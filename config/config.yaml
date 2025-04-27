@@ -75,6 +75,53 @@ config:
   - coils.yaml
   - lights.yaml
 
+flippers:
+  left_flipper:
+    main_coil: c_left_flipper_main
+    hold_coil: c_left_flipper_hold
+    eos_switch: s_left_flipper_eos
+    use_eos: true
+    repulse_on_eos_open: false
+    activation_switch: s_left_flipper
+    enable_events: ball_started, enableAutofire, flipper_on
+    disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
+
+  right_flipper:
+    main_coil: c_right_flipper_main
+    hold_coil: c_right_flipper_hold
+    eos_switch: s_right_flipper_eos
+    use_eos: true
+    repulse_on_eos_open: false
+    activation_switch: s_right_flipper
+    enable_events: ball_started, enableAutofire, flipper_on
+    disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
+
+  left_top_flipper:
+    main_coil: c_left_top_flipper_main
+    hold_coil: c_left_top_flipper_hold
+    eos_switch: s_top_flipper_eos
+    use_eos: true
+    repulse_on_eos_open: false
+    activation_switch: s_left_flipper
+    enable_events: ball_started, enableAutofire, flipper_on
+    disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
+
+autofire_coils:
+  left_sling:
+    coil: c_left_sling
+    switch: s_left_sling
+  right_sling:
+    coil: c_right_sling
+    switch: s_right_sling
+
+  popbumper_left:
+    coil: c_popbumper_left
+    switch: s_popbumper_left
+  popbumper_right:
+    coil: c_popbumper_right
+    switch: s_popbumper_right
+
+
 drop_targets:
   bank1:
     switch: s_drop_target_1
@@ -105,6 +152,19 @@ magnets:
     grab_ball_events: s_right_magna_active
     enable_events: ball_started
     release_ball_events: s_right_magna_inactive
+
+
+servos:
+  servo1:
+    number: playfield-1
+    platform_settings:
+      min_us: 300
+      home_us: 300
+      max_us: 2550
+    positions:
+      0: s_bottom_right_outer_drain_active
+      1: s_bottom_right_inner_drain_active
+
 
 
 machine_vars:

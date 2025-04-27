@@ -65,10 +65,10 @@ switches:
   s_top_flipper_eos:
     number: e-8
   s_left_magna:
-    number: j-8
+    number: j-17
     tags: left_magnet
   s_right_magna:
-    number: j-17
+    number: j-8
     tags: right_magnet
 
  # Slings

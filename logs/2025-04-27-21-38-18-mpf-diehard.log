@@ -1,0 +1,51 @@
+2025-04-27 21:38:18,957 : INFO : root : Loading config.
+2025-04-27 21:38:18,960 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2025-04-27 21:38:18,960 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\46a2264aace4dc9247b28883ea729273.mpf_cache
+2025-04-27 21:38:19,019 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\38c66c284ece5fb2b13b45865e58c857.mpf_cache
+2025-04-27 21:38:19,019 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\846fbc79a2a788b1cf5d5d816f13713f.mpf_cache
+2025-04-27 21:38:19,020 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\771489ba91bf1192210b19104700c5d3.mpf_cache
+2025-04-27 21:38:19,020 : INFO : Machine : Mission Pinball Framework Core Engine v0.80.0.dev7
+2025-04-27 21:38:19,020 : INFO : Machine : Command line arguments: {'no_load_cache': False, 'create_config_cache': True, 'bcp': True, 'configfile': ['config.yaml'], 'force_assets_load': False, 'platform_integration_test': False, 'jsonlogging': False, 'logfile': 'logs\\2025-04-27-21-38-18-mpf-diehard.log', 'pause': False, 'production': False, 'text_ui': True, 'loglevel': 15, 'consoleloglevel': 20, 'force_platform': None, 'syslog_address': None, 'full_logfile_path': 'C:\\Users\\finis\\diehard-mpf\\logs\\2025-04-27-21-38-18-mpf-diehard.log'}
+2025-04-27 21:38:19,020 : INFO : Machine : MPF path: C:\Users\finis\mpf\Lib\site-packages\mpf
+2025-04-27 21:38:19,020 : INFO : Machine : Machine path: C:\Users\finis\diehard-mpf
+2025-04-27 21:38:19,020 : INFO : Machine : Platform: win32
+2025-04-27 21:38:19,020 : INFO : Machine : Python executable location: C:\Users\finis\mpf\Scripts\python.exe
+2025-04-27 21:38:19,020 : INFO : Machine : Python version: 3.12.7 (64-bit)
+2025-04-27 21:38:19,022 : INFO : Machine : Initializing MPF...
+2025-04-27 21:38:19,151 : INFO : FAST : Auto-detecting ports for the following connections: ['net', 'aud']
+2025-04-27 21:38:19,405 : INFO : FAST : Detected AUD on port COM6
+2025-04-27 21:38:19,405 : INFO : FAST : Detected NET on port COM4
+2025-04-27 21:38:19,514 : INFO : FAST [NET] : Trying to connect to COM4 at 921600bps
+2025-04-27 21:38:19,591 : INFO : FAST [NET] : Connected to COM4 at 921600bps
+2025-04-27 21:38:19,608 : INFO : FAST [NET] : Connected to FP-CPU-2000 with firmware v02.19
+2025-04-27 21:38:19,623 : INFO : FAST [NET] : Registered I/O Board 0: Model: FP-I/O-0024, Firmware: 01.10, Switches: 24, Drivers: 8
+2025-04-27 21:38:19,638 : INFO : FAST [NET] : Registered I/O Board 1: Model: FP-I/O-3208, Firmware: 01.10, Switches: 32, Drivers: 8
+2025-04-27 21:38:19,654 : INFO : FAST [NET] : Registered I/O Board 2: Model: FP-I/O-1616, Firmware: 01.10, Switches: 16, Drivers: 16
+2025-04-27 21:38:19,669 : INFO : FAST [NET] : Registered I/O Board 3: Model: FP-I/O-0804, Firmware: 01.10, Switches: 8, Drivers: 4
+2025-04-27 21:38:19,670 : INFO : FAST [EXP] : Trying to connect to COM3 at 921600bps
+2025-04-27 21:38:19,748 : INFO : FAST [EXP] : Connected to COM3 at 921600bps
+2025-04-27 21:38:19,763 : INFO : FAST [EXP] : Verifying hardware for EXP "playfield" (FP-EXP-0071, @B4) with ID string "EXP FP-EXP-0071  0.42", board address B4
+2025-04-27 21:38:19,778 : INFO : FAST [EXP] : Verifying hardware for EXP "playfield" (FP-EXP-0071, @B4) with ID string "BRK FP-EXP-0071  0.42", board address B40
+2025-04-27 21:38:19,794 : WARNING : FAST [EXP] : Interference / bad data received: b'\xffBR:P'
+2025-04-27 21:38:19,794 : ERROR : asyncio : Exception in callback Util.raise_exceptions(<Task finishe... start byte')>) at C:\Users\finis\mpf\Lib\site-packages\mpf\core\utility_functions.py:789
+handle: <Handle Util.raise_exceptions(<Task finishe... start byte')>) at C:\Users\finis\mpf\Lib\site-packages\mpf\core\utility_functions.py:789>
+Traceback (most recent call last):
+  File "C:\Users\finis\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\core\utility_functions.py", line 797, in raise_exceptions
+    future.result()
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\platforms\fast\communicators\base.py", line 413, in _socket_reader
+    self.parse_incoming_raw_bytes(resp)
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\platforms\fast\communicators\base.py", line 360, in parse_incoming_raw_bytes
+    msg = msg.decode()
+          ^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2025-04-27 21:38:19,796 : INFO : Machine : Starting the main run loop with active modes: []
+2025-04-27 21:38:19,796 : ERROR : root : 'attract'
+Traceback (most recent call last):
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\commands\game.py", line 229, in __init__
+    self.machine.run()
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\core\machine.py", line 701, in run
+    if not self.modes['attract'] in self.mode_controller.active_modes:
+           ~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'attract'
