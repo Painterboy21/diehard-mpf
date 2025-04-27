@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://ds4gduf8660uj"]
 
-[ext_resource type="Script" path="res://addons/mpf-gmc/classes/mpf_window.gd" id="1_ixxnq"]
-[ext_resource type="Shader" path="res://addons/mpf-gmc/resources/virtual_dmd.gdshader" id="2_cbmcr"]
-[ext_resource type="Script" path="res://addons/mpf-gmc/classes/mpf_display.gd" id="2_clr31"]
+[ext_resource type="Script" uid="uid://5byr4rygjvxc" path="res://addons/mpf-gmc/classes/mpf_window.gd" id="1_ixxnq"]
+[ext_resource type="Shader" uid="uid://jgw27wdj7i0k" path="res://addons/mpf-gmc/resources/virtual_dmd.gdshader" id="2_cbmcr"]
+[ext_resource type="Script" uid="uid://w0npa2bhvnr" path="res://addons/mpf-gmc/classes/mpf_display.gd" id="2_clr31"]
 [ext_resource type="PackedScene" uid="uid://belkug6sa4arr" path="res://addons/mpf-gmc/slides/startup.tscn" id="3_8nbga"]
-[ext_resource type="Shader" path="res://addons/mpf-gmc/resources/dmd_dots.gdshader" id="5_0sixv"]
-[ext_resource type="Shader" path="res://addons/mpf-gmc/resources/pixelate.gdshader" id="5_m6y8w"]
+[ext_resource type="Shader" uid="uid://by7o1di8t232m" path="res://addons/mpf-gmc/resources/dmd_dots.gdshader" id="5_0sixv"]
+[ext_resource type="Shader" uid="uid://bbkxs4vw31fn5" path="res://addons/mpf-gmc/resources/pixelate.gdshader" id="5_m6y8w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vnlqf"]
 shader = ExtResource("2_cbmcr")
@@ -22,7 +22,7 @@ shader_parameter/rows = 32.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4bkj2"]
 shader = ExtResource("5_0sixv")
-shader_parameter/color = null
+shader_parameter/color = Color(0, 0, 0, 1)
 shader_parameter/hardness = 5.0
 shader_parameter/spacing = 2.0
 shader_parameter/columns = 98.0

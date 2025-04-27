@@ -1,9 +1,60 @@
 #config_version=6
 
-# Base mode that starts at the beginning of each ball
-# and stops at the end of each ball.
-
 mode:
-  start_events: ball_starting
-  stop_events: ball_will_end
-  priority: 100
+  start_events: ball_started
+  stop_events: ball_ended
+  priority: 200
+
+light_player: 
+  mode_base_started: 
+    GI: 
+      color: ffffff
+
+
+show_player:
+  s_start_active:
+    combo:
+      loops: 0
+      show_tokens:
+        led: GI
+        color: red
+      speed: 1
+      events_when_completed: loobooloo
+
+shows:
+  my_red:
+    - duration: 15
+      lights:
+        (led): (color)
+    - duration: -1
+      lights:
+        (led): off
+  combo:
+    - time: +0
+      shows:
+        my_red:
+          key: '1'
+          loops: 1
+          speed: 1
+          show_tokens:
+            led: GI
+            color: red
+    - time: +1
+      shows:
+        my_red:
+          key: '2'
+          loops: 1
+          speed: 1
+          show_tokens:
+            led: l22
+            color: blue
+    - duration: 20
+      shows:
+        my_red:
+          key: '3'
+          loops: 1
+          speed: 1
+          show_tokens:
+            led: l23
+            color: green
+

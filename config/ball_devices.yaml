@@ -1,0 +1,37 @@
+#config_version=6
+
+ball_devices:
+  bd_trough:
+    ball_switches: s_trough1, s_trough2, s_trough3, s_trough4, s_trough5, s_trough6, s_trough_jam
+    eject_coil: c_trough_eject
+    tags: trough, home, drain
+    eject_coil_jam_pulse: 15ms
+    eject_targets: bd_plunger
+    debug: true
+  
+  bd_plunger:
+    ball_switches: swPlunger
+    eject_coil: c_plunger
+    mechanical_eject: true
+    player_controlled_eject_event: s_fire_active
+    debug: true
+
+  bd_scoop:
+    ball_switches: s_safe_vuk
+    eject_coil: c_safe_vuk_eject
+    eject_timeouts: 1s
+
+  bd_scoop1:
+    ball_switches: s_bottom_right_vuk
+    eject_coil: c_bottom_right_vuk_eject
+    eject_timeouts: 1s
+
+  bd_scoop2:
+    ball_switches: s_tunel_vuk
+    eject_coil: c_tunel_vuk_eject
+    eject_timeouts: 1s
+
+  bd_scoop3:
+    ball_switches: s_highvuk
+    eject_coil: c_highvuk_eject
+    eject_timeouts: 1s
