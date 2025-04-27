@@ -35,7 +35,7 @@ lights:
   f142:
     number: playfield-1-6
     subtype: led
-    type: grb  # NEED TO CHANGE BULB
+    type: rgb  # NEED TO CHANGE BULB
   #brucie_top:
   l127:
     number: playfield-1-7
@@ -153,18 +153,18 @@ lights:
   l83:  
     number: playfield-1-29
     subtype: led
-    type: grb
+    type: rgb
   #r_guide2:
   l108:
     number: playfield-1-30
     subtype: led
-    type: grb
+    type: rgb
     tags: GI
   #r_guide1:
   l104:
     number: playfield-1-31
     subtype: led
-    type: grb
+    type: rgb
     tags: GI
   #right_apron
   l73:
@@ -181,6 +181,7 @@ lights:
     number: playfield-2-1
     subtype: led
     type: rgb
+    tags: GI
   # Right main ramp
   l112:  
     number: playfield-2-2
@@ -325,7 +326,7 @@ lights:
   l107:
     number: playfield-2-29
     subtype: led
-    type: grb
+    type: rgb
     tags: GI
   #l_apron
   l72:
@@ -337,7 +338,7 @@ lights:
   l102:
     number: playfield-2-31
     subtype: led
-    type: grb
+    type: rgb
     tags: GI
   #DieHard ball lost
   l29:
@@ -358,6 +359,7 @@ lights:
     number: playfield-3-2
     subtype: led
     type: rgb
+    tags: GI
   #under_right_bumper_plastic
   l119:
     number: playfield-3-3
@@ -410,7 +412,7 @@ lights:
   l123:
     number: playfield-3-12
     subtype: led
-    type: grb
+    type: rgb
     tags: GI
   #back right flasher
   f144:
@@ -421,7 +423,7 @@ lights:
   l122:
     number: playfield-3-14
     subtype: led
-    type: grb
+    type: rgb
     tags: GI
     #top_left_target:
   l1:
@@ -465,7 +467,7 @@ lights:
   l120:
     number: playfield-3-22
     subtype: led 
-    type: grb
+    type: rgb
     tags: GI
   #back left flasher
   f145:
@@ -476,7 +478,7 @@ lights:
   l121:
     number: playfield-3-24
     subtype: led 
-    type: grb
+    type: rgb
     tags: GI
   #central park middle
   l77:  
@@ -487,7 +489,7 @@ lights:
   l76:  
     number: playfield-3-26
     subtype: led
-    type: grb
+    type: rgb
   #central park right 
   l78:
     number: playfield-3-27
