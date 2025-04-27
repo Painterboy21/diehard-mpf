@@ -1,0 +1,536 @@
+[node name="l84" type="Sprite2D" parent="lights"]
+position = Vector2(33.43942, 559.6877)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l138" type="Sprite2D" parent="lights"]
+position = Vector2(146.6235, 139.1366)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="Light003" type="Sprite2D" parent="lights"]
+position = Vector2(455.0162, 378.7346)
+script = ExtResource("3_qb2nn")
+tags = ["00100"]
+
+[node name="Light002" type="Sprite2D" parent="lights"]
+position = Vector2(455.9001, 287.249)
+script = ExtResource("3_qb2nn")
+tags = ["01000"]
+
+[node name="Light001" type="Sprite2D" parent="lights"]
+position = Vector2(457.3873, 197.8931)
+script = ExtResource("3_qb2nn")
+tags = ["10000"]
+
+[node name="l15" type="Sprite2D" parent="lights"]
+position = Vector2(266.9192, 651.7346)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l14" type="Sprite2D" parent="lights"]
+position = Vector2(277.8985, 624.4142)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l137" type="Sprite2D" parent="lights"]
+position = Vector2(345.8864, 745.9204)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l136" type="Sprite2D" parent="lights"]
+position = Vector2(92.35986, 747.5926)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l135" type="Sprite2D" parent="lights"]
+position = Vector2(103.5754, 342.4423)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l134" type="Sprite2D" parent="lights"]
+position = Vector2(366.6448, 959.9095)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l133" type="Sprite2D" parent="lights"]
+position = Vector2(280.2406, 37.24329)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l132" type="Sprite2D" parent="lights"]
+position = Vector2(78.05741, 322.9049)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l131" type="Sprite2D" parent="lights"]
+position = Vector2(87.97251, 962.5999)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l128" type="Sprite2D" parent="lights"]
+position = Vector2(25.71033, 670.903)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l127" type="Sprite2D" parent="lights"]
+position = Vector2(402.8677, 468.2701)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l126" type="Sprite2D" parent="lights"]
+position = Vector2(376.9268, 185.8588)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l82" type="Sprite2D" parent="lights"]
+position = Vector2(345.0188, 784.3807)
+script = ExtResource("3_qb2nn")
+tags = ["101010"]
+
+[node name="l83" type="Sprite2D" parent="lights"]
+position = Vector2(328.6475, 787.0504)
+script = ExtResource("3_qb2nn")
+tags = ["010101"]
+
+[node name="l80" type="Sprite2D" parent="lights"]
+position = Vector2(110.5094, 782.9226)
+script = ExtResource("3_qb2nn")
+tags = ["101010"]
+
+[node name="l81" type="Sprite2D" parent="lights"]
+position = Vector2(88.69388, 785.0284)
+script = ExtResource("3_qb2nn")
+tags = ["010101"]
+
+[node name="l73" type="Sprite2D" parent="lights"]
+position = Vector2(392.5161, 870.4532)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="f140" type="Sprite2D" parent="lights"]
+position = Vector2(103.615, 794.3869)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="f147" type="Sprite2D" parent="lights"]
+position = Vector2(39.60942, 455.7753)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="f146" type="Sprite2D" parent="lights"]
+position = Vector2(91.15463, 179.3727)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="f145" type="Sprite2D" parent="lights"]
+position = Vector2(27.66664, 43.8183)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="f144" type="Sprite2D" parent="lights"]
+position = Vector2(425.7998, 30.38842)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="f143" type="Sprite2D" parent="lights"]
+position = Vector2(393.8134, 299.3168)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="f142" type="Sprite2D" parent="lights"]
+position = Vector2(416.9585, 503.2621)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="f141" type="Sprite2D" parent="lights"]
+position = Vector2(329.6649, 771.6381)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l72" type="Sprite2D" parent="lights"]
+position = Vector2(41.97448, 876.0717)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l71" type="Sprite2D" parent="lights"]
+position = Vector2(404.3603, 356.2064)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l70" type="Sprite2D" parent="lights"]
+position = Vector2(61.71243, 393.6228)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l130" type="Sprite2D" parent="lights"]
+position = Vector2(226.5018, 201.9266)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l75" type="Sprite2D" parent="lights"]
+position = Vector2(215.8986, 133.3175)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l61" type="Sprite2D" parent="lights"]
+position = Vector2(277.5588, 344.8366)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l53" type="Sprite2D" parent="lights"]
+position = Vector2(346.4362, 518.1854)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l43" type="Sprite2D" parent="lights"]
+position = Vector2(219.2644, 788.4172)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l42" type="Sprite2D" parent="lights"]
+position = Vector2(250.6643, 696.5679)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l41" type="Sprite2D" parent="lights"]
+position = Vector2(170.4858, 755.1459)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l40" type="Sprite2D" parent="lights"]
+position = Vector2(186.6532, 695.798)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l31" type="Sprite2D" parent="lights"]
+position = Vector2(82.46352, 588.0842)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l13" type="Sprite2D" parent="lights"]
+position = Vector2(168.326, 647.0068)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l12" type="Sprite2D" parent="lights"]
+position = Vector2(160.2131, 625.3799)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l8" type="Sprite2D" parent="lights"]
+position = Vector2(217.5979, 738.097)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l6" type="Sprite2D" parent="lights"]
+position = Vector2(370.0827, 710.4768)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l5" type="Sprite2D" parent="lights"]
+position = Vector2(65.81039, 711.115)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l4" type="Sprite2D" parent="lights"]
+position = Vector2(27.6277, 719.9629)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l3" type="Sprite2D" parent="lights"]
+position = Vector2(253.356, 98.40002)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l2" type="Sprite2D" parent="lights"]
+position = Vector2(221.9759, 94.95402)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l1" type="Sprite2D" parent="lights"]
+position = Vector2(186.3034, 95.81572)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l78" type="Sprite2D" parent="lights"]
+position = Vector2(373.5551, 63.90316)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l76" type="Sprite2D" parent="lights"]
+position = Vector2(283.3932, 91.37454)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l77" type="Sprite2D" parent="lights"]
+position = Vector2(329.5363, 77.677)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l50" type="Sprite2D" parent="lights"]
+position = Vector2(110.4367, 565.0215)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l20" type="Sprite2D" parent="lights"]
+position = Vector2(95.86245, 526.0836)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l21" type="Sprite2D" parent="lights"]
+position = Vector2(154.4532, 508.7169)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l32" type="Sprite2D" parent="lights"]
+position = Vector2(118.1047, 499.74)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l51" type="Sprite2D" parent="lights"]
+position = Vector2(167.1632, 548.9617)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l17" type="Sprite2D" parent="lights"]
+position = Vector2(132.988, 536.3404)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l33" type="Sprite2D" parent="lights"]
+position = Vector2(220.3883, 469.9523)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l16" type="Sprite2D" parent="lights"]
+position = Vector2(229.7111, 507.4421)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l7" type="Sprite2D" parent="lights"]
+position = Vector2(193.5329, 496.0001)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l30" type="Sprite2D" parent="lights"]
+position = Vector2(62.96779, 644.4973)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l60" type="Sprite2D" parent="lights"]
+position = Vector2(96.59639, 633.0837)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l63" type="Sprite2D" parent="lights"]
+position = Vector2(338.0956, 636.3578)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l34" type="Sprite2D" parent="lights"]
+position = Vector2(362.5107, 567.155)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l52" type="Sprite2D" parent="lights"]
+position = Vector2(307.1127, 497.9489)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l22" type="Sprite2D" parent="lights"]
+position = Vector2(360.1892, 478.4294)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l62" type="Sprite2D" parent="lights"]
+position = Vector2(321.4437, 460.1607)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l23" type="Sprite2D" parent="lights"]
+position = Vector2(285.9128, 303.358)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l24" type="Sprite2D" parent="lights"]
+position = Vector2(275.5924, 255.7142)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l10" type="Sprite2D" parent="lights"]
+position = Vector2(364.5457, 612.5842)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l54" type="Sprite2D" parent="lights"]
+position = Vector2(244.4106, 322.7388)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l55" type="Sprite2D" parent="lights"]
+position = Vector2(246.1425, 286.3692)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l9" type="Sprite2D" parent="lights"]
+position = Vector2(361.9726, 668.2796)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l59" type="Sprite2D" parent="lights"]
+position = Vector2(53.77811, 572.7888)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l58" type="Sprite2D" parent="lights"]
+position = Vector2(46.39967, 592.7117)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l57" type="Sprite2D" parent="lights"]
+position = Vector2(33.277, 607.2664)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l44" type="Sprite2D" parent="lights"]
+position = Vector2(267.6964, 753.5494)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l29" type="Sprite2D" parent="lights"]
+position = Vector2(217.9957, 958.6064)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l18" type="Sprite2D" parent="lights"]
+position = Vector2(179.274, 234.5311)
+script = ExtResource("3_qb2nn")
+tags = ["10"]
+
+[node name="l119" type="Sprite2D" parent="lights"]
+position = Vector2(298.7769, 147.968)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l109" type="Sprite2D" parent="lights"]
+position = Vector2(420.444, 597.9462)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l125" type="Sprite2D" parent="lights"]
+position = Vector2(270.9998, 65.00684)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l124" type="Sprite2D" parent="lights"]
+position = Vector2(165.6608, 61.12594)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l123" type="Sprite2D" parent="lights"]
+position = Vector2(451.919, 69.02877)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l122" type="Sprite2D" parent="lights"]
+position = Vector2(398.2404, 21.13899)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l121" type="Sprite2D" parent="lights"]
+position = Vector2(63.0116, 31.66419)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l120" type="Sprite2D" parent="lights"]
+position = Vector2(21.9632, 94.81561)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l118" type="Sprite2D" parent="lights"]
+position = Vector2(279.8314, 189.5427)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l117" type="Sprite2D" parent="lights"]
+position = Vector2(379.295, 324.7919)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l116" type="Sprite2D" parent="lights"]
+position = Vector2(359.2969, 309.5304)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l115" type="Sprite2D" parent="lights"]
+position = Vector2(330.3526, 378.9969)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l114" type="Sprite2D" parent="lights"]
+position = Vector2(68.30094, 266.9031)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l113" type="Sprite2D" parent="lights"]
+position = Vector2(79.35245, 347.4212)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l112" type="Sprite2D" parent="lights"]
+position = Vector2(201.4451, 406.8887)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l111" type="Sprite2D" parent="lights"]
+position = Vector2(66.36035, 539.885)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l110" type="Sprite2D" parent="lights"]
+position = Vector2(20.14799, 635.2452)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l108" type="Sprite2D" parent="lights"]
+position = Vector2(363.8668, 854.2466)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l107" type="Sprite2D" parent="lights"]
+position = Vector2(71.47084, 853.5806)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l106" type="Sprite2D" parent="lights"]
+position = Vector2(329.8983, 815.9488)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l105" type="Sprite2D" parent="lights"]
+position = Vector2(343.8853, 770.9904)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l104" type="Sprite2D" parent="lights"]
+position = Vector2(331.8964, 876.8923)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l102" type="Sprite2D" parent="lights"]
+position = Vector2(104.1073, 875.8932)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l100" type="Sprite2D" parent="lights"]
+position = Vector2(106.1055, 814.9497)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+[node name="l103" type="Sprite2D" parent="lights"]
+position = Vector2(92.11841, 769.9913)
+script = ExtResource("3_qb2nn")
+tags = ["GI"]
+
+

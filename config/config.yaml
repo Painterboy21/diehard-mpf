@@ -1,12 +1,158 @@
 #config_version=6
+  
 
-## MPF Main Machine Config File
-#
-# This file defines your system-wide properties like switches,
-# drivers, ball devices, hardware platforms, and more. You can
-# include everything here, or create sub-config files to be
-# imported and merged with this one.
+hardware:
+    platform: fast
+
+fast:
+
+  net:
+    controller: neuron
+    io_loop:
+        j:
+          model: FP-I/O-0024
+          order: 1
+        d:
+          model: FP-I/O-3208
+          order: 2
+        e:
+          model: FP-I/O-1616
+          order: 3
+        f:
+          model: FP-I/O-0804
+          order: 4
+
+
+  exp:
+    port: COM3
+    boards:
+      playfield:
+        model: FP-EXP-0071
+
+
+  aud:
+    port: auto
+    debug: false
+
+    main_amp_enabled: true
+    sub_amp_enabled: true
+    headphones_amp_enabled: true
+
+    main_steps: 20
+    sub_steps: 20
+    headphones_steps: 20
+
+    default_main_volume: 60
+    default_sub_volume: 40
+    default_headphones_volume: 10
+
+    persist_volume_settings: true
+
+    max_hw_volume_main: 63
+    max_hw_volume_sub: 63
+    max_hw_volume_headphones: 63
+
+    main_levels_list: None
+    sub_levels_list: None
+    headphones_levels_list: None
+
+    link_sub_to_main: true
+    link_headphones_to_main: false
+
+    headphones_level: headphones
+    mute_speakers_with_headphones: true
+
+virtual_platform_start_active_switches:
+  - s_trough1
+  - s_trough2
+  - s_trough3
+  - s_trough4
+  - s_trough5
+  - s_trough6 
+
+config:
+  - switches.yaml
+  - ball_devices.yaml
+  - coils.yaml
+  - lights.yaml
+
+drop_targets:
+  bank1:
+    switch: s_drop_target_1
+    reset_coil: c_reset_drop_targets
+  bank2:
+    switch: s_drop_target_2
+    reset_coil: c_reset_drop_targets
+  bank3:
+    switch: s_drop_target_3
+    reset_coil: c_reset_drop_targets
+
+drop_target_banks:
+  bank:
+    drop_targets: bank1, bank2, bank3
+    reset_coils: c_reset_drop_targets
+    reset_on_complete: 1s
+
+
+magnets:
+  magnet_l:
+    magnet_coil: c_left_magna
+    grab_ball_events: s_left_magna_active
+    enable_events: ball_started
+    release_ball_events: s_left_magna_inactive
+ 
+  magnet_r:
+    magnet_coil: c_right_magna
+    grab_ball_events: s_right_magna_active
+    enable_events: ball_started
+    release_ball_events: s_right_magna_inactive
+
+
+machine_vars:
+  var_which_attract: #to track which attract screen you are currently on
+    value_type: int
+    initial_value: 0
+    persist: false
+
 
 modes:
-  - attract
   - base
+
+machine:
+    balls_installed: 6
+
+game:
+    balls_per_game: 3
+    max_players: 4
+
+playfields:
+  playfield:
+    default_source_device: bd_plunger
+    tags: default
+
+
+variable_player:
+  increase_main_volume:
+    fast_audio_main_volume:
+      action: add_machine
+      int: 1
+  decrease_main_volume:
+    fast_audio_main_volume:
+      action: add_machine
+      int: -1
+  increase_sub_volume:
+    fast_audio_sub_volume:
+      action: add_machine
+      int: 1
+  decrease_sub_volume:
+    fast_audio_sub_volume:
+      action: add_machine
+      int: -1
+  increase_headphones_volume:
+    fast_audio_headphones_volume:
+      action: add_machine
+      int: 1
+  decrease_headphones_volume:
+    fast_audio_headphones_volume:
+      action: add_machine
+      int: -1
