@@ -1,6 +1,7 @@
 #config_version=6
 
 ball_devices:
+
   bd_trough:
     ball_switches: s_trough1, s_trough2, s_trough3, s_trough4, s_trough5, s_trough6, s_trough_jam
     eject_coil: c_trough_eject
@@ -10,11 +11,9 @@ ball_devices:
     debug: true
   
   bd_plunger:
-    ball_switches: swPlunger
+    ball_switches: s_plunger_lane
     eject_coil: c_plunger
-    mechanical_eject: true
     player_controlled_eject_event: s_fire_active
-    debug: true
 
   bd_scoop:
     ball_switches: s_safe_vuk
@@ -34,4 +33,9 @@ ball_devices:
   bd_scoop3:
     ball_switches: s_highvuk
     eject_coil: c_highvuk_eject
+    eject_timeouts: 1s
+
+  bd_scoop4:
+    ball_switches: s_nakatomi
+    eject_coil: c_nakatomi
     eject_timeouts: 1s
