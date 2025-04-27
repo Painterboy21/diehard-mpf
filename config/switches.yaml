@@ -1,54 +1,36 @@
 #config_version=6
 
 switches:
+
  # trough switches
   s_trough1:
-    number: d-0
+    number: d-8
     type: 'NC'
   s_trough2:
-    number: d-1
+    number: d-9
   s_trough3:
-    number: d-2
+    number: d-10
   s_trough4:
-    number: d-3
+    number: d-11
   s_trough5:
-    number: d-4
+    number: d-12
   s_trough6:
-    number: d-5
+    number: d-13
   s_trough_jam:
-    number: d-6
-    type: NC
-
+    number: d-14
+    type: 'NC'
 
  # Plunger
-  swPlunger:
-    number: d-7
-
-
- # Slings
-  s_left_sling:
-    number: d-8
-    tags: left_slingshot
-  s_right_sling:
-    number: d-9
-    tags: right_slingshot
-
- # In and Outlanes
-  s_left_outlane:
-    number: d-10
-  s_left_inlane:
-    number: d-13
-  s_right_inlane:
-    number: d-17
-  s_right_outlane:
-    number: d-16
+  s_plunger_lane:
+    number: d-15
 
  # Coin Door and cab Switches
   s_start:
     number: j-10
     tags: start
-  s_door:
+  s_door: 
     number: j-12
+    type: 'NC'
   s_escape:
     number: j-0
   s_minus:
@@ -71,17 +53,17 @@ switches:
 
  # Flippers and Magnets
   s_right_flipper_eos:
-    number: d-11
+    number: d-5
   s_left_flipper_eos:
-    number: d-12
+    number: d-4
   s_left_flipper:
     number: j-9
-    tags: left_and_top_flipper
+    tags: left_flipper_top_flipper
   s_right_flipper:
     number: j-16
     tags: right_flipper
-  s_top_flipper_hold:
-    number: e-2
+  s_top_flipper_eos:
+    number: e-8
   s_left_magna:
     number: j-8
     tags: left_magnet
@@ -89,50 +71,78 @@ switches:
     number: j-17
     tags: right_magnet
 
+ # Slings
+  s_left_sling:
+    number: d-2
+    tags: left_slingshot
+  s_right_sling:
+    number: d-3
+    tags: right_slingshot
+
  # Pop Bumpers
   s_popbumper_left:
-    number: e-0
+    number: e-6
     tags: left_pop_bumper
   s_popbumper_right:
-    number: e-1
+    number: e-2
     tags: right_pop_bumper
-
- # Top Targets
-  s_target_3:
-    number: e-3
-  s_target_2:
-    number: e-4
 
  # Holly Switches
   s_holly_h:
-    number: d-14
+    number: e-4
   s_holly_o:
-    number: d-15
+    number: e-1
   s_holly_l:
-    number: e-9
+    number: e-0
   s_holly_l_1:
-    number: e-10
+    number: e-5
   s_holly_y:
     number: e-11
 
- # Vuks  
+
+  #Vuks  
   s_safe_vuk:
-    number: e-5
+    number: e-3
     type: 'NC'
   s_nakatomi:
     number: e-7
     type: 'NC'
   s_bottom_right_vuk:
-    number: e-8
+    number: e-13
     type: 'NC'
   s_tunel_vuk:
     number: e-12
     type: 'NC'
   s_highvuk:
-    number: e-13
+    number: e-10
     type: 'NC'
 
- # drop targets  
+ # spinners
+  s_left spinner:
+    number: e-9
+  s_right spinner:
+    number: e-15
+
+ # airplane
+  s_airplane:
+    number: e-14
+
+ # orbits
+  s_left_orbit:
+    number: d-16
+  s_right_orbit:
+    number: d-19
+
+
+ # Top Targets
+  s_left_top_target:
+    number: d-18
+  s_middle_top_target:
+    number: d-20
+  s_right_top_target:
+    number: d-17
+
+ # drop targets
   s_drop_target_3:
     number: f-0
     type: 'NC'
@@ -142,3 +152,14 @@ switches:
   s_drop_target_1:
     number: f-2
     type: 'NC'
+
+
+# In and Outlanes
+  s_bottom_right_outer_drain:
+    number: d-7
+  s_bottom_right_inner_drain:
+    number: d-6
+  s_bottom_left_outer_drain:
+    number: d-1
+  s_bottom_left_inner_drain:
+    number: d-0

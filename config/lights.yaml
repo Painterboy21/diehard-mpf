@@ -7,7 +7,7 @@ lights:
   f143:
     number: playfield-1-1
     subtype: led  # NEED TO CHANGE BULB
-    type: grb
+    type: rgb
   #plane_right
   l117:
     number: playfield-1-2
@@ -487,7 +487,7 @@ lights:
   l76:  
     number: playfield-3-26
     subtype: led
-    type: rgb
+    type: grb
   #central park right 
   l78:
     number: playfield-3-27
