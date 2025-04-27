@@ -1,0 +1,56 @@
+2025-04-27 19:07:48,099 : INFO : root : Loading config.
+2025-04-27 19:07:48,109 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2025-04-27 19:07:48,109 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\mpf\Lib\site-packages\mpf\mpfconfig.yaml.
+2025-04-27 19:07:48,116 : INFO : ConfigProcessor : Loading config: C:\Users\finis\mpf\Lib\site-packages\mpf\mpfconfig.yaml
+2025-04-27 19:07:48,116 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\diehard-mpf\config\config.yaml.
+2025-04-27 19:07:48,124 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\config\config.yaml
+2025-04-27 19:07:48,124 : INFO : ConfigProcessor : Config file cache created: C:\Users\finis\AppData\Local\Temp\46a2264aace4dc9247b28883ea729273.mpf_cache
+2025-04-27 19:07:48,176 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\mpf\Lib\site-packages\mpf\modes\attract\config\attract.yaml.
+2025-04-27 19:07:48,177 : INFO : ConfigProcessor : Loading config: C:\Users\finis\mpf\Lib\site-packages\mpf\modes\attract\config\attract.yaml
+2025-04-27 19:07:48,177 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\diehard-mpf\modes\attract\config\attract.yaml.
+2025-04-27 19:07:48,183 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\modes\attract\config\attract.yaml
+2025-04-27 19:07:48,185 : INFO : ConfigProcessor : Config file cache created: C:\Users\finis\AppData\Local\Temp\7a912b2511d42635e0b426a52fd16cc1.mpf_cache
+2025-04-27 19:07:48,185 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\846fbc79a2a788b1cf5d5d816f13713f.mpf_cache
+2025-04-27 19:07:48,187 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\7a912b2511d42635e0b426a52fd16cc1.mpf_cache
+2025-04-27 19:07:48,193 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\diehard-mpf\modes\base\config\base.yaml.
+2025-04-27 19:07:48,200 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\modes\base\config\base.yaml
+2025-04-27 19:07:48,200 : INFO : ConfigProcessor : Config file cache created: C:\Users\finis\AppData\Local\Temp\771489ba91bf1192210b19104700c5d3.mpf_cache
+2025-04-27 19:07:48,200 : INFO : Machine : Mission Pinball Framework Core Engine v0.80.0.dev7
+2025-04-27 19:07:48,200 : INFO : Machine : Command line arguments: {'no_load_cache': False, 'create_config_cache': True, 'bcp': False, 'configfile': ['config.yaml'], 'force_assets_load': False, 'platform_integration_test': False, 'jsonlogging': False, 'logfile': 'logs\\2025-04-27-19-07-48-mpf-diehard.log', 'pause': False, 'production': False, 'text_ui': False, 'loglevel': 15, 'consoleloglevel': 20, 'force_platform': 'virtual', 'syslog_address': None, 'full_logfile_path': 'C:\\Users\\finis\\diehard-mpf\\logs\\2025-04-27-19-07-48-mpf-diehard.log'}
+2025-04-27 19:07:48,201 : INFO : Machine : MPF path: C:\Users\finis\mpf\Lib\site-packages\mpf
+2025-04-27 19:07:48,201 : INFO : Machine : Machine path: C:\Users\finis\diehard-mpf
+2025-04-27 19:07:48,201 : INFO : Machine : Platform: win32
+2025-04-27 19:07:48,201 : INFO : Machine : Python executable location: C:\Users\finis\mpf\Scripts\python.exe
+2025-04-27 19:07:48,201 : INFO : Machine : Python version: 3.12.7 (64-bit)
+2025-04-27 19:07:48,203 : INFO : Machine : Initializing MPF...
+2025-04-27 19:07:48,252 : INFO : EventManager : Event: ======'machine_var_credits_string'====== Args={'value': 'FREE PLAY', 'prev_value': None, 'change': True}
+2025-04-27 19:07:48,264 : INFO : EventManager : Event: ======'machine_var_master_volume'====== Args={'value': 0.5, 'prev_value': None, 'change': True}
+2025-04-27 19:07:48,264 : INFO : EventManager : Event: ======'machine_var_mpf_version'====== Args={'value': 'Mission Pinball Framework v0.80.0.dev7', 'prev_value': None, 'change': True}
+2025-04-27 19:07:48,264 : INFO : EventManager : Event: ======'machine_var_mpf_extended_version'====== Args={'value': 'Mission Pinball Framework v0.80.0.dev7, Config version:6, Show version: 6, BCP version:1.1', 'prev_value': None, 'change': True}
+2025-04-27 19:07:48,264 : INFO : EventManager : Event: ======'machine_var_python_version'====== Args={'value': '3.12.7', 'prev_value': None, 'change': True}
+2025-04-27 19:07:48,361 : INFO : EventManager : Event: ======'machine_var_platform'====== Args={'value': 'Windows-11-10.0.26100-SP0', 'prev_value': None, 'change': True}
+2025-04-27 19:07:48,361 : INFO : EventManager : Event: ======'machine_var_platform_system'====== Args={'value': 'Windows', 'prev_value': None, 'change': True}
+2025-04-27 19:07:48,361 : INFO : EventManager : Event: ======'machine_var_platform_release'====== Args={'value': '11', 'prev_value': None, 'change': True}
+2025-04-27 19:07:48,361 : INFO : EventManager : Event: ======'machine_var_platform_version'====== Args={'value': '10.0.26100', 'prev_value': None, 'change': True}
+2025-04-27 19:07:48,361 : INFO : EventManager : Event: ======'machine_var_platform_machine'====== Args={'value': 'AMD64', 'prev_value': None, 'change': True}
+2025-04-27 19:07:48,361 : INFO : EventManager : Event: ======'machine_var_log_file_path'====== Args={'value': 'C:\\Users\\finis\\diehard-mpf\\logs\\2025-04-27-19-07-48-mpf-diehard.log', 'prev_value': None, 'change': True}
+2025-04-27 19:07:48,361 : INFO : EventManager : Event: ======'init_phase_1'====== Args={}
+2025-04-27 19:07:48,369 : INFO : EventManager : Event: ======'init_phase_2'====== Args={}
+2025-04-27 19:07:48,373 : INFO : EventManager : Event: ======'init_phase_3'====== Args={}
+2025-04-27 19:07:48,373 : INFO : EventManager : Event: ======'init_phase_4'====== Args={}
+2025-04-27 19:07:48,375 : INFO : EventManager : Event: ======'machine_var_audits_events_game_started'====== Args={'value': 0, 'prev_value': None, 'change': True}
+2025-04-27 19:07:48,375 : INFO : EventManager : Event: ======'machine_var_audits_events_game_ended'====== Args={'value': 0, 'prev_value': None, 'change': True}
+2025-04-27 19:07:48,375 : INFO : EventManager : Event: ======'machine_var_audits_player_score'====== Args={'value': {'top': [], 'average': 0, 'total': 0}, 'prev_value': None, 'change': True}
+2025-04-27 19:07:48,375 : INFO : EventManager : Event: ======'init_phase_5'====== Args={}
+2025-04-27 19:07:48,375 : INFO : EventManager : Event: ======'init_done'====== Args={}
+2025-04-27 19:07:48,375 : INFO : EventManager : Event: ======'machine_reset_phase_1'====== Args={}
+2025-04-27 19:07:48,375 : INFO : EventManager : Event: ======'machine_reset_phase_2'====== Args={}
+2025-04-27 19:07:48,375 : INFO : EventManager : Event: ======'machine_reset_phase_3'====== Args={}
+2025-04-27 19:07:48,375 : INFO : EventManager : Event: ======'reset_complete'====== Args={}
+2025-04-27 19:07:48,375 : INFO : EventManager : Event: ======'mode_attract_will_start'====== Args={}
+2025-04-27 19:07:48,376 : INFO : EventManager : Event: ======'mode_attract_starting'====== Args={}
+2025-04-27 19:07:48,376 : INFO : Mode.attract : Started. Priority: 10
+2025-04-27 19:07:48,376 : INFO : EventManager : Event: ======'modes_active_modes_changed'====== Args={}
+2025-04-27 19:07:48,376 : INFO : EventManager : Event: ======'mode_attract_started'====== Args={}
+2025-04-27 19:07:48,376 : INFO : EventManager : Event: ======'collecting_balls_complete'====== Args={}
+2025-04-27 19:07:48,376 : INFO : Machine : Starting the main run loop with active modes: [<Mode.attract>]
