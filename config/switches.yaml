@@ -65,10 +65,10 @@ switches:
   s_top_flipper_eos:
     number: e-8
   s_left_magna:
-    number: j-17
+    number: j-8
     tags: left_magnet
   s_right_magna:
-    number: j-8
+    number: j-17
     tags: right_magnet
 
  # Slings
@@ -163,3 +163,8 @@ switches:
     number: d-1
   s_bottom_left_inner_drain:
     number: d-0
+
+# air_ducts
+  s_AirDuctEnter001: #And AirDuct002
+    number:  f-3
+    type: 'NC'
