@@ -532,5 +532,3 @@ tags = ["GI"]
 position = Vector2(92.11841, 769.9913)
 script = ExtResource("3_qb2nn")
 tags = ["GI"]
-
-

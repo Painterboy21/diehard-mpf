@@ -1,0 +1,21 @@
+#config_version=6
+
+mode:
+  start_events: game_ended, reset_complete
+  stop_events: game_start, service_mode_entered
+  priority: 10
+
+light_player: 
+  mode_attract_started: 
+    GI: 
+      color: ff0000
+
+
+
+slide_player: 
+  mode_attract_started: 
+    attract:
+      action: play
+
+
+
