@@ -176,6 +176,7 @@ machine_vars:
 
 modes:
   - base
+  - score
 
 machine:
     balls_installed: 6

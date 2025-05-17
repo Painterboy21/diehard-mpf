@@ -1,0 +1,21 @@
+#config_version=6
+
+mode:
+  start_events: ball_started
+  stop_events: ball_ended
+  priority: 110
+
+variable_player: 
+  s_left_sling_active: 
+    score: 
+      action: add
+      int: 3030
+
+  s_right_sling_active: 
+    score: 
+      action: add
+      int: 3030
+
+
+
+
