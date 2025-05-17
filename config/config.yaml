@@ -74,6 +74,7 @@ config:
   - ball_devices.yaml
   - coils.yaml
   - lights.yaml
+  - shot_profiles.yaml
 
 flippers:
   left_flipper:
