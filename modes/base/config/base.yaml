@@ -5,14 +5,34 @@ mode:
   stop_events: ball_ended
   priority: 100
 
-light_player:
-  mode_base_started:
-    GI:
+show_player: 
+  s_left_sling_active: 
+    flicker_color: 
+      key: key_s_left_sling_active
+      loops: 1
+      show_tokens: 
+        lights: f140
+        color: C81616
+  s_right_sling_active: 
+    flicker_color: 
+      key: key_s_right_sling_active
+      loops: 1
+      show_tokens: 
+        lights: f141
+        color: 1616FF
+
+
+light_player: 
+  mode_base_started: 
+    GI: 
       color: ffffff
 
 
 
-slide_player:
-  mode_base_started:
+slide_player: 
+  mode_base_started: 
     base:
       action: play
+
+
+
