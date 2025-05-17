@@ -3,19 +3,16 @@
 mode:
   start_events: ball_started
   stop_events: ball_ended
-  priority: 200
+  priority: 100
 
-light_player: 
-  mode_base_started: 
-    GI: 
+light_player:
+  mode_base_started:
+    GI:
       color: ffffff
 
 
 
-slide_player: 
-  mode_base_started: 
+slide_player:
+  mode_base_started:
     base:
       action: play
-
-
-
