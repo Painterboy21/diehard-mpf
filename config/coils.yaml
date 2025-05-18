@@ -32,13 +32,12 @@ coils:
   # Magnets
   c_right_magna:
     number: e- 12
-    default_pulse_ms: 100ms
-    default_hold_power: 0.1
+    default_pulse_ms: 70ms
+    default_hold_power: 0.10
   c_left_magna:
     number: e- 13
-    default_pulse_ms: 100ms
-    default_hold_power: 0.1
-
+    default_pulse_ms: 70ms
+    default_hold_power: 0.10
 
  # Plunger & Trough
   c_plunger:

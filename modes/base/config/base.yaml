@@ -43,7 +43,7 @@ show_player:
 light_player: 
   mode_base_started: 
     GI: 
-      color: ffffff
+      color: ffffff%75
 
 
 
