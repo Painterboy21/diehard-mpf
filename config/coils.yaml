@@ -30,11 +30,11 @@ coils:
     allow_enable: true
 
   # Magnets
-  c_right_magna:
+  c_left_magna:
     number: e- 12
     default_pulse_ms: 100ms
     default_hold_power: 0.375
-  c_left_magna:
+  c_right_magna:
     number: e- 13
     default_pulse_ms: 100ms
     default_hold_power: 0.375
