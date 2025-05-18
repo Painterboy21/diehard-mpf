@@ -145,15 +145,16 @@ lights:
     subtype: led
     type: rgb
   #r_police:
-  l82:
+  f141:
     number: playfield-1-28
     subtype: led
     type: rgb
   #r_sling:
-  l83:  
+  l105:  
     number: playfield-1-29
     subtype: led
     type: rgb
+    tags: GI
   #r_guide2:
   l108:
     number: playfield-1-30
@@ -313,12 +314,13 @@ lights:
     subtype: led
     type: rgb
   #l_sling:
-  l81:
+  l103:
     number: playfield-2-27
     subtype: led
     type: grb
+    tags: GI
   #l_police:
-  l80:
+  f140:
     number: playfield-2-28
     subtype: led
     type: rgb
@@ -499,26 +501,27 @@ lights:
 #port4
 
 #still to do maybe
+
 #left police reverse lights
-  l103:
+  l81:
     number: playfield-4-1
     subtype: led
     type: rgb
     tags: GI
-#left police front lights
+#left sling gi
   l100:
     number: playfield-4-2
     subtype: led
     type: rgb
     tags: GI
 #right police reverse lights
-  l106:
+  l83:
     number: playfield-4-3
     subtype: led
     type: rgb
     tags: GI
-#right police front lights
-  l105:
+#r sling gi
+  l106:
     number: playfield-4-4
     subtype: led
     type: rgb
@@ -555,8 +558,8 @@ lights:
     number: playfield-4-10
     subtype: led
     type: rgb
-#right police flasher
-  f141:
+#right police front lights
+  l82:
     number: playfield-4-11
     subtype: led
     type: rgb
@@ -566,13 +569,10 @@ lights:
     subtype: led
     type: rgb
 #LEFT POLCIE CAR
-  f140:
+  l80:
     number: playfield-4-13
     subtype: led
     type: rgb
-
-
-
 
 
 #part of the lum boards
