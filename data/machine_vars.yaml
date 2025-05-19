@@ -13,4 +13,16 @@ master_volume:
 player1_score:
   expire: null
   expire_secs: null
+  value: 30300
+player2_score:
+  expire: null
+  expire_secs: null
+  value: 224220
+player3_score:
+  expire: null
+  expire_secs: null
   value: 0
+player4_score:
+  expire: null
+  expire_secs: null
+  value: 6060
