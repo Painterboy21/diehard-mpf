@@ -145,7 +145,7 @@ lights:
     subtype: led
     type: rgb
   #r_police:
-  f141:
+  f140:
     number: playfield-1-28
     subtype: led
     type: rgb
@@ -320,7 +320,7 @@ lights:
     type: grb
     tags: GI
   #l_police:
-  f140:
+  f141:
     number: playfield-2-28
     subtype: led
     type: rgb
@@ -360,9 +360,7 @@ lights:
   l138:
     number: playfield-3-2
     subtype: led
-    type: rgb
-    tags: GI
-  #under_right_bumper_plastic
+    type: rgb  #under_right_bumper_plastic
   l119:
     number: playfield-3-3
     subtype: led
@@ -587,6 +585,7 @@ lights:
     number: playfield-4-15
     subtype: led
     type: rgb
+    tags: GI
   #l138-l130 FP LUM RGB BOARD
   #Left-Right Pop Bumpers
   l130:
