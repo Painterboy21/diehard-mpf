@@ -1,59 +1,72 @@
 events:
-  game_ended: 10
-  game_started: 58
+  game_ended: 11
+  game_started: 61
 missing_switches:
-  s_AirDuctEnter001: 12
-  s_airplane: 7
-  s_bottom_left_inner_drain: 4
-  s_bottom_left_outer_drain: 7
+  s_AirDuctEnter001: 15
+  s_airplane: 1
+  s_bottom_left_inner_drain: 7
+  s_bottom_left_outer_drain: 10
   s_bottom_right_inner_drain: 1
-  s_bottom_right_outer_drain: 4
+  s_bottom_right_outer_drain: 7
+  s_bottom_right_vuk: 1
   s_door: 1
-  s_door_tilt: 3
+  s_door_tilt: 1
   s_drop_target_1: 1
   s_drop_target_2: 1
   s_drop_target_3: 1
-  s_enter: 58
-  s_escape: 58
-  s_highvuk: 4
-  s_holly_h: 58
-  s_holly_l: 4
-  s_holly_l_1: 10
-  s_holly_o: 4
-  s_holly_y: 5
-  s_left_coin: 58
+  s_enter: 61
+  s_escape: 61
+  s_highvuk: 1
+  s_holly_h: 61
+  s_holly_l: 1
+  s_holly_l_1: 1
+  s_holly_o: 1
+  s_holly_y: 8
+  s_left spinner: 1
+  s_left_coin: 61
   s_left_flipper: 1
   s_left_flipper_eos: 1
   s_left_inlane: 24
   s_left_magna: 1
+  s_left_orbit: 1
   s_left_outlane: 24
-  s_left_top_target: 4
-  s_middle_top_target: 4
-  s_minus: 58
-  s_nakatomi: 4
-  s_plus: 58
-  s_popbumper_left: 4
+  s_left_sling: 1
+  s_left_top_target: 1
+  s_middle_top_target: 1
+  s_minus: 61
+  s_nakatomi: 1
+  s_plus: 61
+  s_popbumper_left: 1
   s_popbumper_right: 1
   s_right spinner: 1
-  s_right_coin: 58
+  s_right_coin: 61
   s_right_flipper: 1
   s_right_flipper_eos: 1
   s_right_inlane: 24
   s_right_magna: 1
   s_right_orbit: 1
   s_right_outlane: 24
-  s_right_top_target: 12
-  s_safe_vuk: 4
+  s_right_sling: 1
+  s_right_top_target: 1
+  s_safe_vuk: 1
+  s_start: 3
   s_target_2: 24
   s_target_3: 24
-  s_tilt_bob: 58
+  s_tilt_bob: 61
   s_top_flipper_eos: 1
   s_top_flipper_hold: 24
+  s_trough2: 1
+  s_trough3: 1
+  s_trough4: 1
+  s_trough5: 1
+  s_trough6: 1
+  s_tunel_vuk: 1
 player:
   score:
-    average: 1730
+    average: 3836
     top:
     - 224220
+    - 33330
     - 30300
     - 6060
     - 0
@@ -62,70 +75,69 @@ player:
     - 0
     - 0
     - 0
-    - 0
-    total: 14
+    total: 15
 switches:
   s_AirDuctEnter001: 8
-  s_airplane: 22
+  s_airplane: 24
   s_bottom_left_inner_drain: 72
   s_bottom_left_outer_drain: 71
-  s_bottom_right_inner_drain: 105
+  s_bottom_right_inner_drain: 108
   s_bottom_right_outer_drain: 298
-  s_bottom_right_vuk: 1519
-  s_door: 48
-  s_door_tilt: 85
-  s_drop_target_1: 72
-  s_drop_target_2: 63
-  s_drop_target_3: 72
+  s_bottom_right_vuk: 1530
+  s_door: 49
+  s_door_tilt: 88
+  s_drop_target_1: 74
+  s_drop_target_2: 65
+  s_drop_target_3: 73
   s_enter: 0
   s_escape: 0
-  s_fire: 100
-  s_highvuk: 51
+  s_fire: 103
+  s_highvuk: 54
   s_holly_h: 0
-  s_holly_l: 117
-  s_holly_l_1: 91
-  s_holly_o: 112
+  s_holly_l: 119
+  s_holly_l_1: 93
+  s_holly_o: 114
   s_holly_y: 43
-  s_left spinner: 731
+  s_left spinner: 749
   s_left_coin: 0
-  s_left_flipper: 915
-  s_left_flipper_eos: 873
+  s_left_flipper: 955
+  s_left_flipper_eos: 912
   s_left_inlane: 0
-  s_left_magna: 321
-  s_left_orbit: 186
+  s_left_magna: 323
+  s_left_orbit: 194
   s_left_outlane: 0
-  s_left_sling: 285
-  s_left_top_target: 54
-  s_middle_top_target: 33
+  s_left_sling: 287
+  s_left_top_target: 62
+  s_middle_top_target: 36
   s_minus: 0
-  s_nakatomi: 151
-  s_plunger_lane: 109
+  s_nakatomi: 156
+  s_plunger_lane: 115
   s_plus: 0
-  s_popbumper_left: 176
-  s_popbumper_right: 269
-  s_right spinner: 87
+  s_popbumper_left: 195
+  s_popbumper_right: 292
+  s_right spinner: 88
   s_right_coin: 0
-  s_right_flipper: 1083
-  s_right_flipper_eos: 1045
+  s_right_flipper: 1113
+  s_right_flipper_eos: 1075
   s_right_inlane: 0
-  s_right_magna: 256
-  s_right_orbit: 176
+  s_right_magna: 261
+  s_right_orbit: 178
   s_right_outlane: 0
-  s_right_sling: 289
-  s_right_top_target: 25
-  s_safe_vuk: 91
+  s_right_sling: 298
+  s_right_top_target: 29
+  s_safe_vuk: 94
   s_start: 46
   s_target_2: 0
   s_target_3: 0
   s_tilt_bob: 0
-  s_top_flipper_eos: 875
+  s_top_flipper_eos: 914
   s_top_flipper_hold: 0
-  s_trough1: 145
-  s_trough2: 75
-  s_trough3: 73
-  s_trough4: 73
-  s_trough5: 63
-  s_trough6: 63
-  s_trough_jam: 104
-  s_tunel_vuk: 159
+  s_trough1: 153
+  s_trough2: 79
+  s_trough3: 77
+  s_trough4: 77
+  s_trough5: 67
+  s_trough6: 67
+  s_trough_jam: 110
+  s_tunel_vuk: 164
   swPlunger: 16
