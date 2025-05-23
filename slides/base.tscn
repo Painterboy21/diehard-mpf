@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bdtc8n1dcqqqh"]
+[gd_scene load_steps=10 format=3 uid="uid://bdtc8n1dcqqqh"]
 
 [ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_b71wd"]
 [ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="2_06ewq"]
@@ -7,6 +7,8 @@
 [ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="5_6vrr4"]
 [ext_resource type="Texture2D" uid="uid://vd5pjb0eda5w" path="res://godot-media/images/player 1 overlay.png" id="5_qjsot"]
 [ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="7_smx5b"]
+[ext_resource type="Texture2D" uid="uid://u6iaowdk2wvk" path="res://godot-media/images/hollywhite.png" id="8_r8cgk"]
+[ext_resource type="Texture2D" uid="uid://5pnjd8thyqqs" path="res://godot-media/images/Bullets/bulletcount.png" id="9_20xw8"]
 
 [node name="Base" type="Control"]
 layout_mode = 3
@@ -35,7 +37,7 @@ expand = true
 script = ExtResource("4_qjsot")
 metadata/_custom_type_script = "uid://b7btpuu3qlkyc"
 
-[node name="TextureRect" type="TextureRect" parent="AspectRatioContainer"]
+[node name="score_overlay" type="TextureRect" parent="AspectRatioContainer"]
 layout_mode = 2
 texture = ExtResource("5_qjsot")
 expand_mode = 1
@@ -53,8 +55,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -49.0
-offset_bottom = -49.0
+offset_top = -98.0
+offset_bottom = -98.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
@@ -74,8 +76,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -135.625
-offset_bottom = -85.625
+offset_top = -261.67
+offset_bottom = -211.67
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 0
@@ -103,12 +105,12 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -55.0
-offset_right = 236.0
+offset_top = -112.0
+offset_right = 554.0
 grow_vertical = 0
 size_flags_horizontal = 0
 theme = ExtResource("5_6vrr4")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 60
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -118,3 +120,11 @@ variable_type = 4
 variable_name = "score"
 comma_separate = true
 metadata/_custom_type_script = "uid://bojo76gkx41ow"
+
+[node name="Hollywhite" type="Sprite2D" parent="."]
+position = Vector2(160, 823)
+texture = ExtResource("8_r8cgk")
+
+[node name="Bulletcount" type="Sprite2D" parent="."]
+position = Vector2(1743.19, 823)
+texture = ExtResource("9_20xw8")

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dnfxt4jon43vt"]
+[gd_scene load_steps=3 format=3 uid="uid://dnfxt4jon43vt"]
 
 [ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_r1mnt"]
+[ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="2_m2s46"]
 
 [node name="Attract" type="Control"]
 layout_mode = 3
@@ -12,13 +13,15 @@ grow_vertical = 2
 script = ExtResource("1_r1mnt")
 metadata/_custom_type_script = "uid://cdwas3gbf7w3g"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="Label" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "DIE HARD PINBALL"
+theme = ExtResource("2_m2s46")
+text = "DIE HARD TRILOGY PINBALL
+"
 horizontal_alignment = 1
 vertical_alignment = 1
