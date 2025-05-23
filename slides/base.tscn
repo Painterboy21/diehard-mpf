@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdtc8n1dcqqqh"]
+[gd_scene load_steps=8 format=3 uid="uid://bdtc8n1dcqqqh"]
 
 [ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_b71wd"]
 [ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="2_06ewq"]
+[ext_resource type="VideoStream" path="res://videos/DieHardBackground.ogv" id="3_myvl5"]
+[ext_resource type="Script" uid="uid://b7btpuu3qlkyc" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="4_qjsot"]
+[ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="5_6vrr4"]
+[ext_resource type="Texture2D" uid="uid://vd5pjb0eda5w" path="res://godot-media/images/player 1 overlay.png" id="5_qjsot"]
+[ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="7_smx5b"]
 
 [node name="Base" type="Control"]
 layout_mode = 3
@@ -13,18 +18,103 @@ grow_vertical = 2
 script = ExtResource("1_b71wd")
 metadata/_custom_type_script = "uid://cdwas3gbf7w3g"
 
-[node name="MPFVariable" type="Label" parent="."]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 106
+ratio = 1.777
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="AspectRatioContainer"]
+layout_mode = 2
+stream = ExtResource("3_myvl5")
+autoplay = true
+expand = true
+script = ExtResource("4_qjsot")
+metadata/_custom_type_script = "uid://b7btpuu3qlkyc"
+
+[node name="TextureRect" type="TextureRect" parent="AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("5_qjsot")
+expand_mode = 1
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="main_score" type="Label" parent="Control2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -49.0
+offset_bottom = -49.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+theme = ExtResource("5_6vrr4")
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
+clip_text = true
 script = ExtResource("2_06ewq")
+variable_name = "score"
+comma_separate = true
+metadata/_custom_type_script = "uid://bojo76gkx41ow"
+
+[node name="current_ball" type="Label" parent="Control2"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -135.625
+offset_bottom = -85.625
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("7_smx5b")
+text = "Ball 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("2_06ewq")
+variable_name = "ball"
+comma_separate = true
+template_string = "Ball %s"
+metadata/_custom_type_script = "uid://bojo76gkx41ow"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -100.0
+grow_vertical = 0
+
+[node name="player_1_score" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -55.0
+offset_right = 236.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("5_6vrr4")
+theme_override_font_sizes/font_size = 30
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("2_06ewq")
+variable_type = 4
 variable_name = "score"
 comma_separate = true
 metadata/_custom_type_script = "uid://bojo76gkx41ow"
