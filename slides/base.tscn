@@ -34,6 +34,7 @@ layout_mode = 2
 stream = ExtResource("3_myvl5")
 autoplay = true
 expand = true
+loop = true
 script = ExtResource("4_qjsot")
 metadata/_custom_type_script = "uid://b7btpuu3qlkyc"
 

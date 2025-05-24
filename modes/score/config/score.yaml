@@ -16,6 +16,11 @@ variable_player:
       action: add
       int: 3030
 
+  holly_targets_hit: 
+    score: 
+      action: add
+      int: 5000
+
 
 
 
