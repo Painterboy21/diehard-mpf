@@ -178,6 +178,7 @@ machine_vars:
 modes:
   - base
   - score
+  - holly
 
 machine:
     balls_installed: 6

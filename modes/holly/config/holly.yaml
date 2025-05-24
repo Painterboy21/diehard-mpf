@@ -1,0 +1,33 @@
+#config_version=6
+
+mode:
+  start_events: ball_started
+  stop_events: ball_ended
+  priority: 110
+
+shots: 
+  holly_h:
+    switch: s_holly_h
+    show_tokens: 
+      lights: l30
+      color: de780b
+    profile: profile_holly
+    start_enabled: True
+
+shot_groups: 
+  holly_targets:
+    shots: holly_h
+
+show_player: 
+  holly_h_hit: 
+    flicker_color: 
+      key: key_holly_h_hit
+      priority: 1
+      loops: 2
+      speed: 2
+      show_tokens: 
+        lights: l30
+        color: de780b
+
+
+

@@ -5,60 +5,63 @@ mode:
   stop_events: ball_ended
   priority: 100
 
-show_player:
-  flash_left_sling_red:
-    flicker_color:
+show_player: 
+  flash_left_sling_red: 
+    flicker_color: 
       key: key_s_left_sling_active
       loops: 0
       speed: 2
-      show_tokens:
+      show_tokens: 
         lights: f141
         color: C81616
-  flash_left_sling_blue:
-    flicker_color:
+  flash_left_sling_blue: 
+    flicker_color: 
       key: key_s_left_sling_active
       loops: 0
       speed: 2
-      show_tokens:
+      show_tokens: 
         lights: f141
         color: 1616FF
-  flash_right_sling_red:
-    flicker_color:
+  flash_right_sling_red: 
+    flicker_color: 
       key: key_s_right_sling_active
       loops: 0
       speed: 2
-      show_tokens:
+      show_tokens: 
         lights: f140
         color: C81616
-  flash_right_sling_blue:
-    flicker_color:
+  flash_right_sling_blue: 
+    flicker_color: 
       key: key_s_right_sling_active
       loops: 0
       speed: 2
-      show_tokens:
+      show_tokens: 
         lights: f140
         color: 1616FF
 
 
-light_player:
-  mode_base_started:
-    GI:
-      color: ffffff%75
+light_player: 
+  mode_base_started: 
+    GI: 
+      color: ffffff
 
 
 
-slide_player:
-  mode_base_started:
+slide_player: 
+  mode_base_started: 
     base:
       action: play
 
 
-random_event_player:
-  s_left_sling_active:
+random_event_player: 
+  s_left_sling_active: 
     events:
       flash_left_sling_red: 1
       flash_left_sling_blue: 1
-  s_right_sling_active:
+  s_right_sling_active: 
     events:
       flash_right_sling_red: 1
       flash_right_sling_blue: 1
+
+
+
