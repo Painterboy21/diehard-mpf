@@ -89,9 +89,9 @@ switches:
 
  # Holly Switches
   s_holly_h:
-    number: e-4
-  s_holly_o:
     number: e-1
+  s_holly_o:
+    number: e-4
   s_holly_l:
     number: e-0
   s_holly_l1:
