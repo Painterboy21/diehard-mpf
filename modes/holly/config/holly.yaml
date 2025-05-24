@@ -13,10 +13,38 @@ shots:
       color: de780b
     profile: profile_holly
     start_enabled: True
+  holly_o:
+    switch: s_holly_o
+    show_tokens: 
+      lights: l31
+      color: de780b
+    profile: profile_holly
+    start_enabled: True
+  holly_l:
+    switch: s_holly_l
+    show_tokens: 
+      lights: l32
+      color: de780b
+    profile: profile_holly
+    start_enabled: True
+  holly_l1:
+    switch: s_holly_l1
+    show_tokens: 
+      lights: l33
+      color: de780b
+    profile: profile_holly
+    start_enabled: True
+  holly_y:
+    switch: s_holly_y
+    show_tokens: 
+      lights: l34
+      color: de780b
+    profile: profile_holly
+    start_enabled: True
 
 shot_groups: 
   holly_targets:
-    shots: holly_h
+    shots: holly_h,holly_o,holly_l,holly_l1,holly_y
 
 show_player: 
   holly_h_hit: 
@@ -27,6 +55,42 @@ show_player:
       speed: 2
       show_tokens: 
         lights: l30
+        color: de780b
+  holly_o_hit: 
+    flicker_color: 
+      key: key_holly_o_hit
+      priority: 1
+      loops: 2
+      speed: 2
+      show_tokens: 
+        lights: l31
+        color: de780b
+  holly_l_hit: 
+    flicker_color: 
+      key: key_holly_l_hit
+      priority: 1
+      loops: 2
+      speed: 2
+      show_tokens: 
+        lights: l32
+        color: de780b
+  holly_l1_hit: 
+    flicker_color: 
+      key: key_holly_l1_hit
+      priority: 1
+      loops: 2
+      speed: 2
+      show_tokens: 
+        lights: l33
+        color: de780b
+  holly_y_hit: 
+    flicker_color: 
+      key: key_holly_y_hit
+      priority: 1
+      loops: 2
+      speed: 2
+      show_tokens: 
+        lights: l34
         color: de780b
 
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_b71wd"]
 [ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="2_06ewq"]
-[ext_resource type="VideoStream" uid="uid://cjtilmeoljhw" path="res://videos/DieHardBackground.ogv" id="3_myvl5"]
+[ext_resource type="VideoStream" path="res://videos/DieHardBackground.ogv" id="3_myvl5"]
 [ext_resource type="Script" uid="uid://b7btpuu3qlkyc" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="4_qjsot"]
 [ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="5_6vrr4"]
 [ext_resource type="Texture2D" uid="uid://vd5pjb0eda5w" path="res://godot-media/images/player 1 overlay.png" id="5_qjsot"]
