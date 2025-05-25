@@ -132,6 +132,12 @@ switches:
     number: d-16
   s_right_orbit:
     number: d-19
+  s_left_orbit2:
+    number: f-4
+  s_right_orbit2:
+    number: f-5
+  s_mid_orbit:
+    number: f-6
 
 
  # Top Targets
@@ -168,3 +174,8 @@ switches:
   s_AirDuctEnter001: #And AirDuct002
     number:  f-3
     type: 'NC'
+
+
+# Upper Playfeild switches
+  s_upper_pf_entrance:
+    number: f-7
