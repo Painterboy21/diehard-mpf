@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdtc8n1dcqqqh"]
+[gd_scene load_steps=15 format=3 uid="uid://bdtc8n1dcqqqh"]
 
 [ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_b71wd"]
 [ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="2_06ewq"]
@@ -9,6 +9,11 @@
 [ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="7_smx5b"]
 [ext_resource type="Texture2D" uid="uid://u6iaowdk2wvk" path="res://godot-media/images/hollywhite.png" id="8_r8cgk"]
 [ext_resource type="Texture2D" uid="uid://5pnjd8thyqqs" path="res://godot-media/images/Bullets/bulletcount.png" id="9_20xw8"]
+[ext_resource type="Script" uid="uid://bh8uniugrpk3c" path="res://slides/holly_letters.gd" id="10_4yxvp"]
+[ext_resource type="Texture2D" uid="uid://4nwhx8a6aa2k" path="res://godot-media/images/H.png" id="10_s2a5r"]
+[ext_resource type="Texture2D" uid="uid://bhbhhixecufkm" path="res://godot-media/images/O.png" id="11_4yxvp"]
+[ext_resource type="Texture2D" uid="uid://bwewyxiybbn4v" path="res://godot-media/images/L.png" id="12_dm14r"]
+[ext_resource type="Texture2D" uid="uid://cressohe110by" path="res://godot-media/images/Y.png" id="13_735fb"]
 
 [node name="Base" type="Control"]
 layout_mode = 3
@@ -129,3 +134,37 @@ texture = ExtResource("8_r8cgk")
 [node name="Bulletcount" type="Sprite2D" parent="."]
 position = Vector2(1743.19, 823)
 texture = ExtResource("9_20xw8")
+
+[node name="HollyLetters" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_4yxvp")
+
+[node name="H" type="Sprite2D" parent="HollyLetters"]
+position = Vector2(130.5, 822.763)
+scale = Vector2(0.140065, 0.109528)
+texture = ExtResource("10_s2a5r")
+
+[node name="O" type="Sprite2D" parent="HollyLetters"]
+position = Vector2(175, 823)
+scale = Vector2(0.147368, 0.107018)
+texture = ExtResource("11_4yxvp")
+
+[node name="L" type="Sprite2D" parent="HollyLetters"]
+position = Vector2(211.919, 821.967)
+scale = Vector2(0.138727, 0.103263)
+texture = ExtResource("12_dm14r")
+
+[node name="L1" type="Sprite2D" parent="HollyLetters"]
+position = Vector2(242.094, 822)
+scale = Vector2(0.137007, 0.103201)
+texture = ExtResource("12_dm14r")
+
+[node name="Y" type="Sprite2D" parent="HollyLetters"]
+position = Vector2(266.5, 822)
+scale = Vector2(0.134868, 0.103093)
+texture = ExtResource("13_735fb")
