@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bdtc8n1dcqqqh"]
+[gd_scene load_steps=31 format=3 uid="uid://bdtc8n1dcqqqh"]
 
 [ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_b71wd"]
 [ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="2_06ewq"]
@@ -14,6 +14,22 @@
 [ext_resource type="Texture2D" uid="uid://bhbhhixecufkm" path="res://godot-media/images/O.png" id="11_4yxvp"]
 [ext_resource type="Texture2D" uid="uid://bwewyxiybbn4v" path="res://godot-media/images/L.png" id="12_dm14r"]
 [ext_resource type="Texture2D" uid="uid://cressohe110by" path="res://godot-media/images/Y.png" id="13_735fb"]
+[ext_resource type="Script" uid="uid://bgeule32t4s3l" path="res://slides/bullets.gd" id="15_gvfig"]
+[ext_resource type="Texture2D" uid="uid://gkh6n4enyr3g" path="res://godot-media/images/Bullets/1bullets.png" id="15_ovcnp"]
+[ext_resource type="Texture2D" uid="uid://bvwgxq2sbriv7" path="res://godot-media/images/Bullets/2bullets.png" id="16_gvfig"]
+[ext_resource type="Texture2D" uid="uid://b5iw8du4545h0" path="res://godot-media/images/Bullets/3bullets.png" id="17_6vceq"]
+[ext_resource type="Texture2D" uid="uid://bsqq8i8yh5g74" path="res://godot-media/images/Bullets/4bullets.png" id="18_yk3m8"]
+[ext_resource type="Texture2D" uid="uid://chgaavq2rpycp" path="res://godot-media/images/Bullets/5bullets.png" id="19_oj564"]
+[ext_resource type="Texture2D" uid="uid://bwx6cxh5fsytg" path="res://godot-media/images/Bullets/6bullets.png" id="20_ume64"]
+[ext_resource type="Texture2D" uid="uid://dx261iyjoe4c3" path="res://godot-media/images/Bullets/7bullets.png" id="21_gjonj"]
+[ext_resource type="Texture2D" uid="uid://dr7fpmqymhh3e" path="res://godot-media/images/Bullets/8bullets.png" id="22_77bry"]
+[ext_resource type="Texture2D" uid="uid://caqcfskecj3a6" path="res://godot-media/images/Bullets/9bullets.png" id="23_6wvah"]
+[ext_resource type="Texture2D" uid="uid://d4dl3t4a5jxbh" path="res://godot-media/images/Bullets/10bullets.png" id="24_tfc7s"]
+[ext_resource type="Texture2D" uid="uid://cgtdjynasa4e4" path="res://godot-media/images/Bullets/11bullets.png" id="25_qijxy"]
+[ext_resource type="Texture2D" uid="uid://csicj2ax4ftbb" path="res://godot-media/images/Bullets/12bullets.png" id="26_msdqq"]
+[ext_resource type="Texture2D" uid="uid://cctfel4ns3l4b" path="res://godot-media/images/Bullets/13bullets.png" id="27_lcr4l"]
+[ext_resource type="Texture2D" uid="uid://d8u5r030gaq3" path="res://godot-media/images/Bullets/14bullets.png" id="28_30m72"]
+[ext_resource type="Texture2D" uid="uid://bqijhm3y30014" path="res://godot-media/images/Bullets/15bullets.png" id="29_iya4i"]
 
 [node name="Base" type="Control"]
 layout_mode = 3
@@ -168,3 +184,84 @@ texture = ExtResource("12_dm14r")
 position = Vector2(266.5, 822)
 scale = Vector2(0.134868, 0.103093)
 texture = ExtResource("13_735fb")
+
+[node name="bullets" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("15_gvfig")
+
+[node name="1Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("15_ovcnp")
+
+[node name="2Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("16_gvfig")
+
+[node name="3Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("17_6vceq")
+
+[node name="4Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("18_yk3m8")
+
+[node name="5Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("19_oj564")
+
+[node name="6Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("20_ume64")
+
+[node name="7Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("21_gjonj")
+
+[node name="8Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("22_77bry")
+
+[node name="9Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("23_6wvah")
+
+[node name="10Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("24_tfc7s")
+
+[node name="11Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("25_qijxy")
+
+[node name="12Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("26_msdqq")
+
+[node name="13Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("27_lcr4l")
+
+[node name="14Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("28_30m72")
+
+[node name="15Bullets" type="Sprite2D" parent="bullets"]
+position = Vector2(1806.06, 435.58)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("29_iya4i")
