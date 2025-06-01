@@ -58,7 +58,7 @@ coils:
     default_pulse_ms: 20ms
   c_bottom_right_vuk_eject:
     number: e-9
-    default_pulse_ms: 80ms
+    default_pulse_ms: 95ms
   c_tunel_vuk_eject:
     number: e-11
     default_pulse_ms: 30ms

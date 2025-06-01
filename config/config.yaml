@@ -159,12 +159,12 @@ servos:
   servo1:
     number: playfield-1
     platform_settings:
-      min_us: 300
-      home_us: 300
-      max_us: 2550
+      min_us: 500
+      max_us: 2500
+      max_runtime: 3s
     positions:
-      0: s_bottom_right_outer_drain_active
-      1: s_bottom_right_inner_drain_active
+      0.1: s_bottom_right_outer_drain_active
+      0.99: s_bottom_right_inner_drain_active
 
 
 
