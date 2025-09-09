@@ -95,10 +95,10 @@ switches:
 
 
  # Slings
-  s_left_sling:
+  s_left_slingshot:
     number: d-18
     tags: left_slingshot
-  s_right_sling:
+  s_right_slingshot:
     number: d-19
     tags: right_slingshot
 

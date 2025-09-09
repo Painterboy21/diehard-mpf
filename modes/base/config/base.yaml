@@ -8,7 +8,7 @@ mode:
 show_player: 
   flash_left_slingshot_red: 
     flicker_color: 
-      key: key_s_left_sling_active
+      key: key_s_left_slingshot_active
       loops: 0
       speed: 2
       show_tokens: 
@@ -16,7 +16,7 @@ show_player:
         color: C81616
   flash_left_slingshot_blue: 
     flicker_color: 
-      key: key_s_left_sling_active
+      key: key_s_left_slingshot_active
       loops: 0
       speed: 2
       show_tokens: 

@@ -2,10 +2,10 @@
 
 coils:
  # Slingshots
-  c_left_sling:
+  c_left_slingshot:
     number: d-7
     default_pulse_ms: 20ms
-  c_right_sling:
+  c_right_slingshot:
     number: d-6
     default_pulse_ms: 20ms
 
@@ -60,6 +60,12 @@ coils:
   c_reset_drop_target_vault:
     number: e-2
     default_pulse_ms: 80ms
+
+ # push drop targets 12v
+  c_push_drop_target_nakatomi:
+    number: f-13
+  c_push_drop_target_vault:
+    number: f-14
 
 
  # Vuks
