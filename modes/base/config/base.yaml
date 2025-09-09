@@ -6,7 +6,7 @@ mode:
   priority: 100
 
 show_player: 
-  flash_left_sling_red: 
+  flash_left_slingshot_red: 
     flicker_color: 
       key: key_s_left_sling_active
       loops: 0
@@ -14,7 +14,7 @@ show_player:
       show_tokens: 
         lights: f141
         color: C81616
-  flash_left_sling_blue: 
+  flash_left_slingshot_blue: 
     flicker_color: 
       key: key_s_left_sling_active
       loops: 0
@@ -22,7 +22,7 @@ show_player:
       show_tokens: 
         lights: f141
         color: 1616FF
-  flash_right_sling_red: 
+  flash_right_slingshot_red: 
     flicker_color: 
       key: key_s_right_slingshot_active
       loops: 0
@@ -30,7 +30,7 @@ show_player:
       show_tokens: 
         lights: f140
         color: C81616
-  flash_right_sling_blue: 
+  flash_right_slingshot_blue: 
     flicker_color: 
       key: key_s_right_slingshot_active
       loops: 0
@@ -56,8 +56,8 @@ slide_player:
 random_event_player: 
   s_left_slingshot_active: 
     events:
-      flash_left_sling_red: 1
-      flash_left_sling_blue: 1
+      flash_left_slingshot_red: 1
+      flash_left_slingshot_blue: 1
   s_right_slingshot_active: 
     events:
       flash_right_slingshot_red: 1

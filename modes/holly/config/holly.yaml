@@ -6,35 +6,35 @@ mode:
   priority: 110
 
 shots: 
-  holly_h:
+  targeth:
     switch: s_targeth
     show_tokens: 
       lights: l30
       color: de780b
     profile: profile_holly
     start_enabled: True
-  holly_o:
+  targeto:
     switch: s_targeto
     show_tokens: 
       lights: l31
       color: de780b
     profile: profile_holly
     start_enabled: True
-  holly_l:
+  targetl:
     switch: s_targetl
     show_tokens: 
       lights: l32
       color: de780b
     profile: profile_holly
     start_enabled: True
-  holly_l2:
+  targetl2:
     switch: s_targetl2
     show_tokens: 
       lights: l33
       color: de780b
     profile: profile_holly
     start_enabled: True
-  holly_y:
+  targety:
     switch: s_targety
     show_tokens: 
       lights: l34
@@ -44,12 +44,12 @@ shots:
 
 shot_groups: 
   holly_targets:
-    shots: holly_h,holly_o,holly_l,holly_l2,holly_y
+    shots: targeth,targeto,targetl,targetl2,targety
 
 show_player: 
   holly_h_hit: 
     flicker_color: 
-      key: key_holly_h_hit
+      key: key_targeth_hit
       priority: 1
       loops: 2
       speed: 2
@@ -58,7 +58,7 @@ show_player:
         color: de780b
   holly_o_hit: 
     flicker_color: 
-      key: key_holly_o_hit
+      key: key_targeto_hit
       priority: 1
       loops: 2
       speed: 2
@@ -67,7 +67,7 @@ show_player:
         color: de780b
   holly_l_hit: 
     flicker_color: 
-      key: key_holly_l_hit
+      key: key_targetl_hit
       priority: 1
       loops: 2
       speed: 2
@@ -76,7 +76,7 @@ show_player:
         color: de780b
   holly_l1_hit: 
     flicker_color: 
-      key: key_holly_l2_hit
+      key: key_targetl2_hit
       priority: 1
       loops: 2
       speed: 2
@@ -85,7 +85,7 @@ show_player:
         color: de780b
   holly_y_hit: 
     flicker_color: 
-      key: key_holly_y_hit
+      key: key_targety_hit
       priority: 1
       loops: 2
       speed: 2
