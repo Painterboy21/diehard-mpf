@@ -22,11 +22,6 @@ fast:
           model: FP-I/O-1616
           order: 4
 
-  exp:
-    port: COM3
-    boards:
-      playfield:
-        model: FP-EXP-0071
 
 
 
@@ -137,11 +132,11 @@ drop_target_banks:
   bank1:
     drop_targets: bank4
     reset_coils: c_reset_drop_target_nakotomi
-    reset_on_complete: 1s
+    reset_on_complete: 4s
   bank2:
     drop_targets: bank5
     reset_coils: c_reset_drop_target_vault
-    reset_on_complete: 3s
+    reset_on_complete: 1s
 
 
 autofire_coils:
@@ -176,17 +171,7 @@ magnets:
     enable_events: ball_started
     release_ball_events: s_trmagr_inactive
 
-servos:
-  servo1:
-    number: playfield-4
-    platform_settings:
-      min_us: 700
-      max_us: 2500
-      home_us: 500
-      max_runtime: 3s
-    positions:
-      0.1: s_targeto_active
-      0.90: s_targeth_active
+
 
 
 machine_vars:

@@ -89,10 +89,13 @@ switches:
  # Nakatomi Lock Drop Target
   s_push_drop_target_4:
     number: e-6
+ # Nakatomi Lock ball count
+  s_nakatomi_lock_ball_count:
+    number: f-10
+    type: 'NC'
  # Safe Lock Drop Target
   s_push_drop_target_5:
     number: d-3
-
 
  # Slings
   s_left_slingshot:
@@ -120,7 +123,7 @@ switches:
   s_swleftorb2:
     number: f-0
   s_swmidorb:
-    number: e-15
+    number: e-13
 
  # Top Targets
   s_target002:
@@ -154,7 +157,7 @@ switches:
   s_spinnerleft:
     number: d-5
   s_spinnerright:
-    number: e-13
+    number: e-15
 
 
  # airplane
