@@ -12,13 +12,13 @@ coils:
  # Flippers
   c_left_flipper_main:
     number: d-3
-    default_pulse_ms: 50ms
+    default_pulse_ms: 30ms
   c_left_flipper_hold:
     number: d-2
     allow_enable: true
   c_left_top_flipper_main:
     number: e-4
-    default_pulse_ms: 40ms
+    default_pulse_ms: 50ms
   c_left_top_flipper_hold:
     number: e-3
     allow_enable: true 
@@ -33,16 +33,16 @@ coils:
   c_trmagr:
     number: e-15
     default_pulse_ms: 90ms
-    default_hold_power: 0.10
+    default_hold_power: 0.12
   c_trmagl:
     number: e-14
     default_pulse_ms: 90ms
-    default_hold_power: 0.10
+    default_hold_power: 0.12
 
  # Plunger & Trough
   c_plunger:
     number: d-0
-    default_pulse_ms: 20ms
+    default_pulse_ms: 40ms
   c_trough_eject:
     number: d-1
     default_pulse_ms: 20ms
@@ -74,13 +74,13 @@ coils:
     default_pulse_ms: 95ms
   c_UrampUp001_eject:
     number: e-9
-    default_pulse_ms: 50ms
+    default_pulse_ms: 80ms
   c_rightvuk_eject:
     number: e-13
     default_pulse_ms: 20ms
   c_towervuk_eject:
     number: e-0
-    default_pulse_ms: 15ms
+    default_pulse_ms: 80ms
   c_kickervault1_eject:
     number: e-6
     default_pulse_ms: 60ms
@@ -97,6 +97,7 @@ coils:
   c_captivetarget:
     number: e-11
     default_pulse_ms: 30ms
+
 
  # Lights
   c_cab_start_button:
