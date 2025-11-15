@@ -1,0 +1,10 @@
+2025-11-15 16:49:10,719 : INFO : root : Loading config.
+2025-11-15 16:49:10,721 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2025-11-15 16:49:10,721 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\46a2264aace4dc9247b28883ea729273.mpf_cache
+2025-11-15 16:49:10,721 : WARNING : ConfigProcessor : Config file in cache changed: C:\Users\finis\diehard-mpf\config\lights.yaml
+2025-11-15 16:49:10,721 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\mpf\Lib\site-packages\mpf\mpfconfig.yaml.
+2025-11-15 16:49:10,731 : INFO : ConfigProcessor : Loading config: C:\Users\finis\mpf\Lib\site-packages\mpf\mpfconfig.yaml
+2025-11-15 16:49:10,731 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\diehard-mpf\config\config.yaml.
+2025-11-15 16:49:10,733 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\config\config.yaml
+2025-11-15 16:49:10,735 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\config\ball_devices.yaml
+2025-11-15 16:49:10,736 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\config\coils.yaml
