@@ -1,0 +1,100 @@
+2025-11-15 16:53:27,609 : INFO : root : Loading config.
+2025-11-15 16:53:27,611 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2025-11-15 16:53:27,611 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\46a2264aace4dc9247b28883ea729273.mpf_cache
+2025-11-15 16:53:27,669 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\7a912b2511d42635e0b426a52fd16cc1.mpf_cache
+2025-11-15 16:53:27,669 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\846fbc79a2a788b1cf5d5d816f13713f.mpf_cache
+2025-11-15 16:53:27,670 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\7a912b2511d42635e0b426a52fd16cc1.mpf_cache
+2025-11-15 16:53:27,670 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\771489ba91bf1192210b19104700c5d3.mpf_cache
+2025-11-15 16:53:27,670 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\46e23fa43ebcbad0058dff2ccd1749db.mpf_cache
+2025-11-15 16:53:27,670 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\4b672ce255959e7c9d79f5c0592d724e.mpf_cache
+2025-11-15 16:53:27,671 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\e56caea5064b88beeafa152aec070b7d.mpf_cache
+2025-11-15 16:53:27,672 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\9e3f944bf38390c8870a73dddcf76b67.mpf_cache
+2025-11-15 16:53:27,672 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\4bf8b529c69b45d37a3cfe4b57c83b44.mpf_cache
+2025-11-15 16:53:27,672 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\363f67c1c91992cd991e35986d72087d.mpf_cache
+2025-11-15 16:53:27,672 : INFO : Machine : Mission Pinball Framework Core Engine v0.80.0.dev11
+2025-11-15 16:53:27,672 : INFO : Machine : Command line arguments: {'no_load_cache': False, 'create_config_cache': True, 'bcp': False, 'configfile': ['config.yaml'], 'force_assets_load': False, 'platform_integration_test': False, 'jsonlogging': False, 'logfile': 'logs\\2025-11-15-16-53-27-mpf-Bosgame-1NWVA.log', 'pause': False, 'production': False, 'text_ui': False, 'loglevel': 15, 'consoleloglevel': 20, 'force_platform': None, 'syslog_address': None, 'full_logfile_path': 'C:\\Users\\finis\\diehard-mpf\\logs\\2025-11-15-16-53-27-mpf-Bosgame-1NWVA.log'}
+2025-11-15 16:53:27,674 : INFO : Machine : MPF path: C:\Users\finis\mpf\Lib\site-packages\mpf
+2025-11-15 16:53:27,674 : INFO : Machine : Machine path: C:\Users\finis\diehard-mpf
+2025-11-15 16:53:27,674 : INFO : Machine : Platform: win32
+2025-11-15 16:53:27,674 : INFO : Machine : Python executable location: C:\Users\finis\mpf\Scripts\python.exe
+2025-11-15 16:53:27,674 : INFO : Machine : Python version: 3.12.7 (64-bit)
+2025-11-15 16:53:27,675 : INFO : Machine : Initializing MPF...
+2025-11-15 16:53:27,736 : INFO : FAST : Auto-detecting ports for the following connections: ['net', 'aud']
+2025-11-15 16:53:27,982 : INFO : FAST : Detected AUD on port COM5
+2025-11-15 16:53:27,982 : INFO : FAST : Detected NET on port COM4
+2025-11-15 16:53:28,092 : INFO : FAST [NET] : Trying to connect to COM4 at 921600bps
+2025-11-15 16:53:28,169 : INFO : FAST [NET] : Connected to COM4 at 921600bps
+2025-11-15 16:53:28,187 : INFO : FAST [NET] : Connected to FP-CPU-2000 with firmware v02.26
+2025-11-15 16:53:28,219 : INFO : FAST [NET] : Registered I/O Board 0: Model: FP-I/O-0024, Firmware: 01.10, Switches: 24, Drivers: 8
+2025-11-15 16:53:28,235 : INFO : FAST [NET] : Registered I/O Board 1: Model: FP-I/O-3208, Firmware: 01.10, Switches: 32, Drivers: 8
+2025-11-15 16:53:28,251 : INFO : FAST [NET] : Registered I/O Board 2: Model: FP-I/O-1616, Firmware: 01.10, Switches: 16, Drivers: 16
+2025-11-15 16:53:28,267 : INFO : FAST [NET] : Registered I/O Board 3: Model: FP-I/O-1616, Firmware: 01.10, Switches: 16, Drivers: 16
+2025-11-15 16:53:28,269 : INFO : FAST [EXP] : Trying to connect to COM3 at 921600bps
+2025-11-15 16:53:28,346 : INFO : FAST [EXP] : Connected to COM3 at 921600bps
+2025-11-15 16:53:28,362 : INFO : FAST [EXP] : Verifying hardware for EXP "playfield" (FP-EXP-0081, @84) with ID string "EXP FP-EXP-0081  0.12", board address 84
+2025-11-15 16:53:28,377 : INFO : FAST [EXP] : Verifying hardware for EXP "playfield" (FP-EXP-0081, @84) with ID string "BRK FP-EXP-0081  0.12", board address 840
+2025-11-15 16:53:28,393 : INFO : FAST [EXP] : Verifying hardware for EXP "playfield" (FP-EXP-0081, @84) with ID string "BRK FP-EXP-0081  0.12", board address 841
+2025-11-15 16:53:28,411 : INFO : FAST [AUD] : Trying to connect to COM5 at 230400bps
+2025-11-15 16:53:28,486 : INFO : FAST [AUD] : Connected to COM5 at 230400bps
+2025-11-15 16:53:28,504 : INFO : FAST [AUD] : Connected to FP-AUD-0100 with firmware v0.02
+2025-11-15 16:53:28,504 : INFO : EventManager : Event: ======'machine_var_credits_string'====== Args={'value': 'FREE PLAY', 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,519 : INFO : EventManager : Event: ======'machine_var_fast_audio_headphones_volume'====== Args={'value': 10, 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,519 : INFO : EventManager : Event: ======'machine_var_fast_audio_main_volume'====== Args={'value': 60, 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,519 : INFO : EventManager : Event: ======'machine_var_master_volume'====== Args={'value': 0.5, 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,519 : INFO : EventManager : Event: ======'machine_var_player1_score'====== Args={'value': 17120, 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,520 : INFO : EventManager : Event: ======'machine_var_var_which_attract'====== Args={'value': 0, 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,520 : INFO : EventManager : Event: ======'machine_var_mpf_version'====== Args={'value': 'Mission Pinball Framework v0.80.0.dev11', 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,520 : INFO : EventManager : Event: ======'machine_var_mpf_extended_version'====== Args={'value': 'Mission Pinball Framework v0.80.0.dev11, Config version:6, Show version: 6, BCP version:1.1', 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,520 : INFO : EventManager : Event: ======'machine_var_python_version'====== Args={'value': '3.12.7', 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,625 : INFO : EventManager : Event: ======'machine_var_platform'====== Args={'value': 'Windows-11-10.0.26200-SP0', 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,625 : INFO : EventManager : Event: ======'machine_var_platform_system'====== Args={'value': 'Windows', 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,625 : INFO : EventManager : Event: ======'machine_var_platform_release'====== Args={'value': '11', 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,625 : INFO : EventManager : Event: ======'machine_var_platform_version'====== Args={'value': '10.0.26200', 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,625 : INFO : EventManager : Event: ======'machine_var_platform_machine'====== Args={'value': 'AMD64', 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,625 : INFO : EventManager : Event: ======'machine_var_log_file_path'====== Args={'value': 'C:\\Users\\finis\\diehard-mpf\\logs\\2025-11-15-16-53-27-mpf-Bosgame-1NWVA.log', 'prev_value': None, 'change': True}
+2025-11-15 16:53:28,625 : INFO : EventManager : Event: ======'init_phase_1'====== Args={}
+2025-11-15 16:53:28,656 : INFO : EventManager : Event: ======'drop_target_bank_bank_up'====== Args={}
+2025-11-15 16:53:28,656 : INFO : EventManager : Event: ======'drop_target_bank_bank1_up'====== Args={}
+2025-11-15 16:53:28,656 : INFO : EventManager : Event: ======'drop_target_bank_bank2_up'====== Args={}
+2025-11-15 16:53:28,772 : ERROR : asyncio : Exception in callback Util.raise_exceptions(<Task finishe... Interface]')>) at C:\Users\finis\mpf\Lib\site-packages\mpf\core\utility_functions.py:789
+handle: <Handle Util.raise_exceptions(<Task finishe... Interface]')>) at C:\Users\finis\mpf\Lib\site-packages\mpf\core\utility_functions.py:789>
+Traceback (most recent call last):
+  File "C:\Users\finis\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\core\utility_functions.py", line 797, in raise_exceptions
+    future.result()
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\platforms\fast\communicators\base.py", line 413, in _socket_reader
+    self.parse_incoming_raw_bytes(resp)
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\platforms\fast\communicators\base.py", line 373, in parse_incoming_raw_bytes
+    self._dispatch_incoming_msg(msg)
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\platforms\fast\communicators\base.py", line 382, in _dispatch_incoming_msg
+    self.message_processors[msg_header](msg[3:])
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\platforms\fast\communicators\net_neuron.py", line 333, in _process_switch_closed
+    self.machine.switch_controller.process_switch_by_num(state=1,
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\core\switch_controller.py", line 251, in process_switch_by_num
+    raise AssertionError("Got early switch change for switch {} to state {}. platform: {}".format(
+AssertionError: Got early switch change for switch 53 to state 1. platform: [FAST Platform Interface]
+2025-11-15 16:53:28,775 : INFO : Machine : Starting the main run loop with active modes: []
+2025-11-15 16:53:28,775 : WARNING : Machine : Attract mode is not active, game will not be playable. Please check your attract mode configuration.
+2025-11-15 16:53:28,775 : INFO : Machine : Shutting down...
+2025-11-15 16:53:28,775 : INFO : EventManager : Event: ======'shutdown'====== Args={}
+2025-11-15 16:53:29,875 : ERROR : Machine : Runtime Exception
+Traceback (most recent call last):
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\core\machine.py", line 810, in _run_loop
+    raise self._exception['exception']
+  File "C:\Users\finis\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\core\utility_functions.py", line 797, in raise_exceptions
+    future.result()
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\platforms\fast\communicators\base.py", line 413, in _socket_reader
+    self.parse_incoming_raw_bytes(resp)
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\platforms\fast\communicators\base.py", line 373, in parse_incoming_raw_bytes
+    self._dispatch_incoming_msg(msg)
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\platforms\fast\communicators\base.py", line 382, in _dispatch_incoming_msg
+    self.message_processors[msg_header](msg[3:])
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\platforms\fast\communicators\net_neuron.py", line 333, in _process_switch_closed
+    self.machine.switch_controller.process_switch_by_num(state=1,
+  File "C:\Users\finis\mpf\Lib\site-packages\mpf\core\switch_controller.py", line 251, in process_switch_by_num
+    raise AssertionError("Got early switch change for switch {} to state {}. platform: {}".format(
+AssertionError: Got early switch change for switch 53 to state 1. platform: [FAST Platform Interface]
+2025-11-15 16:53:29,875 : INFO : root : MPF run loop ended.
