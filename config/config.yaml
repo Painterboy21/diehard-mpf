@@ -19,15 +19,15 @@ fast:
           model: FP-I/O-1616
           order: 3
         f:
-          model: FP-I/O-0804
+          model: FP-I/O-1616
           order: 4
-
 
   exp:
     port: COM3
     boards:
       playfield:
-        model: FP-EXP-0071
+        model: FP-EXP-0081
+
 
   aud:
     port: auto
@@ -61,6 +61,7 @@ fast:
     headphones_level: headphones
     mute_speakers_with_headphones: true
 
+
 virtual_platform_start_active_switches:
   - s_trough1
   - s_trough2
@@ -69,12 +70,14 @@ virtual_platform_start_active_switches:
   - s_trough5
   - s_trough6 
 
+
 config:
-  - switches.yaml
   - ball_devices.yaml
   - coils.yaml
   - lights.yaml
   - shot_profiles.yaml
+  - switches.yaml
+
 
 flippers:
   left_flipper:
@@ -107,22 +110,6 @@ flippers:
     enable_events: ball_started, enableAutofire, flipper_on
     disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
 
-autofire_coils:
-  left_sling:
-    coil: c_left_sling
-    switch: s_left_sling
-  right_sling:
-    coil: c_right_sling
-    switch: s_right_sling
-
-  popbumper_left:
-    coil: c_popbumper_left
-    switch: s_popbumper_left
-  popbumper_right:
-    coil: c_popbumper_right
-    switch: s_popbumper_right
-
-
 drop_targets:
   bank1:
     switch: s_drop_target_1
@@ -133,38 +120,61 @@ drop_targets:
   bank3:
     switch: s_drop_target_3
     reset_coil: c_reset_drop_targets
+  bank4:
+    switch: s_push_drop_target_4
+    reset_coil: c_reset_drop_target_nakotomi
+  bank5:
+    switch: s_push_drop_target_5
+    reset_coil: c_reset_drop_target_vault
+
 
 drop_target_banks:
   bank:
     drop_targets: bank1, bank2, bank3
     reset_coils: c_reset_drop_targets
     reset_on_complete: 1s
+  bank1:
+    drop_targets: bank4
+    reset_coils: c_reset_drop_target_nakotomi
+    reset_on_complete: 0.5s
+  bank2:
+    drop_targets: bank5
+    reset_coils: c_reset_drop_target_vault
+    reset_on_complete: 0.5s
+
+
+autofire_coils:
+  left_sling:
+    coil: c_left_slingshot
+    switch: s_left_slingshot
+  right_sling:
+    coil: c_right_slingshot
+    switch: s_right_slingshot
+  airplane:
+    coil: c_captivetarget
+    switch: s_captiveball
+  popbumper_left:
+    coil: c_popbumper_left
+    switch: s_popbumper_left
+  popbumper_right:
+    coil: c_popbumper_right
+    switch: s_popbumper_right
+
 
 
 magnets:
-  magnet_l:
-    magnet_coil: c_left_magna
-    grab_ball_events: s_left_magna_active
+  trmagrl:
+    magnet_coil: c_trmagl
+    grab_ball_events: s_trmagl_active
     enable_events: ball_started
-    release_ball_events: s_left_magna_inactive
+    release_ball_events: s_trmagl_inactive
  
-  magnet_r:
-    magnet_coil: c_right_magna
-    grab_ball_events: s_right_magna_active
+  trmagr:
+    magnet_coil: c_trmagr
+    grab_ball_events: s_trmagr_active
     enable_events: ball_started
-    release_ball_events: s_right_magna_inactive
+    release_ball_events: s_trmagr_inactive
 
-
-servos:
-  servo1:
-    number: playfield-1
-    platform_settings:
-      min_us: 300
-      home_us: 300
-      max_us: 2550
-    positions:
-      0: s_bottom_right_outer_drain_active
-      1: s_bottom_right_inner_drain_active
 
 
 
@@ -176,15 +186,17 @@ machine_vars:
 
 
 modes:
+  - attract
   - base
-  - score
   - holly
+  - score
 
+  
 machine:
     balls_installed: 6
 
 game:
-    balls_per_game: 3
+    balls_per_game:
     max_players: 4
 
 playfields:

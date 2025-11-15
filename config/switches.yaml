@@ -4,25 +4,27 @@ switches:
 
  # trough switches
   s_trough1:
-    number: d-8
+    number: d-29
     type: 'NC'
   s_trough2:
-    number: d-9
+    number: d-24
   s_trough3:
-    number: d-10
+    number: d-25
   s_trough4:
-    number: d-11
+    number: d-26
   s_trough5:
-    number: d-12
+    number: d-27
   s_trough6:
-    number: d-13
+    number: d-28
   s_trough_jam:
-    number: d-14
+    number: d-30
     type: 'NC'
 
- # Plunger
+ # Plungers
   s_plunger_lane:
-    number: d-15
+    number: d-31
+  s_kickervault1:
+    number: d-2
 
  # Coin Door and cab Switches
   s_start:
@@ -51,11 +53,11 @@ switches:
   s_fire:
     number: j-11
 
- # Flippers and Magnets
+ # Flippers
   s_right_flipper_eos:
-    number: d-5
+    number: d-21
   s_left_flipper_eos:
-    number: d-4
+    number: d-20
   s_left_flipper:
     number: j-9
     tags: left_flipper_top_flipper
@@ -63,119 +65,135 @@ switches:
     number: j-16
     tags: right_flipper
   s_top_flipper_eos:
-    number: e-8
-  s_left_magna:
+    number: d-6
+
+ # Magnets
+  s_trmagl:
     number: j-17
     tags: left_magnet
-  s_right_magna:
+  s_trmagr:
     number: j-8
     tags: right_magnet
 
- # Slings
-  s_left_sling:
-    number: d-2
-    tags: left_slingshot
-  s_right_sling:
+ # three drop targets
+  s_drop_target_1:
+    number: e-2
+    type: 'NC'
+  s_drop_target_2:
+    number: e-3
+    type: 'NC'
+  s_drop_target_3:
+    number: e-4
+    type: 'NC'
+
+ # Nakatomi Lock Drop Target
+  s_push_drop_target_4:
+    number: e-6
+ # Nakatomi Lock ball count
+  s_nakatomi_lock_ball_count:
+    number: f-10
+    type: 'NC'
+ # Safe Lock Drop Target
+  s_push_drop_target_5:
     number: d-3
+
+ # Slings
+  s_left_slingshot:
+    number: d-18
+    tags: left_slingshot
+  s_right_slingshot:
+    number: d-19
     tags: right_slingshot
+
+# Lane Switches
+  s_swrightoutlane:
+    number: d-22
+  s_swrightinlane:
+    number: d-23
+  s_swleftoutlane:
+    number: d-17
+  s_swleftinlane:
+    number: d-16
+  s_swrightorb1:
+    number: e-14
+  s_swleftorb1:
+    number: d-7
+  s_swrightorb2:
+    number: f-4
+    tags: playfield_active
+  s_swleftorb2:
+    number: f-0
+    tags: playfield_active
+  s_swmidorb:
+    number: e-13
+
+ # Top Targets
+  s_target002:
+    number: f-1
+  s_target003:
+    number: f-2
+  s_target004:
+    number: f-3
+
+ # Holly Switches
+  s_targeth:
+    number: d-0
+  s_targeto:
+    number: d-1
+  s_targetl:
+    number: d-4
+  s_targetl2:
+    number: e-0
+  s_targety:
+    number: e-10
 
  # Pop Bumpers
   s_popbumper_left:
-    number: e-6
+    number: e-5
     tags: left_pop_bumper
   s_popbumper_right:
-    number: e-2
+    number: e-7
     tags: right_pop_bumper
 
- # Holly Switches
-  s_holly_h:
-    number: e-1
-  s_holly_o:
-    number: e-4
-  s_holly_l:
-    number: e-0
-  s_holly_l1:
-    number: e-5
-  s_holly_y:
-    number: e-11
-
-
-  #Vuks  
-  s_safe_vuk:
-    number: e-3
-    type: 'NC'
-  s_nakatomi:
-    number: e-7
-    type: 'NC'
-  s_bottom_right_vuk:
-    number: e-13
-    type: 'NC'
-  s_tunel_vuk:
-    number: e-12
-    type: 'NC'
-  s_highvuk:
-    number: e-10
-    type: 'NC'
-
  # spinners
-  s_left spinner:
-    number: e-9
-  s_right spinner:
+  s_spinnerleft:
+    number: d-5
+  s_spinnerright:
     number: e-15
 
+
  # airplane
-  s_airplane:
-    number: e-14
-
- # orbits
-  s_left_orbit:
-    number: d-16
-  s_right_orbit:
-    number: d-19
-  s_left_orbit2:
-    number: f-4
-  s_right_orbit2:
-    number: f-5
-  s_mid_orbit:
-    number: f-6
-
-
- # Top Targets
-  s_left_top_target:
-    number: d-18
-  s_middle_top_target:
-    number: d-20
-  s_right_top_target:
-    number: d-17
-
- # drop targets
-  s_drop_target_3:
-    number: f-0
-    type: 'NC'
-  s_drop_target_2:
-    number: f-1
-    type: 'NC'
-  s_drop_target_1:
-    number: f-2
-    type: 'NC'
-
-
-# In and Outlanes
-  s_bottom_right_outer_drain:
-    number: d-7
-  s_bottom_right_inner_drain:
-    number: d-6
-  s_bottom_left_outer_drain:
-    number: d-1
-  s_bottom_left_inner_drain:
-    number: d-0
+  s_captiveball:
+    number: e-12
 
 # air_ducts
   s_AirDuctEnter001: #And AirDuct002
-    number:  f-3
+    number: f-8
     type: 'NC'
 
+ #vuks
+  s_towervuk:
+    number: e-1
+    type: 'NC'
+  s_rightkicker:
+    number: e-9
+    type: 'NC'
+  s_UrampUp001:
+    number: e-8
+    type: 'NC'
+  s_rightvuk:
+    number: e-11
+    type: 'NC'
 
-# Upper Playfeild switches
-  s_upper_pf_entrance:
+# Top Playfield 
+  s_swDivParkp:
+    number: f-9
+  s_TrPF1:
+    number: f-6
+    type: 'NC'
+  s_TrPF2:
     number: f-7
+    type: 'NC'
+  s_TrPF3:
+    number: f-5
+    type: 'NC'
