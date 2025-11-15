@@ -1,0 +1,32 @@
+2025-11-15 15:31:33,183 : INFO : root : Loading config.
+2025-11-15 15:31:33,226 : INFO : ConfigProcessor : Config spec file cache created: C:\Users\finis\AppData\Local\Temp\config_spec.mpf_cache
+2025-11-15 15:31:33,226 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2025-11-15 15:31:33,228 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\mpf\Lib\site-packages\mpf\mpfconfig.yaml.
+2025-11-15 15:31:33,234 : INFO : ConfigProcessor : Loading config: C:\Users\finis\mpf\Lib\site-packages\mpf\mpfconfig.yaml
+2025-11-15 15:31:33,234 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\diehard-mpf\config\config.yaml.
+2025-11-15 15:31:33,236 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\config\config.yaml
+2025-11-15 15:31:33,238 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\config\switches.yaml
+2025-11-15 15:31:33,241 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\config\coils.yaml
+2025-11-15 15:31:33,241 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\config\ball_devices.yaml
+2025-11-15 15:31:33,248 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\config\lights.yaml
+2025-11-15 15:31:33,250 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\config\shot_profiles.yaml
+2025-11-15 15:31:33,252 : INFO : ConfigProcessor : Config file cache created: C:\Users\finis\AppData\Local\Temp\46a2264aace4dc9247b28883ea729273.mpf_cache
+2025-11-15 15:31:33,305 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\mpf\Lib\site-packages\mpf\modes\attract\config\attract.yaml.
+2025-11-15 15:31:33,306 : INFO : ConfigProcessor : Loading config: C:\Users\finis\mpf\Lib\site-packages\mpf\modes\attract\config\attract.yaml
+2025-11-15 15:31:33,306 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\diehard-mpf\modes\attract\config\attract.yaml.
+2025-11-15 15:31:33,306 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\modes\attract\config\attract.yaml
+2025-11-15 15:31:33,307 : INFO : ConfigProcessor : Config file cache created: C:\Users\finis\AppData\Local\Temp\7a912b2511d42635e0b426a52fd16cc1.mpf_cache
+2025-11-15 15:31:33,307 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\mpf\Lib\site-packages\mpf\modes\game\config\game.yaml.
+2025-11-15 15:31:33,315 : INFO : ConfigProcessor : Loading config: C:\Users\finis\mpf\Lib\site-packages\mpf\modes\game\config\game.yaml
+2025-11-15 15:31:33,315 : INFO : ConfigProcessor : Config file cache created: C:\Users\finis\AppData\Local\Temp\846fbc79a2a788b1cf5d5d816f13713f.mpf_cache
+2025-11-15 15:31:33,315 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\diehard-mpf\modes\base\config\base.yaml.
+2025-11-15 15:31:33,318 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\modes\base\config\base.yaml
+2025-11-15 15:31:33,318 : INFO : ConfigProcessor : Config file cache created: C:\Users\finis\AppData\Local\Temp\771489ba91bf1192210b19104700c5d3.mpf_cache
+2025-11-15 15:31:33,318 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\7a912b2511d42635e0b426a52fd16cc1.mpf_cache
+2025-11-15 15:31:33,320 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\diehard-mpf\modes\holly\config\holly.yaml.
+2025-11-15 15:31:33,321 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\modes\holly\config\holly.yaml
+2025-11-15 15:31:33,321 : INFO : ConfigProcessor : Config file cache created: C:\Users\finis\AppData\Local\Temp\46e23fa43ebcbad0058dff2ccd1749db.mpf_cache
+2025-11-15 15:31:33,321 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\diehard-mpf\modes\score\config\score.yaml.
+2025-11-15 15:31:33,323 : INFO : ConfigProcessor : Loading config: C:\Users\finis\diehard-mpf\modes\score\config\score.yaml
+2025-11-15 15:31:33,323 : INFO : ConfigProcessor : Config file cache created: C:\Users\finis\AppData\Local\Temp\4b672ce255959e7c9d79f5c0592d724e.mpf_cache
+2025-11-15 15:31:33,323 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\diehard-mpf\shows\.\attract_christmas.yaml.

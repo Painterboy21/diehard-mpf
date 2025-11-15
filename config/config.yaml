@@ -71,14 +71,12 @@ virtual_platform_start_active_switches:
   - s_trough6 
 
 
-
 config:
-  - switches.yaml
-  - coils.yaml
   - ball_devices.yaml
+  - coils.yaml
   - lights.yaml
   - shot_profiles.yaml
-
+  - switches.yaml
 
 
 flippers:
@@ -138,11 +136,11 @@ drop_target_banks:
   bank1:
     drop_targets: bank4
     reset_coils: c_reset_drop_target_nakotomi
-    reset_on_complete: 4s
+    reset_on_complete: 0.5s
   bank2:
     drop_targets: bank5
     reset_coils: c_reset_drop_target_vault
-    reset_on_complete: 1s
+    reset_on_complete: 0.5s
 
 
 autofire_coils:
@@ -188,8 +186,10 @@ machine_vars:
 
 
 modes:
-  - base
   - attract
+  - base
+  - holly
+  - score
 
   
 machine:
