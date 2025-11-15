@@ -1,0 +1,29 @@
+2025-11-15 17:22:28,527 : INFO : root : Loading config.
+2025-11-15 17:22:28,548 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2025-11-15 17:22:28,548 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\mpf080\mpf\mpfconfig.yaml.
+2025-11-15 17:22:28,567 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\mpf080\mpf\mpfconfig.yaml
+2025-11-15 17:22:28,568 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\diehard-mpf\config\config.yaml.
+2025-11-15 17:22:28,570 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\config.yaml
+2025-11-15 17:22:28,573 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\ball_devices.yaml
+2025-11-15 17:22:28,575 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\coils.yaml
+2025-11-15 17:22:28,582 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\lights.yaml
+2025-11-15 17:22:28,592 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\shot_profiles.yaml
+2025-11-15 17:22:28,595 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\switches.yaml
+2025-11-15 17:22:28,597 : INFO : ConfigProcessor : Config file cache created: C:\Users\carr-\AppData\Local\Temp\23e177fce4903a9a69d69f474fa748a1.mpf_cache
+2025-11-15 17:22:28,671 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\mpf080\mpf\modes\attract\config\attract.yaml.
+2025-11-15 17:22:28,691 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\mpf080\mpf\modes\attract\config\attract.yaml
+2025-11-15 17:22:28,691 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\diehard-mpf\modes\attract\config\attract.yaml.
+2025-11-15 17:22:28,691 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\modes\attract\config\attract.yaml
+2025-11-15 17:22:28,691 : INFO : ConfigProcessor : Config file cache created: C:\Users\carr-\AppData\Local\Temp\2f9bbeccf93c71693a410725897ab70d.mpf_cache
+2025-11-15 17:22:28,691 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\71986c9cb54d44e1ee87b7d4d0f68024.mpf_cache
+2025-11-15 17:22:28,703 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\2f9bbeccf93c71693a410725897ab70d.mpf_cache
+2025-11-15 17:22:28,713 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\diehard-mpf\modes\base\config\base.yaml.
+2025-11-15 17:22:28,715 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\modes\base\config\base.yaml
+2025-11-15 17:22:28,715 : INFO : ConfigProcessor : Config file cache created: C:\Users\carr-\AppData\Local\Temp\460998002e273cec26232c9157d92984.mpf_cache
+2025-11-15 17:22:28,716 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\diehard-mpf\modes\holly\config\holly.yaml.
+2025-11-15 17:22:28,717 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\modes\holly\config\holly.yaml
+2025-11-15 17:22:28,718 : INFO : ConfigProcessor : Config file cache created: C:\Users\carr-\AppData\Local\Temp\1113c1d20ec4e70f79a7ed8de50ab69e.mpf_cache
+2025-11-15 17:22:28,718 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\diehard-mpf\modes\score\config\score.yaml.
+2025-11-15 17:22:28,719 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\modes\score\config\score.yaml
+2025-11-15 17:22:28,720 : INFO : ConfigProcessor : Config file cache created: C:\Users\carr-\AppData\Local\Temp\668dbdbfcbfe997663fcbdfe0871c0b4.mpf_cache
+2025-11-15 17:22:28,720 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\diehard-mpf\shows\.\attract_christmas.yaml.
