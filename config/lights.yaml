@@ -142,7 +142,7 @@ lights:
     subtype: led
     type: rgb
   l76:
-    number: playfield-1-32
+    number: playfield-1-31
     subtype: led
     type: rgb
 
@@ -300,8 +300,7 @@ lights:
     number: playfield-3-4
     subtype: led
     type: rgb
-  l136:  #part of the lum boards
-  #Left-right sling spots #l136-l137 FP LUM RGB
+  l136:
     number: playfield-3-5
     subtype: led
     type: rgb
@@ -363,22 +362,7 @@ lights:
     number: playfield-3-18
     subtype: led
     type: rgb
-  l82: #not in the game yet
-    number: playfield-3-19
-    subtype: led
-    type: rgb
-  l83: #not in the game yet
-    number: playfield-3-20
-    subtype: led
-    type: rgb
-  l80: #not in the game yet
-    number: playfield-3-21
-    subtype: led
-    type: rgb
-  l81: #not in the game yet
-    number: playfield-3-22
-    subtype: led
-    type: rgb
+
 
 
 #port4
@@ -455,7 +439,7 @@ lights:
     type: rgb
     tags: GI
   l131:
-    number: playfield-4-17
+    number: playfield-4-16
     subtype: led
     type: rgb
     tags: GI
