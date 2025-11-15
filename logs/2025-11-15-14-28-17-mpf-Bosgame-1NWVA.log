@@ -1,0 +1,8 @@
+2025-11-15 14:28:17,470 : INFO : root : Loading config.
+2025-11-15 14:28:17,472 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2025-11-15 14:28:17,472 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\46a2264aace4dc9247b28883ea729273.mpf_cache
+2025-11-15 14:28:17,522 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\7a912b2511d42635e0b426a52fd16cc1.mpf_cache
+2025-11-15 14:28:17,522 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\846fbc79a2a788b1cf5d5d816f13713f.mpf_cache
+2025-11-15 14:28:17,523 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\771489ba91bf1192210b19104700c5d3.mpf_cache
+2025-11-15 14:28:17,523 : INFO : ConfigProcessor : Loading config from cache: C:\Users\finis\AppData\Local\Temp\7a912b2511d42635e0b426a52fd16cc1.mpf_cache
+2025-11-15 14:28:17,523 : INFO : ConfigProcessor : Loading config from file C:\Users\finis\diehard-mpf\shows\.\attract_christmas.yaml.

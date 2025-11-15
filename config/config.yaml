@@ -22,7 +22,11 @@ fast:
           model: FP-I/O-1616
           order: 4
 
-
+  exp:
+    port: COM3
+    boards:
+      playfield:
+        model: FP-EXP-0081
 
 
   aud:
@@ -72,6 +76,8 @@ config:
   - switches.yaml
   - coils.yaml
   - ball_devices.yaml
+  - lights.yaml
+  - shot_profiles.yaml
 
 
 
@@ -183,16 +189,14 @@ machine_vars:
 
 modes:
   - base
+  - attract
 
   
-
-
-
 machine:
     balls_installed: 6
 
 game:
-    balls_per_game: 3
+    balls_per_game:
     max_players: 4
 
 playfields:

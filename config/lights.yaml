@@ -61,371 +61,320 @@ lights:
     number: playfield-1-13
     subtype: led
     type: rgb
-  l23:
+  l115:
     number: playfield-1-14
     subtype: led
     type: rgb
-  l24:
+    tags: GI
+  l23:
     number: playfield-1-15
     subtype: led
     type: rgb
-  l126:
+  l24:
     number: playfield-1-16
     subtype: led
-    type: rgb
-    tags: GI  
-  l118:
+    type: rgb 
+  l126:
     number: playfield-1-17
     subtype: led
     type: rgb
     tags: GI  
-  l75:
+  l118:
     number: playfield-1-18
     subtype: led
     type: rgb
-  l1:
+  l75:
     number: playfield-1-19
     subtype: led
     type: rgb
-  l124:  
+  l1:  
     number: playfield-1-20
     subtype: led
     type: rgb
-    tags: GI  
-  l2:
+  l124:
     number: playfield-1-21
     subtype: led
     type: rgb
     tags: GI
-  l125:  
+  l2:  
     number: playfield-1-22
     subtype: led
     type: rgb
-  l3:
+  l125:
     number: playfield-1-23
     subtype: led
     type: rgb
     tags: GI  
-  l119:  
+  l3:  
     number: playfield-1-24
     subtype: led
     type: rgb
-    tags: GI  
-  l133: #rear spot left and right pop bumpers #l133-l138-l130 FP LUM RGB 
+  l119: 
     number: playfield-1-25
     subtype: led
     type: rgb
     tags: GI  
-  l123:  
+  l133: #rear spot left and right pop bumpers #l133-l138-l130 FP LUM RGB  
     number: playfield-1-26
     subtype: led
     type: rgb
     tags: GI  
-  f144:
+  l123:
     number: playfield-1-27
     subtype: led
     type: rgb
-  l122:
+    tags: GI 
+  f144:
     number: playfield-1-28
     subtype: led
     type: rgb
-    tags: GI  
-  l78:  
+  l122:  
     number: playfield-1-29
     subtype: led
     type: rgb
-  l77:
+    tags: GI 
+  l78:
     number: playfield-1-30
+    subtype: led
+    type: rgb
+  l77:
+    number: playfield-1-31
     subtype: led
     type: rgb
   l76:
     number: playfield-1-31
     subtype: led
     type: rgb
-    tags: GI
 
 
 #port2
-
-  l112:
+  l111:
     number: playfield-2-1
     subtype: led
     type: rgb
     tags: GI
-
   l20:  
     number: playfield-2-2
     subtype: led
     type: rgb
-
   l31:
     number: playfield-2-3
     subtype: led
     type: rgb
-  
   l50:
     number: playfield-2-4
     subtype: led
     type: rgb
- 
   l17:
     number: playfield-2-5
     subtype: led
     type: rgb
-  
   l32:
     number: playfield-2-6
     subtype: led
     type: rgb
- 
   l21:
     number: playfield-2-7
     subtype: led
     type: rgb
-
   l51:
     number: playfield-2-8
     subtype: led
     type: rgb
-
   l7:
     number: playfield-2-9
     subtype: led
     type: rgb
-
   l33:  
     number: playfield-2-10
     subtype: led
     type: rgb
-
   l16:
     number: playfield-2-11
     subtype: led
     type: rgb
- 
   l52:  
     number: playfield-2-12
     subtype: led
     type: rgb
-
   l62:
     number: playfield-2-13
     subtype: led
     type: rgb
-
   l117:
     number: playfield-2-14
     subtype: led
     type: rgb
     tags : GI
-
   f143:
     number: playfield-2-15
     subtype: led
     type: rgb
-
   l116:
     number: playfield-2-16
     subtype: led
     type: rgb
     tags : GI
-
   l71:
     number: playfield-2-17
     subtype: led
     type: rgb
-
   l127:
     number: playfield-2-18
     subtype: led
     type: rgb
     tags : GI
-
   light003:
     number: playfield-2-19
     subtype: led
     type: rgb 
-
   light002:
     number: playfield-2-20
     subtype: led
     type: rgb
-  
-  light003:
+  light001:
     number: playfield-2-21
     subtype: led
     type: rgb
-
   f142:
     number: playfield-2-22
     subtype: led
     type: rgb
- 
   l22:
     number: playfield-2-23
     subtype: led
     type: rgb
-
   l53:
     number: playfield-2-24
     subtype: led
     type: rgb
-
   l34:
     number: playfield-2-25
     subtype: led
     type: rgb
-
   l109:
     number: playfield-2-26
     subtype: led
     type: rgb
     tags : GI
-
   l10:
     number: playfield-2-27
     subtype: led
     type: grb
-   
-    l63:
+  l63:
     number: playfield-2-28
     subtype: led
     type: rgb
-
   l9:
     number: playfield-2-29
     subtype: led
     type: rgb
-
   l6:
     number: playfield-2-30
     subtype: led
     type: rgb
-
   l105:
     number: playfield-2-31
     subtype: led
     type: rgb
     tags: GI
-
   f141:
     number: playfield-2-32
     subtype: led
     type: rgb
 
 # port3
-
   l60:
     number: playfield-3-1
     subtype: led
     type: rgb 
-
   l12:
     number: playfield-3-2
     subtype: led
     type: rgb
-
   l13:
     number: playfield-3-3
     subtype: led
     type: rgb
-
   l40:
     number: playfield-3-4
     subtype: led
     type: rgb
-
   l136:  #part of the lum boards
   #Left-right sling spots #l136-l137 FP LUM RGB
     number: playfield-3-5
     subtype: led
     type: rgb
-
+    tags: GI 
   l14:
     number: playfield-3-6
     subtype: led
     type: rgb
-
   l15:
     number: playfield-3-7
     subtype: led
     type: rgb
-
   l42:
     number: playfield-3-8
     subtype: led
     type: rgb
-
   l8:
     number: playfield-3-9
     subtype: led
     type: rgb
-
   l41:
     number: playfield-3-10
     subtype: led
     type: rgb
-
   l44:
     number: playfield-3-11
     subtype: led
     type: rgb 
-
   l43:
     number: playfield-3-12
     subtype: led
     type: rgb
-
   l106:
     number: playfield-3-13
     subtype: led
     type: rgb
     tags : GI
-
   l108:
     number: playfield-3-14
     subtype: led
     type: rgb
     tags: GI
-
   l104:
     number: playfield-3-15
     subtype: led
     type: rgb
     tags: GI
-:
   l73:
     number: playfield-3-16
     subtype: led 
     type: rgb
     tags: GI
-
   l134:
     number: playfield-3-17
     subtype: led
     type: rgb
     tags: GI
-
   l29:
     number: playfield-3-18
     subtype: led
     type: rgb
-
   l82: #not in the game yet
     number: playfield-3-18
     subtype: led
     type: rgb
-
   l83: #not in the game yet
     number: playfield-3-18
     subtype: led
     type: rgb
-
   l80: #not in the game yet
     number: playfield-3-18
     subtype: led
     type: rgb
-
   l81: #not in the game yet
     number: playfield-3-18
     subtype: led b
@@ -433,94 +382,78 @@ lights:
 
 
 #port4
-
-    f147:
+  f147:
     number: playfield-4-1
     subtype: led
     type: rgb
-
   l84:
     number: playfield-4-2
     subtype: led
     type: rgb
     tags: GI
-
   l59:
     number: playfield-4-3
     subtype: led
     type: rgb
-
   l58:
     number: playfield-4-4
     subtype: led
     type: rgb
-
   l57:
     number: playfield-4-5
     subtype: led
     type: rgb
-
   l110:
     number: playfield-4-6
     subtype: led
     type: rgb
     tags: GI
-
   l128:
     number: playfield-4-7
     subtype: led
     type: rgb
-
-  l60:
+    tags: GI 
+  l30:
     number: playfield-4-8
     subtype: led
     type: rgb
-
   l4:
     number: playfield-4-9
     subtype: led
     type: rgb
-
   l5:
     number: playfield-4-10
     subtype: led
     type: rgb
-
   l103:
     number: playfield-4-11
     subtype: led
     type: rgb
     tags: GI
-
   F140:
     number: playfield-4-12
     subtype: led
     type: rgb
-
   l100:
     number: playfield-4-13
     subtype: led
     type: rgb
     tags: GI
-
   l102:
     number: playfield-4-14
     subtype: led
     type: rgb
     tags: GI
-
   l107:
     number: playfield-4-15
     subtype: led
     type: rgb
     tags: GI
-
   l72:
     number: playfield-4-16
     subtype: led
     type: rgb
     tags: GI
-
   l131:
     number: playfield-4-16
     subtype: led
