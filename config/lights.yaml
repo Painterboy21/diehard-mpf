@@ -142,7 +142,7 @@ lights:
     subtype: led
     type: rgb
   l76:
-    number: playfield-1-31
+    number: playfield-1-32
     subtype: led
     type: rgb
 
@@ -439,7 +439,7 @@ lights:
     type: rgb
     tags: GI
   l131:
-    number: playfield-4-16
+    number: playfield-4-17
     subtype: led
     type: rgb
     tags: GI
