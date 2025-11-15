@@ -6,6 +6,7 @@ ball_devices:
     ball_switches: s_trough1, s_trough2, s_trough3, s_trough4, s_trough5, s_trough6, s_trough_jam
     eject_coil: c_trough_eject
     tags: trough, home, drain
+    jam_switch: s_trough_jam
     eject_coil_jam_pulse: 15ms
     eject_targets: bd_plunger
     debug: true
@@ -15,27 +16,31 @@ ball_devices:
     eject_coil: c_plunger
     player_controlled_eject_event: s_fire_active
 
-  bd_scoop:
-    ball_switches: s_safe_vuk
-    eject_coil: c_safe_vuk_eject
+  kickervault1_eject:
+    ball_switches: s_kickervault1
+    eject_coil: c_kickervault1_eject
+
+  rightkicker:
+    ball_switches: s_rightkicker
+    eject_coil:   c_rightkicker_eject
     eject_timeouts: 1s
 
-  bd_scoop1:
-    ball_switches: s_bottom_right_vuk
-    eject_coil: c_bottom_right_vuk_eject
+  UrampUp001:
+    ball_switches: s_UrampUp001
+    eject_coil: c_UrampUp001_eject
     eject_timeouts: 1s
 
-  bd_scoop2:
-    ball_switches: s_tunel_vuk
-    eject_coil: c_tunel_vuk_eject
+  rightvuk:
+    ball_switches: s_rightvuk
+    eject_coil: c_rightvuk_eject
     eject_timeouts: 1s
 
-  bd_scoop3:
-    ball_switches: s_highvuk
-    eject_coil: c_highvuk_eject
+  towervuk:
+    ball_switches: s_towervuk
+    eject_coil: c_towervuk_eject
     eject_timeouts: 1s
-
-  bd_scoop4:
-    ball_switches: s_nakatomi
-    eject_coil: c_nakatomi
+    
+  airplane:
+    ball_switches: s_captiveball
+    eject_coil: c_captivetarget
     eject_timeouts: 1s

@@ -10,23 +10,19 @@ config_version=5
 
 [application]
 
-config/name="New Game Project"
+config/name="diehard_mpf"
 run/main_scene="uid://ds4gduf8660uj"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
 
 MPF="*res://addons/mpf-gmc/mpf_gmc.gd"
-Settings="*res://settings.gd"
-
-[display]
-
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/size/always_on_top=true
-window/stretch/mode="viewport"
 
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/mpf-gmc/plugin.cfg")
+
+[rendering]
+
+renderer/rendering_method="mobile"

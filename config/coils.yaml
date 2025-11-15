@@ -2,25 +2,25 @@
 
 coils:
  # Slingshots
-  c_left_sling:
-    number: d-6
-    default_pulse_ms: 20ms
-  c_right_sling:
+  c_left_slingshot:
     number: d-7
+    default_pulse_ms: 20ms
+  c_right_slingshot:
+    number: d-6
     default_pulse_ms: 20ms
 
  # Flippers
   c_left_flipper_main:
     number: d-3
-    default_pulse_ms: 50ms
+    default_pulse_ms: 30ms
   c_left_flipper_hold:
     number: d-2
     allow_enable: true
   c_left_top_flipper_main:
-    number: e-5
-    default_pulse_ms: 40ms
-  c_left_top_flipper_hold:
     number: e-4
+    default_pulse_ms: 50ms
+  c_left_top_flipper_hold:
+    number: e-3
     allow_enable: true 
   c_right_flipper_main:
     number: d-5
@@ -29,53 +29,75 @@ coils:
     number: d-4
     allow_enable: true
 
-  # Magnets
-  c_right_magna:
-    number: e- 12
-    default_pulse_ms: 70ms
-    default_hold_power: 0.10
-  c_left_magna:
-    number: e- 13
-    default_pulse_ms: 70ms
-    default_hold_power: 0.10
+ # Magnets
+  c_trmagr:
+    number: e-15
+    default_pulse_ms: 100
+    default_hold_power: 0.375
+  c_trmagl:
+    number: e-14
+    default_pulse_ms: 100
+    default_hold_power: 0.375
 
  # Plunger & Trough
   c_plunger:
     number: d-0
-    default_pulse_ms: 20ms
+    default_pulse_ms: 40ms
   c_trough_eject:
     number: d-1
     default_pulse_ms: 20ms
 
- # Drop Targets
+
+ # Three Drop Targets
   c_reset_drop_targets:
-    number: e-1
+    number: e-12
+    default_pulse_ms: 80ms
+ # Nakatomi Lock Drop Target
+  c_reset_drop_target_nakotomi:
+    number: e-5
+    default_pulse_ms: 80ms
+ # vault Lock Drop Target
+  c_reset_drop_target_vault:
+    number: e-2
     default_pulse_ms: 80ms
 
+ # push drop targets 12v
+  c_push_drop_target_nakatomi:
+    number: f-13
+  c_push_drop_target_vault:
+    number: f-14
+
+
  # Vuks
-  c_safe_vuk_eject:
-    number: e-3
-    default_pulse_ms: 20ms
-  c_bottom_right_vuk_eject:
+  c_rightkicker_eject:
+    number: e-8
+    default_pulse_ms: 150ms
+  c_UrampUp001_eject:
     number: e-9
     default_pulse_ms: 80ms
-  c_tunel_vuk_eject:
-    number: e-11
-    default_pulse_ms: 30ms
-  c_highvuk_eject:
-    number: e-10
-    default_pulse_ms: 13ms
-  c_nakatomi:
-    number: e-2
-    default_pulse_ms: 15ms
+  c_rightvuk_eject:
+    number: e-13
+    default_pulse_ms: 20ms
+  c_towervuk_eject:
+    number: e-0
+    default_pulse_ms: 80ms
+  c_kickervault1_eject:
+    number: e-6
+    default_pulse_ms: 60ms
 
  # Pop Bumpers
   c_popbumper_left:
-    number: e-0
+    number: e-1
     default_pulse_ms: 20ms
   c_popbumper_right:
-    number: e-6
+    number: e-10
     default_pulse_ms: 20ms
+
+ # Airplane
+  c_captivetarget:
+    number: e-11
+    default_pulse_ms: 30ms
+
 
  # Lights
   c_cab_start_button:
@@ -84,4 +106,3 @@ coils:
   c_cab_coin_return_left_right:
     number: j-1
     allow_enable: true
-
