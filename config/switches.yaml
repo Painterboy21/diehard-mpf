@@ -120,8 +120,10 @@ switches:
     number: d-7
   s_swrightorb2:
     number: f-4
+    tags: playfield_active
   s_swleftorb2:
     number: f-0
+    tags: playfield_active
   s_swmidorb:
     number: e-13
 

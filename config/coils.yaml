@@ -32,12 +32,12 @@ coils:
  # Magnets
   c_trmagr:
     number: e-15
-    default_pulse_ms: 90ms
-    default_hold_power: 0.12
+    default_pulse_ms: 100
+    default_hold_power: 0.375
   c_trmagl:
     number: e-14
-    default_pulse_ms: 90ms
-    default_hold_power: 0.12
+    default_pulse_ms: 100
+    default_hold_power: 0.375
 
  # Plunger & Trough
   c_plunger:
@@ -71,7 +71,7 @@ coils:
  # Vuks
   c_rightkicker_eject:
     number: e-8
-    default_pulse_ms: 95ms
+    default_pulse_ms: 150ms
   c_UrampUp001_eject:
     number: e-9
     default_pulse_ms: 80ms

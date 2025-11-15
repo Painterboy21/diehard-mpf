@@ -3,592 +3,526 @@
 #Port 1
 
 lights:
-  #plane_flasher:
-  f143:
+  l70:
     number: playfield-1-1
-    subtype: led  # NEED TO CHANGE BULB
+    subtype: led
     type: rgb
-  #plane_right
-  l117:
+  l120:
     number: playfield-1-2
     subtype: led
     type: rgb
     tags: GI
-  #plane_left
-  l116:  
+  f145:  
     number: playfield-1-3
     subtype: led
     type: rgb
-    tags: GI
-  #r_orbit:
-  l71:  
+  l121:  
     number: playfield-1-4
     subtype: led
     type: rgb
-  #plane_left_side:
-  l115:
+    tags: GI
+  f146:
     number: playfield-1-5
     subtype: led
-    type: rgb  # NEED TO CHANGE BULB
-    tags: GI
-  #brucie flasher:
-  f142:
+    type: rgb  
+  l114:
     number: playfield-1-6
     subtype: led
-    type: rgb  # NEED TO CHANGE BULB
-  #brucie_top:
-  l127:
+    type: rgb
+    tags: GI
+  l113:
     number: playfield-1-7
     subtype: led
-    type: rgb  # NEED TO CHANGE BULB
+    type: rgb 
     tags: GI  
-  #r_orbit_arrow:
-  l22:
+  l132: #Left-ramp spots #l132-l135 FP LUM RGB 
     number: playfield-1-8
     subtype: led
     type: rgb
-  #a_lock:
-  l61:  
+    tags: GI  
+  l112:  
     number: playfield-1-9
     subtype: led
     type: rgb
-  #captive_ball:
-  l52:
+    tags: GI  
+  l54:
     number: playfield-1-10
     subtype: led
     type: rgb
-  #r_orbit_bullet:
-  l53:
+  l18:
     number: playfield-1-11
     subtype: led
     type: rgb
-  #holly_y:
-  l34:  
+  l55:  
     number: playfield-1-12
     subtype: led
     type: rgb
-  #brucie_bottom
-  l109:
+  l61:
     number: playfield-1-13
     subtype: led
-    type: rgb  # NEED TO CHANGE BULB
-    tags: GI
-  #start_villian
-  l10:
+    type: rgb
+  l23:
     number: playfield-1-14
     subtype: led
     type: rgb
-  #ambush
-  l9:
+  l24:
     number: playfield-1-15
     subtype: led
     type: rgb
-  #extra_ball:
-  l63:
+  l126:
     number: playfield-1-16
     subtype: led
     type: rgb
-  #e:
-  l6:
+    tags: GI  
+  l118:
     number: playfield-1-17
     subtype: led
     type: rgb
-  #5x:
-  l14:
+    tags: GI  
+  l75:
     number: playfield-1-18
     subtype: led
     type: rgb
-  #3x:
-  l13:
+  l1:
     number: playfield-1-19
     subtype: led
     type: rgb
-  #4x:
-  l15:  
+  l124:  
     number: playfield-1-20
     subtype: led
     type: rgb
-  #Left-right sling spots #l136-l137 FP LUM RGB
-  l136:
+    tags: GI  
+  l2:
     number: playfield-1-21
     subtype: led
     type: rgb
     tags: GI
-  #katya:
-  l42:  
+  l125:  
     number: playfield-1-22
     subtype: led
     type: rgb
-  #karl:
-  l40:
+  l3:
     number: playfield-1-23
     subtype: led
     type: rgb
-  #yippe:
-  l8:  
+    tags: GI  
+  l119:  
     number: playfield-1-24
     subtype: led
     type: rgb
-  #simon:
-  l41:
+    tags: GI  
+  l133: #rear spot left and right pop bumpers #l133-l138-l130 FP LUM RGB 
     number: playfield-1-25
     subtype: led
     type: rgb
-  #hans:
-  l43:  
+    tags: GI  
+  l123:  
     number: playfield-1-26
     subtype: led
     type: rgb
-  #colonel stuart
-  l44:
+    tags: GI  
+  f144:
     number: playfield-1-27
     subtype: led
     type: rgb
-  #r_police:
-  f140:
+  l122:
     number: playfield-1-28
     subtype: led
     type: rgb
-  #r_sling:
-  l105:  
+    tags: GI  
+  l78:  
     number: playfield-1-29
     subtype: led
     type: rgb
-    tags: GI
-  #r_guide2:
-  l108:
+  l77:
     number: playfield-1-30
     subtype: led
     type: rgb
-    tags: GI
-  #r_guide1:
-  l104:
+  l76:
     number: playfield-1-31
     subtype: led
     type: rgb
-    tags: GI
-  #right_apron
-  l73:
-    number: playfield-1-32
-    subtype: led
-    type: rgb # NEED TO CHANGE BULB
     tags: GI
 
 
 #port2
 
-  #L113-l135 FP LUM RGB MAIN RAMP SPOTS
-  l113:
+  l112:
     number: playfield-2-1
     subtype: led
     type: rgb
     tags: GI
-  # Right main ramp
-  l112:  
+
+  l20:  
     number: playfield-2-2
     subtype: led
-    type: rgb  # NEED TO CHANGE BULB
-    tags: GI
-  #left_orbit
-  l70:
+    type: rgb
+
+  l31:
     number: playfield-2-3
     subtype: led
     type: rgb
-  #vault_flasher
-  f147:
+  
+  l50:
     number: playfield-2-4
     subtype: led
     type: rgb
-  #vault
-  l111:
+ 
+  l17:
     number: playfield-2-5
     subtype: led
     type: rgb
-    tags: GI
-  #left_orbit_arrow
-  l20:
+  
+  l32:
     number: playfield-2-6
     subtype: led
     type: rgb
-  #holly_l_1: 
-  l32:
+ 
+  l21:
     number: playfield-2-7
     subtype: led
     type: rgb
-  #nakatomi_arrow: 
-  l21:
+
+  l51:
     number: playfield-2-8
     subtype: led
     type: rgb
-  #nakatomi_lock: 
+
   l7:
     number: playfield-2-9
     subtype: led
     type: rgb
-  #holly_l_2: 
+
   l33:  
     number: playfield-2-10
     subtype: led
     type: rgb
-  #lightlock_r_nakatomi: 
+
   l16:
     number: playfield-2-11
     subtype: led
     type: rgb
-  #nakatomi_bullet: 
-  l51:  
+ 
+  l52:  
     number: playfield-2-12
     subtype: led
     type: rgb
-  #lightlock_l_nakatomi: 
-  l17:
+
+  l62:
     number: playfield-2-13
     subtype: led
     type: rgb
-  #orbit_bullet:
-  l50:
+
+  l117:
     number: playfield-2-14
     subtype: led
     type: rgb
-  #holly_o:
-  l31:
+    tags : GI
+
+  f143:
     number: playfield-2-15
     subtype: led
     type: rgb
-  #vault:
-  l60:
+
+  l116:
     number: playfield-2-16
     subtype: led
     type: rgb
-  #2x:
-  l12:
+    tags : GI
+
+  l71:
     number: playfield-2-17
     subtype: led
     type: rgb
-  #holly_h:
-  l30:
+
+  l127:
     number: playfield-2-18
     subtype: led
     type: rgb
-  #under phone
-  l110:
+    tags : GI
+
+  light003:
     number: playfield-2-19
     subtype: led
-    type: rgb # NEED TO CHANGE BULB
-    tags : GI
-  #central park right
-  l59:
+    type: rgb 
+
+  light002:
     number: playfield-2-20
     subtype: led
     type: rgb
-  #central park middle
-  l58:
+  
+  light003:
     number: playfield-2-21
     subtype: led
     type: rgb
-  #central park left
-  l57:
+
+  f142:
     number: playfield-2-22
     subtype: led
     type: rgb
-  #vault_light
-  l84:
+ 
+  l22:
     number: playfield-2-23
     subtype: led
     type: rgb
-    tags: GI
-  # under phone 2
-  l128:
+
+  l53:
     number: playfield-2-24
     subtype: led
-    type: rgb # NEED TO CHANGE BULB
-    tags: GI
-  #i:
-  l5:
+    type: rgb
+
+  l34:
     number: playfield-2-25
     subtype: led
     type: rgb
-  #d:
-  l4:
+
+  l109:
     number: playfield-2-26
     subtype: led
     type: rgb
-  #l_sling:
-  l103:
+    tags : GI
+
+  l10:
     number: playfield-2-27
     subtype: led
     type: grb
-    tags: GI
-  #l_police:
-  f141:
+   
+    l63:
     number: playfield-2-28
     subtype: led
     type: rgb
-  #l_guide1:
-  l107:
+
+  l9:
     number: playfield-2-29
     subtype: led
     type: rgb
-    tags: GI
-  #l_apron
-  l72:
+
+  l6:
     number: playfield-2-30
     subtype: led
     type: rgb
-    tags: GI
-  #l_guide2:
-  l102:
+
+  l105:
     number: playfield-2-31
     subtype: led
     type: rgb
     tags: GI
-  #DieHard ball lost
-  l29:
+
+  f141:
     number: playfield-2-32
     subtype: led
     type: rgb
 
 # port3
-  #right side of small ramp
-  l126:
+
+  l60:
     number: playfield-3-1
     subtype: led
-    type: rgb # need to change bulb
-    tags: GI
-  #l138-l130 FP LUM RGB BOARD
-  #Left-Right Pop Bumpers
-  l138:
+    type: rgb 
+
+  l12:
     number: playfield-3-2
     subtype: led
-    type: rgb  #under_right_bumper_plastic
-  l119:
+    type: rgb
+
+  l13:
     number: playfield-3-3
     subtype: led
-    type: rgb # need to change bulb
-    tags: GI
-  #r_ramp_arrow:
-  l24:
+    type: rgb
+
+  l40:
     number: playfield-3-4
     subtype: led
     type: rgb
-  #top_outer_ramp_arrow:
-  l23:
+
+  l136:  #part of the lum boards
+  #Left-right sling spots #l136-l137 FP LUM RGB
     number: playfield-3-5
     subtype: led
     type: rgb
-  #airplane_lock:
-  l62:
+
+  l14:
     number: playfield-3-6
     subtype: led
     type: rgb
-  #top_outer_ramp_bullet
-  l54:
+
+  l15:
     number: playfield-3-7
     subtype: led
     type: rgb
-  #right ramp bullet
-  l55:
+
+  l42:
     number: playfield-3-8
     subtype: led
     type: rgb
-  #multiplier
-  l18:
+
+  l8:
     number: playfield-3-9
     subtype: led
     type: rgb
-  #left side main ramp
-  l114:
+
+  l41:
     number: playfield-3-10
     subtype: led
-    type: rgb # need to change bulb
-    tags: GI
-  #left side main ramp 2
-  l132:
+    type: rgb
+
+  l44:
     number: playfield-3-11
     subtype: led
-    type: rgb # need to change bulb
-    tags: GI
-  #back right
-  l123:
+    type: rgb 
+
+  l43:
     number: playfield-3-12
     subtype: led
     type: rgb
-    tags: GI
-  #back right flasher
-  f144:
+
+  l106:
     number: playfield-3-13
     subtype: led
     type: rgb
-  #back right 2
-  l122:
+    tags : GI
+
+  l108:
     number: playfield-3-14
     subtype: led
     type: rgb
     tags: GI
-    #top_left_target:
-  l1:
+
+  l104:
     number: playfield-3-15
     subtype: led
     type: rgb
-    #above top_right_target:
-  l125:
+    tags: GI
+:
+  l73:
     number: playfield-3-16
-    subtype: led # need to change bulb
+    subtype: led 
     type: rgb
     tags: GI
-    #top_middle_target:
-  l2:
+
+  l134:
     number: playfield-3-17
     subtype: led
     type: rgb
-    #above top_left_target:
-  l124:
+    tags: GI
+
+  l29:
     number: playfield-3-18
-    subtype: led # need to change bulb
-    type: rgb
-    tags: GI
-  #top_right_target:
-  l3:
-    number: playfield-3-19
     subtype: led
     type: rgb
-  #top_explosive:
-  l75:
-    number: playfield-3-20
+
+  l82: #not in the game yet
+    number: playfield-3-18
     subtype: led
     type: rgb
-  #right bumper gi 2
-  l118:
-    number: playfield-3-21
-    subtype: led # need to change bulb
-    type: rgb
-    tags: GI
-  #back left
-  l120:
-    number: playfield-3-22
-    subtype: led 
-    type: rgb
-    tags: GI
-  #back left flasher
-  f145:
-    number: playfield-3-23
-    subtype: led 
-    type: rgb
-  #back left 1
-  l121:
-    number: playfield-3-24
-    subtype: led 
-    type: rgb
-    tags: GI
-  #central park middle
-  l77:  
-    number: playfield-3-25
+
+  l83: #not in the game yet
+    number: playfield-3-18
     subtype: led
     type: rgb
-  #central park left
-  l76:  
-    number: playfield-3-26
+
+  l80: #not in the game yet
+    number: playfield-3-18
     subtype: led
     type: rgb
-  #central park right 
-  l78:
-    number: playfield-3-27
-    subtype: led
+
+  l81: #not in the game yet
+    number: playfield-3-18
+    subtype: led b
     type: rgb
+
 
 #port4
 
-#still to do maybe
-
-#left police reverse lights
-  l81:
+    f147:
     number: playfield-4-1
     subtype: led
     type: rgb
-    tags: GI
-#left sling gi
-  l100:
+
+  l84:
     number: playfield-4-2
     subtype: led
     type: rgb
     tags: GI
-#right police reverse lights
-  l83:
+
+  l59:
     number: playfield-4-3
     subtype: led
     type: rgb
-    tags: GI
-#r sling gi
-  l106:
+
+  l58:
     number: playfield-4-4
     subtype: led
     type: rgb
-    tags: GI
-#right apron writing
-  l134:
+
+  l57:
     number: playfield-4-5
     subtype: led
     type: rgb
-#left under apron
-  l131:
+
+  l110:
     number: playfield-4-6
     subtype: led
     type: rgb
     tags: GI
-#top playfield spot
-  l133:
+
+  l128:
     number: playfield-4-7
     subtype: led
     type: rgb
-    tags: GI
-#tunnel
-  light001:
+
+  l60:
     number: playfield-4-8
     subtype: led
     type: rgb
-#tunne2
-  light002:
+
+  l4:
     number: playfield-4-9
     subtype: led
     type: rgb
-#tunne3
-  light003:
+
+  l5:
     number: playfield-4-10
     subtype: led
     type: rgb
-#right police front lights
-  l82:
+
+  l103:
     number: playfield-4-11
     subtype: led
     type: rgb
-#NAKTOMI
-  f146:
+    tags: GI
+
+  F140:
     number: playfield-4-12
     subtype: led
     type: rgb
-#LEFT POLCIE CAR
-  l80:
+
+  l100:
     number: playfield-4-13
     subtype: led
     type: rgb
+    tags: GI
 
-
-#part of the lum boards
-  #Left-right sling spots #l136-l137 FP LUM RGB
-  l137:
+  l102:
     number: playfield-4-14
     subtype: led
     type: rgb
     tags: GI
-  #L113-l135 FP LUM RGB MAIN RAMP SPOTS
-  l135:
+
+  l107:
     number: playfield-4-15
     subtype: led
     type: rgb
     tags: GI
-  #l138-l130 FP LUM RGB BOARD
-  #Left-Right Pop Bumpers
-  l130:
+
+  l72:
     number: playfield-4-16
     subtype: led
     type: rgb
+    tags: GI
+
+  l131:
+    number: playfield-4-16
+    subtype: led
+    type: rgb
+    tags: GI
