@@ -1,0 +1,128 @@
+2025-11-15 17:41:40,232 : INFO : root : Loading config.
+2025-11-15 17:41:40,232 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2025-11-15 17:41:40,232 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\23e177fce4903a9a69d69f474fa748a1.mpf_cache
+2025-11-15 17:41:40,308 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\2f9bbeccf93c71693a410725897ab70d.mpf_cache
+2025-11-15 17:41:40,308 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\71986c9cb54d44e1ee87b7d4d0f68024.mpf_cache
+2025-11-15 17:41:40,308 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\2f9bbeccf93c71693a410725897ab70d.mpf_cache
+2025-11-15 17:41:40,320 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\460998002e273cec26232c9157d92984.mpf_cache
+2025-11-15 17:41:40,320 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\1113c1d20ec4e70f79a7ed8de50ab69e.mpf_cache
+2025-11-15 17:41:40,320 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\668dbdbfcbfe997663fcbdfe0871c0b4.mpf_cache
+2025-11-15 17:41:40,323 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\diehard-mpf\shows\.\attract_christmas.yaml.
+2025-11-15 17:41:40,380 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\shows\.\attract_christmas.yaml
+2025-11-15 17:41:40,380 : INFO : ConfigProcessor : Config file cache created: C:\Users\carr-\AppData\Local\Temp\6a4847c7210b75a304ae3e1d0e125b6a.mpf_cache
+2025-11-15 17:41:40,380 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\5bdb9da15c9005c4036d70c7ddf4c03f.mpf_cache
+2025-11-15 17:41:40,380 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\4ef2cae97e908c683695ed521c4a6650.mpf_cache
+2025-11-15 17:41:40,380 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\3675271a3c90b9f1f0f947db698ba341.mpf_cache
+2025-11-15 17:41:40,380 : INFO : Machine : Mission Pinball Framework Core Engine v0.80.0.dev6
+2025-11-15 17:41:40,380 : INFO : Machine : Command line arguments: {'no_load_cache': False, 'create_config_cache': True, 'bcp': False, 'configfile': ['config.yaml'], 'force_assets_load': False, 'platform_integration_test': False, 'jsonlogging': False, 'logfile': 'logs\\2025-11-15-17-41-40-mpf-LAPTOP-99TN7EPH.log', 'pause': False, 'production': False, 'text_ui': False, 'loglevel': 15, 'consoleloglevel': 10, 'force_platform': 'smart_virtual', 'syslog_address': None, 'full_logfile_path': 'C:\\Users\\carr-\\Documents\\development\\diehard-mpf\\logs\\2025-11-15-17-41-40-mpf-LAPTOP-99TN7EPH.log'}
+2025-11-15 17:41:40,380 : INFO : Machine : MPF path: C:\Users\carr-\Documents\development\mpf080\mpf
+2025-11-15 17:41:40,380 : INFO : Machine : Machine path: C:\Users\carr-\Documents\development\diehard-mpf
+2025-11-15 17:41:40,380 : INFO : Machine : Platform: win32
+2025-11-15 17:41:40,380 : INFO : Machine : Python executable location: C:\Users\carr-\Documents\development\mpf080\mpfenv\Scripts\python.exe
+2025-11-15 17:41:40,380 : INFO : Machine : Python version: 3.9.13 (64-bit)
+2025-11-15 17:41:40,397 : INFO : Machine : Initializing MPF...
+2025-11-15 17:41:40,463 : INFO : EventManager : Event: ======'machine_var_credits_string'====== Args={'value': 'FREE PLAY', 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,482 : INFO : EventManager : Event: ======'machine_var_fast_audio_headphones_volume'====== Args={'value': 10, 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,482 : INFO : EventManager : Event: ======'machine_var_fast_audio_main_volume'====== Args={'value': 60, 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,482 : INFO : EventManager : Event: ======'machine_var_master_volume'====== Args={'value': 0.5, 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,482 : INFO : EventManager : Event: ======'machine_var_player1_score'====== Args={'value': 17120, 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,482 : INFO : EventManager : Event: ======'machine_var_var_which_attract'====== Args={'value': 0, 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,482 : INFO : EventManager : Event: ======'machine_var_mpf_version'====== Args={'value': 'Mission Pinball Framework v0.80.0.dev6', 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,482 : INFO : EventManager : Event: ======'machine_var_mpf_extended_version'====== Args={'value': 'Mission Pinball Framework v0.80.0.dev6, Config version:6, Show version: 6, BCP version:1.1', 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,482 : INFO : EventManager : Event: ======'machine_var_python_version'====== Args={'value': '3.9.13', 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,527 : INFO : EventManager : Event: ======'machine_var_platform'====== Args={'value': 'Windows-10-10.0.26100-SP0', 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,527 : INFO : EventManager : Event: ======'machine_var_platform_system'====== Args={'value': 'Windows', 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,527 : INFO : EventManager : Event: ======'machine_var_platform_release'====== Args={'value': '10', 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,527 : INFO : EventManager : Event: ======'machine_var_platform_version'====== Args={'value': '10.0.26100', 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,527 : INFO : EventManager : Event: ======'machine_var_platform_machine'====== Args={'value': 'AMD64', 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,527 : INFO : EventManager : Event: ======'machine_var_log_file_path'====== Args={'value': 'C:\\Users\\carr-\\Documents\\development\\diehard-mpf\\logs\\2025-11-15-17-41-40-mpf-LAPTOP-99TN7EPH.log', 'prev_value': None, 'change': True}
+2025-11-15 17:41:40,527 : INFO : EventManager : Event: ======'init_phase_1'====== Args={}
+2025-11-15 17:41:40,569 : INFO : EventManager : Event: ======'drop_target_bank_bank_up'====== Args={}
+2025-11-15 17:41:40,569 : INFO : EventManager : Event: ======'drop_target_bank_bank1_up'====== Args={}
+2025-11-15 17:41:40,569 : INFO : EventManager : Event: ======'drop_target_bank_bank2_up'====== Args={}
+2025-11-15 17:41:40,569 : INFO : EventManager : Event: ======'init_phase_2'====== Args={}
+2025-11-15 17:41:40,569 : INFO : SwitchController : Found active switch: ('d-29', <Platform.SmartVirtual>) <switch.s_trough1>
+2025-11-15 17:41:40,569 : INFO : SwitchController : Found active switch: ('d-24', <Platform.SmartVirtual>) <switch.s_trough2>
+2025-11-15 17:41:40,569 : INFO : SwitchController : Found active switch: ('d-25', <Platform.SmartVirtual>) <switch.s_trough3>
+2025-11-15 17:41:40,569 : INFO : SwitchController : Found active switch: ('d-26', <Platform.SmartVirtual>) <switch.s_trough4>
+2025-11-15 17:41:40,569 : INFO : SwitchController : Found active switch: ('d-27', <Platform.SmartVirtual>) <switch.s_trough5>
+2025-11-15 17:41:40,569 : INFO : SwitchController : Found active switch: ('d-28', <Platform.SmartVirtual>) <switch.s_trough6>
+2025-11-15 17:41:40,576 : INFO : ball_device.bd_trough : BCH: Initial count: 6
+2025-11-15 17:41:40,577 : INFO : ball_device.bd_trough : State: idle
+2025-11-15 17:41:40,577 : INFO : ball_device.bd_plunger : BCH: Initial count: 0
+2025-11-15 17:41:40,577 : INFO : ball_device.bd_plunger : State: idle
+2025-11-15 17:41:40,577 : INFO : ball_device.kickervault1_eject : BCH: Initial count: 0
+2025-11-15 17:41:40,577 : INFO : ball_device.kickervault1_eject : State: idle
+2025-11-15 17:41:40,577 : INFO : ball_device.rightkicker : BCH: Initial count: 0
+2025-11-15 17:41:40,577 : INFO : ball_device.rightkicker : State: idle
+2025-11-15 17:41:40,578 : INFO : ball_device.UrampUp001 : BCH: Initial count: 0
+2025-11-15 17:41:40,578 : INFO : ball_device.UrampUp001 : State: idle
+2025-11-15 17:41:40,578 : INFO : ball_device.rightvuk : BCH: Initial count: 0
+2025-11-15 17:41:40,578 : INFO : ball_device.rightvuk : State: idle
+2025-11-15 17:41:40,578 : INFO : ball_device.towervuk : BCH: Initial count: 0
+2025-11-15 17:41:40,578 : INFO : ball_device.towervuk : State: idle
+2025-11-15 17:41:40,579 : INFO : ball_device.airplane : BCH: Initial count: 0
+2025-11-15 17:41:40,579 : INFO : ball_device.airplane : State: idle
+2025-11-15 17:41:40,587 : INFO : EventManager : Event: ======'init_phase_3'====== Args={}
+2025-11-15 17:41:40,594 : ERROR : asyncio : Exception in callback EventManager._queue_task_done(<Task finishe... [\'f140\']')>)
+handle: <Handle EventManager._queue_task_done(<Task finishe... [\'f140\']')>)>
+Traceback (most recent call last):
+  File "C:\Users\carr-\AppData\Local\Programs\Python\Python39\lib\asyncio\events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\events.py", line 795, in _queue_task_done
+    future.result()
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\events.py", line 708, in _run_handlers_sequential
+    handler.callback(queue=queue, **merged_kwargs)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\show_controller.py", line 53, in _load_shows
+    self.machine.shows[show_name].load(show_config)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\assets\show.py", line 171, in load
+    self._process_step_actions(step, actions)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\assets\show.py", line 201, in _process_step_actions
+    raise e
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\assets\show.py", line 197, in _process_step_actions
+    self.machine.show_controller.show_players[key].validate_config_entry(value, self.name)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\config_players\device_config_player.py", line 56, in validate_config_entry
+    raise e
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\config_players\device_config_player.py", line 52, in validate_config_entry
+    self._validate_config_item(device, device_settings))
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\config_players\device_config_player.py", line 85, in _validate_config_item
+    devices = self._expand_device(device)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\config_players\device_config_player.py", line 114, in _expand_device
+    return self.raise_config_error(
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\logging.py", line 175, in raise_config_error
+    raise ConfigFileError(msg, error_no, self.log.name if self.log else "", context, self._url_base) \
+mpf.exceptions.config_file_error.ConfigFileError: Config File Error in light_player: Show "attract_christmas" >> Failed to load config player attract_christmas:lights with settings {'f143': '000000%100', 'l117': '000000%100', 'l116': '000000%100', 'l71': '000000%100', 'l115': '000000%100', 'f142': '000000%100', 'l127': '000000%100', 'l22': '000000%100', 'l61': '000000%100', 'l52': '000000%100', 'l53': '000000%100', 'l34': '000000%100', 'l109': '000000%100', 'l10': '000000%100', 'l9': '000000%100', 'l63': '000000%100', 'l6': '000000%100', 'l14': '000000%100', 'l13': '000000%100', 'l15': '000000%100', 'l136': '000000%100', 'l42': '000000%100', 'l40': '000000%100', 'l8': '000000%100', 'l41': '000000%100', 'l43': '000000%100', 'l44': '000000%100', 'f141': '000000%100', 'l105': '000000%100', 'l108': '000000%100', 'l104': '000000%100', 'l73': '000000%100', 'l113': '000000%100', 'l112': '000000%100', 'l70': '000000%100', 'f147': '000000%100', 'l111': '000000%100', 'l20': '000000%100', 'l32': '000000%100', 'l21': '000000%100', 'l7': '000000%100', 'l33': '000000%100', 'l16': '000000%100', 'l51': '000000%100', 'l17': '000000%100', 'l50': '000000%100', 'l31': '000000%100', 'l60': '000000%100', 'l12': '000000%100', 'l30': '000000%100', 'l110': '000000%100', 'l59': '000000%100', 'l58': '000000%100', 'l57': '000000%100', 'l84': '000000%100', 'l128': '000000%100', 'l5': '000000%100', 'l4': '000000%100', 'l103': '000000%100', 'f140': '000000%100', 'l107': '000000%100', 'l72': '000000%100', 'l102': '000000%100', 'l29': '000000%100', 'l126': '000000%100', 'l138': '000000%100', 'l119': '000000%100', 'l24': '000000%100', 'l23': '000000%100', 'l62': '000000%100', 'l54': '000000%100', 'l55': '000000%100', 'l18': '000000%100', 'l114': '000000%100', 'l132': '000000%100', 'l123': '000000%100', 'f144': '000000%100', 'l122': '000000%100', 'l1': '000000%100', 'l125': '000000%100', 'l2': '000000%100', 'l124': '000000%100', 'l3': '000000%100', 'l75': '000000%100', 'l118': '000000%100', 'l120': '000000%100', 'f145': '000000%100', 'l121': '000000%100', 'l77': '000000%100', 'l76': '000000%100', 'l78': '000000%100', 'l81': '000000%100', 'l100': '000000%100', 'l83': '000000%100', 'l106': '000000%100', 'l134': '000000%100', 'l131': '000000%100', 'l133': '000000%100', 'l82': '000000%100', 'f146': '000000%100', 'l80': '000000%100', 'l137': '000000%100', 'l135': '000000%100', 'l130': '000000%100'} >> Could not find a lights device with name or tag f140, from list ['f140'] Error Code: CFE-light_player-101 (https://missionpinball.org/logs)
+2025-11-15 17:41:40,652 : INFO : Machine : Starting the main run loop with active modes: []
+2025-11-15 17:41:40,652 : WARNING : Machine : Attract mode is not active, game will not be playable. Please check your attract mode configuration.
+2025-11-15 17:41:40,652 : INFO : Machine : Shutting down...
+2025-11-15 17:41:40,652 : INFO : EventManager : Event: ======'shutdown'====== Args={}
+2025-11-15 17:41:41,660 : ERROR : Machine : Runtime Exception
+Traceback (most recent call last):
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\machine.py", line 808, in _run_loop
+    raise self._exception['exception']
+  File "C:\Users\carr-\AppData\Local\Programs\Python\Python39\lib\asyncio\events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\events.py", line 795, in _queue_task_done
+    future.result()
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\events.py", line 708, in _run_handlers_sequential
+    handler.callback(queue=queue, **merged_kwargs)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\show_controller.py", line 53, in _load_shows
+    self.machine.shows[show_name].load(show_config)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\assets\show.py", line 171, in load
+    self._process_step_actions(step, actions)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\assets\show.py", line 201, in _process_step_actions
+    raise e
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\assets\show.py", line 197, in _process_step_actions
+    self.machine.show_controller.show_players[key].validate_config_entry(value, self.name)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\config_players\device_config_player.py", line 56, in validate_config_entry
+    raise e
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\config_players\device_config_player.py", line 52, in validate_config_entry
+    self._validate_config_item(device, device_settings))
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\config_players\device_config_player.py", line 85, in _validate_config_item
+    devices = self._expand_device(device)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\config_players\device_config_player.py", line 114, in _expand_device
+    return self.raise_config_error(
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\logging.py", line 175, in raise_config_error
+    raise ConfigFileError(msg, error_no, self.log.name if self.log else "", context, self._url_base) \
+mpf.exceptions.config_file_error.ConfigFileError: Config File Error in light_player: Show "attract_christmas" >> Failed to load config player attract_christmas:lights with settings {'f143': '000000%100', 'l117': '000000%100', 'l116': '000000%100', 'l71': '000000%100', 'l115': '000000%100', 'f142': '000000%100', 'l127': '000000%100', 'l22': '000000%100', 'l61': '000000%100', 'l52': '000000%100', 'l53': '000000%100', 'l34': '000000%100', 'l109': '000000%100', 'l10': '000000%100', 'l9': '000000%100', 'l63': '000000%100', 'l6': '000000%100', 'l14': '000000%100', 'l13': '000000%100', 'l15': '000000%100', 'l136': '000000%100', 'l42': '000000%100', 'l40': '000000%100', 'l8': '000000%100', 'l41': '000000%100', 'l43': '000000%100', 'l44': '000000%100', 'f141': '000000%100', 'l105': '000000%100', 'l108': '000000%100', 'l104': '000000%100', 'l73': '000000%100', 'l113': '000000%100', 'l112': '000000%100', 'l70': '000000%100', 'f147': '000000%100', 'l111': '000000%100', 'l20': '000000%100', 'l32': '000000%100', 'l21': '000000%100', 'l7': '000000%100', 'l33': '000000%100', 'l16': '000000%100', 'l51': '000000%100', 'l17': '000000%100', 'l50': '000000%100', 'l31': '000000%100', 'l60': '000000%100', 'l12': '000000%100', 'l30': '000000%100', 'l110': '000000%100', 'l59': '000000%100', 'l58': '000000%100', 'l57': '000000%100', 'l84': '000000%100', 'l128': '000000%100', 'l5': '000000%100', 'l4': '000000%100', 'l103': '000000%100', 'f140': '000000%100', 'l107': '000000%100', 'l72': '000000%100', 'l102': '000000%100', 'l29': '000000%100', 'l126': '000000%100', 'l138': '000000%100', 'l119': '000000%100', 'l24': '000000%100', 'l23': '000000%100', 'l62': '000000%100', 'l54': '000000%100', 'l55': '000000%100', 'l18': '000000%100', 'l114': '000000%100', 'l132': '000000%100', 'l123': '000000%100', 'f144': '000000%100', 'l122': '000000%100', 'l1': '000000%100', 'l125': '000000%100', 'l2': '000000%100', 'l124': '000000%100', 'l3': '000000%100', 'l75': '000000%100', 'l118': '000000%100', 'l120': '000000%100', 'f145': '000000%100', 'l121': '000000%100', 'l77': '000000%100', 'l76': '000000%100', 'l78': '000000%100', 'l81': '000000%100', 'l100': '000000%100', 'l83': '000000%100', 'l106': '000000%100', 'l134': '000000%100', 'l131': '000000%100', 'l133': '000000%100', 'l82': '000000%100', 'f146': '000000%100', 'l80': '000000%100', 'l137': '000000%100', 'l135': '000000%100', 'l130': '000000%100'} >> Could not find a lights device with name or tag f140, from list ['f140'] Error Code: CFE-light_player-101 (https://missionpinball.org/logs)
+2025-11-15 17:41:41,660 : INFO : root : MPF run loop ended.

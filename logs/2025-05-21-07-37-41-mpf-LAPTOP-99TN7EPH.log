@@ -1,0 +1,6 @@
+2025-05-21 07:37:41,783 : INFO : root : Loading config.
+2025-05-21 07:37:42,089 : INFO : ConfigProcessor : Config spec file cache created: C:\Users\carr-\AppData\Local\Temp\config_spec.mpf_cache
+2025-05-21 07:37:42,090 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2025-05-21 07:37:42,090 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\AppData\Local\Programs\Python\Python39\lib\site-packages\mpf\mpfconfig.yaml.
+2025-05-21 07:37:42,161 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\AppData\Local\Programs\Python\Python39\lib\site-packages\mpf\mpfconfig.yaml
+2025-05-21 07:37:42,161 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\diehard-mpf\config\config.yaml.

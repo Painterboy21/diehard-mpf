@@ -5,10 +5,10 @@ mode:
   stop_events: game_start, service_mode_entered
   priority: 10
 
-show_player: 
-  mode_attract_started: 
-    attract_christmas: 
-      key: key_attract_christmas
+#show_player: 
+#  mode_attract_started: 
+#    attract_christmas: 
+#      key: key_attract_christmas
 
 
 slide_player: 
