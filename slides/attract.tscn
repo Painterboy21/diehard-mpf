@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dnfxt4jon43vt"]
 
 [ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_r1mnt"]
-[ext_resource type="Texture2D" uid="uid://blu2kl8ceqje5" path="res://godot-media/images/backglassHOMEBREWsized.png" id="2_m2s46"]
+[ext_resource type="Texture2D" uid="uid://dya2h6g72t11e" path="res://godot-media/images/VRscreenshot.png.bdfb8687813995e02d6882ea6352f8d5.png" id="2_m2s46"]
 
 [node name="Attract" type="Control"]
 layout_mode = 3
@@ -14,6 +14,6 @@ script = ExtResource("1_r1mnt")
 metadata/_custom_type_script = "uid://cdwas3gbf7w3g"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(961.844, 542)
-scale = Vector2(0.564401, 0.505555)
+position = Vector2(961, 547)
+scale = Vector2(1.1697, 1.01296)
 texture = ExtResource("2_m2s46")
