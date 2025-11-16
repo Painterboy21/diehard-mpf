@@ -196,7 +196,7 @@ machine:
     balls_installed: 6
 
 game:
-    balls_per_game:
+    balls_per_game: 3
     max_players: 4
 
 playfields:
