@@ -114,7 +114,7 @@ lights:
     subtype: led
     type: rgb
     tags: GI  
-  l133: #rear spot left and right pop bumpers #l133-l138-l130 FP LUM RGB  
+  l138: #rear spot left and right pop bumpers #l133-l138-l130 FP LUM RGB  
     number: playfield-1-26
     subtype: led
     type: rgb
@@ -362,6 +362,23 @@ lights:
     number: playfield-3-18
     subtype: led
     type: rgb
+  l82: #not in the game yet
+    number: playfield-3-19
+    subtype: led
+    type: rgb
+  l83: #not in the game yet
+    number: playfield-3-20
+    subtype: led
+    type: rgb
+  l80: #not in the game yet
+    number: playfield-3-21
+    subtype: led
+    type: rgb
+  l81: #not in the game yet
+    number: playfield-3-22
+    subtype: led
+    type: rgb
+
 
 
 
@@ -414,7 +431,7 @@ lights:
     subtype: led
     type: rgb
     tags: GI
-  F140:
+  f140:
     number: playfield-4-12
     subtype: led
     type: rgb
