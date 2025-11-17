@@ -74,7 +74,7 @@ func _process(_delta: float) -> void:
 
 ## Handle connection validation before public on_connect method
 func _on_connect(payload: Dictionary) -> void:
-	if payload.controller_name == "Mission Pinball Framework":
+	if payload.controller_name == "Mission Pinball Framework1":
 		if not MPF.validate_min_version(payload.controller_version, MPF.MPF_MIN_VERSION):
 			self.log.error("MPF %s does not meet GMC's minimum version requirement %s", [payload.controller_version, MPF.MPF_MIN_VERSION])
 			self.stop(true)
