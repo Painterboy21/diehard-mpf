@@ -3,11 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bqijhm3y30014"
-valid=false
+path="res://.godot/imported/15bullets.png-3408cec856f7cbe5b391d218fdd0fa9e.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://godot-media/images/Bullets/15bullets.png"
+dest_files=["res://.godot/imported/15bullets.png-3408cec856f7cbe5b391d218fdd0fa9e.ctex"]
 
 [params]
 
