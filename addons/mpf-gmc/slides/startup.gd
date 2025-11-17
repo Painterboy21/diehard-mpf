@@ -21,18 +21,18 @@ func _on_status(new_status):
 	var message: String
 	if new_status == ServerStatus.ERROR:
 		target_child = error_node
-		message = "Error: Unable to connect to MPF"
+		message = "Error: Unable to connect"
 		status_node.hide()
 	else:
 		target_child = status_node
 		error_node.hide()
 		match new_status:
 			ServerStatus.WAITING:
-				message = "Waiting for MPF..."
+				message = "Waiting to connect..."
 			ServerStatus.LAUNCHING:
-				message = "Launching MPF..."
+				message = "Launching..."
 			ServerStatus.CONNECTED:
-				message = "Connected to MPF"
+				message = "Connected"
 			ServerStatus.IDLE:
 				message = ""
 	target_child.text = message

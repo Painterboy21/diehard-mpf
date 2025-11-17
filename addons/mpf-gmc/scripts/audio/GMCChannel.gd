@@ -38,7 +38,8 @@ func play_with_settings(settings: Dictionary) -> AudioStream:
 		printerr("Attempting to play on channel %s with no stream. %s ", [self, settings])
 		return
 
-	self.log.debug("playing %s (%s) on %s with settings %s", [self.stream.resource_path, self.stream, self, settings])
+	self.log.debug("%s playing %s (%s) at volume %s with settings %s",
+		[self, self.stream.resource_path, self.stream, db_to_linear(self.volume_db), settings])
 	self.stream.set_meta("context", settings.context)
 	self.stream.set_meta("key", settings.key)
 	self.stream_paused = false
@@ -55,7 +56,11 @@ func play_with_settings(settings: Dictionary) -> AudioStream:
 			if self.stream is AudioStreamOggVorbis or self.stream is AudioStreamMP3:
 				self.stream.loop = true
 			elif self.stream is AudioStreamWAV:
-				self.stream.loop_mode = 1
+				self.stream.loop_mode = AudioStreamWAV.LoopMode.LOOP_FORWARD
+				# This file might have been imported with a loop end, respect that if present
+				if not self.stream.loop_end:
+					# Loop end is in samples, so multiple sample rate * length
+					self.stream.loop_end = self.stream.mix_rate * self.stream.get_length()
 			else:
 				self._connect_loop(settings["loops"])
 		else:

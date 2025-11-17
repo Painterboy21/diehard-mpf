@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ds4gduf8660uj"]
+[gd_scene load_steps=12 format=3 uid="uid://ds4gduf8660uj"]
 
 [ext_resource type="Script" uid="uid://5byr4rygjvxc" path="res://addons/mpf-gmc/classes/mpf_window.gd" id="1_ixxnq"]
 [ext_resource type="Shader" uid="uid://jgw27wdj7i0k" path="res://addons/mpf-gmc/resources/virtual_dmd.gdshader" id="2_cbmcr"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://belkug6sa4arr" path="res://addons/mpf-gmc/slides/startup.tscn" id="3_8nbga"]
 [ext_resource type="Shader" uid="uid://by7o1di8t232m" path="res://addons/mpf-gmc/resources/dmd_dots.gdshader" id="5_0sixv"]
 [ext_resource type="Shader" uid="uid://bbkxs4vw31fn5" path="res://addons/mpf-gmc/resources/pixelate.gdshader" id="5_m6y8w"]
+[ext_resource type="Script" uid="uid://cjd7bgf56g7b5" path="res://addons/mpf-gmc/slides/right_click_menu.gd" id="7_t2qq6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vnlqf"]
 shader = ExtResource("2_cbmcr")
@@ -106,3 +107,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="RightClickMenu" type="PopupMenu" parent="."]
+allow_search = false
+prefer_native_menu = true
+script = ExtResource("7_t2qq6")
