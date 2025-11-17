@@ -188,9 +188,10 @@ texture = ExtResource("13_735fb")
 
 [node name="bullets" type="Control" parent="."]
 anchors_preset = 0
-offset_right = 1920.0
-offset_bottom = 1086.0
+anchor_right = 1.0
+anchor_bottom = 1.00556
 script = ExtResource("15_gvfig")
+metadata/_edit_use_anchors_ = true
 
 [node name="1Bullets" type="Sprite2D" parent="bullets"]
 position = Vector2(1806.06, 435.58)
