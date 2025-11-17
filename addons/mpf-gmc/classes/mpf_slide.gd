@@ -5,6 +5,9 @@ var _widgets: Control
 
 ## A scene root node for creating a Slide that can be added to a display stack using events and the slide_player.
 
+## If true, this slide will not be considered "active" in the slide stack
+@export var mask_from_active: bool = false
+
 func initialize(n: String, settings: Dictionary, c: String, p: int = 0, kwargs: Dictionary = {}) -> void:
 	# The node name attribute is the name of the root node, which could be
 	# anything or case-sensitive. Set an explicit key instead, using the name.
@@ -14,6 +17,7 @@ func process_widget(widget_name: String, action: String, settings: Dictionary, c
 	if not self._widgets:
 		self._widgets = Control.new()
 		self._widgets.name = "_%s_widgets" % self.name
+		self._widgets.set_anchors_and_offsets_preset(PRESET_FULL_RECT)
 		self.add_child(self._widgets)
 	self.process_action(widget_name, self._widgets.get_children(), action, settings, c, p, kwargs)
 

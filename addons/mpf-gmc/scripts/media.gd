@@ -11,16 +11,26 @@ var sounds := {}
 
 func _enter_tree() -> void:
 	# Look for an exported traversal file
-	if ResourceLoader.exists("res://_media.res"):
-		self.log.info("Retrieving exported media tree traversal.")
-		# Cannot use preload because the file may not exist
-		var traversal = load("res://_media.res")
-		for m in ["slides", "sounds", "widgets"]:
-			for k in traversal[m]:
-				self[m][k] = traversal[m][k]
-	else:
+	if OS.is_debug_build():
 		self.log.info("Traversing directory tree for media.")
 		self.generate_traversal()
+		var traversal = {
+			"slides": self.slides,
+			"sounds": self.sounds,
+			"widgets": self.widgets,
+		}
+		var traversal_data = PackedDataContainer.new()
+		traversal_data.pack(traversal)
+		ResourceSaver.save(traversal_data, "res://_media.res")
+	else:
+		print("Running in release mode")
+		if ResourceLoader.exists("res://_media.res"):
+			self.log.info("Retrieving exported media tree traversal.")
+			# Cannot use preload because the file may not exist
+			var traversal = load("res://_media.res")
+			for m in ["slides", "sounds", "widgets"]:
+				for k in traversal[m]:
+					self[m][k] = traversal[m][k]
 
 	self.log.debug("Generated slide lookups: %s", slides)
 	self.log.debug("Generated widget lookups: %s", widgets)

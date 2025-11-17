@@ -148,7 +148,6 @@ func _on_player_added(total_players: int) -> void:
 
 func _calculate_player_value() -> bool:
 	var mpf_player_num = MPF.game.player.get("number")
-	MPF.log.info("MPF player number: %s", mpf_player_num)
 	if not mpf_player_num:
 		MPF.log.warning("MPFVariable '%s' is a player variable and should only exist in game modes.", self.name)
 		return false
