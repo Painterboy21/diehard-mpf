@@ -282,22 +282,6 @@ lights:
     number: playfield-2-32
     subtype: led
     type: rgb
-  l137:
-    number: playfield-2-33
-    subtype: led
-    type: rgb
-  l135:
-    number: playfield-2-34
-    subtype: led
-    type: rgb
-  l133:
-    number: playfield-2-35
-    subtype: led
-    type: rgb
-  l130:
-    number: playfield-2-36
-    subtype: led
-    type: rgb
 
 # port3
   l60:
