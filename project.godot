@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 MPF="*res://addons/mpf-gmc/mpf_gmc.gd"
+Settings="*res://settings.gd"
 
 [display]
 

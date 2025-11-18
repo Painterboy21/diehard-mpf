@@ -65,3 +65,19 @@ random_event_player:
 
 
 
+sound_player: 
+  flash_left_sling_red: 
+    sling_1: 
+      action: play
+  flash_left_sling_blue: 
+    sling_2: 
+      action: play
+  flash_right_sling_red: 
+    sling_2: 
+      action: play
+  flash_right_sling_blue: 
+    sling_1: 
+      action: play
+
+
+
