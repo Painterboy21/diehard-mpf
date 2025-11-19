@@ -62,22 +62,40 @@ random_event_player:
     events:
       flash_right_slingshot_red: 1
       flash_right_slingshot_blue: 1
-
-
+  mode_base_started: 
+    events:
+      gameplay_music_1: 1
+      gameplay_music_2: 1
+      gameplay_music_3: 1
+      gameplay_music_4: 1
+    scope: player
 
 sound_player: 
-  flash_left_sling_red: 
+  gameplay_music_1: 
+    gameplay_music_beethoven: 
+      action: play
+  gameplay_music_2: 
+    gameplay_music_assault: 
+      action: play
+  gameplay_music_3: 
+    gameplay_music_finlandia: 
+      action: play
+  gameplay_music_4: 
+    gameplay_music_battle: 
+      action: play
+  flash_left_slingshot_red: 
     sling_1: 
       action: play
-  flash_left_sling_blue: 
+  flash_left_slingshot_blue: 
     sling_2: 
       action: play
-  flash_right_sling_red: 
+  flash_right_slingshot_red: 
     sling_2: 
       action: play
-  flash_right_sling_blue: 
+  flash_right_slingshot_blue: 
     sling_1: 
       action: play
+
 
 
 

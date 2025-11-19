@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="MPFSoundAsset" load_steps=4 format=3 uid="uid://ct63eh38ruood"]
+
+[ext_resource type="Script" uid="uid://cr71mfoc2ttd5" path="res://addons/mpf-gmc/classes/mpf_sound_marker.gd" id="1_8bwwk"]
+[ext_resource type="Script" uid="uid://biw1dfpewxtuv" path="res://addons/mpf-gmc/classes/mpf_sound.gd" id="2_u0b6s"]
+[ext_resource type="AudioStream" uid="uid://c5rlogotu65gx" path="res://sounds/finlandia_j_sibelius_.mp3" id="3_8bwwk"]
+
+[resource]
+script = ExtResource("2_u0b6s")
+stream = ExtResource("3_8bwwk")
+bus = "music"
+fade_in = 0.0
+fade_out = 0.0
+loops = 0
+start_at = 0.0
+max_queue_time = 0.0
+markers = Array[ExtResource("1_8bwwk")]([])
+metadata/_custom_type_script = "uid://biw1dfpewxtuv"

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="MPFSoundAsset" load_steps=4 format=3 uid="uid://dnih08hoop3x7"]
+
+[ext_resource type="Script" uid="uid://cr71mfoc2ttd5" path="res://addons/mpf-gmc/classes/mpf_sound_marker.gd" id="1_xs1u2"]
+[ext_resource type="Script" uid="uid://biw1dfpewxtuv" path="res://addons/mpf-gmc/classes/mpf_sound.gd" id="2_n6r82"]
+[ext_resource type="AudioStream" uid="uid://dkpsd6h6ibggi" path="res://sounds/Assault on the Tower.mp3" id="3_xs1u2"]
+
+[resource]
+script = ExtResource("2_n6r82")
+stream = ExtResource("3_xs1u2")
+bus = "music"
+fade_in = 0.0
+fade_out = 0.0
+loops = 0
+start_at = 0.0
+max_queue_time = 0.0
+markers = Array[ExtResource("1_xs1u2")]([])
+metadata/_custom_type_script = "uid://biw1dfpewxtuv"
