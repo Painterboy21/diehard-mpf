@@ -1,0 +1,27 @@
+#show_version=6
+
+- duration: 0.16s
+  lights:
+    l138: ffff5E%100
+
+- duration: 0.16s
+  lights:
+    l138: ffffff%100
+
+- duration: 0.16s
+  lights:
+    l138: ffff3D%100
+
+- duration: 0.16s
+  lights:
+    l138: ffffff%100
+
+- duration: 0.16s
+  lights:
+    l138: ffffB2%100
+
+- duration: 0.16s
+  lights:
+    l138: ffffff%100
+
+

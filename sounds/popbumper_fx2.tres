@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="MPFSoundAsset" load_steps=4 format=3 uid="uid://7ei5ny0ajp5s"]
+
+[ext_resource type="Script" uid="uid://cr71mfoc2ttd5" path="res://addons/mpf-gmc/classes/mpf_sound_marker.gd" id="1_40upu"]
+[ext_resource type="Script" uid="uid://biw1dfpewxtuv" path="res://addons/mpf-gmc/classes/mpf_sound.gd" id="2_3rlxa"]
+[ext_resource type="AudioStream" uid="uid://bjymm6pggmnf2" path="res://sounds/src/dh_popbumper1.wav" id="3_1xngt"]
+
+[resource]
+script = ExtResource("2_3rlxa")
+stream = ExtResource("3_1xngt")
+bus = "effects"
+fade_in = 0.0
+fade_out = 0.0
+loops = 0
+start_at = 0.0
+max_queue_time = 0.0
+markers = Array[ExtResource("1_40upu")]([])
+metadata/_custom_type_script = "uid://biw1dfpewxtuv"

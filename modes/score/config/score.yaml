@@ -31,6 +31,16 @@ variable_player:
       action: add
       int: 1010
 
+  s_popbumper_left_active: 
+    score: 
+      action: add
+      int: 5000
+
+  s_popbumper_right_active: 
+    score: 
+      action: add
+      int: 5000
+
 
 
 
