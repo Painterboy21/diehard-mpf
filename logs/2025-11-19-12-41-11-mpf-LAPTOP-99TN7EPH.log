@@ -1,0 +1,111 @@
+2025-11-19 12:41:11,850 : INFO : root : Loading config.
+2025-11-19 12:41:11,861 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2025-11-19 12:41:11,861 : WARNING : ConfigProcessor : Config file in cache changed: C:\Users\carr-\Documents\development\diehard-mpf\config\config.yaml
+2025-11-19 12:41:11,862 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\mpf080\mpf\mpfconfig.yaml.
+2025-11-19 12:41:11,880 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\mpf080\mpf\mpfconfig.yaml
+2025-11-19 12:41:11,880 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\diehard-mpf\config\config.yaml.
+2025-11-19 12:41:11,895 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\config.yaml
+2025-11-19 12:41:11,896 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\ball_devices.yaml
+2025-11-19 12:41:11,908 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\coils.yaml
+2025-11-19 12:41:11,917 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\lights.yaml
+2025-11-19 12:41:11,919 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\shot_profiles.yaml
+2025-11-19 12:41:11,934 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\switches.yaml
+2025-11-19 12:41:11,937 : INFO : ConfigProcessor : Config file cache created: C:\Users\carr-\AppData\Local\Temp\23e177fce4903a9a69d69f474fa748a1.mpf_cache
+2025-11-19 12:41:12,030 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\2f9bbeccf93c71693a410725897ab70d.mpf_cache
+2025-11-19 12:41:12,039 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\71986c9cb54d44e1ee87b7d4d0f68024.mpf_cache
+2025-11-19 12:41:12,046 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\2f9bbeccf93c71693a410725897ab70d.mpf_cache
+2025-11-19 12:41:12,047 : WARNING : ConfigProcessor : Config file in cache changed: C:\Users\carr-\Documents\development\diehard-mpf\modes\base\config\base.yaml
+2025-11-19 12:41:12,047 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\diehard-mpf\modes\base\config\base.yaml.
+2025-11-19 12:41:12,061 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\modes\base\config\base.yaml
+2025-11-19 12:41:12,062 : INFO : ConfigProcessor : Config file cache created: C:\Users\carr-\AppData\Local\Temp\460998002e273cec26232c9157d92984.mpf_cache
+2025-11-19 12:41:12,062 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\1113c1d20ec4e70f79a7ed8de50ab69e.mpf_cache
+2025-11-19 12:41:12,072 : WARNING : ConfigProcessor : Config file in cache changed: C:\Users\carr-\Documents\development\diehard-mpf\modes\score\config\score.yaml
+2025-11-19 12:41:12,072 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\diehard-mpf\modes\score\config\score.yaml.
+2025-11-19 12:41:12,081 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\modes\score\config\score.yaml
+2025-11-19 12:41:12,082 : INFO : ConfigProcessor : Config file cache created: C:\Users\carr-\AppData\Local\Temp\668dbdbfcbfe997663fcbdfe0871c0b4.mpf_cache
+2025-11-19 12:41:12,082 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\6a4847c7210b75a304ae3e1d0e125b6a.mpf_cache
+2025-11-19 12:41:12,094 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\5bdb9da15c9005c4036d70c7ddf4c03f.mpf_cache
+2025-11-19 12:41:12,106 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\4ef2cae97e908c683695ed521c4a6650.mpf_cache
+2025-11-19 12:41:12,115 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\3675271a3c90b9f1f0f947db698ba341.mpf_cache
+2025-11-19 12:41:12,124 : INFO : Machine : Mission Pinball Framework Core Engine v0.80.0.dev6
+2025-11-19 12:41:12,125 : INFO : Machine : Command line arguments: {'no_load_cache': False, 'create_config_cache': True, 'bcp': False, 'configfile': ['config.yaml'], 'force_assets_load': False, 'platform_integration_test': False, 'jsonlogging': False, 'logfile': 'logs\\2025-11-19-12-41-11-mpf-LAPTOP-99TN7EPH.log', 'pause': False, 'production': False, 'text_ui': False, 'loglevel': 15, 'consoleloglevel': 10, 'force_platform': 'smart_virtual', 'syslog_address': None, 'full_logfile_path': 'C:\\Users\\carr-\\Documents\\development\\diehard-mpf\\logs\\2025-11-19-12-41-11-mpf-LAPTOP-99TN7EPH.log'}
+2025-11-19 12:41:12,125 : INFO : Machine : MPF path: C:\Users\carr-\Documents\development\mpf080\mpf
+2025-11-19 12:41:12,125 : INFO : Machine : Machine path: C:\Users\carr-\Documents\development\diehard-mpf
+2025-11-19 12:41:12,125 : INFO : Machine : Platform: win32
+2025-11-19 12:41:12,125 : INFO : Machine : Python executable location: C:\Users\carr-\Documents\development\mpf080\mpfenv\Scripts\python.exe
+2025-11-19 12:41:12,125 : INFO : Machine : Python version: 3.9.13 (64-bit)
+2025-11-19 12:41:12,129 : INFO : Machine : Initializing MPF...
+2025-11-19 12:41:12,337 : INFO : EventManager : Event: ======'machine_var_credits_string'====== Args={'value': 'FREE PLAY', 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,359 : INFO : EventManager : Event: ======'machine_var_fast_audio_headphones_volume'====== Args={'value': 10, 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,359 : INFO : EventManager : Event: ======'machine_var_fast_audio_main_volume'====== Args={'value': 60, 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,359 : INFO : EventManager : Event: ======'machine_var_master_volume'====== Args={'value': 0.5, 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,359 : INFO : EventManager : Event: ======'machine_var_player1_score'====== Args={'value': 17120, 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,359 : INFO : EventManager : Event: ======'machine_var_var_which_attract'====== Args={'value': 0, 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,359 : INFO : EventManager : Event: ======'machine_var_mpf_version'====== Args={'value': 'Mission Pinball Framework v0.80.0.dev6', 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,359 : INFO : EventManager : Event: ======'machine_var_mpf_extended_version'====== Args={'value': 'Mission Pinball Framework v0.80.0.dev6, Config version:6, Show version: 6, BCP version:1.1', 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,359 : INFO : EventManager : Event: ======'machine_var_python_version'====== Args={'value': '3.9.13', 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,393 : INFO : EventManager : Event: ======'machine_var_platform'====== Args={'value': 'Windows-10-10.0.26100-SP0', 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,394 : INFO : EventManager : Event: ======'machine_var_platform_system'====== Args={'value': 'Windows', 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,394 : INFO : EventManager : Event: ======'machine_var_platform_release'====== Args={'value': '10', 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,394 : INFO : EventManager : Event: ======'machine_var_platform_version'====== Args={'value': '10.0.26100', 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,394 : INFO : EventManager : Event: ======'machine_var_platform_machine'====== Args={'value': 'AMD64', 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,394 : INFO : EventManager : Event: ======'machine_var_log_file_path'====== Args={'value': 'C:\\Users\\carr-\\Documents\\development\\diehard-mpf\\logs\\2025-11-19-12-41-11-mpf-LAPTOP-99TN7EPH.log', 'prev_value': None, 'change': True}
+2025-11-19 12:41:12,394 : INFO : EventManager : Event: ======'init_phase_1'====== Args={}
+2025-11-19 12:41:12,442 : ERROR : asyncio : Exception in callback EventManager._async_handler_done(<QueuedEvent>)(<Task finishe...our config.')>) at C:\Users\carr-\Documents\development\mpf080\mpf\core\events.py:124
+handle: <Handle EventManager._async_handler_done(<QueuedEvent>)(<Task finishe...our config.')>) at C:\Users\carr-\Documents\development\mpf080\mpf\core\events.py:124>
+Traceback (most recent call last):
+  File "C:\Users\carr-\AppData\Local\Programs\Python\Python39\lib\asyncio\events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\events.py", line 127, in _async_handler_done
+    future.result()
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\device_manager.py", line 89, in _load_device_modules
+    await self.machine.mode_controller.load_mode_devices()
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\mode_controller.py", line 86, in load_mode_devices
+    await mode.load_mode_devices()
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\mode.py", line 438, in load_mode_devices
+    settings = device.validate_and_parse_config(settings, True, "mode:" + self.name)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\device.py", line 108, in validate_and_parse_config
+    self.machine.config_validator.validate_config(
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_validator.py", line 164, in validate_config
+    return self._validate_config(config_spec, source, base_spec=base_spec, add_missing_keys=add_missing_keys,
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_validator.py", line 204, in _validate_config
+    processed_config[k] = self.validate_config_item(
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_validator.py", line 256, in validate_config_item
+    new_list.append(self.validate_item(i, validation, validation_failure_info))
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_validator.py", line 699, in validate_item
+    return self.validator_list[validator](item, validation_failure_info=validation_failure_info, param=param)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_validator.py", line 413, in _validate_type_machine
+    raise self.validation_error(item, validation_failure_info,
+mpf.exceptions.config_file_error.ConfigFileError: Config File Error in ConfigValidator: Config validation error: Entry mode:base:sequence_shots:left_orbit:switch_sequence = "s_left_orbit" is not valid. Device "s_left_orbit" not found in "switches:" section in your config. Error Code: CFE-ConfigValidator-6 (https://missionpinball.org/logs)
+2025-11-19 12:41:12,529 : INFO : Machine : Starting the main run loop with active modes: []
+2025-11-19 12:41:12,529 : WARNING : Machine : Attract mode is not active, game will not be playable. Please check your attract mode configuration.
+2025-11-19 12:41:12,529 : INFO : Machine : Shutting down...
+2025-11-19 12:41:12,529 : INFO : EventManager : Event: ======'shutdown'====== Args={}
+2025-11-19 12:41:13,541 : ERROR : Machine : Runtime Exception
+Traceback (most recent call last):
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\machine.py", line 808, in _run_loop
+    raise self._exception['exception']
+  File "C:\Users\carr-\AppData\Local\Programs\Python\Python39\lib\asyncio\events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\events.py", line 127, in _async_handler_done
+    future.result()
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\device_manager.py", line 89, in _load_device_modules
+    await self.machine.mode_controller.load_mode_devices()
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\mode_controller.py", line 86, in load_mode_devices
+    await mode.load_mode_devices()
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\mode.py", line 438, in load_mode_devices
+    settings = device.validate_and_parse_config(settings, True, "mode:" + self.name)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\device.py", line 108, in validate_and_parse_config
+    self.machine.config_validator.validate_config(
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_validator.py", line 164, in validate_config
+    return self._validate_config(config_spec, source, base_spec=base_spec, add_missing_keys=add_missing_keys,
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_validator.py", line 204, in _validate_config
+    processed_config[k] = self.validate_config_item(
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_validator.py", line 256, in validate_config_item
+    new_list.append(self.validate_item(i, validation, validation_failure_info))
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_validator.py", line 699, in validate_item
+    return self.validator_list[validator](item, validation_failure_info=validation_failure_info, param=param)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_validator.py", line 413, in _validate_type_machine
+    raise self.validation_error(item, validation_failure_info,
+mpf.exceptions.config_file_error.ConfigFileError: Config File Error in ConfigValidator: Config validation error: Entry mode:base:sequence_shots:left_orbit:switch_sequence = "s_left_orbit" is not valid. Device "s_left_orbit" not found in "switches:" section in your config. Error Code: CFE-ConfigValidator-6 (https://missionpinball.org/logs)
+2025-11-19 12:41:13,555 : INFO : root : MPF run loop ended.

@@ -5,51 +5,51 @@ mode:
   stop_events: ball_ended
   priority: 110
 
+shot_groups: 
+  holly_targets:
+    shots: holly_h,holly_o,holly_l,holly_l1,holly_y
+
 shots: 
-  targeth:
-    switch: s_targeth
+  holly_h:
+    switch: s_holly_h
+    profile: profile_holly
+    start_enabled: True
     show_tokens: 
       lights: l30
       color: de780b
+  holly_o:
+    switch: s_holly_o
     profile: profile_holly
     start_enabled: True
-  targeto:
-    switch: s_targeto
     show_tokens: 
       lights: l31
       color: de780b
+  holly_l:
+    switch: s_holly_l
     profile: profile_holly
     start_enabled: True
-  targetl:
-    switch: s_targetl
     show_tokens: 
       lights: l32
       color: de780b
+  holly_l1:
+    switch: s_holly_l1
     profile: profile_holly
     start_enabled: True
-  targetl2:
-    switch: s_targetl2
     show_tokens: 
       lights: l33
       color: de780b
+  holly_y:
+    switch: s_holly_y
     profile: profile_holly
     start_enabled: True
-  targety:
-    switch: s_targety
     show_tokens: 
       lights: l34
       color: de780b
-    profile: profile_holly
-    start_enabled: True
-
-shot_groups: 
-  holly_targets:
-    shots: targeth,targeto,targetl,targetl2,targety
 
 show_player: 
   holly_h_hit: 
     flicker_color: 
-      key: key_targeth_hit
+      key: key_holly_h_hit
       priority: 1
       loops: 2
       speed: 2
@@ -58,7 +58,7 @@ show_player:
         color: de780b
   holly_o_hit: 
     flicker_color: 
-      key: key_targeto_hit
+      key: key_holly_o_hit
       priority: 1
       loops: 2
       speed: 2
@@ -67,7 +67,7 @@ show_player:
         color: de780b
   holly_l_hit: 
     flicker_color: 
-      key: key_targetl_hit
+      key: key_holly_l_hit
       priority: 1
       loops: 2
       speed: 2
@@ -76,7 +76,7 @@ show_player:
         color: de780b
   holly_l1_hit: 
     flicker_color: 
-      key: key_targetl2_hit
+      key: key_holly_l1_hit
       priority: 1
       loops: 2
       speed: 2
@@ -85,7 +85,7 @@ show_player:
         color: de780b
   holly_y_hit: 
     flicker_color: 
-      key: key_targety_hit
+      key: key_holly_y_hit
       priority: 1
       loops: 2
       speed: 2

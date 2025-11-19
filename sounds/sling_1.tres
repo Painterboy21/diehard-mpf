@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cr71mfoc2ttd5" path="res://addons/mpf-gmc/classes/mpf_sound_marker.gd" id="1_juf8f"]
 [ext_resource type="Script" uid="uid://biw1dfpewxtuv" path="res://addons/mpf-gmc/classes/mpf_sound.gd" id="2_4fkhb"]
-[ext_resource type="AudioStream" uid="uid://13xl7oiwvdw2" path="res://sounds/dh_sling1.wav" id="3_rea8u"]
+[ext_resource type="AudioStream" uid="uid://13xl7oiwvdw2" path="res://sounds/src/dh_sling1.wav" id="3_rea8u"]
 
 [resource]
 script = ExtResource("2_4fkhb")

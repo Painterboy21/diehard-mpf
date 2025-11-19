@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="MPFSoundAsset" load_steps=4 format=3 uid="uid://bis40npwowyfn"]
+
+[ext_resource type="Script" uid="uid://cr71mfoc2ttd5" path="res://addons/mpf-gmc/classes/mpf_sound_marker.gd" id="1_aut2v"]
+[ext_resource type="Script" uid="uid://biw1dfpewxtuv" path="res://addons/mpf-gmc/classes/mpf_sound.gd" id="2_i5fpq"]
+[ext_resource type="AudioStream" uid="uid://fjwt4iyvleut" path="res://sounds/src/spinner2.mp3" id="3_pode1"]
+
+[resource]
+script = ExtResource("2_i5fpq")
+stream = ExtResource("3_pode1")
+bus = "effects"
+fade_in = 0.0
+fade_out = 0.0
+loops = 0
+start_at = 0.08
+max_queue_time = 0.0
+markers = Array[ExtResource("1_aut2v")]([])
+metadata/_custom_type_script = "uid://biw1dfpewxtuv"

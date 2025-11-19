@@ -1,0 +1,17 @@
+#config_version=6
+
+mode:
+  start_events: ball_started
+  stop_events: ball_ended
+  priority: 110
+
+shots: 
+  bullet_left_orbit:
+    profile: profile_bullets
+    start_enabled: True
+    show_tokens: 
+      lights: l50
+      color: ffffff
+    hit_events: left_orbit_hit
+
+

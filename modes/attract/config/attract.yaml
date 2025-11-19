@@ -5,6 +5,12 @@ mode:
   stop_events: game_start, service_mode_entered
   priority: 10
 
+light_player: 
+  mode_attract_started: 
+    GI: 
+      color: ff0000
+
+
 show_player: 
   mode_attract_started: 
     attract_christmas: 
