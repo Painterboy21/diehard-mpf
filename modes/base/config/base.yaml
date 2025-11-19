@@ -5,6 +5,15 @@ mode:
   stop_events: ball_ended
   priority: 100
 
+event_player: 
+  s_popbumper_left_active: 
+    - flash_bumper_left
+    - flash_bumper_explosion
+  s_popbumper_right_active: 
+    - flash_bumper_right
+    - flash_bumper_explosion
+
+
 light_player: 
   mode_base_started: 
     GI: 
@@ -50,6 +59,12 @@ random_event_player:
       spinner_fx6: 1
       spinner_fx7: 1
       spinner_fx8: 1
+    scope: player
+  flash_bumper_explosion: 
+    events:
+      popbumper_fx1: 1
+      popbumper_fx2: 1
+      popbumper_fx3: 1
     scope: player
 
 
@@ -114,6 +129,24 @@ show_player:
       show_tokens: 
         lights: l71
         color: FFFFFF
+  flash_bumper_explosion: 
+    flicker_color: 
+      key: key_flash_bumper_explosion
+      loops: 0
+      speed: 2
+      show_tokens: 
+        lights: l75
+        color: FFFFFF
+  flash_bumper_left: 
+    flash_left_bumper: 
+      key: key_flash_bumper_left
+      loops: 0
+      speed: 2
+  flash_bumper_right: 
+    flash_right_bumper: 
+      key: key_flash_bumper_right
+      loops: 0
+      speed: 2
 
 
 slide_player: 
@@ -170,6 +203,15 @@ sound_player:
       action: play
   spinner_fx8: 
     spinner_fx8: 
+      action: play
+  popbumper_fx1: 
+    popbumper_fx1: 
+      action: play
+  popbumper_fx2: 
+    popbumper_fx2: 
+      action: play
+  popbumper_fx3: 
+    popbumper_fx3: 
       action: play
 
 
