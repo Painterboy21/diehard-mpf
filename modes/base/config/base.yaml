@@ -140,11 +140,13 @@ show_player:
   flash_bumper_left: 
     flash_left_bumper: 
       key: key_flash_bumper_left
+      priority: 1
       loops: 0
       speed: 2
   flash_bumper_right: 
     flash_right_bumper: 
       key: key_flash_bumper_right
+      priority: 1
       loops: 0
       speed: 2
 
