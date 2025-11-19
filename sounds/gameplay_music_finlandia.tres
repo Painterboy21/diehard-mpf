@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cr71mfoc2ttd5" path="res://addons/mpf-gmc/classes/mpf_sound_marker.gd" id="1_8bwwk"]
 [ext_resource type="Script" uid="uid://biw1dfpewxtuv" path="res://addons/mpf-gmc/classes/mpf_sound.gd" id="2_u0b6s"]
-[ext_resource type="AudioStream" uid="uid://c5rlogotu65gx" path="res://sounds/finlandia_j_sibelius_.mp3" id="3_8bwwk"]
+[ext_resource type="AudioStream" uid="uid://c5rlogotu65gx" path="res://sounds/src/finlandia_j_sibelius_.mp3" id="3_8bwwk"]
 
 [resource]
 script = ExtResource("2_u0b6s")

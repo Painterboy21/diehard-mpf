@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cr71mfoc2ttd5" path="res://addons/mpf-gmc/classes/mpf_sound_marker.gd" id="1_xs1u2"]
 [ext_resource type="Script" uid="uid://biw1dfpewxtuv" path="res://addons/mpf-gmc/classes/mpf_sound.gd" id="2_n6r82"]
-[ext_resource type="AudioStream" uid="uid://dkpsd6h6ibggi" path="res://sounds/Assault on the Tower.mp3" id="3_xs1u2"]
+[ext_resource type="AudioStream" uid="uid://dkpsd6h6ibggi" path="res://sounds/src/Assault on the Tower.mp3" id="3_xs1u2"]
 
 [resource]
 script = ExtResource("2_n6r82")

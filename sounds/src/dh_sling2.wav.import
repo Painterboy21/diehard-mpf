@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://13xl7oiwvdw2"
-path="res://.godot/imported/dh_sling1.wav-3bf1f95a22a6752d74e030396e292d46.sample"
+uid="uid://c3tjivl6w015m"
+path="res://.godot/imported/dh_sling2.wav-113aa5e2c753c1df5cb9bad45916cf50.sample"
 
 [deps]
 
-source_file="res://sounds/dh_sling1.wav"
-dest_files=["res://.godot/imported/dh_sling1.wav-3bf1f95a22a6752d74e030396e292d46.sample"]
+source_file="res://sounds/src/dh_sling2.wav"
+dest_files=["res://.godot/imported/dh_sling2.wav-113aa5e2c753c1df5cb9bad45916cf50.sample"]
 
 [params]
 

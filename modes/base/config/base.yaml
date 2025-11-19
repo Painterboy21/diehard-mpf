@@ -5,63 +5,23 @@ mode:
   stop_events: ball_ended
   priority: 100
 
-show_player: 
-  flash_left_slingshot_red: 
-    flicker_color: 
-      key: key_s_left_slingshot_active
-      loops: 0
-      speed: 2
-      show_tokens: 
-        lights: f141
-        color: C81616
-  flash_left_slingshot_blue: 
-    flicker_color: 
-      key: key_s_left_slingshot_active
-      loops: 0
-      speed: 2
-      show_tokens: 
-        lights: f141
-        color: 1616FF
-  flash_right_slingshot_red: 
-    flicker_color: 
-      key: key_s_right_slingshot_active
-      loops: 0
-      speed: 2
-      show_tokens: 
-        lights: f140
-        color: C81616
-  flash_right_slingshot_blue: 
-    flicker_color: 
-      key: key_s_right_slingshot_active
-      loops: 0
-      speed: 2
-      show_tokens: 
-        lights: f140
-        color: 1616FF
-
-
 light_player: 
   mode_base_started: 
     GI: 
       color: ffffff
 
 
-
-slide_player: 
-  mode_base_started: 
-    base:
-      action: play
-
-
 random_event_player: 
-  s_left_slingshot_active: 
+  s_left_sling_active: 
     events:
-      flash_left_slingshot_red: 1
-      flash_left_slingshot_blue: 1
-  s_right_slingshot_active: 
+      flash_left_sling_red: 1
+      flash_left_sling_blue: 1
+    scope: player
+  s_right_sling_active: 
     events:
-      flash_right_slingshot_red: 1
-      flash_right_slingshot_blue: 1
+      flash_right_sling_red: 1
+      flash_right_sling_blue: 1
+    scope: player
   mode_base_started: 
     events:
       gameplay_music_1: 1
@@ -69,6 +29,98 @@ random_event_player:
       gameplay_music_3: 1
       gameplay_music_4: 1
     scope: player
+  SpinnerLeft_active: 
+    events:
+      spinner_fx1: 1
+      spinner_fx2: 1
+      spinner_fx3: 1
+      spinner_fx4: 1
+      spinner_fx5: 1
+      spinner_fx6: 1
+      spinner_fx7: 1
+      spinner_fx8: 1
+    scope: player
+  SpinnerRight_active: 
+    events:
+      spinner_fx1: 1
+      spinner_fx2: 1
+      spinner_fx3: 1
+      spinner_fx4: 1
+      spinner_fx5: 1
+      spinner_fx6: 1
+      spinner_fx7: 1
+      spinner_fx8: 1
+    scope: player
+
+
+sequence_shots: 
+  left_orbit:
+    switch_sequence: 
+      - s_left_orbit
+      - s_left_orbit2
+    sequence_timeout: 1500ms
+  right_orbit:
+    switch_sequence: 
+      - s_right_orbit
+      - s_right_orbit2
+    sequence_timeout: 1500ms
+
+show_player: 
+  flash_left_sling_red: 
+    flicker_color: 
+      key: key_s_left_sling_active
+      loops: 0
+      speed: 2
+      show_tokens: 
+        lights: f141
+        color: C81616
+  flash_left_sling_blue: 
+    flicker_color: 
+      key: key_s_left_sling_active
+      loops: 0
+      speed: 2
+      show_tokens: 
+        lights: f141
+        color: 1616FF
+  flash_right_sling_red: 
+    flicker_color: 
+      key: key_s_right_sling_active
+      loops: 0
+      speed: 2
+      show_tokens: 
+        lights: f140
+        color: C81616
+  flash_right_sling_blue: 
+    flicker_color: 
+      key: key_s_right_sling_active
+      loops: 0
+      speed: 2
+      show_tokens: 
+        lights: f140
+        color: 1616FF
+  SpinnerLeft_active: 
+    flicker_color: 
+      key: key_s_left_spinner_active
+      loops: 0
+      speed: 2
+      show_tokens: 
+        lights: l70
+        color: FFFFFF
+  SpinnerRight_active: 
+    flicker_color: 
+      key: key_s_right_spinner_active
+      loops: 0
+      speed: 2
+      show_tokens: 
+        lights: l71
+        color: FFFFFF
+
+
+slide_player: 
+  mode_base_started: 
+    base:
+      action: play
+
 
 sound_player: 
   gameplay_music_1: 
@@ -83,19 +135,42 @@ sound_player:
   gameplay_music_4: 
     gameplay_music_battle: 
       action: play
-  flash_left_slingshot_red: 
+  flash_left_sling_red: 
     sling_1: 
       action: play
-  flash_left_slingshot_blue: 
+  flash_left_sling_blue: 
     sling_2: 
       action: play
-  flash_right_slingshot_red: 
+  flash_right_sling_red: 
     sling_2: 
       action: play
-  flash_right_slingshot_blue: 
+  flash_right_sling_blue: 
     sling_1: 
       action: play
-
+  spinner_fx1: 
+    spinner_fx1: 
+      action: play
+  spinner_fx2: 
+    spinner_fx2: 
+      action: play
+  spinner_fx3: 
+    spinner_fx3: 
+      action: play
+  spinner_fx4: 
+    spinner_fx4: 
+      action: play
+  spinner_fx5: 
+    spinner_fx5: 
+      action: play
+  spinner_fx6: 
+    spinner_fx6: 
+      action: play
+  spinner_fx7: 
+    spinner_fx7: 
+      action: play
+  spinner_fx8: 
+    spinner_fx8: 
+      action: play
 
 
 

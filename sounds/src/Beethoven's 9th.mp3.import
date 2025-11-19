@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://coohnxva2fx27"
+path="res://.godot/imported/Beethoven's 9th.mp3-3e1d73a14543ca9812db7284066bd0ff.mp3str"
+
+[deps]
+
+source_file="res://sounds/src/Beethoven's 9th.mp3"
+dest_files=["res://.godot/imported/Beethoven's 9th.mp3-3e1d73a14543ca9812db7284066bd0ff.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

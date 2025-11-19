@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cr71mfoc2ttd5" path="res://addons/mpf-gmc/classes/mpf_sound_marker.gd" id="1_xjfls"]
 [ext_resource type="Script" uid="uid://biw1dfpewxtuv" path="res://addons/mpf-gmc/classes/mpf_sound.gd" id="2_ujl3w"]
-[ext_resource type="AudioStream" uid="uid://coohnxva2fx27" path="res://sounds/Beethoven's 9th.mp3" id="3_xjfls"]
+[ext_resource type="AudioStream" uid="uid://coohnxva2fx27" path="res://sounds/src/Beethoven's 9th.mp3" id="3_xjfls"]
 
 [resource]
 script = ExtResource("2_ujl3w")

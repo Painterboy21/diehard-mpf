@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="MPFSoundAsset" load_steps=4 format=3 uid="uid://bi76o0yihbssv"]
+
+[ext_resource type="Script" uid="uid://cr71mfoc2ttd5" path="res://addons/mpf-gmc/classes/mpf_sound_marker.gd" id="1_o118n"]
+[ext_resource type="Script" uid="uid://biw1dfpewxtuv" path="res://addons/mpf-gmc/classes/mpf_sound.gd" id="2_yfsha"]
+[ext_resource type="AudioStream" uid="uid://13xl7oiwvdw2" path="res://sounds/src/dh_sling1.wav" id="3_a56bu"]
+
+[resource]
+script = ExtResource("2_yfsha")
+stream = ExtResource("3_a56bu")
+bus = "effects"
+fade_in = 0.0
+fade_out = 0.0
+loops = 0
+start_at = 0.37
+max_queue_time = 0.0
+markers = Array[ExtResource("1_o118n")]([])
+metadata/_custom_type_script = "uid://biw1dfpewxtuv"

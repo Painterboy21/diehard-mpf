@@ -33,11 +33,14 @@ func load_window_settings():
 		var size = config.get_value("window", "size", Vector2i(800, 600))  # Default size
 		var position = config.get_value("window", "position", Vector2i(100, 100))  # Default position
 		var borderless = config.get_value("window", "borderless", false)  # Default to false
+		var alwaysOnTop = config.get_value("window", "alwaysOnTop", false)  # Default to false
+
 
 		var window = get_window()
 		window.size = size
 		window.position = position
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, borderless)
+		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, alwaysOnTop)
 
 	else:
 		print("No settings file found or other error: ", error)

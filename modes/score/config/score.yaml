@@ -6,12 +6,12 @@ mode:
   priority: 110
 
 variable_player: 
-  s_left_slingshot_active: 
+  s_left_sling_active: 
     score: 
       action: add
       int: 3030
 
-  s_right_slingshot_active: 
+  s_right_sling_active: 
     score: 
       action: add
       int: 3030
@@ -20,6 +20,16 @@ variable_player:
     score: 
       action: add
       int: 5000
+
+  SpinnerLeft_active: 
+    score: 
+      action: add
+      int: 1010
+
+  SpinnerRight_active: 
+    score: 
+      action: add
+      int: 1010
 
 
 

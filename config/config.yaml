@@ -145,11 +145,11 @@ drop_target_banks:
 
 autofire_coils:
   left_sling:
-    coil: c_left_slingshot
-    switch: s_left_slingshot
+    coil: c_left_sling
+    switch: s_left_sling
   right_sling:
-    coil: c_right_slingshot
-    switch: s_right_slingshot
+    coil: c_right_sling
+    switch: s_right_sling
   airplane:
     coil: c_captivetarget
     switch: s_captiveball
