@@ -2,7 +2,7 @@
 
 - duration: 0.16s
   lights:
-    l138: ff5Eff%100
+    l138: 5Effff%100
 
 - duration: 0.16s
   lights:
@@ -10,7 +10,7 @@
 
 - duration: 0.16s
   lights:
-    l138: ff3Dff%100
+    l138: 3Dffff%100
 
 - duration: 0.16s
   lights:
@@ -18,7 +18,7 @@
 
 - duration: 0.16s
   lights:
-    l138: ffB2ff%100
+    l138: B2ffff%100
 
 - duration: 0.16s
   lights:
