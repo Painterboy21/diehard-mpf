@@ -8,7 +8,7 @@ mode:
 light_player: 
   mode_attract_started: 
     GI: 
-      color: ff0000
+      color: 000000
 
 
 show_player: 
