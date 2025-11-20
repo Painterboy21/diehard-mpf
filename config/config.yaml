@@ -26,9 +26,9 @@ fast:
     port: COM3
     boards:
       playfield:
-        model: FP-EXP-0081
+        model: FP-EXP-0071
 
-
+ 
   aud:
     port: auto
     debug: false
