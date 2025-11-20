@@ -66,6 +66,16 @@ random_event_player:
       popbumper_fx2: 1
       popbumper_fx3: 1
     scope: player
+  left_orbit_hit: 
+    events:
+      orbit_fx1: 1
+      orbit_fx2: 1
+    scope: player
+  right_orbit_hit: 
+    events:
+      orbit_fx1: 1
+      orbit_fx2: 1
+    scope: player
 
 
 sequence_shots: 
@@ -73,12 +83,12 @@ sequence_shots:
     switch_sequence: 
       - s_left_orbit
       - s_left_orbit2
-    sequence_timeout: 1500ms
+    sequence_timeout: 1000ms
   right_orbit:
     switch_sequence: 
       - s_right_orbit
       - s_right_orbit2
-    sequence_timeout: 1500ms
+    sequence_timeout: 1000ms
 
 show_player: 
   flash_left_sling_red: 
@@ -149,6 +159,24 @@ show_player:
       priority: 1
       loops: 0
       speed: 2
+  left_orbit_hit: 
+    flicker_color: 
+      key: key_left_orbit_hit
+      priority: 1
+      loops: 0
+      speed: 2
+      show_tokens: 
+        lights: f145
+        color: FF0000
+  right_orbit_hit: 
+    flicker_color: 
+      key: key_right_orbit_hit
+      priority: 1
+      loops: 0
+      speed: 2
+      show_tokens: 
+        lights: f144
+        color: FF0000
 
 
 slide_player: 
@@ -214,6 +242,12 @@ sound_player:
       action: play
   popbumper_fx3: 
     popbumper_fx3: 
+      action: play
+  orbit_fx1: 
+    orbit_fx1: 
+      action: play
+  orbit_fx2: 
+    orbit_fx2: 
       action: play
 
 

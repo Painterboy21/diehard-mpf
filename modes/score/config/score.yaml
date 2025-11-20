@@ -41,6 +41,16 @@ variable_player:
       action: add
       int: 5000
 
+  left_orbit_hit: 
+    score: 
+      action: add
+      int: 5000
+
+  right_orbit_hit: 
+    score: 
+      action: add
+      int: 5000
+
 
 
 
