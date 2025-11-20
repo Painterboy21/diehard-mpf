@@ -124,7 +124,7 @@ switches:
   s_left_orbit2:
     number: f-0
     tags: playfield_active
-  s_swmidorb:
+  s_mid_orbit:
     number: e-13
 
  # Top Targets
