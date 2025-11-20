@@ -126,7 +126,8 @@ drop_targets:
   bank5:
     switch: s_push_drop_target_5
     reset_coil: c_reset_drop_target_vault
-
+    knockdown_events: knockdown_vault_exit
+    reset_events: ball_starting, machine_reset_phase_3, close_vault_door
 
 drop_target_banks:
   bank:
@@ -136,12 +137,7 @@ drop_target_banks:
   bank1:
     drop_targets: bank4
     reset_coils: c_reset_drop_target_nakotomi
-    reset_on_complete: 0.5s
-  bank2:
-    drop_targets: bank5
-    reset_coils: c_reset_drop_target_vault
-    reset_on_complete: 0.5s
-
+    reset_on_complete: 0.5s 
 
 autofire_coils:
   left_sling:
