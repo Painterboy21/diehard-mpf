@@ -37,4 +37,40 @@ shot_profiles:
        loops: -1
        speed: 1
        sync_ms: 0
+  profile_mystery:
+    states: 
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
+     - name: on
+       show: flash_color
+       loops: -1
+       speed: 3
+       sync_ms: 0
+  profile_mystery_ho:
+    states: 
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
+     - name: on
+       show: flicker_color
+       loops: 0
+       speed: 1
+       sync_ms: 0
+  profile_bullets:
+    states: 
+     - name: on
+       show: led_color
+       loops: -1
+       speed: 1
+       sync_ms: 0
+     - name: flash
+       show: flash_color
+       loops: -1
+       speed: 1
+       sync_ms: 0
 

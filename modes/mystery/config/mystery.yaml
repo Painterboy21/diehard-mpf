@@ -1,0 +1,90 @@
+#config_version=6
+
+mode:
+  start_events: ball_started
+  stop_events: ball_ended
+  priority: 115
+
+ball_holds: 
+  mystery_hold:
+    enable_events: mystery_open_vault
+    disable_events: mystery_awarded.1
+    hold_devices: kickervault1_eject
+    balls_to_hold: 1
+    release_all_events: tilt, mystery_awarded.2
+
+event_player: 
+  mystery_ho_on_complete.1{current_player.mystery_hits_count == 2}: 
+    - mystery_open_vault
+  ball_hold_mystery_hold_full: 
+    - mystery_close_vault
+  timer_mystery_complete: 
+    - mystery_awarded
+
+
+
+shots: 
+  vault_h:
+    switch: s_holly_h
+    profile: profile_mystery_ho
+    start_enabled: True
+    show_tokens: 
+      lights: l30
+      color: de780b
+  vault_o:
+    switch: s_holly_o
+    profile: profile_mystery_ho
+    start_enabled: True
+    show_tokens: 
+      lights: l31
+      color: de780b
+  vault_mystery:
+    profile: profile_mystery
+    show_tokens: 
+      lights: l60
+      color: 00ff00
+    control_events: 
+      - events: mystery_close_vault
+        state: 0
+      - events: mystery_open_vault
+        state: 1
+
+timers: 
+  mystery:
+    start_value: 0
+    end_value: 3
+    direction: up
+    control_events: 
+      - event: ball_hold_mystery_hold_full
+        action: restart
+    restart_on_complete: False
+    start_running: False
+    tick_interval: 1000ms
+
+variable_player: 
+  mystery_ho_on_complete.2: 
+    mystery_hits_count: 
+      action: add
+      int: 1
+
+shot_groups:
+  mystery_ho:
+    debug: true
+    shots: vault_h,vault_o
+    restart_events: mystery_ho_on_complete.1{current_player.mystery_hits_count == 1}, mystery_awarded
+
+
+widget_player: 
+  mystery_ho_on_complete: 
+    mystery_qualify:
+      action: play
+      expire: 3ms
+  mystery_open_vault: 
+    mystery:
+      action: play
+  mystery_awarded: 
+    mystery:
+      action: remove
+
+
+
