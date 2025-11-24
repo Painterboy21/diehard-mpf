@@ -242,5 +242,5 @@ servos:
       home_us: 600
       max_runtime: 3s
     positions:
-      0.1: mystery_open_vault
-      0.90: mystery_close_vault
+      0.1: mystery_close_vault
+      0.90: mystery_open_vault
