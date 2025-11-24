@@ -690,3 +690,30 @@
 2025-11-20 14:58:39,200 : INFO : EventManager : Event: ======'sw_playfield_active'====== Args={}
 2025-11-20 14:58:39,200 : INFO : EventManager : Event: ======'machine_var_audits_switches_s_left_orbit2'====== Args={'value': 4, 'prev_value': 3, 'change': 1}
 2025-11-20 14:58:39,252 : INFO : SwitchController : <<<<<<< 's_left_orbit2' inactive >>>>>>>
+2025-11-20 21:09:30,736 : INFO : Machine : Shutting down...
+2025-11-20 21:09:30,744 : INFO : EventManager : Event: ======'shutdown'====== Args={}
+2025-11-20 21:09:30,760 : INFO : EventManager : Event: ======'mode_game_will_stop'====== Args={}
+2025-11-20 21:09:30,761 : INFO : EventManager : Event: ======'mode_game_stopping'====== Args={}
+2025-11-20 21:09:30,763 : INFO : EventManager : Event: ======'mode_base_will_stop'====== Args={}
+2025-11-20 21:09:30,763 : INFO : EventManager : Event: ======'mode_base_stopping'====== Args={}
+2025-11-20 21:09:30,763 : INFO : EventManager : Event: ======'mode_score_will_stop'====== Args={}
+2025-11-20 21:09:30,763 : INFO : EventManager : Event: ======'mode_score_stopping'====== Args={}
+2025-11-20 21:09:30,763 : INFO : EventManager : Event: ======'mode_holly_will_stop'====== Args={}
+2025-11-20 21:09:30,763 : INFO : EventManager : Event: ======'mode_holly_stopping'====== Args={}
+2025-11-20 21:09:30,763 : INFO : Mode.holly : Stopped.
+2025-11-20 21:09:30,763 : INFO : EventManager : Event: ======'modes_active_modes_changed'====== Args={}
+2025-11-20 21:09:30,765 : INFO : EventManager : Event: ======'mode_holly_stopped'====== Args={}
+2025-11-20 21:09:30,765 : INFO : EventManager : Event: ======'clear'====== Args={'key': 'holly'}
+2025-11-20 21:09:30,768 : INFO : Mode.score : Stopped.
+2025-11-20 21:09:30,769 : INFO : EventManager : Event: ======'modes_active_modes_changed'====== Args={}
+2025-11-20 21:09:30,769 : INFO : EventManager : Event: ======'mode_score_stopped'====== Args={}
+2025-11-20 21:09:30,769 : INFO : EventManager : Event: ======'clear'====== Args={'key': 'score'}
+2025-11-20 21:09:30,769 : INFO : Mode.base : Stopped.
+2025-11-20 21:09:30,769 : INFO : EventManager : Event: ======'modes_active_modes_changed'====== Args={}
+2025-11-20 21:09:30,770 : INFO : EventManager : Event: ======'mode_base_stopped'====== Args={}
+2025-11-20 21:09:30,770 : INFO : EventManager : Event: ======'clear'====== Args={'key': 'base'}
+2025-11-20 21:09:30,771 : INFO : Mode.game : Stopped.
+2025-11-20 21:09:30,771 : INFO : EventManager : Event: ======'modes_active_modes_changed'====== Args={}
+2025-11-20 21:09:30,771 : INFO : EventManager : Event: ======'mode_game_stopped'====== Args={}
+2025-11-20 21:09:30,771 : INFO : EventManager : Event: ======'clear'====== Args={'key': 'game'}
+2025-11-20 21:09:30,779 : INFO : root : MPF run loop ended.

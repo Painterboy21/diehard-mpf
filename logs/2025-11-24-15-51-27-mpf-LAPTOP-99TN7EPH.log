@@ -1,0 +1,11 @@
+2025-11-24 15:51:27,874 : INFO : root : Loading config.
+2025-11-24 15:51:27,884 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2025-11-24 15:51:27,884 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\23e177fce4903a9a69d69f474fa748a1.mpf_cache
+2025-11-24 15:51:27,896 : WARNING : ConfigProcessor : Config file in cache changed: C:\Users\carr-\Documents\development\diehard-mpf\config\shot_profiles.yaml
+2025-11-24 15:51:27,896 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\mpf080\mpf\mpfconfig.yaml.
+2025-11-24 15:51:27,905 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\mpf080\mpf\mpfconfig.yaml
+2025-11-24 15:51:27,906 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\diehard-mpf\config\config.yaml.
+2025-11-24 15:51:27,909 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\config.yaml
+2025-11-24 15:51:27,911 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\ball_devices.yaml
+2025-11-24 15:51:27,913 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\coils.yaml
+2025-11-24 15:51:27,919 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\config\lights.yaml

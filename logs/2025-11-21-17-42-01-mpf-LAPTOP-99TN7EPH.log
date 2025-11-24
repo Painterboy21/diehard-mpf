@@ -1,0 +1,102 @@
+2025-11-21 17:42:01,435 : INFO : root : Loading config.
+2025-11-21 17:42:01,450 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2025-11-21 17:42:01,451 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\23e177fce4903a9a69d69f474fa748a1.mpf_cache
+2025-11-21 17:42:01,549 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\2f9bbeccf93c71693a410725897ab70d.mpf_cache
+2025-11-21 17:42:01,549 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\71986c9cb54d44e1ee87b7d4d0f68024.mpf_cache
+2025-11-21 17:42:01,551 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\2f9bbeccf93c71693a410725897ab70d.mpf_cache
+2025-11-21 17:42:01,551 : WARNING : ConfigProcessor : Config file in cache changed: C:\Users\carr-\Documents\development\diehard-mpf\modes\base\config\base.yaml
+2025-11-21 17:42:01,552 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\diehard-mpf\modes\base\config\base.yaml.
+2025-11-21 17:42:01,566 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\diehard-mpf\modes\base\config\base.yaml
+2025-11-21 17:42:01,567 : INFO : ConfigProcessor : Config file cache created: C:\Users\carr-\AppData\Local\Temp\460998002e273cec26232c9157d92984.mpf_cache
+2025-11-21 17:42:01,568 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\1113c1d20ec4e70f79a7ed8de50ab69e.mpf_cache
+2025-11-21 17:42:01,569 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\668dbdbfcbfe997663fcbdfe0871c0b4.mpf_cache
+2025-11-21 17:42:01,569 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\9f94008f2458f1d20e2cc19a054f750f.mpf_cache
+2025-11-21 17:42:01,570 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\6a4847c7210b75a304ae3e1d0e125b6a.mpf_cache
+2025-11-21 17:42:01,572 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\5bdb9da15c9005c4036d70c7ddf4c03f.mpf_cache
+2025-11-21 17:42:01,572 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\4ef2cae97e908c683695ed521c4a6650.mpf_cache
+2025-11-21 17:42:01,573 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\3fafba5daebe73845f095f892a673873.mpf_cache
+2025-11-21 17:42:01,573 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\c01a61b73c292b8700a32cafeda2e6a0.mpf_cache
+2025-11-21 17:42:01,574 : INFO : ConfigProcessor : Loading config from cache: C:\Users\carr-\AppData\Local\Temp\3675271a3c90b9f1f0f947db698ba341.mpf_cache
+2025-11-21 17:42:01,575 : INFO : Machine : Mission Pinball Framework Core Engine v0.80.0.dev6
+2025-11-21 17:42:01,575 : INFO : Machine : Command line arguments: {'no_load_cache': False, 'create_config_cache': True, 'bcp': False, 'configfile': ['config.yaml'], 'force_assets_load': False, 'platform_integration_test': False, 'jsonlogging': False, 'logfile': 'logs\\2025-11-21-17-42-01-mpf-LAPTOP-99TN7EPH.log', 'pause': False, 'production': False, 'text_ui': False, 'loglevel': 15, 'consoleloglevel': 10, 'force_platform': 'smart_virtual', 'syslog_address': None, 'full_logfile_path': 'C:\\Users\\carr-\\Documents\\development\\diehard-mpf\\logs\\2025-11-21-17-42-01-mpf-LAPTOP-99TN7EPH.log'}
+2025-11-21 17:42:01,575 : INFO : Machine : MPF path: C:\Users\carr-\Documents\development\mpf080\mpf
+2025-11-21 17:42:01,575 : INFO : Machine : Machine path: C:\Users\carr-\Documents\development\diehard-mpf
+2025-11-21 17:42:01,575 : INFO : Machine : Platform: win32
+2025-11-21 17:42:01,575 : INFO : Machine : Python executable location: C:\Users\carr-\Documents\development\mpf080\mpfenv\Scripts\python.exe
+2025-11-21 17:42:01,575 : INFO : Machine : Python version: 3.9.13 (64-bit)
+2025-11-21 17:42:01,577 : INFO : Machine : Initializing MPF...
+2025-11-21 17:42:01,663 : INFO : EventManager : Event: ======'machine_var_credits_string'====== Args={'value': 'FREE PLAY', 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,695 : INFO : EventManager : Event: ======'machine_var_fast_audio_headphones_volume'====== Args={'value': 10, 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,695 : INFO : EventManager : Event: ======'machine_var_fast_audio_main_volume'====== Args={'value': 60, 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,695 : INFO : EventManager : Event: ======'machine_var_master_volume'====== Args={'value': 0.5, 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,695 : INFO : EventManager : Event: ======'machine_var_player1_score'====== Args={'value': 17120, 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,695 : INFO : EventManager : Event: ======'machine_var_var_which_attract'====== Args={'value': 0, 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,695 : INFO : EventManager : Event: ======'machine_var_mpf_version'====== Args={'value': 'Mission Pinball Framework v0.80.0.dev6', 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,695 : INFO : EventManager : Event: ======'machine_var_mpf_extended_version'====== Args={'value': 'Mission Pinball Framework v0.80.0.dev6, Config version:6, Show version: 6, BCP version:1.1', 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,695 : INFO : EventManager : Event: ======'machine_var_python_version'====== Args={'value': '3.9.13', 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,720 : INFO : EventManager : Event: ======'machine_var_platform'====== Args={'value': 'Windows-10-10.0.26100-SP0', 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,720 : INFO : EventManager : Event: ======'machine_var_platform_system'====== Args={'value': 'Windows', 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,721 : INFO : EventManager : Event: ======'machine_var_platform_release'====== Args={'value': '10', 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,721 : INFO : EventManager : Event: ======'machine_var_platform_version'====== Args={'value': '10.0.26100', 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,721 : INFO : EventManager : Event: ======'machine_var_platform_machine'====== Args={'value': 'AMD64', 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,721 : INFO : EventManager : Event: ======'machine_var_log_file_path'====== Args={'value': 'C:\\Users\\carr-\\Documents\\development\\diehard-mpf\\logs\\2025-11-21-17-42-01-mpf-LAPTOP-99TN7EPH.log', 'prev_value': None, 'change': True}
+2025-11-21 17:42:01,721 : INFO : EventManager : Event: ======'init_phase_1'====== Args={}
+2025-11-21 17:42:01,776 : INFO : EventManager : Event: ======'drop_target_bank_bank_up'====== Args={}
+2025-11-21 17:42:01,776 : INFO : EventManager : Event: ======'drop_target_bank_bank1_up'====== Args={}
+2025-11-21 17:42:01,778 : INFO : EventManager : Event: ======'init_phase_2'====== Args={}
+2025-11-21 17:42:01,778 : INFO : SwitchController : Found active switch: ('d-29', <Platform.SmartVirtual>) <switch.s_trough1>
+2025-11-21 17:42:01,778 : INFO : SwitchController : Found active switch: ('d-24', <Platform.SmartVirtual>) <switch.s_trough2>
+2025-11-21 17:42:01,778 : INFO : SwitchController : Found active switch: ('d-25', <Platform.SmartVirtual>) <switch.s_trough3>
+2025-11-21 17:42:01,778 : INFO : SwitchController : Found active switch: ('d-26', <Platform.SmartVirtual>) <switch.s_trough4>
+2025-11-21 17:42:01,778 : INFO : SwitchController : Found active switch: ('d-27', <Platform.SmartVirtual>) <switch.s_trough5>
+2025-11-21 17:42:01,778 : INFO : SwitchController : Found active switch: ('d-28', <Platform.SmartVirtual>) <switch.s_trough6>
+2025-11-21 17:42:01,780 : ERROR : asyncio : Exception in callback EventManager._queue_task_done(<Task finishe...per_left.10')>)
+handle: <Handle EventManager._queue_task_done(<Task finishe...per_left.10')>)>
+Traceback (most recent call last):
+  File "C:\Users\carr-\AppData\Local\Programs\Python\Python39\lib\asyncio\events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\events.py", line 795, in _queue_task_done
+    future.result()
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\events.py", line 708, in _run_handlers_sequential
+    handler.callback(queue=queue, **merged_kwargs)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\mode_controller.py", line 97, in initialize_modes
+    item.method(config=mode.config[item.config_section],
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_player.py", line 150, in process_mode_config
+    config = self.validate_config(config)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_player.py", line 113, in validate_config
+    validated_config[event] = self.validate_config_entry(settings, event)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\config_players\event_player.py", line 88, in validate_config_entry
+    var = self._parse_and_validate_conditional(event, name)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_player.py", line 122, in _parse_and_validate_conditional
+    self.raise_config_error("Variable may only contain letters, numbers, dashes and underscores. "
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\logging.py", line 175, in raise_config_error
+    raise ConfigFileError(msg, error_no, self.log.name if self.log else "", context, self._url_base) \
+mpf.exceptions.config_file_error.ConfigFileError: Config File Error in event_player: Variable may only contain letters, numbers, dashes and underscores. Var: flash_bumper_left.10 Name: flash_bumper_left.10 Context: s_popbumper_left_active Error Code: CFE-event_player-4 (https://missionpinball.org/logs)
+2025-11-21 17:42:01,866 : INFO : Machine : Starting the main run loop with active modes: []
+2025-11-21 17:42:01,866 : WARNING : Machine : Attract mode is not active, game will not be playable. Please check your attract mode configuration.
+2025-11-21 17:42:01,866 : INFO : Machine : Shutting down...
+2025-11-21 17:42:01,866 : INFO : EventManager : Event: ======'shutdown'====== Args={}
+2025-11-21 17:42:02,880 : ERROR : Machine : Runtime Exception
+Traceback (most recent call last):
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\machine.py", line 808, in _run_loop
+    raise self._exception['exception']
+  File "C:\Users\carr-\AppData\Local\Programs\Python\Python39\lib\asyncio\events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\events.py", line 795, in _queue_task_done
+    future.result()
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\events.py", line 708, in _run_handlers_sequential
+    handler.callback(queue=queue, **merged_kwargs)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\mode_controller.py", line 97, in initialize_modes
+    item.method(config=mode.config[item.config_section],
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_player.py", line 150, in process_mode_config
+    config = self.validate_config(config)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_player.py", line 113, in validate_config
+    validated_config[event] = self.validate_config_entry(settings, event)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\config_players\event_player.py", line 88, in validate_config_entry
+    var = self._parse_and_validate_conditional(event, name)
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\config_player.py", line 122, in _parse_and_validate_conditional
+    self.raise_config_error("Variable may only contain letters, numbers, dashes and underscores. "
+  File "C:\Users\carr-\Documents\development\mpf080\mpf\core\logging.py", line 175, in raise_config_error
+    raise ConfigFileError(msg, error_no, self.log.name if self.log else "", context, self._url_base) \
+mpf.exceptions.config_file_error.ConfigFileError: Config File Error in event_player: Variable may only contain letters, numbers, dashes and underscores. Var: flash_bumper_left.10 Name: flash_bumper_left.10 Context: s_popbumper_left_active Error Code: CFE-event_player-4 (https://missionpinball.org/logs)
+2025-11-21 17:42:02,895 : INFO : root : MPF run loop ended.
