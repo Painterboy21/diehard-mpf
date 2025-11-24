@@ -126,6 +126,7 @@ drop_targets:
   bank5:
     switch: s_push_drop_target_5
     reset_coil: c_reset_drop_target_vault
+    knockdown_coil: c_push_drop_target_vault
     knockdown_events: mystery_close_vault
     reset_events: ball_starting, machine_reset_phase_3, mystery_open_vault
 
