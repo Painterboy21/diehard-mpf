@@ -23,7 +23,7 @@ fast:
           order: 4
 
   exp:
-    port: COM4
+    port: COM6
     boards:
       playfield:
         model: FP-EXP-0071
