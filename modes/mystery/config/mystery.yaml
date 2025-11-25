@@ -14,14 +14,20 @@ ball_holds:
     release_all_events: tilt, mystery_awarded.2
 
 event_player: 
-  mystery_ho_on_complete.1{current_player.mystery_hits_count == 2}: 
+  mystery_ho_on_complete.1{current_player.mystery_hits_count == 3}: 
     - mystery_open_vault
   ball_hold_mystery_hold_full: 
     - mystery_close_vault
   timer_mystery_complete: 
     - mystery_awarded
+  mode_mystery_started{current_player.mystery_hits_count == 3}: 
+    - mystery_open_vault
 
 
+shot_groups: 
+  mystery_ho:
+    shots: vault_h,vault_o
+    restart_events: mystery_ho_on_complete.1{current_player.mystery_hits_count < 3}, mystery_awarded
 
 shots: 
   vault_h:
@@ -30,18 +36,18 @@ shots:
     start_enabled: True
     show_tokens: 
       lights: l30
-      color: de780b
+      color: 00ff00
   vault_o:
     switch: s_holly_o
     profile: profile_mystery_ho
     start_enabled: True
     show_tokens: 
       lights: l31
-      color: de780b
+      color: 00ff00
   vault_mystery:
     profile: profile_mystery
     show_tokens: 
-      lights: l60
+      lights: Vault
       color: 00ff00
     control_events: 
       - events: mystery_close_vault
@@ -62,23 +68,23 @@ timers:
     tick_interval: 1000ms
 
 variable_player: 
-  mystery_ho_on_complete.2: 
+  mystery_ho_on_complete.2{current_player.mystery_hits_count < 3}: 
     mystery_hits_count: 
       action: add
       int: 1
 
-shot_groups:
-  mystery_ho:
-    debug: true
-    shots: vault_h,vault_o
-    restart_events: mystery_ho_on_complete.1{current_player.mystery_hits_count == 1}, mystery_awarded
+  mystery_awarded: 
+    mystery_hits_count: 
+      action: set
+      int: 0
+
 
 
 widget_player: 
-  mystery_ho_on_complete: 
+  mystery_ho_on_complete{current_player.mystery_hits_count < 3}: 
     mystery_qualify:
       action: play
-      expire: 3ms
+      expire: 3s
   mystery_open_vault: 
     mystery:
       action: play

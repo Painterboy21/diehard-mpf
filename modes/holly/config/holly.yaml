@@ -3,7 +3,7 @@
 mode:
   start_events: ball_started
   stop_events: ball_ended
-  priority: 110
+  priority: 120
 
 shot_groups: 
   holly_targets:

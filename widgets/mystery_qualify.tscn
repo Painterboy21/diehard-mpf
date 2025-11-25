@@ -1,8 +1,62 @@
-[gd_scene load_steps=2 format=3 uid="uid://bpu5xcvxojjqo"]
+[gd_scene load_steps=7 format=3 uid="uid://bpu5xcvxojjqo"]
 
 [ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_m52hf"]
+[ext_resource type="Texture2D" uid="uid://ctmtru62irnnx" path="res://godot-media/images/hohoho.png" id="2_jwy04"]
 
-[node name="TestWidget" type="Control"]
+[sub_resource type="Animation" id="Animation_jwy04"]
+resource_name = "created"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1812, -155), Vector2(1812, 147)]
+}
+
+[sub_resource type="Animation" id="Animation_0oj8b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1812, 147)]
+}
+
+[sub_resource type="Animation" id="Animation_evkmd"]
+resource_name = "removed"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1812, 147), Vector2(1812, -160)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0oj8b"]
+_data = {
+&"RESET": SubResource("Animation_0oj8b"),
+&"created": SubResource("Animation_jwy04"),
+&"removed": SubResource("Animation_evkmd")
+}
+
+[node name="TestWidget" type="Control" node_paths=PackedStringArray("animation_player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,16 +64,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_m52hf")
+animation_player = NodePath("AnimationPlayer")
 metadata/_custom_type_script = "uid://dwcsp83138nco"
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 151
-text = "HO
-HO
-HO"
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1812, 147)
+scale = Vector2(0.302486, 0.302486)
+texture = ExtResource("2_jwy04")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_0oj8b")
+}
