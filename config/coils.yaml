@@ -66,7 +66,7 @@ coils:
     number: f-13
   c_push_drop_target_vault:
     number: f-14
-    default_pulse_ms: 80ms
+    default_pulse_ms: 20ms
 
 
  # Vuks
