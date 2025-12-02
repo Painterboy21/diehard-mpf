@@ -183,6 +183,7 @@ slide_player:
   mode_base_started: 
     base:
       action: play
+      expire: 0s
 
 
 sound_player: 

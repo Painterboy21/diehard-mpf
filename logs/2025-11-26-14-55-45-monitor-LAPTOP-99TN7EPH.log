@@ -1,0 +1,7 @@
+2025-11-26 14:55:45,993 : INFO : root : Loading MPF Monitor
+2025-11-26 14:55:46,308 : INFO : Core : Looking for MPF at localhost:5051
+2025-11-26 14:55:47,557 : INFO : BCP Client : Connected to MPF
+2025-11-27 15:27:25,519 : INFO : Core : Quitting due to quit on close
+2025-11-27 15:27:25,538 : INFO : root : MPF Monitor run loop ended.
+2025-11-27 15:27:25,539 : INFO : root : Stopping child threads... (0 remaining)
+2025-11-27 15:27:25,542 : INFO : root : All child threads stopped.

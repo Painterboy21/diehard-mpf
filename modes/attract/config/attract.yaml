@@ -21,6 +21,7 @@ slide_player:
   mode_attract_started: 
     attract:
       action: play
+      expire: 0s
 
 
 
