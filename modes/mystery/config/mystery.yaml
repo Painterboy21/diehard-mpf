@@ -24,6 +24,13 @@ event_player:
     - mystery_open_vault
 
 
+random_event_player: 
+  ball_hold_mystery_hold_full.2: 
+    events:
+      mystery_award_points: 1
+    scope: player
+
+
 shot_groups: 
   mystery_ho:
     shots: vault_h,vault_o
@@ -55,10 +62,28 @@ shots:
       - events: mystery_open_vault
         state: 1
 
+show_player: 
+  mystery_awarded: 
+    flicker_color: 
+      key: key_mystery_awarded
+      loops: 2
+      speed: 4
+      show_tokens: 
+        lights: f147
+        color: 00FF00
+
+
+slide_player: 
+  ball_hold_mystery_hold_full: 
+    mystery:
+      action: play
+      expire: 4s
+
+
 timers: 
   mystery:
     start_value: 0
-    end_value: 3
+    end_value: 4
     direction: up
     control_events: 
       - event: ball_hold_mystery_hold_full
@@ -78,6 +103,11 @@ variable_player:
       action: set
       int: 0
 
+  mystery_award_points: 
+    mystery_awarded_index: 
+      action: set
+      int: 0
+
 
 
 widget_player: 
@@ -85,12 +115,6 @@ widget_player:
     mystery_qualify:
       action: play
       expire: 3s
-  mystery_open_vault: 
-    mystery:
-      action: play
-  mystery_awarded: 
-    mystery:
-      action: remove
 
 
 

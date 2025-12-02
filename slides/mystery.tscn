@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://dx1glodi5lrec"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_5sopy"]
+[ext_resource type="Script" uid="uid://cb07gtge3d1d" path="res://slides/mystery.gd" id="2_5sopy"]
+[ext_resource type="Theme" uid="uid://cfix632dro1cx" path="res://godot-media/themes/lbl_holly.tres" id="3_ghofp"]
+
+[node name="Mystery" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5sopy")
+metadata/_custom_type_script = "uid://cdwas3gbf7w3g"
+
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_5sopy")
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="VideoPlayer"]
+wait_time = 0.25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 70
+alignment = 1
+
+[node name="VaultTitle" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_ghofp")
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 8
+theme_override_font_sizes/font_size = 111
+text = "Vault Mystery Award"
+horizontal_alignment = 1
+
+[node name="VaultAward" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_ghofp")
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 8
+theme_override_font_sizes/font_size = 111
+text = "LIGHT AIRPLANE LOCK"
+horizontal_alignment = 1
