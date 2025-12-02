@@ -54,7 +54,7 @@ shots:
   vault_mystery:
     profile: profile_mystery
     show_tokens: 
-      lights: Vault
+      lights: l60
       color: 00ff00
     control_events: 
       - events: mystery_close_vault
@@ -71,6 +71,18 @@ show_player:
       show_tokens: 
         lights: f147
         color: 00FF00
+  mystery_open_vault: 
+    flicker_color: 
+      key: key_mystery_open_vault
+      loops: -1
+      speed: 4
+      show_tokens: 
+        lights: l84
+        color: FFFFFF
+  mystery_close_vault: 
+    flicker_color: 
+      action: stop
+      key: key_mystery_open_vault
 
 
 slide_player: 
