@@ -177,9 +177,9 @@ show_player:
       show_tokens: 
         lights: f144
         color: FF0000
-  balldevice_right_vuk_ball_eject_success: 
+  balldevice_rightvuk_ejecting_ball: 
     flicker_color: 
-      key: key_balldevice_right_vuk_ball_eject_success
+      key: key_balldevice_rightvuk_ejecting_ball
       priority: 1
       loops: 0
       speed: 4
