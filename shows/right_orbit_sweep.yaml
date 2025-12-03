@@ -1,0 +1,282 @@
+#show_version=6
+
+- time: 0
+  lights:
+    l84: stop
+    l15: stop
+    l14: stop
+    l128: stop
+    l127: 0f21d3%100
+    l126: stop
+    l82: stop
+    l83: stop
+    l80: stop
+    l81: stop
+    l73: stop
+    f140: stop
+    f147: stop
+    f146: stop
+    f145: stop
+    f144: stop
+    f143: stop
+    f142: stop
+    f141: stop
+    l72: stop
+    l71: stop
+    l70: stop
+    l75: stop
+    l61: stop
+    l53: 0a16cd%100
+    l43: stop
+    l42: stop
+    l41: stop
+    l40: stop
+    l31: stop
+    l13: stop
+    l12: stop
+    l8: stop
+    l6: stop
+    l5: stop
+    l4: stop
+    l3: stop
+    l2: stop
+    l1: stop
+    l78: stop
+    l76: stop
+    l77: stop
+    l50: stop
+    l20: stop
+    l21: stop
+    l32: stop
+    l51: stop
+    l17: stop
+    l33: stop
+    l16: stop
+    l7: stop
+    l30: stop
+    l60: stop
+    l63: stop
+    l34: stop
+    l52: stop
+    l22: 0d1cd0%100
+    l62: stop
+    l23: stop
+    l24: stop
+    l10: stop
+    l54: stop
+    l55: stop
+    l9: stop
+    l59: stop
+    l58: stop
+    l57: stop
+    l44: stop
+    l29: stop
+    l18: stop
+    l119: stop
+    l109: stop
+    l125: stop
+    l124: stop
+    l123: stop
+    l122: stop
+    l121: stop
+    l120: stop
+    l118: stop
+    l117: stop
+    l116: stop
+    l115: stop
+    l114: stop
+    l113: stop
+    l112: stop
+    l111: stop
+    l110: stop
+    l108: stop
+    l107: stop
+    l106: stop
+    l105: stop
+    l104: stop
+    l102: stop
+    l100: stop
+    l103: stop
+
+- time: 0.03333s
+  lights:
+    l127: stop
+    l53: stop
+
+- time: 0.06667s
+  lights:
+    l52: 0a15cc%100
+
+- time: 0.1s
+  lights:
+    l71: 152edb%100
+    l22: stop
+
+- time: 0.13333s
+  lights:
+    l71: 162edb%100
+    l62: 0c1bcf%100
+
+- time: 0.16667s
+  lights:
+    l62: 0d1bd0%100
+
+- time: 0.2s
+  lights:
+    f143: 1935de%100
+    l71: stop
+    l117: 1731dc%100
+
+- time: 0.23333s
+  lights:
+    f143: 1935df%100
+    l115: 1226d6%100
+
+- time: 0.26667s
+  lights:
+    f143: stop
+    l52: stop
+    l62: stop
+    l123: 2957f2%100
+    l117: stop
+    l116: 1831dd%100
+
+- time: 0.3s
+  lights:
+    l126: 2044e7%100
+    l123: 2958f2%100
+    l116: 1832dd%100
+    l115: 1227d6%100
+
+- time: 0.33333s
+  lights:
+    f144: 2c5cf5%100
+    l123: stop
+    l116: stop
+    l115: stop
+
+- time: 0.36667s
+  lights:
+    l126: stop
+    f144: stop
+    l78: 2856f1%100
+    l122: 2c5cf5%100
+
+- time: 0.4s
+  lights:
+    l61: 142ad8%100
+    l23: 1630db%100
+    l122: stop
+
+- time: 0.43333s
+  lights:
+    l78: stop
+    l77: 2752ef%100
+    l16: 0810ca%100
+    l24: 1937df%100
+    l119: 2247e9%100
+
+- time: 0.46667s
+  lights:
+    l76: 254fed%100
+    l77: stop
+    l16: 0811ca%100
+    l23: 1730dc%100
+    l118: 1e41e5%100
+
+- time: 0.5s
+  lights:
+    l61: stop
+    l33: 0a16cd%100
+    l23: stop
+    l54: 142cda%100
+    l55: 1832dd%100
+    l119: stop
+    l125: 2753ef%100
+
+- time: 0.53333s
+  lights:
+    l3: 254eed%100
+    l76: stop
+    l24: stop
+    l54: 152cda%100
+    l125: stop
+    l118: stop
+
+- time: 0.56667s
+  lights:
+    l75: 2349ea%100
+    l3: stop
+    l2: 254fed%100
+    l54: stop
+    l55: stop
+
+- time: 0.6s
+  lights:
+    l2: stop
+    l1: 254fed%100
+    l33: 0a17cd%100
+    l112: 0f20d3%100
+
+- time: 0.63333s
+  lights:
+    l75: stop
+    l16: stop
+    l7: 0914cb%100
+    l18: 1b3ae1%100
+    l124: 2854f0%100
+
+- time: 0.66667s
+  lights:
+    l1: stop
+    l33: stop
+    l124: stop
+
+- time: 0.7s
+  lights:
+    l7: 0a14cc%100
+    l18: stop
+    l112: stop
+
+- time: 0.73333s
+
+- time: 0.76667s
+  lights:
+    f146: 2145e8%100
+    l121: 2b5bf4%100
+
+- time: 0.8s
+  lights:
+    f145: 2b5bf4%100
+    l7: stop
+    l121: stop
+
+- time: 0.83333s
+  lights:
+    f146: stop
+    f145: stop
+    l21: 0a15cc%100
+    l120: 2855f0%100
+    l114: 1b3ae1%100
+
+- time: 0.86667s
+  lights:
+    l51: 060ec8%100
+    l120: stop
+    l114: 1c3ae2%100
+    l113: 162fdb%100
+
+- time: 0.9s
+  lights:
+    l51: 070fc9%100
+    l114: stop
+
+- time: 0.93333s
+
+- time: 0.96667s
+  lights:
+    l70: 142ad8%100
+    l32: 0b19ce%100
+    l113: stop
+
+
