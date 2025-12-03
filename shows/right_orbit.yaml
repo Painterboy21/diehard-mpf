@@ -1,0 +1,18 @@
+#show_version=6
+
+- time: 0
+  shows:
+    flicker_color: 
+      key: key_right_orbit_hit1
+      priority: 2
+      loops: 4
+      speed: 2
+      show_tokens: 
+        lights: f144
+        color: FF0000
+    right_orbit_sweep: 
+      key: key_right_orbit_hit2
+      priority: 1
+      loops: 0
+
+
