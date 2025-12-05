@@ -187,9 +187,12 @@ scale = Vector2(0.134868, 0.103093)
 texture = ExtResource("13_735fb")
 
 [node name="bullets" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 1920.0
-offset_bottom = 1086.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("15_gvfig")
 
 [node name="1Bullets" type="Sprite2D" parent="bullets"]
@@ -266,3 +269,13 @@ texture = ExtResource("29_cbytx")
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("30_1m7cl")
+
+[node name="BulletsCount" type="Label" parent="bullets"]
+layout_mode = 0
+offset_left = 1701.0
+offset_top = 788.0
+offset_right = 1802.0
+offset_bottom = 839.0
+theme = ExtResource("7_smx5b")
+theme_override_font_sizes/font_size = 38
+text = "0 of 15"
