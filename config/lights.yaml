@@ -49,6 +49,7 @@ lights:
     number: playfield-1-10
     subtype: led
     type: rgb
+    tags: bullets
   l18:
     number: playfield-1-11
     subtype: led
@@ -57,6 +58,7 @@ lights:
     number: playfield-1-12
     subtype: led
     type: rgb
+    tags: bullets
   l61:
     number: playfield-1-13
     subtype: led
@@ -166,6 +168,7 @@ lights:
     number: playfield-2-4
     subtype: led
     type: rgb
+    tags: bullets
   l17:
     number: playfield-2-5
     subtype: led
@@ -249,6 +252,7 @@ lights:
     number: playfield-2-24
     subtype: led
     type: rgb
+    tags: bullets
   l34:
     number: playfield-2-25
     subtype: led
