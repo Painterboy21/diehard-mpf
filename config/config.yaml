@@ -185,6 +185,7 @@ machine_vars:
 modes:
   - attract
   - base
+  - bullets
   - holly
   - score
   - mystery
