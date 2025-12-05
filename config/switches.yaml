@@ -167,7 +167,7 @@ switches:
     number: e-12
 
 # air_ducts
-  s_AirDuctEnter001: #And AirDuct002
+  s_air_duct:
     number: f-8
     type: 'NC'
 

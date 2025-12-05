@@ -17,7 +17,7 @@ event_player:
 light_player: 
   mode_base_started: 
     GI: 
-      color: 7f7f7f
+      color: ffffff
 
 
 random_event_player: 

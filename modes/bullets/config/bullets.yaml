@@ -5,13 +5,79 @@ mode:
   stop_events: ball_ended
   priority: 110
 
+event_player: 
+  left_orbit_hit{current_player.shot_bullet_left_orbit == 0}: 
+    - bullet_lock_left_orbit
+    - bullet_hit
+  left_orbit_hit{current_player.shot_bullet_left_orbit == 2}: 
+    - bullet_lock_left_orbit
+    - bullet_hit
+    - bullet_combo_hit
+  right_orbit_hit{current_player.shot_bullet_right_orbit == 0}: 
+    - bullet_lock_right_orbit
+    - bullet_hit
+  right_orbit_hit{current_player.shot_bullet_right_orbit == 2}: 
+    - bullet_lock_right_orbit
+    - bullet_hit
+    - bullet_combo_hit
+  bullet_mid_orbit_hit{current_player.shot_bullet_mid_orbit == 0}: 
+    - bullet_lock_mid_orbit
+    - bullet_hit
+  bullet_mid_orbit_hit{current_player.shot_bullet_mid_orbit == 2}: 
+    - bullet_lock_mid_orbit
+    - bullet_hit
+    - bullet_combo_hit
+  bullet_air_duct_hit{current_player.shot_bulletair_duct == 0}: 
+    - bullet_lock_air_duct
+    - bullet_hit
+  bullet_air_duct_hit{current_player.shot_bullet_air_duct == 2}: 
+    - bullet_lock_air_duct
+    - bullet_hit
+    - bullet_combo_hit
+
+
 shots: 
   bullet_left_orbit:
     profile: profile_bullets
     start_enabled: True
     show_tokens: 
       lights: l50
-      color: ffffff
-    hit_events: left_orbit_hit
+    control_events: 
+      - events: bullet_lock_left_orbit
+        state: 1
+      - events: bullet_hit{current_player.shot_bullet_left_orbit != 1}
+        state: 2
+  bullet_right_orbit:
+    profile: profile_bullets
+    start_enabled: True
+    show_tokens: 
+      lights: l53
+    control_events: 
+      - events: bullet_lock_right_orbit
+        state: 1
+      - events: bullet_hit{current_player.shot_bullet_right_orbit != 1}
+        state: 2
+  bullet_mid_orbit:
+    switch: s_mid_orbit
+    profile: profile_bullets
+    start_enabled: True
+    show_tokens: 
+      lights: l54
+    control_events: 
+      - events: bullet_lock_mid_orbit
+        state: 1
+      - events: bullet_hit{current_player.shot_bullet_mid_orbit != 1}
+        state: 2
+  bullet_air_duct:
+    switch: s_air_duct
+    profile: profile_bullets
+    start_enabled: True
+    show_tokens: 
+      lights: l55
+    control_events: 
+      - events: bullet_lock_air_duct
+        state: 1
+      - events: bullet_hit{current_player.shot_bullet_air_duct != 1}
+        state: 2
 
 

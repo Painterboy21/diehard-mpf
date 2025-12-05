@@ -68,9 +68,27 @@ shot_profiles:
        loops: -1
        speed: 1
        sync_ms: 0
-     - name: flash
-       show: flash_color
+       show_tokens: 
+         color: ffffff
+     - name: locked_out
+       show: led_color
        loops: -1
        speed: 1
        sync_ms: 0
+       show_tokens: 
+         color: ff0000
+     - name: flash
+       show: flash_color
+       loops: -1
+       speed: 4
+       sync_ms: 0
+       show_tokens: 
+         color: ffffff
+     - name: complete
+       show: led_color
+       loops: -1
+       speed: 1
+       sync_ms: 0
+       show_tokens: 
+         color: ffff00
 
