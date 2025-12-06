@@ -77,6 +77,7 @@ config:
   - lights.yaml
   - shot_profiles.yaml
   - switches.yaml
+  - player_vars.yaml
 
 
 flippers:
@@ -202,11 +203,6 @@ playfields:
   playfield:
     default_source_device: bd_plunger
     tags: default
-
-player_vars:
-  mystery_hits_count:
-    initial_value: 0
-    value_type: int
 
 variable_player:
   increase_main_volume:

@@ -38,7 +38,11 @@ event_player:
     - bullet_combo_hit
     - bullet_hit
     - bullet_combo_check
-  timer_bullets_combo_complete: 
+  timer_bullets_combo_complete:
+    - reset_bullets
+  mode_bullets_stopping:
+    - reset_bullets
+  mode_bullets_starting:
     - reset_bullets
   bullet_combo_check{current_player.bullet_combo_hits == 3}: 
     - bullets_combo_max
