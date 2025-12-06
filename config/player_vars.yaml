@@ -1,0 +1,85 @@
+#config_version=6
+
+player_vars:
+  mystery_hits_count:
+    initial_value: 0
+    value_type: int
+  nakatomi_mb_available:
+    initial_value: 1
+    value_type: int
+  tower_lock:
+    initial_value: 0
+    value_type: int
+  airplane_mb_available:
+    initial_value: 1
+    value_type: int
+  airplane_lock_lit:
+    initial_value: 0
+    value_type: int
+  park_mb_available:
+    initial_value: 1
+    value_type: int
+  park_locks:
+    initial_value: 0
+    value_type: int
+  modes_complete:
+    initial_value: 0
+    value_type: int
+  mode_running:
+    initial_value: 
+    value_type: str
+  collected_bullets:
+    initial_value: 0
+    value_type: int
+  time_ball_save:
+    initial_value: 0
+    value_type: int
+  bonus_multiplier:
+    initial_value: 1
+    value_type: int
+  bonus_x_held:
+    initial_value: 0
+    value_type: int
+  karl_bonus:
+    initial_value: 0
+    value_type: int
+  super_jets:
+    initial_value: 0
+    value_type: int
+  super_jets_goal:
+    initial_value: 40
+    value_type: int
+  super_spinners:
+    initial_value: 0
+    value_type: int
+  stuart_bonus:
+    initial_value: 0
+    value_type: int
+  point_multiplier:
+    initial_value: 1
+    value_type: int
+  ambush:
+    initial_value: 0
+    value_type: int
+  nakatomi_super_collected:
+    initial_value: 0
+    value_type: int
+  airplane_mb_stage2:
+    initial_value: 0
+    value_type: int
+  park_super_collected:
+    initial_value: 0
+    value_type: int
+  extra_ball_mball_awarded:
+    initial_value: 0
+    value_type: int
+  mystery_awarded_index:
+    initial_value: 0
+    value_type: int
+  bullet_hits:
+    initial_value: 0
+    value_type: int
+  bullet_combo_hits:
+    initial_value: 0
+    value_type: int
+
