@@ -186,8 +186,6 @@ switches:
     type: 'NC'
 
 # Top Playfield 
-  s_swDivParkp:
-    number: f-9
   s_TrPF1:
     number: f-6
     type: 'NC'
@@ -197,3 +195,5 @@ switches:
   s_TrPF3:
     number: f-5
     type: 'NC'
+  s_upper_pf_entrance:
+    number: f-9
