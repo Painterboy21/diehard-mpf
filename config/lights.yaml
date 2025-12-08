@@ -49,7 +49,7 @@ lights:
     number: playfield-1-10
     subtype: led
     type: rgb
-    tags: bullets
+    tags: bullets, BMO
   l18:
     number: playfield-1-11
     subtype: led
@@ -58,7 +58,7 @@ lights:
     number: playfield-1-12
     subtype: led
     type: rgb
-    tags: bullets
+    tags: bullets, BAD
   l61:
     number: playfield-1-13
     subtype: led
@@ -72,10 +72,12 @@ lights:
     number: playfield-1-15
     subtype: led
     type: rgb
+    tags: BMO
   l24:
     number: playfield-1-16
     subtype: led
     type: rgb 
+    tags: BAD
   l126:
     number: playfield-1-17
     subtype: led
@@ -160,6 +162,7 @@ lights:
     number: playfield-2-2
     subtype: led
     type: rgb
+    tags: BLO
   l31:
     number: playfield-2-3
     subtype: led
@@ -168,7 +171,7 @@ lights:
     number: playfield-2-4
     subtype: led
     type: rgb
-    tags: bullets
+    tags: bullets, BLO
   l17:
     number: playfield-2-5
     subtype: led
@@ -181,10 +184,12 @@ lights:
     number: playfield-2-7
     subtype: led
     type: rgb
+    tags: BUP
   l51:
     number: playfield-2-8
     subtype: led
     type: rgb
+    tags: bullets, BUP
   l7:
     number: playfield-2-9
     subtype: led
@@ -248,11 +253,12 @@ lights:
     number: playfield-2-23
     subtype: led
     type: rgb
+    tags: BRO
   l53:
     number: playfield-2-24
     subtype: led
     type: rgb
-    tags: bullets
+    tags: bullets, BRO
   l34:
     number: playfield-2-25
     subtype: led
