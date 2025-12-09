@@ -163,21 +163,23 @@ autofire_coils:
 magnets:
   trmagrl:
     magnet_coil: c_trmagl
-    grab_ball_events: s_trmagl_active
+    grab_ball_events: s_trmagl_active{machine.magnets_enabled}
     enable_events: ball_started
     release_ball_events: s_trmagl_inactive
  
   trmagr:
     magnet_coil: c_trmagr
-    grab_ball_events: s_trmagr_active
+    grab_ball_events: s_trmagr_active{machine.magnets_enabled}
     enable_events: ball_started
     release_ball_events: s_trmagr_inactive
 
 
-
-
 machine_vars:
   var_which_attract: #to track which attract screen you are currently on
+    value_type: int
+    initial_value: 0
+    persist: false
+  magnets_enabled:
     value_type: int
     initial_value: 0
     persist: false
