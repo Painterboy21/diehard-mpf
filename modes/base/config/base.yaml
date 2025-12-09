@@ -255,4 +255,25 @@ sound_player:
       action: play
 
 
+variable_player: 
+  s_TrPF1_active: 
+    magnets_enabled: 
+      action: set_machine
+      int: 0
+
+  s_TrPF2_active: 
+    magnets_enabled: 
+      action: set_machine
+      int: 0
+
+  s_TrPF3_active: 
+    magnets_enabled: 
+      action: set_machine
+      int: 0
+
+  s_upper_pf_entrance_active: 
+    magnets_enabled: 
+      action: set_machine
+      int: 1
+
 
