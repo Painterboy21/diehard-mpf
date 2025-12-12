@@ -12,7 +12,7 @@ coils:
  # Flippers
   c_left_flipper_main:
     number: d-3
-    default_pulse_ms: 30ms
+    default_pulse_ms: 27ms
   c_left_flipper_hold:
     number: d-2
     allow_enable: true
@@ -86,10 +86,10 @@ coils:
  # Pop Bumpers
   c_popbumper_left:
     number: e-1
-    default_pulse_ms: 20ms
+    default_pulse_ms: 40ms
   c_popbumper_right:
     number: e-10
-    default_pulse_ms: 20ms
+    default_pulse_ms: 15ms
 
  # Airplane
   c_captivetarget:

@@ -382,14 +382,7 @@ lights:
     number: playfield-3-20
     subtype: led
     type: rgb
-  l80: #not in the game yet
-    number: playfield-3-21
-    subtype: led
-    type: rgb
-  l81: #not in the game yet
-    number: playfield-3-22
-    subtype: led
-    type: rgb
+
 
 
 
@@ -438,37 +431,47 @@ lights:
     number: playfield-4-10
     subtype: led
     type: rgb
-  l103:
+  f140:
     number: playfield-4-11
     subtype: led
-    type: grb
-    tags: GI
-  f140:
+    type: rgb   
+  l103:
     number: playfield-4-12
     subtype: led
-    type: rgb
-  l100:
+    type: grb
+    tags: GI
+  l81:
     number: playfield-4-13
     subtype: led
-    type: grb
+    type: rgb
     tags: GI
-  l102:
+  l80: 
     number: playfield-4-14
     subtype: led
-    type: grb
+    type: rgb
     tags: GI
-  l107:
+  l100:
     number: playfield-4-15
     subtype: led
     type: grb
     tags: GI
-  l72:
+  l102:
     number: playfield-4-16
+    subtype: led
+    type: grb
+    tags: GI
+  l107:
+    number: playfield-4-17
+    subtype: led
+    type: grb
+    tags: GI
+  l72:
+    number: playfield-4-18
     subtype: led
     type: rgb
     tags: GI
   l131:
-    number: playfield-4-17
+    number: playfield-4-19
     subtype: led
     type: grb
     tags: GI
