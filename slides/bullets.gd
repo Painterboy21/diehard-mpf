@@ -5,14 +5,18 @@ var format_string = "%s of 15"
 @onready var bullets_collected: Label = $BulletsCount
 
 func _ready() -> void:
-	bullets_collected.text = format_string % MPF.game.player.bullet_hits
+
+	var bullet_hits = MPF.game.player.bullet_hits
+	if bullet_hits > 15:
+			bullet_hits = 15
+	bullets_collected.text = format_string % bullet_hits
 
 	for i in range(1, 16):
 		var bullet = get_node("%sBullets" % i) as Sprite2D
 		bullet.visible = false
 		bullet_nodes.append(bullet)
 
-	for i in range(0,MPF.game.player.bullet_hits):
+	for i in range(0,bullet_hits):
 			bullet_nodes[i].visible = true
 
 	MPF.game.connect("player_update", self._on_player_update)
