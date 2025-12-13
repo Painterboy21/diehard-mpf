@@ -97,7 +97,7 @@ show_player:
       loops: 0
       speed: 2
       show_tokens: 
-        lights: f141
+        lights: LeftSling
         color: C81616
   flash_left_sling_blue: 
     flicker_color: 
@@ -105,7 +105,7 @@ show_player:
       loops: 0
       speed: 2
       show_tokens: 
-        lights: f141
+        lights: LeftSling
         color: 1616FF
   flash_right_sling_red: 
     flicker_color: 

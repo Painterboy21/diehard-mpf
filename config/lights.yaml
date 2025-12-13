@@ -293,6 +293,7 @@ lights:
     number: playfield-2-32
     subtype: led
     type: rgb
+    tags: LeftSling
 
 # port3
   l60:
@@ -444,12 +445,12 @@ lights:
     number: playfield-4-13
     subtype: led
     type: rgb
-    tags: GI
+    tags: GI, LeftSling
   l80: 
     number: playfield-4-14
     subtype: led
     type: rgb
-    tags: GI
+    tags: GI, LeftSling
   l100:
     number: playfield-4-15
     subtype: led
