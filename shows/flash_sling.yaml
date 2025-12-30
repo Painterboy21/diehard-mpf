@@ -1,11 +1,53 @@
 #show_version=6
 
-- duration: 1s
+- duration: 0.16s
   lights:
+    (flasher): ff0000%37
     (lights): ff0000%100
 
-- duration: 1s
+- duration: 0.16s
   lights:
+    (flasher): ff0000%100
+
+- duration: 0.16s
+  lights:
+    (flasher): ff0000%24
+
+- duration: 0.16s
+  lights:
+    (flasher): ff0000%100
+
+- duration: 0.16s
+  lights:
+    (flasher): ff0000%70
+
+- duration: 0.16s
+  lights:
+    (flasher): ff0000%100
+
+- duration: 0.16s
+  lights:
+    (flasher): 0000ff%37
     (lights): 0000ff%100
+
+- duration: 0.16s
+  lights:
+    (flasher): 0000ff%100
+
+- duration: 0.16s
+  lights:
+    (flasher): 0000ff%24
+
+- duration: 0.16s
+  lights:
+    (flasher): 0000ff%100
+
+- duration: 0.16s
+  lights:
+    (flasher): 0000ff%70
+
+- duration: 0.16s
+  lights:
+    (flasher): 0000ff%100
 
 
