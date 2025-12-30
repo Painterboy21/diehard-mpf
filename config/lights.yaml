@@ -276,12 +276,12 @@ lights:
     number: playfield-2-28
     subtype: led
     type: rgb
-    tags: Rightsling
+    tags: RightSling
   l83:
     number: playfield-2-29
     subtype: led
     type: rgb
-    tags: Rightsling 
+    tags: RightSling 
 
 # port3
 
