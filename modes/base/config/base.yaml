@@ -85,6 +85,7 @@ show_player:
     flash_sling: 
       key: key_s_left_sling_active
       loops: 1
+      speed: 2
       show_tokens: 
         lights: LeftSling
         flasher: f140
@@ -92,6 +93,7 @@ show_player:
     flash_sling: 
       key: key_s_right_sling_active
       loops: 1
+      speed: 2
       show_tokens: 
         lights: RightSling
         flasher: f141
