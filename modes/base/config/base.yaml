@@ -87,12 +87,14 @@ show_player:
       loops: 1
       show_tokens: 
         lights: LeftSling
+        flasher: f140
   s_right_sling_active: 
     flash_sling: 
       key: key_s_right_sling_active
       loops: 1
       show_tokens: 
         lights: RightSling
+        flasher: f141
   SpinnerLeft_active: 
     flicker_color: 
       key: key_s_left_spinner_active
