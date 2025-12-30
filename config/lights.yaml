@@ -266,7 +266,7 @@ lights:
     number: playfield-2-26
     subtype: led
     type: rgb
-    tags: LeftSling
+    tags: RightSling
   l105:
     number: playfield-2-27
     subtype: led
@@ -436,6 +436,7 @@ lights:
     number: playfield-4-11
     subtype: led
     type: rgb   
+    tags: LeftSling
   l103:
     number: playfield-4-12
     subtype: led
