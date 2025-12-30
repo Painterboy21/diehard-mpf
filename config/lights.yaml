@@ -293,7 +293,7 @@ lights:
     number: playfield-2-32
     subtype: led
     type: rgb
-    tags: LeftSling
+    tags: RightSling
 
 # port3
   l60:
@@ -379,10 +379,12 @@ lights:
     number: playfield-3-19
     subtype: led
     type: rgb
+    tags: RightSling
   l83: #not in the game yet
     number: playfield-3-20
     subtype: led
     type: rgb
+    tags: RightSling
 
 
 
@@ -435,7 +437,8 @@ lights:
   f140:
     number: playfield-4-11
     subtype: led
-    type: rgb   
+    type: rgb
+    tags: LeftSling
   l103:
     number: playfield-4-12
     subtype: led
