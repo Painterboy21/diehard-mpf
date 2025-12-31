@@ -3,10 +3,10 @@
 coils:
  # Slingshots
   c_left_sling:
-    number: d-7
+    number: d-6
     default_pulse_ms: 20ms
   c_right_sling:
-    number: d-6
+    number: d-7
     default_pulse_ms: 20ms
 
  # Flippers
