@@ -3,51 +3,49 @@
 - duration: 0.16s
   lights:
     (flasher): ff0000%37
-    (lights): ff0000%100
+    (lights1): ff0000%100
+    (lights2): 000000%100
 
 - duration: 0.16s
   lights:
     (flasher): ff0000%100
+    (lights2): 0000ff%100
+    (lights1): 000000%100
 
 - duration: 0.16s
   lights:
     (flasher): ff0000%24
+    (lights1): 0000ff%100
+    (lights2): 000000%100
 
 - duration: 0.16s
   lights:
     (flasher): ff0000%100
+    (lights2): ff0000%100
+    (lights1): 000000%100
 
 - duration: 0.16s
   lights:
     (flasher): ff0000%70
+    (lights1): ff0000%100
+    (lights2): 000000%100
 
 - duration: 0.16s
   lights:
     (flasher): ff0000%100
+    (lights2): 0000ff%100
+    (lights1): 000000%100
 
 - duration: 0.16s
   lights:
-    (flasher): 0000ff%37
-    (lights): 0000ff%100
+    (flasher): ff0000%24
+    (lights1): 0000ff%100
+    (lights2): 000000%100
 
 - duration: 0.16s
   lights:
-    (flasher): 0000ff%100
-
-- duration: 0.16s
-  lights:
-    (flasher): 0000ff%24
-
-- duration: 0.16s
-  lights:
-    (flasher): 0000ff%100
-
-- duration: 0.16s
-  lights:
-    (flasher): 0000ff%70
-
-- duration: 0.16s
-  lights:
-    (flasher): 0000ff%100
+    (flasher): ff0000%100
+    (lights2): ff0000%100
+    (lights1): 000000%100
 
 
