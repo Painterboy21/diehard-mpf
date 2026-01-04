@@ -72,7 +72,36 @@ func register_display(display: MPFDisplay) -> void:
 			self.default_display = display
 		else:
 			assert(false, "More than one Display cannot be default")
+
+	if display.floating:
+		MPF.log.info("Creating floating display: %s", display)
+
+		var floating_display := Window.new()
+		floating_display.title = display.name
+		floating_display.size = display.size
+		floating_display.close_requested.connect(_on_floating_window_close_requested.bind(floating_display))
+		# Force a sensible initial placement (avoid off-screen surprises)
+		floating_display.initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN
+
+		# Add it to the ROOT viewport (important for multi-window)
+		get_tree().root.add_child.call_deferred(floating_display)
+		# Show it after it enters the tree
+		floating_display.call_deferred("show")
+		call_deferred("_move_display_to_window", floating_display, display)
+
 	MPF.log.info("Registered display %s", display)
+
+func _move_display_to_window(window: Window, display: MPFDisplay) -> void:
+	display.visible = true
+	display.reparent(window)
+	display.set_anchors_preset(Control.PRESET_FULL_RECT)
+	display.offset_left = 0
+	display.offset_top = 0
+	display.offset_right = 0
+	display.offset_bottom = 0
+
+func _on_floating_window_close_requested(window: Window) -> void:
+	window.queue_free()
 
 func _check_config() -> void:
 	var filter_parent = self.get_node_or_null("filters")
@@ -109,6 +138,6 @@ func _check_config() -> void:
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-		var menu = $RightClickMenu
-		menu.set_position(event.position)
-		menu.popup()
+		var settings_panel = $SettingsMenu
+		settings_panel.position = event.get_position()
+		settings_panel.popup()

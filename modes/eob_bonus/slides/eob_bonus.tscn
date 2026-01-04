@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://2qj4qxbjhptu"]
+
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_hp4uy"]
+[ext_resource type="VideoStream" uid="uid://8gwyluj7siuh" path="res://modes/eob_bonus/slides/assets/bonusroofexplosion.ogv" id="2_4oqqg"]
+
+[node name="EobBonus" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hp4uy")
+metadata/_custom_type_script = "uid://dru3usokwlhd3"
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_4oqqg")
+autoplay = true

@@ -1,0 +1,32 @@
+#config_version=6
+
+mode:
+  start_events: ball_ending{game.tilted == False}
+  stop_events: bonus_finished
+  priority: 150
+  use_wait_queue: true
+
+event_player:
+  timer_bullets_combo_complete:
+	- bonus_finished
+
+
+slide_player:
+  mode_eob_bonus_started:
+	eob_bonus:
+	  action: play
+	  expire: 0s
+  mode_eob_bonus_stopping:
+	eob_bonus:
+	  action: remove
+	  expire: 0s
+
+
+timers:
+  eob_bonus:
+	start_value: 0
+	end_value: 6
+	direction: up
+	restart_on_complete: False
+	start_running: True
+	tick_interval: 1000ms

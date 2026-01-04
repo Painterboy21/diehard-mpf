@@ -65,11 +65,13 @@ func CheckHit(payload: Dictionary):
 		hitSuccess = false
 		videoPlayer.stream = load("res://modes/skillshot/slides/assets/SkillshotMissed.ogv")
 
+	videoPlayer.visible = true
 	videoPlayer.play()
 
 func _on_video_finished():
 	if playingIntro:
 		playingIntro = false
+		videoPlayer.visible = false
 		return
 
 	if hitSuccess:

@@ -11,14 +11,13 @@ config_version=5
 [application]
 
 config/name="diehard_mpf"
-run/main_scene="uid://ds4gduf8660uj"
-config/features=PackedStringArray("4.4", "Mobile")
+run/main_scene="uid://bxomb1kyk6cw7"
+config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
 
 MPF="*res://addons/mpf-gmc/mpf_gmc.gd"
-Settings="*res://settings.gd"
 
 [display]
 
