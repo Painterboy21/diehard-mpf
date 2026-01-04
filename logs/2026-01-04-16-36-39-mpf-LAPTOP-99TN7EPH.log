@@ -1,0 +1,6 @@
+2026-01-04 16:36:39,501 : INFO : root : Loading config.
+2026-01-04 16:36:39,516 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2026-01-04 16:36:39,517 : WARNING : ConfigProcessor : Config file in cache changed: C:\Users\carr-\Documents\development\diehard-mpf\config\config.yaml
+2026-01-04 16:36:39,517 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\mpf080\mpf\mpfconfig.yaml.
+2026-01-04 16:36:39,537 : INFO : ConfigProcessor : Loading config: C:\Users\carr-\Documents\development\mpf080\mpf\mpfconfig.yaml
+2026-01-04 16:36:39,537 : INFO : ConfigProcessor : Loading config from file C:\Users\carr-\Documents\development\diehard-mpf\config\config.yaml.
