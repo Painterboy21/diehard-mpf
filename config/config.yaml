@@ -1,65 +1,65 @@
 #config_version=6
-  
+
 
 hardware:
-    platform: fast
+	platform: fast
 
 fast:
 
   net:
-    controller: neuron
-    io_loop:
-        j:
-          model: FP-I/O-0024
-          order: 1
-        d:
-          model: FP-I/O-3208
-          order: 2
-        e:
-          model: FP-I/O-1616
-          order: 3
-        f:
-          model: FP-I/O-1616
-          order: 4
+	controller: neuron
+	io_loop:
+		j:
+		  model: FP-I/O-0024
+		  order: 1
+		d:
+		  model: FP-I/O-3208
+		  order: 2
+		e:
+		  model: FP-I/O-1616
+		  order: 3
+		f:
+		  model: FP-I/O-1616
+		  order: 4
 
   exp:
-    port: COM6
-    boards:
-      playfield:
-        model: FP-EXP-0071
+	port: COM6
+	boards:
+	  playfield:
+		model: FP-EXP-0071
 
- 
+
   aud:
-    port: auto
-    debug: false
+	port: auto
+	debug: false
 
-    main_amp_enabled: true
-    sub_amp_enabled: true
-    headphones_amp_enabled: true
+	main_amp_enabled: true
+	sub_amp_enabled: true
+	headphones_amp_enabled: true
 
-    main_steps: 20
-    sub_steps: 20
-    headphones_steps: 20
+	main_steps: 20
+	sub_steps: 20
+	headphones_steps: 20
 
-    default_main_volume: 60
-    default_sub_volume: 40
-    default_headphones_volume: 10
+	default_main_volume: 60
+	default_sub_volume: 40
+	default_headphones_volume: 10
 
-    persist_volume_settings: true
+	persist_volume_settings: true
 
-    max_hw_volume_main: 63
-    max_hw_volume_sub: 63
-    max_hw_volume_headphones: 63
+	max_hw_volume_main: 63
+	max_hw_volume_sub: 63
+	max_hw_volume_headphones: 63
 
-    main_levels_list: None
-    sub_levels_list: None
-    headphones_levels_list: None
+	main_levels_list: None
+	sub_levels_list: None
+	headphones_levels_list: None
 
-    link_sub_to_main: true
-    link_headphones_to_main: false
+	link_sub_to_main: true
+	link_headphones_to_main: false
 
-    headphones_level: headphones
-    mute_speakers_with_headphones: true
+	headphones_level: headphones
+	mute_speakers_with_headphones: true
 
 
 virtual_platform_start_active_switches:
@@ -68,7 +68,7 @@ virtual_platform_start_active_switches:
   - s_trough3
   - s_trough4
   - s_trough5
-  - s_trough6 
+  - s_trough6
 
 
 config:
@@ -82,107 +82,107 @@ config:
 
 flippers:
   left_flipper:
-    main_coil: c_left_flipper_main
-    hold_coil: c_left_flipper_hold
-    eos_switch: s_left_flipper_eos
-    use_eos: true
-    repulse_on_eos_open: false
-    activation_switch: s_left_flipper
-    enable_events: ball_started, enableAutofire, flipper_on
-    disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
+	main_coil: c_left_flipper_main
+	hold_coil: c_left_flipper_hold
+	eos_switch: s_left_flipper_eos
+	use_eos: true
+	repulse_on_eos_open: false
+	activation_switch: s_left_flipper
+	enable_events: ball_started, enableAutofire, flipper_on
+	disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
 
   right_flipper:
-    main_coil: c_right_flipper_main
-    hold_coil: c_right_flipper_hold
-    eos_switch: s_right_flipper_eos
-    use_eos: true
-    repulse_on_eos_open: false
-    activation_switch: s_right_flipper
-    enable_events: ball_started, enableAutofire, flipper_on
-    disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
+	main_coil: c_right_flipper_main
+	hold_coil: c_right_flipper_hold
+	eos_switch: s_right_flipper_eos
+	use_eos: true
+	repulse_on_eos_open: false
+	activation_switch: s_right_flipper
+	enable_events: ball_started, enableAutofire, flipper_on
+	disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
 
   left_top_flipper:
-    main_coil: c_left_top_flipper_main
-    hold_coil: c_left_top_flipper_hold
-    eos_switch: s_top_flipper_eos
-    use_eos: true
-    repulse_on_eos_open: false
-    activation_switch: s_left_flipper
-    enable_events: ball_started, enableAutofire, flipper_on
-    disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
+	main_coil: c_left_top_flipper_main
+	hold_coil: c_left_top_flipper_hold
+	eos_switch: s_top_flipper_eos
+	use_eos: true
+	repulse_on_eos_open: false
+	activation_switch: s_left_flipper
+	enable_events: ball_started, enableAutofire, flipper_on
+	disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
 
 drop_targets:
   bank1:
-    switch: s_drop_target_1
-    reset_coil: c_reset_drop_targets
+	switch: s_drop_target_1
+	reset_coil: c_reset_drop_targets
   bank2:
-    switch: s_drop_target_2
-    reset_coil: c_reset_drop_targets
+	switch: s_drop_target_2
+	reset_coil: c_reset_drop_targets
   bank3:
-    switch: s_drop_target_3
-    reset_coil: c_reset_drop_targets
+	switch: s_drop_target_3
+	reset_coil: c_reset_drop_targets
   bank4:
-    switch: s_push_drop_target_4
-    reset_coil: c_reset_drop_target_nakotomi
+	switch: s_push_drop_target_4
+	reset_coil: c_reset_drop_target_nakotomi
   bank5:
-    switch: s_push_drop_target_5
-    reset_coil: c_reset_drop_target_vault
-    knockdown_coil: c_push_drop_target_vault
-    knockdown_events: mystery_close_vault
-    reset_events: ball_starting, machine_reset_phase_3, mystery_open_vault
+	switch: s_push_drop_target_5
+	reset_coil: c_reset_drop_target_vault
+	knockdown_coil: c_push_drop_target_vault
+	knockdown_events: mystery_close_vault
+	reset_events: ball_starting, machine_reset_phase_3, mystery_open_vault
 
 drop_target_banks:
   bank:
-    drop_targets: bank1, bank2, bank3
-    reset_coils: c_reset_drop_targets
-    reset_on_complete: 1s
+	drop_targets: bank1, bank2, bank3
+	reset_coils: c_reset_drop_targets
+	reset_on_complete: 1s
   bank1:
-    drop_targets: bank4
-    reset_coils: c_reset_drop_target_nakotomi
-    reset_on_complete: 0.5s 
+	drop_targets: bank4
+	reset_coils: c_reset_drop_target_nakotomi
+	reset_on_complete: 0.5s
 
 autofire_coils:
   left_sling:
-    coil: c_left_sling
-    switch: s_left_sling
+	coil: c_left_sling
+	switch: s_left_sling
   right_sling:
-    coil: c_right_sling
-    switch: s_right_sling
+	coil: c_right_sling
+	switch: s_right_sling
   airplane:
-    coil: c_captivetarget
-    switch: s_captiveball
+	coil: c_captivetarget
+	switch: s_captiveball
   popbumper_left:
-    coil: c_popbumper_left
-    switch: s_popbumper_left
+	coil: c_popbumper_left
+	switch: s_popbumper_left
   popbumper_right:
-    coil: c_popbumper_right
-    switch: s_popbumper_right
+	coil: c_popbumper_right
+	switch: s_popbumper_right
 
 
 
 magnets:
   trmagrl:
-    magnet_coil: c_trmagl
-    grab_ball_events: s_trmagl_active{machine.magnets_enabled}
-    enable_events: ball_started
-    release_ball_events: s_trmagl_inactive
- 
+	magnet_coil: c_trmagl
+	grab_ball_events: s_trmagl_active{machine.magnets_enabled}
+	enable_events: ball_started
+	release_ball_events: s_trmagl_inactive
+
   trmagr:
-    magnet_coil: c_trmagr
-    grab_ball_events: s_trmagr_active{machine.magnets_enabled}
-    enable_events: ball_started
-    release_ball_events: s_trmagr_inactive
+	magnet_coil: c_trmagr
+	grab_ball_events: s_trmagr_active{machine.magnets_enabled}
+	enable_events: ball_started
+	release_ball_events: s_trmagr_inactive
 
 
 machine_vars:
   var_which_attract: #to track which attract screen you are currently on
-    value_type: int
-    initial_value: 0
-    persist: false
+	value_type: int
+	initial_value: 0
+	persist: false
   magnets_enabled:
-    value_type: int
-    initial_value: 0
-    persist: false
+	value_type: int
+	initial_value: 0
+	persist: false
 
 
 modes:
@@ -193,57 +193,58 @@ modes:
   - score
   - mystery
   - skillshot
+  - eob_bonus
 
-  
+
 machine:
-    balls_installed: 6
+	balls_installed: 6
 
 game:
-    balls_per_game: 3
-    max_players: 4
+	balls_per_game: 3
+	max_players: 4
 
 playfields:
   playfield:
-    default_source_device: bd_plunger
-    tags: default
+	default_source_device: bd_plunger
+	tags: default
 
 variable_player:
   increase_main_volume:
-    fast_audio_main_volume:
-      action: add_machine
-      int: 1
+	fast_audio_main_volume:
+	  action: add_machine
+	  int: 1
   decrease_main_volume:
-    fast_audio_main_volume:
-      action: add_machine
-      int: -1
+	fast_audio_main_volume:
+	  action: add_machine
+	  int: -1
   increase_sub_volume:
-    fast_audio_sub_volume:
-      action: add_machine
-      int: 1
+	fast_audio_sub_volume:
+	  action: add_machine
+	  int: 1
   decrease_sub_volume:
-    fast_audio_sub_volume:
-      action: add_machine
-      int: -1
+	fast_audio_sub_volume:
+	  action: add_machine
+	  int: -1
   increase_headphones_volume:
-    fast_audio_headphones_volume:
-      action: add_machine
-      int: 1
+	fast_audio_headphones_volume:
+	  action: add_machine
+	  int: 1
   decrease_headphones_volume:
-    fast_audio_headphones_volume:
-      action: add_machine
-      int: -1
+	fast_audio_headphones_volume:
+	  action: add_machine
+	  int: -1
 
 
 servos:
   servo1:
-    number: playfield-4
-    platform_settings:
-      min_us: 650
-      max_us: 2500
-      home_us: 600
-      max_runtime: 3s
-    reset_position: 0.1
-    reset_events: game_started, ball_ended
-    positions:
-      0.1: mystery_close_vault
-      0.90: mystery_open_vault
+	number: playfield-4
+	platform_settings:
+	  min_us: 650
+	  max_us: 2500
+	  home_us: 600
+	  max_runtime: 3s
+	reset_position: 0.1
+	reset_events: game_started, ball_ended
+	positions:
+	  0.1: mystery_close_vault
+	  0.90: mystery_open_vault

@@ -5,22 +5,19 @@ mode:
   stop_events: ball_ended, skillshot_miss, skillshot_hit
   priority: 1100
 
-event_player: 
-  s_plunger_key_active: 
-    - skillshot_check
-  s_fire_active: 
-    - skillshot_check
+event_player:
+  s_plunger_key_active:
+	- skillshot_check
+  s_fire_active:
+	- skillshot_check
 
 
-slide_player: 
-  mode_skillshot_started: 
-    skillshot:
-      action: play
-      expire: 0s
-  mode_skillshot_stopping: 
-    skillshot:
-      action: remove
-      expire: 0s
-
-
-
+slide_player:
+  mode_skillshot_started:
+	skillshot:
+	  action: play
+	  expire: 0s
+  mode_skillshot_stopping:
+	skillshot:
+	  action: remove
+	  expire: 0s

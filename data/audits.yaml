@@ -1,80 +1,84 @@
 events:
   game_ended: 20
-  game_started: 120
+  game_started: 121
 missing_switches:
-  SpinnerRight: 9
+  SpinnerLeft: 1
+  SpinnerRight: 10
   s_AirDuctEnter001: 33
-  s_TrPF1: 42
-  s_TrPF2: 42
-  s_TrPF3: 42
-  s_UrampUp001: 42
-  s_air_duct: 8
+  s_TrPF1: 43
+  s_TrPF2: 43
+  s_TrPF3: 43
+  s_UrampUp001: 43
+  s_air_duct: 9
   s_airplane: 1
   s_bottom_left_inner_drain: 1
   s_bottom_left_outer_drain: 2
   s_bottom_right_inner_drain: 1
-  s_captiveball: 42
-  s_door: 43
-  s_door_tilt: 43
-  s_drop_target_1: 42
-  s_drop_target_2: 42
-  s_drop_target_3: 41
-  s_enter: 120
-  s_escape: 120
+  s_captiveball: 43
+  s_door: 44
+  s_door_tilt: 44
+  s_drop_target_1: 43
+  s_drop_target_2: 43
+  s_drop_target_3: 42
+  s_enter: 121
+  s_escape: 121
+  s_fire: 1
   s_highvuk: 3
-  s_holly_h: 9
-  s_holly_l: 41
-  s_holly_l1: 40
+  s_holly_h: 10
+  s_holly_l: 42
+  s_holly_l1: 41
   s_holly_l_1: 3
-  s_holly_o: 9
-  s_holly_y: 41
-  s_kickervault1: 9
-  s_left_coin: 120
-  s_left_flipper: 5
-  s_left_flipper_eos: 41
+  s_holly_o: 10
+  s_holly_y: 42
+  s_kickervault1: 10
+  s_left_coin: 121
+  s_left_flipper: 6
+  s_left_flipper_eos: 42
   s_left_inlane: 24
   s_left_magna: 1
+  s_left_orbit: 1
+  s_left_orbit2: 1
   s_left_outlane: 24
   s_left_slingshot: 1
   s_left_top_target: 1
-  s_mid_orbit: 51
+  s_mid_orbit: 52
   s_middle_top_target: 1
-  s_minus: 120
-  s_nakatomi_lock_ball_count: 42
-  s_plus: 120
-  s_popbumper_left: 32
-  s_popbumper_right: 32
-  s_push_drop_target_4: 41
-  s_push_drop_target_5: 9
-  s_right_coin: 120
-  s_right_flipper: 41
-  s_right_flipper_eos: 42
+  s_minus: 121
+  s_nakatomi_lock_ball_count: 43
+  s_plus: 121
+  s_popbumper_left: 33
+  s_popbumper_right: 33
+  s_push_drop_target_4: 42
+  s_push_drop_target_5: 10
+  s_right_coin: 121
+  s_right_flipper: 42
+  s_right_flipper_eos: 43
   s_right_inlane: 24
   s_right_magna: 1
-  s_right_orbit: 36
-  s_right_orbit2: 36
+  s_right_orbit: 37
+  s_right_orbit2: 37
   s_right_outlane: 24
   s_right_slingshot: 2
   s_right_top_target: 1
-  s_rightkicker: 8
-  s_rightvuk: 42
+  s_rightkicker: 9
+  s_rightvuk: 43
   s_safe_vuk: 3
   s_spinnerleft: 1
   s_spinnerright: 1
-  s_start: 33
+  s_start: 34
   s_swDivParkp: 34
-  s_swleftinlane: 42
+  s_swleftinlane: 43
   s_swleftorb1: 1
   s_swleftorb2: 1
-  s_swleftoutlane: 42
+  s_swleftoutlane: 43
   s_swmidorb: 6
-  s_swrightinlane: 41
+  s_swrightinlane: 42
   s_swrightorb1: 1
   s_swrightorb2: 2
-  s_swrightoutlane: 42
-  s_target002: 42
-  s_target003: 42
-  s_target004: 42
+  s_swrightoutlane: 43
+  s_target002: 43
+  s_target003: 43
+  s_target004: 43
   s_target_2: 24
   s_target_3: 24
   s_targeth: 2
@@ -82,19 +86,21 @@ missing_switches:
   s_targetl2: 1
   s_targeto: 2
   s_targety: 2
-  s_tilt_bob: 120
-  s_top_flipper_eos: 42
+  s_tilt_bob: 121
+  s_top_flipper_eos: 43
   s_top_flipper_hold: 24
-  s_towervuk: 42
-  s_trmagl: 42
-  s_trmagr: 42
-  s_trough2: 2
-  s_trough3: 2
-  s_trough4: 2
-  s_trough5: 2
-  s_trough6: 2
+  s_towervuk: 43
+  s_trmagl: 43
+  s_trmagr: 43
+  s_trough1: 1
+  s_trough2: 3
+  s_trough3: 3
+  s_trough4: 3
+  s_trough5: 3
+  s_trough6: 3
+  s_trough_jam: 1
   s_tunel_vuk: 1
-  s_upper_pf_entrance: 23
+  s_upper_pf_entrance: 24
 player:
   score:
     average: 89899
@@ -160,7 +166,7 @@ switches:
   s_left_orbit: 345
   s_left_orbit2: 11
   s_left_outlane: 0
-  s_left_sling: 388
+  s_left_sling: 389
   s_left_slingshot: 1
   s_left_top_target: 76
   s_mid_orbit: 0
@@ -168,7 +174,7 @@ switches:
   s_minus: 0
   s_nakatomi: 199
   s_nakatomi_lock_ball_count: 0
-  s_plunger_lane: 204
+  s_plunger_lane: 205
   s_plus: 0
   s_popbumper_left: 256
   s_popbumper_right: 535
@@ -183,7 +189,7 @@ switches:
   s_right_orbit: 261
   s_right_orbit2: 11
   s_right_outlane: 0
-  s_right_sling: 510
+  s_right_sling: 511
   s_right_slingshot: 0
   s_right_top_target: 38
   s_rightkicker: 2

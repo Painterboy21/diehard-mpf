@@ -9,13 +9,15 @@ var channels: Array[GMCChannel] = []
 var type: BusType = BusType.SIMULTANEOUS
 var queue
 var duckings: Array[DuckSettings] = []
+var mpf: MPFGMC
 
 var _full_volume_db: float
 var _bus_index: int
 var _active_duck: Tween
 var _duck_release_timer: Timer
 
-func _init(n: String, log_level: int = 30):
+func _init(mpf_instance: MPFGMC, n: String, log_level: int = 30):
+	self.mpf = mpf_instance
 	self.name = n
 	self.configure_logging("Bus<%s>" % self.name, log_level)
 	# Store the target restore volume for post-ducks
@@ -25,7 +27,7 @@ func _init(n: String, log_level: int = 30):
 	self.log.debug("Initialized audio bus '%s' at index %s with volume %s" % [self.name, self._bus_index, db_to_linear(self._full_volume_db)])
 
 func create_channel(channel_name: String) -> GMCChannel:
-	var channel = GMCChannel.new(channel_name, self)
+	var channel = GMCChannel.new(self.mpf, channel_name, self)
 	self.channels.append(channel)
 	# Channels have tweens so must be in the tree
 	self.add_child(channel)
@@ -135,9 +137,6 @@ func play(filename: String, settings: Dictionary = {}) -> void:
 	else:
 		available_channel = self._find_available_channel(filepath, settings, self.type==BusType.SIMULTANEOUS)
 
-	if not available_channel:
-		self.log.info("sound player1: No available channels")
-
 	# If the available channel we got back is already playing, it's playing this file
 	# and we don't need to do anything further.
 	if available_channel and available_channel.playing:
@@ -153,7 +152,6 @@ func play(filename: String, settings: Dictionary = {}) -> void:
 				c.stop_with_settings()
 
 	if not available_channel:
-		self.log.info("sound player: No available channels")
 		# Queue the filename if this bus type has a queue
 		if self.queue != null:
 			# By default, max queue time is forever
@@ -167,7 +165,6 @@ func play(filename: String, settings: Dictionary = {}) -> void:
 		self.log.error("Failed to load stream for filepath '%s' on channel %s", [filepath, available_channel])
 		return
 	var stream = available_channel.play_with_settings(settings)
-	
 	self.sound_play.emit(filename, settings)
 
 	if settings.get("ducking", false):
@@ -282,8 +279,6 @@ func _create_duck_tween(attenuation: float, duration: float) -> Tween:
 func _find_available_channel(filepath: String, settings: Dictionary, ignore_existing: bool = false) -> AudioStreamPlayer:
 	var available_channel
 	for channel in self.channels:
-		self.log.info('sound player: channel')
-		
 		if channel.stream and channel.stream.resource_path == filepath and not ignore_existing:
 			# If this file is *already* playing, keep playing
 			if channel.playing:

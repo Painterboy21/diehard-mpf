@@ -17,7 +17,7 @@ event_player:
 light_player: 
   mode_base_started: 
     GI: 
-      color: ffffff
+      color: 969696
 
 
 random_event_player: 
@@ -249,3 +249,7 @@ variable_player:
     magnets_enabled: 
       action: set_machine
       int: 1
+
+
+
+

@@ -12,6 +12,8 @@ signal slide_changed(active_slide: MPFSlide)
 @export var initial_slide: PackedScene
 ## If not selected, this display will persist a removed slide until a new one arrives
 @export var allow_empty: bool = false
+## If the display shold be a separate floating window
+@export var floating: bool = false
 
 # The slide stack is an array of slide nodes that are sorted by priority
 var _slide_stack: Array = []

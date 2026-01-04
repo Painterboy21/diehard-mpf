@@ -71,7 +71,6 @@ func save_window_settings():
 	config.set_value("window", "size", window.size)
 	config.set_value("window", "position", window.position)
 	config.set_value("window", "borderless", DisplayServer.window_get_flag(DisplayServer.WINDOW_FLAG_BORDERLESS))
-	config.set_value("window", "alwaysOnTop", DisplayServer.window_get_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP))
 
 	var error = config.save(CONFIG_FILE)
 	if error != OK:
