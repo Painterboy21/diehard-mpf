@@ -248,3 +248,12 @@ servos:
     positions:
       0.1: mystery_close_vault
       0.90: mystery_open_vault
+
+coil_player:
+  reset_complete:
+    c_cab_start_button:
+      action: enable
+      hold_power: 0.3
+    c_cab_coin_return_left_right:
+      action: enable
+      hold_power: 1
