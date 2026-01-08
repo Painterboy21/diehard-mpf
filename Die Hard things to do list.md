@@ -1,12 +1,26 @@
 Die Hard things to do list 
 
+Attract
+- add score screens
+- add instruct video from kongedom
+- add diehard video from vpw
+
+Skillshot
+- Add scores, ball save times
+
 Base mode
-- add videos, score, lights, for air duct
-- ball saves
+- air duct shot, add random videos, score, lights,
+- ball saves,
+- playfield multiplyer
+- 
 
 Holly 
 - add red letters on holly card when hit
 - add ball save
+
+Vault
+- flash vault light when h,o has been hit,
+- apply bonus to score or whatever
 
 bonus mode 
 - add score
@@ -32,7 +46,11 @@ multiball modes
 
 - taxi
 
+Extra balls
+
+
 Service mode
+- control volume
 
 
 
