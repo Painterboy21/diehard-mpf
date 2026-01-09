@@ -1,0 +1,49 @@
+#show_version=6
+
+- time: 0
+  lights:
+    GI: 000000%100
+    NONRGB: 000000%100
+  slides:
+    eob_bonus:
+      action: play
+      expire: 0s
+
+- time: 1s
+  shows:
+    ball_drain: 
+      key: key_eob_bonus
+      loops: 0
+
+- time: 5s
+  widgets:
+    widget_eob_bullets:
+      action: play
+      expire: 5s
+
+- time: 6s
+  widgets:
+    widget_eob_multiball:
+      action: play
+      expire: 4s
+
+- time: 7s
+  widgets:
+    widget_eob_ambush:
+      action: play
+      expire: 3s
+
+- time: 8s
+  widgets:
+    widget_eob_holly:
+      action: play
+      expire: 2s
+
+- time: 9s
+  duration: 1s
+  widgets:
+    widget_eob_villan:
+      action: play
+      expire: 1s
+
+
