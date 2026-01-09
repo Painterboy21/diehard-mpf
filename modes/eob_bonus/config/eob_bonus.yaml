@@ -11,6 +11,13 @@ event_player:
     - bonus_finished
 
 
+show_player: 
+  mode_eob_bonus_started: 
+    ball_drain: 
+      key: key_eob_bonus
+      loops: 0
+
+
 slide_player: 
   mode_eob_bonus_started: 
     eob_bonus:
