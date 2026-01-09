@@ -220,11 +220,11 @@ variable_player:
   increase_sub_volume:
     fast_audio_sub_volume:
       action: add_machine
-      int: 1
+      int: 30
   decrease_sub_volume:
     fast_audio_sub_volume:
       action: add_machine
-      int: -1
+      int: -10
   increase_headphones_volume:
     fast_audio_headphones_volume:
       action: add_machine
@@ -248,3 +248,12 @@ servos:
     positions:
       0.1: mystery_close_vault
       0.90: mystery_open_vault
+
+coil_player:
+  reset_complete:
+    c_cab_coin_return_left_right:
+      action: enable
+      hold_power: 1
+    c_cab_start_button:
+      action: enable
+      hold_power: 0.4
