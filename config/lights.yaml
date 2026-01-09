@@ -39,7 +39,7 @@ lights:
     number: playfield-1-8
     subtype: led
     type: grb
-    tags: GI  
+    tags: GI,NONRGB
   l112:  
     number: playfield-1-9
     subtype: led
@@ -123,7 +123,7 @@ lights:
     number: playfield-1-26
     subtype: led
     type: grb
-    tags: GI  
+    tags: GI, NONRGB
   l123:
     number: playfield-1-27
     subtype: led

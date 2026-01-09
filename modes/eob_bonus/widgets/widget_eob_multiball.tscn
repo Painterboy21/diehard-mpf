@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://d166nnjslndry"]
+
+[ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_mts5q"]
+[ext_resource type="Texture2D" uid="uid://c85sdor6cnpot" path="res://modes/eob_bonus/assets/target.png" id="2_7ee5s"]
+
+[node name="widget_eob_multiball" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mts5q")
+metadata/_custom_type_script = "uid://d4ky3s4bg1ouq"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(751, 339)
+scale = Vector2(0.3611111, 0.3611111)
+texture = ExtResource("2_7ee5s")
