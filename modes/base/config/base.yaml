@@ -88,7 +88,7 @@ show_player:
       show_tokens: 
         lights1: l80
         lights2: l81
-        flasher: f140
+        flasher: f141
   s_right_sling_active: 
     flash_sling: 
       key: key_s_right_sling_active
@@ -96,7 +96,7 @@ show_player:
       show_tokens: 
         lights1: l82
         lights2: l83
-        flasher: f141
+        flasher: f140
   SpinnerLeft_active: 
     flicker_color: 
       key: key_s_left_spinner_active
