@@ -12,6 +12,7 @@ Base mode
 - air duct shot, add random videos, score, lights,
 - ball saves,
 - playfield multiplyer
+- top three targets, score, lights
 - 
 
 Holly 
@@ -25,6 +26,7 @@ Vault
 bonus mode 
 - add score
 - add random ball drained videos
+- add bullet sounds
 
 
 villian modes
