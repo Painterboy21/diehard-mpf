@@ -194,7 +194,7 @@ modes:
   - mystery
   - skillshot
   - eob_bonus
-
+  - service
 
 machine:
     balls_installed: 6
