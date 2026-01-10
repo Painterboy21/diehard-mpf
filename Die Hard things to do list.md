@@ -13,7 +13,7 @@ Base mode
 - ball saves,
 - playfield multiplyer
 - top three targets, score, lights
-- 
+
 
 Holly 
 - add red letters on holly card when hit
