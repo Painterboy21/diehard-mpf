@@ -24,7 +24,7 @@ coils:
     allow_enable: true 
   c_right_flipper_main:
     number: d-5
-    default_pulse_ms: 50ms
+    default_pulse_ms: 30ms
   c_right_flipper_hold:
     number: d-4
     allow_enable: true
@@ -33,11 +33,11 @@ coils:
   c_trmagr:
     number: e-15
     default_pulse_ms: 100
-    default_hold_power: 0.375
+    default_hold_power: 0.6
   c_trmagl:
     number: e-14
     default_pulse_ms: 100
-    default_hold_power: 0.375
+    default_hold_power: 0.6
 
  # Plunger & Trough
   c_plunger:
@@ -69,10 +69,10 @@ coils:
  # Vuks
   c_rightkicker_eject:
     number: e-8
-    default_pulse_ms: 150ms
+    default_pulse_ms: 200ms
   c_UrampUp001_eject:
     number: e-9
-    default_pulse_ms: 80ms
+    default_pulse_ms: 120ms
   c_rightvuk_eject:
     number: e-13
     default_pulse_ms: 20ms
