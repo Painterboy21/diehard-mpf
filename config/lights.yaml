@@ -262,7 +262,7 @@ lights:
     number: playfield-2-25
     subtype: led
     type: rgb
-  f141:
+  f140:
     number: playfield-2-26
     subtype: led
     type: rgb
@@ -432,7 +432,7 @@ lights:
     number: playfield-4-10
     subtype: led
     type: rgb
-  f140:
+  f141:
     number: playfield-4-11
     subtype: led
     type: rgb   
