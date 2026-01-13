@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MPFSoundAsset" load_steps=4 format=3 uid="uid://d034il4vg8xva"]
+
+[ext_resource type="Script" uid="uid://bsvo8cxf10088" path="res://addons/mpf-gmc/classes/mpf_sound_marker.gd" id="1_qxes8"]
+[ext_resource type="Script" uid="uid://e2h352i1jeqi" path="res://addons/mpf-gmc/classes/mpf_sound.gd" id="2_fnhrv"]
+[ext_resource type="AudioStream" uid="uid://botrvxdfqtvk8" path="res://sounds/src/gunfire.mp3" id="3_iher7"]
+
+[resource]
+script = ExtResource("2_fnhrv")
+stream = ExtResource("3_iher7")
+bus = "effects"
+metadata/_custom_type_script = "uid://e2h352i1jeqi"
