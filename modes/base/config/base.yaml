@@ -166,15 +166,19 @@ slide_player:
 sound_player: 
   gameplay_music_1: 
     gameplay_music_beethoven: 
+      key: main_snd_music
       action: play
   gameplay_music_2: 
     gameplay_music_assault: 
+      key: main_snd_music
       action: play
   gameplay_music_3: 
     gameplay_music_finlandia: 
+      key: main_snd_music
       action: play
   gameplay_music_4: 
     gameplay_music_battle: 
+      key: main_snd_music
       action: play
   flash_left_sling_red: 
     sling_1: 

@@ -3,12 +3,17 @@
 mode:
   start_events: ball_ending{game.tilted == False}
   stop_events: bonus_finished
-  priority: 150
+  priority: 9999
   use_wait_queue: true
 
 event_player: 
   timer_eob_bonus_complete: 
     - bonus_finished
+  mode_eob_bonus_started: 
+    - stop_main_music1
+    - stop_main_music2
+    - stop_main_music3
+    - stop_main_music4
 
 
 show_player: 
@@ -16,6 +21,25 @@ show_player:
     eob_bonus: 
       key: key_eob_bonus
       loops: 0
+
+
+sound_player: 
+  stop_main_music1: 
+    gameplay_music_beethoven: 
+      key: main_snd_music
+      action: stop
+  stop_main_music2: 
+    gameplay_music_assault: 
+      key: main_snd_music
+      action: stop
+  stop_main_music3: 
+    gameplay_music_finlandia: 
+      key: main_snd_music
+      action: stop
+  stop_main_music4: 
+    gameplay_music_battle: 
+      key: main_snd_music
+      action: stop
 
 
 timers: 
