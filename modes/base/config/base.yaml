@@ -5,6 +5,29 @@ mode:
   stop_events: ball_ended
   priority: 100
 
+ball_saves: 
+  one:
+    active_time: 5000ms
+    grace_period: 2000ms
+    hurry_up_time: 3000ms
+    enable_events: ball_save_one
+    auto_launch: true
+    balls_to_save: -1
+  two:
+    active_time: 7000ms
+    grace_period: 2000ms
+    hurry_up_time: 3000ms
+    enable_events: ball_save_two
+    auto_launch: true
+    balls_to_save: -1
+  three:
+    active_time: 10000ms
+    grace_period: 2000ms
+    hurry_up_time: 3000ms
+    enable_events: ball_save_three
+    auto_launch: true
+    balls_to_save: -1
+
 event_player: 
   s_popbumper_left_active: 
     - flash_bumper_left

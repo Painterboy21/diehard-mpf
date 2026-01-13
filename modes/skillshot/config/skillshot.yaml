@@ -2,7 +2,7 @@
 
 mode:
   start_events: ball_started
-  stop_events: ball_ended, skillshot_miss, skillshot_hit
+  stop_events: ball_ended, end_skillshot
   priority: 1100
 
 event_player: 
@@ -10,6 +10,16 @@ event_player:
     - skillshot_check
   s_fire_active: 
     - skillshot_check
+  skillshot_hit.1{current_player.ball==1}: 
+    - ball_save_one
+  skillshot_hit.1{current_player.ball==2}: 
+    - ball_save_two
+  skillshot_hit.1{current_player.ball==3}: 
+    - ball_save_three
+  skillshot_hit: 
+    - end_skillshot
+  skillshot_miss: 
+    - end_skillshot
 
 
 slide_player: 
@@ -21,6 +31,24 @@ slide_player:
     skillshot:
       action: remove
       expire: 0s
+
+
+variable_player: 
+  ball_save_one: 
+    score: 
+      action: add
+      int: 1000000
+
+  ball_save_two: 
+    score: 
+      action: add
+      int: 2000000
+
+  ball_save_three: 
+    score: 
+      action: add
+      int: 4000000
+
 
 
 
