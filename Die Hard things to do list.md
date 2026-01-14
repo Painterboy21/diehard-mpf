@@ -6,11 +6,11 @@ Attract
 - add diehard video from vpw
 
 Skillshot
-- Add scores, ball save times
+- videos and lights
 
 Base mode
 - air duct shot, add random videos, score, lights,
-- ball saves,
+- ball saves videos,
 - playfield multiplyer
 - top three targets, score, lights
 
@@ -26,7 +26,7 @@ Vault
 bonus mode 
 - add score
 - add random ball drained videos
-- add bullet sounds
+
 
 
 villian modes
