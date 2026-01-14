@@ -24,8 +24,16 @@ Vault
 - apply bonus to score or whatever
 
 bonus mode 
-- add score
-- add random ball drained videos
+- ~~add bullets collect score~~
+- Add Multiballs Collected Bonus Points
+- Add Ambush Collected Bonus Points
+- Add Holly Collected Bonus Points
+- Add Villains Collected Bonus Points
+- Add Bonu X and Total
+- Add Bonus Summary Screen.
+- Add random ball drained videos
+- Add Light Shows for each bonus section
+- Add Skip Bonus Feature
 
 
 
