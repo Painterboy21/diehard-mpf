@@ -194,6 +194,9 @@ variable_player:
     bullet_hits: 
       action: add
       int: 1 + current_player.bullet_combo_hits
+    eob_bonus_bullet: 
+      action: add
+      int: 35000 * 1 + current_player.bullet_combo_hits
 
   bullet_combo_hit.10: 
     bullet_combo_hits: 
