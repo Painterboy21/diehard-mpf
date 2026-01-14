@@ -45,7 +45,7 @@ sound_player:
 timers: 
   eob_bonus:
     start_value: 0
-    end_value: 10
+    end_value: 12
     direction: up
     restart_on_complete: False
     start_running: True

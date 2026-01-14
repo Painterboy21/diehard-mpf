@@ -19,7 +19,7 @@
   widgets:
     widget_eob_bullets:
       action: play
-      expire: 5s
+      expire: 6s
   sounds:
     gunfire_fx: 
       key: snd_gunfire_eob_bullets
@@ -29,7 +29,7 @@
   widgets:
     widget_eob_multiball:
       action: play
-      expire: 4s
+      expire: 5s
   sounds:
     gunfire_fx: 
       key: snd_gunfire_eob_multiball
@@ -39,7 +39,7 @@
   widgets:
     widget_eob_ambush:
       action: play
-      expire: 3s
+      expire: 4s
   sounds:
     gunfire_fx: 
       key: snd_gunfire_eob_ambush
@@ -49,21 +49,31 @@
   widgets:
     widget_eob_holly:
       action: play
-      expire: 2s
+      expire: 3s
   sounds:
     gunfire_fx: 
       key: snd_gunfire_eob_holly
       action: play
 
 - time: 9s
+  widgets:
+    widget_eob_villain:
+      action: play
+      expire: 2s
+  sounds:
+    gunfire_fx: 
+      key: snd_gunfire_eob_villain
+      action: play
+
+- time: 10s
   duration: 1s
   widgets:
-    widget_eob_villan:
+    widget_eob_bonusx:
       action: play
       expire: 1s
   sounds:
     gunfire_fx: 
-      key: snd_gunfire_eob_villan
+      key: snd_gunfire_eob_bonusx
       action: play
 
 

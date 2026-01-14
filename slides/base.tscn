@@ -1,9 +1,9 @@
 [gd_scene load_steps=31 format=3 uid="uid://bdtc8n1dcqqqh"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_b71wd"]
-[ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="2_06ewq"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_b71wd"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="2_06ewq"]
 [ext_resource type="VideoStream" uid="uid://cf68qaxsi6qpv" path="res://videos/DieHardBackground.ogv" id="2_gvfig"]
-[ext_resource type="Script" uid="uid://b7btpuu3qlkyc" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="4_qjsot"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="4_qjsot"]
 [ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="5_6vrr4"]
 [ext_resource type="Texture2D" uid="uid://ytwrcjpchkp8" path="res://godot-media/images/player 1 overlay.png" id="5_qjsot"]
 [ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="7_smx5b"]
@@ -39,7 +39,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_b71wd")
-metadata/_custom_type_script = "uid://cdwas3gbf7w3g"
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
 layout_mode = 1
@@ -58,7 +57,6 @@ expand = true
 loop = true
 script = ExtResource("4_qjsot")
 preview_in_editor = true
-metadata/_custom_type_script = "uid://b7btpuu3qlkyc"
 
 [node name="score_overlay" type="TextureRect" parent="AspectRatioContainer"]
 layout_mode = 2
@@ -91,7 +89,6 @@ clip_text = true
 script = ExtResource("2_06ewq")
 variable_name = "score"
 comma_separate = true
-metadata/_custom_type_script = "uid://bojo76gkx41ow"
 
 [node name="current_ball" type="Label" parent="Control2"]
 layout_mode = 1
@@ -99,8 +96,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -261.67
-offset_bottom = -211.67
+offset_top = -292.66998
+offset_bottom = -212.66998
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 0
@@ -113,7 +110,6 @@ script = ExtResource("2_06ewq")
 variable_name = "ball"
 comma_separate = true
 template_string = "Ball %s"
-metadata/_custom_type_script = "uid://bojo76gkx41ow"
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 1
@@ -142,7 +138,6 @@ script = ExtResource("2_06ewq")
 variable_type = 4
 variable_name = "score"
 comma_separate = true
-metadata/_custom_type_script = "uid://bojo76gkx41ow"
 
 [node name="Hollywhite" type="Sprite2D" parent="."]
 position = Vector2(160, 823)

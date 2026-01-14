@@ -79,6 +79,24 @@ player_vars:
   bullet_hits:
     initial_value: 0
     value_type: int
+  eob_bonus_bullet:
+    initial_value: 0
+    value_type: int
+  eob_bonus_multiball:
+    initial_value: 0
+    value_type: int
+  eob_bonus_ambush:
+    initial_value: 0
+    value_type: int
+  eob_bonus_holly:
+    initial_value: 0
+    value_type: int
+  eob_bonus_villains:
+    initial_value: 0
+    value_type: int
+  eob_bonus_x:
+    initial_value: 0
+    value_type: int
   bullet_combo_hits:
     initial_value: 0
     value_type: int
