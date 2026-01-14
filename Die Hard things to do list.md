@@ -1,29 +1,30 @@
-Die Hard things to do list 
+# Die Hard things to do list 
 
-Attract
+## Attract
 - add score screens
 - add instruct video from kongedom
 - add diehard video from vpw
 
-Skillshot
+## Skillshot
 - videos and lights
 
-Base mode
+## Base mode
 - air duct shot, add random videos, score, lights,
 - ball saves videos,
 - playfield multiplyer
 - top three targets, score, lights
 
 
-Holly 
+## Holly 
 - add red letters on holly card when hit
 - add ball save
 
-Vault
+## Vault
 - flash vault light when h,o has been hit,
 - apply bonus to score or whatever
 
-bonus mode 
+## Bonus Mode
+
 - ~~add bullets collect score~~
 - Add Multiballs Collected Bonus Points
 - Add Ambush Collected Bonus Points
@@ -35,9 +36,8 @@ bonus mode
 - Add Light Shows for each bonus section
 - Add Skip Bonus Feature
 
+## Villian Modes
 
-
-villian modes
 - shoot villian light on when bullets are full to start mode
 
 - kayta
@@ -47,7 +47,7 @@ villian modes
 - karl vreski
 - yippee ki yaaa
 
-multiball modes
+## Multiball modes
 - airplane
 
 
@@ -56,10 +56,9 @@ multiball modes
 
 - taxi
 
-Extra balls
+## Extra balls
 
-
-Service mode
+## Service mode
 - control volume
 
 
