@@ -158,6 +158,7 @@ lights:
     number: playfield-2-1
     subtype: led
     type: rgb
+    tags: HOLLY
   l21:
     number: playfield-2-2
     subtype: led
@@ -176,6 +177,7 @@ lights:
     number: playfield-2-5
     subtype: led
     type: rgb
+    tags: HOLLY
   l16:
     number: playfield-2-6
     subtype: led
@@ -241,6 +243,7 @@ lights:
     number: playfield-2-20
     subtype: led
     type: rgb
+    tags: HOLLY
   l109:
     number: playfield-2-21
     subtype: led
@@ -308,6 +311,7 @@ lights:
     number: playfield-3-5
     subtype: led
     type: rgb
+    tags: HOLLY
   l60:
     number: playfield-3-6
     subtype: led
@@ -387,6 +391,7 @@ lights:
     number: playfield-3-23
     subtype: led
     type: rgb
+    tags: BALL_SAVE
 
 #port4
   f147:
@@ -424,6 +429,7 @@ lights:
     number: playfield-4-8
     subtype: led
     type: rgb
+    tags: HOLLY
   l4:
     number: playfield-4-9
     subtype: led

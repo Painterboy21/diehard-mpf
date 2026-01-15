@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MPFSoundAsset" load_steps=4 format=3 uid="uid://brsldhvypa6b1"]
+
+[ext_resource type="Script" uid="uid://bsvo8cxf10088" path="res://addons/mpf-gmc/classes/mpf_sound_marker.gd" id="1_ayjki"]
+[ext_resource type="Script" uid="uid://e2h352i1jeqi" path="res://addons/mpf-gmc/classes/mpf_sound.gd" id="2_gdbpm"]
+[ext_resource type="AudioStream" uid="uid://dfsmr52b8n06u" path="res://sounds/src/dh_hollytarget1.wav" id="3_ayjki"]
+
+[resource]
+script = ExtResource("2_gdbpm")
+stream = ExtResource("3_ayjki")
+bus = "effects"
