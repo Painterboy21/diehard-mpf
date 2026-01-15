@@ -1,0 +1,11 @@
+#show_version=6
+
+- duration: 0.2s
+  lights:
+    (lights): ff0000%100
+
+- duration: 0.2s
+  lights:
+    (lights): 0000ff%100
+
+

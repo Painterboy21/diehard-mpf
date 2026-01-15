@@ -5,9 +5,19 @@ mode:
   stop_events: ball_ended
   priority: 120
 
+ball_saves: 
+  holly:
+    active_time: 12000ms
+    grace_period: 3000ms
+    hurry_up_time: 5000ms
+    enable_events: holly_targets_on_complete
+    auto_launch: true
+    balls_to_save: -1
+
 shot_groups: 
   holly_targets:
     shots: holly_h,holly_o,holly_l,holly_l1,holly_y
+    restart_events: ball_save_holly_grace_period, mode_holly_stopping{device.shot_groups.holly_targets.common_state == 1}
 
 shots: 
   holly_h:
@@ -45,6 +55,16 @@ shots:
     show_tokens: 
       lights: l34
       color: de780b
+  holly_shoot_again:
+    profile: shoot_again
+    restart_events: ball_save_holly_grace_period
+    show_tokens: 
+      color: ff0000
+    control_events: 
+      - events: ball_save_holly_enabled
+        state: 1
+      - events: ball_save_holly_hurry_up
+        state: 2
 
 show_player: 
   holly_h_hit: 
@@ -92,6 +112,52 @@ show_player:
       show_tokens: 
         lights: l34
         color: de780b
+  holly_targets_on_complete: 
+    led_color: 
+      key: key_holly_targets_on_complete
+      priority: 1
+      show_tokens: 
+        lights: HOLLY
+        color: 0000ff
+  holly_targets_off_complete: 
+    off: 
+      key: key_holly_targets_of_complete
+      priority: 1
+      show_tokens: 
+        lights: HOLLY
+
+
+slide_player: 
+  holly_targets_on_complete: 
+    holly_complete:
+      action: play
+      expire: 0s
+
+
+sound_player: 
+  holly_targets_hit: 
+    hollytarget1: 
+      key: key_holly_targets_hit
+      action: play
+
+
+variable_player: 
+  holly_targets_hit: 
+    score: 
+      action: add
+      int: 5000
+    eob_bonus_holly: 
+      action: add
+      int: 4000
+
+  holly_targets_on_complete: 
+    score: 
+      action: add
+      int: 50000
+    eob_bonus_holly: 
+      action: add
+      int: 200000
+
 
 
 

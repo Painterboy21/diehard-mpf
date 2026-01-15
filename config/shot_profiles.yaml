@@ -92,4 +92,28 @@ shot_profiles:
        sync_ms: 0
        show_tokens: 
          color: ffff00
+  shoot_again:
+    states: 
+     - name: unlit
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
+       show_tokens: 
+         lights: BALL_SAVE
+     - name: flashing
+       show: flash_color_with_fade
+       loops: -1
+       speed: 2
+       sync_ms: 0
+       show_tokens: 
+         lights: BALL_SAVE
+         fade: 500
+     - name: hurry
+       show: flash_color
+       loops: -1
+       speed: 7
+       sync_ms: 0
+       show_tokens: 
+         lights: BALL_SAVE
 
