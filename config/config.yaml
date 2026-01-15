@@ -25,8 +25,14 @@ fast:
   exp:
     port: COM6
     boards:
+      neuron:
+        model: FP-EXP-2000
       playfield:
         model: FP-EXP-0071
+      shakerboard:
+        model: FP-EXP-1313 
+    
+
 
 
   aud:
@@ -158,8 +164,6 @@ autofire_coils:
     coil: c_popbumper_right
     switch: s_popbumper_right
 
-
-
 magnets:
   trmagrl:
     magnet_coil: c_trmagl
@@ -172,6 +176,27 @@ magnets:
     grab_ball_events: s_trmagr_active{machine.magnets_enabled}
     enable_events: ball_started
     release_ball_events: s_trmagr_inactive
+
+servos:
+  servo1:
+    number: playfield-4
+    platform_settings:
+      min_us: 650
+      max_us: 2500
+      home_us: 600
+      max_runtime: 3s
+    reset_position: 0.1
+    reset_events: game_started, ball_ended
+    positions:
+      0.1: mystery_close_vault
+      0.90: mystery_open_vault
+
+shakers: 
+  
+  main_shaker:
+    number: shakerboard-1
+    debug: true
+    default_power: 0.5
 
 
 machine_vars:
@@ -208,6 +233,15 @@ playfields:
     default_source_device: bd_plunger
     tags: default
 
+coil_player:
+  reset_complete:
+    c_cab_coin_return_left_right:
+      action: enable
+      hold_power: 1
+    c_cab_start_button:
+      action: enable
+      hold_power: 0.4
+
 variable_player:
   increase_main_volume:
     fast_audio_main_volume:
@@ -235,25 +269,3 @@ variable_player:
       int: -1
 
 
-servos:
-  servo1:
-    number: playfield-4
-    platform_settings:
-      min_us: 650
-      max_us: 2500
-      home_us: 600
-      max_runtime: 3s
-    reset_position: 0.1
-    reset_events: game_started, ball_ended
-    positions:
-      0.1: mystery_close_vault
-      0.90: mystery_open_vault
-
-coil_player:
-  reset_complete:
-    c_cab_coin_return_left_right:
-      action: enable
-      hold_power: 1
-    c_cab_start_button:
-      action: enable
-      hold_power: 0.4
