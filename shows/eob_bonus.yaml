@@ -4,6 +4,7 @@
   lights:
     GI: 000000%100
     NONRGB: 000000%100
+    INSERT: 000000%100
   slides:
     eob_bonus:
       action: play
@@ -16,6 +17,14 @@
       loops: 0
 
 - time: 5s
+  shows:
+    flicker_color: 
+      key: key_eob_bonus_bullet_flash
+      loops: 0
+      speed: 2
+      show_tokens: 
+        lights: BONUS_BULLET
+        color: ff0000
   widgets:
     widget_eob_bullets:
       action: play
@@ -26,6 +35,14 @@
       action: play
 
 - time: 6s
+  shows:
+    flicker_color: 
+      key: key_eob_bonus_mb_flash
+      loops: 0
+      speed: 2
+      show_tokens: 
+        lights: BONUS_MB
+        color: 00ff00
   widgets:
     widget_eob_multiball:
       action: play
@@ -36,6 +53,14 @@
       action: play
 
 - time: 7s
+  shows:
+    flicker_color: 
+      key: key_eob_bonus_ambush_flash
+      loops: 0
+      speed: 2
+      show_tokens: 
+        lights: BONUS_AMBUSH
+        color: ffffff
   widgets:
     widget_eob_ambush:
       action: play
@@ -46,6 +71,14 @@
       action: play
 
 - time: 8s
+  shows:
+    flicker_color: 
+      key: key_eob_bonus_holly_flash
+      loops: 0
+      speed: 2
+      show_tokens: 
+        lights: HOLLY
+        color: ffffff
   widgets:
     widget_eob_holly:
       action: play
@@ -56,6 +89,14 @@
       action: play
 
 - time: 9s
+  shows:
+    flicker_color: 
+      key: key_eob_bonus_villain_flash
+      loops: 0
+      speed: 2
+      show_tokens: 
+        lights: BONUS_VILLAIN
+        color: ffffff
   widgets:
     widget_eob_villain:
       action: play

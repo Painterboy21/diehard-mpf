@@ -103,6 +103,17 @@ sequence_shots:
       - s_right_orbit2
     sequence_timeout: 1000ms
 
+shots: 
+  shoot_again:
+    profile: shoot_again
+    enable_events: ball_save_one_enabled, ball_save_two_enabled, ball_save_three_enabled 
+    disable_events: ball_save_one_grace_period, ball_save_two_grace_period, ball_save_three_grace_period
+    show_tokens: 
+      color: ff0000
+    control_events: 
+      - events: ball_save_one_hurry_up, ball_save_two_hurry_up, ball_save_three_hurry_up
+        state: 1
+
 show_player: 
   s_left_sling_active: 
     flash_sling: 
@@ -182,6 +193,18 @@ show_player:
 slide_player: 
   mode_base_started: 
     base:
+      action: play
+      expire: 0s
+  ball_save_one_saving_ball: 
+    ball_save:
+      action: play
+      expire: 0s
+  ball_save_two_saving_ball: 
+    ball_save:
+      action: play
+      expire: 0s
+  ball_save_three_saving_ball: 
+    ball_save:
       action: play
       expire: 0s
 

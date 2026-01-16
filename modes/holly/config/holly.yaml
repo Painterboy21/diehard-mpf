@@ -57,14 +57,13 @@ shots:
       color: de780b
   holly_shoot_again:
     profile: shoot_again
-    restart_events: ball_save_holly_grace_period
+    enable_events: ball_save_holly_enabled
+    disable_events: ball_save_holly_grace_period
     show_tokens: 
       color: ff0000
     control_events: 
-      - events: ball_save_holly_enabled
-        state: 1
       - events: ball_save_holly_hurry_up
-        state: 2
+        state: 1
 
 show_player: 
   holly_h_hit: 
@@ -121,7 +120,7 @@ show_player:
         color: 0000ff
   holly_targets_off_complete: 
     off: 
-      key: key_holly_targets_of_complete
+      key: key_holly_targets_off_complete
       priority: 1
       show_tokens: 
         lights: HOLLY
