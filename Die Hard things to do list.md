@@ -7,6 +7,7 @@
 
 ## Skillshot
 - videos and lights
+- flash ball save light to the time acheieved
 
 ## Base mode
 - air duct shot, add random videos, score, lights,
@@ -24,8 +25,6 @@
 - apply bonus to score or whatever
 
 ## Bonus Mode
-
-- ~~add bullets collect score~~
 - Add Multiballs Collected Bonus Points
 - Add Ambush Collected Bonus Points
 - Add Holly Collected Bonus Points
