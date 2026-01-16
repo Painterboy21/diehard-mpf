@@ -183,6 +183,10 @@ shakers:
     number: shakerboard-1
     debug: true
     default_power: 0.5
+    control_events:
+      mode_base_started:
+        power: 0.250
+        duration: 200ms
 
 
 machine_vars:
