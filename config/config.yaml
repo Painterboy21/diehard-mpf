@@ -25,8 +25,12 @@ fast:
   exp:
     port: COM6
     boards:
+      neuron:
+        model: FP-EXP-2000    
       playfield:
         model: FP-EXP-0071
+      shakerboard:
+        model: FP-EXP-1313
 
 
   aud:
@@ -172,6 +176,13 @@ magnets:
     grab_ball_events: s_trmagr_active{machine.magnets_enabled}
     enable_events: ball_started
     release_ball_events: s_trmagr_inactive
+
+
+shakers: 
+  main_shaker:
+    number: shakerboard-1
+    debug: true
+    default_power: 0.5
 
 
 machine_vars:
