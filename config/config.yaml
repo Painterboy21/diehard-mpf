@@ -184,9 +184,9 @@ shakers:
     debug: true
     default_power: 0.5
     control_events:
-      mode_base_started:
+      skillshot_hit:
         power: 0.250
-        duration: 200ms
+        duration: 500ms
 
 
 machine_vars:

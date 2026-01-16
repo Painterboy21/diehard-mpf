@@ -16,8 +16,8 @@
 
 
 ## Holly 
-- add red letters on holly card when hit
-- add ball save
+- ~~add red letters on holly card when hit~~
+- ~~add ball save~~
 
 ## Vault
 - flash vault light when h,o has been hit,

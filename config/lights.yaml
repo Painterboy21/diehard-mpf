@@ -7,6 +7,7 @@ lights:
     number: playfield-1-1
     subtype: led
     type: rgb
+    tags: INSERT
   l120:
     number: playfield-1-2
     subtype: led
@@ -16,6 +17,7 @@ lights:
     number: playfield-1-3
     subtype: led
     type: rgb
+    tags: INSERT
   l121:  
     number: playfield-1-4
     subtype: led
@@ -24,7 +26,8 @@ lights:
   f146:
     number: playfield-1-5
     subtype: led
-    type: rgb  
+    type: rgb
+    tags: INSERT
   l114:
     number: playfield-1-6
     subtype: led
@@ -34,7 +37,7 @@ lights:
     number: playfield-1-7
     subtype: led
     type: grb 
-    tags: GI  
+    tags: GI
   l132: #Left-ramp spots #l132-l135 FP LUM RGB 
     number: playfield-1-8
     subtype: led
@@ -49,20 +52,22 @@ lights:
     number: playfield-1-10
     subtype: led
     type: rgb
-    tags: bullets, BMO,BONUS_BULLET
+    tags: bullets, BMO,BONUS_BULLET,INSERT
   l18:
     number: playfield-1-11
     subtype: led
     type: rgb
+    tags: INSERT
   l55:  
     number: playfield-1-12
     subtype: led
     type: rgb
-    tags: bullets, BAD,BONUS_BULLET
+    tags: bullets, BAD,BONUS_BULLET,INSERT
   l61:
     number: playfield-1-13
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_MB
   l115:
     number: playfield-1-14
     subtype: led
@@ -72,12 +77,12 @@ lights:
     number: playfield-1-15
     subtype: led
     type: rgb
-    tags: BMO,BONUS_BULLET
+    tags: BMO,BONUS_BULLET,INSERT
   l24:
     number: playfield-1-16
     subtype: led
     type: rgb 
-    tags: BAD,BONUS_BULLET
+    tags: BAD,BONUS_BULLET,INSERT
   l126:
     number: playfield-1-17
     subtype: led
@@ -87,6 +92,7 @@ lights:
     number: playfield-1-18
     subtype: led
     type: grb
+    tags: INSERT
   l75:
     number: playfield-1-19
     subtype: led
@@ -96,6 +102,7 @@ lights:
     number: playfield-1-20
     subtype: led
     type: rgb
+    tags: INSERT
   l124:
     number: playfield-1-21
     subtype: led
@@ -105,6 +112,7 @@ lights:
     number: playfield-1-22
     subtype: led
     type: rgb
+    tags: INSERT
   l125:
     number: playfield-1-23
     subtype: led
@@ -114,6 +122,7 @@ lights:
     number: playfield-1-24
     subtype: led
     type: rgb
+    tags: INSERT
   l119: 
     number: playfield-1-25
     subtype: led
@@ -133,6 +142,7 @@ lights:
     number: playfield-1-28
     subtype: led
     type: rgb
+    tags: INSERT
   l122:  
     number: playfield-1-29
     subtype: led
@@ -142,14 +152,17 @@ lights:
     number: playfield-1-30
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_MB
   l77:
     number: playfield-1-31
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_MB
   l76:
     number: playfield-1-32
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_MB
 
 
 #port2
@@ -158,38 +171,42 @@ lights:
     number: playfield-2-1
     subtype: led
     type: rgb
-    tags: HOLLY
+    tags: HOLLY,INSERT
   l21:
     number: playfield-2-2
     subtype: led
     type: rgb
-    tags: BUP,BONUS_BULLET
+    tags: BUP,BONUS_BULLET,INSERT
   l51:
     number: playfield-2-3
     subtype: led
     type: rgb
-    tags: bullets, BUP,BONUS_BULLET
+    tags: bullets, BUP,BONUS_BULLET,INSERT
   l7:
     number: playfield-2-4
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_MB
   l33:  
     number: playfield-2-5
     subtype: led
     type: rgb
-    tags: HOLLY
+    tags: HOLLY,INSERT
   l16:
     number: playfield-2-6
     subtype: led
     type: rgb
+    tags: INSERT
   l52:  
     number: playfield-2-7
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_MB
   l62:
     number: playfield-2-8
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_MB
   l117:
     number: playfield-2-9
     subtype: led
@@ -199,6 +216,7 @@ lights:
     number: playfield-2-10
     subtype: led
     type: rgb
+    tags: INSERT
   l116:
     number: playfield-2-11
     subtype: led
@@ -208,6 +226,7 @@ lights:
     number: playfield-2-12
     subtype: led
     type: rgb
+    tags: INSERT
   l127:
     number: playfield-2-13
     subtype: led
@@ -217,33 +236,37 @@ lights:
     number: playfield-2-14
     subtype: led
     type: rgb 
+    tags: INSERT
   light002:
     number: playfield-2-15
     subtype: led
     type: rgb
+    tags: INSERT
   light001:
     number: playfield-2-16
     subtype: led
     type: rgb
+    tags: INSERT
   f142:
     number: playfield-2-17
     subtype: led
     type: rgb
+    tags: INSERT
   l22:
     number: playfield-2-18
     subtype: led
     type: rgb
-    tags: BRO,BONUS_BULLET
+    tags: BRO,BONUS_BULLET,INSERT
   l53:
     number: playfield-2-19
     subtype: led
     type: rgb
-    tags: bullets, BRO,BONUS_BULLET
+    tags: bullets, BRO,BONUS_BULLET,INSERT
   l34:
     number: playfield-2-20
     subtype: led
     type: rgb
-    tags: HOLLY
+    tags: HOLLY,INSERT
   l109:
     number: playfield-2-21
     subtype: led
@@ -253,18 +276,22 @@ lights:
     number: playfield-2-22
     subtype: led
     type: rgb
+    tags: INSERT
   l63:
     number: playfield-2-23
     subtype: led
     type: rgb
+    tags: INSERT
   l9:
     number: playfield-2-24
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_AMBUSH
   l6:
     number: playfield-2-25
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_AMBUSH
   f140:
     number: playfield-2-26
     subtype: led
@@ -297,38 +324,42 @@ lights:
     number: playfield-3-2
     subtype: led
     type: rgb
-    tags: BLO,BONUS_BULLET
+    tags: BLO,BONUS_BULLET,INSERT
   l17:
     number: playfield-3-3
     subtype: led
     type: rgb
+    tags: INSERT
   l50:
     number: playfield-3-4
     subtype: led
     type: rgb
-    tags: bullets, BLO,BONUS_BULLET
+    tags: bullets, BLO,BONUS_BULLET,INSERT
   l31:
     number: playfield-3-5
     subtype: led
     type: rgb
-    tags: HOLLY
+    tags: HOLLY,INSERT
   l60:
     number: playfield-3-6
     subtype: led
     type: rgb
-    tags: Vault
+    tags: Vault,INSERT
   l12:
     number: playfield-3-7
     subtype: led
     type: rgb
+    tags: INSERT
   l13:
     number: playfield-3-8
     subtype: led
     type: rgb
+    tags: INSERT
   l40:
     number: playfield-3-9
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_VILLAIN
   l136: #front spots left and right l136 and l137 FP LUM RGB
     number: playfield-3-10
     subtype: led
@@ -338,30 +369,37 @@ lights:
     number: playfield-3-11
     subtype: led
     type: rgb
+    tags: INSERT
   l15:
     number: playfield-3-12
     subtype: led
     type: rgb
+    tags: INSERT
   l42:
     number: playfield-3-13
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_VILLAIN
   l8:
     number: playfield-3-14
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_VILLAIN
   l41:
     number: playfield-3-15
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_VILLAIN
   l44:
     number: playfield-3-16
     subtype: led
     type: rgb 
+    tags: INSERT,BONUS_VILLAIN
   l43:
     number: playfield-3-17
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_VILLAIN
   l106:
     number: playfield-3-18
     subtype: led
@@ -391,13 +429,14 @@ lights:
     number: playfield-3-23
     subtype: led
     type: rgb
-    tags: BALL_SAVE
+    tags: BALL_SAVE,INSERT
 
 #port4
   f147:
     number: playfield-4-1
     subtype: led
     type: rgb
+    tags: INSERT
   l84:
     number: playfield-4-2
     subtype: led
@@ -407,14 +446,17 @@ lights:
     number: playfield-4-3
     subtype: led
     type: rgb
+    tags: INSERT
   l58:
     number: playfield-4-4
     subtype: led
     type: rgb
+    tags: INSERT
   l57:
     number: playfield-4-5
     subtype: led
     type: rgb
+    tags: INSERT
   l110:
     number: playfield-4-6
     subtype: led
@@ -429,15 +471,17 @@ lights:
     number: playfield-4-8
     subtype: led
     type: rgb
-    tags: HOLLY
+    tags: HOLLY,INSERT
   l4:
     number: playfield-4-9
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_AMBUSH
   l5:
     number: playfield-4-10
     subtype: led
     type: rgb
+    tags: INSERT,BONUS_AMBUSH
   f141:
     number: playfield-4-11
     subtype: led

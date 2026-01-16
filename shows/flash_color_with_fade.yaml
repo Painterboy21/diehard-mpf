@@ -2,10 +2,14 @@
 
 - duration: 1s
   lights:
-    (lights): (color)%100
+    (lights): 
+      color: (color)%100
+      fade: (fade)
 
 - duration: 1s
   lights:
-    (lights): 000000%100
+    (lights): 
+      color: 000000%100
+      fade: (fade)
 
 
