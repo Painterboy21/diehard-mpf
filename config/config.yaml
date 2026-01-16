@@ -186,7 +186,7 @@ shakers:
     control_events:
       mode_base_started:
         power: 0.250
-        duration: 200ms
+        duration: 300ms
 
 
 machine_vars:
