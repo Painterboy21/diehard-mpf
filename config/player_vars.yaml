@@ -100,4 +100,19 @@ player_vars:
   bullet_combo_hits:
     initial_value: 0
     value_type: int
+  shot_holly_h:
+    initial_value: 0
+    value_type: int
+  shot_holly_o:
+    initial_value: 0
+    value_type: int
+  shot_holly_l:
+    initial_value: 0
+    value_type: int
+  shot_holly_l1:
+    initial_value: 0
+    value_type: int
+  shot_holly_y:
+    initial_value: 0
+    value_type: int
 
