@@ -55,15 +55,6 @@ shots:
     show_tokens: 
       lights: l34
       color: de780b
-  holly_shoot_again:
-    profile: shoot_again
-    enable_events: ball_save_holly_enabled
-    disable_events: ball_save_holly_grace_period
-    show_tokens: 
-      color: ff0000
-    control_events: 
-      - events: ball_save_holly_hurry_up
-        state: 1
 
 show_player: 
   holly_h_hit: 

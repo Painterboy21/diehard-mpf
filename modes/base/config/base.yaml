@@ -35,6 +35,14 @@ event_player:
   s_popbumper_right_active: 
     - flash_bumper_right
     - flash_bumper_explosion
+  ball_save_one_saving_ball: 
+    - ball_save_saving_ball
+  ball_save_two_saving_ball: 
+    - ball_save_saving_ball
+  ball_save_three_saving_ball: 
+    - ball_save_saving_ball
+  ball_save_holly_saving_ball: 
+    - ball_save_saving_ball
 
 
 light_player: 
@@ -106,12 +114,12 @@ sequence_shots:
 shots: 
   shoot_again:
     profile: shoot_again
-    enable_events: ball_save_one_enabled, ball_save_two_enabled, ball_save_three_enabled 
-    disable_events: ball_save_one_grace_period, ball_save_two_grace_period, ball_save_three_grace_period
     show_tokens: 
       color: ff0000
+    enable_events: ball_save_one_enabled, ball_save_two_enabled, ball_save_three_enabled, ball_save_holly_enabled
+    disable_events: ball_save_one_grace_period, ball_save_two_grace_period, ball_save_three_grace_period, ball_save_holly_grace_period
     control_events: 
-      - events: ball_save_one_hurry_up, ball_save_two_hurry_up, ball_save_three_hurry_up
+      - events: ball_save_one_hurry_up, ball_save_two_hurry_up, ball_save_three_hurry_up, ball_save_holly_hurry_up
         state: 1
 
 show_player: 
@@ -188,6 +196,10 @@ show_player:
       show_tokens: 
         lights: f142
         color: 00FF00
+  balldevice_bd_plunger_ejecting_ball.10{current_player.saving_ball==1}: 
+    swipe_up_red: 
+      key: key_balldevice_bd_plunger_ejecting_ball_save
+      loops: 0
 
 
 slide_player: 
@@ -195,15 +207,7 @@ slide_player:
     base:
       action: play
       expire: 0s
-  ball_save_one_saving_ball: 
-    ball_save:
-      action: play
-      expire: 0s
-  ball_save_two_saving_ball: 
-    ball_save:
-      action: play
-      expire: 0s
-  ball_save_three_saving_ball: 
+  ball_save_saving_ball: 
     ball_save:
       action: play
       expire: 0s
@@ -299,6 +303,16 @@ variable_player:
     magnets_enabled: 
       action: set_machine
       int: 1
+
+  ball_save_saving_ball: 
+    saving_ball: 
+      action: set
+      int: 1
+
+  balldevice_bd_plunger_ejecting_ball{current_player.saving_ball==1}: 
+    saving_ball: 
+      action: set
+      int: 0
 
 
 
