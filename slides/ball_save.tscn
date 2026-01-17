@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_s21al"]
 [ext_resource type="VideoStream" uid="uid://bvlax5evyxk10" path="res://videos/ball_save/BallSaved1.ogv" id="2_f0y7e"]
-[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_ndsyg"]
+[ext_resource type="Script" uid="uid://j5rv2iupm8s0" path="res://addons/mpf-gmc/classes/mpf_random_video_player.gd" id="2_hrsh4"]
 
 [node name="BallSave" type="Control"]
 layout_mode = 3
@@ -23,7 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_f0y7e")
 autoplay = true
-script = ExtResource("3_ndsyg")
+script = ExtResource("2_hrsh4")
 end_behavior = 1
-preview_in_editor = true
-metadata/_custom_type_script = "uid://bov7mrgxslshq"
+folder_path = "res://videos/ball_save"
+metadata/_custom_type_script = "uid://j5rv2iupm8s0"
