@@ -23,10 +23,10 @@ shakers:
         duration: 60ms
       s_Spinner_Left_active:
         power: 0.250
-        duration: 50ms
+        duration: 40ms
       s_Spinner_right_active:
         power: 0.250
-        duration: 50ms
+        duration: 40ms
       s_captiveball_active:
         power: 0.250
         duration: 300ms
