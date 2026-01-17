@@ -43,6 +43,9 @@ event_player:
     - ball_save_saving_ball
   ball_save_holly_saving_ball: 
     - ball_save_saving_ball
+  s_air_duct_active: 
+    - show_airduct
+    - show_airduct2
 
 
 light_player: 
@@ -199,6 +202,17 @@ show_player:
   balldevice_bd_plunger_ejecting_ball.10{current_player.saving_ball==1}: 
     swipe_up_red: 
       key: key_balldevice_bd_plunger_ejecting_ball_save
+      loops: 0
+  show_airduct: 
+    flash_color: 
+      key: key_airduct_enter_flash
+      loops: 3
+      show_tokens: 
+        lights: AIRDUCT
+        color: ffffff
+  show_airduct2: 
+    airduct: 
+      key: key_airduct_enter_show
       loops: 0
 
 
