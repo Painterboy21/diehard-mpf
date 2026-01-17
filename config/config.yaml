@@ -82,6 +82,7 @@ config:
   - shot_profiles.yaml
   - switches.yaml
   - player_vars.yaml
+  - shaker.yaml
 
 
 flippers:
@@ -178,15 +179,7 @@ magnets:
     release_ball_events: s_trmagr_inactive
 
 
-shakers: 
-  main_shaker:
-    number: shakerboard-1
-    debug: true
-    default_power: 0.5
-    control_events:
-      skillshot_hit:
-        power: 0.250
-        duration: 500ms
+
 
 
 machine_vars:

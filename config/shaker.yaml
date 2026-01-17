@@ -1,0 +1,11 @@
+#config_version=6
+
+shakers: 
+  main_shaker:
+    number: shakerboard-1
+    debug: true
+    default_power: 0.5
+    control_events:
+      skillshot_hit:
+        power: 0.250
+        duration: 500ms
