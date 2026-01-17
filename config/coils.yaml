@@ -64,7 +64,7 @@ coils:
  # push drop targets 12v
   c_push_drop_target_vault:
     number: e-7
-    default_pulse_ms: 35ms
+    default_pulse_ms: 60ms
  
  # Vuks
   c_rightkicker_eject:
