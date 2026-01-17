@@ -161,9 +161,9 @@ switches:
     tags: right_pop_bumper
 
  # spinners
-  SpinnerLeft:
+  s_Spinner_Left:
     number: d-5
-  SpinnerRight:
+  s_Spinner_right:
     number: e-15
 
 

@@ -9,3 +9,24 @@ shakers:
       skillshot_hit:
         power: 0.250
         duration: 500ms
+      s_popbumper_left_active:
+        power: 0.250
+        duration: 100ms
+      s_popbumper_right_active:
+        power: 0.250
+        duration: 100ms
+      s_left_sling_active:
+        power: 0.250
+        duration: 60ms
+      s_right_sling_active:
+        power: 0.250
+        duration: 60ms
+      s_Spinner_Left_active:
+        power: 0.250
+        duration: 50ms
+      s_Spinner_right_active:
+        power: 0.250
+        duration: 50ms
+      s_captiveball_active:
+        power: 0.250
+        duration: 300ms
