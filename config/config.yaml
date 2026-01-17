@@ -84,6 +84,7 @@ config:
   - player_vars.yaml
 
 
+
 flippers:
   left_flipper:
     main_coil: c_left_flipper_main
@@ -178,17 +179,6 @@ magnets:
     release_ball_events: s_trmagr_inactive
 
 
-shakers: 
-  main_shaker:
-    number: shakerboard-1
-    debug: true
-    default_power: 0.5
-    control_events:
-      skillshot_hit:
-        power: 0.250
-        duration: 500ms
-
-
 machine_vars:
   var_which_attract: #to track which attract screen you are currently on
     value_type: int
@@ -210,6 +200,7 @@ modes:
   - skillshot
   - eob_bonus
   - service
+
 
 machine:
     balls_installed: 6
@@ -272,3 +263,35 @@ coil_player:
     c_cab_start_button:
       action: enable
       hold_power: 0.4
+
+
+shakers: 
+  main_shaker:
+    number: shakerboard-1
+    debug: true
+    default_power: 0.5
+    control_events:
+      skillshot_hit:
+        power: 0.250
+        duration: 500ms
+      s_popbumper_left_active:
+        power: 0.250
+        duration: 100ms
+      s_popbumper_right_active:
+        power: 0.250
+        duration: 100ms
+      s_left_sling_active:
+        power: 0.250
+        duration: 60ms
+      s_right_sling_active:
+        power: 0.250
+        duration: 60ms
+      s_Spinner_Left_active:
+        power: 0.250
+        duration: 50ms
+      s_Spinner_right_active:
+        power: 0.250
+        duration: 50ms
+      s_captiveball_active:
+        power: 0.250
+        duration: 300ms
