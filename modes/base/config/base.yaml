@@ -244,7 +244,7 @@ sound_player:
     gameplay_music_battle: 
       key: main_snd_music
       action: play
-  flash_left_sling_red: 
+  s_left_sling_active: 
     sling_1: 
       action: play
   flash_left_sling_blue: 
@@ -253,7 +253,7 @@ sound_player:
   flash_right_sling_red: 
     sling_2: 
       action: play
-  flash_right_sling_blue: 
+  s_right_sling_active: 
     sling_1: 
       action: play
   spinner_fx1: 
