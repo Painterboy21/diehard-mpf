@@ -259,6 +259,19 @@ servos:
       0.1: mystery_close_vault
       0.90: mystery_open_vault
 
+  servo2:
+    number: playfield-1
+    platform_settings:
+      min_us: 650
+      max_us: 2500
+      home_us: 600
+      max_runtime: 3s
+    reset_position: 0.1
+    reset_events: game_started, ball_ended
+    positions:
+      0.1: mystery_close_vault
+      0.90: mystery_open_vault
+
 coil_player:
   reset_complete:
     c_cab_coin_return_left_right:
