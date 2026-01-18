@@ -1,14 +1,16 @@
-[gd_scene load_steps=33 format=3 uid="uid://bdtc8n1dcqqqh"]
+[gd_scene load_steps=36 format=3 uid="uid://bdtc8n1dcqqqh"]
 
 [ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_b71wd"]
 [ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="2_06ewq"]
 [ext_resource type="VideoStream" uid="uid://cf68qaxsi6qpv" path="res://videos/DieHardBackground.ogv" id="2_gvfig"]
+[ext_resource type="Script" uid="uid://8w1dn35u20tw" path="res://addons/mpf-gmc/classes/mpf_ducking.gd" id="4_oj564"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="4_qjsot"]
 [ext_resource type="Script" uid="uid://bgfhdcsfeeqd3" path="res://addons/mpf-gmc/classes/mpf_event_handler.gd" id="4_yk3m8"]
 [ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="5_6vrr4"]
-[ext_resource type="Script" uid="uid://c246ik7ljrnta" path="res://slides/video_stream_player_vent.gd" id="5_oj564"]
 [ext_resource type="Texture2D" uid="uid://ytwrcjpchkp8" path="res://godot-media/images/player 1 overlay.png" id="5_qjsot"]
+[ext_resource type="VideoStream" uid="uid://dptavnw1jb783" path="res://videos/vent/Vent1.ogv" id="5_ume64"]
 [ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="7_smx5b"]
+[ext_resource type="Script" uid="uid://j5rv2iupm8s0" path="res://addons/mpf-gmc/classes/mpf_random_video_player.gd" id="7_ume64"]
 [ext_resource type="Texture2D" uid="uid://cgdg61xeojmu8" path="res://godot-media/images/hollywhite.png" id="8_r8cgk"]
 [ext_resource type="Texture2D" uid="uid://bemu57mnw43ii" path="res://godot-media/images/bulletcount.png" id="9_gvfig"]
 [ext_resource type="Script" uid="uid://bh8uniugrpk3c" path="res://slides/holly_letters.gd" id="10_4yxvp"]
@@ -32,6 +34,15 @@
 [ext_resource type="Texture2D" uid="uid://b05h5vpcby1hc" path="res://godot-media/images/13bullets.png" id="28_iya4i"]
 [ext_resource type="Texture2D" uid="uid://dbimohvmuh7to" path="res://godot-media/images/14bullets.png" id="29_cbytx"]
 [ext_resource type="Texture2D" uid="uid://bc2jqlfsyu4tc" path="res://godot-media/images/15bullets.png" id="30_1m7cl"]
+
+[sub_resource type="Resource" id="Resource_oj564"]
+script = ExtResource("4_oj564")
+target_bus = "music"
+attenuation = 0.9
+attack = 0.2
+release = 0.2
+release_from_start = 3.0
+metadata/_custom_type_script = "uid://8w1dn35u20tw"
 
 [node name="Base" type="Control"]
 layout_mode = 3
@@ -65,15 +76,26 @@ layout_mode = 2
 script = ExtResource("4_yk3m8")
 event_name = "show_airduct"
 handler_direction = 1
-call_method = "play_random"
+call_method = "_play_random"
 metadata/_custom_type_script = "uid://bgfhdcsfeeqd3"
 
-[node name="VideoStreamPlayer-VENT" type="VideoStreamPlayer" parent="AspectRatioContainer/MPFEventHandler"]
-layout_mode = 0
-offset_right = 1919.1599
-offset_bottom = 1080.0
-script = ExtResource("5_oj564")
+[node name="MPFRandomVideoPlayer" type="VideoStreamPlayer" parent="AspectRatioContainer/MPFEventHandler"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("5_ume64")
+volume_db = 23.999998
+bus = &"voice"
+script = ExtResource("7_ume64")
+end_behavior = 2
+end_method = "fade_out"
+ducking = SubResource("Resource_oj564")
+preview_in_editor = true
 folder_path = "res://videos/vent"
+metadata/_custom_type_script = "uid://j5rv2iupm8s0"
 
 [node name="score_overlay" type="TextureRect" parent="AspectRatioContainer"]
 layout_mode = 2
