@@ -124,6 +124,7 @@ shot_profiles:
        show_tokens: 
          color: fA6A60B
   ambush:
+    advance_on_hit: false
     states: 
      - name: unlit
        show: off
