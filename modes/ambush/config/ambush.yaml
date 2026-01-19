@@ -1,0 +1,8 @@
+#config_version=6
+
+mode:
+  start_events: start_ambush
+  stop_events: ball_ended, stop_ambush
+  priority: 200
+
+
