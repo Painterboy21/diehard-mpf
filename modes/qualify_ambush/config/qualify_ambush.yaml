@@ -1,0 +1,89 @@
+#config_version=6
+
+mode:
+  start_events: ball_started, stop_ambush
+  stop_events: ball_ended, start_ambush
+  priority: 120
+
+ball_holds: 
+  ambush_hold:
+    enable_events: qualify_ambush_on_complete
+    disable_events: start_ambush.1
+    hold_devices: rightkicker
+    balls_to_hold: 1
+    release_all_events: tilt, start_ambush.2
+
+event_player: 
+  timer_ambush_hold_complete: 
+    - start_ambush
+
+
+shot_groups: 
+  qualify_ambush:
+    shots: die_inlane_d,die_inlane_i,die_inlane_e
+    restart_events: start_ambush.2
+    rotate_left_events: s_left_flipper_active
+    rotate_right_events: s_right_flipper_active
+
+shots: 
+  die_inlane_d:
+    switch: s_swleftoutlane
+    profile: qualify_ambush
+    show_tokens: 
+      lights: l4
+  die_inlane_i:
+    switch: s_swleftinlane
+    profile: qualify_ambush
+    show_tokens: 
+      lights: l5
+  die_inlane_e:
+    switch: s_swrightinlane
+    profile: qualify_ambush
+    show_tokens: 
+      lights: l6
+  die_inlane_ambush:
+    switch: s_rightkicker
+    profile: ambush
+    show_tokens: 
+      lights: l9
+    control_events: 
+      - events: qualify_ambush_on_complete
+        state: 1
+      - events: start_ambush.2
+        state: 0
+
+show_player: 
+  ball_hold_ambush_hold_full: 
+    ambush_start: 
+      key: key_ambush_start
+      loops: 0
+      speed: 2
+
+
+slide_player: 
+  ball_hold_ambush_hold_full: 
+    ambush_started:
+      action: play
+      expire: 3s
+
+
+timers: 
+  ambush_hold:
+    start_value: 0
+    end_value: 3
+    direction: up
+    control_events: 
+      - event: ball_hold_ambush_hold_full
+        action: restart
+    restart_on_complete: False
+    start_running: False
+    tick_interval: 1000ms
+
+widget_player: 
+  qualify_ambush_on_complete: 
+    qualify_ambush:
+      action: play
+      expire: 3s
+
+
+

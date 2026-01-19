@@ -250,10 +250,10 @@ sound_player:
   flash_left_sling_blue: 
     sling_2: 
       action: play
-  flash_right_sling_red: 
+  s_right_sling_active: 
     sling_2: 
       action: play
-  s_right_sling_active: 
+  flash_right_sling_blue: 
     sling_1: 
       action: play
   spinner_fx1: 

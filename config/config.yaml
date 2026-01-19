@@ -196,6 +196,8 @@ machine_vars:
 
 modes:
   - attract
+  - qualify_ambush
+  - ambush
   - base
   - bullets
   - holly
