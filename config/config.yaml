@@ -85,7 +85,6 @@ config:
   - shaker.yaml
 
 
-
 flippers:
   left_flipper:
     main_coil: c_left_flipper_main
