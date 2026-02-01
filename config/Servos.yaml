@@ -1,49 +1,52 @@
 #config_version=6
 
 servos:
-  servo1:
-    number: playfield-1 # left side wire ramp exit
-    platform_settings:
-      min_us: 650
-      max_us: 2500
-      home_us: 600
-      max_runtime: 3s
-    reset_position: 0.1
-    reset_events: game_started, ball_ended
-    positions:
-        0.1: mystery_close_vault
-        0.90: mystery_open_vault
-   
-      
-  servo2:
-    number: playfield-2 #nakatomi ball lock
-    platform_settings:
-      min_us: 650
-      max_us: 2500
-      home_us: 600
-      max_runtime: 3s
-    reset_position: 0.1
-    reset_events: game_started, ball_ended
   
-  servo3:
-    number: playfield-3 #nakatomi ball Entrance
-    platform_settings:
-      min_us: 650
-      max_us: 2500
-      home_us: 600
-      max_runtime: 3s
-    reset_position: 0.1
-    reset_events: game_started, ball_ended
 
-  servo4:
+  servo1:
     number: playfield-4 # vault door
     platform_settings:
-      min_us: 650
-      max_us: 2500
-      home_us: 600
+      servo_min: 0.1
+      servo_max: 0.9
+      home_us: 0.1
       max_runtime: 3s
     reset_position: 0.1
     reset_events: game_started, ball_ended
     positions:
       0.1: mystery_close_vault
       0.90: mystery_open_vault
+    
+  servo2:
+    number: playfield-3 # left wire ramp divertor
+    platform_settings:
+      servo_min: 0.1
+      servo_max: 0.9
+      home_us: 0.1
+      max_runtime: 3s
+    reset_position: 0.1
+    positions:
+     reset_events: game_started, ball_ended
+    positions:
+
+
+  servo3:
+    number: playfield-2 # Nakatomi multiball lock 
+    platform_settings:
+      servo_min: 0.1
+      servo_max: 0.9
+      home_us: 0.1
+      max_runtime: 3s
+    reset_position: 0.1
+    reset_events: game_started, ball_ended
+    positions:
+   
+  servo4:
+    number: playfield-1 # Nakatomi Lock Entrance
+    platform_settings:
+      servo_min: 0.1
+      servo_max: 0.9
+      home_us: 0.1
+      max_runtime: 3s
+    reset_position: 0.1
+    reset_events: game_started, ball_ended
+    positions:
