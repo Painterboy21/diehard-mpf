@@ -18,35 +18,12 @@ servos:
     
   servo2:
     number: playfield-3 # left wire ramp divertor
-    platform_settings:
-      servo_min: 0.1
-      servo_max: 0.9
-      home_us: 0.1
-      max_runtime: 3s
-    reset_position: 0.1
-    positions:
-     reset_events: game_started, ball_ended
-    positions:
+
 
 
   servo3:
     number: playfield-2 # Nakatomi multiball lock 
-    platform_settings:
-      servo_min: 0.1
-      servo_max: 0.9
-      home_us: 0.1
-      max_runtime: 3s
-    reset_position: 0.1
-    reset_events: game_started, ball_ended
-    positions:
+
    
   servo4:
     number: playfield-1 # Nakatomi Lock Entrance
-    platform_settings:
-      servo_min: 0.1
-      servo_max: 0.9
-      home_us: 0.1
-      max_runtime: 3s
-    reset_position: 0.1
-    reset_events: game_started, ball_ended
-    positions:
