@@ -37,6 +37,7 @@ shots:
     profile: qualify_ambush
     show_tokens: 
       lights: l5
+      color: F5D327
   die_inlane_e:
     switch: s_swrightinlane
     profile: qualify_ambush
@@ -48,7 +49,6 @@ shots:
     profile: ambush
     show_tokens: 
       lights: l9
-      color: F5D327
     control_events: 
       - events: qualify_ambush_on_complete
         state: 1
