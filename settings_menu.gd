@@ -12,6 +12,12 @@ var pos_display: String
 const MPF_DISPLAY_SCRIPT := preload("res://addons/mpf-gmc/classes/mpf_display.gd")
 
 func _ready():
+	
+	var config = ConfigFile.new()
+	var error = config.load(CONFIG_FILE)
+	if error != OK:
+		config.save(CONFIG_FILE)
+		
 
 	mpf_window = get_tree().current_scene
 
@@ -87,8 +93,7 @@ func load_window_settings(display: String, display_menu: PopupMenu):
 
 		window.size		 = wsize
 		window.position = wposition
-
-
+		
 	else:
 		print("No settings file found or other error: ", error)
 
