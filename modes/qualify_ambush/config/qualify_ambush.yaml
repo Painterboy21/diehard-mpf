@@ -31,16 +31,19 @@ shots:
     profile: qualify_ambush
     show_tokens: 
       lights: l4
+      color: F5D327
   die_inlane_i:
     switch: s_swleftinlane
     profile: qualify_ambush
     show_tokens: 
       lights: l5
+      color: F5D327
   die_inlane_e:
     switch: s_swrightinlane
     profile: qualify_ambush
     show_tokens: 
       lights: l6
+      color: F5D327
   die_inlane_ambush:
     switch: s_rightkicker
     profile: ambush
