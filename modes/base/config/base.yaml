@@ -214,6 +214,15 @@ show_player:
     airduct: 
       key: key_airduct_enter_show
       loops: 0
+  s_captiveball_hit: 
+    flicker_color: 
+      key: key_captive_ball_hit_flasher
+      priority: 1
+      loops: 0
+      speed: 4
+      show_tokens: 
+        lights: f143
+        color: FFFFFF
 
 
 slide_player: 
