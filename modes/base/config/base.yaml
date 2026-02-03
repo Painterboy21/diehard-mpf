@@ -214,7 +214,7 @@ show_player:
     airduct: 
       key: key_airduct_enter_show
       loops: 0
-  s_captiveball_hit: 
+  s_captiveball_active: 
     flicker_color: 
       key: key_captive_ball_hit_flasher
       priority: 1
