@@ -1,0 +1,39 @@
+#show_version=6
+
+# Flash 1
+- duration: 400ms
+  coils:
+    c_cab_start_button: enable
+- duration: 400ms
+  coils:
+    c_cab_start_button: disable
+
+# Flash 2
+- duration: 400ms
+  coils:
+    c_cab_start_button: enable
+- duration: 400ms
+  coils:
+    c_cab_start_button: disable
+
+# Flash 3
+- duration: 400ms
+  coils:
+    c_cab_start_button: enable
+- duration: 400ms
+  coils:
+    c_cab_start_button: disable
+
+# Flash 4
+- duration: 400ms
+  coils:
+    c_cab_start_button: enable
+- duration: 400ms
+  coils:
+    c_cab_start_button: disable
+
+
+# Stay ON
+- duration: 25000ms
+  coils:
+    c_cab_start_button: enable

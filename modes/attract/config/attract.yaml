@@ -10,18 +10,20 @@ light_player:
     GI: 
       color: 000000
 
-
-show_player: 
-  mode_attract_started: 
-    attract_christmas: 
-      key: key_attract_christmas
-
-
 slide_player: 
   mode_attract_started: 
     attract:
       action: play
       expire: 0s
+
+
+show_player:
+  mode_attract_started:
+    attract_christmas:
+      key: key_attract_christmas
+    flash_start_button:
+      loops: -1
+
 
 
 
