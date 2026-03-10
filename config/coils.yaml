@@ -51,7 +51,7 @@ coils:
  # Three Drop Targets
   c_reset_drop_targets:
     number: e-12
-    default_pulse_ms: 80ms
+    default_pulse_ms: 100ms
  # Nakatomi Lock Drop Target
   c_reset_drop_target_nakotomi:
     number: e-5
@@ -69,7 +69,7 @@ coils:
  # Vuks
   c_rightkicker_eject:
     number: e-8
-    default_pulse_ms: 200ms
+    default_pulse_ms: 180ms
   c_UrampUp001_eject:
     number: e-9
     default_pulse_ms: 80ms
@@ -81,7 +81,7 @@ coils:
     default_pulse_ms: 80ms
   c_kickervault1_eject:
     number: e-6
-    default_pulse_ms: 30ms
+    default_pulse_ms: 19ms
 
  # Pop Bumpers
   c_popbumper_left:
@@ -89,7 +89,7 @@ coils:
     default_pulse_ms: 40ms
   c_popbumper_right:
     number: e-10
-    default_pulse_ms: 15ms
+    default_pulse_ms: 40ms
 
  # Airplane
   c_captivetarget:
