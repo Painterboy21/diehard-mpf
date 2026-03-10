@@ -136,7 +136,7 @@ drop_target_banks:
   bank:
     drop_targets: bank1, bank2, bank3
     reset_coils: c_reset_drop_targets
-    reset_on_complete: 1s
+    reset_on_complete: 0.1
 
 autofire_coils:
   left_sling:
