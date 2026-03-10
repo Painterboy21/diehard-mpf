@@ -33,7 +33,7 @@ lights:
     subtype: led
     type: grb
     tags: GI 
-  l54:
+  l54:  
     number: playfield-1-7
     subtype: led
     type: rgb
@@ -83,7 +83,7 @@ lights:
     subtype: led
     type: rgb
     tags: INSERT
-  l120:
+  l121:
     number: playfield-1-17
     subtype: led
     type: grb
@@ -93,7 +93,7 @@ lights:
     subtype: led
     type: rgb
     tags: INSERT
-  l121:  
+  l120    :  
     number: playfield-1-19
     subtype: led
     type: grb
@@ -206,7 +206,7 @@ lights:
     subtype: led
     type: rgb
     tags: INSERT,BONUS_MB
-  l117:
+  l116:
     number: playfield-2-9
     subtype: led
     type: grb
@@ -216,7 +216,7 @@ lights:
     subtype: led
     type: rgb
     tags: INSERT
-  l116:
+  l117:
     number: playfield-2-11
     subtype: led
     type: grb
@@ -246,16 +246,16 @@ lights:
     subtype: led
     type: rgb
     tags: INSERT,AIRDUCT
-  f142:
+  l22:
     number: playfield-2-17
     subtype: led
     type: rgb
-    tags: INSERT
-  l22:
+    tags: BRO,BONUS_BULLET,INSERT
+  f142:
     number: playfield-2-18
     subtype: led
     type: rgb
-    tags: BRO,BONUS_BULLET,INSERT
+    tags: INSERT
   l53:
     number: playfield-2-19
     subtype: led
@@ -296,7 +296,7 @@ lights:
     subtype: led
     type: rgb
     tags: RightSling
-  l105:
+  l106:
     number: playfield-2-27
     subtype: led
     type: grb
@@ -384,51 +384,31 @@ lights:
     subtype: led
     type: rgb
     tags: INSERT,BONUS_VILLAIN
-  l41:
-    number: playfield-3-15
-    subtype: led
-    type: rgb
-    tags: INSERT,BONUS_VILLAIN
   l44:
-    number: playfield-3-16
+    number: playfield-3-15
     subtype: led
     type: rgb 
     tags: INSERT,BONUS_VILLAIN
   l43:
+    number: playfield-3-16
+    subtype: led
+    type: rgb
+    tags: INSERT,BONUS_VILLAIN
+  l41:
     number: playfield-3-17
     subtype: led
     type: rgb
     tags: INSERT,BONUS_VILLAIN
-  l106:
+  l105: # not in the game
     number: playfield-3-18
     subtype: led
     type: grb
     tags : GI
-  l108:
+  l103:  # not in the game 
     number: playfield-3-19
     subtype: led
     type: grb
     tags: GI
-  l104:
-    number: playfield-3-20
-    subtype: led
-    type: grb
-    tags: GI
-  l73:
-    number: playfield-3-21
-    subtype: led 
-    type: rgb
-    tags: GI
-  l134:
-    number: playfield-3-22
-    subtype: led
-    type: grb
-    tags: GI
-  l29:
-    number: playfield-3-23
-    subtype: led
-    type: rgb
-    tags: BALL_SAVE,INSERT
 
 #port4
   f147:
@@ -484,45 +464,66 @@ lights:
   f141:
     number: playfield-4-11
     subtype: led
-    type: rgb   
+    type: grb   
     tags: LeftSling
-  l103:
-    number: playfield-4-12
-    subtype: led
-    type: grb
-    tags: GI
   l81:
-    number: playfield-4-13
+    number: playfield-4-12
     subtype: led
     type: rgb
     tags: LeftSling
   l80: 
-    number: playfield-4-14
+    number: playfield-4-13
     subtype: led
     type: rgb
     tags: LeftSling
   l100:
-    number: playfield-4-15
+    number: playfield-4-14
     subtype: led
     type: grb
     tags: GI
   l102:
-    number: playfield-4-16
+    number: playfield-4-15
     subtype: led
     type: grb
     tags: GI
   l107:
-    number: playfield-4-17
+    number: playfield-4-16
     subtype: led
     type: grb
     tags: GI
   l72:
-    number: playfield-4-18
+    number: playfield-4-17
     subtype: led
     type: rgb
     tags: GI
   l131:
-    number: playfield-4-19
+    number: playfield-4-18
     subtype: led
     type: grb
     tags: GI
+  l29:
+    number: playfield-4-19
+    subtype: led
+    type: rgb
+    tags: BALL_SAVE,INSERT
+  l134:
+    number: playfield-3-20
+    subtype: led
+    type: grb
+    tags: GI
+  l73:
+    number: playfield-3-21
+    subtype: led 
+    type: rgb
+    tags: GI
+  l108:
+    number: playfield-3-22
+    subtype: led
+    type: grb
+    tags: GI
+  l104:
+    number: playfield-3-23
+    subtype: led
+    type: grb
+    tags: GI
+

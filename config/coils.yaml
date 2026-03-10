@@ -42,10 +42,10 @@ coils:
  # Plunger & Trough
   c_plunger:
     number: d-0
-    default_pulse_ms: 40ms
+    default_pulse_ms: 80ms
   c_trough_eject:
     number: d-1
-    default_pulse_ms: 20ms
+    default_pulse_ms: 30ms
 
 
  # Three Drop Targets
@@ -72,7 +72,7 @@ coils:
     default_pulse_ms: 200ms
   c_UrampUp001_eject:
     number: e-9
-    default_pulse_ms: 120ms
+    default_pulse_ms: 80ms
   c_rightvuk_eject:
     number: e-13
     default_pulse_ms: 20ms
@@ -81,7 +81,7 @@ coils:
     default_pulse_ms: 80ms
   c_kickervault1_eject:
     number: e-6
-    default_pulse_ms: 60ms
+    default_pulse_ms: 30ms
 
  # Pop Bumpers
   c_popbumper_left:
