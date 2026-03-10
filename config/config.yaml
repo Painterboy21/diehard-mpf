@@ -29,8 +29,7 @@ fast:
         model: FP-EXP-2000    
       playfield:
         model: FP-EXP-0071
-      shakerboard:
-        model: FP-EXP-1313
+
 
 
   aud:
@@ -82,7 +81,7 @@ config:
   - shot_profiles.yaml
   - switches.yaml
   - player_vars.yaml
-  - shaker.yaml
+
 
 
 flippers:
@@ -126,9 +125,6 @@ drop_targets:
   bank3:
     switch: s_drop_target_3
     reset_coil: c_reset_drop_targets
-  bank4:
-    switch: s_push_drop_target_4
-    reset_coil: c_reset_drop_target_nakotomi
   bank5:
     switch: s_push_drop_target_5
     reset_coil: c_reset_drop_target_vault
@@ -141,10 +137,6 @@ drop_target_banks:
     drop_targets: bank1, bank2, bank3
     reset_coils: c_reset_drop_targets
     reset_on_complete: 1s
-  bank1:
-    drop_targets: bank4
-    reset_coils: c_reset_drop_target_nakotomi
-    reset_on_complete: 0.5s
 
 autofire_coils:
   left_sling:

@@ -53,10 +53,10 @@ switches:
   s_door_tilt:
     number: j-6
   s_tilt_bob:
-    number: j-18
+    number: j-19
     tags: tilt_warning
   s_fire:
-    number: j-11
+    number: j-18
 
  # Flippers
   s_right_flipper_eos:
@@ -93,10 +93,10 @@ switches:
 
  # Nakatomi Lock Drop Target
   s_push_drop_target_4:
-    number: e-6
+    number: f-10
  # Nakatomi Lock ball count
   s_nakatomi_lock_ball_count:
-    number: f-10
+    number: e-6
     type: 'NC'
  # Safe Lock Drop Target
   s_push_drop_target_5:
@@ -154,10 +154,10 @@ switches:
 
  # Pop Bumpers
   s_popbumper_left:
-    number: e-5
+    number: e-7
     tags: left_pop_bumper
   s_popbumper_right:
-    number: e-7
+    number: e-5
     tags: right_pop_bumper
 
  # spinners
@@ -192,13 +192,13 @@ switches:
 
 # Top Playfield 
   s_TrPF1:
-    number: f-6
+    number: f-9
     type: 'NC'
   s_TrPF2:
-    number: f-7
+    number: f-6
     type: 'NC'
   s_TrPF3:
-    number: f-5
+    number: f-7
     type: 'NC'
   s_upper_pf_entrance:
-    number: f-9
+    number: f-5
