@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://ckrr1wigkjb8a"]
+
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_st1el"]
+[ext_resource type="VideoStream" uid="uid://cvhdkusxnr8cj" path="res://modes/eob_bonus/slides/assets/BonusSummary.ogv" id="2_ufmpl"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_xc6x3"]
+[ext_resource type="Theme" uid="uid://cfix632dro1cx" path="res://godot-media/themes/lbl_holly.tres" id="4_s2jgj"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="5_cmna3"]
+
+[node name="EobBonusSummary" type="Control" unique_id=266257104]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_st1el")
+metadata/_custom_type_script = "uid://dru3usokwlhd3"
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=1714217678]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_ufmpl")
+autoplay = true
+script = ExtResource("3_xc6x3")
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=410553109]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=1116962892]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer" unique_id=133847342]
+custom_minimum_size = Vector2(745.16, 0)
+layout_mode = 2
+
+[node name="Control" type="Control" parent="HBoxContainer/VBoxContainer2" unique_id=1764756588]
+custom_minimum_size = Vector2(0, 95.025)
+layout_mode = 2
+
+[node name="MPFVariable" type="Label" parent="HBoxContainer/VBoxContainer2" unique_id=876970418]
+layout_mode = 2
+theme = ExtResource("4_s2jgj")
+text = "2,567,534"
+script = ExtResource("5_cmna3")
+variable_name = "eob_bonus_bullet"
+comma_separate = true
+min_digits = 2
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="Control2" type="Control" parent="HBoxContainer/VBoxContainer2" unique_id=652305986]
+custom_minimum_size = Vector2(0, 15.675)
+layout_mode = 2
+
+[node name="MPFVariable2" type="Label" parent="HBoxContainer/VBoxContainer2" unique_id=1233121664]
+layout_mode = 2
+theme = ExtResource("4_s2jgj")
+text = "2,567,534"
+script = ExtResource("5_cmna3")
+variable_name = "eob_bonus_multiball"
+comma_separate = true
+min_digits = 2
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="Control3" type="Control" parent="HBoxContainer/VBoxContainer2" unique_id=1254381730]
+custom_minimum_size = Vector2(0, 20.745)
+layout_mode = 2
+
+[node name="MPFVariable3" type="Label" parent="HBoxContainer/VBoxContainer2" unique_id=363207831]
+layout_mode = 2
+theme = ExtResource("4_s2jgj")
+text = "2,567,534"
+script = ExtResource("5_cmna3")
+variable_name = "eob_bonus_ambush"
+comma_separate = true
+min_digits = 2
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="Control4" type="Control" parent="HBoxContainer/VBoxContainer2" unique_id=2104415340]
+custom_minimum_size = Vector2(0, 60.38)
+layout_mode = 2
+
+[node name="MPFVariable4" type="Label" parent="HBoxContainer/VBoxContainer2" unique_id=1780525670]
+layout_mode = 2
+theme = ExtResource("4_s2jgj")
+text = "2,567,534"
+script = ExtResource("5_cmna3")
+variable_name = "eob_bonus_holly"
+comma_separate = true
+min_digits = 2
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="Control5" type="Control" parent="HBoxContainer/VBoxContainer2" unique_id=2012365930]
+custom_minimum_size = Vector2(0, 102.785)
+layout_mode = 2
+
+[node name="MPFVariable5" type="Label" parent="HBoxContainer/VBoxContainer2" unique_id=1279620521]
+layout_mode = 2
+theme = ExtResource("4_s2jgj")
+text = "2,567,534"
+script = ExtResource("5_cmna3")
+variable_name = "eob_bonus_villains"
+comma_separate = true
+min_digits = 2
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="Control6" type="Control" parent="HBoxContainer/VBoxContainer2" unique_id=886041791]
+custom_minimum_size = Vector2(0, 89.785)
+layout_mode = 2
+
+[node name="MPFVariable6" type="Label" parent="HBoxContainer/VBoxContainer2" unique_id=42285028]
+layout_mode = 2
+theme = ExtResource("4_s2jgj")
+text = "2,567,534"
+script = ExtResource("5_cmna3")
+variable_name = "eob_bonus_x"
+comma_separate = true
+min_digits = 2
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer" unique_id=604530879]
+layout_mode = 2
+
+[node name="MPFVariable" type="Label" parent="HBoxContainer/VBoxContainer3" unique_id=1668043241]
+layout_mode = 2
+size_flags_vertical = 10
+theme = ExtResource("4_s2jgj")
+text = "2,567,534"
+script = ExtResource("5_cmna3")
+variable_name = "score"
+comma_separate = true
+min_digits = 2
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="Control6" type="Control" parent="HBoxContainer/VBoxContainer3" unique_id=7477907]
+custom_minimum_size = Vector2(0, 82.685)
+layout_mode = 2

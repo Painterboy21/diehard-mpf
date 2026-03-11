@@ -6,8 +6,17 @@ mode:
   priority: 9999
   use_wait_queue: true
 
+combo_switches: 
+  flipper_cancel_bonus:
+    switches_1: s_left_flipper
+    switches_2: s_right_flipper
+    events_when_both: 
+      - show_bonus_summary
+
 event_player: 
   timer_eob_bonus_complete: 
+    - show_bonus_summary
+  timer_eob_bonus_summary_complete: 
     - bonus_finished
   mode_eob_bonus_started: 
     - stop_main_music1
@@ -21,6 +30,17 @@ show_player:
     eob_bonus: 
       key: key_eob_bonus
       loops: 0
+  show_bonus_summary: 
+    eob_bonus: 
+      action: stop
+      key: key_eob_bonus
+
+
+slide_player: 
+  show_bonus_summary: 
+    eob_bonus_summary:
+      action: play
+      expire: 0s
 
 
 sound_player: 
@@ -45,10 +65,23 @@ sound_player:
 timers: 
   eob_bonus:
     start_value: 0
-    end_value: 12
+    end_value: 11
     direction: up
+    control_events: 
+      - event: show_bonus_summary
+        action: stop
     restart_on_complete: False
     start_running: True
+    tick_interval: 1000ms
+  eob_bonus_summary:
+    start_value: 0
+    end_value: 3
+    direction: up
+    control_events: 
+      - event: show_bonus_summary
+        action: start
+    restart_on_complete: False
+    start_running: False
     tick_interval: 1000ms
 
 
