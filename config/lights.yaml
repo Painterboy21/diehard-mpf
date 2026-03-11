@@ -294,7 +294,7 @@ lights:
   f140:
     number: playfield-2-26
     subtype: led
-    type: rgb
+    type: grb
     tags: RightSling
   l106:
     number: playfield-2-27
