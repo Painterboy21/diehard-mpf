@@ -5,25 +5,32 @@ mode:
   stop_events: game_start, service_mode_entered
   priority: 10
 
+event_player: 
+  mode_attract_started: 
+    - play_show_xmas
+    - play_show_start_button_flash
+
+
 light_player: 
   mode_attract_started: 
     GI: 
       color: 000000
+
+
+show_player: 
+  play_show_xmas: 
+    attract_christmas: 
+      key: key_attract_christmas
+  play_show_start_button_flash: 
+    flash_start_button: 
+      key: key_attract_start_button_flash
+
 
 slide_player: 
   mode_attract_started: 
     attract:
       action: play
       expire: 0s
-
-
-show_player:
-  mode_attract_started:
-    attract_christmas:
-      key: key_attract_christmas
-    flash_start_button:
-      loops: -1
-
 
 
 
