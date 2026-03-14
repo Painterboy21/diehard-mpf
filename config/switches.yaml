@@ -179,7 +179,6 @@ switches:
  #vuks
   s_towervuk:
     number: e-1
-    type: 'NC'
   s_rightkicker:
     number: e-9
     type: 'NC'
