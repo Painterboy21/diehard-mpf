@@ -74,6 +74,8 @@ virtual_platform_start_active_switches:
   - s_trough6
 
 
+
+
 config:
   - ball_devices.yaml
   - coils.yaml
@@ -190,7 +192,9 @@ modes:
   - qualify_ambush
   - ambush
   - base
+  - basement
   - bullets
+  - high_scores
   - holly
   - score
   - mystery

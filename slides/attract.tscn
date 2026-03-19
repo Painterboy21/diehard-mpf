@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://dnfxt4jon43vt"]
+[gd_scene format=3 uid="uid://dnfxt4jon43vt"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_r1mnt"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_r1mnt"]
+[ext_resource type="Theme" uid="uid://cfix632dro1cx" path="res://godot-media/themes/lbl_holly.tres" id="3_f161n"]
 [ext_resource type="Script" uid="uid://b3jcb5pfjctkh" path="res://slides/attract.gd" id="3_hhxni"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="4_cq3lo"]
 
-[node name="Attract" type="Control"]
+[node name="Attract" type="Control" unique_id=661243709]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,9 +13,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_r1mnt")
-metadata/_custom_type_script = "uid://cdwas3gbf7w3g"
 
-[node name="VideoPlayer" type="VideoStreamPlayer" parent="."]
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="." unique_id=1757556996]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,3 +23,32 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_hhxni")
 metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=652163265]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MPFVariable" type="Label" parent="VBoxContainer" unique_id=687483913]
+layout_mode = 2
+theme = ExtResource("3_f161n")
+script = ExtResource("4_cq3lo")
+variable_type = 2
+variable_name = "games_played_since_boot"
+min_digits = 2
+template_string = "games played since boot %d"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="MPFVariable2" type="Label" parent="VBoxContainer" unique_id=561168574]
+layout_mode = 2
+theme = ExtResource("3_f161n")
+script = ExtResource("4_cq3lo")
+variable_type = 2
+variable_name = "last_game_players"
+min_digits = 2
+template_string = "last game num players %d"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"

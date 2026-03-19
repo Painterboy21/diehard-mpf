@@ -65,7 +65,7 @@ sound_player:
 timers: 
   eob_bonus:
     start_value: 0
-    end_value: 11
+    end_value: 12
     direction: up
     control_events: 
       - event: show_bonus_summary

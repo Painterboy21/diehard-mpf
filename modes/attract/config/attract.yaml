@@ -9,6 +9,14 @@ event_player:
   mode_attract_started: 
     - play_show_xmas
     - play_show_start_button_flash
+  s_left_flipper_active: 
+    - rotate_attract_left
+    - reset_idle_timer
+  s_right_flipper_active: 
+    - rotate_attract_right
+    - reset_idle_timer
+  timer_attract_idle_complete: 
+    - play_show_xmas
 
 
 light_player: 
@@ -21,6 +29,7 @@ show_player:
   play_show_xmas: 
     attract_christmas: 
       key: key_attract_christmas
+      loops: 0
   play_show_start_button_flash: 
     flash_start_button: 
       key: key_attract_start_button_flash
@@ -32,5 +41,17 @@ slide_player:
       action: play
       expire: 0s
 
+
+timers: 
+  attract_idle:
+    start_value: 0
+    end_value: 18
+    direction: up
+    control_events: 
+      - event: reset_idle_timer
+        action: reset
+    restart_on_complete: True
+    start_running: True
+    tick_interval: 10000ms
 
 
