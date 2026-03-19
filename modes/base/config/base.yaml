@@ -307,6 +307,7 @@ sound_player:
 
 
 variable_player: 
+
   s_TrPF1_active: 
     magnets_enabled: 
       action: set_machine

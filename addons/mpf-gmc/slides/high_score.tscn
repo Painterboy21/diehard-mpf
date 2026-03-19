@@ -1,65 +1,235 @@
-[gd_scene load_steps=4 format=3 uid="uid://lqeoxevsy0ex"]
+[gd_scene format=3 uid="uid://lqeoxevsy0ex"]
 
-[ext_resource type="Script" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_adeqt"]
-[ext_resource type="Script" path="res://addons/mpf-gmc/classes/mpf_text_input.gd" id="2_6uslk"]
-[ext_resource type="Script" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="3_hewrl"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_adeqt"]
+[ext_resource type="Texture2D" uid="uid://cq4vhw46ehatc" path="res://modes/high_scores/assets/keyboard.png" id="2_2xg7w"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="3_hewrl"]
+[ext_resource type="Theme" uid="uid://lv7hwqbdx038" path="res://godot-media/themes/lbl_highscore.tres" id="5_qkqu0"]
+[ext_resource type="Texture2D" uid="uid://dec20eua0kvfd" path="res://modes/high_scores/assets/A.png" id="5_rrhha"]
+[ext_resource type="Texture2D" uid="uid://bujru0cq4gbwg" path="res://modes/high_scores/assets/B.png" id="6_8nxqw"]
+[ext_resource type="Script" uid="uid://dtr8gi6bmmpia" path="res://modes/high_scores/assets/letter-script.gd" id="6_dt7wd"]
+[ext_resource type="Texture2D" uid="uid://chve1nkhqm1to" path="res://modes/high_scores/assets/C.png" id="7_dt7wd"]
+[ext_resource type="Texture2D" uid="uid://dxlxh1edlx58g" path="res://modes/high_scores/assets/D.png" id="8_qkqu0"]
+[ext_resource type="Texture2D" uid="uid://bfyx3n1w3m1u" path="res://modes/high_scores/assets/E.png" id="9_jihut"]
+[ext_resource type="Texture2D" uid="uid://covf2154y3m8q" path="res://modes/high_scores/assets/F.png" id="10_q4j8p"]
+[ext_resource type="Texture2D" uid="uid://citffwdsrff2s" path="res://modes/high_scores/assets/G.png" id="11_hd8u0"]
+[ext_resource type="Texture2D" uid="uid://ckxmn381tsxpu" path="res://modes/high_scores/assets/H.png" id="12_q5rmx"]
+[ext_resource type="Texture2D" uid="uid://dwx28u04da6vf" path="res://modes/high_scores/assets/I.png" id="13_fih6x"]
+[ext_resource type="Texture2D" uid="uid://cekypexdw2d3h" path="res://modes/high_scores/assets/J.png" id="14_k800b"]
+[ext_resource type="Texture2D" uid="uid://cu6odokk0minp" path="res://modes/high_scores/assets/K.png" id="15_ihs7o"]
+[ext_resource type="Texture2D" uid="uid://dx18cai1pm76u" path="res://modes/high_scores/assets/L.png" id="16_hn0g1"]
+[ext_resource type="Texture2D" uid="uid://6bpk7eysio8t" path="res://modes/high_scores/assets/M.png" id="17_et8o1"]
+[ext_resource type="Texture2D" uid="uid://2o8irpl4lvhg" path="res://modes/high_scores/assets/N.png" id="18_qbhi2"]
+[ext_resource type="Texture2D" uid="uid://ckq2gtvnfkqg2" path="res://modes/high_scores/assets/O.png" id="19_xbw1g"]
+[ext_resource type="Texture2D" uid="uid://boocepy46tjpq" path="res://modes/high_scores/assets/P.png" id="20_y3slt"]
+[ext_resource type="Texture2D" uid="uid://oke840uyhqbv" path="res://modes/high_scores/assets/Q.png" id="21_78vwb"]
+[ext_resource type="Texture2D" uid="uid://dy0182rwyl8kq" path="res://modes/high_scores/assets/R.png" id="22_pmxwv"]
+[ext_resource type="Texture2D" uid="uid://c0hsx2wlcunrr" path="res://modes/high_scores/assets/S.png" id="23_c5hk1"]
+[ext_resource type="Texture2D" uid="uid://mhv4646rxnj3" path="res://modes/high_scores/assets/T.png" id="24_hfbwf"]
+[ext_resource type="Texture2D" uid="uid://un3pfqi4v0oj" path="res://modes/high_scores/assets/U.png" id="25_qe5dj"]
+[ext_resource type="Texture2D" uid="uid://cc63248lg7pvy" path="res://modes/high_scores/assets/V.png" id="26_txoma"]
+[ext_resource type="Texture2D" uid="uid://os0j6ebmg51a" path="res://modes/high_scores/assets/W.png" id="27_kwknd"]
+[ext_resource type="Texture2D" uid="uid://dk13sgviet6mn" path="res://modes/high_scores/assets/X.png" id="28_2yfvc"]
+[ext_resource type="Texture2D" uid="uid://cih1owkaggh7t" path="res://modes/high_scores/assets/Y.png" id="29_ckame"]
+[ext_resource type="Texture2D" uid="uid://csouuwatso665" path="res://modes/high_scores/assets/Z.png" id="30_bbo10"]
+[ext_resource type="Texture2D" uid="uid://bs6w03tjnhpa2" path="res://modes/high_scores/assets/End.png" id="31_lwi0q"]
+[ext_resource type="Texture2D" uid="uid://e0jfkk1wi2q1" path="res://modes/high_scores/assets/Del.png" id="32_i08x5"]
+[ext_resource type="Script" uid="uid://ctn22bjte0o71" path="res://modes/high_scores/assets/high-score-timer.gd" id="35_jihut"]
 
-[node name="HighScore" type="Control"]
+[node name="HighScore" type="Control" unique_id=1964300870]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_adeqt")
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 691.0
-offset_top = 104.0
-offset_right = 1356.0
-offset_bottom = 246.0
+[node name="Keyboard" type="Sprite2D" parent="." unique_id=39695025]
+texture = ExtResource("2_2xg7w")
+centered = false
 
-[node name="MPFTextInput" type="HFlowContainer" parent="." node_paths=PackedStringArray("display_node")]
-layout_mode = 0
-offset_left = 329.0
-offset_top = 551.0
-offset_right = 868.0
-offset_bottom = 632.0
-scale = Vector2(4, 4)
-script = ExtResource("2_6uslk")
-grid_width = 30
-display_node = NodePath("../RichTextLabel")
+[node name="Initials" type="Label" parent="." unique_id=319416148]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -283.0
+offset_bottom = -203.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_qkqu0")
+theme_override_font_sizes/font_size = 112
+horizontal_alignment = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="event_player" type="Label" parent="." unique_id=1348407172]
 layout_mode = 0
-offset_left = 663.0
-offset_top = 258.0
-offset_right = 1284.0
-offset_bottom = 345.0
-scale = Vector2(3.5, 3.5)
-theme_override_font_sizes/normal_font_size = 60
-bbcode_enabled = true
-text = "[pulse freq=3.0 color=#ff00ffff ease=-1.0]A[/pulse]"
-
-[node name="event_award" type="Label" parent="."]
-layout_mode = 0
-offset_left = 758.0
-offset_top = 61.0
-offset_right = 2046.0
-offset_bottom = 231.0
+offset_left = 117.0
+offset_top = 673.0
+offset_right = 449.0
+offset_bottom = 796.0
+theme = ExtResource("5_qkqu0")
 theme_override_font_sizes/font_size = 100
-text = "Award Name"
+text = "Player N"
 horizontal_alignment = 1
 script = ExtResource("3_hewrl")
 variable_type = 1
-variable_name = "award"
+variable_name = "player_num"
+template_string = "Player %d"
 
-[node name="event_player" type="Label" parent="."]
+[node name="event_score" type="Label" parent="." unique_id=1680955765]
 layout_mode = 0
-offset_left = 152.0
-offset_top = 330.0
-offset_right = 595.0
-offset_bottom = 476.0
+offset_left = 1350.0
+offset_top = 673.0
+offset_right = 1909.0
+offset_bottom = 796.0
+theme = ExtResource("5_qkqu0")
 theme_override_font_sizes/font_size = 100
-text = "Player N:"
+text = "10,455,566"
+horizontal_alignment = 1
 script = ExtResource("3_hewrl")
 variable_type = 1
-variable_name = "player_num"
-template_string = "Player %d:"
+variable_name = "value"
+comma_separate = true
+min_digits = 2
+
+[node name="Control" type="Control" parent="." unique_id=1551951499]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_dt7wd")
+metadata/_edit_lock_ = true
+
+[node name="A" type="Sprite2D" parent="Control" unique_id=2122923538]
+position = Vector2(690, 441)
+texture = ExtResource("5_rrhha")
+
+[node name="B" type="Sprite2D" parent="Control" unique_id=1269172426]
+position = Vector2(800, 441)
+texture = ExtResource("6_8nxqw")
+
+[node name="C" type="Sprite2D" parent="Control" unique_id=1148926966]
+position = Vector2(909, 441)
+texture = ExtResource("7_dt7wd")
+
+[node name="D" type="Sprite2D" parent="Control" unique_id=942100336]
+position = Vector2(1019, 441)
+texture = ExtResource("8_qkqu0")
+
+[node name="E" type="Sprite2D" parent="Control" unique_id=570173714]
+position = Vector2(1128, 441)
+texture = ExtResource("9_jihut")
+
+[node name="F" type="Sprite2D" parent="Control" unique_id=1411731101]
+position = Vector2(1239, 441)
+texture = ExtResource("10_q4j8p")
+
+[node name="G" type="Sprite2D" parent="Control" unique_id=2080817162]
+position = Vector2(634, 577)
+texture = ExtResource("11_hd8u0")
+
+[node name="H" type="Sprite2D" parent="Control" unique_id=60249904]
+position = Vector2(744, 577)
+texture = ExtResource("12_q5rmx")
+
+[node name="I" type="Sprite2D" parent="Control" unique_id=1426535982]
+position = Vector2(853, 577)
+texture = ExtResource("13_fih6x")
+
+[node name="J" type="Sprite2D" parent="Control" unique_id=1130982043]
+position = Vector2(963, 577)
+texture = ExtResource("14_k800b")
+
+[node name="K" type="Sprite2D" parent="Control" unique_id=1560939544]
+position = Vector2(1074, 577)
+texture = ExtResource("15_ihs7o")
+
+[node name="L" type="Sprite2D" parent="Control" unique_id=895556436]
+position = Vector2(1183, 577)
+texture = ExtResource("16_hn0g1")
+
+[node name="M" type="Sprite2D" parent="Control" unique_id=268381501]
+position = Vector2(1286, 577)
+texture = ExtResource("17_et8o1")
+
+[node name="N" type="Sprite2D" parent="Control" unique_id=1709433917]
+position = Vector2(635, 715)
+texture = ExtResource("18_qbhi2")
+
+[node name="O" type="Sprite2D" parent="Control" unique_id=1017480458]
+position = Vector2(745, 715)
+texture = ExtResource("19_xbw1g")
+
+[node name="P" type="Sprite2D" parent="Control" unique_id=1494412840]
+position = Vector2(854, 715)
+texture = ExtResource("20_y3slt")
+
+[node name="Q" type="Sprite2D" parent="Control" unique_id=956128148]
+position = Vector2(963, 715)
+texture = ExtResource("21_78vwb")
+
+[node name="R" type="Sprite2D" parent="Control" unique_id=1701177743]
+position = Vector2(1074, 715)
+texture = ExtResource("22_pmxwv")
+
+[node name="S" type="Sprite2D" parent="Control" unique_id=788186808]
+position = Vector2(1183, 715)
+texture = ExtResource("23_c5hk1")
+
+[node name="T" type="Sprite2D" parent="Control" unique_id=1189749516]
+position = Vector2(1286, 715)
+texture = ExtResource("24_hfbwf")
+
+[node name="U" type="Sprite2D" parent="Control" unique_id=1924729932]
+position = Vector2(690, 851)
+texture = ExtResource("25_qe5dj")
+
+[node name="V" type="Sprite2D" parent="Control" unique_id=57236188]
+position = Vector2(799, 851)
+texture = ExtResource("26_txoma")
+
+[node name="W" type="Sprite2D" parent="Control" unique_id=652620010]
+position = Vector2(909, 851)
+texture = ExtResource("27_kwknd")
+
+[node name="X" type="Sprite2D" parent="Control" unique_id=2012741743]
+position = Vector2(1020, 851)
+texture = ExtResource("28_2yfvc")
+
+[node name="Y" type="Sprite2D" parent="Control" unique_id=678533693]
+position = Vector2(1129, 851)
+texture = ExtResource("29_ckame")
+
+[node name="Z" type="Sprite2D" parent="Control" unique_id=758081449]
+position = Vector2(1238, 851)
+texture = ExtResource("30_bbo10")
+
+[node name="End" type="Sprite2D" parent="Control" unique_id=640120475]
+position = Vector2(802, 971)
+texture = ExtResource("31_lwi0q")
+
+[node name="Del" type="Sprite2D" parent="Control" unique_id=511772762]
+position = Vector2(1129, 970)
+texture = ExtResource("32_i08x5")
+
+[node name="ExpireTimer" type="Timer" parent="." unique_id=807905821]
+script = ExtResource("35_jihut")
+
+[node name="ExpireLabel" type="Label" parent="." unique_id=867523641]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 467.0
+offset_bottom = 547.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_qkqu0")
+text = "60"
+horizontal_alignment = 1
+
+[connection signal="timeout" from="ExpireTimer" to="ExpireTimer" method="_on_ExpireTimer_timeout"]

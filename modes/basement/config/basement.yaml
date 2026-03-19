@@ -1,0 +1,33 @@
+#config_version=6
+
+mode:
+  start_events: reset_complete
+  stop_events: when_the_universe_ends
+  game_mode: false
+  priority: 100
+
+variable_player: 
+  mode_basement_started: 
+    games_played_since_boot: 
+      action: set_machine
+      int: 0
+    last_game_players: 
+      action: set_machine
+      int: 0
+
+  game_started: 
+    games_played_since_boot: 
+      action: add_machine
+      int: 1
+    last_game_players: 
+      action: set_machine
+      int: 0
+
+  player_added: 
+    last_game_players: 
+      action: add_machine
+      int: 1
+
+
+
+
