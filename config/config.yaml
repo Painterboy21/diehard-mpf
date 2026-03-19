@@ -29,7 +29,8 @@ fast:
         model: FP-EXP-2000    
       playfield:
         model: FP-EXP-0071
-
+      shakerboard:
+        model: FP-EXP-1313
 
 
   aud:
@@ -83,6 +84,8 @@ config:
   - shot_profiles.yaml
   - switches.yaml
   - player_vars.yaml
+  - shaker.yaml
+
 
 
 
@@ -201,6 +204,7 @@ modes:
   - skillshot
   - eob_bonus
   - service
+
 
 
 
