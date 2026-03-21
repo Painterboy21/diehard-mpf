@@ -1,0 +1,7 @@
+2026-03-11 20:21:45,015 : INFO : root : Loading config.
+2026-03-11 20:21:45,017 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2026-03-11 20:21:45,018 : DEBUG : ConfigProcessor : Cache file not found: C:\Users\Matt\AppData\Local\Temp\76d577560a4961afddfe91b705edee4b.mpf_cache
+2026-03-11 20:21:45,018 : INFO : ConfigProcessor : Loading config from file C:\Users\Matt\development\repos\mpf057\mpf\mpfconfig.yaml.
+2026-03-11 20:21:45,018 : DEBUG : YAML File Interface : Loading file: C:\Users\Matt\development\repos\mpf057\mpf\mpfconfig.yaml
+2026-03-11 20:21:45,028 : INFO : ConfigProcessor : Loading config: C:\Users\Matt\development\repos\mpf057\mpf\mpfconfig.yaml
+2026-03-11 20:21:45,028 : INFO : ConfigProcessor : Loading config from file C:\Users\Matt\development\diehard-mpf\monitor\config\config.yaml.

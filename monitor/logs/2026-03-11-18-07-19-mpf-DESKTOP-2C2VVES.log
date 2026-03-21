@@ -1,0 +1,5 @@
+2026-03-11 18:07:19,142 : INFO : root : Loading config.
+2026-03-11 18:07:19,144 : INFO : YamlMultifileConfigLoader : Machine config file #1: config.yaml
+2026-03-11 18:07:19,144 : INFO : ConfigProcessor : Loading config from file C:\Users\Matt\development\repos\mpf\mpf\mpfconfig.yaml.
+2026-03-11 18:07:19,153 : INFO : ConfigProcessor : Loading config: C:\Users\Matt\development\repos\mpf\mpf\mpfconfig.yaml
+2026-03-11 18:07:19,153 : INFO : ConfigProcessor : Loading config from file C:\Users\Matt\development\diehard-mpf\monitor\config\config.yaml.

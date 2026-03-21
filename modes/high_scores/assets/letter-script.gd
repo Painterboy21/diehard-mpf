@@ -47,6 +47,8 @@ func _on_text_input_event(payload):
 				if initials.length() < 3:
 					initials = initials + letters_lookup[letter_index]
 					lblInitials.text = initials
+					if initials.length() == 3:
+						letter_index = 26
 				
 	show_sprite()
 

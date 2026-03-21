@@ -25,7 +25,6 @@ script = ExtResource("3_hhxni")
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=652163265]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -55,7 +54,8 @@ template_string = "last game num players %d"
 initialize_empty = false
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
-[node name="P1Score" type="Label" parent="." unique_id=185638166]
+[node name="P1Score" type="Label" parent="." unique_id=2041784751]
+visible = false
 layout_mode = 0
 offset_left = 206.0
 offset_top = 260.0
@@ -64,8 +64,16 @@ offset_bottom = 340.0
 theme = ExtResource("3_f161n")
 text = "123,567,666"
 horizontal_alignment = 1
+script = ExtResource("4_cq3lo")
+variable_type = 4
+variable_name = "score"
+comma_separate = true
+min_digits = 2
+initialize_empty = false
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
-[node name="P2Score" type="Label" parent="." unique_id=2133072625]
+[node name="P2Score" type="Label" parent="." unique_id=426990306]
+visible = false
 layout_mode = 0
 offset_left = 1087.0
 offset_top = 260.0
@@ -74,8 +82,16 @@ offset_bottom = 340.0
 theme = ExtResource("3_f161n")
 text = "123,567,666"
 horizontal_alignment = 1
+script = ExtResource("4_cq3lo")
+variable_type = 5
+variable_name = "score"
+comma_separate = true
+min_digits = 2
+initialize_empty = false
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
-[node name="P3Score" type="Label" parent="." unique_id=1692267037]
+[node name="P3Score" type="Label" parent="." unique_id=647632794]
+visible = false
 layout_mode = 0
 offset_left = 208.0
 offset_top = 836.0
@@ -84,8 +100,16 @@ offset_bottom = 916.0
 theme = ExtResource("3_f161n")
 text = "123,567,666"
 horizontal_alignment = 1
+script = ExtResource("4_cq3lo")
+variable_type = 6
+variable_name = "score"
+comma_separate = true
+min_digits = 2
+initialize_empty = false
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
-[node name="P4Score" type="Label" parent="." unique_id=1270842073]
+[node name="P4Score" type="Label" parent="." unique_id=2111263189]
+visible = false
 layout_mode = 0
 offset_left = 1088.0
 offset_top = 836.0
@@ -94,3 +118,10 @@ offset_bottom = 916.0
 theme = ExtResource("3_f161n")
 text = "123,567,666"
 horizontal_alignment = 1
+script = ExtResource("4_cq3lo")
+variable_type = 7
+variable_name = "score"
+comma_separate = true
+min_digits = 2
+initialize_empty = false
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
