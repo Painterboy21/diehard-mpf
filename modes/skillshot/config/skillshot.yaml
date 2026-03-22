@@ -10,6 +10,8 @@ event_player:
     - skillshot_check
   s_fire_active: 
     - skillshot_check
+  s_actionbtn_active: 
+    - skillshot_check    
   skillshot_hit.1{current_player.ball==1}: 
     - ball_save_one
   skillshot_hit.1{current_player.ball==2}: 
