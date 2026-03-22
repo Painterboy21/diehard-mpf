@@ -8,6 +8,10 @@ var gameover_video: String = "res://videos/attractvideos/GameOver.ogv"
 @onready var lblP3Score = $"../P3Score"
 @onready var lblP4Score = $"../P4Score"
 
+@onready var vboxHighScore1 = $"../HighScore1"
+@onready var vboxHighScore2 = $"../HighScore2"
+@onready var vboxHighScore3 = $"../HighScore3"
+
 # Playlist of video files (local resources)
 var loop_videos: Array[String] = [
 	"res://videos/attractvideos/HSBackground3.ogv",
@@ -63,6 +67,10 @@ func _play_next(increment: bool) -> void:
 	lblP2Score.hide()
 	lblP3Score.hide()
 	lblP4Score.hide()
+	
+	vboxHighScore1.hide()
+	vboxHighScore2.hide()
+	vboxHighScore3.hide()
 
 	if current_index == -1:
 		# Play intro video first
@@ -80,6 +88,12 @@ func _play_next(increment: bool) -> void:
 			if current_index == -1:
 				current_index = loop_videos.size() -1
 		path = loop_videos[current_index]
+		if current_index == 0:
+			vboxHighScore3.show()
+		if current_index == 1:
+			vboxHighScore1.show()
+		if current_index == 2:
+			vboxHighScore2.show()
 		
 	var stream: VideoStream = load(path)
 	if stream == null:
