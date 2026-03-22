@@ -204,3 +204,4 @@ switches:
     type: 'NC'
   s_upper_pf_entrance:
     number: f-5
+    type: 'NC'
