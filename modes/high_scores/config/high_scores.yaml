@@ -36,7 +36,6 @@ high_score:
       - BW: 120000000
       - EJS: 9000000
       - LFS: 5000000
-      - DIE: 10
   enter_initials_timeout: 90000ms
   award_slide_display_time: 3000ms
 
