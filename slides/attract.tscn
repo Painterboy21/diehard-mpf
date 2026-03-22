@@ -117,7 +117,7 @@ text = "sdsd"
 horizontal_alignment = 1
 script = ExtResource("4_cq3lo")
 variable_type = 2
-variable_name = "score_1_label"
+variable_name = "score1_label"
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [node name="HighScoreName" type="Label" parent="HighScore1" unique_id=215513201]
@@ -130,7 +130,7 @@ text = "sdsd"
 horizontal_alignment = 1
 script = ExtResource("4_cq3lo")
 variable_type = 2
-variable_name = "score_1_name"
+variable_name = "score1_name"
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [node name="HighScoreValue" type="Label" parent="HighScore1" unique_id=1664205788]
@@ -143,7 +143,7 @@ text = "sdsd"
 horizontal_alignment = 1
 script = ExtResource("4_cq3lo")
 variable_type = 2
-variable_name = "score_1_value"
+variable_name = "score1_value"
 comma_separate = true
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
@@ -169,7 +169,7 @@ text = "sdsd"
 horizontal_alignment = 1
 script = ExtResource("4_cq3lo")
 variable_type = 2
-variable_name = "score_2_label"
+variable_name = "score2_label"
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [node name="HighScoreName" type="Label" parent="HighScore2" unique_id=1153681795]
@@ -182,7 +182,7 @@ text = "sdsd"
 horizontal_alignment = 1
 script = ExtResource("4_cq3lo")
 variable_type = 2
-variable_name = "score_2_name"
+variable_name = "score2_name"
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [node name="HighScoreValue" type="Label" parent="HighScore2" unique_id=1157158202]
@@ -195,7 +195,7 @@ text = "sdsd"
 horizontal_alignment = 1
 script = ExtResource("4_cq3lo")
 variable_type = 2
-variable_name = "score_2_value"
+variable_name = "score2_value"
 comma_separate = true
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
@@ -221,7 +221,7 @@ text = "sdsd"
 horizontal_alignment = 1
 script = ExtResource("4_cq3lo")
 variable_type = 2
-variable_name = "score_3_label"
+variable_name = "score3_label"
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [node name="HighScoreName" type="Label" parent="HighScore3" unique_id=2046194206]
@@ -234,7 +234,7 @@ text = "sdsd"
 horizontal_alignment = 1
 script = ExtResource("4_cq3lo")
 variable_type = 2
-variable_name = "score_3_name"
+variable_name = "score3_name"
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [node name="HighScoreValue" type="Label" parent="HighScore3" unique_id=224262349]
@@ -247,6 +247,6 @@ text = "sdsd"
 horizontal_alignment = 1
 script = ExtResource("4_cq3lo")
 variable_type = 2
-variable_name = "score_3_value"
+variable_name = "score3_value"
 comma_separate = true
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
