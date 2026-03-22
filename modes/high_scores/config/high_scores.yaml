@@ -17,6 +17,8 @@ event_player:
     text_input: {action: "select"}
   s_fire_active: 
     text_input: {action: "select"}
+  s_actionbtn_active: 
+    text_input: {action: "select"}
   s_plunger_key_active: 
     text_input: {action: "select"}
 
