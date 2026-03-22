@@ -57,6 +57,8 @@ switches:
     tags: tilt_warning
   s_fire:
     number: j-18
+  s_actionbtn:
+    number: j-13
 
  # Flippers
   s_right_flipper_eos:
