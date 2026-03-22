@@ -36,13 +36,15 @@ high_score:
       - LFS: 5000000
       - DIE: 10
   enter_initials_timeout: 90000ms
-  award_slide_display_time: 0ms
+  award_slide_display_time: 3000ms
 
 slide_player: 
   high_score_enter_initials: 
     high_score:
       action: play
       expire: 0s
-
-
+  high_score_award_display: 
+      high_score_award:
+        action: play
+        expire: 0s
 
