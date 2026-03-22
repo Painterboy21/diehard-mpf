@@ -14,7 +14,7 @@ ball_devices:
   bd_plunger:
     ball_switches: s_plunger_lane
     eject_coil: c_plunger
-    player_controlled_eject_event: s_fire_active
+    player_controlled_eject_event: s_fire_active, s_actionbtn_active
 
   kickervault1_eject:
     ball_switches: s_kickervault1
