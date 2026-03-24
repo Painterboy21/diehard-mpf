@@ -27,7 +27,7 @@ light_player:
 
 show_player: 
   play_show_xmas: 
-    attract_christmas: 
+    attract_show_runner: 
       key: key_attract_christmas
       loops: 0
   play_show_start_button_flash: 
