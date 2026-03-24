@@ -1,0 +1,22 @@
+#show_version=6
+
+- time: 0
+  shows:
+    attract_christmas: 
+      key: key_attract_xmas_up
+      loops: 0
+
+- time: 9s
+  shows:
+    attract_christmas_flash: 
+      key: key_attract_xmas_flash
+      loops: 5
+      speed: 10
+
+- time: 14s
+  shows:
+    bullets_fade: 
+      key: key_attract_bullets_fade
+      loops: 5
+
+
