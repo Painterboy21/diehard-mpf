@@ -28,9 +28,7 @@ ball_saves:
     auto_launch: true
     balls_to_save: -1
 
-event_player:
-  s_actionbtn_active: 
-    - s_fire_active
+event_player: 
   s_popbumper_left_active: 
     - flash_bumper_left
     - flash_bumper_explosion
@@ -48,6 +46,8 @@ event_player:
   s_air_duct_active: 
     - show_airduct
     - show_airduct2
+  s_actionbtn_active: 
+    - s_fire_active
 
 
 light_player: 
@@ -309,7 +309,6 @@ sound_player:
 
 
 variable_player: 
-
   s_TrPF1_active: 
     magnets_enabled: 
       action: set_machine
