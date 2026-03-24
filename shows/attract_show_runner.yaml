@@ -13,7 +13,8 @@
       loops: 5
       speed: 10
 
-- time: 14s
+- time: 10s
+  duration: 25s
   shows:
     bullets_fade: 
       key: key_attract_bullets_fade
