@@ -72,7 +72,7 @@ coils:
     default_pulse_ms: 180ms
   c_UrampUp001_eject:
     number: e-9
-    default_pulse_ms: 80ms
+    default_pulse_ms: 30ms
   c_rightvuk_eject:
     number: e-13
     default_pulse_ms: 20ms
