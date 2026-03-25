@@ -10,22 +10,31 @@
   shows:
     attract_christmas_flash: 
       key: key_attract_xmas_flash
-      loops: 5
-      speed: 10
+      loops: 4
 
-- time: 12s
+- time: 14s
   shows:
     orange_fade_out: 
       key: key_attract_orange_fade_out
-      loops: 3
+      loops: 0
 
 - time: 14.01s
-  duration: 10s
   shows:
     bullets_fade: 
       key: key_attract_bullets_fade
-      loops: 5
+      loops: 0
 
+- time: 26s
+  shows:
+    dotwaves: 
+      key: key_attract_dotwaves
+      loops: 0
 
+- time: 34s
+  duration: 8s
+  shows:
+    physio: 
+      key: key_attract_physio
+      loops: 0
 
 
