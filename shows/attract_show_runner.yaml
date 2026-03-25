@@ -13,11 +13,19 @@
       loops: 5
       speed: 10
 
-- time: 10s
-  duration: 25s
+- time: 12s
+  shows:
+    orange_fade_out: 
+      key: key_attract_orange_fade_out
+      loops: 3
+
+- time: 14.01s
+  duration: 10s
   shows:
     bullets_fade: 
       key: key_attract_bullets_fade
       loops: 5
+
+
 
 
