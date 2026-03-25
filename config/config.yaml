@@ -249,19 +249,6 @@ variable_player:
 
 servos:
   servo1:
-    number: playfield-4 # vault door
-    platform_settings:
-      min_us: 650
-      max_us: 2500
-      home_us: 600
-      max_runtime: 3s
-    reset_position: 0.1
-    reset_events: game_started, ball_ended
-    positions:
-      0.1: mystery_close_vault
-      0.90: mystery_open_vault
-
-  servo2:
     number: playfield-1 # left side wire ramp exit
     platform_settings:
       min_us: 0.2
@@ -274,7 +261,7 @@ servos:
       0.2: s_holly_l1_active
       0.90: s_holly_y_active
 
-  servo3:
+  servo2:
     number: playfield-2 #nakatomi lock entrance
     platform_settings:
       min_us: 650
@@ -286,6 +273,32 @@ servos:
     positions:
       0: s_holly_l_active
       0.90: s_holly_l1_active
+
+  servo3:
+    number: playfield-3 #nakatomi multiball
+    platform_settings:
+      min_us: 950
+      max_us: 2500
+      home_us: 950
+      max_runtime: 5s
+    reset_position: 0
+    reset_events: game_started, ball_ended
+    positions:
+      0: s_holly_l1_active
+      0.9: s_holly_l_active
+
+  servo4:
+    number: playfield-4 # vault door
+    platform_settings:
+      min_us: 650
+      max_us: 2500
+      home_us: 600
+      max_runtime: 3s
+    reset_position: 0.1
+    reset_events: game_started, ball_ended
+    positions:
+      0.1: mystery_close_vault
+      0.90: mystery_open_vault
 
 
 coil_player:
