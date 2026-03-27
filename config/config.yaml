@@ -284,8 +284,8 @@ servos:
     reset_position: 0
     reset_events: game_started, ball_ended
     positions:
-      0: nakatomi_lock_close
-      0.9: nakatomi_lock_open
+      0: nakatomi_lock_open
+      0.9: nakatomi_lock_close
 
   servo4:
     number: playfield-4 # vault door
