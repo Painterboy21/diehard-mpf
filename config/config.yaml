@@ -277,10 +277,10 @@ servos:
   servo3:
     number: playfield-3 #nakatomi multiball
     platform_settings:
-      min_us: 950
+      min_us: 1350
       max_us: 2500
-      home_us: 950
-      max_runtime: 5s
+      home_us: 1350
+      max_runtime: 65525ms
     reset_position: 0
     reset_events: game_started, ball_ended
     positions:
