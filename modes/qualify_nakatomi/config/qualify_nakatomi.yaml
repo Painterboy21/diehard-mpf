@@ -8,7 +8,7 @@ mode:
 event_player: 
   timer_nakatomi_lock_reset_complete: 
     - nakatomi_lock_open
-  qualify_ambush_on_complete: 
+  qualify_nakatomi_on_complete: 
     - nakatomi_lock_open
 
 
@@ -34,7 +34,7 @@ timers:
     end_value: 1
     direction: up
     control_events: 
-      - event: qualify_ambush_on_complete
+      - event: qualify_nakatomi_on_complete
         action: restart
     restart_on_complete: True
     start_running: False
