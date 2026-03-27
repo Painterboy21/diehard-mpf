@@ -10,6 +10,10 @@ event_player:
     - nakatomi_lock_open
   qualify_nakatomi_on_complete: 
     - nakatomi_lock_open
+  s_actionbtn_active: 
+    - nakatomi_lock_close
+  s_actionbtn_inactive: 
+    - nakatomi_lock_open
 
 
 shot_groups: 
