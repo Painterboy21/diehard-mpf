@@ -1,0 +1,43 @@
+#config_version=6
+
+mode:
+  start_events: ball_started
+  stop_events: ball_ended
+  priority: 120
+
+event_player: 
+  timer_nakatomi_lock_reset_complete: 
+    - nakatomi_lock_open
+  qualify_ambush_on_complete: 
+    - nakatomi_lock_open
+
+
+shot_groups: 
+  qualify_nakatomi:
+    shots: nakatomi_lock_left,nakatomi_lock_right
+
+shots: 
+  nakatomi_lock_left:
+    switch: s_holly_l
+    profile: profile_nakatomi_lock
+    show_tokens: 
+      lights: l17
+  nakatomi_lock_right:
+    switch: s_holly_l1
+    profile: profile_nakatomi_lock
+    show_tokens: 
+      lights: l16
+
+timers: 
+  nakatomi_lock_reset:
+    start_value: 0
+    end_value: 1
+    direction: up
+    control_events: 
+      - event: qualify_ambush_on_complete
+        action: restart
+    restart_on_complete: True
+    start_running: False
+    tick_interval: 60000ms
+
+
