@@ -45,13 +45,13 @@ coils:
     default_pulse_ms: 60ms
   c_trough_eject:
     number: d-1
-    default_pulse_ms: 20ms
+    default_pulse_ms: 15ms
 
 
  # Three Drop Targets
   c_reset_drop_targets:
     number: e-12
-    default_pulse_ms: 100ms
+    default_pulse_ms: 60ms
  # Nakatomi Lock Drop Target
   c_reset_drop_target_nakotomi:
     number: e-5
@@ -78,7 +78,7 @@ coils:
     default_pulse_ms: 20ms
   c_towervuk_eject:
     number: e-0
-    default_pulse_ms: 80ms
+    default_pulse_ms: 13ms
   c_kickervault1_eject:
     number: e-6
     default_pulse_ms: 17ms
@@ -94,7 +94,7 @@ coils:
  # Airplane
   c_captivetarget:
     number: e-11
-    default_pulse_ms: 30ms
+    default_pulse_ms: 90ms
 
 
  # Lights
