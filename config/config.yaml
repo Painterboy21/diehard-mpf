@@ -31,7 +31,8 @@ fast:
         model: FP-EXP-0071
       shakerboard:
         model: FP-EXP-1313
-
+      Cab:
+        model: FP-EXP-0071
 
   aud:
     port: auto
