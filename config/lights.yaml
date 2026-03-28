@@ -527,15 +527,15 @@ lights:
     type: grb
     tags: GI
 
-
-    # cab board
+# cab board port 5
   l1000:
     number: cab-5-1
     subtype: led
-    type: RGB
+    type: rgb
     tags: s_actionbtn
-    l1001:
+
+  l1001:
     number: cab-5-2
     subtype: led
-    type: RGB
+    type: rgb
     tags: s_actionbtn
