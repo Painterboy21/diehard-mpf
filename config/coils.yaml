@@ -33,11 +33,11 @@ coils:
   c_trmagr:
     number: e-15
     default_pulse_ms: 100
-    default_hold_power: 0.6
+    default_hold_power: 0.8
   c_trmagl:
     number: e-14
     default_pulse_ms: 100
-    default_hold_power: 0.6
+    default_hold_power: 0.8
 
  # Plunger & Trough
   c_plunger:
