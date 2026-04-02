@@ -12,7 +12,7 @@ event_player:
     - nakatomi_lock_open
   timer_nakatomi_lock_release_one_complete: 
     - nakatomi_lock_open
-  s_actionbtn_active:
+  s_holly_h_active:
     - nakatomi_lock_close
 
 shot_groups: 
@@ -47,11 +47,11 @@ timers:
     end_value: 3
     direction: up
     control_events: 
-      - event: s_actionbtn_active
+      - event: s_holly_h_active
         action: restart
     restart_on_complete: False
     start_running: False
-    tick_interval: 1000ms
+    tick_interval: 44ms
 
 
 
