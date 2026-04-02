@@ -11,9 +11,9 @@ event_player:
   qualify_nakatomi_on_complete: 
     - nakatomi_lock_open
   timer_nakatomi_lock_release_one_complete: 
-    - nakatomi_lock_open
-  s_actionbtn_active:
     - nakatomi_lock_close
+  s_actionbtn_active:
+    - nakatomi_lock_open
 
 shot_groups: 
   qualify_nakatomi:
