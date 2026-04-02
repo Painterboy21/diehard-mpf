@@ -10,7 +10,7 @@ event_player:
     - nakatomi_lock_open
   qualify_nakatomi_on_complete: 
     - nakatomi_lock_open
-  nakatomi_lock_release_one_on_complete: 
+  timer_nakatomi_lock_release_one_complete: 
     - nakatomi_lock_open
   s_actionbtn_active:
     - nakatomi_lock_close
