@@ -12,7 +12,7 @@ event_player:
     - nakatomi_lock_open
   nakatomi_lock_release_one_complete: 
     - nakatomi_lock_close
-  s_action_btn_active:
+  s_actionbtn_active:
     - nakatomi_lock_open
 
 shot_groups: 
@@ -47,7 +47,7 @@ timers:
     end_value: 3
     direction: up
     control_events: 
-      - event: s_action_btn_active
+      - event: s_actionbtn_active
         action: restart
     restart_on_complete: False
     start_running: False
