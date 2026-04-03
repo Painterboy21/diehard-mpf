@@ -5,15 +5,20 @@ mode:
   stop_events: ball_ended
   priority: 120
 
+ball_holds: 
+  nakatomi_lock_wait:
+    enable_events: qualify_nakatomi_on_complete
+    disable_events: slide_ball_1_locked_removed.1
+    hold_devices: tower_vuk
+    balls_to_hold: 1
+    release_all_events: tilt, slide_ball_1_locked_removed.2
+
 event_player: 
-  timer_nakatomi_lock_reset_complete:  
+  timer_nakatomi_lock_reset_complete: 
     - nakatomi_lock_open
   qualify_nakatomi_on_complete: 
     - nakatomi_lock_open
-  timer_nakatomi_lock_release_one_complete: 
-    - nakatomi_lock_open
-  s_holly_h_active:
-    - nakatomi_lock_close
+
 
 shot_groups: 
   qualify_nakatomi:
@@ -30,6 +35,32 @@ shots:
     profile: profile_nakatomi_lock
     show_tokens: 
       lights: l16
+  nakatomi_lock_lit:
+    profile: profile_off_then_flash
+    show_tokens: 
+      lights: l7
+      color: 00ff00
+    control_events: 
+      - events: qualify_nakatomi_on_complete
+        state: 1
+
+show_player: 
+  ball_hold_nakatomi_lock_wait_full: 
+    nakatomi_ball_locked: 
+      key: key_nakatomi_ball_locked
+      loops: 0
+
+
+slide_player: 
+  qualify_nakatomi_on_complete: 
+    lock_is_lit:
+      action: play
+      expire: 0s
+  ball_hold_nakatomi_lock_wait_full: 
+    ball_1_locked:
+      action: play
+      expire: 0s
+
 
 timers: 
   nakatomi_lock_reset:
@@ -42,17 +73,5 @@ timers:
     restart_on_complete: True
     start_running: False
     tick_interval: 60000ms
-  nakatomi_lock_release_one:
-    start_value: 0
-    end_value: 3
-    direction: up
-    control_events: 
-      - event: s_holly_h_active
-        action: restart
-    restart_on_complete: False
-    start_running: False
-    tick_interval: 44ms
-
-
 
 

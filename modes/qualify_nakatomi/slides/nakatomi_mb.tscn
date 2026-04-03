@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://b3kymcmoq1qk1"]
+
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_hl78m"]
+[ext_resource type="VideoStream" uid="uid://crusnj1dvhcaf" path="res://videos/lock/NakatomiMutliball.ogv" id="2_hl78m"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_3dk03"]
+
+[node name="nakatomiMB" type="Control" unique_id=1817163035]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hl78m")
+metadata/_custom_type_script = "uid://dru3usokwlhd3"
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=1597017079]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_hl78m")
+autoplay = true
+script = ExtResource("3_3dk03")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
