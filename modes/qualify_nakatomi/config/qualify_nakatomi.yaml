@@ -9,7 +9,7 @@ ball_holds:
   nakatomi_lock_wait:
     enable_events: qualify_nakatomi_on_complete
     disable_events: slide_ball_1_locked_removed.1
-    hold_devices: tower_vuk
+    hold_devices: towervuk
     balls_to_hold: 1
     release_all_events: tilt, slide_ball_1_locked_removed.2
 

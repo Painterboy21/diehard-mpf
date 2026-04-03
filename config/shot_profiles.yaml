@@ -155,3 +155,16 @@ shot_profiles:
        sync_ms: 0
        show_tokens: 
          color: 00ff00
+  profile_off_then_flash:
+    advance_on_hit: True
+    states: 
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
+     - name: on
+       show: flash_color
+       loops: -1
+       speed: 3
+       sync_ms: 0
