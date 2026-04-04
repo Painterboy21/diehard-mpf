@@ -122,7 +122,7 @@ shot_profiles:
        speed: 4
        sync_ms: 0
        show_tokens: 
-         color: fA6A60B
+         color: F5D327
   ambush:
     advance_on_hit: false
     states: 

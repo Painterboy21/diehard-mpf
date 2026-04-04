@@ -7,11 +7,11 @@ mode:
 
 ball_holds: 
   nakatomi_lock_wait:
-    enable_events: qualify_nakatomi_on_complete
-    disable_events: slide_ball_1_locked_removed.1
-    hold_devices: towervuk
+    enable_events: qualify_nakatomi_on_complete.2
+    disable_events: trigger_nakatomi_ball_locked.1
+    hold_devices: tower_vuk
     balls_to_hold: 1
-    release_all_events: tilt, slide_ball_1_locked_removed.2
+    release_all_events: tilt, trigger_nakatomi_ball_locked.2
 
 event_player: 
   timer_nakatomi_lock_reset_complete: 
@@ -19,6 +19,14 @@ event_player:
   qualify_nakatomi_on_complete: 
     - nakatomi_lock_open
 
+
+multiball_locks: 
+  nakatomi:
+    balls_to_lock: 3
+    lock_devices: tower_vuk
+    enable_events: qualify_nakatomi_on_complete.1
+    disable_events: mode_nakatomi_mb_started
+    reset_count_for_current_player_events: restart_nakatomi_locks
 
 shot_groups: 
   qualify_nakatomi:
@@ -49,6 +57,7 @@ show_player:
     nakatomi_ball_locked: 
       key: key_nakatomi_ball_locked
       loops: 0
+      events_when_completed: trigger_nakatomi_ball_locked
 
 
 slide_player: 
