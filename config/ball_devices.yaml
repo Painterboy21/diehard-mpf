@@ -35,10 +35,11 @@ ball_devices:
     eject_coil: c_rightvuk_eject
     eject_timeouts: 1s
 
-  towervuk:
+  tower_vuk:
     ball_switches: s_towervuk
     eject_coil: c_towervuk_eject
     eject_timeouts: 1s
+    eject_events: trigger_nakatomi_ball_locked
     
   airplane:
     ball_switches: s_captiveball
