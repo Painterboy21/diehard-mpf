@@ -271,7 +271,7 @@ servos:
       home_us: 600
       max_runtime: 5s
     reset_position: 0
-    reset_events: game_started, ball_ended
+    reset_events: game_started
     positions:
       0: nakatomi_entrance_lock_close
       0.90: nakatomi_entrance_lock_open

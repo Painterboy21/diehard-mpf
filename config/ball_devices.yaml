@@ -9,7 +9,6 @@ ball_devices:
     jam_switch: s_trough_jam
     eject_coil_jam_pulse: 15ms
     eject_targets: bd_plunger
-    debug: true
   
   bd_plunger:
     ball_switches: s_plunger_lane
@@ -36,10 +35,10 @@ ball_devices:
     eject_timeouts: 1s
 
   tower_vuk:
-    ball_switches: s_towervuk
+    entrance_switch: s_towervuk
+    ball_capacity: 3
     eject_coil: c_towervuk_eject
     eject_timeouts: 1s
-    eject_events: trigger_nakatomi_ball_locked
     
   airplane:
     ball_switches: s_captiveball
