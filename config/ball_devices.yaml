@@ -39,6 +39,7 @@ ball_devices:
     ball_capacity: 3
     eject_coil: c_towervuk_eject
     eject_timeouts: 1s
+    auto_fire_on_unexpected_ball: false
     
   airplane:
     ball_switches: s_captiveball
