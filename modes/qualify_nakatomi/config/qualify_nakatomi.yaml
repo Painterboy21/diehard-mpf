@@ -5,14 +5,6 @@ mode:
   stop_events: ball_ended
   priority: 120
 
-ball_holds: 
-  nakatomi_lock_wait:
-    enable_events: qualify_nakatomi_on_complete.2
-    disable_events: trigger_nakatomi_ball_locked.1
-    hold_devices: tower_vuk
-    balls_to_hold: 1
-    release_all_events: tilt, trigger_nakatomi_ball_locked.2
-
 event_player: 
   timer_nakatomi_lock_reset_complete: 
     - nakatomi_lock_open
@@ -25,12 +17,13 @@ multiball_locks:
     balls_to_lock: 3
     lock_devices: tower_vuk
     enable_events: qualify_nakatomi_on_complete.1
-    disable_events: mode_nakatomi_mb_started
+    disable_events: trigger_nakatomi_ball_locked
     reset_count_for_current_player_events: restart_nakatomi_locks
 
 shot_groups: 
   qualify_nakatomi:
     shots: nakatomi_lock_left,nakatomi_lock_right
+    restart_events: trigger_nakatomi_ball_locked
 
 shots: 
   nakatomi_lock_left:
@@ -51,9 +44,11 @@ shots:
     control_events: 
       - events: qualify_nakatomi_on_complete
         state: 1
+      - events: trigger_nakatomi_ball_locked
+        state: 0
 
 show_player: 
-  ball_hold_nakatomi_lock_wait_full: 
+  multiball_lock_nakatomi_locked_ball: 
     nakatomi_ball_locked: 
       key: key_nakatomi_ball_locked
       loops: 0
@@ -65,8 +60,12 @@ slide_player:
     lock_is_lit:
       action: play
       expire: 0s
-  ball_hold_nakatomi_lock_wait_full: 
+  multiball_lock_nakatomi_locked_ball{current_player.nakatomi_balls_locked == 0}: 
     ball_1_locked:
+      action: play
+      expire: 0s
+  multiball_lock_nakatomi_locked_ball{current_player.nakatomi_balls_locked == 1}: 
+    ball_2_locked:
       action: play
       expire: 0s
 
@@ -82,5 +81,26 @@ timers:
     restart_on_complete: True
     start_running: False
     tick_interval: 60000ms
+
+variable_player: 
+  mode_qualify_nakatomi_started: 
+    ball_locking_nakatomi: 
+      action: set
+      int: 0
+
+  multiball_lock_nakatomi_locked_ball: 
+    ball_locking_nakatomi: 
+      action: set
+      int: 1
+
+  trigger_nakatomi_ball_locked.10: 
+    ball_locking_nakatomi: 
+      action: set
+      int: 0
+    nakatomi_balls_locked: 
+      action: add
+      int: 1
+
+
 
 
