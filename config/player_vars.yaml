@@ -115,4 +115,9 @@ player_vars:
   shot_holly_y:
     initial_value: 0
     value_type: int
-
+  ball_locking_nakatomi:
+    initial_value: 0
+    value_type: int
+  nakatomi_balls_locked:
+    initial_value: 0
+    value_type: int
