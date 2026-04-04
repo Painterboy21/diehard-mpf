@@ -16,9 +16,16 @@ multiball_locks:
   nakatomi:
     balls_to_lock: 3
     lock_devices: tower_vuk
-    enable_events: qualify_nakatomi_on_complete.1
+    enable_events: qualify_nakatomi_on_complete.1{current_player.nakatomi_balls_locked < 2}
     disable_events: trigger_nakatomi_ball_locked
+    locked_ball_counting_strategy: physical_only
     reset_count_for_current_player_events: restart_nakatomi_locks
+
+queue_relay_player: 
+  balldevice_trough_ball_eject_attempt{current_player.ball_locking_nakatomi == 1}: 
+    post: wait_for_naktomi_locking_slide
+    wait_for: trigger_nakatomi_ball_locked
+
 
 shot_groups: 
   qualify_nakatomi:
@@ -66,6 +73,10 @@ slide_player:
       expire: 0s
   multiball_lock_nakatomi_locked_ball{current_player.nakatomi_balls_locked == 1}: 
     ball_2_locked:
+      action: play
+      expire: 0s
+  multiball_lock_nakatomi_locked_ball{current_player.nakatomi_balls_locked == 2}: 
+    nakatomi_mb:
       action: play
       expire: 0s
 
