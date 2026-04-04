@@ -273,8 +273,8 @@ servos:
     reset_position: 0
     reset_events: game_started, ball_ended
     positions:
-      0: nakatomi_lock_close
-      0.90: nakatomi_lock_open
+      0: nakatomi_entrance_lock_close
+      0.90: nakatomi_entrance_lock_open
 
   servo3:
     number: playfield-3 #nakatomi multiball

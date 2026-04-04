@@ -10,6 +10,9 @@ event_player:
     - nakatomi_lock_open
   qualify_nakatomi_on_complete: 
     - nakatomi_lock_open
+    - nakatomi_entrance_lock_open
+  trigger_nakatomi_ball_locked:
+    - nakatomi_entrance_lock_close
 
 
 multiball_locks: 
