@@ -23,7 +23,8 @@ event_player:
     - enable_nakatomi_multiball_lock
   balldevice_tower_vuk_ball_entered{current_player.shot_nakatomi_lock_lit == 1 and current_player.nakatomi_balls_locked == 2}:
     - trigger_nakatomi_mb_slide
-
+  multiball_nakatomi_started:
+    - nakatomi_lock_close
 
 multiball_locks: 
   nakatomi:
