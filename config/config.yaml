@@ -284,7 +284,7 @@ servos:
       home_us: 1350
       max_runtime: 65525ms
     reset_position: 0.9
-    reset_events: game_started, game_ended
+    reset_events: reset_complete, game_started, game_ended
     positions:
       0: nakatomi_lock_open
       0.9: nakatomi_lock_close

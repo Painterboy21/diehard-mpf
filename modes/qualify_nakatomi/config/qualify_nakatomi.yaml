@@ -23,8 +23,9 @@ event_player:
     - enable_nakatomi_multiball_lock
   balldevice_tower_vuk_ball_entered{current_player.shot_nakatomi_lock_lit == 1 and current_player.nakatomi_balls_locked == 2}:
     - trigger_nakatomi_mb_slide
-  multiball_nakatomi_started:
+  multiball_nakatomi_started.1:
     - nakatomi_lock_close
+    - nakatomi_entrance_lock_close
 
 multiball_locks: 
   nakatomi:
@@ -43,7 +44,7 @@ queue_relay_player:
 shot_groups: 
   qualify_nakatomi:
     shots: nakatomi_lock_left,nakatomi_lock_right
-    restart_events: trigger_nakatomi_ball_locked
+    restart_events: trigger_nakatomi_ball_locked, trigger_nakatomi_mb_slide
 
 shots: 
   nakatomi_lock_left:
@@ -65,6 +66,8 @@ shots:
       - events: qualify_nakatomi_on_complete
         state: 1
       - events: trigger_nakatomi_ball_locked
+        state: 0
+      - events: trigger_nakatomi_mb_slide
         state: 0
 
 show_player: 
@@ -102,7 +105,6 @@ multiballs:
     start_events: slide_nakatomi_mb_removed
     ball_locks: tower_vuk
 
-
 timers: 
   nakatomi_lock_reset:
     start_value: 0
@@ -113,6 +115,8 @@ timers:
         action: restart
       - event: mode_qualify_nakatomi_started{current_player.shot_nakatomi_lock_lit == 1}
         action: restart
+      - event: multiball_nakatomi_started
+        action: stop
     restart_on_complete: True
     start_running: False
     tick_interval: 60000ms
