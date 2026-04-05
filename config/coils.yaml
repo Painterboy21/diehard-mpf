@@ -78,7 +78,7 @@ coils:
     default_pulse_ms: 20ms
   c_towervuk_eject:
     number: e-0
-    default_pulse_ms: 13ms
+    default_pulse_ms: 20ms
   c_kickervault1_eject:
     number: e-6
     default_pulse_ms: 17ms
