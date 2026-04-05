@@ -134,6 +134,14 @@ variable_player:
     nakatomi_balls_locked: 
       action: add
       int: 1
+  
+  trigger_nakatomi_mb_slide.10: 
+    ball_locking_nakatomi: 
+      action: set
+      int: 0
+    nakatomi_balls_locked: 
+      action: add
+      int: 1
 
 coil_player: 
   trigger_nakatomi_ball_locked: c_towervuk_eject
