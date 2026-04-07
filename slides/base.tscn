@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://bdtc8n1dcqqqh"]
+[gd_scene format=3 uid="uid://bdtc8n1dcqqqh"]
 
 [ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_b71wd"]
 [ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="2_06ewq"]
@@ -44,7 +44,7 @@ release = 0.2
 release_from_start = 3.0
 metadata/_custom_type_script = "uid://8w1dn35u20tw"
 
-[node name="Base" type="Control"]
+[node name="Base" type="Control" unique_id=1079522263]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,7 +53,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_b71wd")
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=401463443]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -62,7 +62,7 @@ grow_horizontal = 2
 grow_vertical = 2
 ratio = 1.777
 
-[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="AspectRatioContainer"]
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="AspectRatioContainer" unique_id=847438674]
 layout_mode = 2
 stream = ExtResource("2_gvfig")
 autoplay = true
@@ -71,7 +71,7 @@ loop = true
 script = ExtResource("4_qjsot")
 preview_in_editor = true
 
-[node name="MPFEventHandler" type="Control" parent="AspectRatioContainer"]
+[node name="MPFEventHandler" type="Control" parent="AspectRatioContainer" unique_id=182992829]
 layout_mode = 2
 script = ExtResource("4_yk3m8")
 event_name = "show_airduct"
@@ -79,7 +79,7 @@ handler_direction = 1
 call_method = "_play_random"
 metadata/_custom_type_script = "uid://bgfhdcsfeeqd3"
 
-[node name="MPFRandomVideoPlayer" type="VideoStreamPlayer" parent="AspectRatioContainer/MPFEventHandler"]
+[node name="MPFRandomVideoPlayer" type="VideoStreamPlayer" parent="AspectRatioContainer/MPFEventHandler" unique_id=871942895]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -97,12 +97,12 @@ preview_in_editor = true
 folder_path = "res://videos/vent"
 metadata/_custom_type_script = "uid://j5rv2iupm8s0"
 
-[node name="score_overlay" type="TextureRect" parent="AspectRatioContainer"]
+[node name="score_overlay" type="TextureRect" parent="AspectRatioContainer" unique_id=1152697542]
 layout_mode = 2
 texture = ExtResource("5_qjsot")
 expand_mode = 1
 
-[node name="Control2" type="Control" parent="."]
+[node name="Control2" type="Control" parent="." unique_id=131316709]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -110,7 +110,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="main_score" type="Label" parent="Control2"]
+[node name="main_score" type="Label" parent="Control2" unique_id=335568833]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -129,7 +129,7 @@ script = ExtResource("2_06ewq")
 variable_name = "score"
 comma_separate = true
 
-[node name="current_ball" type="Label" parent="Control2"]
+[node name="current_ball" type="Label" parent="Control2" unique_id=1821157397]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -150,7 +150,7 @@ variable_name = "ball"
 comma_separate = true
 template_string = "Ball %s"
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=526275576]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -158,7 +158,7 @@ anchor_bottom = 1.0
 offset_top = -100.0
 grow_vertical = 0
 
-[node name="player_1_score" type="Label" parent="Control"]
+[node name="player_1_score" type="Label" parent="Control" unique_id=733890098]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -178,15 +178,15 @@ variable_type = 4
 variable_name = "score"
 comma_separate = true
 
-[node name="Hollywhite" type="Sprite2D" parent="."]
+[node name="Hollywhite" type="Sprite2D" parent="." unique_id=808262119]
 position = Vector2(160, 823)
 texture = ExtResource("8_r8cgk")
 
-[node name="Bulletcount" type="Sprite2D" parent="."]
+[node name="Bulletcount" type="Sprite2D" parent="." unique_id=1905680696]
 position = Vector2(1743.19, 823)
 texture = ExtResource("9_gvfig")
 
-[node name="HollyLetters" type="Control" parent="."]
+[node name="HollyLetters" type="Control" parent="." unique_id=367369400]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -195,32 +195,32 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("10_4yxvp")
 
-[node name="H" type="Sprite2D" parent="HollyLetters"]
+[node name="H" type="Sprite2D" parent="HollyLetters" unique_id=1043722749]
 position = Vector2(130.5, 822.763)
 scale = Vector2(0.140065, 0.109528)
 texture = ExtResource("10_s2a5r")
 
-[node name="O" type="Sprite2D" parent="HollyLetters"]
+[node name="O" type="Sprite2D" parent="HollyLetters" unique_id=780281742]
 position = Vector2(175, 823)
 scale = Vector2(0.147368, 0.107018)
 texture = ExtResource("11_4yxvp")
 
-[node name="L" type="Sprite2D" parent="HollyLetters"]
+[node name="L" type="Sprite2D" parent="HollyLetters" unique_id=1516728704]
 position = Vector2(211.919, 821.967)
 scale = Vector2(0.138727, 0.103263)
 texture = ExtResource("12_dm14r")
 
-[node name="L1" type="Sprite2D" parent="HollyLetters"]
+[node name="L1" type="Sprite2D" parent="HollyLetters" unique_id=249405930]
 position = Vector2(242.094, 822)
 scale = Vector2(0.137007, 0.103201)
 texture = ExtResource("12_dm14r")
 
-[node name="Y" type="Sprite2D" parent="HollyLetters"]
+[node name="Y" type="Sprite2D" parent="HollyLetters" unique_id=1214883432]
 position = Vector2(266.5, 822)
 scale = Vector2(0.134868, 0.103093)
 texture = ExtResource("13_735fb")
 
-[node name="bullets" type="Control" parent="."]
+[node name="bullets" type="Control" parent="." unique_id=202181781]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -229,82 +229,82 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("15_gvfig")
 
-[node name="1Bullets" type="Sprite2D" parent="bullets"]
+[node name="1Bullets" type="Sprite2D" parent="bullets" unique_id=1493041764]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("16_6vceq")
 
-[node name="2Bullets" type="Sprite2D" parent="bullets"]
+[node name="2Bullets" type="Sprite2D" parent="bullets" unique_id=113503036]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("17_yk3m8")
 
-[node name="3Bullets" type="Sprite2D" parent="bullets"]
+[node name="3Bullets" type="Sprite2D" parent="bullets" unique_id=1630979273]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("18_oj564")
 
-[node name="4Bullets" type="Sprite2D" parent="bullets"]
+[node name="4Bullets" type="Sprite2D" parent="bullets" unique_id=1338015852]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("19_ume64")
 
-[node name="5Bullets" type="Sprite2D" parent="bullets"]
+[node name="5Bullets" type="Sprite2D" parent="bullets" unique_id=33575248]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("20_gjonj")
 
-[node name="6Bullets" type="Sprite2D" parent="bullets"]
+[node name="6Bullets" type="Sprite2D" parent="bullets" unique_id=220182354]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("21_77bry")
 
-[node name="7Bullets" type="Sprite2D" parent="bullets"]
+[node name="7Bullets" type="Sprite2D" parent="bullets" unique_id=947719695]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("22_6wvah")
 
-[node name="8Bullets" type="Sprite2D" parent="bullets"]
+[node name="8Bullets" type="Sprite2D" parent="bullets" unique_id=102647313]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("23_tfc7s")
 
-[node name="9Bullets" type="Sprite2D" parent="bullets"]
+[node name="9Bullets" type="Sprite2D" parent="bullets" unique_id=1526477198]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("24_qijxy")
 
-[node name="10Bullets" type="Sprite2D" parent="bullets"]
+[node name="10Bullets" type="Sprite2D" parent="bullets" unique_id=1177680268]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("25_msdqq")
 
-[node name="11Bullets" type="Sprite2D" parent="bullets"]
+[node name="11Bullets" type="Sprite2D" parent="bullets" unique_id=431959092]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("26_lcr4l")
 
-[node name="12Bullets" type="Sprite2D" parent="bullets"]
+[node name="12Bullets" type="Sprite2D" parent="bullets" unique_id=1967817423]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("27_30m72")
 
-[node name="13Bullets" type="Sprite2D" parent="bullets"]
+[node name="13Bullets" type="Sprite2D" parent="bullets" unique_id=306652982]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("28_iya4i")
 
-[node name="14Bullets" type="Sprite2D" parent="bullets"]
+[node name="14Bullets" type="Sprite2D" parent="bullets" unique_id=88601757]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("29_cbytx")
 
-[node name="15Bullets" type="Sprite2D" parent="bullets"]
+[node name="15Bullets" type="Sprite2D" parent="bullets" unique_id=2073556446]
 position = Vector2(1806.06, 435.58)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("30_1m7cl")
 
-[node name="BulletsCount" type="Label" parent="bullets"]
+[node name="BulletsCount" type="Label" parent="bullets" unique_id=104390978]
 layout_mode = 0
 offset_left = 1701.0
 offset_top = 788.0

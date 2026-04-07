@@ -23,6 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_m1p16")
 autoplay = true
+bus = &"voice"
 script = ExtResource("3_ofwfp")
 end_behavior = 1
 preview_in_editor = true
