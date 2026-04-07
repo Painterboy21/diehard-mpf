@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnftg1k5a7hkb"]
+[gd_scene format=3 uid="uid://bnftg1k5a7hkb"]
 
 [ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_s21al"]
 [ext_resource type="VideoStream" uid="uid://bvlax5evyxk10" path="res://videos/ball_save/BallSaved1.ogv" id="2_f0y7e"]
 [ext_resource type="Script" uid="uid://j5rv2iupm8s0" path="res://addons/mpf-gmc/classes/mpf_random_video_player.gd" id="2_hrsh4"]
 
-[node name="BallSave" type="Control"]
+[node name="BallSave" type="Control" unique_id=1585087607]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,7 +14,7 @@ grow_vertical = 2
 script = ExtResource("1_s21al")
 metadata/_custom_type_script = "uid://dru3usokwlhd3"
 
-[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="."]
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=2005085945]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,7 +23,9 @@ grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_f0y7e")
 autoplay = true
+bus = &"voice"
 script = ExtResource("2_hrsh4")
 end_behavior = 1
+preview_in_editor = true
 folder_path = "res://videos/ball_save"
 metadata/_custom_type_script = "uid://j5rv2iupm8s0"
