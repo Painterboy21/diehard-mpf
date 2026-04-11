@@ -6,51 +6,51 @@ mode:
   priority: 110
 
 event_player: 
-  left_orbit_hit{current_player.shot_bullet_left_orbit == 0}: 
+  left_orbit_hit{current_player.shot_bullet_left_orbit == 0}:
     - bullet_lock_left_orbit
     - bullet_hit
-  left_orbit_hit{current_player.shot_bullet_left_orbit == 2}: 
+  left_orbit_hit{current_player.shot_bullet_left_orbit == 2}:
     - bullet_lock_left_orbit
     - bullet_combo_hit
     - bullet_hit
     - bullet_combo_check
-  right_orbit_hit{current_player.shot_bullet_right_orbit == 0}: 
+  right_orbit_hit{current_player.shot_bullet_right_orbit == 0}:
     - bullet_lock_right_orbit
     - bullet_hit
-  right_orbit_hit{current_player.shot_bullet_right_orbit == 2}: 
+  right_orbit_hit{current_player.shot_bullet_right_orbit == 2}:
     - bullet_lock_right_orbit
     - bullet_combo_hit
     - bullet_hit
     - bullet_combo_check
-  bullet_mid_orbit_hit{current_player.shot_bullet_mid_orbit == 0}: 
+  bullet_mid_orbit_hit{current_player.shot_bullet_mid_orbit == 0}:
     - bullet_lock_mid_orbit
     - bullet_hit
-  bullet_mid_orbit_hit{current_player.shot_bullet_mid_orbit == 2}: 
+  bullet_mid_orbit_hit{current_player.shot_bullet_mid_orbit == 2}:
     - bullet_lock_mid_orbit
     - bullet_combo_hit
     - bullet_hit
     - bullet_combo_check
-  bullet_air_duct_hit{current_player.shot_bullet_air_duct == 0}: 
+  bullet_air_duct_hit{current_player.shot_bullet_air_duct == 0}:
     - bullet_lock_air_duct
     - bullet_hit
-  bullet_air_duct_hit{current_player.shot_bullet_air_duct == 2}: 
+  bullet_air_duct_hit{current_player.shot_bullet_air_duct == 2}:
     - bullet_lock_air_duct
     - bullet_combo_hit
     - bullet_hit
     - bullet_combo_check
-  bullet_upper_pf_hit{current_player.shot_bullet_upper_pf == 0}: 
+  bullet_upper_pf_hit{current_player.shot_bullet_upper_pf == 0}:
     - bullet_lock_upper_pf
     - bullet_hit
-  bullet_upper_pf_hit{current_player.shot_bullet_upper_pf == 2}: 
+  bullet_upper_pf_hit{current_player.shot_bullet_upper_pf == 2}:
     - bullet_lock_upper_pf
     - bullet_combo_hit
     - bullet_hit
     - bullet_combo_check
-  timer_bullets_combo_complete: 
+  timer_bullets_combo_complete:
     - reset_bullets
-  mode_bullets_stopping: 
+  mode_bullets_stopping:
     - reset_bullets
-  bullet_combo_check{current_player.bullet_combo_hits == 4}: 
+  bullet_combo_check{current_player.bullet_combo_hits == 4}:
     - bullets_combo_max
     - reset_bullets
 

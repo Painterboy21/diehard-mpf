@@ -1,0 +1,22 @@
+#config_version=6
+
+mode:
+  start_events: ball_started{current_player.played_naktomi_multiball == 0}
+  stop_events: ball_ended
+  priority: 120
+
+event_player: 
+  multiball_nakatomi_started:
+    - nakatomi_lock_close
+    - nakatomi_entrance_lock_close
+
+
+variable_player: 
+  slide_nakatomi_mb_removed: 
+    played_naktomi_multiball: 
+      action: set
+      int: 1
+
+
+
+

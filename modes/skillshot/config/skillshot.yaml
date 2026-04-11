@@ -6,19 +6,19 @@ mode:
   priority: 1100
 
 event_player: 
-  s_plunger_key_active: 
+  s_plunger_key_active:
     - skillshot_check
-  s_fire_active: 
+  s_fire_active:
     - skillshot_check
-  skillshot_hit.1{current_player.ball==1}: 
+  skillshot_hit.1{current_player.ball==1}:
     - ball_save_one
-  skillshot_hit.1{current_player.ball==2}: 
+  skillshot_hit.1{current_player.ball==2}:
     - ball_save_two
-  skillshot_hit.1{current_player.ball==3}: 
+  skillshot_hit.1{current_player.ball==3}:
     - ball_save_three
-  skillshot_hit: 
+  skillshot_hit:
     - end_skillshot
-  skillshot_miss: 
+  skillshot_miss:
     - end_skillshot
 
 
