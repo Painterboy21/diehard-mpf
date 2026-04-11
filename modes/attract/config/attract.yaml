@@ -6,16 +6,16 @@ mode:
   priority: 10
 
 event_player: 
-  mode_attract_started: 
+  mode_attract_started:
     - play_show_xmas
     - play_show_start_button_flash
-  s_left_flipper_active: 
+  s_left_flipper_active:
     - rotate_attract_left
     - reset_idle_timer
-  s_right_flipper_active: 
+  s_right_flipper_active:
     - rotate_attract_right
     - reset_idle_timer
-  timer_attract_idle_complete: 
+  timer_attract_idle_complete:
     - play_show_xmas
 
 

@@ -14,7 +14,7 @@ ball_holds:
     release_all_events: tilt, start_ambush.2
 
 event_player: 
-  timer_ambush_hold_complete: 
+  timer_ambush_hold_complete:
     - start_ambush
 
 

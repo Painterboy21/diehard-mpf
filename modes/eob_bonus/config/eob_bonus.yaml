@@ -14,11 +14,11 @@ combo_switches:
       - show_bonus_summary
 
 event_player: 
-  timer_eob_bonus_complete: 
+  timer_eob_bonus_complete:
     - show_bonus_summary
-  timer_eob_bonus_summary_complete: 
+  timer_eob_bonus_summary_complete:
     - bonus_finished
-  mode_eob_bonus_started: 
+  mode_eob_bonus_started:
     - stop_main_music1
     - stop_main_music2
     - stop_main_music3

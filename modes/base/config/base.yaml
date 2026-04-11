@@ -29,24 +29,24 @@ ball_saves:
     balls_to_save: -1
 
 event_player: 
-  s_popbumper_left_active: 
+  s_popbumper_left_active:
     - flash_bumper_left
     - flash_bumper_explosion
-  s_popbumper_right_active: 
+  s_popbumper_right_active:
     - flash_bumper_right
     - flash_bumper_explosion
-  ball_save_one_saving_ball: 
+  ball_save_one_saving_ball:
     - ball_save_saving_ball
-  ball_save_two_saving_ball: 
+  ball_save_two_saving_ball:
     - ball_save_saving_ball
-  ball_save_three_saving_ball: 
+  ball_save_three_saving_ball:
     - ball_save_saving_ball
-  ball_save_holly_saving_ball: 
+  ball_save_holly_saving_ball:
     - ball_save_saving_ball
-  s_air_duct_active: 
+  s_air_duct_active:
     - show_airduct
     - show_airduct2
-  s_actionbtn_active: 
+  s_actionbtn_active:
     - s_fire_active
 
 

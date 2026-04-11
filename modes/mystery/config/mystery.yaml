@@ -14,13 +14,13 @@ ball_holds:
     release_all_events: tilt, mystery_awarded.2
 
 event_player: 
-  mystery_ho_on_complete.1{current_player.mystery_hits_count == 3}: 
+  mystery_ho_on_complete.1{current_player.mystery_hits_count == 3}:
     - mystery_open_vault
-  ball_hold_mystery_hold_full: 
+  ball_hold_mystery_hold_full:
     - mystery_close_vault
-  timer_mystery_complete: 
+  timer_mystery_complete:
     - mystery_awarded
-  mode_mystery_started{current_player.mystery_hits_count == 3}: 
+  mode_mystery_started{current_player.mystery_hits_count == 3}:
     - mystery_open_vault
 
 
