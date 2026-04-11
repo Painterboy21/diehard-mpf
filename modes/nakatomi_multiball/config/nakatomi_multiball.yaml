@@ -11,6 +11,16 @@ event_player:
     - nakatomi_entrance_lock_close
 
 
+multiballs: 
+  multiball_nakatomi:
+    start_events: slide_nakatomi_mb_removed
+    ball_count: 3
+    ball_count_type: total
+    shoot_again: 20000
+    hurry_up: 3000
+    grace_period: 2000
+    ball_locks: tower_vuk
+
 variable_player: 
   slide_nakatomi_mb_removed: 
     played_naktomi_multiball: 

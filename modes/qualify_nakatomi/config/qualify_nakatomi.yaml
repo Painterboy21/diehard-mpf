@@ -2,7 +2,7 @@
 
 mode:
   start_events: ball_started{current_player.played_naktomi_multiball == 0}
-  stop_events: ball_ended, mode_naktomi_multiball_started
+  stop_events: ball_ended, multiball_nakatomi_started
   priority: 120
 
 event_player: 
