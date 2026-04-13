@@ -4,10 +4,10 @@ coils:
  # Slingshots
   c_left_sling:
     number: d-6
-    default_pulse_ms: 20ms
+    default_pulse_ms: 40ms
   c_right_sling:
     number: d-7
-    default_pulse_ms: 20ms
+    default_pulse_ms: 40ms
 
  # Flippers
   c_left_flipper_main:
@@ -32,12 +32,12 @@ coils:
  # Magnets
   c_trmagr:
     number: e-15
-    default_pulse_ms: 100
-    default_hold_power: 0.8
+    default_pulse_ms: 100ms
+    default_hold_power: 0.7
   c_trmagl:
     number: e-14
-    default_pulse_ms: 100
-    default_hold_power: 0.8
+    default_pulse_ms: 100ms
+    default_hold_power: 0.7
 
  # Plunger & Trough
   c_plunger:
@@ -45,7 +45,7 @@ coils:
     default_pulse_ms: 80ms
   c_trough_eject:
     number: d-1
-    default_pulse_ms: 19ms
+    default_pulse_ms: 22ms
 
 
  # Three Drop Targets
@@ -89,7 +89,7 @@ coils:
     default_pulse_ms: 40ms
   c_popbumper_right:
     number: e-10
-    default_pulse_ms: 40ms
+    default_pulse_ms: 20ms
 
  # Airplane
   c_captivetarget:
