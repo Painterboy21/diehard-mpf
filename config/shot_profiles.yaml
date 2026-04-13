@@ -168,3 +168,18 @@ shot_profiles:
        loops: -1
        speed: 3
        sync_ms: 0
+  profile_nakatomi:
+    advance_on_hit: True
+    states: 
+     - name: on
+       show: flash_color
+       loops: -1
+       speed: 3
+       sync_ms: 0
+       show_tokens: 
+         color: ffffff
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0

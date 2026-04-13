@@ -1,32 +1,68 @@
 #config_version=6
 
 mode:
-  start_events: ball_started{current_player.played_naktomi_multiball == 0}
-  stop_events: ball_ended
+  start_events: multiball_nakatomi_started
+  stop_events: ball_ended, multiball_nakatomi_stopped
   priority: 120
 
-event_player: 
-  multiball_nakatomi_started:
-    - nakatomi_lock_close
-    - nakatomi_entrance_lock_close
+light_player: 
+  mode_nakatomi_multiball_started: 
+    GI: 
+      color: ffb700
 
 
-multiballs: 
-  nakatomi:
-    start_events: slide_nakatomi_mb_removed
-    ball_count: 3
-    ball_count_type: total
-    shoot_again: 20000
-    hurry_up_time: 3000
-    grace_period: 2000
-    ball_locks: tower_vuk
-    debug: true
+shot_groups: 
+  nakatomi_jackpots:
+    shots: bullet_left_orbit_nakatomi,bullet_upper_pf_nakatomi,bullet_right_orbit_nakatomi,bullet_mid_orbit_nakatomi,bullet_air_duct_nakatomi
+
+shots: 
+  bullet_left_orbit_nakatomi:
+    profile: profile_nakatomi
+    start_enabled: True
+    show_tokens: 
+      lights: l20
+    hit_events: left_orbit_hit
+  bullet_upper_pf_nakatomi:
+    switch: s_upper_pf_entrance
+    profile: profile_nakatomi
+    start_enabled: True
+    show_tokens: 
+      lights: l21
+  bullet_right_orbit_nakatomi:
+    profile: profile_nakatomi
+    start_enabled: True
+    show_tokens: 
+      lights: l22
+  bullet_mid_orbit_nakatomi:
+    switch: s_mid_orbit
+    profile: profile_nakatomi
+    start_enabled: True
+    show_tokens: 
+      lights: l23
+  bullet_air_duct_nakatomi:
+    switch: s_air_duct
+    profile: profile_nakatomi
+    start_enabled: True
+    show_tokens: 
+      lights: l24
+
+slide_player: 
+  nakatomi_jackpots_hit: 
+    jackpot:
+      action: play
+      expire: 0s
+
 
 variable_player: 
   slide_nakatomi_mb_removed: 
     played_naktomi_multiball: 
       action: set
       int: 1
+
+  nakatomi_jackpots_hit: 
+    score: 
+      action: add
+      int: 2000000
 
 
 
