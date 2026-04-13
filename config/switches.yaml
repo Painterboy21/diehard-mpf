@@ -7,15 +7,15 @@ switches:
     number: d-29
     type: 'NC'
   s_trough2:
-    number: d-24
+    number: d-26
   s_trough3:
     number: d-25
   s_trough4:
-    number: d-26
-  s_trough5:
     number: d-27
-  s_trough6:
+  s_trough5:
     number: d-28
+  s_trough6:
+    number: d-24
   s_trough_jam:
     number: d-30
     type: 'NC'
