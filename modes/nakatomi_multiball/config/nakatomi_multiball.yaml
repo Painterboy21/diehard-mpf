@@ -28,11 +28,12 @@ shots:
     start_enabled: True
     show_tokens: 
       lights: l21
-  bullet_right_orbit_nakatomi:
+  bullet_right_orbit_nakatomi: 
     profile: profile_nakatomi
     start_enabled: True
     show_tokens: 
       lights: l22
+    hit_events: right_orbit_hit
   bullet_mid_orbit_nakatomi:
     switch: s_mid_orbit
     profile: profile_nakatomi
