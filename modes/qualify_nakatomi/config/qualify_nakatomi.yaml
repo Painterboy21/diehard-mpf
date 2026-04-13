@@ -21,6 +21,8 @@ event_player:
     - nakatomi_entrance_lock_close
   mode_qualify_nakatomi_started{current_player.shot_nakatomi_lock_lit == 1 and current_player.nakatomi_balls_locked < 3}:
     - enable_nakatomi_multiball_lock
+  mode_qualify_nakatomi_started{current_player.nakatomi_balls_locked > 0}:
+    - nakatomi_lock_open
 
 
 multiball_locks: 
@@ -101,7 +103,7 @@ timers:
     control_events: 
       - event: qualify_nakatomi_on_complete
         action: restart
-      - event: mode_qualify_nakatomi_started{current_player.shot_nakatomi_lock_lit == 1}
+      - event: mode_qualify_nakatomi_started{current_player.nakatomi_balls_locked > 0}
         action: restart
       - event: multiball_nakatomi_started
         action: stop
