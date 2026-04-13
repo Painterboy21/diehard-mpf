@@ -40,7 +40,8 @@ ball_devices:
     mechanical_eject: true
     auto_fire_on_unexpected_ball: false
     eject_targets: playfield
-    eject_timeouts: 500ms
+    eject_timeouts: 250ms
+    eject_all_events: multiball_nakatomi_started
     
   airplane:
     ball_switches: s_captiveball
