@@ -54,6 +54,10 @@ light_player:
   mode_base_started: 
     GI: 
       color: 969696
+    SPOTS:
+      color: 969696
+    SPOTS_BUMPER:
+      color: 969696
 
 
 random_event_player: 

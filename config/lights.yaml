@@ -27,7 +27,7 @@ lights:
     number: playfield-1-5
     subtype: led
     type: grb
-    tags: GI,NONRGB
+    tags: SPOTS,NONRGB
   l112:  
     number: playfield-1-6
     subtype: led
@@ -132,7 +132,7 @@ lights:
     number: playfield-1-26
     subtype: led
     type: grb
-    tags: GI, NONRGB
+    tags: SPOTS_BUMPER,NONRGB
   l123:
     number: playfield-1-27
     subtype: led
@@ -363,7 +363,7 @@ lights:
     number: playfield-3-10
     subtype: led
     type: grb
-    tags: GI 
+    tags: SPOTS,NONRGB
   l14:
     number: playfield-3-11
     subtype: led
