@@ -9,6 +9,10 @@ light_player:
   mode_nakatomi_multiball_started: 
     GI: 
       color: ffb700
+    SPOTS:
+      color: 505050
+    SPOTS_BUMPER:
+      color: 969650
 
 
 shot_groups: 
