@@ -2,7 +2,7 @@
 
 mode:
   start_events: multiball_nakatomi_started
-  stop_events: ball_ended, multiball_nakatomi_stopped
+  stop_events: ball_ended, multiball_nakatomi_ended
   priority: 120
 
 light_player: 
