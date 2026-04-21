@@ -29,4 +29,7 @@ shakers:
         duration: 40ms
       s_captiveball_active:
         power: 0.250
-        duration: 300ms
+        duration: 280ms
+      nakatomi_jackpots_hit:
+        power: 0.300
+        duration: 350ms
