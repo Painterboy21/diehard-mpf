@@ -57,7 +57,7 @@ light_player:
     SPOTS:
       color: 969696
     SPOTS_BUMPER:
-      color: 969696
+      color: 969670
 
 
 random_event_player: 

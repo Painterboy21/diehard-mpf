@@ -14,6 +14,7 @@
 - ~~ball saves videos,~~
 - playfield multiplyer ,lights
 - top three targets, score, lights, gifs, sounds
+- airduct lights flash to slow
 
 ## D i e Lanes
 - Add score and lights for die lanes 
