@@ -16,12 +16,6 @@ player_vars:
   airplane_lock_lit:
     initial_value: 0
     value_type: int
-  central_park_multiball:
-    initial_value: 1
-    value_type: int
-  central_park_played:
-    initial_value: 1
-    value_type: int
   modes_complete:
     initial_value: 0
     value_type: int
@@ -119,6 +113,9 @@ player_vars:
     initial_value: 0
     value_type: int
   nakatomi_balls_locked:
+    initial_value: 0
+    value_type: int
+  central_park_played:
     initial_value: 0
     value_type: int
   jackpot_2mil:
