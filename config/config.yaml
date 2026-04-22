@@ -208,6 +208,8 @@ modes:
   - service
   - qualify_nakatomi
   - nakatomi_multiball
+  - qualify_central_park
+  - central_park_multiball
 
 
 

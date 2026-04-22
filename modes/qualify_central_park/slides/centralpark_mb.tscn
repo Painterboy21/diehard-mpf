@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bb7oaaa6gxbgb"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_lb4lo"]
+[ext_resource type="VideoStream" uid="uid://bhtq3u0d1v7ae" path="res://videos/centralpark/CentralParkMultiball.ogv" id="2_uhngn"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_yq21y"]
+
+[node name="centralparkmultiball" type="Control" unique_id=758029554]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lb4lo")
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=536647480]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_uhngn")
+autoplay = true
+script = ExtResource("3_yq21y")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"

@@ -183,3 +183,16 @@ shot_profiles:
        loops: -1
        speed: 1
        sync_ms: 0
+  profile_central_park_lock:
+    advance_on_hit: True
+    states: 
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
+     - name: on
+       show: flash_color_on
+       loops: -1
+       speed: 2
+       sync_ms: 0
