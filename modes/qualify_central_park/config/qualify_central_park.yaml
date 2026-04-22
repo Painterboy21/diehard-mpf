@@ -1,7 +1,7 @@
 #config_version=6
 
 mode:
-  start_events: ball_started{current_player.central_park_played == 0}
+  start_events: ball_started{current_player.central_park_played==0}
   stop_events: ball_ended,multiball_central_park_started
   priority: 200
 
@@ -9,7 +9,7 @@ shot_groups:
   qualify_central_park:
     shots: central_park_lock_left,central_park_lock_middle,central_park_lock_right
     restart_events: trigger_central_park_ball_locked
-    disable_events: start_central_park_multiball
+    disable_events: multiball_central_park_started
     
     
 shots: 
@@ -59,7 +59,6 @@ slide_player:
 
 event_player:
   slide_centralpark_mb_removed:
-   - start_mode_central_park_multiball
    - qualify_central_park_complete
 
 
@@ -70,12 +69,12 @@ multiballs:
     ball_count_type: total
     shoot_again: 30s
 
+
 variable_player:
-  qualify_central_park_complete:
+  multiball_central_park_started:
     central_park_played:
       action: set
       int: 1
-
 
 
 
