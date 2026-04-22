@@ -1,7 +1,7 @@
 #config_version=6
 
 mode:
-  start_events: ball_started{current_player.played_naktomi_multiball == 0}
+  start_events: ball_started{current_player.nakatomi_played==0}
   stop_events: ball_ended, multiball_nakatomi_started
   priority: 120
 
@@ -128,7 +128,11 @@ variable_player:
   mode_qualify_nakatomi_started: 
     ball_locking_nakatomi: 
       action: set
-      int: 0
+      int: 0 
+  multiball_nakatomi_started: 
+    nakatomi_played: 
+      action: set
+      int: 1
 
   multiball_lock_nakatomi_locked_ball: 
     ball_locking_nakatomi: 
@@ -142,6 +146,8 @@ variable_player:
     nakatomi_balls_locked: 
       action: add
       int: 1
+
+
 
 coil_player: 
   trigger_nakatomi_ball_locked: c_towervuk_eject
