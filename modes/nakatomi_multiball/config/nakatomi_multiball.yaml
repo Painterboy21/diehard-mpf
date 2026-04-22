@@ -14,10 +14,20 @@ light_player:
     SPOTS_BUMPER:
       color: 969650
 
+event_player:
+  nakatomi_jackpots_on_hit:
+    - jackpot_2mil
+  nakatomi_jackpots_off_complete:
+    - nakatomi_enable_super_jackpot
+  nakatomi_super_jackpot_hit:
+    - jackpot_20mil
+    - nakatomi_disable_super_jackpot
+    - nakatomi_super_jackpot_collected
 
 shot_groups: 
   nakatomi_jackpots:
     shots: bullet_left_orbit_nakatomi,bullet_upper_pf_nakatomi,bullet_right_orbit_nakatomi,bullet_mid_orbit_nakatomi,bullet_air_duct_nakatomi
+    restart_events: nakatomi_disable_super_jackpot
 
 shots: 
   bullet_left_orbit_nakatomi:
@@ -50,10 +60,24 @@ shots:
     start_enabled: True
     show_tokens: 
       lights: l24
+  nakatomi_super_jackpot:
+    profile: profile_off_then_flash
+    show_tokens: 
+      lights: l7
+      color: 0000ff
+    control_events: 
+      - events: nakatomi_enable_super_jackpot
+        state: 1
+      - events: nakatomi_disable_super_jackpot
+        state: 0
 
 slide_player: 
-  nakatomi_jackpots_hit: 
+  nakatomi_jackpots_on_hit: 
     jackpot:
+      action: play
+      expire: 0s
+  nakatomi_super_jackpot_collected: 
+    super_jackpot:
       action: play
       expire: 0s
 
@@ -64,10 +88,24 @@ variable_player:
       action: set
       int: 1
 
-  nakatomi_jackpots_hit: 
+  jackpot_2mil: 
     score: 
       action: add
       int: 2000000
+    last_jackpot_value: 
+      action: set
+      int: 2000000
+
+  jackpot_20mil: 
+    score: 
+      action: add
+      int: 20000000
+    last_jackpot_value: 
+      action: set
+      int: 20000000
+    nakatomi_super_jackpot_collected: 
+      action: set
+      int: 1
 
 
 
