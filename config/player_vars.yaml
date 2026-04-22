@@ -121,3 +121,15 @@ player_vars:
   nakatomi_balls_locked:
     initial_value: 0
     value_type: int
+  jackpot_2mil:
+    initial_value: 0
+    value_type: int
+  jackpot_20mil:
+    initial_value: 0
+    value_type: int
+  nakatomi_super_jackpot_collected:
+    initial_value: 0
+    value_type: int
+  played_naktomi_multiball:
+    initial_value: 0
+    value_type: int

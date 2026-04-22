@@ -1,10 +1,10 @@
-[gd_scene format=3 uid="uid://cauw52j3s7dmj"]
+[gd_scene format=3 uid="uid://bpukjyw5bqmj2"]
 
-[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_1ajbw"]
-[ext_resource type="VideoStream" uid="uid://bi8p77fw01bjg" path="res://videos/jackpots/Jackpot.ogv" id="2_1ajbw"]
-[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_eaa5q"]
-[ext_resource type="Theme" uid="uid://cfix632dro1cx" path="res://godot-media/themes/lbl_holly.tres" id="4_3h0oy"]
-[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="5_7k3h8"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_ourlk"]
+[ext_resource type="VideoStream" uid="uid://dl655e822rum2" path="res://videos/jackpots/SuperJackpot.ogv" id="2_ourlk"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_q1h8k"]
+[ext_resource type="Theme" uid="uid://cfix632dro1cx" path="res://godot-media/themes/lbl_holly.tres" id="4_j6kx2"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="5_x2erx"]
 
 [node name="Jackpot" type="Control" unique_id=778786681]
 layout_mode = 3
@@ -13,7 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_1ajbw")
+script = ExtResource("1_ourlk")
 
 [node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=1887755407]
 layout_mode = 1
@@ -22,9 +22,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-stream = ExtResource("2_1ajbw")
+stream = ExtResource("2_ourlk")
 autoplay = true
-script = ExtResource("3_eaa5q")
+script = ExtResource("3_q1h8k")
 end_behavior = 1
 preview_in_editor = true
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
@@ -34,18 +34,18 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 100.0
-offset_bottom = 100.0
+offset_top = 200.0
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("4_3h0oy")
+theme = ExtResource("4_j6kx2")
 theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
 theme_override_constants/shadow_outline_size = 11
 theme_override_font_sizes/font_size = 144
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("5_7k3h8")
+script = ExtResource("5_x2erx")
 variable_name = "last_jackpot_value"
 comma_separate = true
 min_digits = 2
