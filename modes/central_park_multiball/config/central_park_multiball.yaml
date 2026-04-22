@@ -1,0 +1,38 @@
+#config_version=6
+
+mode:
+  start_events: multiball_central_park_started
+  stop_events: ball_ended,multiball_central_park_ended
+  priority: 120
+
+
+light_player: 
+  mode_central_park_multiball_started: 
+    GI: 
+      color: ffb700
+    SPOTS:
+      color: 505050
+    SPOTS_BUMPER:
+      color: 969650
+
+
+shots:
+  cp_single_bullet_advance:
+    switch: s_upper_pf_entrance
+    profile: profile_cp_single_bullet_advance
+    show_tokens: 
+      lights: l21
+    control_events: 
+      - events: cp_single_bullet_advance_hit
+        state: 1
+
+variable_player:
+  central_park_multiball_ended:
+    central_park_multiball_available: 
+      action: set
+      int: 1
+
+
+
+  
+

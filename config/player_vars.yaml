@@ -16,11 +16,11 @@ player_vars:
   airplane_lock_lit:
     initial_value: 0
     value_type: int
-  park_mb_available:
+  central_park_multiball:
     initial_value: 1
     value_type: int
-  park_locks:
-    initial_value: 0
+  central_park_played:
+    initial_value: 1
     value_type: int
   modes_complete:
     initial_value: 0
