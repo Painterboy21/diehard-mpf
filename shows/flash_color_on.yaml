@@ -1,0 +1,23 @@
+#show_version=6
+
+
+        - duration: 1
+          lights:
+            (lights):
+              color: (color)
+        - duration: 2
+          lights:
+            (lights):
+              color: off
+        - duration: 1
+          lights:
+            (lights):
+              color: (color)
+        - duration: 2
+          lights:
+            (lights):
+              color: off
+        - duration: -1
+          lights:
+            (lights):
+              color: (color)
