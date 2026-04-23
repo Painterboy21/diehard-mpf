@@ -421,7 +421,7 @@ lights:
     subtype: led
     type: rgb
     tags: GI, Vault
-  l59:
+  l57:
     number: playfield-4-3
     subtype: led
     type: rgb
@@ -431,7 +431,7 @@ lights:
     subtype: led
     type: rgb
     tags: INSERT
-  l57:
+  l59:
     number: playfield-4-5
     subtype: led
     type: rgb

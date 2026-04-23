@@ -202,7 +202,7 @@ shot_profiles:
    advance_on_hit: True
    states: 
      - name: on
-       show: flash_color_on
+       show: flash_color
        loops: -1
        speed: 3
        sync_ms: 0
