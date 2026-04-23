@@ -83,8 +83,8 @@ slide_player:
 
 
 variable_player: 
-  slide_nakatomi_mb_removed: 
-    played_naktomi_multiball: 
+  mode_nakatomi_multiball_started: 
+    played_nakatomi_multiball: 
       action: set
       int: 1
 
