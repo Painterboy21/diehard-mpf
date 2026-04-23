@@ -45,7 +45,7 @@ coils:
     default_pulse_ms: 80ms
   c_trough_eject:
     number: d-1
-    default_pulse_ms: 30ms
+    default_pulse_ms: 35ms
 
 
  # Three Drop Targets
