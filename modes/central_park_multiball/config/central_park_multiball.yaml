@@ -16,15 +16,56 @@ light_player:
       color: 969650
 
 
+
+shot_groups:
+  cp_jackpots: 
+    shots: cp_jackpot_1,cp_jackpot_2,cp_jackpot_3
+
+
+    
 shots:
+  cp_bullets_advance:
+    profile: profile_cp_bullets_advance
+    start_enabled: True
+    show_tokens: 
+      lights: l20,l22,l23,l24
+    hit_events: left_orbit_hit,right_orbit_hit,s_mid_orbit_active,s_air_duct_active
   cp_single_bullet_advance:
     switch: s_upper_pf_entrance
     profile: profile_cp_single_bullet_advance
     show_tokens: 
       lights: l21
     control_events: 
-      - events: cp_single_bullet_advance_hit
+      - events: left_orbit_hit,right_orbit_hit,s_mid_orbit_active,s_air_duct_active
         state: 1
+      - events: cp_single_bullet_advance_hit
+        state: 2
+  cp_jackpot_1:
+    switch: s_TrPF1
+    profile: profile_cp_jackpot
+    show_tokens: 
+      lights: l76
+    control_events: 
+      - events: cp_jackpot
+        state: 1
+  cp_jackpot_2:
+    switch: s_TrPF2
+    profile: profile_cp_jackpot
+    show_tokens: 
+      lights: l77
+    control_events:
+      - events: cp_jackpot
+        state: 1
+  cp_jackpot_3:
+    switch: s_TrPF3
+    profile: profile_cp_jackpot
+    show_tokens: 
+      lights: l78
+    control_events: 
+      - events: cp_jackpot
+        state: 1
+
+
 
 variable_player:
   central_park_multiball_ended:
