@@ -199,8 +199,45 @@ shot_profiles:
        show_tokens: 
         color: 00ff00
   profile_cp_single_bullet_advance:
-   advance_on_hit: True
    states: 
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
+     - name: on
+       show: flash_color
+       loops: -1
+       speed: 3
+       sync_ms: 0
+       show_tokens: 
+         color: 00ff00
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
+  profile_cp_jackpot:
+    states:
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
+     - name: on
+       show: flash_color_on
+       loops: -1
+       speed: 3
+       sync_ms: 0
+       show_tokens: 
+         color: ffffff
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
+  profile_cp_bullets_advance:
+    states: 
      - name: on
        show: flash_color
        loops: -1
