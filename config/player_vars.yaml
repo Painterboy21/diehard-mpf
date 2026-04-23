@@ -127,6 +127,9 @@ player_vars:
   nakatomi_super_jackpot_collected:
     initial_value: 0
     value_type: int
+  nakatomi_played:
+    initial_value: 0
+    value_type: int
   played_nakatomi_multiball:
     initial_value: 0
     value_type: int

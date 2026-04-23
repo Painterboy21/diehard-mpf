@@ -1,7 +1,7 @@
 #config_version=6
 
 mode:
-  start_events: ball_started{current_player.played_nakatomi_multiball==0}
+  start_events: ball_started{current_player.nakatomi_played==0}
   stop_events: ball_ended, multiball_nakatomi_started
   priority: 120
 
@@ -129,6 +129,10 @@ variable_player:
     ball_locking_nakatomi: 
       action: set
       int: 0 
+  multiball_nakatomi_started: 
+    nakatomi_played: 
+      action: set
+      int: 1
 
   multiball_lock_nakatomi_locked_ball: 
     ball_locking_nakatomi: 

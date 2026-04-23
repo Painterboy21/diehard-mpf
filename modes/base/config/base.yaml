@@ -61,13 +61,13 @@ light_player:
   nakatomi_super_jackpot_collected: 
     l57: 
       color: 00ff00
-  multiball_nakatomi_ended{current_player.nakatomi_super_jackpot_collected == 0}:
+  multiball_nakatomi_ended{current_player.nakatomi_super_jackpot_collected==0}:
     l57: 
       color: ff0000
-  mode_base_started{current_player.played_naktomi_multiball == 1 and current_player.nakatomi_super_jackpot_collected == 0}:
+  mode_base_started{current_player.played_nakatomi_multiball==1 and current_player.nakatomi_super_jackpot_collected==0}:
     l57: 
       color: ff0000
-  mode_base_started{current_player.played_naktomi_multiball == 1 and current_player.nakatomi_super_jackpot_collected == 1}:
+  mode_base_started{current_player.played_nakatomi_multiball==1 and current_player.nakatomi_super_jackpot_collected==1}:
     l57: 
       color: 00ff00
 
