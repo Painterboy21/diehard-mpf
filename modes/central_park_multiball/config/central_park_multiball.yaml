@@ -30,6 +30,8 @@ shots:
         state: 0
       - events: left_orbit_hit,right_orbit_hit,s_mid_orbit_active,s_air_duct_active
         state: 1
+      - events: start_super_jackpot_lit
+        state: 1
   cp_single_bullet_advance:
     switch: s_upper_pf_entrance
     profile: profile_cp_single_bullet_advance
@@ -41,6 +43,7 @@ shots:
       - events: cp_jackpots_hit
         state: 0
 
+
   cp_jackpot_1:
     switch: s_TrPF1
     profile: profile_cp_jackpot
@@ -48,6 +51,10 @@ shots:
       lights: l76
     control_events: 
       - events: cp_jackpot_1_hit
+        state: 1
+      - events: start_super_jackpot_lit
+        state: 0
+      - events: start_super_jackpot_lit_hit
         state: 1
   cp_jackpot_2:
     switch: s_TrPF2
@@ -57,6 +64,10 @@ shots:
     control_events:
       - events: cp_jackpot_2_hit
         state: 1
+      - events: start_super_jackpot_lit
+        state: 0
+      - events: start_super_jackpot_lit_hit
+        state: 1
   cp_jackpot_3:
     switch: s_TrPF3
     profile: profile_cp_jackpot
@@ -65,6 +76,21 @@ shots:
     control_events: 
       - events: cp_jackpot_3_hit
         state: 1
+      - events: start_super_jackpot_lit
+        state: 0
+      - events: start_super_jackpot_lit_hit
+        state: 1
+
+  start_super_jackpot_lit:
+    profile: profile_cp_super_jackpot_lit
+    show_tokens: 
+      lights: l76,l77,l78,l21
+    control_events: 
+      - events: start_super_jackpot_lit
+        state: 1
+
+
+
 
 
 slide_player: 
@@ -82,6 +108,12 @@ event_player:
     - wire_ramp_exit_closed
   slide_base_active:
     - wire_ramp_exit_open
+  cp_jackpots_on_hit:
+    - jackpot_2mil
+  cp_jackpots_complete: start_super_jackpot_lit|5s
+  start_super_jackpot_lit:
+   - 
+
 
 variable_player:
   central_park_multiball_ended:

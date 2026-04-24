@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://ciub8gjdiy3ff"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_d8kci"]
+[ext_resource type="VideoStream" uid="uid://bi8p77fw01bjg" path="res://videos/jackpots/Jackpot.ogv" id="2_yu3hq"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_jsou6"]
+[ext_resource type="Theme" uid="uid://cfix632dro1cx" path="res://godot-media/themes/lbl_holly.tres" id="4_t8k2j"]
+[ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="5_8dna0"]
+
+[node name="cp_jackpots_complete" type="Control" unique_id=192248820]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_d8kci")
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=327841594]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -23.425
+anchor_top = -12.775
+anchor_right = 71.575
+anchor_bottom = 40.225
+offset_left = 940.0
+offset_top = 520.0
+offset_right = -940.0
+offset_bottom = -520.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_yu3hq")
+autoplay = true
+script = ExtResource("3_jsou6")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
+metadata/_edit_use_anchors_ = true
+
+[node name="MPFVariable" type="Label" parent="MPFVideoPlayer" unique_id=1992601719]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_t8k2j")
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_outline_size = 11
+theme_override_font_sizes/font_size = 144
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_8dna0")
+variable_name = "last_jackpot_value"
+comma_separate = true
+min_digits = 2
