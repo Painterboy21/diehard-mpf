@@ -76,8 +76,6 @@ slide_player:
 event_player:
   mode_qualify_central_park_stopped:
     - wire_ramp_exit_open
-  cp_jackpots_hit:
-    - jackpot_2mil
   player_shot_cp_bullets_advance:
     - wire_ramp_exit_closed
   player_shot_single_bullet_advance:
@@ -91,7 +89,7 @@ variable_player:
       action: set
       int: 1
 
-  jackpot_2mil: 
+  cp_jackpots_hit: 
     score: 
       action: add
       int: 2000000
