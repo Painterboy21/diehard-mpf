@@ -47,7 +47,7 @@ shots:
     show_tokens: 
       lights: l76
     control_events: 
-      - events: cp_jackpot__hit
+      - events: cp_jackpot_1_hit
         state: 1
   cp_jackpot_2:
     switch: s_TrPF2
@@ -66,13 +66,38 @@ shots:
       - events: cp_jackpot_3_hit
         state: 1
 
+
+slide_player: 
+ cp_jackpots_hit: 
+    jackpot:
+      action: play
+      expire: 0s
+
+event_player:
+  mode_qualify_central_park_stopped:
+    - wire_ramp_exit_open
+  cp_jackpots_hit:
+    - jackpot_2mil
+  player_shot_cp_bullets_advance:
+    - wire_ramp_exit_closed
+  player_shot_single_bullet_advance:
+    - wire_ramp_exit_closed
+  slide_base_active:
+    - wire_ramp_exit_open
+
 variable_player:
   central_park_multiball_ended:
     central_park_multiball_available: 
       action: set
       int: 1
 
-
+  jackpot_2mil: 
+    score: 
+      action: add
+      int: 2000000
+    last_jackpot_value: 
+      action: set
+      int: 2000000
 
   
 

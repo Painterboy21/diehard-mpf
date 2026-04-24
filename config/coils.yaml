@@ -42,10 +42,10 @@ coils:
  # Plunger & Trough
   c_plunger:
     number: d-0
-    default_pulse_ms: 80ms
+    default_pulse_ms: 70ms
   c_trough_eject:
     number: d-1
-    default_pulse_ms: 35ms
+    default_pulse_ms: 20ms
 
 
  # Three Drop Targets
