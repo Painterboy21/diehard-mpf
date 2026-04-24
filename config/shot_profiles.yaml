@@ -224,10 +224,17 @@ shot_profiles:
      - name: on
        show: flash_color_on
        loops: -1
-       speed: 3
+       speed: 4
        sync_ms: 0
        show_tokens: 
          color: ffffff
+     - name: on
+       show: on
+       loops: -1
+       speed: 4
+       sync_ms: 0
+       show_tokens: 
+         color: ff0000
   profile_cp_bullets_advance:
     advance_on_hit: False
     states: 
@@ -243,3 +250,33 @@ shot_profiles:
        loops: -1
        speed: 1
        sync_ms: 0
+  profile_cp_super_jackpot_lit:  
+    advance_on_hit: False
+    states:
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
+     - name: on
+       show: flash_color
+       loops: -1
+       speed: 3
+       sync_ms: 0
+       show_tokens: 
+         color: ff0000
+  profile_super_jackpot_hit:
+    advance_on_hit: False
+    states:
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
+     - name: on
+       show: on
+       loops: -1
+       speed: 3
+       sync_ms: 0
+       show_tokens: 
+         color: ff0000
