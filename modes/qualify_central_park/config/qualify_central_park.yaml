@@ -59,23 +59,5 @@ slide_player:
 
 event_player:
   slide_centralpark_mb_removed:
-   - qualify_central_park_complete
-
-
-multiballs: 
-  central_park:
-    start_events: slide_centralpark_mb_removed
-    ball_count: 3
-    ball_count_type: total
-    shoot_again: 30s
-
-
-variable_player:
-  multiball_central_park_started:
-    central_park_played:
-      action: set
-      int: 1
-
-
-
+   - start_central_park_multiball
 
