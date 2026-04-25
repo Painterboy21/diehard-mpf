@@ -18,8 +18,7 @@ light_player:
 shot_groups:
   cp_jackpots: 
     shots: cp_jackpot_1,cp_jackpot_2,cp_jackpot_3
-  cp_super_jackpot_hit:
-    shots: cp_super_jackpot_1,cp_super_jackpot_2,cp_super_jackpot_3
+
     
 
 
@@ -36,6 +35,7 @@ shots:
         state: 1
       - events: start_super_jackpot_lit
         state: 1
+ 
   cp_single_bullet_advance:
     switch: s_upper_pf_entrance
     profile: profile_cp_single_bullet_advance
@@ -46,6 +46,8 @@ shots:
         state: 1
       - events: cp_jackpots_hit
         state: 0
+      - events: cp_super_jackpot
+        state: 0  
 
 
   cp_jackpot_1:
@@ -58,6 +60,8 @@ shots:
         state: 1
       - events: start_super_jackpot_lit
         state: 1
+      - events: cp_super_jackpot
+        state: 2  
   cp_jackpot_2:
     switch: s_TrPF2
     profile: profile_cp_jackpot
@@ -68,6 +72,8 @@ shots:
         state: 1
       - events: start_super_jackpot_lit
         state: 0
+      - events: cp_super_jackpot
+        state: 2  
   cp_jackpot_3:
     switch: s_TrPF3
     profile: profile_cp_jackpot
@@ -78,6 +84,8 @@ shots:
         state: 1
       - events: start_super_jackpot_lit
         state: 0
+      - events: cp_super_jackpot
+        state: 2  
 
   start_super_jackpot_lit:
     profile: profile_cp_super_jackpot_lit
@@ -87,31 +95,6 @@ shots:
       - events: start_super_jackpot_lit
         state: 1
 
-
-  cp_super_jackpot_1:
-    switch: s_TrPF1
-    profile: profile_super_jackpot_hit
-    show_tokens: 
-      lights: l76
-    control_events: 
-      - events: cp_super_jackpot
-        state: 1
-  cp_super_jackpot_2:
-    switch: s_TrPF2
-    profile: profile_super_jackpot_hit
-    show_tokens: 
-      lights: l77
-    control_events: 
-      - events: cp_super_jackpot
-        state: 1
-  cp_super_jackpot_3:
-    switch: s_TrPF3
-    profile: profile_super_jackpot_hit
-    show_tokens: 
-      lights: l78
-    control_events: 
-      - events: cp_super_jackpot
-        state: 1
 
 
 
@@ -134,6 +117,9 @@ event_player:
   cp_jackpots_on_hit:
     - jackpot_2mil
   cp_jackpots_complete: start_super_jackpot_lit|5s
+  start_super_jackpot_lit_hit:
+    - cp_super_jackpot
+ 
 
 
 variable_player:
