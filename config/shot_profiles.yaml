@@ -211,15 +211,11 @@ shot_profiles:
        loops: -1
        speed: 3
        sync_ms: 0
-       show_tokens: 
-         color: 00ff00
      - name: superhit
        show: flash_color
        loops: -1
        speed: 4
        sync_ms: 0
-       show_tokens: 
-         color: ff0000
   profile_cp_bullets_advance:
     advance_on_hit: False
     states: 
