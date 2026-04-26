@@ -15,7 +15,6 @@ event_player:
   slide_base_active:
     - wire_ramp_exit_open
 
-
   cp_jackpot_1_off_hit{current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_jackpot
     - advance_cp_jackpot_1
@@ -28,17 +27,20 @@ event_player:
   slide_jackpot_removed{current_player.shot_cp_jackpot_1 == 1 and current_player.shot_cp_jackpot_2 == 1 and current_player.shot_cp_jackpot_3 == 1}:
     - enable_park_super_jackpot
 
-  cp_jackpot_1_super_hit{current_player.shot_cp_single_bullet_advance == 1}:
+
+  cp_jackpot_1_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_super_jackpot
-    - advance_cp_super_jackpot_1
-  cp_jackpot_2_super_hit{current_player.shot_cp_single_bullet_advance == 1}:
+    - score_park_super_jackpot_1
+  cp_jackpot_2_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_super_jackpot
-    - advance_cp_super_jackpot_2
-  cp_jackpot_3_super_hit{current_player.shot_cp_single_bullet_advance == 1}:
+    - score_park_super_jackpot_2
+  cp_jackpot_3_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_super_jackpot
-    - advance_cp_super_jackpot_3
-  slide_super_jackpot_removed{current_player.shot_cp_super_jackpot_1 == 1 and current_player.shot_cp_super_jackpot_2 == 1 and current_player.shot_cp_super_jackpot_3 == 1}:
-    - enable_park_super_jackpot_complete
+    - score_park_super_jackpot_3
+
+
+
+
 
 multiballs: 
   central_park:
@@ -66,8 +68,7 @@ shots:
         state: 0
       - events: left_orbit_hit,right_orbit_hit,s_mid_orbit_active,s_air_duct_active
         state: 1
-      - events: enable_park_super_jackpot
-        state: 2 
+
    
   cp_single_bullet_advance:
     switch: s_upper_pf_entrance
@@ -79,8 +80,7 @@ shots:
         state: 1
       - events: score_park_jackpot
         state: 0
-      - events: score_park_super_jackpot
-        state: 2 
+
 
   cp_jackpot_1:
     switch: s_TrPF1
@@ -94,8 +94,9 @@ shots:
         state: 1
       - events: enable_park_super_jackpot
         state: 2
-      - events: advance_cp_super_jackpot_1
+      - events: score_park_super_jackpot_1
         state: 3
+
   cp_jackpot_2:
     switch: s_TrPF2
     profile: profile_cp_jackpot
@@ -108,8 +109,10 @@ shots:
         state: 1
       - events: enable_park_super_jackpot
         state: 2
-      - events: advance_cp_super_jackpot_2
+      - events: score_park_super_jackpot_2
         state: 3
+ 
+
   cp_jackpot_3:
     switch: s_TrPF3
     profile: profile_cp_jackpot
@@ -122,8 +125,10 @@ shots:
         state: 1
       - events: enable_park_super_jackpot
         state: 2
-      - events: advance_cp_super_jackpot_3
+      - events: score_park_super_jackpot_3
         state: 3
+
+
 
 slide_player: 
  score_park_jackpot: 
