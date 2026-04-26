@@ -68,6 +68,8 @@ shots:
         state: 0
       - events: left_orbit_hit,right_orbit_hit,s_mid_orbit_active,s_air_duct_active
         state: 1
+      - events: enable_park_super_jackpot,score_park_super_jackpot
+        state: 2
 
    
   cp_single_bullet_advance:
@@ -79,6 +81,8 @@ shots:
       - events: left_orbit_hit,right_orbit_hit,s_mid_orbit_active,s_air_duct_active
         state: 1
       - events: score_park_jackpot
+        state: 0
+      - events: score_park_super_jackpot
         state: 0
 
 
