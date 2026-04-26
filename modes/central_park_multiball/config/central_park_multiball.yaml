@@ -37,10 +37,8 @@ event_player:
   cp_jackpot_3_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_super_jackpot
     - score_park_super_jackpot_3
-
-
-
-
+  slide_super_jackpot_removed{current_player.shot_cp_jackpot_1 == 1 and current_player.shot_cp_jackpot_2 == 1 and current_player.shot_cp_jackpot_3 == 1}:
+    - enable_super_jackpot_complete
 
 multiballs: 
   central_park:
