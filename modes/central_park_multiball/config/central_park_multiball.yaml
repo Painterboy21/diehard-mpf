@@ -73,14 +73,28 @@ shots:
   cp_single_bullet_advance:
     switch: s_upper_pf_entrance
     profile: profile_cp_single_bullet_advance
+    disable_events: enable_park_super_jackpot
     show_tokens: 
       lights: l21
+      color: 00ff00
     control_events: 
       - events: left_orbit_hit,right_orbit_hit,s_mid_orbit_active,s_air_duct_active
         state: 1
-      - events: score_park_jackpot,score_park_super_jackpot
+      - events: score_park_jackpot
         state: 0
-
+  
+  cp_single_bullet_super_advance:
+    switch: s_upper_pf_entrance
+    profile: profile_cp_single_bullet_advance
+    enable_events: enable_park_super_jackpot
+    show_tokens: 
+      lights: l21
+      color: ff0000
+    control_events: 
+      - events: left_orbit_hit,right_orbit_hit,s_mid_orbit_active,s_air_duct_active
+        state: 2
+      - events: score_park_super_jackpot, enable_park_super_jackpot
+        state: 0
 
 
   cp_jackpot_1:
