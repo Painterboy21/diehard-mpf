@@ -4,9 +4,6 @@ player_vars:
   mystery_hits_count:
     initial_value: 0
     value_type: int
-  nakatomi_mb_available:
-    initial_value: 1
-    value_type: int
   tower_lock:
     initial_value: 0
     value_type: int
@@ -55,13 +52,7 @@ player_vars:
   ambush:
     initial_value: 0
     value_type: int
-  nakatomi_super_collected:
-    initial_value: 0
-    value_type: int
   airplane_mb_stage2:
-    initial_value: 0
-    value_type: int
-  park_super_collected:
     initial_value: 0
     value_type: int
   extra_ball_mball_awarded:
@@ -115,7 +106,15 @@ player_vars:
   nakatomi_balls_locked:
     initial_value: 0
     value_type: int
-  central_park_played:
+  nakatomi_mb_available:
+    initial_value: 1
+    value_type: int
+  nakatomi_super_jackpot_collected:
+    initial_value: 0
+    value_type: int
+  nakatomi_super_collected:
+    initial_value: 0
+  played_nakatomi_multiball:
     initial_value: 0
     value_type: int
   jackpot_2mil:
@@ -124,13 +123,10 @@ player_vars:
   jackpot_20mil:
     initial_value: 0
     value_type: int
-  nakatomi_super_jackpot_collected:
+  central_park_played:
     initial_value: 0
     value_type: int
-  played_nakatomi_multiball:
-    initial_value: 0
-    value_type: int
-  park_super_jackpot_collected:
+  score_park_super_jackpot_hit:
     initial_value: 0
     value_type: int
   park_super_jackpot_available:
