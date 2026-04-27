@@ -30,12 +30,15 @@ event_player:
 
   cp_jackpot_1_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_super_jackpot
+    - score_park_super_jackpot_hit
     - score_park_super_jackpot_1
   cp_jackpot_2_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_super_jackpot
+    - score_park_super_jackpot_hit
     - score_park_super_jackpot_2
   cp_jackpot_3_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_super_jackpot
+    - score_park_super_jackpot_hit
     - score_park_super_jackpot_3
   slide_super_jackpot_removed{current_player.shot_cp_jackpot_1 == 1 and current_player.shot_cp_jackpot_2 == 1 and current_player.shot_cp_jackpot_3 == 1}:
     - enable_super_jackpot_complete
@@ -143,8 +146,6 @@ shots:
       - events: score_park_super_jackpot_3
         state: 3
 
-
-
 slide_player: 
  score_park_jackpot: 
     jackpot:
@@ -155,11 +156,19 @@ slide_player:
       action: play
       expire: 0s
 
+
+
+
 variable_player:
   multiball_central_park_started:
     central_park_played:
       action: set
       int: 1
+  
+  enable_park_super_jackpot:
+    park_super_jackpot_available:
+      action: set
+      int: 1 
 
   #Normal Jackpots
   score_park_jackpot:
@@ -175,8 +184,7 @@ variable_player:
     score: 
       action: add
       int: 20000000
-  
-  enable_park_super_jackpot:
-    park_super_jackpot_available:
+    score_park_super_jackpot_hit:
       action: set
-      int: 1 
+      int: 1
+
