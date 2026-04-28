@@ -30,6 +30,30 @@ shakers:
       s_captiveball_active:
         power: 0.250
         duration: 280ms
+# nakatomi
       nakatomi_jackpots_hit:
         power: 0.300
+        duration: 350ms
+
+# central park  
+      central_park_lock_left_hit:
+        power: 0.200
+        duration: 100ms
+      central_park_lock_middle_hit:
+        power: 0.200
+        duration: 100ms
+      central_park_lock_right_hit:
+        power: 0.200
+        duration: 100ms
+      slide_centralparkball_1_locked_active:
+        power: 0.300
+        duration: 250ms
+      slide_centralparkball_2_locked_active:
+        power: 0.300
+        duration: 250ms
+      slide_centralpark_mb_active:
+        power: 0.300
+        duration: 250ms
+      multiball_central_park_started:
+        power: 0.800
         duration: 350ms

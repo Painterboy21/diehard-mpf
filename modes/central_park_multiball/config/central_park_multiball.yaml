@@ -8,6 +8,7 @@ mode:
 event_player:
   mode_qualify_central_park_stopped:
     - wire_ramp_exit_open
+    - nakatomi_entrance_lock_close
   player_shot_cp_bullets_advance:
     - wire_ramp_exit_closed
   player_shot_single_bullet_advance:
