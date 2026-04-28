@@ -55,5 +55,11 @@ shakers:
         power: 0.300
         duration: 250ms
       multiball_central_park_started:
-        power: 0.800
-        duration: 350ms
+        power: 0.400
+        duration: 450ms
+      score_park_jackpot:
+        power: 0.400
+        duration: 450ms
+      score_park_super_jackpot_hit:
+        power: 0.650
+        duration: 550ms  
