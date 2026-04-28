@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bwpshhqxtild8"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_uhd72"]
+[ext_resource type="VideoStream" uid="uid://c3qfr6ibqm5mc" path="res://videos/centralpark/CentralParkBallLocked2.ogv" id="2_qpjax"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_m7dwp"]
+
+[node name="centralparkball2locked" type="Control" unique_id=441500076]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_uhd72")
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=766485998]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+stream = ExtResource("2_qpjax")
+autoplay = true
+script = ExtResource("3_m7dwp")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"

@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://djeq51ogeqvhc"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_4xps3"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="2_yiob8"]
+
+[node name="superjackpotlit" type="Control" unique_id=1411690626]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = 1.0
+offset_right = -8.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4xps3")
+metadata/_custom_type_script = "uid://dwcsp83138nco"
+
+[node name="Label" type="Label" parent="." unique_id=1120720776]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -2.0
+offset_right = 4.0
+offset_bottom = -942.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.050000012, 0.050000012, 1)
+theme_override_colors/font_shadow_color = Color(0.95, 0.95, 0.95, 0.9647059)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("2_yiob8")
+theme_override_font_sizes/font_size = 100
+text = "SUPER JACKPOT LIT!!"
+horizontal_alignment = 1
