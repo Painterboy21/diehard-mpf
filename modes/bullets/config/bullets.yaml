@@ -1,8 +1,8 @@
 #config_version=6
 
 mode:
-  start_events: ball_started, multiball_nakatomi_stopped
-  stop_events: ball_ended, multiball_nakatomi_started
+  start_events: ball_started,multiball_nakatomi_ended,multiball_central_park_ended
+  stop_events: ball_ended, multiball_nakatomi_started,multiball_central_park_started
   priority: 110
 
 event_player: 
