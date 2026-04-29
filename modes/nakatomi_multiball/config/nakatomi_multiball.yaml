@@ -139,5 +139,6 @@ variable_player:
       int: 1
 
 
-
+coil_player: 
+  balldevice_tower_vuk_ball_entered: c_towervuk_eject
 
