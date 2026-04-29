@@ -1,7 +1,7 @@
 #config_version=6
 
 mode:
-  start_events: multiball_nakatomi_started
+  start_events: start_nakatomi_multiball
   stop_events: ball_ended, multiball_nakatomi_ended
   priority: 120
 
@@ -19,10 +19,25 @@ event_player:
     - jackpot_2mil
   nakatomi_jackpots_off_complete:
     - nakatomi_enable_super_jackpot
-  nakatomi_super_jackpot_hit:
+    - nakatomi_lock_open
+    - nakatomi_entrance_lock_open
+  balldevice_tower_vuk_ball_entered:
     - jackpot_20mil
-    - nakatomi_disable_super_jackpot
     - nakatomi_super_jackpot_collected
+  slide_super_jackpot_removed{current_player.nakatomi_multiball_supers_locked==2}:
+    - nakatomi_lock_close
+    - nakatomi_entrance_lock_close
+    - nakatomi_disable_super_jackpot
+
+multiballs: 
+  nakatomi:
+    start_events: mode_nakatomi_multiball_started
+    ball_count: 3
+    ball_count_type: total
+    shoot_again: 20000
+    hurry_up_time: 3000
+    grace_period: 2000
+    ball_locks: tower_vuk
 
 shot_groups: 
   nakatomi_jackpots:
@@ -87,7 +102,20 @@ variable_player:
     played_nakatomi_multiball: 
       action: set
       int: 1
+    nakatomi_multiball_supers_locked: 
+      action: set
+      int: 0
 
+  nakatomi_super_jackpot_collected: 
+    nakatomi_multiball_supers_locked: 
+      action: add
+      int: 1
+
+  nakatomi_disable_super_jackpot:
+    nakatomi_multiball_supers_locked: 
+      action: set
+      int: 0
+  
   jackpot_2mil: 
     score: 
       action: add

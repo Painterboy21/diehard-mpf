@@ -26,6 +26,8 @@ event_player:
   multiball_nakatomi_started.1:
     - nakatomi_lock_close
     - nakatomi_entrance_lock_close
+  slide_nakatomi_mb_removed:
+    - start_nakatomi_multiball
 
 
 multiball_locks: 
@@ -37,16 +39,6 @@ multiball_locks:
     disable_events: trigger_nakatomi_ball_locked
     reset_count_for_current_player_events: restart_nakatomi_locks
     locked_ball_counting_strategy: physical_only
-
-multiballs: 
-  nakatomi:
-    start_events: slide_nakatomi_mb_removed
-    ball_count: 3
-    ball_count_type: total
-    shoot_again: 20000
-    hurry_up_time: 3000
-    grace_period: 2000
-    ball_locks: tower_vuk
 
 queue_relay_player: 
   balldevice_trough_ball_eject_attempt{current_player.ball_locking_nakatomi == 1}: 
