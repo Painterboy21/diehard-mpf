@@ -28,6 +28,9 @@ event_player:
     - nakatomi_lock_close
     - nakatomi_entrance_lock_close
     - nakatomi_disable_super_jackpot
+  multiball_nakatomi_ended.1:
+    - nakatomi_lock_close
+    - nakatomi_entrance_lock_close
 
 multiballs: 
   nakatomi:
