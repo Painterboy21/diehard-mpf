@@ -194,6 +194,7 @@ machine_vars:
 
 modes:
   - attract
+  - qualify_airplane
   - qualify_ambush
   - ambush
   - base
