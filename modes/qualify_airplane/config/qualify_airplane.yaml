@@ -1,45 +1,58 @@
 #config_version=6
 
 mode:
-  start_events: ball_started{current_player.airplane_multiball_played==0},multiball_nakatomi_ended,multiball_central_park_ended
-  stop_events: ball_ended,multiball_central_park_started,multiball_nakatomi_started
+  start_events: ball_started
+  stop_events: ball_ended
   priority: 150
 
+event_player: 
+  counter_airplane_light_lock_hit{hits==5}:
+   - lock_lit
+   - airplane_lock_ready
+  counter_airplane_light_lock_hit{hits==10}:
+   - lock_lit
+  counter_airplane_light_lock_hit{hits==15}:
+   - lock_lit
 
-event_player:
-  airplane_ball_1_lock:
+sequences:
+  airplane_ball_1_locked:
+    events:
+      - counter_airplane_light_lock_hit{hits==5}
+      - s_UrampUp001_active
+    events_when_complete: airplane_ball_1_locked
+
 
 
 counters:
-  airplane_lock_counter:
+  airplane_light_lock:
     count_events: s_captiveball_active
     count_complete_value: 15
     persist_state: true
 
-shot_groups:
-  airplane_ball_1_lock: airplane_lock_counter_1_counter_hit{hits==5},airplane_ball_1_2nd_catch
-  airplane_ball_2_lock: airplane_lock_counter_2_counter_hit{hits==10},airplane_ball_2_2nd_catch
-  airplane_ball_3_lock: airplane_lock_counter_3_counter_hit{hits==15},airplane_ball_3_2nd_catch
 
 shots:
-  airplane_lock_counter_1_counter_hit{hits==5}:
+  airplane_lock_1:
     switch: s_captiveball
-    profile: 
-    show_tokens: l61
-  airplane_ball_1_2nd_catch:
-   switch: s_rightvuk
-  airplane_lock_counter_2_counter_hit{hits==10}:
-    switch: s_captiveball
-    profile: 
-    show_tokens: l61
-  airplane_ball_2_2nd_catch:
-   switch: s_rightvuk
-  airplane_lock_counter_2_counter_hit{hits==10}:
-    switch: s_captiveball
-    profile: 
-    show_tokens: l61
-  airplane_ball_3_2nd_catch:
-   switch: s_rightvuk
+    profile: profile_airplane_light_off
+    show_tokens: 
+      lights: l62
+    control_events: 
+      - events: lock_lit
+        state: 1
+      - events: 
+        state: 0
 
+  airplane_lock:
+    switch: s_captiveball
+    profile: profile_airplane_lock_lit
+    show_tokens: 
+      lights: l61
+    control_events: 
+      - events: lock_lit
+        state: 1
+      - events: 
+        state: 0
 
-slide_player:
+  airplane_lock_complete:
+    switch: s_UrampUp001
+

@@ -267,3 +267,33 @@ shot_profiles:
        sync_ms: 0
        show_tokens: 
          color: ff0000
+  profile_airplane_lock_lit:
+    advance_on_hit: False
+    states:
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
+     - name: lock_lit
+       show: flash_color_on
+       loops: -1
+       speed: 4
+       sync_ms: 0
+       show_tokens: 
+         color: 00ff00
+  profile_airplane_light_off:
+    advance_on_hit: False
+    states:
+     - name: lock_lit
+       show: flash_color_on
+       loops: -1
+       speed: 4
+       sync_ms: 0
+       show_tokens: 
+         color: 00ff00
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
