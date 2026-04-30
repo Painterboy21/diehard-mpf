@@ -6,4 +6,40 @@ mode:
   priority: 150
 
 
+event_player:
+  airplane_ball_1_lock:
 
+
+counters:
+  airplane_lock_counter:
+    count_events: s_captiveball_active
+    count_complete_value: 15
+    persist_state: true
+
+shot_groups:
+  airplane_ball_1_lock: airplane_lock_counter_1_counter_hit{hits==5},airplane_ball_1_2nd_catch
+  airplane_ball_2_lock: airplane_lock_counter_2_counter_hit{hits==10},airplane_ball_2_2nd_catch
+  airplane_ball_3_lock: airplane_lock_counter_3_counter_hit{hits==15},airplane_ball_3_2nd_catch
+
+shots:
+  airplane_lock_counter_1_counter_hit{hits==5}:
+    switch: s_captiveball
+    profile: 
+    show_tokens: l61
+  airplane_ball_1_2nd_catch:
+   switch: s_rightvuk
+  airplane_lock_counter_2_counter_hit{hits==10}:
+    switch: s_captiveball
+    profile: 
+    show_tokens: l61
+  airplane_ball_2_2nd_catch:
+   switch: s_rightvuk
+  airplane_lock_counter_2_counter_hit{hits==10}:
+    switch: s_captiveball
+    profile: 
+    show_tokens: l61
+  airplane_ball_3_2nd_catch:
+   switch: s_rightvuk
+
+
+slide_player:

@@ -43,7 +43,7 @@ event_player:
     - score_park_super_jackpot_3
   slide_super_jackpot_removed{current_player.shot_cp_super_jackpot_1 == 1 and current_player.shot_cp_super_jackpot_2 == 1 and current_player.shot_cp_super_jackpot_3 == 1}:
     - enable_super_jackpot_complete
-    - start_central_park_multiball
+    - central_park_multiball_ended
 
 multiballs: 
   central_park:
@@ -154,7 +154,7 @@ slide_player:
       action: play
       expire: 0s
  score_park_super_jackpot:
-     super_jackpot:
+    central_park_super_jackpot:
       action: play
       expire: 0s
 
@@ -163,6 +163,12 @@ widget_player:
     super_jackpot_lit:
       action: play
       expire: 0s
+  
+  score_park_super_jackpot:
+    central_park_super_jackpot_widget:
+      action: play
+      expire: 0s
+  
 
 
 variable_player:

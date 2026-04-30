@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://c51pwfk0qsfji"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_jp4c3"]
+[ext_resource type="VideoStream" uid="uid://dcuv7kk5lcn30" path="res://modes/qualify_airplane/slides/AirplaneMultiball.ogv" id="2_h7r63"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_wwfnb"]
+
+[node name="airplane mb" type="Control" unique_id=93336183]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_jp4c3")
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=1304133462]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+stream = ExtResource("2_h7r63")
+autoplay = true
+script = ExtResource("3_wwfnb")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"

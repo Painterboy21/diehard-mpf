@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://pb5l4cfhe8ha"]
 
 [ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_7dipa"]
-[ext_resource type="FontFile" uid="uid://8bwe3lenjji0" path="res://godot-media/fonts/DieHardVPX-Regular.ttf" id="2_7dipa"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="2_7dipa"]
 
 [sub_resource type="Animation" id="Animation_7dipa"]
 length = 0.001
@@ -70,14 +70,11 @@ offset_bottom = -942.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.050000012, 0.050000012, 1)
-theme_override_colors/font_shadow_color = Color(0.02, 0.02, 0.02, 0.9647059)
+theme_override_colors/font_shadow_color = Color(0.98234254, 0.9823423, 0.9823424, 0.9647059)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/line_spacing = 39
-theme_override_constants/paragraph_spacing = 57
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 14
-theme_override_constants/shadow_outline_size = 59
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_7dipa")
 theme_override_font_sizes/font_size = 100
 text = "SUPER JACKPOT LIT!!"
