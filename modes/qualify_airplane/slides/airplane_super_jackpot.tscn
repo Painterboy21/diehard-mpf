@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cmmcthfxfswyw"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_m71na"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="2_fno3o"]
+[ext_resource type="VideoStream" uid="uid://bxcncht4w6iry" path="res://modes/qualify_airplane/slides/AirplaneSuperJackpot.ogv" id="2_shvb6"]
+
+[node name="airplane super jackpot" type="Control" unique_id=1399614588]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_m71na")
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=1871765078]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+stream = ExtResource("2_shvb6")
+autoplay = true
+script = ExtResource("2_fno3o")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"

@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dcv78jqa127dh"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_h1nnn"]
+[ext_resource type="VideoStream" uid="uid://chu3uus7lo0qn" path="res://modes/qualify_airplane/slides/AirplaneBallLocked2.ogv" id="2_7ghr4"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_ieyov"]
+
+[node name="airplane ball 2 locked" type="Control" unique_id=774205122]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_h1nnn")
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=779336135]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+stream = ExtResource("2_7ghr4")
+autoplay = true
+script = ExtResource("3_ieyov")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
