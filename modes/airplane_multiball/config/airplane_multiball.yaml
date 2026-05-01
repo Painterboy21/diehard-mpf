@@ -1,18 +1,38 @@
 #config_version=6
 
 mode:
-  start_events: ball_started{current_player.airplane_mb_played==0}
+  start_events: start_airplane_multiball{current_player.airplane_mb_played==0}
   stop_events:
     - ball_ended
     - multiball_airplane_ended
-  priority: 120
+  priority: 150
 
+light_player:
+  mode_airplane_multiball_started:
+    GI:
+      color: ffb700
+    SPOTS:
+      color: 505050
+    SPOTS_BUMPER:
+      color: 969650
 
+shots:
+  airplane_light_1:
+    switch: s_captiveball
+    profile: profile_airplane_light_1
+    show_tokens:
+      lights: l52
 
 
 multiballs:
-  central_park:
+  airplane:
     start_events: mode_airplane_multiball_started
     ball_count: 3
     ball_count_type: total
     shoot_again: 30s
+
+
+variable_player:
+    airplane_mb_played:
+      int: 1
+      action: set

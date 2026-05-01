@@ -30,9 +30,9 @@ event_player:
     - airplane_enable_lock_counter
   airplane_ball_3_locked_complete:
     - airplane_ball_3_locked
-    - airplane_reset_locks
     - airplane_disable_lock_counter
-    - airplane_multiball_start
+  slide_airplane_mb_removed:
+   - start_airplane_multiball
 
 
 counters:
@@ -55,11 +55,11 @@ shots:
       lights: l62
     control_events:
       - events: lock_lit
-        state: 1
+        state: 0
       - events: airplane_reset_locks
-        state: 0
-      - events: airplane_multiball_start
-        state: 0
+        state: 1
+      - events: airplane_ball_3_locked_complete
+        state: 2
 
   airplane_lock:
     switch: s_captiveball
@@ -68,11 +68,11 @@ shots:
       lights: l61
     control_events:
       - events: lock_lit
-        state: 1
+        state: 0
       - events: airplane_reset_locks
-        state: 0
-      - events: airplane_multiball_start
-        state: 0
+        state: 1
+      - events: airplane_ball_3_locked_complete
+        state: 2
 
   airplane_lock_complete:
     switch: s_UrampUp001
@@ -125,6 +125,4 @@ variable_player:
     airplane_lock_lit:
       int: 0
       action: set
-    airplane_mb_played:
-      int: 1
-      action: set
+

@@ -86,7 +86,7 @@ config:
   - shot_profiles.yaml
   - switches.yaml
   - player_vars.yaml
-  #- shaker.yaml
+ # - shaker.yaml
 
 
 
@@ -195,6 +195,7 @@ machine_vars:
 modes:
   - attract
   - qualify_airplane
+  - airplane_multiball
   - qualify_ambush
   - ambush
   - base
