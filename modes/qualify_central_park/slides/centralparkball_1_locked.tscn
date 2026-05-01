@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ba1xuiw550na4"]
 
-[ext_resource type="VideoStream" uid="uid://dk0yfv73gvpoe" path="res://videos/centralpark/CentralParkBallLocked1.ogv" id="1_72qc4"]
+[ext_resource type="VideoStream" uid="uid://s3qvjv5ot50m" path="res://modes/qualify_central_park/slides/CentralParkBallLocked1.ogv" id="1_72qc4"]
 [ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_w43xb"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="2_w43xb"]
 

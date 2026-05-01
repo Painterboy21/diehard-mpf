@@ -1,7 +1,7 @@
 #config_version=6
 
 mode:
-  start_events: ball_started{current_player.central_park_played==0}multiball_nakatomi_ended
+  start_events: ball_started{current_player.central_park_played==0},multiball_nakatomi_ended
   stop_events: ball_ended,multiball_central_park_started,multiball_nakatomi_started
   priority: 200
 
@@ -34,6 +34,9 @@ counters:
     count_events: qualify_central_park_on_complete
     count_complete_value: 3
     persist_state: true
+    enable_events: mode_qualify_central_park_started
+    disable_events: multiball_central_park_started, ball_ended
+    events_when_complete: trigger_central_park_ball_locked
    
 show_player: 
   qualify_central_park_on_complete: 
