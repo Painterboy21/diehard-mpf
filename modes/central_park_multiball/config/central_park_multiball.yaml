@@ -1,113 +1,136 @@
 #config_version=6
 
 mode:
-  start_events: start_central_park_multiball
-  stop_events: ball_ended,multiball_central_park_ended
+  start_events: start_central_park_multiball{current_player.central_park_played==0}
+  stop_events:
+    - ball_ended
+    - multiball_central_park_ended
   priority: 120
+
 
 event_player:
   mode_qualify_central_park_stopped:
     - wire_ramp_exit_open
     - nakatomi_entrance_lock_close
-  player_shot_cp_bullets_advance:
-    - wire_ramp_exit_closed
-  player_shot_single_bullet_advance:
-    - wire_ramp_exit_closed
+
+  mode_central_park_multiball_started:
+    - wire_ramp_exit_open
+
   slide_base_active:
     - wire_ramp_exit_open
+
+  left_orbit_hit:
+    - wire_ramp_exit_closed
+
+  right_orbit_hit:
+    - wire_ramp_exit_closed
+
+  s_mid_orbit_active:
+    - wire_ramp_exit_closed
+
+  s_air_duct_active:
+    - wire_ramp_exit_closed
 
   cp_jackpot_1_off_hit{current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_jackpot
     - advance_cp_jackpot_1
+
   cp_jackpot_2_off_hit{current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_jackpot
     - advance_cp_jackpot_2
+
   cp_jackpot_3_off_hit{current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_jackpot
     - advance_cp_jackpot_3
+
   slide_jackpot_removed{current_player.shot_cp_jackpot_1 == 1 and current_player.shot_cp_jackpot_2 == 1 and current_player.shot_cp_jackpot_3 == 1}:
     - enable_park_super_jackpot
 
-
-  cp_jackpot_1_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_advance == 1}:
+  cp_jackpot_1_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_super_advance == 2}:
     - score_park_super_jackpot
     - score_park_super_jackpot_hit
     - score_park_super_jackpot_1
-  cp_jackpot_2_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_advance == 1}:
+
+  cp_jackpot_2_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_super_advance == 2}:
     - score_park_super_jackpot
     - score_park_super_jackpot_hit
     - score_park_super_jackpot_2
-  cp_jackpot_3_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_advance == 1}:
+
+  cp_jackpot_3_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_super_advance == 2}:
     - score_park_super_jackpot
     - score_park_super_jackpot_hit
     - score_park_super_jackpot_3
+
   slide_super_jackpot_removed{current_player.shot_cp_super_jackpot_1 == 1 and current_player.shot_cp_super_jackpot_2 == 1 and current_player.shot_cp_super_jackpot_3 == 1}:
     - enable_super_jackpot_complete
     - central_park_multiball_ended
 
-multiballs: 
+
+multiballs:
   central_park:
     start_events: mode_central_park_multiball_started
     ball_count: 3
     ball_count_type: total
     shoot_again: 30s
 
-light_player: 
-  mode_central_park_multiball_started: 
-    GI: 
+
+light_player:
+  mode_central_park_multiball_started:
+    GI:
       color: ffb700
     SPOTS:
       color: 505050
     SPOTS_BUMPER:
       color: 969650
 
+
 shots:
   cp_bullets_advance:
     profile: profile_cp_bullets_advance
-    show_tokens: 
+    show_tokens:
       lights: l20,l22,l23,l24
-    control_events: 
+    control_events:
       - events: score_park_jackpot
         state: 0
       - events: left_orbit_hit,right_orbit_hit,s_mid_orbit_active,s_air_duct_active
         state: 1
-      - events: enable_park_super_jackpot,score_park_super_jackpot
+      - events: enable_park_super_jackpot
         state: 2
 
-   
   cp_single_bullet_advance:
     switch: s_upper_pf_entrance
     profile: profile_cp_single_bullet_advance
     disable_events: enable_park_super_jackpot
-    show_tokens: 
+    show_tokens:
       lights: l21
       color: 00ff00
-    control_events: 
+    control_events:
       - events: left_orbit_hit,right_orbit_hit,s_mid_orbit_active,s_air_duct_active
         state: 1
       - events: score_park_jackpot
         state: 0
-  
+
   cp_single_bullet_super_advance:
     switch: s_upper_pf_entrance
     profile: profile_cp_single_bullet_advance
     enable_events: enable_park_super_jackpot
-    show_tokens: 
+    show_tokens:
       lights: l21
       color: ff0000
-    control_events: 
+    control_events:
+      - events: enable_park_super_jackpot
+        state: 0
       - events: left_orbit_hit,right_orbit_hit,s_mid_orbit_active,s_air_duct_active
         state: 2
-      - events: score_park_super_jackpot, enable_park_super_jackpot
+      - events: score_park_super_jackpot
         state: 0
-
 
   cp_jackpot_1:
     switch: s_TrPF1
     profile: profile_cp_jackpot
-    show_tokens: 
+    show_tokens:
       lights: l76
-    control_events: 
+    control_events:
       - events: mode_central_park_multiball_started
         state: 0
       - events: advance_cp_jackpot_1
@@ -120,7 +143,7 @@ shots:
   cp_jackpot_2:
     switch: s_TrPF2
     profile: profile_cp_jackpot
-    show_tokens: 
+    show_tokens:
       lights: l77
     control_events:
       - events: mode_central_park_multiball_started
@@ -131,14 +154,13 @@ shots:
         state: 2
       - events: score_park_super_jackpot_2
         state: 3
- 
 
   cp_jackpot_3:
     switch: s_TrPF3
     profile: profile_cp_jackpot
-    show_tokens: 
+    show_tokens:
       lights: l78
-    control_events: 
+    control_events:
       - events: mode_central_park_multiball_started
         state: 0
       - events: advance_cp_jackpot_3
@@ -148,55 +170,61 @@ shots:
       - events: score_park_super_jackpot_3
         state: 3
 
-slide_player: 
- score_park_jackpot: 
+
+slide_player:
+  score_park_jackpot:
     jackpot:
       action: play
       expire: 0s
- score_park_super_jackpot:
+
+  score_park_super_jackpot:
     central_park_super_jackpot:
       action: play
       expire: 0s
 
-widget_player: 
-  enable_park_super_jackpot{current_player.park_super_jackpot_available == 1}: 
+
+widget_player:
+  enable_park_super_jackpot{current_player.park_super_jackpot_available == 1}:
     super_jackpot_lit:
       action: play
       expire: 0s
-  
+
   score_park_super_jackpot:
     central_park_super_jackpot_widget:
       action: play
       expire: 0s
-  
 
 
 variable_player:
+  mode_central_park_multiball_started:
+    park_super_jackpot_available:
+      action: set
+      int: 0
+
   multiball_central_park_started:
     central_park_played:
       action: set
       int: 1
-  
+
   enable_park_super_jackpot:
     park_super_jackpot_available:
       action: set
-      int: 1 
-
-  #Normal Jackpots
-  score_park_jackpot:
-    score: 
-      action: add
-      int: 2000000
-    last_jackpot_value: 
-      action: set
-      int: 2000000
-  
-  #Super Jackpots
-  score_park_super_jackpot: 
-    score: 
-      action: add
-      int: 20000000
-    score_park_super_jackpot_hit:
-      action: set
       int: 1
 
+  score_park_jackpot:
+    score:
+      action: add
+      int: 2000000
+    last_jackpot_value:
+      action: set
+      int: 2000000
+
+  score_park_super_jackpot:
+    score:
+      action: add
+      int: 20000000
+
+  score_park_super_jackpot_hit:
+    score_park_super_jackpot_hit:
+      action: set
+      int: 

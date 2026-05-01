@@ -1,0 +1,18 @@
+#config_version=6
+
+mode:
+  start_events: ball_started{current_player.airplane_mb_played==0}
+  stop_events:
+    - ball_ended
+    - multiball_airplane_ended
+  priority: 120
+
+
+
+
+multiballs:
+  central_park:
+    start_events: mode_airplane_multiball_started
+    ball_count: 3
+    ball_count_type: total
+    shoot_again: 30s
