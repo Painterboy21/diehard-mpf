@@ -1,58 +1,116 @@
 #config_version=6
 
 mode:
-  start_events: ball_started
+  start_events: ball_started{current_player.airplane_mb_played==0}
   stop_events: ball_ended
   priority: 150
 
-event_player: 
+
+event_player:
+
+  mode_qualify_airplane_started:
+    - airplane_reset_locks
+    - airplane_enable_lock_counter
   counter_airplane_light_lock_hit{hits==5}:
-   - lock_lit
-   - airplane_lock_ready
-  counter_airplane_light_lock_hit{hits==10}:
-   - lock_lit
-  counter_airplane_light_lock_hit{hits==15}:
-   - lock_lit
-
-sequences:
-  airplane_ball_1_locked:
-    events:
-      - counter_airplane_light_lock_hit{hits==5}
-      - s_UrampUp001_active
-    events_when_complete: airplane_ball_1_locked
-
+    - lock_lit
+    - airplane_disable_lock_counter
+  s_UrampUp001_active{current_player.airplane_lock_lit==1 and current_player.airplane_virtual_locks==0}:
+    - airplane_ball_1_locked_complete
+  s_UrampUp001_active{current_player.airplane_lock_lit==1 and current_player.airplane_virtual_locks==1}:
+    - airplane_ball_2_locked_complete
+  s_UrampUp001_active{current_player.airplane_lock_lit==1 and current_player.airplane_virtual_locks==2}:
+    - airplane_ball_3_locked_complete
+  airplane_ball_1_locked_complete:
+    - airplane_ball_1_locked
+    - airplane_reset_locks
+    - airplane_enable_lock_counter
+  airplane_ball_2_locked_complete:
+    - airplane_ball_2_locked
+    - airplane_reset_locks
+    - airplane_enable_lock_counter
+  airplane_ball_3_locked_complete:
+    - airplane_ball_3_locked
+    - airplane_reset_locks
+    - airplane_disable_lock_counter
+    - airplane_multiball_start
 
 
 counters:
   airplane_light_lock:
     count_events: s_captiveball_active
-    count_complete_value: 15
-    persist_state: true
+    count_complete_value: 5
+    enable_events: airplane_enable_lock_counter
+    disable_events:
+      - airplane_disable_lock_counter
+      - airplane_multiball_start
+    reset_events: airplane_reset_locks
+    persist_state: false
 
 
 shots:
   airplane_lock_1:
     switch: s_captiveball
     profile: profile_airplane_light_off
-    show_tokens: 
+    show_tokens:
       lights: l62
-    control_events: 
+    control_events:
       - events: lock_lit
         state: 1
-      - events: 
+      - events: airplane_reset_locks
+        state: 0
+      - events: airplane_multiball_start
         state: 0
 
   airplane_lock:
     switch: s_captiveball
     profile: profile_airplane_lock_lit
-    show_tokens: 
+    show_tokens:
       lights: l61
-    control_events: 
+    control_events:
       - events: lock_lit
         state: 1
-      - events: 
+      - events: airplane_reset_locks
+        state: 0
+      - events: airplane_multiball_start
         state: 0
 
   airplane_lock_complete:
     switch: s_UrampUp001
 
+
+variable_player:
+  mode_started:
+    airplane_lock_lit:
+      int: 0
+      action: set
+    airplane_virtual_locks:
+      int: 0
+      action: set
+  counter_airplane_light_lock_hit{hits==5}:
+    airplane_lock_lit:
+      int: 1
+      action: set
+  airplane_ball_1_locked_complete:
+    airplane_virtual_locks:
+      int: 1
+      action: add
+    airplane_lock_lit:
+      int: 0
+      action: set
+  airplane_ball_2_locked_complete:
+    airplane_virtual_locks:
+      int: 1
+      action: add
+    airplane_lock_lit:
+      int: 0
+      action: set
+  airplane_ball_3_locked_complete:
+    airplane_virtual_locks:
+      int: 1
+      action: add
+    airplane_lock_lit:
+      int: 0
+      action: set
+    airplane_mb_played:
+      int: 1
+      action: set

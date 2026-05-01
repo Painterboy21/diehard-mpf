@@ -7,12 +7,6 @@ player_vars:
   tower_lock:
     initial_value: 0
     value_type: int
-  airplane_mb_available:
-    initial_value: 1
-    value_type: int
-  airplane_lock_lit:
-    initial_value: 0
-    value_type: int
   modes_complete:
     initial_value: 0
     value_type: int
@@ -130,5 +124,14 @@ player_vars:
     initial_value: 0
     value_type: int
   park_super_jackpot_available:
+    initial_value: 0
+    value_type: int
+  airplane_virtual_locks:
+    initial_value: 0
+    value_type: int
+  airplane_lock_lit:
+    initial_value: 0
+    value_type: int
+  airplane_mb_played:
     initial_value: 0
     value_type: int

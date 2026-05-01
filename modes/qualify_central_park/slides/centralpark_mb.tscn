@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bb7oaaa6gxbgb"]
 
 [ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_lb4lo"]
-[ext_resource type="VideoStream" uid="uid://bhtq3u0d1v7ae" path="res://videos/centralpark/CentralParkMultiball.ogv" id="2_uhngn"]
+[ext_resource type="VideoStream" uid="uid://2fvtjjeua0pa" path="res://modes/qualify_central_park/slides/CentralParkMultiball.ogv" id="2_uhngn"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_yq21y"]
 
 [node name="centralparkmultiball" type="Control" unique_id=758029554]
