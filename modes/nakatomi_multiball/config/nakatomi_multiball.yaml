@@ -31,7 +31,7 @@ event_player:
   ball_hold_nakatomi_super_hold_held_ball:
     - jackpot_20mil
     - nakatomi_super_jackpot_collected
-  slide_super_jackpot_removed{device.ball_holds.nakatomi_super_hold.balls_held==2}:
+  slide_nakatomi_super_jackpot_removed{device.ball_holds.nakatomi_super_hold.balls_held==2}:
     - nakatomi_lock_close
     - nakatomi_entrance_lock_close
     - nakatomi_disable_super_jackpot
@@ -102,10 +102,21 @@ slide_player:
       action: play
       expire: 0s
   nakatomi_super_jackpot_collected: 
-    super_jackpot:
+    nakatomi_super_jackpot:
       action: play
       expire: 0s
 
+widget_player:
+  nakatomi_enable_super_jackpot:
+    super_jackpot_lit:
+      action: play
+  nakatomi_disable_super_jackpot:
+    super_jackpot_lit:
+      action: remove
+  nakatomi_super_jackpot_collected:
+    nakatomi_super_jackpot_widget:
+      action: play
+      expire: 0s
 
 show_player: 
   nakatomi_super_jackpot_collected: 
