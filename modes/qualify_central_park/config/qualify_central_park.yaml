@@ -40,7 +40,7 @@ counters:
    
 show_player: 
   qualify_central_park_on_complete: 
-    nakatomi_ball_locked: 
+    park_mb_ball_locked: 
       key: key_central_park_ball_locked
       loops: 0
       events_when_completed: trigger_central_park_ball_locked
