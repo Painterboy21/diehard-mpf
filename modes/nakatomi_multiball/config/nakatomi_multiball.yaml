@@ -107,6 +107,39 @@ slide_player:
       expire: 0s
 
 
+show_player: 
+  nakatomi_super_jackpot_collected: 
+    nakatomi_super_jackpot: 
+      key: nakatomi_super_jackpot_collected
+      loops: 0
+      speed: 2
+  bullet_left_orbit_nakatomi_on_hit: 
+    nakatomi_jackpot_left_orbit: 
+      key: bullet_left_orbit_nakatomi_hit
+      loops: 0
+      speed: 2
+  bullet_upper_pf_nakatomi_on_hit: 
+    nakatomi_jackpot_park: 
+      key: bullet_upper_pf_nakatomi_on_hit
+      loops: 0
+      speed: 2
+  bullet_air_duct_nakatomi_on_hit: 
+    nakatomi_jackpot_vent: 
+      key: bullet_air_duct_nakatomi_on_hit
+      loops: 0
+      speed: 2
+  bullet_mid_orbit_nakatomi_on_hit:
+    nakatomi_jackpot_mid_orbit: 
+      key: bullet_mid_orbit_nakatomi_on_hit
+      loops: 0
+      speed: 2
+  bullet_right_orbit_nakatomi_on_hit:
+    nakatomi_jackpot_right_orbit: 
+      key: bullet_right_orbit_nakatomi_on_hit
+      loops: 0
+      speed: 2
+  
+
 variable_player: 
   mode_nakatomi_multiball_started: 
     played_nakatomi_multiball: 
