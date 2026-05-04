@@ -33,7 +33,6 @@ event_player:
     - nakatomi_super_jackpot_collected
     - nakatomi_entrance_lock_close
   slide_nakatomi_super_jackpot_removed{device.ball_holds.nakatomi_super_hold.balls_held==2}:
-    - nakatomi_entrance_lock_close
     - nakatomi_disable_super_jackpot
   multiball_nakatomi_ended.1:
     - nakatomi_lock_close

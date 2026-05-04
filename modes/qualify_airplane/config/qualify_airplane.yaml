@@ -1,7 +1,7 @@
 #config_version=6
 
 mode:
-  start_events: ball_started{current_player.airplane_mb_played==0}multiball_nakatomi_ended,multiball_central_park_ended,ambush_ended
+  start_events: ball_started{current_player.airplane_mb_played==0},multiball_nakatomi_ended,multiball_central_park_ended,ambush_ended
   stop_events: ball_ended,multiball_nakatomi_started,multiball_central_park_started,ambush_started
   priority: 150
 
@@ -38,6 +38,7 @@ event_player:
   airplane_ball_3_locked_complete:
     - airplane_ball_3_locked
     - airplane_disable_lock_counter
+    - nakatomi_entrance_lock_close
   slide_airplane_mb_removed:
    - start_airplane_multiball
 
