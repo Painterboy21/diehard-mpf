@@ -188,7 +188,6 @@ variable_player:
   airplane_super_jackpot_available:
       int: 1
       action: set
-      
   airplane_left_orbit_jackpot_hit:
     score:
       action: add
