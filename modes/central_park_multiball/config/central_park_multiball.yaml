@@ -31,15 +31,15 @@ event_player:
   s_air_duct_active:
     - wire_ramp_exit_closed
 
-  cp_jackpot_1_off_hit{current_player.shot_cp_single_bullet_advance == 1}:
+  cp_jackpot_1_off_hit{current_player.park_super_jackpot_available == 0 and current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_jackpot
     - advance_cp_jackpot_1
 
-  cp_jackpot_2_off_hit{current_player.shot_cp_single_bullet_advance == 1}:
+  cp_jackpot_2_off_hit{current_player.park_super_jackpot_available == 0 and current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_jackpot
     - advance_cp_jackpot_2
 
-  cp_jackpot_3_off_hit{current_player.shot_cp_single_bullet_advance == 1}:
+  cp_jackpot_3_off_hit{current_player.park_super_jackpot_available == 0 and current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_jackpot
     - advance_cp_jackpot_3
 
@@ -50,20 +50,25 @@ event_player:
     - score_park_super_jackpot
     - score_park_super_jackpot_hit
     - score_park_super_jackpot_1
+    - check_restart_cp_jackpots
 
   cp_jackpot_2_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_super_advance == 2}:
     - score_park_super_jackpot
     - score_park_super_jackpot_hit
     - score_park_super_jackpot_2
+    - check_restart_cp_jackpots
 
   cp_jackpot_3_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_super_advance == 2}:
     - score_park_super_jackpot
     - score_park_super_jackpot_hit
     - score_park_super_jackpot_3
+    - check_restart_cp_jackpots
 
-  slide_super_jackpot_removed{current_player.shot_cp_super_jackpot_1 == 1 and current_player.shot_cp_super_jackpot_2 == 1 and current_player.shot_cp_super_jackpot_3 == 1}:
-    - enable_super_jackpot_complete
-    - central_park_multiball_ended
+  check_restart_cp_jackpots{current_player.cp_super_jackpots_collected >= 3}:
+    - restart_cp_jackpots
+
+  restart_cp_jackpots:
+    - remove_cp_super_jackpot_lit|100ms
 
 
 multiballs:
@@ -94,17 +99,24 @@ shots:
         state: 0
       - events: left_orbit_hit,right_orbit_hit,s_mid_orbit_active,s_air_duct_active
         state: 1
-      - events: enable_park_super_jackpot
+      - events: score_park_super_jackpot_hit
         state: 2
+      - events: restart_cp_jackpots
+        state: 0
 
   cp_single_bullet_advance:
     switch: s_upper_pf_entrance
     profile: profile_cp_single_bullet_advance
+    enable_events:
+      - mode_central_park_multiball_started
+      - restart_cp_jackpots
     disable_events: enable_park_super_jackpot
     show_tokens:
       lights: l21
       color: 00ff00
     control_events:
+      - events: restart_cp_jackpots
+        state: 0
       - events: left_orbit_hit,right_orbit_hit,s_mid_orbit_active,s_air_duct_active
         state: 1
       - events: score_park_jackpot
@@ -114,6 +126,7 @@ shots:
     switch: s_upper_pf_entrance
     profile: profile_cp_single_bullet_advance
     enable_events: enable_park_super_jackpot
+    disable_events: restart_cp_jackpots
     show_tokens:
       lights: l21
       color: ff0000
@@ -124,6 +137,8 @@ shots:
         state: 2
       - events: score_park_super_jackpot
         state: 0
+      - events: restart_cp_jackpots
+        state: 0
 
   cp_jackpot_1:
     switch: s_TrPF1
@@ -132,6 +147,8 @@ shots:
       lights: l76
     control_events:
       - events: mode_central_park_multiball_started
+        state: 0
+      - events: restart_cp_jackpots
         state: 0
       - events: advance_cp_jackpot_1
         state: 1
@@ -148,6 +165,8 @@ shots:
     control_events:
       - events: mode_central_park_multiball_started
         state: 0
+      - events: restart_cp_jackpots
+        state: 0
       - events: advance_cp_jackpot_2
         state: 1
       - events: enable_park_super_jackpot
@@ -162,6 +181,8 @@ shots:
       lights: l78
     control_events:
       - events: mode_central_park_multiball_started
+        state: 0
+      - events: restart_cp_jackpots
         state: 0
       - events: advance_cp_jackpot_3
         state: 1
@@ -187,7 +208,13 @@ widget_player:
   enable_park_super_jackpot{current_player.park_super_jackpot_available == 1}:
     super_jackpot_lit:
       action: play
+      key: cp_super_jackpot_lit
       expire: 0s
+
+  remove_cp_super_jackpot_lit:
+    super_jackpot_lit:
+      action: remove
+      key: cp_super_jackpot_lit
 
   score_park_super_jackpot:
     central_park_super_jackpot_widget:
@@ -200,6 +227,9 @@ variable_player:
     park_super_jackpot_available:
       action: set
       int: 0
+    cp_super_jackpots_collected:
+      action: set
+      int: 0
 
   multiball_central_park_started:
     central_park_played:
@@ -210,6 +240,22 @@ variable_player:
     park_super_jackpot_available:
       action: set
       int: 1
+    cp_super_jackpots_collected:
+      action: set
+      int: 0
+
+  score_park_super_jackpot_hit:
+    cp_super_jackpots_collected:
+      action: add
+      int: 1
+
+  restart_cp_jackpots:
+    park_super_jackpot_available:
+      action: set
+      int: 0
+    cp_super_jackpots_collected:
+      action: set
+      int: 0
 
   score_park_jackpot:
     score:
@@ -220,7 +266,6 @@ variable_player:
       int: 2000000
 
   score_park_super_jackpot:
-    score_park_super_jackpot_hit:
+    score:
       action: add
       int: 20000000
-
