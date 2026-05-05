@@ -31,9 +31,10 @@ event_player:
   ball_hold_nakatomi_super_hold_held_ball:
     - jackpot_20mil
     - nakatomi_super_jackpot_collected
+    - nakatomi_entrance_lock_close
   slide_nakatomi_super_jackpot_removed{device.ball_holds.nakatomi_super_hold.balls_held==2}:
     - nakatomi_disable_super_jackpot
-    - nakatomi_entrance_lock_close
+    - nakatomi_lock_close
   multiball_nakatomi_ended.1:
     - nakatomi_lock_close
     - nakatomi_entrance_lock_close
@@ -88,7 +89,7 @@ shots:
     profile: profile_off_then_flash
     show_tokens: 
       lights: l7
-      color: 0000ff
+      color: 00ff00
     control_events: 
       - events: nakatomi_enable_super_jackpot
         state: 1
