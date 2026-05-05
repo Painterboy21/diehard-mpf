@@ -2,7 +2,7 @@
 
 mode:
   start_events: ball_started{current_player.played_nakatomi_multiball==0},multiball_central_park_ended,multiball_airplane_ended,ambush_ended
-  stop_events: ball_ended, multiball_nakatomi_started,multiball_central_park_started,multiball_central_park_started,multiball_airplane_started,ambush_started,airplane_ball_3_locked_complete
+  stop_events: ball_ended, multiball_nakatomi_started,multiball_central_park_started,multiball_central_park_started,multiball_airplane_started,ambush_started
   priority: 120
 
 event_player: 

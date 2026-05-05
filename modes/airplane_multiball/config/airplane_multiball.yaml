@@ -8,7 +8,7 @@ mode:
   priority: 150
 
 light_player:
-  mode_central_park_multiball_started:
+  mode_airplane_multiball_started:
     GI:
       color: ffb700
     SPOTS:
@@ -16,216 +16,23 @@ light_player:
     SPOTS_BUMPER:
       color: 969650
 
-event_player:
-  mode_airplane_multiball_started:
-    - airplane_start_multiball
-  multiball_airplane_started:
-    - airplane_enable_captive_for_jackpot
-
-  airplane_left_orbit_jackpot_hit{device.counters.airplane_jackpot_counter.value<5}: airplane_enable_captive_for_jackpot
-  airplane_right_orbit_jackpot_hit{device.counters.airplane_jackpot_counter.value<5}: airplane_enable_captive_for_jackpot
-  airplane_mid_orbit_jackpot_hit{device.counters.airplane_jackpot_counter.value<5}: airplane_enable_captive_for_jackpot
-  airplane_air_duct_jackpot_hit{device.counters.airplane_jackpot_counter.value<5}: airplane_enable_captive_for_jackpot
-  airplane_upper_pf_jackpot_hit{device.counters.airplane_jackpot_counter.value<5}: airplane_enable_captive_for_jackpot
-
-  airplane_super_jackpot_ready:
-    - airplane_disable_jackpots
-    - airplane_light_super_jackpot
-  airplane_super_jackpot_hit:
-    - airplane_reset_for_next_round
-  airplane_reset_for_next_round:
-    - reset_airplane_jackpot_counter
-    - airplane_disable_super_jackpot
-    - airplane_enable_captive_for_jackpot
-
-  airplane_disable_super_jackpot:
-    - disable_airplane_super_jackpot
-
-random_event_player:
-  airplane_captive_jackpot_select_hit:
-    force_different: true
-    scope: player
-    events:
-      - airplane_light_left_orbit_jackpot
-      - airplane_light_right_orbit_jackpot
-      - airplane_light_mid_orbit_jackpot
-      - airplane_light_air_duct_jackpot
-      - airplane_light_upper_pf_jackpot
-
 shots:
-  airplane_captive_jackpot_select:
+  airplane_light_1:
     switch: s_captiveball
     profile: profile_airplane_light_1
-    enable_events:
-      - airplane_enable_captive_for_jackpot
-    disable_events:
-      - airplane_captive_jackpot_select_hit
-      - airplane_super_jackpot_ready
     show_tokens:
       lights: l52
 
-  airplane_left_orbit_jackpot:
-    switch: s_left_orbit
-    profile: airplane_jackpot_profile
-    enable_events: airplane_light_left_orbit_jackpot
-    disable_events:
-      - airplane_left_orbit_jackpot_hit
-      - airplane_disable_jackpots
-    show_tokens:
-      lights: l20
-
-  airplane_right_orbit_jackpot:
-    switch: s_right_orbit
-    profile: airplane_jackpot_profile
-    enable_events: airplane_light_right_orbit_jackpot
-    disable_events:
-      - airplane_right_orbit_jackpot_hit
-      - airplane_disable_jackpots
-    show_tokens:
-      lights: l22
-
-  airplane_mid_orbit_jackpot:
-    switch: s_mid_orbit
-    profile: airplane_jackpot_profile
-    enable_events: airplane_light_mid_orbit_jackpot
-    disable_events:
-      - airplane_mid_orbit_jackpot_hit
-      - airplane_disable_jackpots
-    show_tokens:
-      lights: l23
-
-  airplane_air_duct_jackpot:
-    switch: s_air_duct
-    profile: airplane_jackpot_profile
-    enable_events: airplane_light_air_duct_jackpot
-    disable_events:
-      - airplane_air_duct_jackpot_hit
-      - airplane_disable_jackpots
-    show_tokens:
-      lights: l24
-
-  airplane_upper_pf_jackpot:
-    switch: s_upper_pf_entrance
-    profile: airplane_jackpot_profile
-    enable_events: airplane_light_upper_pf_jackpot
-    disable_events:
-      - airplane_upper_pf_jackpot_hit
-      - airplane_disable_jackpots
-    show_tokens:
-      lights: l21
-
-  airplane_super_jackpot:
-    switch: s_captiveball
-    profile: airplane_super_jackpot_profile
-    enable_events: airplane_light_super_jackpot
-    disable_events:
-      - airplane_super_jackpot_hit
-      - disable_airplane_super_jackpot
-    show_tokens:
-      lights: l52
-
-counters:
-  airplane_jackpot_counter:
-    count_events:
-      - airplane_left_orbit_jackpot_hit
-      - airplane_right_orbit_jackpot_hit
-      - airplane_mid_orbit_jackpot_hit
-      - airplane_air_duct_jackpot_hit
-      - airplane_upper_pf_jackpot_hit
-    starting_count: 0
-    count_complete_value: 5
-    events_when_complete: airplane_super_jackpot_ready
-    reset_events:
-      - multiball_airplane_started
-      - reset_airplane_jackpot_counter
 
 multiballs:
   airplane:
-    start_events: airplane_start_multiball
+    start_events: mode_airplane_multiball_started
     ball_count: 3
     ball_count_type: total
     shoot_again: 30s
 
-widget_player:
-  airplane_light_super_jackpot:
-    super_jackpot_lit:
-      action: play
-  airplane_disable_super_jackpot:
-    super_jackpot_lit:
-      action: remove
-
-slide_player:
-  airplane_left_orbit_jackpot_hit:
-    jackpot:
-      action: play
-      expire: 0s
-  airplane_right_orbit_jackpot_hit:
-    jackpot:
-      action: play
-      expire: 0s
-  airplane_mid_orbit_jackpot_hit:
-    jackpot:
-      action: play
-      expire: 0s
-  airplane_air_duct_jackpot_hit:
-    jackpot:
-      action: play
-      expire: 0s
-  airplane_upper_pf_jackpot_hit:
-    jackpot:
-      action: play
-      expire: 0s
-  airplane_super_jackpot_hit:
-    super_jackpot:
-      action: play
-      expire: 0s
 
 variable_player:
-  airplane_start_multiball:
     airplane_mb_played:
       int: 1
       action: set
-  airplane_super_jackpot_available:
-      int: 1
-      action: set
-  airplane_left_orbit_jackpot_hit:
-    score:
-      action: add
-      int: 2000000
-    last_jackpot_value:
-      action: set
-      int: 2000000
-  airplane_right_orbit_jackpot_hit:
-    score:
-      action: add
-      int: 2000000
-    last_jackpot_value:
-      action: set
-      int: 2000000
-  airplane_mid_orbit_jackpot_hit:
-    score:
-      action: add
-      int: 2000000
-    last_jackpot_value:
-      action: set
-      int: 2000000
-  airplane_air_duct_jackpot_hit:
-    score:
-      action: add
-      int: 2000000
-    last_jackpot_value:
-      action: set
-      int: 2000000
-  airplane_upper_pf_jackpot_hit:
-    score:
-      action: add
-      int: 2000000
-    last_jackpot_value:
-      action: set
-      int: 2000000
-
-  airplane_super_jackpot_hit:
-    score:
-      action: add
-      int: 20000000
-

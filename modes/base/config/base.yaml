@@ -58,7 +58,6 @@ light_player:
       color: 969696
     SPOTS_BUMPER:
       color: 969670
-
   nakatomi_super_jackpot_collected: 
     l57: 
       color: 00ff00
@@ -269,10 +268,7 @@ slide_player:
     central_park_failed:
       action: play
       expire: 0s
-  multiball_nakatomi_ended{current_player.nakatomi_super_jackpot_collected==0}:
-    nakatomi_mb_failed:
-      action: play
-      expire: 0s
+
 
 sound_player: 
   gameplay_music_1: 
