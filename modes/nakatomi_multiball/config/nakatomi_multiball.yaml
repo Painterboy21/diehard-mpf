@@ -102,10 +102,21 @@ slide_player:
       action: play
       expire: 0s
   nakatomi_super_jackpot_collected: 
-    super_jackpot:
+    nakatomi_super_jackpot:
       action: play
       expire: 0s
 
+widget_player:
+  nakatomi_enable_super_jackpot:
+    super_jackpot_lit:
+      action: play
+  nakatomi_disable_super_jackpot:
+    super_jackpot_lit:
+      action: remove
+  nakatomi_super_jackpot_collected:
+    nakatomi_super_jackpot_widget:
+      action: play
+      expire: 0s
 
 show_player: 
   nakatomi_super_jackpot_collected: 
