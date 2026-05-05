@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bhexc7pxnncsu"]
 
 [ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_m1p16"]
-[ext_resource type="VideoStream" uid="uid://cf8ftysro3coq" path="res://modes/qualify_nakatomi/NakatomiBall Locked1.ogv" id="2_m1p16"]
+[ext_resource type="VideoStream" uid="uid://bbaya65taq6ic" path="res://modes/qualify_nakatomi/slides/ball_1_locked.ogv" id="2_m1p16"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_ofwfp"]
 
 [node name="ballOneLocked" type="Control" unique_id=1817163035]
