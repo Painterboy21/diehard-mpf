@@ -135,4 +135,3 @@ player_vars:
   airplane_mb_played:
     initial_value: 0
     value_type: int
-
