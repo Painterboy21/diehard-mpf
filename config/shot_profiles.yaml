@@ -251,23 +251,23 @@ shot_profiles:
        loops: -1
        speed: 4
        sync_ms: 0
-       show_tokens: 
+       show_tokens:
          color: 00ff00
      - name: super
        show: flash_color
        loops: -1
        speed: 4
        sync_ms: 0
-       show_tokens: 
+       show_tokens:
          color: ff0000
      - name: superhit
-       show: led_color
+       show: flash_color_on         
        loops: -1
        speed: 4
        sync_ms: 0
-       show_tokens: 
+       show_tokens:
          color: ff0000
-  profile_airplane_lock_lit:
+  profile_airplane_lock_lit: 
     advance_on_hit: False
     states:
      - name: lock_lit
@@ -316,7 +316,37 @@ shot_profiles:
        speed: 4
        sync_ms: 0
        show_tokens: 
-         color: 00ff00
+         color: F5D327
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
+  airplane_jackpot_profile:
+    advance_on_hit: False
+    states:
+     - name: on
+       show: flash_color
+       loops: -1
+       speed: 4
+       sync_ms: 0
+       show_tokens: 
+         color: ffffff
+     - name: off
+       show: off
+       loops: -1
+       speed: 1
+       sync_ms: 0
+  airplane_super_jackpot_profile:
+    advance_on_hit: False
+    states:
+     - name: on
+       show: flash_color
+       loops: -1
+       speed: 4
+       sync_ms: 0
+       show_tokens: 
+         color: ff0000
      - name: off
        show: off
        loops: -1
