@@ -270,7 +270,29 @@ variable_player:
       action: set
       int: 2000000
 
-  score_park_super_jackpot:
+  score_park_super_jackpot_1:
     score:
       action: add
+      int: 10000000
+
+    last_jackpot_value:
+      action: set
+      int: 10000000
+
+  score_park_super_jackpot_2:
+    score:
+      action: add
+      int: 15000000
+
+    last_jackpot_value:
+      action: set
+      int: 15000000
+
+  score_park_super_jackpot_3:
+    score:
+      action: add
+      int: 20000000
+
+    last_jackpot_value:
+      action: set
       int: 20000000
