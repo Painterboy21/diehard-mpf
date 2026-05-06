@@ -48,4 +48,4 @@ variable_type = 1
 variable_name = "ticks"
 comma_separate = true
 min_digits = 2
-update_event = "timer_cp_super_jackpot_timer_tick"
+update_event = "timer_super_jackpot_timer_tick"
