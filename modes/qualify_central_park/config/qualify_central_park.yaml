@@ -6,7 +6,7 @@ mode:
   priority: 200
 
 ball_saves:
-  airplane_multiball_save:
+  central_park_multiball_save:
     active_time: 8s           
     hurry_up_time: 4s                
     enable_events: counter_central_park_multiball_counter_hit{hits==3}
