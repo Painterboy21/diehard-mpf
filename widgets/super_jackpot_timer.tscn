@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://bimhn5e4m7rhi"]
+
+[ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_inws7"]
+[ext_resource type="Texture2D" uid="uid://cfxyj8151nfrt" path="res://godot-media/images/PoliceBadge.png" id="2_arcq3"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="3_68u5k"]
+[ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="4_hy3c6"]
+
+[node name="super jackpot timer" type="Control" unique_id=1489342586]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_inws7")
+
+[node name="PoliceBadge" type="Sprite2D" parent="." unique_id=1686997108]
+position = Vector2(201, 510)
+scale = Vector2(1.1784452, 1.2106742)
+texture = ExtResource("2_arcq3")
+
+[node name="Sprite2D" type="Sprite2D" parent="PoliceBadge" unique_id=1970610468]
+position = Vector2(-1484.1589, -406.38513)
+scale = Vector2(0.8485757, 0.825986)
+
+[node name="MPFVariable" type="Label" parent="PoliceBadge/Sprite2D" unique_id=1864572763]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 1700.5
+offset_top = 391.0001
+offset_right = 1805.5
+offset_bottom = 511.0001
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.029999971, 0.029999971, 1)
+theme_override_colors/font_outline_color = Color(0.962076, 0.9481818, 0.99228555, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 6
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 16
+theme_override_fonts/font = ExtResource("3_68u5k")
+theme_override_font_sizes/font_size = 98
+text = "00"
+justification_flags = 161
+script = ExtResource("4_hy3c6")
+variable_type = 1
+variable_name = "ticks"
+comma_separate = true
+min_digits = 2
+update_event = "timer_cp_super_jackpot_timer_tick"
