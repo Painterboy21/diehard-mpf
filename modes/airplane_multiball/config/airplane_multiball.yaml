@@ -1,6 +1,5 @@
 #config_version=6
 
-#config_version=6
 
 mode:
   start_events: start_airplane_multiball{current_player.airplane_mb_played==0}

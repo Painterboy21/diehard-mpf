@@ -6,8 +6,16 @@ mode:
   priority: 150
 
 
-event_player:
+ball_saves:
+  airplane_save:
+    active_time: 8s           
+    hurry_up_time: 4s                
+    enable_events: airplane_ball_3_locked_complete
+    disable_events: start_airplane_multiball
+    auto_launch: true
+    balls_to_save: -1
 
+event_player:
   mode_qualify_airplane_started:
     - airplane_reset_locks
     - airplane_enable_lock_counter
@@ -48,6 +56,16 @@ counters:
 
 
 shots:
+  airplane_save:
+    profile: shoot_again
+    show_tokens: 
+      color: ff0000
+    enable_events: airplane_ball_3_locked_complete
+    disable_events: start_airplane_multiball
+    control_events: 
+      - events: qualify_airplane_on_complete
+        state: 1
+
   airplane_lock_1:
     switch: s_captiveball
     profile: profile_airplane_light_off
