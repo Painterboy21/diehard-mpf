@@ -22,8 +22,9 @@ ball_holds:
     release_all_events: tilt, nakatomi_disable_super_jackpot
 
 event_player:
-  nakatomi_jackpots_on_hit:
+  nakatomi_jackpots_on_hit.1:
     - jackpot_2mil
+    - nakatomi_jackpot_collected
   nakatomi_jackpots_off_complete:
     - nakatomi_enable_super_jackpot
     - nakatomi_lock_open
@@ -97,7 +98,7 @@ shots:
         state: 0
 
 slide_player: 
-  nakatomi_jackpots_on_hit: 
+  nakatomi_jackpot_collected: 
     jackpot:
       action: play
       expire: 0s
