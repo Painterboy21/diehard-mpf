@@ -208,8 +208,14 @@ widget_player:
   enable_park_super_jackpot:
     super_jackpot_lit:
       action: play
+      slide: base
       key: cp_super_jackpot_lit
       expire: 0s
+  remove_cp_super_jackpot_lit:
+    super_jackpot_lit:
+        action: remove
+        slide: base
+        key: cp_super_jackpot_lit
 
  
 
