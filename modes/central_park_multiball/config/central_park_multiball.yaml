@@ -45,6 +45,7 @@ event_player:
 
   slide_jackpot_removed{current_player.shot_cp_jackpot_1 == 1 and current_player.shot_cp_jackpot_2 == 1 and current_player.shot_cp_jackpot_3 == 1}:
     - enable_park_super_jackpot
+    - cp_bullets_advance_super_red|100ms
 
   cp_jackpot_1_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_super_advance == 2}:
     - score_park_super_jackpot
@@ -103,6 +104,8 @@ shots:
         state: 2
       - events: restart_cp_jackpots
         state: 0
+      - events: cp_bullets_advance_super_red
+        state: 2
 
   cp_single_bullet_advance:
     switch: s_upper_pf_entrance
@@ -139,6 +142,7 @@ shots:
         state: 0
       - events: restart_cp_jackpots
         state: 0
+
 
   cp_jackpot_1:
     switch: s_TrPF1
@@ -216,8 +220,6 @@ widget_player:
         action: remove
         slide: base
         key: cp_super_jackpot_lit
-
- 
 
   score_park_super_jackpot:
     central_park_super_jackpot_widget:
