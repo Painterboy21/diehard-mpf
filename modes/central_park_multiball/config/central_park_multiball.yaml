@@ -205,16 +205,13 @@ slide_player:
 
 
 widget_player:
-  enable_park_super_jackpot{current_player.park_super_jackpot_available == 1}:
+  enable_park_super_jackpot:
     super_jackpot_lit:
       action: play
       key: cp_super_jackpot_lit
       expire: 0s
 
-  remove_cp_super_jackpot_lit:
-    super_jackpot_lit:
-      action: remove
-      key: cp_super_jackpot_lit
+ 
 
   score_park_super_jackpot:
     central_park_super_jackpot_widget:
