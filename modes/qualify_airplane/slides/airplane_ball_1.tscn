@@ -21,4 +21,5 @@ stream = ExtResource("2_hgs1t")
 autoplay = true
 script = ExtResource("3_otyj4")
 end_behavior = 1
+preview_in_editor = true
 metadata/_custom_type_script = "uid://bov7mrgxslshq"

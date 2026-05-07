@@ -49,6 +49,19 @@ event_player:
   s_actionbtn_active:
     - s_fire_active
 
+  multiball_central_park_started:
+    - stop_gameplay_music
+  multiball_airplane_started:
+    - stop_gameplay_music
+  multiball_nakatomi_started:
+    - stop_gameplay_music
+  multiball_central_park_ended:
+    - restart_gameplay_music
+  multiball_airplane_ended:
+    - restart_gameplay_music
+  multiball_nakatomi_ended:
+    - restart_gameplay_music
+
 
 light_player: 
   mode_base_started: 
@@ -83,16 +96,24 @@ light_player:
     l59: 
       color: 00ff00
 
-
-random_event_player: 
-  mode_base_started: 
+random_event_player:
+  mode_base_started:
     events:
       gameplay_music_1: 1
       gameplay_music_2: 1
       gameplay_music_3: 1
       gameplay_music_4: 1
     scope: player
-  SpinnerLeft_active: 
+
+  restart_gameplay_music:
+    events:
+      gameplay_music_1: 1
+      gameplay_music_2: 1
+      gameplay_music_3: 1
+      gameplay_music_4: 1
+    scope: player
+
+  SpinnerLeft_active:
     events:
       spinner_fx1: 1
       spinner_fx2: 1
@@ -103,7 +124,8 @@ random_event_player:
       spinner_fx7: 1
       spinner_fx8: 1
     scope: player
-  SpinnerRight_active: 
+
+  SpinnerRight_active:
     events:
       spinner_fx1: 1
       spinner_fx2: 1
@@ -114,22 +136,27 @@ random_event_player:
       spinner_fx7: 1
       spinner_fx8: 1
     scope: player
-  flash_bumper_explosion: 
+
+  flash_bumper_explosion:
     events:
       popbumper_fx1: 1
       popbumper_fx2: 1
       popbumper_fx3: 1
     scope: player
-  left_orbit_hit: 
+
+  left_orbit_hit:
     events:
       orbit_fx1: 1
       orbit_fx2: 1
     scope: player
-  right_orbit_hit: 
+
+  right_orbit_hit:
     events:
       orbit_fx1: 1
       orbit_fx2: 1
     scope: player
+
+
 
 
 sequence_shots: 
@@ -274,6 +301,9 @@ slide_player:
       expire: 0s
 
 sound_player: 
+  stop_gameplay_music:
+    main_snd_music:
+      action: stop
   gameplay_music_1: 
     gameplay_music_beethoven: 
       key: main_snd_music
