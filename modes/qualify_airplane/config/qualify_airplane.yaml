@@ -108,7 +108,10 @@ slide_player:
     airplane_mb:
       action: play
       expire: 0s
-
+  counter_airplane_light_lock_hit{hits==5}:
+    airplane_lock_lit:
+      action: play
+      expire: 0s
 
 variable_player:
   mode_started:

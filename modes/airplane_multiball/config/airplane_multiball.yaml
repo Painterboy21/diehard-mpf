@@ -150,6 +150,12 @@ multiballs:
     ball_count_type: total
     shoot_again: 30s
 
+sound_player:
+  mode_airplane_multiball_started:
+    runway:
+      action: play
+      loops: -1
+
 widget_player:
   airplane_light_super_jackpot:
     super_jackpot_lit:
@@ -250,3 +256,4 @@ variable_player:
     score:
       action: add
       int: 20000000
+
