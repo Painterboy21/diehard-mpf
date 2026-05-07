@@ -275,7 +275,7 @@ lights:
     number: playfield-2-22
     subtype: led
     type: rgb
-    tags: INSERT
+    tags: INSERT,VILLIAN
   l63:
     number: playfield-2-23
     subtype: led

@@ -69,7 +69,7 @@ shots:
       lights: l52
 
   airplane_left_orbit_jackpot:
-    switch: s_left_orbit
+    hit_events: left_orbit_hit
     profile: airplane_jackpot_profile
     enable_events: airplane_light_left_orbit_jackpot
     disable_events:
@@ -79,7 +79,7 @@ shots:
       lights: l20
 
   airplane_right_orbit_jackpot:
-    switch: s_right_orbit
+    hit_events: right_orbit_hit
     profile: airplane_jackpot_profile
     enable_events: airplane_light_right_orbit_jackpot
     disable_events:
@@ -150,11 +150,6 @@ multiballs:
     ball_count_type: total
     shoot_again: 30s
 
-sound_player:
-  mode_airplane_multiball_started:
-    runway:
-      action: play
-      loops: -1
 
 widget_player:
   airplane_light_super_jackpot:
