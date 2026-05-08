@@ -51,6 +51,19 @@ variable_player:
       action: add
       int: 5000
 
+  s_TrPF1_active: 
+    score: 
+      action: add
+      int: 5000
 
+  s_TrPF2_active: 
+    score: 
+      action: add
+      int: 5000
+
+  s_TrPF3_active: 
+    score: 
+      action: add
+      int: 5000
 
 

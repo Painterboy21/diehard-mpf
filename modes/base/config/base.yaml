@@ -142,6 +142,24 @@ random_event_player:
       orbit_fx1: 1
       orbit_fx2: 1
     scope: player
+  s_TrPF1_active: 
+    events:
+      inlanerollover1_fx: 1
+      inlanerollover2_fx: 1
+      inlanerollover3_fx: 1 
+    scope: player
+  s_TrPF2_active: 
+    events:
+      inlanerollover1_fx: 1
+      inlanerollover2_fx: 1
+      inlanerollover3_fx: 1 
+    scope: player
+  s_TrPF3_active: 
+    events:
+      inlanerollover1_fx: 1
+      inlanerollover2_fx: 1
+      inlanerollover3_fx: 1 
+    scope: player
 
 
 sequence_shots: 
@@ -352,6 +370,15 @@ sound_player:
       action: play
   orbit_fx2: 
     orbit_fx2: 
+      action: play
+  inlanerollover1_fx: 
+    inlanerollover1_fx: 
+      action: play
+  inlanerollover2_fx: 
+    inlanerollover2_fx: 
+      action: play
+  inlanerollover3_fx: 
+    inlanerollover3_fx: 
       action: play
 
 
