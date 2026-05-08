@@ -7,118 +7,30 @@ mode:
     - ball_ended
   priority: 300
 
+ball_holds:
+  villain_select_hold:
+    balls_to_hold: 1
+    hold_devices: rightvuk
+    enable_events:
+      - mode_villain_select_started
+    release_one_events:
+      - release_villain_select_vuk
+    disable_events:
+      - villain_selection_complete
+      - ball_ended
 
-event_player:
-
-  mode_villain_select_started:
-    - show_col_choice_slide
-
-  s_left_flipper_active{current_player.villain_select_stage=="choose"}:
-    - toggle_col_choice
-    - show_col_choice_slide
-
-  s_right_flipper_active{current_player.villain_select_stage=="choose"}:
-    - toggle_col_choice
-    - show_col_choice_slide
-
-  s_actionbtn_active{current_player.villain_select_stage=="choose"}:
-    - play_col_intro
-
-  villain_intro_finished:
-    - release_villain_select_vuk
-    - start_colonel_stuart
-    - villain_selection_complete
-
-  both_flippers_active{current_player.villain_select_stage=="intro"}:
-    - release_villain_select_vuk
-    - start_colonel_stuart
-    - villain_selection_complete
-
-
+mode_settings:
+  selectable_items:
+    - villain_col_die_hard
+    - villain_col_die_harder
+  next_item_events: s_right_flipper_active
+  previous_item_events: s_left_flipper_active
+  select_item_events: s_actionbtn_active
 
 slide_player:
-
-  show_col_choice_slide{current_player.villain_choice_index==0}:
-    villain_col_die_hard:
-      action: play
-
-  show_col_choice_slide{current_player.villain_choice_index==1}:
-    villain_col_die_harder:
-      action: play
-
-
-  play_col_intro:
-    villain_col_intro:
-      action: play
-
-
-
-light_player:
-
-  show_col_choice_slide{current_player.villain_choice_index==0}:
-    l40:
-      color: orange
-
-    l41:
-      color: yellow
-  show_col_choice_slide{current_player.villain_choice_index==1}:
-    l40:
-      color: orange
-
-    l41:
-      color: red
-  play_col_intro:
-    l40:
-      color: white
-
-    l41:
-      color: white
-
-  villain_selection_complete:
-    l40:
-      color: off
-
-    l41:
-      color: off
-
-variable_player:
-
   mode_villain_select_started:
-    selected_villain:
-      string: col
-      action: set
+    villain_select:
+      action: play
 
-    selected_diehard_mode:
-      string: die_hard
-      action: set
 
-    villain_choice_index:
-      int: 0
-      action: set
 
-    villain_select_stage:
-      string: choose
-      action: set
-
-  toggle_col_choice{current_player.villain_choice_index==0}:
-    villain_choice_index:
-      int: 1
-      action: set
-
-    selected_diehard_mode:
-      string: die_harder
-      action: set
-
-  toggle_col_choice{current_player.villain_choice_index==1}:
-    villain_choice_index:
-      int: 0
-      action: set
-
-    selected_diehard_mode:
-      string: die_hard
-      action: set
-
-  play_col_intro:
-    villain_select_stage:
-      string: intro
-      action: set

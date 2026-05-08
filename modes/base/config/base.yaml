@@ -48,7 +48,7 @@ event_player:
     - show_airduct2
   s_actionbtn_active:
     - s_fire_active
-  s_right_vuk_active{current_player.villain_qualified==1}:
+  s_rightvuk_active:
     - start_villain_select
 
 light_player: 
