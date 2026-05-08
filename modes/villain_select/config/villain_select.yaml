@@ -16,6 +16,12 @@ ball_holds:
       - mode_villain_select_started
 
 
+slide_player:
+  mode_villain_select_started:
+    villain_select:
+      action: play
+      expire: 0s
+
 mode_settings:
   selectable_items:
     - villain_col_die_hard
