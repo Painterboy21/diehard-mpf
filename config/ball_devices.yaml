@@ -30,12 +30,11 @@ ball_devices:
     eject_timeouts: 1s
 
 
-  right_vuk:
+  rightvuk:
     ball_switches: s_rightvuk
     eject_coil: c_rightvuk_eject
     eject_timeouts: 1s
-    eject_events:
-      - release_villain_select_vuk
+
 
   tower_vuk:
     entrance_switch: s_towervuk
