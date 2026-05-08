@@ -6,6 +6,7 @@ mode:
     - villain_selection_complete
     - ball_ended
   priority: 300
+  code: mpf.modes.carousel.code.carousel.Carousel
 
 ball_holds:
   villain_select_hold:
