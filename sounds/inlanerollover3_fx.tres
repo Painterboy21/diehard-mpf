@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MPFSoundAsset" format=3 uid="uid://bjy58lgblx5my"]
+
+[ext_resource type="Script" uid="uid://bsvo8cxf10088" path="res://addons/mpf-gmc/classes/mpf_sound_marker.gd" id="1_t27eu"]
+[ext_resource type="Script" uid="uid://e2h352i1jeqi" path="res://addons/mpf-gmc/classes/mpf_sound.gd" id="2_abdh8"]
+[ext_resource type="AudioStream" uid="uid://6lb3m88gqe67" path="res://sounds/src/dh_inlanerollover3.wav" id="3_t27eu"]
+
+[resource]
+script = ExtResource("2_abdh8")
+stream = ExtResource("3_t27eu")
+bus = "effects"

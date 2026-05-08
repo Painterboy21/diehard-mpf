@@ -89,6 +89,12 @@ light_player:
     SPOTS_BUMPER:
       color: 969650
 
+show_player: 
+  score_park_jackpot: 
+    park_jackpot: 
+      key: park_mb_jackpot
+      loops: 0
+      speed: 2
 
 shots:
   cp_bullets_advance:
