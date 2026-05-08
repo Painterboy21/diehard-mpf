@@ -13,11 +13,7 @@ ball_holds:
     hold_devices: rightvuk
     enable_events:
       - mode_villain_select_started
-    release_one_events:
-      - release_villain_select_vuk
-    disable_events:
-      - villain_selection_complete
-      - ball_ended
+
 
 mode_settings:
   selectable_items:
@@ -25,7 +21,7 @@ mode_settings:
     - villain_col_die_harder
   next_item_events: s_right_flipper_active
   previous_item_events: s_left_flipper_active
-  select_item_events: s_actionbtn_active
+  select_item_events: s_fire_active
 
 slide_player:
   mode_villain_select_started:
