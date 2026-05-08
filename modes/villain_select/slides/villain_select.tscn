@@ -23,10 +23,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_kwaca")
-carousel_name = "villain_select"
+carousel_name = "mode_villain_select_started"
 metadata/_custom_type_script = "uid://dpe3dq8axt3g7"
 
-[node name="villain_col_die_hard" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=308858693]
+[node name="villain_col_die_hard" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=2034872230]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,9 +37,10 @@ stream = ExtResource("3_ui17p")
 autoplay = true
 loop = true
 script = ExtResource("4_5vsr6")
+end_behavior = 1
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
 
-[node name="villain_col_die_harder" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=281924315]
+[node name="villain_col_die_harder" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=595684919]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,5 +51,5 @@ stream = ExtResource("5_l5g7c")
 autoplay = true
 loop = true
 script = ExtResource("4_5vsr6")
-preview_in_editor = true
+end_behavior = 1
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
