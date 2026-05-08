@@ -1,26 +1,36 @@
 [gd_scene format=3 uid="uid://duk31ytm308q6"]
 
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_e7r7o"]
 [ext_resource type="Script" uid="uid://dpe3dq8axt3g7" path="res://addons/mpf-gmc/classes/mpf_carousel.gd" id="2_kwaca"]
 [ext_resource type="VideoStream" uid="uid://coc0x1xbcwelj" path="res://videos/VillainSelect/ColDieHard.ogv" id="3_ui17p"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="4_5vsr6"]
 [ext_resource type="VideoStream" uid="uid://bkw4x0rct67w3" path="res://videos/VillainSelect/ColDieHarder.ogv" id="5_l5g7c"]
 
-[node name="villain select" type="Control" unique_id=47511501]
+[node name="villain select" type="Control" unique_id=544795929]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_e7r7o")
+metadata/_custom_type_script = "uid://dru3usokwlhd3"
+
+[node name="MPFCarousel" type="Control" parent="." unique_id=392338308]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 script = ExtResource("2_kwaca")
-carousel_name = "villian_select"
+carousel_name = "villain_select"
 metadata/_custom_type_script = "uid://dpe3dq8axt3g7"
 
-[node name="villain_col_die_hard" type="VideoStreamPlayer" parent="." unique_id=390449281]
+[node name="villain_col_die_hard" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=390449281]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 1880.0
+offset_bottom = 1040.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("3_ui17p")
@@ -31,11 +41,13 @@ end_behavior = 1
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
 metadata/_edit_use_anchors_ = true
 
-[node name="villain_col_die_harder" type="VideoStreamPlayer" parent="." unique_id=1702254877]
+[node name="villain_col_die_harder" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=1702254877]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 1880.0
+offset_bottom = 1040.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("5_l5g7c")
