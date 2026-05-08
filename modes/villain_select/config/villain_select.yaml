@@ -8,9 +8,78 @@ mode:
   priority: 300
 
 
-############################
-# VARIABLES
-############################
+event_player:
+
+  mode_villain_select_started:
+    - show_col_choice_slide
+
+  s_left_flipper_active{current_player.villain_select_stage=="choose"}:
+    - toggle_col_choice
+    - show_col_choice_slide
+
+  s_right_flipper_active{current_player.villain_select_stage=="choose"}:
+    - toggle_col_choice
+    - show_col_choice_slide
+
+  s_actionbtn_active{current_player.villain_select_stage=="choose"}:
+    - play_col_intro
+
+  villain_intro_finished:
+    - release_villain_select_vuk
+    - start_colonel_stuart
+    - villain_selection_complete
+
+  both_flippers_active{current_player.villain_select_stage=="intro"}:
+    - release_villain_select_vuk
+    - start_colonel_stuart
+    - villain_selection_complete
+
+
+
+slide_player:
+
+  show_col_choice_slide{current_player.villain_choice_index==0}:
+    villain_col_die_hard:
+      action: play
+
+  show_col_choice_slide{current_player.villain_choice_index==1}:
+    villain_col_die_harder:
+      action: play
+
+
+  play_col_intro:
+    villain_col_intro:
+      action: play
+
+
+
+light_player:
+
+  show_col_choice_slide{current_player.villain_choice_index==0}:
+    l40:
+      color: orange
+
+    l41:
+      color: yellow
+  show_col_choice_slide{current_player.villain_choice_index==1}:
+    l40:
+      color: orange
+
+    l41:
+      color: red
+  play_col_intro:
+    l40:
+      color: white
+
+    l41:
+      color: white
+
+  villain_selection_complete:
+    l40:
+      color: off
+
+    l41:
+      color: off
 
 variable_player:
 
@@ -31,11 +100,6 @@ variable_player:
       string: choose
       action: set
 
-
-############################
-# TOGGLE DIE HARD / HARDER
-############################
-
   toggle_col_choice{current_player.villain_choice_index==0}:
     villain_choice_index:
       int: 1
@@ -44,7 +108,6 @@ variable_player:
     selected_diehard_mode:
       string: die_harder
       action: set
-
 
   toggle_col_choice{current_player.villain_choice_index==1}:
     villain_choice_index:
@@ -55,121 +118,7 @@ variable_player:
       string: die_hard
       action: set
 
-
-############################
-# INTRO STAGE
-############################
-
   play_col_intro:
     villain_select_stage:
       string: intro
       action: set
-
-
-############################
-# EVENTS
-############################
-
-event_player:
-
-  mode_villain_select_started:
-    - show_col_choice_slide
-
-
-############################
-# FLIPPER CONTROL
-############################
-
-  s_left_flipper_active{current_player.villain_select_stage=="choose"}:
-    - toggle_col_choice
-    - show_col_choice_slide
-
-  s_right_flipper_active{current_player.villain_select_stage=="choose"}:
-    - toggle_col_choice
-    - show_col_choice_slide
-
-
-############################
-# START INTRO
-############################
-
-  s_actionbtn_active{current_player.villain_select_stage=="choose"}:
-    - play_col_intro
-
-
-############################
-# INTRO FINISHED
-############################
-
-  villain_intro_finished:
-    - release_villain_select_vuk
-    - start_colonel_stuart
-    - villain_selection_complete
-
-
-############################
-# SKIP INTRO
-############################
-
-  both_flippers_active{current_player.villain_select_stage=="intro"}:
-    - release_villain_select_vuk
-    - start_colonel_stuart
-    - villain_selection_complete
-
-
-############################
-# SLIDES
-############################
-
-slide_player:
-
-  show_col_choice_slide{current_player.villain_choice_index==0}:
-    villain_col_die_hard:
-      action: play
-
-  show_col_choice_slide{current_player.villain_choice_index==1}:
-    villain_col_die_harder:
-      action: play
-
-
-  play_col_intro:
-    villain_col_intro:
-      action: play
-
-
-############################
-# LIGHTS
-############################
-
-light_player:
-
-  show_col_choice_slide{current_player.villain_choice_index==0}:
-    l40:
-      color: orange
-
-    l41:
-      color: yellow
-
-
-  show_col_choice_slide{current_player.villain_choice_index==1}:
-    l40:
-      color: orange
-
-    l41:
-      color: red
-
-
-  play_col_intro:
-    l40:
-      color: white
-
-    l41:
-      color: white
-
-
-  villain_selection_complete:
-    l40:
-      color: off
-
-    l41:
-      color: off
