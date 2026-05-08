@@ -7,97 +7,169 @@ mode:
     - ball_ended
   priority: 300
 
+
+############################
+# VARIABLES
+############################
+
 variable_player:
 
   mode_villain_select_started:
     selected_villain:
       string: col
       action: set
+
     selected_diehard_mode:
       string: die_hard
       action: set
+
     villain_choice_index:
       int: 0
       action: set
 
-  villain_choice_next{current_player.villain_choice_index==0}:
+    villain_select_stage:
+      string: choose
+      action: set
+
+
+############################
+# TOGGLE DIE HARD / HARDER
+############################
+
+  toggle_col_choice{current_player.villain_choice_index==0}:
     villain_choice_index:
       int: 1
       action: set
+
     selected_diehard_mode:
       string: die_harder
       action: set
 
-  villain_choice_next{current_player.villain_choice_index==1}:
-    villain_choice_index:
-      int: 2
-      action: set
 
-  villain_choice_next{current_player.villain_choice_index==2}:
+  toggle_col_choice{current_player.villain_choice_index==1}:
     villain_choice_index:
       int: 0
       action: set
+
     selected_diehard_mode:
       string: die_hard
       action: set
 
 
+############################
+# INTRO STAGE
+############################
+
+  play_col_intro:
+    villain_select_stage:
+      string: intro
+      action: set
+
+
+############################
+# EVENTS
+############################
+
 event_player:
 
   mode_villain_select_started:
-    - show_col_slide
+    - show_col_choice_slide
 
-  s_actionbtn_active{current_player.villain_choice_index<2}:
-    - villain_choice_next
-    - show_col_slide
 
-  s_actionbtn_active{current_player.villain_choice_index==2}:
-    - villain_selection_complete
+############################
+# FLIPPER CONTROL
+############################
+
+  s_left_flipper_active{current_player.villain_select_stage=="choose"}:
+    - toggle_col_choice
+    - show_col_choice_slide
+
+  s_right_flipper_active{current_player.villain_select_stage=="choose"}:
+    - toggle_col_choice
+    - show_col_choice_slide
+
+
+############################
+# START INTRO
+############################
+
+  s_actionbtn_active{current_player.villain_select_stage=="choose"}:
+    - play_col_intro
+
+
+############################
+# INTRO FINISHED
+############################
+
+  villain_intro_finished:
+    - release_villain_select_vuk
     - start_colonel_stuart
+    - villain_selection_complete
 
+
+############################
+# SKIP INTRO
+############################
+
+  both_flippers_active{current_player.villain_select_stage=="intro"}:
+    - release_villain_select_vuk
+    - start_colonel_stuart
+    - villain_selection_complete
+
+
+############################
+# SLIDES
+############################
 
 slide_player:
 
-  show_col_slide{current_player.villain_choice_index==0}:
+  show_col_choice_slide{current_player.villain_choice_index==0}:
     villain_col_die_hard:
       action: play
 
-  show_col_slide{current_player.villain_choice_index==1}:
+  show_col_choice_slide{current_player.villain_choice_index==1}:
     villain_col_die_harder:
       action: play
 
-  show_col_slide{current_player.villain_choice_index==2}:
-    villain_col_select:
+
+  play_col_intro:
+    villain_col_intro:
       action: play
 
-  villain_selection_complete:
-    villain_select_starting:
-      action: play
-      expire: 2s
 
+############################
+# LIGHTS
+############################
 
 light_player:
 
-  show_col_slide{current_player.villain_choice_index==0}:
+  show_col_choice_slide{current_player.villain_choice_index==0}:
     l40:
       color: orange
+
     l41:
       color: yellow
 
-  show_col_slide{current_player.villain_choice_index==1}:
+
+  show_col_choice_slide{current_player.villain_choice_index==1}:
     l40:
       color: orange
+
     l41:
       color: red
 
-  show_col_slide{current_player.villain_choice_index==2}:
+
+  play_col_intro:
     l40:
-      color: orange
+      color: white
+
     l41:
       color: white
+
 
   villain_selection_complete:
     l40:
       color: off
+
     l41:
       color: off

@@ -29,10 +29,13 @@ ball_devices:
     eject_coil: c_UrampUp001_eject
     eject_timeouts: 1s
 
-  rightvuk:
-    ball_switches: s_rightvuk
-    eject_coil: c_rightvuk_eject
+
+  right_vuk:
+    ball_switches: s_UrampUp001
+    eject_coil: c_UrampUp001_eject
     eject_timeouts: 1s
+    eject_events:
+      - release_villain_select_vuk
 
   tower_vuk:
     entrance_switch: s_towervuk
