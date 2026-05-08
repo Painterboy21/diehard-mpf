@@ -1,32 +1,22 @@
 [gd_scene format=3 uid="uid://duk31ytm308q6"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_e7r7o"]
 [ext_resource type="Script" uid="uid://dpe3dq8axt3g7" path="res://addons/mpf-gmc/classes/mpf_carousel.gd" id="2_kwaca"]
 [ext_resource type="VideoStream" uid="uid://coc0x1xbcwelj" path="res://videos/VillainSelect/ColDieHard.ogv" id="3_ui17p"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="4_5vsr6"]
 [ext_resource type="VideoStream" uid="uid://bkw4x0rct67w3" path="res://videos/VillainSelect/ColDieHarder.ogv" id="5_l5g7c"]
 
-[node name="villain select" type="Control" unique_id=1421908483]
+[node name="villain select" type="Control" unique_id=47511501]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_e7r7o")
-
-[node name="MPFCarousel" type="Control" parent="." unique_id=417446625]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 script = ExtResource("2_kwaca")
-carousel_name = "mode_villain_select_started"
+carousel_name = "villian_select"
 metadata/_custom_type_script = "uid://dpe3dq8axt3g7"
 
-[node name="villain_col_die_hard" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=2034872230]
+[node name="villain_col_die_hard" type="VideoStreamPlayer" parent="." unique_id=390449281]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,8 +29,9 @@ loop = true
 script = ExtResource("4_5vsr6")
 end_behavior = 1
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
+metadata/_edit_use_anchors_ = true
 
-[node name="villain_col_die_harder" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=595684919]
+[node name="villain_col_die_harder" type="VideoStreamPlayer" parent="." unique_id=1702254877]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,4 +43,6 @@ autoplay = true
 loop = true
 script = ExtResource("4_5vsr6")
 end_behavior = 1
+preview_in_editor = true
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
+metadata/_edit_use_anchors_ = true
