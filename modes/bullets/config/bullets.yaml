@@ -2,54 +2,30 @@
 
 mode:
   start_events: ball_started,multiball_nakatomi_ended,multiball_central_park_ended,multiball_airplane_ended,ambush_ended
-  stop_events: ball_ended, multiball_nakatomi_started,multiball_central_park_started,multiball_airplane_started,ambush_started
+  stop_events: ball_ended,multiball_nakatomi_started,multiball_central_park_started,multiball_airplane_started,ambush_started
   priority: 110
 
-event_player: 
+event_player:
+
   left_orbit_hit{current_player.shot_bullet_left_orbit == 0}:
+    - bullet_new_unique_shot
     - bullet_lock_left_orbit
-    - bullet_hit
-  left_orbit_hit{current_player.shot_bullet_left_orbit == 2}:
-    - bullet_lock_left_orbit
-    - bullet_combo_hit
-    - bullet_hit
-    - bullet_combo_check
 
   right_orbit_hit{current_player.shot_bullet_right_orbit == 0}:
+    - bullet_new_unique_shot
     - bullet_lock_right_orbit
-    - bullet_hit
-  right_orbit_hit{current_player.shot_bullet_right_orbit == 2}:
-    - bullet_lock_right_orbit
-    - bullet_combo_hit
-    - bullet_hit
-    - bullet_combo_check
 
   bullet_mid_orbit_hit{current_player.shot_bullet_mid_orbit == 0}:
+    - bullet_new_unique_shot
     - bullet_lock_mid_orbit
-    - bullet_hit
-  bullet_mid_orbit_hit{current_player.shot_bullet_mid_orbit == 2}:
-    - bullet_lock_mid_orbit
-    - bullet_combo_hit
-    - bullet_hit
-    - bullet_combo_check
 
   bullet_air_duct_hit{current_player.shot_bullet_air_duct == 0}:
+    - bullet_new_unique_shot
     - bullet_lock_air_duct
-    - bullet_hit
-  bullet_air_duct_hit{current_player.shot_bullet_air_duct == 2}:
-    - bullet_lock_air_duct
-    - bullet_combo_hit
-    - bullet_hit
-    - bullet_combo_check
 
   bullet_upper_pf_hit{current_player.shot_bullet_upper_pf == 0}:
+    - bullet_new_unique_shot
     - bullet_lock_upper_pf
-    - bullet_hit
-  bullet_upper_pf_hit{current_player.shot_bullet_upper_pf == 2}:
-    - bullet_lock_upper_pf
-    - bullet_combo_hit
-    - bullet_hit
-    - bullet_combo_check
 
   timer_bullets_combo_complete:
     - reset_bullets
@@ -57,15 +33,17 @@ event_player:
   mode_bullets_stopping:
     - reset_bullets
 
-  bullet_combo_check{current_player.bullet_combo_hits == 4}:
+  player_bullet_combo_hits{value==5}:
     - bullets_combo_max
-    - reset_bullets
+    - villain_start_lit
+    - reset_bullets|100ms
 
-  # VILLAIN START LIGHTS WHEN BULLETS REACH 15
   player_bullet_hits{value>=15}:
     - villain_start_lit
 
-  # CHANGE right_vuk_hit TO YOUR REAL VUK/SCOOP EVENT IF DIFFERENT
+  villain_start_lit:
+    - reset_bullets|100ms
+
   right_vuk_hit{current_player.bullet_hits >= 15}:
     - start_villain_select
     - reset_bullet_total
@@ -75,144 +53,126 @@ event_player:
     - villain_start_not_ready
 
 
-shots: 
+shots:
+
   bullet_left_orbit:
     profile: profile_bullets
-    start_enabled: True
-    show_tokens: 
+    start_enabled: true
+    show_tokens:
       lights: l50
-    control_events: 
+    control_events:
       - events: reset_bullets
         state: 0
       - events: bullet_lock_left_orbit
         state: 1
-      - events: bullet_hit{current_player.shot_bullet_left_orbit != 1}
-        state: 2
-      - events: villain_start_lit
-        state: 3
 
   bullet_upper_pf:
     switch: s_upper_pf_entrance
     profile: profile_bullets
-    start_enabled: True
-    show_tokens: 
+    start_enabled: true
+    show_tokens:
       lights: l51
-    control_events: 
+    control_events:
       - events: reset_bullets
         state: 0
       - events: bullet_lock_upper_pf
         state: 1
-      - events: bullet_hit{current_player.shot_bullet_upper_pf != 1}
-        state: 2
-      - events: villain_start_lit
-        state: 3
 
   bullet_right_orbit:
     profile: profile_bullets
-    start_enabled: True
-    show_tokens: 
+    start_enabled: true
+    show_tokens:
       lights: l53
-    control_events: 
+    control_events:
       - events: reset_bullets
         state: 0
       - events: bullet_lock_right_orbit
         state: 1
-      - events: bullet_hit{current_player.shot_bullet_right_orbit != 1}
-        state: 2
-      - events: villain_start_lit
-        state: 3
 
   bullet_mid_orbit:
     switch: s_mid_orbit
     profile: profile_bullets
-    start_enabled: True
-    show_tokens: 
+    start_enabled: true
+    show_tokens:
       lights: l54
-    control_events: 
+    control_events:
       - events: reset_bullets
         state: 0
       - events: bullet_lock_mid_orbit
         state: 1
-      - events: bullet_hit{current_player.shot_bullet_mid_orbit != 1}
-        state: 2
-      - events: villain_start_lit
-        state: 3
 
   bullet_air_duct:
     switch: s_air_duct
     profile: profile_bullets
-    start_enabled: True
-    show_tokens: 
+    start_enabled: true
+    show_tokens:
       lights: l55
-    control_events: 
+    control_events:
       - events: reset_bullets
         state: 0
       - events: bullet_lock_air_duct
         state: 1
-      - events: bullet_hit{current_player.shot_bullet_air_duct != 1}
-        state: 2
-      - events: villain_start_lit
-        state: 3
 
 
-show_player: 
-  bullets_combo_max: 
-    flicker_color: 
+show_player:
+
+  bullets_combo_max:
+    flicker_color:
       key: key_bullets_combo_max
       priority: 1
       loops: 2
       speed: 4
-      show_tokens: 
+      show_tokens:
         lights: bullets
         color: 00ff00
 
-  bullet_lock_left_orbit: 
-    flicker_color: 
+  bullet_lock_left_orbit:
+    flicker_color:
       key: key_bullet_lock_left_orbit
       priority: 1
       loops: 2
       speed: 4
-      show_tokens: 
+      show_tokens:
         lights: BLO
         color: ff0000
 
-  bullet_lock_right_orbit: 
-    flicker_color: 
+  bullet_lock_right_orbit:
+    flicker_color:
       key: key_bullet_lock_right_orbit
       priority: 1
       loops: 2
       speed: 4
-      show_tokens: 
+      show_tokens:
         lights: BRO
         color: ff0000
 
-  bullet_lock_mid_orbit: 
-    flicker_color: 
+  bullet_lock_mid_orbit:
+    flicker_color:
       key: key_bullet_lock_mid_orbit
       priority: 1
       loops: 2
       speed: 4
-      show_tokens: 
+      show_tokens:
         lights: BMO
         color: ff0000
 
-  bullet_lock_air_duct: 
-    flicker_color: 
+  bullet_lock_air_duct:
+    flicker_color:
       key: key_bullet_lock_air_duct
       priority: 1
       loops: 2
       speed: 4
-      show_tokens: 
+      show_tokens:
         lights: BAD
         color: ff0000
 
-  bullet_lock_upper_pf: 
-    flicker_color: 
+  bullet_lock_upper_pf:
+    flicker_color:
       key: key_bullet_lock_upper_pf
       priority: 1
       loops: 2
       speed: 4
-      show_tokens: 
+      show_tokens:
         lights: BUP
         color: ff0000
 
@@ -226,8 +186,13 @@ show_player:
         lights: l10
         color: F5D327
 
+  start_villain_select:
+    key_villain_start_lit:
+      action: stop
+
 
 light_player:
+
   start_villain_select:
     l10:
       color: F5D327
@@ -237,44 +202,50 @@ light_player:
       color: off
 
 
-timers: 
+timers:
+
   bullets_combo:
-    start_value: 0
-    end_value: 5
-    direction: up
-    control_events: 
-      - event: bullet_hit
+    start_value: 65
+    end_value: 0
+    direction: down
+    control_events:
+      - event: bullet_new_unique_shot
         action: restart
       - event: villain_start_lit
         action: stop
-    restart_on_complete: False
-    start_running: False
-    tick_interval: 1000ms
+    restart_on_complete: false
+    start_running: false
+    tick_interval: 100ms
 
 
-variable_player: 
-  bullet_hit: 
-    bullet_hits: 
+variable_player:
+
+  bullet_new_unique_shot:
+
+    bullet_hits:
       action: add
       int: 1 + current_player.bullet_combo_hits
-    eob_bonus_bullet: 
+
+    eob_bonus_bullet:
       action: add
       int: 35000 * (1 + current_player.bullet_combo_hits)
 
-  bullet_combo_hit.10: 
-    bullet_combo_hits: 
+    bullet_combo_hits:
       action: add
       int: 1
 
-  reset_bullets: 
-    bullet_combo_hits: 
+  reset_bullets:
+
+    bullet_combo_hits:
       action: set
       int: 0
 
   reset_bullet_total:
+
     bullet_hits:
       action: set
       int: 0
+
     bullet_combo_hits:
       action: set
       int: 0

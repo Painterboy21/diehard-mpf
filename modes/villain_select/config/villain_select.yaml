@@ -1,0 +1,103 @@
+#config_version=6
+
+mode:
+  start_events: start_villain_select
+  stop_events:
+    - villain_selection_complete
+    - ball_ended
+  priority: 300
+
+variable_player:
+
+  mode_villain_select_started:
+    selected_villain:
+      string: col
+      action: set
+    selected_diehard_mode:
+      string: die_hard
+      action: set
+    villain_choice_index:
+      int: 0
+      action: set
+
+  villain_choice_next{current_player.villain_choice_index==0}:
+    villain_choice_index:
+      int: 1
+      action: set
+    selected_diehard_mode:
+      string: die_harder
+      action: set
+
+  villain_choice_next{current_player.villain_choice_index==1}:
+    villain_choice_index:
+      int: 2
+      action: set
+
+  villain_choice_next{current_player.villain_choice_index==2}:
+    villain_choice_index:
+      int: 0
+      action: set
+    selected_diehard_mode:
+      string: die_hard
+      action: set
+
+
+event_player:
+
+  mode_villain_select_started:
+    - show_col_slide
+
+  s_actionbtn_active{current_player.villain_choice_index<2}:
+    - villain_choice_next
+    - show_col_slide
+
+  s_actionbtn_active{current_player.villain_choice_index==2}:
+    - villain_selection_complete
+    - start_colonel_stuart
+
+
+slide_player:
+
+  show_col_slide{current_player.villain_choice_index==0}:
+    villain_col_die_hard:
+      action: play
+
+  show_col_slide{current_player.villain_choice_index==1}:
+    villain_col_die_harder:
+      action: play
+
+  show_col_slide{current_player.villain_choice_index==2}:
+    villain_col_select:
+      action: play
+
+  villain_selection_complete:
+    villain_select_starting:
+      action: play
+      expire: 2s
+
+
+light_player:
+
+  show_col_slide{current_player.villain_choice_index==0}:
+    l40:
+      color: orange
+    l41:
+      color: yellow
+
+  show_col_slide{current_player.villain_choice_index==1}:
+    l40:
+      color: orange
+    l41:
+      color: red
+
+  show_col_slide{current_player.villain_choice_index==2}:
+    l40:
+      color: orange
+    l41:
+      color: white
+
+  villain_selection_complete:
+    l40:
+      color: off
+    l41:
+      color: off
