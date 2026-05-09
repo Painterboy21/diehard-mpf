@@ -8,19 +8,6 @@ mode:
   priority: 300
   code: mpf.modes.carousel.code.carousel.Carousel
 
-ball_holds:
-  villain_select_hold:
-    balls_to_hold: 1
-    hold_devices: rightvuk
-    enable_events:
-      - mode_villain_select_started
-
-
-slide_player:
-  mode_villain_select_started:
-    villain_select:
-      action: play
-      expire: 0s
 
 mode_settings:
   selectable_items:
@@ -28,9 +15,40 @@ mode_settings:
     - villain_col_die_harder
   next_item_events: s_right_flipper_active
   previous_item_events: s_left_flipper_active
-  select_item_events: s_fire_active
+  select_item_events: s_fire_active, s_actionbtn_active
 
+slide_player:
+  mode_villain_select_started:
+    villain_select:
+      action: play
+      expire: 0s
 
+  villain_intro_started:
+    villain_col_intro:
+      action: play
+      expire: 3s
 
+event_player:
+  carousel_item_selected{carousel=="villain_select" and item=="villain_col_die_hard"}:
+    - set_villain_col_die_hard
+    - villain_intro_started
+    - villain_intro_finished|3s
+  carousel_item_selected{carousel=="villain_select" and item=="villain_col_die_harder"}:
+    - set_villain_col_die_harder
+    - villain_intro_started
+    - villain_intro_finished|3s
+  villain_intro_finished:
+    - release_villain_select_vuk
+    - start_colonel_stuart
+    - villain_selection_complete|300ms
 
-  
+variable_player:
+  set_villain_col_die_hard:
+    selected_diehard_mode:
+      string: die_hard
+      action: set
+
+  set_villain_col_die_harder:
+    selected_diehard_mode:
+      string: die_harder
+      action: set

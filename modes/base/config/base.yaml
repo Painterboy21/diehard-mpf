@@ -5,6 +5,18 @@ mode:
   stop_events: ball_ended
   priority: 100
 
+
+ball_holds:
+  villain_hold:
+    enable_events: villain_start_lit
+    disable_events: villain_selection_complete
+    hold_devices: rightvuk
+    balls_to_hold: 1
+    release_all_events:
+      - tilt
+      - ball_ended
+      - villain_selection_complete
+
 ball_saves: 
   one:
     active_time: 5000ms
@@ -46,10 +58,7 @@ event_player:
   s_air_duct_active:
     - show_airduct
     - show_airduct2
-  s_actionbtn_active:
-    - s_fire_active
-  s_rightvuk_active:
-    - start_villain_select
+
 
 light_player: 
   mode_base_started: 
@@ -301,6 +310,10 @@ slide_player:
       expire: 0s
   multiball_nakatomi_ended{current_player.nakatomi_super_jackpot_collected==0}:
     nakatomi_mb_failed:
+      action: play
+      expire: 0s
+  multiball_airplane_ended{current_player.score_airplane_super_jackpot_hit==0}:
+    airplane_mb_failed:
       action: play
       expire: 0s
 
