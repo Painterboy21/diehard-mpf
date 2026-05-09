@@ -5,56 +5,44 @@ mode:
   stop_events: ball_ended,multiball_nakatomi_started,multiball_central_park_started,multiball_airplane_started,ambush_started
   priority: 110
 
-event_player:
 
+
+
+
+event_player:
   left_orbit_hit{current_player.shot_bullet_left_orbit == 0}:
     - bullet_new_unique_shot
     - bullet_lock_left_orbit
-
   right_orbit_hit{current_player.shot_bullet_right_orbit == 0}:
     - bullet_new_unique_shot
     - bullet_lock_right_orbit
-
   bullet_mid_orbit_hit{current_player.shot_bullet_mid_orbit == 0}:
     - bullet_new_unique_shot
     - bullet_lock_mid_orbit
-
   bullet_air_duct_hit{current_player.shot_bullet_air_duct == 0}:
     - bullet_new_unique_shot
     - bullet_lock_air_duct
-
   bullet_upper_pf_hit{current_player.shot_bullet_upper_pf == 0}:
     - bullet_new_unique_shot
     - bullet_lock_upper_pf
-
   timer_bullets_combo_complete:
     - reset_bullets
-
   mode_bullets_stopping:
     - reset_bullets
-
   player_bullet_combo_hits{value==5}:
     - bullets_combo_max
     - villain_start_lit
     - reset_bullets|100ms
-
   player_bullet_hits{value>=15}:
     - villain_start_lit
-
-  villain_start_lit:
-    - reset_bullets|100ms
-
-  right_vuk_hit{current_player.bullet_hits >= 15}:
+  ball_hold_villain_hold_full:
     - start_villain_select
     - reset_bullet_total
     - reset_bullets
 
-  right_vuk_hit{current_player.bullet_hits < 15}:
-    - villain_start_not_ready
 
 
 shots:
-
   bullet_left_orbit:
     profile: profile_bullets
     start_enabled: true
@@ -184,15 +172,16 @@ show_player:
       speed: 4
       show_tokens:
         lights: l10
-        color: F5D327
+        color: ffffff
 
   start_villain_select:
     key_villain_start_lit:
       action: stop
 
 
-light_player:
 
+
+light_player:
   start_villain_select:
     l10:
       color: F5D327
@@ -203,7 +192,6 @@ light_player:
 
 
 timers:
-
   bullets_combo:
     start_value: 65
     end_value: 0
@@ -219,7 +207,6 @@ timers:
 
 
 variable_player:
-
   bullet_new_unique_shot:
 
     bullet_hits:

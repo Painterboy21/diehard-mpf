@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://duk31ytm308q6"]
 
-[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_e7r7o"]
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_e7r7o"]
 [ext_resource type="Script" uid="uid://dpe3dq8axt3g7" path="res://addons/mpf-gmc/classes/mpf_carousel.gd" id="2_kwaca"]
 [ext_resource type="VideoStream" uid="uid://coc0x1xbcwelj" path="res://videos/VillainSelect/ColDieHard.ogv" id="3_ui17p"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="4_5vsr6"]
@@ -14,7 +14,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_e7r7o")
-metadata/_custom_type_script = "uid://dru3usokwlhd3"
 
 [node name="MPFCarousel" type="Control" parent="." unique_id=392338308]
 anchors_preset = 0
@@ -38,6 +37,7 @@ autoplay = true
 loop = true
 script = ExtResource("4_5vsr6")
 end_behavior = 1
+events_when_stopped = "villain_select_villain_villain_col_die_hard_selected"
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
 metadata/_edit_use_anchors_ = true
 
@@ -55,6 +55,7 @@ autoplay = true
 loop = true
 script = ExtResource("4_5vsr6")
 end_behavior = 1
+events_when_stopped = "villain_select_villain_villain_col_die_harder_selected"
 preview_in_editor = true
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
 metadata/_edit_use_anchors_ = true

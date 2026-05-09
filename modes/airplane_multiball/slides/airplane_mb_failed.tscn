@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://b8prfkfcpf2gu"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_m8rww"]
+[ext_resource type="VideoStream" uid="uid://bgikaq67ksm43" path="res://modes/airplane_multiball/slides/AirplaneMBFailed.ogv" id="2_7v2j2"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_8dkqd"]
+
+[node name="airplane mb failed" type="Control" unique_id=471582454]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m8rww")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=1697640011]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_7v2j2")
+autoplay = true
+script = ExtResource("3_8dkqd")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
