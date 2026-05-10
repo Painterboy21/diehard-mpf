@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://dmnsyl068knyb"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_ti57f"]
+[ext_resource type="Script" uid="uid://dpe3dq8axt3g7" path="res://addons/mpf-gmc/classes/mpf_carousel.gd" id="2_q1pov"]
+[ext_resource type="VideoStream" uid="uid://dt5u7hx5lmayo" path="res://videos/VillainSelect/KatyaDieHard.ogv" id="3_yer41"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="4_k6en3"]
+[ext_resource type="VideoStream" uid="uid://cg8drit1n2xvx" path="res://videos/VillainSelect/KatyaDieHarder.ogv" id="5_mkljl"]
+
+[node name="katya_difficulty_select" type="Control" unique_id=544795929]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 59.0
+offset_top = 45.0
+offset_right = 59.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ti57f")
+
+[node name="MPFCarousel" type="Control" parent="." unique_id=392338308]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_q1pov")
+carousel_name = "katya_difficulty_select"
+metadata/_custom_type_script = "uid://dpe3dq8axt3g7"
+
+[node name="katya_die_hard" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=390449281]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1880.0
+offset_bottom = 1040.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("3_yer41")
+autoplay = true
+loop = true
+script = ExtResource("4_k6en3")
+end_behavior = 1
+events_when_stopped = "katya_die_hard"
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
+metadata/_edit_use_anchors_ = true
+
+[node name="katya_die_harder" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=1702254877]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1880.0
+offset_bottom = 1040.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("5_mkljl")
+autoplay = true
+loop = true
+script = ExtResource("4_k6en3")
+end_behavior = 1
+events_when_stopped = "katya_harder_selected"
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
+metadata/_edit_use_anchors_ = true

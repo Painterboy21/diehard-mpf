@@ -210,16 +210,14 @@ modes:
   - qualify_central_park
   - central_park_multiball
   - villain_select
-
+  
 
 
 machine:
     balls_installed: 6
-
 game:
     balls_per_game: 3
     max_players: 4
-
 playfields:
   playfield:
     default_source_device: bd_plunger
