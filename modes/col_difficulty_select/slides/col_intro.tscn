@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c4iom2c84lpya"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_a7sh0"]
+[ext_resource type="VideoStream" uid="uid://cs8epycswpgdw" path="res://videos/VillainSelect/ColStuartEnters.ogv" id="2_htwkm"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_diehv"]
+
+[node name="col_intro" type="Control" unique_id=1873253894]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a7sh0")
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=1865256443]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_htwkm")
+autoplay = true
+script = ExtResource("3_diehv")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"

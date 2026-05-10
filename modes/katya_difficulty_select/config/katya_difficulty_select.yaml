@@ -30,7 +30,7 @@ slide_player:
 
 
   play_katya_intro:
-    villain_katya_intro:
+    katya_intro:
       action: play
       expire: 3s
 

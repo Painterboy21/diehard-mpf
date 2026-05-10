@@ -28,7 +28,7 @@ slide_player:
       action: play
       expire: 0s
   play_col_intro:
-    villain_col_intro:
+    col_intro:
       action: play
       expire: 3s
 

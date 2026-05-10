@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bpdhok1jwtlwp"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_kc6c3"]
+[ext_resource type="VideoStream" uid="uid://trx2t3xtn04q" path="res://videos/VillainSelect/KarlEnters.ogv" id="2_1c0m0"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_p5pfm"]
+
+[node name="karl_intro" type="Control" unique_id=1873253894]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kc6c3")
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=1865256443]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_1c0m0")
+autoplay = true
+script = ExtResource("3_p5pfm")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"

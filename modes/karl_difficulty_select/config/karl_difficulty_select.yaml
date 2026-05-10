@@ -27,10 +27,8 @@ slide_player:
     karl_difficulty_select:
       action: play
       expire: 0s
-
-
   play_karl_intro:
-    villain_karl_intro:
+    karl_intro:
       action: play
       expire: 3s
 
