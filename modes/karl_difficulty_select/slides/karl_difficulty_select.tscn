@@ -11,10 +11,6 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 230.0
-offset_top = 103.0
-offset_right = 230.0
-offset_bottom = 103.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sdu5w")
@@ -46,7 +42,7 @@ preview_in_editor = true
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
 metadata/_edit_use_anchors_ = true
 
-[node name="karl_die_hard2" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=1702254877]
+[node name="karl_die_harder" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=1702254877]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
