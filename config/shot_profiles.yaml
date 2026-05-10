@@ -352,3 +352,12 @@ shot_profiles:
        loops: -1
        speed: 1
        sync_ms: 0
+  cp_start_multiball_profile:
+    advance_on_hit: False
+    states:
+     - name: on
+       show: flash_color
+       loops: -1
+       speed: 6
+       sync_ms: 0
+       priority: 10

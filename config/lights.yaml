@@ -152,17 +152,17 @@ lights:
     number: playfield-1-30
     subtype: led
     type: rgb
-    tags: INSERT,BONUS_MB
+    tags: INSERT,BONUS_MB,CP_LOCK
   l77:
     number: playfield-1-31
     subtype: led
     type: rgb
-    tags: INSERT,BONUS_MB
+    tags: INSERT,BONUS_MB,CP_LOCK
   l76:
     number: playfield-1-32
     subtype: led
     type: rgb
-    tags: INSERT,BONUS_MB
+    tags: INSERT,BONUS_MB,CP_LOCK
 
 
 #port2
@@ -175,7 +175,7 @@ lights:
     number: playfield-2-2
     subtype: led
     type: rgb
-    tags: BUP,BONUS_BULLET,INSERT
+    tags: BUP,BONUS_BULLET,INSERT, CP_LOCK
   l51:
     number: playfield-2-3
     subtype: led
