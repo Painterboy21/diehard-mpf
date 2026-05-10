@@ -293,6 +293,10 @@ show_player:
       show_tokens: 
         lights: f143
         color: FFFFFF
+  s_upper_pf_entrance_active:
+    upper_pf_entrance:
+      key: key_upper_pf_entrance_show
+      loops: 0
 
 
 slide_player: 
