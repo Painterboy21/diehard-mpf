@@ -28,7 +28,7 @@ slide_player:
       action: play
       expire: 0s
   play_simon_intro:
-    villain_simon_intro:
+    simon_intro:
       action: play
       expire: 3s
 
