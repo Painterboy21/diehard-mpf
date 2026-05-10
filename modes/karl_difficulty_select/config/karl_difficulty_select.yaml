@@ -2,15 +2,25 @@
 
 mode:
   start_events: start_karl_difficulty_select
-  stop_events: villain_selection_complete, ball_ended
+  stop_events:
+    - villain_selection_complete
+    - ball_ended
   priority: 310
   code: mpf.modes.carousel.code.carousel.Carousel
 
+
 mode_settings:
-  selectable_items: Die_Hard, Die_Harder
-  next_item_events: s_right_flipper_active
-  previous_item_events: s_left_flipper_active
-  select_item_events: s_fire_active, s_actionbtn_active
+  selectable_items:
+    - karl_die_hard
+    - karl_die_harder
+  next_item_events:
+    - s_right_flipper_active
+  previous_item_events:
+    - s_left_flipper_active
+  select_item_events:
+    - s_fire_active
+    - s_actionbtn_active
+
 
 slide_player:
   mode_karl_difficulty_select_started:
@@ -18,32 +28,34 @@ slide_player:
       action: play
       expire: 0s
 
+
   play_karl_intro:
     villain_karl_intro:
       action: play
       expire: 3s
 
+
 event_player:
-  carousel_item_selected{carousel=="karl_difficulty_select" and item=="Die_Hard"}:
+  carousel_item_selected{carousel=="karl_difficulty_select" and item=="karl_die_hard"}:
     - set_difficulty_die_hard
     - play_karl_intro
     - villain_intro_finished|3s
-
-  carousel_item_selected{carousel=="karl_difficulty_select" and item=="Die_Harder"}:
+  carousel_item_selected{carousel=="karl_difficulty_select" and item=="karl_die_harder"}:
     - set_difficulty_die_harder
     - play_karl_intro
     - villain_intro_finished|3s
-
   villain_intro_finished:
     - release_villain_select_vuk
     - start_karl_vreski
     - villain_selection_complete|100ms
+
 
 variable_player:
   set_difficulty_die_hard:
     selected_diehard_mode:
       string: die_hard
       action: set
+
 
   set_difficulty_die_harder:
     selected_diehard_mode:
