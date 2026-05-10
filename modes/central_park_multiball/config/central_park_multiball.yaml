@@ -260,6 +260,9 @@ variable_player:
     cp_super_jackpots_collected:
       action: add
       int: 1
+    score_park_super_jackpot_hit:
+      action: set
+      int: 1
 
   restart_cp_jackpots:
     park_super_jackpot_available:
@@ -303,3 +306,5 @@ variable_player:
     last_jackpot_value:
       action: set
       int: 20000000
+
+  
