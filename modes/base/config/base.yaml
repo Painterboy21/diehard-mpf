@@ -189,10 +189,10 @@ shots:
     profile: shoot_again
     show_tokens: 
       color: ff0000
-    enable_events: ball_save_one_enabled, ball_save_two_enabled, ball_save_three_enabled, ball_save_holly_enabled
-    disable_events: ball_save_one_grace_period, ball_save_two_grace_period, ball_save_three_grace_period, ball_save_holly_grace_period
+    enable_events: ball_save_one_enabled, ball_save_two_enabled, ball_save_three_enabled, ball_save_holly_enabled,multiball_nakatomi_started
+    disable_events: ball_save_one_grace_period, ball_save_two_grace_period, ball_save_three_grace_period, ball_save_holly_grace_period,multiball_nakatomi_ended, multiball_nakatomi_grace_period
     control_events: 
-      - events: ball_save_one_hurry_up, ball_save_two_hurry_up, ball_save_three_hurry_up, ball_save_holly_hurry_up
+      - events: ball_save_one_hurry_up, ball_save_two_hurry_up, ball_save_three_hurry_up, ball_save_holly_hurry_up,multiball_nakatomi_hurry_up
         state: 1
 
 show_player: 
