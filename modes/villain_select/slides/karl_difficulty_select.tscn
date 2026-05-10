@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://c36qg7ac7fxh6"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_sdu5w"]
+[ext_resource type="Script" uid="uid://dpe3dq8axt3g7" path="res://addons/mpf-gmc/classes/mpf_carousel.gd" id="2_jnljj"]
+[ext_resource type="VideoStream" uid="uid://dpsla4ls2vt1a" path="res://videos/VillainSelect/KarlDieHard.ogv" id="3_trfxu"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="4_uxck2"]
+[ext_resource type="VideoStream" uid="uid://yj1fe6yrkvxg" path="res://videos/VillainSelect/KarlDieHarder.ogv" id="5_kpqhs"]
+
+[node name="karl_difficulty_select" type="Control" unique_id=544795929]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 230.0
+offset_top = 103.0
+offset_right = 230.0
+offset_bottom = 103.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sdu5w")
+
+[node name="MPFCarousel" type="Control" parent="." unique_id=392338308]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_jnljj")
+carousel_name = "karl_difficulty_select"
+metadata/_custom_type_script = "uid://dpe3dq8axt3g7"
+
+[node name="karl_die_hard" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=390449281]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1880.0
+offset_bottom = 1040.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("3_trfxu")
+autoplay = true
+loop = true
+script = ExtResource("4_uxck2")
+end_behavior = 1
+events_when_stopped = "karl_hard_selected"
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
+metadata/_edit_use_anchors_ = true
+
+[node name="karl_die_hard2" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=1702254877]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1880.0
+offset_bottom = 1040.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("5_kpqhs")
+autoplay = true
+loop = true
+script = ExtResource("4_uxck2")
+end_behavior = 1
+events_when_stopped = "karl_harder_selected"
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
+metadata/_edit_use_anchors_ = true

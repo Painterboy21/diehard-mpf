@@ -8,14 +8,32 @@ mode:
   priority: 300
   code: mpf.modes.carousel.code.carousel.Carousel
 
+config:
+  - col_difficulty_select.yaml
+  - hans_difficulty_select.yaml
+  - karl_difficulty_select.yaml
+  - katya_difficulty_select.yaml
+  - simon_difficulty_select.yaml
+
+
+
 
 mode_settings:
   selectable_items:
-    - villain_col_die_hard
-    - villain_col_die_harder
-  next_item_events: s_right_flipper_active
-  previous_item_events: s_left_flipper_active
-  select_item_events: s_fire_active, s_actionbtn_active
+    - villain_instructions
+    - Col_Stuart_Villain_Select
+    - Hans_Gruber_Villain_Select
+    - Karl_Vreski_Villain_Select
+    - Katya_Villain_Select
+    - Simon_Gruber_Villain_Select
+  next_item_events:
+    - s_right_flipper_active
+  previous_item_events:
+    - s_left_flipper_active
+  select_item_events:
+    - s_fire_active
+    - s_actionbtn_active
+
 
 slide_player:
   mode_villain_select_started:
@@ -23,32 +41,190 @@ slide_player:
       action: play
       expire: 0s
 
-  villain_intro_started:
-    villain_col_intro:
-      action: play
-      expire: 3s
 
 event_player:
-  carousel_item_selected{carousel=="villain_select" and item=="villain_col_die_hard"}:
-    - set_villain_col_die_hard
-    - villain_intro_started
-    - villain_intro_finished|3s
-  carousel_item_selected{carousel=="villain_select" and item=="villain_col_die_harder"}:
-    - set_villain_col_die_harder
-    - villain_intro_started
-    - villain_intro_finished|3s
-  villain_intro_finished:
-    - release_villain_select_vuk
-    - start_colonel_stuart
-    - villain_selection_complete|300ms
+
+
+############################
+# INSTRUCTIONS
+############################
+
+  carousel_item_selected{carousel=="villain_select" and item=="villain_instructions"}:
+    - villain_select_no_pick
+
+
+############################
+# COL
+############################
+
+  carousel_item_selected{carousel=="villain_select" and item=="Col_Stuart_Villain_Select"}:
+    - set_villain_col
+    - start_col_difficulty_select|250ms
+
+
+############################
+# HANS
+############################
+
+  carousel_item_selected{carousel=="villain_select" and item=="Hans_Gruber_Villain_Select"}:
+    - set_villain_hans
+    - start_hans_difficulty_select|250ms
+
+
+############################
+# KARL
+############################
+
+  carousel_item_selected{carousel=="villain_select" and item=="Karl_Vreski_Villain_Select"}:
+    - set_villain_karl
+    - start_karl_difficulty_select|250ms
+
+
+############################
+# KATYA
+############################
+
+  carousel_item_selected{carousel=="villain_select" and item=="Katya_Villain_Select"}:
+    - set_villain_katya
+    - start_katya_difficulty_select|250ms
+
+
+############################
+# SIMON
+############################
+
+  carousel_item_selected{carousel=="villain_select" and item=="Simon_Gruber_Villain_Select"}:
+    - set_villain_simon
+    - start_simon_difficulty_select|250ms
+
+
+############################
+# FLASHING LIGHTS
+############################
+
+  carousel_item_highlighted{carousel=="villain_select" and item=="Col_Stuart_Villain_Select"}:
+    - flash_col_light
+
+  carousel_item_highlighted{carousel=="villain_select" and item=="Hans_Gruber_Villain_Select"}:
+    - flash_hans_light
+
+  carousel_item_highlighted{carousel=="villain_select" and item=="Karl_Vreski_Villain_Select"}:
+    - flash_karl_light
+
+  carousel_item_highlighted{carousel=="villain_select" and item=="Katya_Villain_Select"}:
+    - flash_katya_light
+
+  carousel_item_highlighted{carousel=="villain_select" and item=="Simon_Gruber_Villain_Select"}:
+    - flash_simon_light
+
+  carousel_item_highlighted{carousel=="villain_select" and item=="villain_instructions"}:
+    - stop_villain_flash
+
+
+############################
+# VARIABLES
+############################
 
 variable_player:
-  set_villain_col_die_hard:
-    selected_diehard_mode:
-      string: die_hard
+
+  set_villain_col:
+    selected_villain:
+      string: col
       action: set
 
-  set_villain_col_die_harder:
-    selected_diehard_mode:
-      string: die_harder
+  set_villain_hans:
+    selected_villain:
+      string: hans
       action: set
+
+  set_villain_karl:
+    selected_villain:
+      string: karl
+      action: set
+
+  set_villain_katya:
+    selected_villain:
+      string: katya
+      action: set
+
+  set_villain_simon:
+    selected_villain:
+      string: simon
+      action: set
+
+
+############################
+# LIGHT SHOWS
+############################
+
+show_player:
+
+  stop_villain_flash:
+
+    villain_flash:
+      action: stop
+
+
+  flash_col_light:
+
+    flash_color:
+      key: villain_flash
+      priority: 50
+      loops: -1
+      speed: 6
+
+      show_tokens:
+        lights: l44
+        color: 050bff
+
+
+  flash_hans_light:
+
+    flash_color:
+      key: villain_flash
+      priority: 50
+      loops: -1
+      speed: 6
+
+      show_tokens:
+        lights: l43
+        color: ff0000
+
+
+  flash_karl_light:
+
+    flash_color:
+      key: villain_flash
+      priority: 50
+      loops: -1
+      speed: 6
+
+      show_tokens:
+        lights: l40
+        color: ff8800
+
+
+  flash_katya_light:
+
+    flash_color:
+      key: villain_flash
+      priority: 50
+      loops: -1
+      speed: 6
+
+      show_tokens:
+        lights: l42
+        color: ff00ff
+
+
+  flash_simon_light:
+
+    flash_color:
+      key: villain_flash
+      priority: 50
+      loops: -1
+      speed: 6
+
+      show_tokens:
+        lights: l41
+        color: 00ff00

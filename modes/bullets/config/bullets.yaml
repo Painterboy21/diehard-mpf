@@ -179,8 +179,6 @@ show_player:
       action: stop
 
 
-
-
 light_player:
   start_villain_select:
     l10:
