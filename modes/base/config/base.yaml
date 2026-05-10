@@ -9,13 +9,13 @@ mode:
 ball_holds:
   villain_hold:
     enable_events: villain_start_lit
-    disable_events: villain_selection_complete
+    disable_events: villain_difficulty_selection_complete
     hold_devices: rightvuk
     balls_to_hold: 1
     release_all_events:
       - tilt
       - ball_ended
-      - villain_selection_complete
+      - villain_difficulty_selection_complete
 
 ball_saves: 
   one:

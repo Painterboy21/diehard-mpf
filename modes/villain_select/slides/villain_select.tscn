@@ -2,9 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_e7r7o"]
 [ext_resource type="Script" uid="uid://dpe3dq8axt3g7" path="res://addons/mpf-gmc/classes/mpf_carousel.gd" id="2_kwaca"]
-[ext_resource type="VideoStream" uid="uid://coc0x1xbcwelj" path="res://videos/VillainSelect/ColDieHard.ogv" id="3_ui17p"]
+[ext_resource type="VideoStream" uid="uid://cgwyeidig05gt" path="res://videos/VillainSelect/VillainSelectInstructions.ogv" id="3_e7r7o"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="4_5vsr6"]
-[ext_resource type="VideoStream" uid="uid://bkw4x0rct67w3" path="res://videos/VillainSelect/ColDieHarder.ogv" id="5_l5g7c"]
+[ext_resource type="VideoStream" uid="uid://bi4g4afc3fh4b" path="res://videos/VillainSelect/ColStuartVillainSelect.ogv" id="5_kwaca"]
+[ext_resource type="VideoStream" uid="uid://cvfe1bs5di1mg" path="res://videos/VillainSelect/HansGruberVillainSelect.ogv" id="6_kwaca"]
+[ext_resource type="VideoStream" uid="uid://cjae8bwbgxy2n" path="res://videos/VillainSelect/KarlVreskiVillainSelect.ogv" id="7_l5g7c"]
+[ext_resource type="VideoStream" uid="uid://cuvjuhi6c36co" path="res://videos/VillainSelect/KatyaVillainSelect.ogv" id="8_80r7y"]
+[ext_resource type="VideoStream" uid="uid://cpbtqgdbk5lmg" path="res://videos/VillainSelect/SimonGruberVillainSelect.ogv" id="9_j1ttw"]
 
 [node name="villain select" type="Control" unique_id=544795929]
 layout_mode = 3
@@ -23,7 +27,7 @@ script = ExtResource("2_kwaca")
 carousel_name = "villain_select"
 metadata/_custom_type_script = "uid://dpe3dq8axt3g7"
 
-[node name="villain_col_die_hard" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=390449281]
+[node name="villain_instructions" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=390449281]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,16 +36,17 @@ offset_right = 1880.0
 offset_bottom = 1040.0
 grow_horizontal = 2
 grow_vertical = 2
-stream = ExtResource("3_ui17p")
+stream = ExtResource("3_e7r7o")
 autoplay = true
 loop = true
 script = ExtResource("4_5vsr6")
 end_behavior = 1
 events_when_stopped = "villain_select_villain_villain_col_die_hard_selected"
+preview_in_editor = true
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
 metadata/_edit_use_anchors_ = true
 
-[node name="villain_col_die_harder" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=1702254877]
+[node name="Col_Stuart_Villain_Select" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=1702254877]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,7 +55,7 @@ offset_right = 1880.0
 offset_bottom = 1040.0
 grow_horizontal = 2
 grow_vertical = 2
-stream = ExtResource("5_l5g7c")
+stream = ExtResource("5_kwaca")
 autoplay = true
 loop = true
 script = ExtResource("4_5vsr6")
@@ -59,3 +64,87 @@ events_when_stopped = "villain_select_villain_villain_col_die_harder_selected"
 preview_in_editor = true
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
 metadata/_edit_use_anchors_ = true
+
+[node name="Hans_Gruber_Villain_Select" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=130838348]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -39.0
+offset_top = -38.0
+offset_right = 1881.0
+offset_bottom = 1042.0
+grow_horizontal = 0
+grow_vertical = 0
+stream = ExtResource("6_kwaca")
+autoplay = true
+loop = true
+script = ExtResource("4_5vsr6")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
+
+[node name="Karl_Vreski_Villain_Select" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=1775752061]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -39.0
+offset_top = -38.0
+offset_right = 1881.0
+offset_bottom = 1042.0
+grow_horizontal = 0
+grow_vertical = 0
+stream = ExtResource("7_l5g7c")
+autoplay = true
+loop = true
+script = ExtResource("4_5vsr6")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
+
+[node name="Katya_Villain_Select" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=810199230]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -39.0
+offset_top = -38.0
+offset_right = 1881.0
+offset_bottom = 1042.0
+grow_horizontal = 0
+grow_vertical = 0
+stream = ExtResource("8_80r7y")
+autoplay = true
+loop = true
+script = ExtResource("4_5vsr6")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
+
+[node name="Simon_Gruber_Villain_Select" type="VideoStreamPlayer" parent="MPFCarousel" unique_id=595336453]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -39.0
+offset_top = -38.0
+offset_right = 1881.0
+offset_bottom = 1042.0
+grow_horizontal = 0
+grow_vertical = 0
+stream = ExtResource("9_j1ttw")
+autoplay = true
+loop = true
+script = ExtResource("4_5vsr6")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
