@@ -210,6 +210,11 @@ modes:
   - qualify_central_park
   - central_park_multiball
   - villain_select
+  - col_difficulty_select
+  - hans_difficulty_select
+  - karl_difficulty_select
+  - katya_difficulty_select
+  - simon_difficulty_select
   
 
 
