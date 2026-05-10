@@ -74,6 +74,12 @@ slide_player:
       action: play
       expire: 0s
 
+variable_player:
+  trigger_central_park_ball_locked:
+    score:
+      action: add
+      int: 250000  
+
 event_player:
   slide_centralpark_mb_removed:
    - start_central_park_multiball
