@@ -7,7 +7,6 @@ mode:
     - multiball_central_park_ended
   priority: 120
 
-
 event_player:
   mode_qualify_central_park_stopped:
     - wire_ramp_exit_open
@@ -77,7 +76,9 @@ multiballs:
     start_events: mode_central_park_multiball_started
     ball_count: 3
     ball_count_type: total
-    shoot_again: 30s
+    shoot_again: 20000
+    hurry_up_time: 3000
+    grace_period: 2000
 
 
 light_player:
