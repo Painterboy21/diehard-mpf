@@ -11,13 +11,13 @@ mode:
     - start_simon_difficulty_select
     - villain_selection_complete
     - ball_ended
+
   priority: 300
   code: mpf.modes.carousel.code.carousel.Carousel
 
 
-
-
 mode_settings:
+
   selectable_items:
     - villain_instructions
     - Katya_Villain_Select
@@ -25,7 +25,7 @@ mode_settings:
     - Hans_Gruber_Villain_Select
     - Simon_Gruber_Villain_Select
     - Karl_Vreski_Villain_Select
-
+  
   next_item_events:
     - s_right_flipper_active
   previous_item_events:
@@ -33,6 +33,7 @@ mode_settings:
   select_item_events:
     - s_fire_active
     - s_actionbtn_active
+
 
 slide_player:
   mode_villain_select_started:
@@ -42,7 +43,6 @@ slide_player:
 
 
 event_player:
-
   carousel_item_selected{carousel=="villain_select" and item=="villain_instructions"}:
     - villain_select_no_pick
 
@@ -65,7 +65,6 @@ event_player:
   carousel_item_selected{carousel=="villain_select" and item=="Simon_Gruber_Villain_Select"}:
     - set_villain_simon
     - start_simon_difficulty_select|250ms
-
 
   carousel_item_highlighted{carousel=="villain_select" and item=="Col_Stuart_Villain_Select"}:
     - flash_col_light
@@ -92,63 +91,57 @@ variable_player:
       string: col
       action: set
 
-
   set_villain_hans:
     selected_villain:
       string: hans
       action: set
-
 
   set_villain_karl:
     selected_villain:
       string: karl
       action: set
 
-
   set_villain_katya:
     selected_villain:
       string: katya
       action: set
-
 
   set_villain_simon:
     selected_villain:
       string: simon
       action: set
 
-
 show_player:
-  mode_villain_select_started:
 
+  mode_villain_select_started:
     flash_color:
-      key: villain_insert_flash
-      priority: 100
+      key: villain_select_insert_flash
+      priority: 40
       loops: -1
       speed: 4
-
       show_tokens:
         lights: l10
         color: ffff00
 
 
   start_col_difficulty_select:
-    villain_insert_flash:
+    villain_select_insert_flash:
       action: stop
 
   start_hans_difficulty_select:
-    villain_insert_flash:
+    villain_select_insert_flash:
       action: stop
 
   start_karl_difficulty_select:
-    villain_insert_flash:
+    villain_select_insert_flash:
       action: stop
 
   start_katya_difficulty_select:
-    villain_insert_flash:
+    villain_select_insert_flash:
       action: stop
 
   start_simon_difficulty_select:
-    villain_insert_flash:
+    villain_select_insert_flash:
       action: stop
 
 

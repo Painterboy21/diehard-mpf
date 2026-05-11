@@ -21,7 +21,25 @@ mode_settings:
     - s_fire_active
     - s_actionbtn_active
 
+show_player:
+  mode_col_difficulty_select_started:
+    flash_color:
+      key: selected_villain_flash
+      priority: 120
+      loops: -1
+      speed: 6
+      show_tokens:
+        lights: l44
+        color: 050bff
 
+  set_difficulty_die_hard:
+    selected_villain_flash:
+      action: stop
+
+  set_difficulty_die_harder:
+    selected_villain_flash:
+      action: stop
+      
 slide_player:
   mode_col_difficulty_select_started:
     col_difficulty_select:
