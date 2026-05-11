@@ -182,7 +182,7 @@ show_player:
 light_player:
   start_villain_select:
     l10:
-      color: F5D327
+      color: ffff00
 
   reset_bullet_total:
     l10:

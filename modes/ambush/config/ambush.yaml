@@ -1,8 +1,408 @@
 #config_version=6
 
 mode:
-  start_events: start_ambush,multiball_nakatomi_ended,multiball_central_park_ended,multiball_airplane_ended
-  stop_events: ball_ended,stop_ambush,multiball_nakatomi_started,multiball_central_park_started,multiball_airplane_started
-  priority: 200
+  start_events: start_ambush
+  stop_events:
+    - ambush_collected
+    - ambush_failed
+    - ball_ended
+  priority: 160
 
 
+event_player:
+  mode_ambush_started:
+    - wire_ramp_exit_open
+    - ambush_enable_shots
+
+  timer_ambush_display_timer_tick:
+    - ambush_display_tick
+
+  timer_ambush_decay_timer_tick:
+    - ambush_tick
+
+  timer_ambush_grace_complete:
+    - ambush_enable_decay
+
+  timer_ambush_display_timer_complete:
+    - ambush_failed
+
+  ambush_left_loop_hit:
+    - ambush_extend
+
+  ambush_left_ramp_wire_hit:
+    - ambush_extend
+
+  ambush_right_loop_hit:
+    - ambush_extend
+
+  ambush_upper_loop_hit:
+    - ambush_extend
+
+  ambush_captive_hit:
+    - ambush_extend
+
+  ambush_right_ramp_collect_hit:
+    - ambush_collected
+
+  ambush_collected:
+    - wire_ramp_exit_closed
+
+  ambush_failed:
+    - wire_ramp_exit_closed
+
+  ball_ended:
+    - wire_ramp_exit_closed
+
+
+
+timers:
+  ambush_display_timer:
+    start_value: 15
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: true
+    control_events:
+      - event: ambush_extend
+        action: add
+        value: 6
+      - event: ambush_collected
+        action: stop
+      - event: ambush_failed
+        action: stop
+
+
+  ambush_decay_timer:
+    start_value: 0
+    end_value: 9999
+    direction: up
+    tick_interval: 250ms
+    start_running: true
+    control_events:
+      - event: ambush_collected
+        action: stop
+      - event: ambush_failed
+        action: stop
+
+
+  ambush_grace:
+    start_value: 3
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: true
+
+
+shots:
+  ambush_left_loop:
+    switch: s_left_orbit2
+    enable_events: ambush_enable_shots
+    disable_events:
+      - ambush_left_loop_hit
+      - ambush_collected
+      - ambush_failed
+      - ball_ended
+
+  ambush_left_ramp_wire:
+    switch: s_swleftinlane
+    enable_events: ambush_enable_shots
+    disable_events:
+      - ambush_left_ramp_wire_hit
+      - ambush_collected
+      - ambush_failed
+      - ball_ended
+
+  ambush_right_loop:
+    switch: s_right_orbit2
+    enable_events: ambush_enable_shots
+    disable_events:
+      - ambush_right_loop_hit
+      - ambush_collected
+      - ambush_failed
+      - ball_ended
+
+  ambush_upper_loop:
+    switch: s_mid_orbit
+    enable_events: ambush_enable_shots
+    disable_events:
+      - ambush_upper_loop_hit
+      - ambush_collected
+      - ambush_failed
+      - ball_ended
+
+  ambush_captive:
+    switch: s_captiveball
+    enable_events: ambush_enable_shots
+    disable_events:
+      - ambush_captive_hit
+      - ambush_collected
+      - ambush_failed
+      - ball_ended
+
+  ambush_right_ramp_collect:
+    switch: s_air_duct
+    enable_events: ambush_enable_shots
+    disable_events:
+      - ambush_collected
+      - ambush_failed
+      - ball_ended
+
+
+show_player:
+  ambush_enable_shots:
+    ambush_l20_flash:
+      show: flash
+      loops: -1
+      speed: 2
+      priority: 400
+      show_tokens:
+        led: l20
+        color: yellow
+
+    ambush_l21_flash:
+      show: flash
+      loops: -1
+      speed: 2
+      priority: 400
+      show_tokens:
+        led: l21
+        color: yellow
+
+    ambush_l22_flash:
+      show: flash
+      loops: -1
+      speed: 2
+      priority: 400
+      show_tokens:
+        led: l22
+        color: yellow
+
+    ambush_l23_flash:
+      show: flash
+      loops: -1
+      speed: 2
+      priority: 400
+      show_tokens:
+        led: l23
+        color: yellow
+
+    ambush_l52_flash:
+      show: flash
+      loops: -1
+      speed: 2
+      priority: 400
+      show_tokens:
+        led: l52
+        color: yellow
+
+    ambush_l24_flash:
+      show: flash
+      loops: -1
+      speed: 2
+      priority: 410
+      show_tokens:
+        led: l24
+        color: purple
+
+  ambush_left_loop_hit:
+    ambush_l20_flash:
+      action: stop
+
+  ambush_left_ramp_wire_hit:
+    ambush_l21_flash:
+      action: stop
+
+  ambush_right_loop_hit:
+    ambush_l22_flash:
+      action: stop
+
+  ambush_upper_loop_hit:
+    ambush_l23_flash:
+      action: stop
+
+  ambush_captive_hit:
+    ambush_l52_flash:
+      action: stop
+
+  ambush_collected:
+    ambush_l20_flash:
+      action: stop
+    ambush_l21_flash:
+      action: stop
+    ambush_l22_flash:
+      action: stop
+    ambush_l23_flash:
+      action: stop
+    ambush_l52_flash:
+      action: stop
+    ambush_l24_flash:
+      action: stop
+
+  ambush_failed:
+    ambush_l20_flash:
+      action: stop
+    ambush_l21_flash:
+      action: stop
+    ambush_l22_flash:
+      action: stop
+    ambush_l23_flash:
+      action: stop
+    ambush_l52_flash:
+      action: stop
+    ambush_l24_flash:
+      action: stop
+
+
+light_player:
+  mode_ambush_started:
+    GI:
+      color: ff9900
+    SPOTS:
+      color: 332200
+  ambush_left_loop_hit:
+    l20: off
+  ambush_left_ramp_wire_hit:
+    l21: off
+  ambush_right_loop_hit:
+    l22: off
+  ambush_upper_loop_hit:
+    l23: off
+  ambush_captive_hit:
+    l52: off
+  ambush_collected:
+    l20: off
+    l21: off
+    l22: off
+    l23: off
+    l24: off
+    l52: off
+  ambush_failed:
+    l20: off
+    l21: off
+    l22: off
+    l23: off
+    l24: off
+    l52: off
+
+
+variable_player:
+  mode_ambush_started{current_player.ambush_level <= 0}:
+    ambush_level:
+      int: 1
+      action: set
+  mode_ambush_started{current_player.ambush_level == 1}:
+    ambush_value:
+      int: 1000000
+      action: set
+    ambush_time:
+      int: 15
+      action: set
+    ambush_decay_active:
+      int: 0
+      action: set
+  mode_ambush_started{current_player.ambush_level == 2}:
+    ambush_value:
+      int: 2000000
+      action: set
+    ambush_time:
+      int: 15
+      action: set
+    ambush_decay_active:
+      int: 0
+      action: set
+  mode_ambush_started{current_player.ambush_level == 3}:
+    ambush_value:
+      int: 3000000
+      action: set
+    ambush_time:
+      int: 15
+      action: set
+    ambush_decay_active:
+      int: 0
+      action: set
+  mode_ambush_started{current_player.ambush_level >= 4}:
+    ambush_level:
+      int: 4
+      action: set
+    ambush_value:
+      int: 4000000
+      action: set
+    ambush_time:
+      int: 15
+      action: set
+    ambush_decay_active:
+      int: 0
+      action: set
+  ambush_enable_decay:
+    ambush_decay_active:
+      int: 1
+      action: set
+  ambush_display_tick{current_player.ambush_time > 0}:
+    ambush_time:
+      int: -1
+      action: add
+  ambush_tick{current_player.ambush_decay_active == 1 and current_player.ambush_level == 1 and current_player.ambush_value > 200000}:
+    ambush_value:
+      int: -20000
+      action: add
+  ambush_tick{current_player.ambush_decay_active == 1 and current_player.ambush_level == 2 and current_player.ambush_value > 400000}:
+    ambush_value:
+      int: -40000
+      action: add
+  ambush_tick{current_player.ambush_decay_active == 1 and current_player.ambush_level == 3 and current_player.ambush_value > 600000}:
+    ambush_value:
+      int: -60000
+      action: add
+  ambush_tick{current_player.ambush_decay_active == 1 and current_player.ambush_level >= 4 and current_player.ambush_value > 800000}:
+    ambush_value:
+      int: -80000
+      action: add
+  ambush_extend{current_player.ambush_level == 1}:
+    ambush_value:
+      int: 500000
+      action: add
+    ambush_time:
+      int: 6
+      action: add
+  ambush_extend{current_player.ambush_level == 2}:
+    ambush_value:
+      int: 1000000
+      action: add
+    ambush_time:
+      int: 6
+      action: add
+  ambush_extend{current_player.ambush_level == 3}:
+    ambush_value:
+      int: 1500000
+      action: add
+    ambush_time:
+      int: 6
+      action: add
+  ambush_extend{current_player.ambush_level >= 4}:
+    ambush_value:
+      int: 2000000
+      action: add
+    ambush_time:
+      int: 6
+      action: add
+  ambush_collected:
+    score: current_player.ambush_value
+    ambush_value:
+      int: 0
+      action: set
+    ambush_time:
+      int: 0
+      action: set
+    ambush_level:
+      int: 0
+      action: set
+  ambush_failed:
+    ambush_value:
+      int: 0
+      action: set
+    ambush_time:
+      int: 0
+      action: set
+    ambush_level:
+      int: 0
+      action: set
