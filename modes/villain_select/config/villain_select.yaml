@@ -112,7 +112,6 @@ variable_player:
       action: set
 
 show_player:
-
   mode_villain_select_started:
     flash_color:
       key: villain_select_insert_flash
