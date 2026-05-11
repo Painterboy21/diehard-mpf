@@ -21,14 +21,28 @@ mode_settings:
     - s_fire_active
     - s_actionbtn_active
 
-
+show_player:
+  mode_katya_difficulty_select_started:
+    flash_color:
+      key: selected_villain_flash
+      priority: 120
+      loops: -1
+      speed: 6
+      show_tokens:
+        lights: l42
+        color: ff00ff
+  set_difficulty_die_hard:
+    selected_villain_flash:
+      action: stop
+  set_difficulty_die_harder:
+    selected_villain_flash:
+      action: stop
+      
 slide_player:
   mode_katya_difficulty_select_started:
     katya_difficulty_select:
       action: play
       expire: 0s
-
-
   play_katya_intro:
     katya_intro:
       action: play
