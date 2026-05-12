@@ -3,19 +3,55 @@
 mode:
   start_events: start_ambush
   stop_events:
-    - ambush_collected
+    - ambush_finished
     - ambush_failed
     - ball_ended
   priority: 160
+
+widget_player:
+  ambush_start_timers:
+    ambush_value_widget:
+      action: play
+      priority: 500
+
+  ambush_collected:
+    ambush_value_widget:
+      action: remove
+
+    ambush_collected_widget:
+      action: play
+      priority: 9999
+
+  ambush_finished:
+    ambush_collected_widget:
+      action: remove
+
+  ambush_failed:
+    ambush_value_widget:
+      action: remove
+
+    ambush_collected_widget:
+      action: remove
+
+  ball_ended:
+    ambush_value_widget:
+      action: remove
+
+    ambush_collected_widget:
+      action: remove
+
+slide_player:
+  ambush_collected:
+    ambush_collected_slide:
+      priority: 9999
+      expire: 2s
 
 event_player:
   mode_ambush_started:
     - wire_ramp_exit_open
     - ambush_enable_shots
-    - ambush_start_timers
-
-  ambush_start_timers:
     - ambush_reset_values
+    - ambush_start_timers
 
   timer_ambush_display_timer_tick:
     - ambush_display_tick
@@ -49,6 +85,10 @@ event_player:
 
   ambush_collected:
     - wire_ramp_exit_closed
+    - ambush_finish_delay_start
+
+  timer_ambush_finish_delay_complete:
+    - ambush_finished
 
   ambush_failed:
     - wire_ramp_exit_closed
@@ -190,6 +230,8 @@ variable_player:
 
   ambush_collected:
     score: current_player.ambush_value
+
+  ambush_finished:
     ambush_value:
       int: 0
       action: set
@@ -221,11 +263,14 @@ timers:
     control_events:
       - event: ambush_start_timers
         action: restart
+
       - event: ambush_extend
         action: add
         value: 6
+
       - event: ambush_collected
         action: stop
+
       - event: ambush_failed
         action: stop
 
@@ -238,8 +283,10 @@ timers:
     control_events:
       - event: ambush_start_timers
         action: restart
+
       - event: ambush_collected
         action: stop
+
       - event: ambush_failed
         action: stop
 
@@ -252,42 +299,76 @@ timers:
     control_events:
       - event: ambush_start_timers
         action: restart
+
       - event: ambush_collected
         action: stop
+
       - event: ambush_failed
         action: stop
 
+  ambush_finish_delay:
+    start_value: 2
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - event: ambush_finish_delay_start
+        action: restart
+
 shots:
- shots:
   ambush_left_loop:
     hit_events: left_orbit_hit
     enable_events: ambush_enable_shots
-    disable_events: ambush_left_loop_hit, ambush_collected, ambush_failed, ball_ended
+    disable_events:
+      - ambush_left_loop_hit
+      - ambush_collected
+      - ambush_failed
+      - ball_ended
 
   ambush_right_loop:
     hit_events: right_orbit_hit
     enable_events: ambush_enable_shots
-    disable_events: ambush_right_loop_hit, ambush_collected, ambush_failed, ball_ended
+    disable_events:
+      - ambush_right_loop_hit
+      - ambush_collected
+      - ambush_failed
+      - ball_ended
 
   ambush_left_ramp_wire:
     switch: s_swleftinlane
     enable_events: ambush_enable_shots
-    disable_events: ambush_left_ramp_wire_hit, ambush_collected, ambush_failed, ball_ended
+    disable_events:
+      - ambush_left_ramp_wire_hit
+      - ambush_collected
+      - ambush_failed
+      - ball_ended
 
   ambush_upper_loop:
     switch: s_mid_orbit
     enable_events: ambush_enable_shots
-    disable_events: ambush_upper_loop_hit, ambush_collected, ambush_failed, ball_ended
+    disable_events:
+      - ambush_upper_loop_hit
+      - ambush_collected
+      - ambush_failed
+      - ball_ended
 
   ambush_captive:
     switch: s_captiveball
     enable_events: ambush_enable_shots
-    disable_events: ambush_captive_hit, ambush_collected, ambush_failed, ball_ended
+    disable_events:
+      - ambush_captive_hit
+      - ambush_collected
+      - ambush_failed
+      - ball_ended
 
   ambush_right_ramp_collect:
     switch: s_air_duct
     enable_events: ambush_enable_shots
-    disable_events: ambush_collected, ambush_failed, ball_ended
+    disable_events:
+      - ambush_collected
+      - ambush_failed
+      - ball_ended
 
 show_player:
   ambush_enable_shots:
@@ -368,28 +449,47 @@ show_player:
   ambush_collected:
     ambush_l20_flash:
       action: stop
+
     ambush_l21_flash:
       action: stop
+
     ambush_l22_flash:
       action: stop
+
     ambush_l23_flash:
       action: stop
+
     ambush_l52_flash:
       action: stop
+
     ambush_l24_flash:
       action: stop
+
+    ambush_collect_flash:
+      show: ambush_flash_color
+      loops: 3
+      speed: 8
+      priority: 1000
+      show_tokens:
+        led: l24
+        color: red
 
   ambush_failed:
     ambush_l20_flash:
       action: stop
+
     ambush_l21_flash:
       action: stop
+
     ambush_l22_flash:
       action: stop
+
     ambush_l23_flash:
       action: stop
+
     ambush_l52_flash:
       action: stop
+
     ambush_l24_flash:
       action: stop
 
@@ -397,6 +497,7 @@ light_player:
   mode_ambush_started:
     GI:
       color: ff9900
+
     SPOTS:
       color: 332200
 
