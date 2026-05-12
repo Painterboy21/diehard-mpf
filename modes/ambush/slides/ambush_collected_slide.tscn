@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://krku6gcx5yxk"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_an7v0"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="2_f1a4x"]
+[ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="3_uahg7"]
+
+[node name="ambush_collected_slide" type="Control" unique_id=1434040433]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_an7v0")
+
+[node name="Label" type="Label" parent="." unique_id=627260351]
+layout_mode = 0
+offset_top = -3.0
+offset_right = 1916.0
+offset_bottom = 204.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(1, 0.97, 0.9735, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 7
+theme_override_fonts/font = ExtResource("2_f1a4x")
+theme_override_font_sizes/font_size = 100
+text = "HURRYUP COLLECTED"
+horizontal_alignment = 1
+
+[node name="MPFVariable" type="Label" parent="." unique_id=758572560]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -450.0
+offset_right = 4.0
+offset_bottom = -285.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.01999998, 0.01999998, 1)
+theme_override_colors/font_shadow_color = Color(0.98, 0.98, 0.98, 0.99215686)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_f1a4x")
+theme_override_font_sizes/font_size = 100
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_uahg7")
+variable_name = "ambush_collected_value"

@@ -1,8 +1,8 @@
 #config_version=6
 
 mode:
-  start_events: ball_started, stop_ambush
-  stop_events: ball_ended, start_ambush
+  start_events: ball_started,stop_ambush,multiball_nakatomi_ended,ambush_ended,multiball_airplane_ended,multiball_central_park_ended
+  stop_events: ball_ended,start_ambush,multiball_central_park_started,multiball_nakatomi_started,multiball_airplane_started
   priority: 120
 
 ball_holds: 
