@@ -15,6 +15,46 @@ ball_saves:
     auto_launch: true
     balls_to_save: -1
 
+ball_holds:
+  airplane_lock_hold: 
+    enable_events: counter_airplane_light_lock_hit{hits==5}
+    disable_events: ball_ended
+    hold_devices: UrampUp001
+    balls_to_hold: 1
+    release_all_events:
+      - slide_airplane_ball_1_removed
+      - slide_airplane_ball_2_removed
+      - slide_airplane_mb_removed 
+      - multiball_airplane_started
+      - tilt
+      - ball_ended  
+
+shows:
+  flash_captive_yellow:
+    - duration: 100ms
+      lights:
+        l62: ffff00
+    - duration: 100ms
+      lights:
+        l62: off
+  flash_rightvuk_release:
+    - duration: 100ms
+      lights:
+        f142: 00ff00
+    - duration: 100ms
+      lights:
+        f142: off
+
+show_player:
+  s_captiveball_active:
+    flash_captive_yellow:
+      loops: 6
+      speed: 1
+  airplane_lock_release_warning:
+    flash_rightvuk_release:
+      loops: 8
+      speed: 1
+
 event_player:
   mode_qualify_airplane_started:
     - airplane_reset_locks
@@ -28,19 +68,23 @@ event_player:
     - airplane_ball_2_locked_complete
   s_UrampUp001_active{current_player.airplane_lock_lit==1 and current_player.airplane_virtual_locks==2}:
     - airplane_ball_3_locked_complete
-  airplane_ball_1_locked_complete:
-    - airplane_ball_1_locked
-    - airplane_reset_locks
-    - airplane_enable_lock_counter
-  airplane_ball_2_locked_complete:
-    - airplane_ball_2_locked
-    - airplane_reset_locks
-    - airplane_enable_lock_counter
+  slide_airplane_ball_1_removed:
+    - airplane_lock_release_warning
+    - airplane_lock_slide_done|500ms
+    - airplane_reset_locks|600ms
+    - airplane_enable_lock_counter|600ms
+  slide_airplane_ball_2_removed:
+    - airplane_lock_release_warning
+    - airplane_lock_slide_done|500ms
+    - airplane_reset_locks|600ms
+    - airplane_enable_lock_counter|600ms
   airplane_ball_3_locked_complete:
     - airplane_ball_3_locked
     - airplane_disable_lock_counter
   slide_airplane_mb_removed:
-   - start_airplane_multiball
+    - airplane_lock_release_warning
+    - airplane_lock_slide_done|500ms
+    - start_airplane_multiball|600ms
 
 
 counters:
