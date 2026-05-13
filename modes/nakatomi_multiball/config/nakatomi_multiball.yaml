@@ -40,16 +40,16 @@ event_player:
     - nakatomi_lock_close
     - nakatomi_entrance_lock_close
 
-multiballs: 
+multiballs:
   nakatomi:
     start_events: mode_nakatomi_multiball_started
     ball_count: 3
     ball_count_type: total
-    shoot_again: 20000
-    hurry_up_time: 3000
-    grace_period: 2000
-    ball_locks: tower_vuk
-
+    shoot_again: 30s
+    add_a_ball_events:
+      - add_a_ball_in_multiball
+    add_a_ball_shoot_again: 10s
+    
 shot_groups: 
   nakatomi_jackpots:
     shots: bullet_left_orbit_nakatomi,bullet_upper_pf_nakatomi,bullet_right_orbit_nakatomi,bullet_mid_orbit_nakatomi,bullet_air_duct_nakatomi

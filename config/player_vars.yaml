@@ -49,9 +49,6 @@ player_vars:
   airplane_mb_stage2:
     initial_value: 0
     value_type: int
-  extra_ball_mball_awarded:
-    initial_value: 0
-    value_type: int
   mystery_awarded_index:
     initial_value: 0
     value_type: int
@@ -94,6 +91,7 @@ player_vars:
   shot_holly_y:
     initial_value: 0
     value_type: int
+    
   ball_locking_nakatomi:
     initial_value: 0
     value_type: int
@@ -117,6 +115,7 @@ player_vars:
   jackpot_20mil:
     initial_value: 0
     value_type: int
+
   central_park_played:
     initial_value: 0
     value_type: int
@@ -126,6 +125,7 @@ player_vars:
   park_super_jackpot_available:
     initial_value: 0
     value_type: int
+
   airplane_virtual_locks:
     initial_value: 0
     value_type: int
@@ -142,6 +142,16 @@ player_vars:
     initial_value: 0
     value_type: int
   last_jackpot_value:
+    initial_value: 0
+    value_type: int
+
+  mystery_add_a_ball_airplane_awarded:
+    initial_value: 0
+    value_type: int
+  mystery_add_a_ball_central_park_awarded:
+    initial_value: 0
+    value_type: int
+  mystery_add_a_ball_nakatomi_awarded:
     initial_value: 0
     value_type: int
 
