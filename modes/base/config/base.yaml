@@ -318,11 +318,11 @@ slide_player:
     central_park_failed:
       action: play
       expire: 0s
-  multiball_nakatomi_ended{current_player.nakatomi_super_jackpot_collected==0}:
+  multiball_nakatomi_ended{current_player.played_nakatomi_multiball==1 and current_player.nakatomi_super_jackpot_collected==0}:
     nakatomi_mb_failed:
       action: play
       expire: 0s
-  multiball_airplane_ended{current_player.score_airplane_super_jackpot_hit==0}:
+  multiball_airplane_ended{current_player.airplane_multiball_played==1 and current_player.score_airplane_super_jackpot_hit==0}:
     airplane_mb_failed:
       action: play
       expire: 0s

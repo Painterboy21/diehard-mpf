@@ -135,3 +135,12 @@ player_vars:
   airplane_mb_played:
     initial_value: 0
     value_type: int
+  airplane_mb_stage:
+    initial_value: 1
+    value_type: int
+  airplane_super_jackpot_available:
+    initial_value: 0
+    value_type: int
+  last_jackpot_value:
+    initial_value: 0
+    value_type: int
