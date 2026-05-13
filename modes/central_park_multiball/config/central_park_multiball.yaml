@@ -14,6 +14,7 @@ event_player:
 
   mode_central_park_multiball_started:
     - wire_ramp_exit_open
+    - show_widget_park_jackpot_unlit
 
   slide_base_active:
     - wire_ramp_exit_open
@@ -70,6 +71,14 @@ event_player:
   restart_cp_jackpots:
     - remove_cp_super_jackpot_lit|100ms
 
+  player_shot_cp_bullets_advance{value==0}:
+    - show_widget_park_jackpot_unlit
+  player_shot_cp_bullets_advance{value!=0}:
+    - remove_widget_park_jackpot_unlit
+  player_shot_cp_bullets_advance{value==1}:
+    - show_widget_park_jackpot_lit
+  player_shot_cp_bullets_advance{value!=1}:
+    - remove_widget_park_jackpot_lit
 
 multiballs:
   central_park:
@@ -227,6 +236,28 @@ widget_player:
         action: remove
         slide: base
         key: cp_super_jackpot_lit
+  show_widget_park_jackpot_unlit:
+    park_jackpot_unlit:
+      action: play
+      slide: base
+      key: widget_park_jackpot_unlit
+      expire: 0s
+  remove_widget_park_jackpot_unlit:
+    park_jackpot_unlit:
+      action: remove
+      slide: base
+      key: widget_park_jackpot_unlit
+  show_widget_park_jackpot_lit:
+    park_jackpot_lit:
+      action: play
+      slide: base
+      key: widget_park_jackpot_lit
+      expire: 0s
+  remove_widget_park_jackpot_lit:
+    park_jackpot_lit:
+      action: remove
+      slide: base
+      key: widget_park_jackpot_lit
 
   score_park_super_jackpot:
     central_park_super_jackpot_widget:
