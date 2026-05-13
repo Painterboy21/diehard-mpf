@@ -144,3 +144,4 @@ player_vars:
   last_jackpot_value:
     initial_value: 0
     value_type: int
+
