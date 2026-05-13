@@ -85,9 +85,10 @@ multiballs:
     start_events: mode_central_park_multiball_started
     ball_count: 3
     ball_count_type: total
-    shoot_again: 20000
-    hurry_up_time: 3000
-    grace_period: 2000
+    shoot_again: 30s
+    add_a_ball_events:
+      - add_a_ball_in_multiball
+    add_a_ball_shoot_again: 10s
 
 
 light_player:
