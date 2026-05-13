@@ -1,6 +1,5 @@
 #config_version=6
 
-
 mode:
   start_events: start_airplane_multiball{current_player.airplane_mb_played==0}
   stop_events:
@@ -16,6 +15,13 @@ light_player:
       color: 505050
     SPOTS_BUMPER:
       color: 969650
+
+  airplane_light_super_jackpot:
+    l52:
+      color: ff0000
+
+  airplane_disable_super_jackpot:
+    l52: off
 
 event_player:
   mode_airplane_multiball_started:
@@ -35,12 +41,9 @@ event_player:
     - airplane_light_super_jackpot
 
   airplane_super_jackpot_hit:
-    - airplane_reset_for_next_round
-
-  airplane_reset_for_next_round:
     - reset_airplane_jackpot_counter
     - airplane_disable_super_jackpot
-    - airplane_enable_captive_for_jackpot
+    - airplane_enable_captive_for_jackpot|100ms
 
   airplane_disable_super_jackpot:
     - disable_airplane_super_jackpot
@@ -121,7 +124,8 @@ shots:
   airplane_super_jackpot:
     switch: s_captiveball
     profile: airplane_super_jackpot_profile
-    enable_events: airplane_light_super_jackpot
+    enable_events:
+      - airplane_light_super_jackpot
     disable_events:
       - airplane_super_jackpot_hit
       - disable_airplane_super_jackpot
@@ -149,7 +153,6 @@ multiballs:
     ball_count: 3
     ball_count_type: total
     shoot_again: 30s
-
 
 widget_player:
   airplane_light_super_jackpot:
@@ -196,6 +199,14 @@ variable_player:
     airplane_mb_played:
       int: 1
       action: set
+    airplane_mb_stage:
+      int: 1
+      action: set
+
+  airplane_captive_jackpot_select_hit:
+    score:
+      action: add
+      int: 500000
 
   airplane_light_super_jackpot:
     airplane_super_jackpot_available:
@@ -207,7 +218,7 @@ variable_player:
       int: 0
       action: set
 
-  airplane_left_orbit_jackpot_hit:
+  airplane_left_orbit_jackpot_hit{current_player.airplane_mb_stage==1}:
     score:
       action: add
       int: 2000000
@@ -215,7 +226,7 @@ variable_player:
       action: set
       int: 2000000
 
-  airplane_right_orbit_jackpot_hit:
+  airplane_right_orbit_jackpot_hit{current_player.airplane_mb_stage==1}:
     score:
       action: add
       int: 2000000
@@ -223,7 +234,7 @@ variable_player:
       action: set
       int: 2000000
 
-  airplane_mid_orbit_jackpot_hit:
+  airplane_mid_orbit_jackpot_hit{current_player.airplane_mb_stage==1}:
     score:
       action: add
       int: 2000000
@@ -231,7 +242,7 @@ variable_player:
       action: set
       int: 2000000
 
-  airplane_air_duct_jackpot_hit:
+  airplane_air_duct_jackpot_hit{current_player.airplane_mb_stage==1}:
     score:
       action: add
       int: 2000000
@@ -239,7 +250,7 @@ variable_player:
       action: set
       int: 2000000
 
-  airplane_upper_pf_jackpot_hit:
+  airplane_upper_pf_jackpot_hit{current_player.airplane_mb_stage==1}:
     score:
       action: add
       int: 2000000
@@ -247,8 +258,63 @@ variable_player:
       action: set
       int: 2000000
 
-  airplane_super_jackpot_hit:
+  airplane_super_jackpot_hit{current_player.airplane_mb_stage==1}:
+    score:
+      action: add
+      int: 10000000
+    last_jackpot_value:
+      action: set
+      int: 10000000
+
+  airplane_left_orbit_jackpot_hit{current_player.airplane_mb_stage>=2}:
+    score:
+      action: add
+      int: 4000000
+    last_jackpot_value:
+      action: set
+      int: 4000000
+
+  airplane_right_orbit_jackpot_hit{current_player.airplane_mb_stage>=2}:
+    score:
+      action: add
+      int: 4000000
+    last_jackpot_value:
+      action: set
+      int: 4000000
+
+  airplane_mid_orbit_jackpot_hit{current_player.airplane_mb_stage>=2}:
+    score:
+      action: add
+      int: 4000000
+    last_jackpot_value:
+      action: set
+      int: 4000000
+
+  airplane_air_duct_jackpot_hit{current_player.airplane_mb_stage>=2}:
+    score:
+      action: add
+      int: 4000000
+    last_jackpot_value:
+      action: set
+      int: 4000000
+
+  airplane_upper_pf_jackpot_hit{current_player.airplane_mb_stage>=2}:
+    score:
+      action: add
+      int: 4000000
+    last_jackpot_value:
+      action: set
+      int: 4000000
+
+  airplane_super_jackpot_hit{current_player.airplane_mb_stage>=2}:
     score:
       action: add
       int: 20000000
+    last_jackpot_value:
+      action: set
+      int: 20000000
 
+  airplane_super_jackpot_hit:
+    airplane_mb_stage:
+      int: 1
+      action: add

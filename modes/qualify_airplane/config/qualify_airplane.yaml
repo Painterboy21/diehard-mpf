@@ -18,14 +18,14 @@ ball_saves:
 ball_holds:
   airplane_lock_hold: 
     enable_events: counter_airplane_light_lock_hit{hits==5}
-    disable_events: ball_ended
+    disable_events: start_airplane_multiball
     hold_devices: UrampUp001
     balls_to_hold: 1
     release_all_events:
       - slide_airplane_ball_1_removed
       - slide_airplane_ball_2_removed
       - slide_airplane_mb_removed 
-      - multiball_airplane_started
+      - start_airplane_multiball
       - tilt
       - ball_ended  
 
