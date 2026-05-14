@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bimhn5e4m7rhi"]
+[gd_scene format=3 uid="uid://cn8ox1847apk4"]
 
 [ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_inws7"]
 [ext_resource type="Texture2D" uid="uid://cfxyj8151nfrt" path="res://godot-media/images/PoliceBadge.png" id="2_arcq3"]

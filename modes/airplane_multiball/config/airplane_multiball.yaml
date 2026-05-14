@@ -205,12 +205,19 @@ multiballs:
     
 widget_player:
   airplane_light_super_jackpot:
-    super_jackpot_lit:
+    airplane_super_jackpot_lit:
       action: play
-
-  airplane_disable_super_jackpot:
-    super_jackpot_lit:
+  airplane_super_jackpot_hit:
+    airplane_super_jackpot_lit:
       action: remove
+
+  airplane_enable_captive_for_jackpot:
+    airplane_captive_ball:
+      action: play
+  airplane_captive_jackpot_select_hit:
+    airplane_captive_ball:
+      action: remove
+
 
 slide_player:
   airplane_left_orbit_jackpot_hit:

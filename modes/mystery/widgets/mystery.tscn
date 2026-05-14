@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://m8ra0y3jund7"]
+[gd_scene format=3 uid="uid://m8ra0y3jund7"]
 
 [ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_4ki5d"]
 

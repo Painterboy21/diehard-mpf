@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bpu5xcvxojjqo"]
+[gd_scene format=3 uid="uid://bpu5xcvxojjqo"]
 
 [ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_m52hf"]
 [ext_resource type="Texture2D" uid="uid://ctmtru62irnnx" path="res://godot-media/images/hohoho.png" id="2_jwy04"]
