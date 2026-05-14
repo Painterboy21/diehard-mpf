@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://bmv1qgpx2np7l"]
+
+[ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_2eiyh"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="2_40yht"]
+
+[node name="airplane_super_jackpot_lit" type="Control" unique_id=846617471]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 35.0
+offset_top = -6.0
+offset_right = 35.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2eiyh")
+
+[node name="Label" type="Label" parent="." unique_id=1183447414]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -2.0
+offset_right = 4.0
+offset_bottom = -942.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.050000012, 0.050000012, 1)
+theme_override_colors/font_shadow_color = Color(0.98234254, 0.9823423, 0.9823424, 0.9647059)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_40yht")
+theme_override_font_sizes/font_size = 100
+text = "SUPER JACKPOT IS LIT!"
+horizontal_alignment = 1

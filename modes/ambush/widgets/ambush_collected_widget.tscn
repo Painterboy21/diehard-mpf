@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cfy1y64xf6dei"]
+[gd_scene format=3 uid="uid://bgp1a8iakl4yi"]
 
 [ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_mta6v"]
 [ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="2_jsy77"]

@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dyyjj86rv7kga"]
+[gd_scene format=3 uid="uid://chkvyjies528o"]
 
 [ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_nl61l"]
 [ext_resource type="Theme" uid="uid://cfix632dro1cx" path="res://godot-media/themes/lbl_holly.tres" id="2_6yunp"]
