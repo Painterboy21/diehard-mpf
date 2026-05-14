@@ -48,6 +48,7 @@ slide_player:
 
 event_player:
   mode_ambush_started:
+    - nakatomi_entrance_lock_close
     - wire_ramp_exit_open
     - ambush_enable_shots
     - ambush_reset_values

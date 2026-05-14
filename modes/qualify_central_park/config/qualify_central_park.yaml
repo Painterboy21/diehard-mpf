@@ -1,8 +1,8 @@
 #config_version=6
 
 mode:
-  start_events: ball_started{current_player.central_park_played==0},multiball_nakatomi_ended,ambush_ended,multiball_airplane_ended
-  stop_events: ball_ended,multiball_central_park_started,multiball_nakatomi_started,multiball_airplane_started,ambush_started
+  start_events: ball_started{current_player.central_park_played==0},multiball_nakatomi_ended,multiball_airplane_ended
+  stop_events: ball_ended,multiball_central_park_started,multiball_nakatomi_started,multiball_airplane_started
   priority: 200
 
 
