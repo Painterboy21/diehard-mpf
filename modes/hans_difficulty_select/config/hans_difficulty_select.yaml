@@ -29,8 +29,9 @@ show_player:
       loops: -1
       speed: 6
       show_tokens:
-        lights: l43
-        color: ff0000
+        lights: l43, l1000, l1001
+        color: 00ff00
+
   set_difficulty_die_hard:
     selected_villain_flash:
       action: stop

@@ -29,8 +29,8 @@ show_player:
       loops: -1
       speed: 6
       show_tokens:
-        lights: l44
-        color: 050bff
+        lights: l44, l1000, l1001
+        color: 0044ff
 
   set_difficulty_die_hard:
     selected_villain_flash:

@@ -190,21 +190,6 @@ widget_player:
       action: play
       expire: 3s
 
-  mystery_award_add_a_ball_airplane:
-    mystery_award_add_a_ball:
-      action: play
-      expire: 3s
-
-  mystery_award_add_a_ball_central_park:
-    mystery_award_add_a_ball:
-      action: play
-      expire: 3s
-
-  mystery_award_add_a_ball_nakatomi:
-    mystery_award_add_a_ball:
-      action: play
-      expire: 3s
-
   add_a_ball_in_multiball:
     mystery_award_add_a_ball:
       action: play
