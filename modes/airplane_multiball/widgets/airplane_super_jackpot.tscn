@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://coairdq5u7orl"]
+
+[ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_dftsl"]
+[ext_resource type="Theme" uid="uid://cfix632dro1cx" path="res://godot-media/themes/lbl_holly.tres" id="2_q734i"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="3_rodff"]
+[ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="4_joyix"]
+
+[sub_resource type="Animation" id="Animation_nl61l"]
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MPFVariable:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2, 4.8333335, 5.733333, 6.633333, 7.4666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.9882353), Color(1, 1, 1, 0), Color(1, 1, 1, 0.9882353)]
+}
+
+[sub_resource type="Animation" id="Animation_6yunp"]
+resource_name = "cpjackpot"
+length = 10.033334
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MPFVariable:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 5.233333, 5.866667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.98039216)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wmdc6"]
+_data = {
+&"RESET": SubResource("Animation_nl61l"),
+&"cpjackpot": SubResource("Animation_6yunp")
+}
+
+[node name="airplane_super_jackpot" type="Control" unique_id=511689800]
+self_modulate = Color(1, 1, 1, 0.007843137)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dftsl")
+
+[node name="MPFVariable" type="Label" parent="." unique_id=1109498928]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 2.0
+offset_bottom = -840.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_q734i")
+theme_override_colors/font_shadow_color = Color(0.9691369, 0.9691369, 0.9691368, 1)
+theme_override_colors/font_outline_color = Color(0.9867516, 0.9867516, 0.9867516, 1)
+theme_override_constants/line_spacing = 23
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_rodff")
+theme_override_font_sizes/font_size = 144
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_joyix")
+variable_name = "last_jackpot_value"
+comma_separate = true
+min_digits = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1847812782]
+deterministic = true
+libraries/ = SubResource("AnimationLibrary_wmdc6")
+autoplay = &"RESET"
+movie_quit_on_finish = true

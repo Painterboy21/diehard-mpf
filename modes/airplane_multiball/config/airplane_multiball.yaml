@@ -28,7 +28,34 @@ shows:
       lights:
         l52: off
 
+  airplane_captive_insane:
+    - duration: 30ms
+      coils:
+        c_captivetarget:
+          pulse_ms: 50
+
+    - duration: 30ms
+
+    - duration: 30ms
+      coils:
+        c_captivetarget:
+          pulse_ms: 50
+
+    - duration: 30ms
+
+    - duration: 30ms
+      coils:
+        c_captivetarget:
+          pulse_ms: 50
+
+    - duration: 70ms
+
 show_player:
+  airplane_super_jackpot_hit:
+    airplane_captive_insane:
+      loops: 35
+
+
   airplane_light_super_jackpot:
     airplane_super_red_flash:
       loops: -1
@@ -204,19 +231,27 @@ multiballs:
 
     
 widget_player:
-  airplane_light_super_jackpot:
-    airplane_super_jackpot_lit:
-      action: play
-  airplane_super_jackpot_hit:
-    airplane_super_jackpot_lit:
-      action: remove
-
-  airplane_enable_captive_for_jackpot:
+  airplane_start_multiball:
     airplane_captive_ball:
       action: play
+
   airplane_captive_jackpot_select_hit:
     airplane_captive_ball:
       action: remove
+
+  airplane_super_jackpot_ready:
+    airplane_super_jackpot_lit:
+      action: play
+
+  airplane_super_jackpot_hit:
+    airplane_super_jackpot_lit:
+      action: remove
+    airplane_super_jackpot:
+      action: play
+      expire: 3s
+
+
+
 
 
 slide_player:
@@ -246,7 +281,7 @@ slide_player:
       expire: 0s
 
   airplane_super_jackpot_hit:
-    super_jackpot:
+    airplane_super_jackpot:
       action: play
       expire: 0s
 
