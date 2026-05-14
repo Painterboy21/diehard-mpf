@@ -2,7 +2,6 @@
 
 mode:
   start_events: start_villain_select
-
   stop_events:
     - start_col_difficulty_select
     - start_hans_difficulty_select
@@ -11,13 +10,10 @@ mode:
     - start_simon_difficulty_select
     - villain_selection_complete
     - ball_ended
-
   priority: 300
   code: mpf.modes.carousel.code.carousel.Carousel
 
-
 mode_settings:
-
   selectable_items:
     - villain_instructions
     - Katya_Villain_Select
@@ -25,7 +21,7 @@ mode_settings:
     - Hans_Gruber_Villain_Select
     - Simon_Gruber_Villain_Select
     - Karl_Vreski_Villain_Select
-  
+
   next_item_events:
     - s_right_flipper_active
   previous_item_events:
@@ -34,13 +30,11 @@ mode_settings:
     - s_fire_active
     - s_actionbtn_active
 
-
 slide_player:
   mode_villain_select_started:
     villain_select:
       action: play
       expire: 0s
-
 
 event_player:
   carousel_item_selected{carousel=="villain_select" and item=="villain_instructions"}:
@@ -84,7 +78,6 @@ event_player:
   carousel_item_highlighted{carousel=="villain_select" and item=="villain_instructions"}:
     - stop_villain_flash
 
-
 variable_player:
   set_villain_col:
     selected_villain:
@@ -122,32 +115,39 @@ show_player:
         lights: l10
         color: ffff00
 
-
   start_col_difficulty_select:
     villain_select_insert_flash:
+      action: stop
+    villain_flash:
       action: stop
 
   start_hans_difficulty_select:
     villain_select_insert_flash:
       action: stop
+    villain_flash:
+      action: stop
 
   start_karl_difficulty_select:
     villain_select_insert_flash:
+      action: stop
+    villain_flash:
       action: stop
 
   start_katya_difficulty_select:
     villain_select_insert_flash:
       action: stop
+    villain_flash:
+      action: stop
 
   start_simon_difficulty_select:
     villain_select_insert_flash:
       action: stop
-
+    villain_flash:
+      action: stop
 
   stop_villain_flash:
     villain_flash:
       action: stop
-
 
   flash_col_light:
     flash_color:
@@ -156,9 +156,8 @@ show_player:
       loops: -1
       speed: 6
       show_tokens:
-        lights: l44
-        color: 050bff
-
+        lights: l44, l1000, l1001
+        color: 0044ff
 
   flash_hans_light:
     flash_color:
@@ -167,9 +166,8 @@ show_player:
       loops: -1
       speed: 6
       show_tokens:
-        lights: l43
-        color: ff0000
-
+        lights: l43, l1000, l1001
+        color: 00ff00
 
   flash_karl_light:
     flash_color:
@@ -178,9 +176,8 @@ show_player:
       loops: -1
       speed: 6
       show_tokens:
-        lights: l40
+        lights: l40, l1000, l1001
         color: ff8800
-
 
   flash_katya_light:
     flash_color:
@@ -189,9 +186,8 @@ show_player:
       loops: -1
       speed: 6
       show_tokens:
-        lights: l42
-        color: ff00ff
-
+        lights: l42, l1000, l1001
+        color: ff00aa
 
   flash_simon_light:
     flash_color:
@@ -200,5 +196,5 @@ show_player:
       loops: -1
       speed: 6
       show_tokens:
-        lights: l41
-        color: 00ff00
+        lights: l41, l1000, l1001
+        color: ffffff

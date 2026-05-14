@@ -29,7 +29,7 @@ show_player:
       loops: -1
       speed: 6
       show_tokens:
-        lights: l40
+        lights: l40, l1000, l1001
         color: ff8800
   set_difficulty_die_hard:
     selected_villain_flash:

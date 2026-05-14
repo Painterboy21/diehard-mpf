@@ -6,6 +6,15 @@ mode:
   priority: 200
 
 
+light_player:
+  central_park_start_multiball_hit:
+    GI: 
+      color: ffb700
+    SPOTS:
+      color: 505050
+    SPOTS_BUMPER:
+      color: 969650
+
 shot_groups: 
   qualify_central_park:
     shots: central_park_lock_left,central_park_lock_middle,central_park_lock_right
