@@ -1,8 +1,8 @@
 #config_version=6
 
 mode:
-  start_events: ball_started{current_player.airplane_mb_played==0}multiball_nakatomi_ended,multiball_central_park_ended,hans_diehard_ended
-  stop_events: ball_ended,multiball_nakatomi_started,multiball_central_park_started,start_hans_diehard
+  start_events: ball_started{current_player.airplane_mb_played==0}multiball_nakatomi_ended,multiball_central_park_ended,ambush_stopped,hans_diehard_ended
+  stop_events: ball_ended,multiball_nakatomi_started,multiball_central_park_started,start_hans_diehard,start_hans_diehard
   priority: 150
 
 
