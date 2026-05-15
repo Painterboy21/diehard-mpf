@@ -215,8 +215,8 @@ modes:
   - karl_difficulty_select
   - katya_difficulty_select
   - simon_difficulty_select
-  
-
+  - hans_diehard
+  - hans_dieharder
 
 machine:
     balls_installed: 6

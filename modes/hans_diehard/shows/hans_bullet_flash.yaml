@@ -1,0 +1,9 @@
+#show_version=6
+
+- duration: 250ms
+  lights:
+    (light): yellow
+
+- duration: 250ms
+  lights:
+    (light): off
