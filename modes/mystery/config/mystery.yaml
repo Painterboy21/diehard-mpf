@@ -69,29 +69,31 @@ event_player:
   timer_mystery_scroll_complete:
     - mystery_pick_award
 
-  mystery_pick_award{device.multiballs.airplane.balls_live_target<=1 and device.multiballs.central_park.balls_live_target<=1 and device.multiballs.nakatomi.balls_live_target<=1}:
+  # Add-A-Ball first if a multiball is active
+  mystery_pick_award{current_player.mystery_multiball_active == 1}:
+    - mystery_award_add_a_ball
+
+  mystery_pick_award{current_player.mystery_multiball_active == 0}:
     - mystery_pick_normal_award
 
-  mystery_pick_award{device.multiballs.airplane.balls_live_target>1 and current_player.mystery_add_a_ball_airplane_awarded==0}:
-    - mystery_award_add_a_ball_airplane
+  # These events track your main multiballs
+  multiball_nakatomi_started:
+    - mystery_multiball_active
+  multiball_airplane_started:
+    - mystery_multiball_active
+  multiball_central_park_started:
+    - mystery_multiball_active
 
-  mystery_pick_award{device.multiballs.central_park.balls_live_target>1 and current_player.mystery_add_a_ball_central_park_awarded==0}:
-    - mystery_award_add_a_ball_central_park
+  multiball_nakatomi_ended:
+    - mystery_multiball_inactive
+  multiball_airplane_ended:
+    - mystery_multiball_inactive
+  multiball_central_park_ended:
+    - mystery_multiball_inactive
 
-  mystery_pick_award{device.multiballs.nakatomi.balls_live_target>1 and current_player.mystery_add_a_ball_nakatomi_awarded==0}:
-    - mystery_award_add_a_ball_nakatomi
-
-  mystery_award_add_a_ball_airplane:
+  mystery_award_add_a_ball:
     - add_a_ball_in_multiball
-    - mystery_awarded|100ms
-
-  mystery_award_add_a_ball_central_park:
-    - add_a_ball_in_multiball
-    - mystery_awarded|100ms
-
-  mystery_award_add_a_ball_nakatomi:
-    - add_a_ball_in_multiball
-    - mystery_awarded|100ms
+    - mystery_awarded
 
   mystery_award_points:
     - mystery_awarded
@@ -190,7 +192,7 @@ widget_player:
       action: play
       expire: 3s
 
-  add_a_ball_in_multiball:
+  mystery_award_add_a_ball:
     mystery_award_add_a_ball:
       action: play
       expire: 3s
@@ -271,32 +273,125 @@ variable_player:
       action: set
       int: 0
 
+  mystery_multiball_active:
+    mystery_multiball_active:
+      action: set
+      int: 1
+
+  mystery_multiball_inactive:
+    mystery_multiball_active:
+      action: set
+      int: 0
+
   mystery_award_points:
     score: 2500000
     mystery_awarded_index:
       action: set
       int: 11
 
-  mystery_award_add_a_ball_airplane:
-    mystery_add_a_ball_airplane_awarded:
-      int: 1
+  mystery_award_tower_lock:
+    tower_lock_lit:
       action: set
+      int: 1
     mystery_awarded_index:
       action: set
-      int: 14
+      int: 0
 
-  mystery_award_add_a_ball_central_park:
-    mystery_add_a_ball_central_park_awarded:
-      int: 1
+  mystery_award_airplane_lock:
+    airplane_lock_lit:
       action: set
+      int: 1
+    airplane_captive_hits:
+      action: set
+      int: 0
     mystery_awarded_index:
       action: set
-      int: 14
-
-  mystery_award_add_a_ball_nakatomi:
-    mystery_add_a_ball_nakatomi_awarded:
       int: 1
+
+  mystery_award_park_lock:
+    park_locks:
+      action: add
+      int: 1
+    mystery_awarded_index:
       action: set
+      int: 2
+
+  mystery_award_villain:
+    collected_bullets:
+      action: set
+      int: 15
+    mystery_awarded_index:
+      action: set
+      int: 3
+
+  mystery_award_ball_save:
+    mystery_ball_save_awarded:
+      action: set
+      int: 1
+    mystery_awarded_index:
+      action: set
+      int: 4
+
+  mystery_award_bonus_x:
+    bonus_multiplier:
+      action: add
+      int: 1
+    mystery_awarded_index:
+      action: set
+      int: 5
+
+  mystery_award_hold_bonus_x:
+    bonus_x_held:
+      action: set
+      int: 1
+    mystery_awarded_index:
+      action: set
+      int: 6
+
+  mystery_award_super_spinner:
+    super_spinner:
+      action: set
+      int: 1
+    mystery_awarded_index:
+      action: set
+      int: 7
+
+  mystery_award_super_jets:
+    super_jets:
+      action: set
+      int: 1
+    mystery_awarded_index:
+      action: set
+      int: 8
+
+  mystery_award_playfield_x:
+    playfield_multiplier:
+      action: add
+      int: 1
+    mystery_awarded_index:
+      action: set
+      int: 9
+
+  mystery_award_ambush:
+    ambush:
+      action: add
+      int: 1
+    mystery_awarded_index:
+      action: set
+      int: 10
+
+  mystery_award_extra_ball_lit:
+    extra_balls_lit:
+      action: add
+      int: 1
+    extra_ball_mball_awarded:
+      action: set
+      int: 1
+    mystery_awarded_index:
+      action: set
+      int: 15
+
+  mystery_award_add_a_ball:
     mystery_awarded_index:
       action: set
       int: 14
