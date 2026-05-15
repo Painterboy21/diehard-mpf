@@ -9,18 +9,15 @@ mode:
 ball_holds:
   villain_hold:
     enable_events: villain_start_lit
-    disable_events: ball_ended
+    disable_events: ball_ended,villain_mode_started
     hold_devices: rightvuk
     balls_to_hold: 1
     release_all_events:
       - tilt
       - ball_ended
-      - villain_difficulty_selection_complete
-      - slide_katya_intro_removed
-      - slide_col_intro_removed
-      - slide_hans_into_removed
-      - slide_simon_intro_removed
-      - slide_karl_intro_removed
+      - start_hans_diehard
+      - start_hans_dieharder
+
 
 
 ball_saves: 
@@ -78,6 +75,9 @@ light_player:
       color: 969696
 
 
+  player_hans_complete{value==1}:
+    l43: 
+      color: 00ff00
 
   nakatomi_super_jackpot_collected: 
     l57: 

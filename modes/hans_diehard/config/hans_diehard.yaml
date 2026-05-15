@@ -1,0 +1,289 @@
+#config_version=6
+
+mode:
+  start_events: start_hans_diehard
+  stop_events:
+    - ball_ended
+    - hans_diehard_won
+    - hans_diehard_failed
+  priority: 160
+
+timers:
+  hans_diehard_timer:
+    start_value: 93
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - event: mode_hans_diehard_started
+        action: restart
+      - event: hans_diehard_won
+        action: stop
+      - event: hans_diehard_failed
+        action: stop
+
+counters:
+  hans_diehard_detonators:
+    count_events:
+      - hans_diehard_valid_h
+      - hans_diehard_valid_o
+      - hans_diehard_valid_l1
+      - hans_diehard_valid_l2
+      - hans_diehard_valid_y
+    starting_count: 0
+    count_complete_value: 8
+    direction: up
+    persist_state: false
+    reset_on_complete: false
+    events_when_complete:
+      - hans_diehard_complete
+
+shots:
+  hans_diehard_h:
+    switch: s_holly_h
+    enable_events:
+      - mode_hans_diehard_started
+      - hans_diehard_h_ready
+    disable_events:
+      - hans_diehard_valid_h
+
+  hans_diehard_o:
+    switch: s_holly_o
+    enable_events:
+      - mode_hans_diehard_started
+      - hans_diehard_o_ready
+    disable_events:
+      - hans_diehard_valid_o
+
+  hans_diehard_l1:
+    switch: s_holly_l
+    enable_events:
+      - mode_hans_diehard_started
+      - hans_diehard_l1_ready
+    disable_events:
+      - hans_diehard_valid_l1
+
+  hans_diehard_l2:
+    switch: s_holly_l1
+    enable_events:
+      - mode_hans_diehard_started
+      - hans_diehard_l2_ready
+    disable_events:
+      - hans_diehard_valid_l2
+
+  hans_diehard_y:
+    switch: s_holly_y
+    enable_events:
+      - mode_hans_diehard_started
+      - hans_diehard_y_ready
+    disable_events:
+      - hans_diehard_valid_y
+
+event_player:
+  mode_hans_diehard_started:
+    - villain_mode_started
+    - hans_diehard_h_ready
+    - hans_diehard_o_ready
+    - hans_diehard_l1_ready
+    - hans_diehard_l2_ready
+    - hans_diehard_y_ready
+    - hans_diehard_music_start
+    - hans_diehard_show_timer
+    - hans_diehard_message_start
+    - nakatomi_entrance_lock_close
+    - release_villain_select_vuk
+
+  mode_hans_diehard_stopping:
+    - villain_mode_stopped
+
+  hans_diehard_h_hit:
+    - hans_diehard_valid_h
+
+  hans_diehard_o_hit:
+    - hans_diehard_valid_o
+
+  hans_diehard_l1_hit:
+    - hans_diehard_valid_l1
+
+  hans_diehard_l2_hit:
+    - hans_diehard_valid_l2
+
+  hans_diehard_y_hit:
+    - hans_diehard_valid_y
+
+  hans_diehard_valid_h:
+    - hans_diehard_h_ready|3s
+    - hans_diehard_update_display
+    - hans_diehard_target_hit
+
+  hans_diehard_valid_o:
+    - hans_diehard_o_ready|3s
+    - hans_diehard_update_display
+    - hans_diehard_target_hit
+
+  hans_diehard_valid_l1:
+    - hans_diehard_l1_ready|3s
+    - hans_diehard_update_display
+    - hans_diehard_target_hit
+
+  hans_diehard_valid_l2:
+    - hans_diehard_l2_ready|3s
+    - hans_diehard_update_display
+    - hans_diehard_target_hit
+
+  hans_diehard_valid_y:
+    - hans_diehard_y_ready|3s
+    - hans_diehard_update_display
+    - hans_diehard_target_hit
+
+  hans_diehard_complete:
+    - hans_diehard_won
+
+  timer_hans_diehard_timer_complete:
+    - hans_diehard_failed
+
+variable_player:
+  mode_hans_diehard_started:
+    villain_mode_running:
+      int: 1
+      action: set
+    hans_diehard_progress:
+      int: 0
+      action: set
+
+  hans_diehard_target_hit{device.counters.hans_diehard_detonators.value<8}:
+    score: 1000000
+    hans_diehard_progress: 1
+
+  hans_diehard_won:
+    score: 3000000
+
+    hans_complete:
+      int: 1
+      action: set
+
+    hans_diehard_complete:
+      int: 1
+      action: set
+
+  mode_hans_diehard_stopping:
+    villain_mode_running:
+      int: 0
+      action: set
+
+show_player:
+  mode_hans_diehard_started:
+    flash_color:
+      key: hans_gruber_flash
+      priority: 160
+      loops: -1
+      speed: 6
+      show_tokens:
+        lights: l43
+        color: red
+
+  hans_diehard_h_ready:
+    hans_bullet_flash:
+      key: hans_h_flash
+      priority: 170
+      loops: -1
+      show_tokens:
+        light: l30
+
+  hans_diehard_o_ready:
+    hans_bullet_flash:
+      key: hans_o_flash
+      priority: 170
+      loops: -1
+      show_tokens:
+        light: l31
+
+  hans_diehard_l1_ready:
+    hans_bullet_flash:
+      key: hans_l1_flash
+      priority: 170
+      loops: -1
+      show_tokens:
+        light: l32
+
+  hans_diehard_l2_ready:
+    hans_bullet_flash:
+      key: hans_l2_flash
+      priority: 170
+      loops: -1
+      show_tokens:
+        light: l33
+
+  hans_diehard_y_ready:
+    hans_bullet_flash:
+      key: hans_y_flash
+      priority: 170
+      loops: -1
+      show_tokens:
+        light: l34
+
+  hans_diehard_valid_h:
+    hans_h_flash:
+      action: stop
+
+  hans_diehard_valid_o:
+    hans_o_flash:
+      action: stop
+
+  hans_diehard_valid_l1:
+    hans_l1_flash:
+      action: stop
+
+  hans_diehard_valid_l2:
+    hans_l2_flash:
+      action: stop
+
+  hans_diehard_valid_y:
+    hans_y_flash:
+      action: stop
+
+  mode_hans_diehard_stopping:
+    hans_gruber_flash:
+      action: stop
+    hans_h_flash:
+      action: stop
+    hans_o_flash:
+      action: stop
+    hans_l1_flash:
+      action: stop
+    hans_l2_flash:
+      action: stop
+    hans_y_flash:
+      action: stop
+
+light_player:
+  mode_hans_diehard_started:
+    GI:
+      color: 0bc80b
+
+  hans_diehard_valid_h:
+    l30: off
+
+  hans_diehard_valid_o:
+    l31: off
+
+  hans_diehard_valid_l1:
+    l32: off
+
+  hans_diehard_valid_l2:
+    l33: off
+
+  hans_diehard_valid_y:
+    l34: off
+
+  hans_diehard_won:
+    l43: green
+
+  mode_hans_diehard_stopping:
+    l30: off
+    l31: off
+    l32: off
+    l33: off
+    l34: off
+    l43: off
