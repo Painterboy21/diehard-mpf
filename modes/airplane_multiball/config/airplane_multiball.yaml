@@ -54,7 +54,36 @@ show_player:
   airplane_super_jackpot_hit:
     airplane_captive_insane:
       loops: 35
+ 
+  airplane_left_orbit_jackpot_hit: 
+    plane_jackpot: 
+      key: plane_mb_jackpot
+      loops: 0
+      speed: 1
 
+  airplane_right_orbit_jackpot_hit: 
+    plane_jackpot: 
+      key: plane_mb_jackpot
+      loops: 0
+      speed: 1
+  
+  airplane_mid_orbit_jackpot_hit: 
+    plane_jackpot: 
+      key: plane_mb_jackpot
+      loops: 0
+      speed: 1
+
+  airplane_air_duct_jackpot_hit: 
+    plane_jackpot: 
+      key: plane_mb_jackpot
+      loops: 0
+      speed: 1
+
+  airplane_upper_pf_jackpot_hit: 
+    plane_jackpot: 
+      key: plane_mb_jackpot
+      loops: 0
+      speed: 1
 
   airplane_light_super_jackpot:
     airplane_super_red_flash:
