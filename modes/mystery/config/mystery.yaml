@@ -192,76 +192,6 @@ widget_player:
       action: play
       expire: 3s
 
-  mystery_award_add_a_ball:
-    mystery_award_add_a_ball:
-      action: play
-      expire: 3s
-
-  mystery_award_points:
-    mystery_award_points:
-      action: play
-      expire: 3s
-
-  mystery_award_tower_lock:
-    mystery_award_tower_lock:
-      action: play
-      expire: 3s
-
-  mystery_award_airplane_lock:
-    mystery_award_airplane_lock:
-      action: play
-      expire: 3s
-
-  mystery_award_park_lock:
-    mystery_award_park_lock:
-      action: play
-      expire: 3s
-
-  mystery_award_villain:
-    mystery_award_villain:
-      action: play
-      expire: 3s
-
-  mystery_award_ball_save:
-    mystery_award_ball_save:
-      action: play
-      expire: 3s
-
-  mystery_award_bonus_x:
-    mystery_award_bonus_x:
-      action: play
-      expire: 3s
-
-  mystery_award_hold_bonus_x:
-    mystery_award_hold_bonus_x:
-      action: play
-      expire: 3s
-
-  mystery_award_super_spinner:
-    mystery_award_super_spinner:
-      action: play
-      expire: 3s
-
-  mystery_award_super_jets:
-    mystery_award_super_jets:
-      action: play
-      expire: 3s
-
-  mystery_award_playfield_x:
-    mystery_award_playfield_x:
-      action: play
-      expire: 3s
-
-  mystery_award_ambush:
-    mystery_award_ambush:
-      action: play
-      expire: 3s
-
-  mystery_award_extra_ball_lit:
-    mystery_award_extra_ball_lit:
-      action: play
-      expire: 3s
-
 variable_player:
   mystery_ho_qualified_step:
     mystery_hits_count:
@@ -287,7 +217,7 @@ variable_player:
     score: 2500000
     mystery_awarded_index:
       action: set
-      int: 11
+      int: 0
 
   mystery_award_tower_lock:
     tower_lock_lit:
@@ -295,7 +225,7 @@ variable_player:
       int: 1
     mystery_awarded_index:
       action: set
-      int: 0
+      int: 1
 
   mystery_award_airplane_lock:
     airplane_lock_lit:
@@ -306,7 +236,7 @@ variable_player:
       int: 0
     mystery_awarded_index:
       action: set
-      int: 1
+      int: 2
 
   mystery_award_park_lock:
     park_locks:
@@ -314,7 +244,7 @@ variable_player:
       int: 1
     mystery_awarded_index:
       action: set
-      int: 2
+      int: 3
 
   mystery_award_villain:
     collected_bullets:
@@ -322,7 +252,7 @@ variable_player:
       int: 15
     mystery_awarded_index:
       action: set
-      int: 3
+      int: 4
 
   mystery_award_ball_save:
     mystery_ball_save_awarded:
@@ -330,7 +260,7 @@ variable_player:
       int: 1
     mystery_awarded_index:
       action: set
-      int: 4
+      int: 5
 
   mystery_award_bonus_x:
     bonus_multiplier:
@@ -338,18 +268,10 @@ variable_player:
       int: 1
     mystery_awarded_index:
       action: set
-      int: 5
+      int: 6
 
   mystery_award_hold_bonus_x:
     bonus_x_held:
-      action: set
-      int: 1
-    mystery_awarded_index:
-      action: set
-      int: 6
-
-  mystery_award_super_spinner:
-    super_spinner:
       action: set
       int: 1
     mystery_awarded_index:
@@ -364,13 +286,21 @@ variable_player:
       action: set
       int: 8
 
+  mystery_award_super_spinner:
+    super_spinner:
+      action: set
+      int: 1
+    mystery_awarded_index:
+      action: set
+      int: 9
+
   mystery_award_playfield_x:
     playfield_multiplier:
       action: add
       int: 1
     mystery_awarded_index:
       action: set
-      int: 9
+      int: 10
 
   mystery_award_ambush:
     ambush:
@@ -378,7 +308,7 @@ variable_player:
       int: 1
     mystery_awarded_index:
       action: set
-      int: 10
+      int: 11
 
   mystery_award_extra_ball_lit:
     extra_balls_lit:
@@ -389,9 +319,9 @@ variable_player:
       int: 1
     mystery_awarded_index:
       action: set
-      int: 15
+      int: 12
 
   mystery_award_add_a_ball:
     mystery_awarded_index:
       action: set
-      int: 14
+      int: 13

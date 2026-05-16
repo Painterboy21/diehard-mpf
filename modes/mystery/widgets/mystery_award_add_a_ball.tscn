@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://3nsbhdo7x0gr"]
 
-[ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_ummed"]
+[ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_ummed"]
 [ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="2_ms1mw"]
 
 [node name="mystery_award_add_a_ball" type="Control" unique_id=1888052330]

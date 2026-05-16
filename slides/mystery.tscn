@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dx1glodi5lrec"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_5sopy"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_5sopy"]
 [ext_resource type="Script" uid="uid://cb07gtge3d1d" path="res://slides/mystery.gd" id="2_5sopy"]
 [ext_resource type="Theme" uid="uid://cfix632dro1cx" path="res://godot-media/themes/lbl_holly.tres" id="3_ghofp"]
 
@@ -49,7 +49,6 @@ text = "Vault Mystery Award"
 horizontal_alignment = 1
 
 [node name="VaultAward" type="Label" parent="VBoxContainer" unique_id=510769225]
-visible = false
 layout_mode = 2
 theme = ExtResource("3_ghofp")
 theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
@@ -58,15 +57,4 @@ theme_override_constants/shadow_offset_y = 2
 theme_override_constants/shadow_outline_size = 8
 theme_override_font_sizes/font_size = 111
 text = "LIGHT AIRPLANE LOCK"
-horizontal_alignment = 1
-
-[node name="VaultAward2" type="Label" parent="VBoxContainer" unique_id=331789804]
-layout_mode = 2
-theme = ExtResource("3_ghofp")
-theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-theme_override_constants/shadow_outline_size = 8
-theme_override_font_sizes/font_size = 111
-text = "Add A Ball"
 horizontal_alignment = 1
