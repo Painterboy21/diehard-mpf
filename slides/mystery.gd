@@ -73,6 +73,9 @@ func _ready() -> void:
 	self.finished.connect(_on_video_finished)
 	self.flash_timer.timeout.connect(_on_timer_timeout)
 
+	MPF.server.add_event_handler("mystery_awarded", self._mystery_awarded)
+	MPF.game.connect("player_update", self._on_player_update)
+
 	var stream: VideoStream = load(available_videos.pick_random())
 	self.stream = stream
 	self.play()
@@ -95,8 +98,14 @@ func _on_timer_timeout() -> void:
 		award_label.text = award_names[current_index]
 		current_index = (current_index + 1) % award_names.size()
 
-		# stop after full duration
-		if elapsed_time >= flash_duration:
-			flashing = false
-			flash_timer.stop()
+func _mystery_awarded(payload: Dictionary) -> void:
+	print(payload)
+	flashing = false
+	flash_timer.stop()
+	
+func _on_player_update(var_name: String, value: Variant) -> void:
+	if var_name == 'mystery_awarded_index':
+		if value == 13:	
+			award_label.text = "Add a Ball"
+		else:
 			award_label.text = award_names[MPF.game.player.mystery_awarded_index]
