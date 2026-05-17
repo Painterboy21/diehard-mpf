@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bxfx8o1gktt3y"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_542ar"]
+[ext_resource type="VideoStream" uid="uid://ekpq378a7xy" path="res://modes/hans_dieharder/slides/HansPlayerDied.ogv" id="2_ch7ws"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_fifks"]
+
+[node name="hans_ball_lost" type="Control" unique_id=1587462938]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_542ar")
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=507791585]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_ch7ws")
+autoplay = true
+script = ExtResource("3_fifks")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"

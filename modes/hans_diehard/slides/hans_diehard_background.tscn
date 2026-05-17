@@ -1,0 +1,170 @@
+[gd_scene format=3 uid="uid://bmr1ejbhflkrc"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_23x1e"]
+[ext_resource type="VideoStream" uid="uid://d11wn3dk276s4" path="res://videos/DieHard1Background.ogv" id="2_b2frs"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_uas50"]
+[ext_resource type="PackedScene" uid="uid://cerpiy4w578gl" path="res://modes/hans_diehard/widgets/hans_progress_widget.tscn" id="4_uas50"]
+[ext_resource type="PackedScene" uid="uid://cdm38n5v7sadm" path="res://modes/hans_diehard/widgets/hans_timer_widget.tscn" id="5_yudu3"]
+[ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="6_mugig"]
+[ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="7_kferj"]
+[ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="8_ktfam"]
+[ext_resource type="Texture2D" uid="uid://ytwrcjpchkp8" path="res://godot-media/images/player 1 overlay.png" id="9_g3nsm"]
+[ext_resource type="Texture2D" uid="uid://cgdg61xeojmu8" path="res://godot-media/images/hollywhite.png" id="10_iqljn"]
+[ext_resource type="Script" uid="uid://bh8uniugrpk3c" path="res://slides/holly_letters.gd" id="11_hk5xl"]
+[ext_resource type="Texture2D" uid="uid://c0tj7020wfqu7" path="res://godot-media/images/H.png" id="12_c056g"]
+[ext_resource type="Texture2D" uid="uid://binlmwaj3sxtd" path="res://godot-media/images/O.png" id="13_cmyb2"]
+[ext_resource type="Texture2D" uid="uid://bo1y2txk5qfxf" path="res://godot-media/images/L.png" id="14_evd32"]
+[ext_resource type="Texture2D" uid="uid://bs0sdjldfa8j4" path="res://godot-media/images/Y.png" id="15_htvvc"]
+
+[node name="hans_diehard_background" type="Control" unique_id=1876849087]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_23x1e")
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=2017886156]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_b2frs")
+autoplay = true
+loop = true
+script = ExtResource("3_uas50")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
+
+[node name="hans_progress_widget" parent="." unique_id=1421029567 instance=ExtResource("4_uas50")]
+layout_mode = 1
+
+[node name="hans_timer_widget" parent="." unique_id=1684703874 instance=ExtResource("5_yudu3")]
+layout_mode = 1
+
+[node name="Control2" type="Control" parent="." unique_id=967988825]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="main_score" type="Label" parent="Control2" unique_id=1048838247]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -98.0
+offset_bottom = -98.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+theme = ExtResource("6_mugig")
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_kferj")
+variable_name = "score"
+comma_separate = true
+
+[node name="current_ball" type="Label" parent="Control2" unique_id=1769272716]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -292.66998
+offset_bottom = -212.66998
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("8_ktfam")
+text = "Ball 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_kferj")
+variable_name = "ball"
+comma_separate = true
+template_string = "Ball %s"
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=1589179317]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.777
+
+[node name="score_overlay" type="TextureRect" parent="AspectRatioContainer" unique_id=1107110937]
+layout_mode = 2
+texture = ExtResource("9_g3nsm")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="AspectRatioContainer" unique_id=1695330213]
+layout_mode = 2
+
+[node name="player_1_score" type="Label" parent="AspectRatioContainer/Control" unique_id=88526952]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -112.0
+offset_right = 554.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_mugig")
+theme_override_font_sizes/font_size = 60
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_kferj")
+variable_type = 4
+variable_name = "score"
+comma_separate = true
+
+[node name="Hollywhite" type="Sprite2D" parent="." unique_id=1237423753]
+position = Vector2(160, 823)
+texture = ExtResource("10_iqljn")
+
+[node name="HollyLetters" type="Control" parent="." unique_id=126271155]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_hk5xl")
+
+[node name="H" type="Sprite2D" parent="HollyLetters" unique_id=24461905]
+position = Vector2(130.5, 822.763)
+scale = Vector2(0.140065, 0.109528)
+texture = ExtResource("12_c056g")
+
+[node name="O" type="Sprite2D" parent="HollyLetters" unique_id=478243289]
+position = Vector2(175, 823)
+scale = Vector2(0.147368, 0.107018)
+texture = ExtResource("13_cmyb2")
+
+[node name="L" type="Sprite2D" parent="HollyLetters" unique_id=108471217]
+position = Vector2(211.919, 821.967)
+scale = Vector2(0.138727, 0.103263)
+texture = ExtResource("14_evd32")
+
+[node name="L1" type="Sprite2D" parent="HollyLetters" unique_id=1562401939]
+position = Vector2(242.094, 822)
+scale = Vector2(0.137007, 0.103201)
+texture = ExtResource("14_evd32")
+
+[node name="Y" type="Sprite2D" parent="HollyLetters" unique_id=1523090683]
+position = Vector2(266.5, 822)
+scale = Vector2(0.134868, 0.103093)
+texture = ExtResource("15_htvvc")
