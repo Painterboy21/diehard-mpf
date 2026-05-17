@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://ciou3dud7bhci"]
+[gd_scene format=3 uid="uid://ciou3dud7bhci"]
 
 [ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_u1lr7"]
 [ext_resource type="Theme" uid="uid://cfix632dro1cx" path="res://godot-media/themes/lbl_holly.tres" id="2_jyiw4"]
 
-[node name="QualifyAmbush" type="Control"]
+[node name="QualifyAmbush" type="Control" unique_id=1172388702]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ grow_vertical = 2
 script = ExtResource("1_u1lr7")
 metadata/_custom_type_script = "uid://d4ky3s4bg1ouq"
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=205639021]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,14 +23,16 @@ grow_vertical = 2
 theme_override_constants/margin_top = 40
 theme_override_constants/margin_bottom = 40
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1989413797]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=187091693]
 layout_mode = 2
 theme = ExtResource("2_jyiw4")
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_outline_size = 16
 theme_override_font_sizes/font_size = 65
 text = "AMBUSH LIT FOR 1,000,000"
 horizontal_alignment = 1

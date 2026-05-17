@@ -1,7 +1,7 @@
 #config_version=6
 
 mode:
-  start_events: ball_started,stop_ambush,multiball_nakatomi_ended,ambush_ended,multiball_airplane_ended,multiball_central_park_ended,hans_diehard_ended
+  start_events: ball_started,stop_ambush,multiball_nakatomi_ended,mode_ambush_stopped,multiball_airplane_ended,multiball_central_park_ended,hans_diehard_ended
   stop_events: ball_ended,start_ambush,multiball_central_park_started,multiball_nakatomi_started,multiball_airplane_started,start_hans_diehard
   priority: 120
 

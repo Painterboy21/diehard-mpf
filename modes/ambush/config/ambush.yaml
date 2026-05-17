@@ -18,26 +18,12 @@ widget_player:
     ambush_value_widget:
       action: remove
 
-    ambush_collected_widget:
-      action: play
-      priority: 9999
-
-  ambush_finished:
-    ambush_collected_widget:
-      action: remove
-
   ambush_failed:
     ambush_value_widget:
       action: remove
 
-    ambush_collected_widget:
-      action: remove
-
   ball_ended:
     ambush_value_widget:
-      action: remove
-
-    ambush_collected_widget:
       action: remove
 
 slide_player:
@@ -372,6 +358,7 @@ shots:
       - ball_ended
 
 show_player:
+
   ambush_enable_shots:
     ambush_l20_flash:
       show: ambush_flash_color
@@ -465,6 +452,11 @@ show_player:
 
     ambush_l24_flash:
       action: stop
+
+    ambush_collected_show:
+      key: key_ambush_collected_show
+      loops: 0
+      speed: 1
 
     ambush_collect_flash:
       show: ambush_flash_color

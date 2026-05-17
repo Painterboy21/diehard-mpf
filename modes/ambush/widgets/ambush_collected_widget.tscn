@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://bgp1a8iakl4yi"]
+[gd_scene format=3 uid="uid://dgnq6t4ppsr4v"]
 
-[ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_mta6v"]
+[ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_mta6v"]
 [ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="2_jsy77"]
-[ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="3_g2iko"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="3_g2iko"]
 
 [node name="ambush_collected_widget" type="Control" unique_id=287608978]
 layout_mode = 3
