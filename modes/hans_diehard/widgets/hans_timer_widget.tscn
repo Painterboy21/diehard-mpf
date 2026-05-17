@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://cdm38n5v7sadm"]
+
+[ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_3w81q"]
+[ext_resource type="Texture2D" uid="uid://cfxyj8151nfrt" path="res://godot-media/images/PoliceBadge.png" id="2_nbu3r"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="3_k1x2n"]
+[ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="4_6ysvn"]
+
+[node name="hans_timer_widget" type="Control" unique_id=1684703874]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3w81q")
+
+[node name="PoliceBadge" type="Sprite2D" parent="." unique_id=1705670128]
+position = Vector2(154, 522)
+scale = Vector2(0.7561838, 0.738764)
+texture = ExtResource("2_nbu3r")
+
+[node name="MPFVariable" type="Label" parent="." unique_id=1030957635]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 134.0
+offset_top = 431.0
+offset_right = -1741.0
+offset_bottom = -526.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.00999999, 0.00999999, 1)
+theme_override_colors/font_outline_color = Color(0.99, 0.99, 0.99, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 9
+theme_override_fonts/font = ExtResource("3_k1x2n")
+theme_override_font_sizes/font_size = 80
+vertical_alignment = 1
+script = ExtResource("4_6ysvn")
+variable_name = "hans_diehard_time"
+template_string = "%s"
+initialize_empty = false
+update_event = "player_hans_diehard_time"

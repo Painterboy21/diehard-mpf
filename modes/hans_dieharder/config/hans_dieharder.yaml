@@ -6,7 +6,7 @@ mode:
     - ball_ended
     - hans_dieharder_won
     - hans_dieharder_failed
-  priority: 165
+  priority: 170
 
 timers:
   hans_dieharder_timer:
@@ -138,12 +138,12 @@ event_player:
     - hans_dieharder_target_hit
 
   hans_dieharder_complete:
-    - hans_dieharder_won
+    - hans_dieharder_completed_sequence
+    - hans_dieharder_completed_slide|4s
+    - hans_dieharder_won|8s
 
   timer_hans_dieharder_timer_complete:
     - hans_dieharder_failed
-    - hans_dieharder_blackout|2s
-    - end_ball|3s
 
 variable_player:
   mode_hans_dieharder_started:
@@ -155,23 +155,39 @@ variable_player:
       int: 0
       action: set
 
+    hans_dieharder_time:
+      int: 93
+      action: set
+
+    hans_dieharder_remaining:
+      int: 8
+      action: set
+
+  timer_hans_dieharder_timer_tick:
+    hans_dieharder_time:
+      int: ticks
+      action: set
+
+  logicblock_hans_dieharder_detonators_hit:
+    hans_dieharder_remaining:
+      int: 8 - device.counters.hans_dieharder_detonators.value
+      action: set
+
   hans_dieharder_target_hit{device.counters.hans_dieharder_detonators.value<8}:
     score: 1000000
-    hans_dieharder_progress: 1
+    hans_dieharder_progress:
+      int: 1
+      action: add
 
   hans_dieharder_won:
     score: 3000000
-
     hans_complete:
       int: 1
       action: set
-
     hans_dieharder_complete:
       int: 1
       action: set
-
-  hans_dieharder_failed:
-    hans_dieharder_failed:
+    hans_bonus:
       int: 1
       action: set
 
@@ -183,8 +199,8 @@ variable_player:
 show_player:
   mode_hans_dieharder_started:
     flash_color:
-      key: hans_dieharder_gruber_flash
-      priority: 165
+      key: hans_dieharder_flash
+      priority: 170
       loops: -1
       speed: 6
       show_tokens:
@@ -194,7 +210,7 @@ show_player:
   hans_dieharder_h_ready:
     hans_bullet_flash:
       key: hans_dieharder_h_flash
-      priority: 175
+      priority: 180
       loops: -1
       show_tokens:
         light: l30
@@ -202,7 +218,7 @@ show_player:
   hans_dieharder_o_ready:
     hans_bullet_flash:
       key: hans_dieharder_o_flash
-      priority: 175
+      priority: 180
       loops: -1
       show_tokens:
         light: l31
@@ -210,7 +226,7 @@ show_player:
   hans_dieharder_l1_ready:
     hans_bullet_flash:
       key: hans_dieharder_l1_flash
-      priority: 175
+      priority: 180
       loops: -1
       show_tokens:
         light: l32
@@ -218,7 +234,7 @@ show_player:
   hans_dieharder_l2_ready:
     hans_bullet_flash:
       key: hans_dieharder_l2_flash
-      priority: 175
+      priority: 180
       loops: -1
       show_tokens:
         light: l33
@@ -226,7 +242,7 @@ show_player:
   hans_dieharder_y_ready:
     hans_bullet_flash:
       key: hans_dieharder_y_flash
-      priority: 175
+      priority: 180
       loops: -1
       show_tokens:
         light: l34
@@ -252,7 +268,7 @@ show_player:
       action: stop
 
   mode_hans_dieharder_stopping:
-    hans_dieharder_gruber_flash:
+    hans_dieharder_flash:
       action: stop
     hans_dieharder_h_flash:
       action: stop
@@ -285,39 +301,11 @@ light_player:
   hans_dieharder_valid_y:
     l34: off
 
-  hans_dieharder_failed:
-    GI:
-      color: ff0000
-
-    l30:
-      color: 220000
-
-    l31:
-      color: 220000
-
-    l32:
-      color: 220000
-
-    l33:
-      color: 220000
-
-    l34:
-      color: 220000
-
-    l43:
-      color: 220000
-
-  hans_dieharder_blackout:
-    GI: off
-    l30: off
-    l31: off
-    l32: off
-    l33: off
-    l34: off
-    l43: off
-
   hans_dieharder_won:
     l43: green
+
+  hans_dieharder_failed:
+    l43: red
 
   mode_hans_dieharder_stopping:
     l30: off
@@ -325,3 +313,81 @@ light_player:
     l32: off
     l33: off
     l34: off
+    l43: off
+
+slide_player:
+  mode_hans_dieharder_started:
+    hans_dieharder_progress:
+      action: play
+      expire: 0s
+
+  mode_hans_dieharder_stopping:
+    hans_dieharder_progress:
+      action: remove
+
+  logicblock_hans_dieharder_detonators_hit{count==1}:
+    detonator_1:
+      action: play
+      expire: 4s
+
+  logicblock_hans_dieharder_detonators_hit{count==2}:
+    detonator_2:
+      action: play
+      expire: 4s
+
+  logicblock_hans_dieharder_detonators_hit{count==3}:
+    detonator_3:
+      action: play
+      expire: 4s
+
+  logicblock_hans_dieharder_detonators_hit{count==4}:
+    detonator_4:
+      action: play
+      expire: 4s
+
+  logicblock_hans_dieharder_detonators_hit{count==5}:
+    detonator_5:
+      action: play
+      expire: 4s
+
+  logicblock_hans_dieharder_detonators_hit{count==6}:
+    detonator_6:
+      action: play
+      expire: 4s
+
+  logicblock_hans_dieharder_detonators_hit{count==7}:
+    detonator_7:
+      action: play
+      expire: 4s
+
+  logicblock_hans_dieharder_detonators_complete:
+    detonator_8:
+      action: play
+      expire: 4s
+
+  hans_dieharder_completed_slide:
+    detonators_completed:
+      action: play
+      expire: 4s
+
+  hans_dieharder_failed:
+    hans_ball_lost:
+      action: play
+      expire: 4s
+
+widget_player:
+  mode_hans_dieharder_started:
+    hans_dieharder_timer_widget:
+      slide: hans_dieharder_progress
+      action: play
+
+    hans_diehard_progress_widget:
+      slide: hans_dieharder_progress
+      action: play
+
+  mode_hans_dieharder_stopping:
+    hans_dieharder_timer_widget:
+      action: remove
+
+    hans_dieharder_progress_widget:
+      action: remove
