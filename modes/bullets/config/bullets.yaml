@@ -1,12 +1,25 @@
 #config_version=6
 
 mode:
-  start_events: ball_started,multiball_nakatomi_ended,multiball_central_park_ended,multiball_airplane_ended,mode_ambush_stopped,hans_diehard_ended
-  stop_events: ball_ended,multiball_nakatomi_started,multiball_central_park_started,multiball_airplane_started,ambush_started,start_hans_diehard
+  start_events:
+    - ball_started
+    - multiball_nakatomi_ended
+    - multiball_central_park_ended
+    - multiball_airplane_ended
+    - mode_ambush_stopped
+    - hans_diehard_won_complete
+    - hans_diehard_failed_complete
+
+  stop_events:
+    - ball_ended
+    - multiball_nakatomi_started
+    - multiball_central_park_started
+    - multiball_airplane_started
+    - start_ambush
+    - start_hans_diehard
+
   priority: 110
-
-
-
+  
 event_player:
   left_orbit_hit{current_player.shot_bullet_left_orbit == 0}:
     - bullet_new_unique_shot
@@ -101,7 +114,6 @@ shots:
 
 
 show_player:
-
   bullets_combo_max:
     flicker_color:
       key: key_bullets_combo_max
