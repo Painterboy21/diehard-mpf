@@ -15,6 +15,15 @@
 [ext_resource type="Texture2D" uid="uid://binlmwaj3sxtd" path="res://godot-media/images/O.png" id="13_cmyb2"]
 [ext_resource type="Texture2D" uid="uid://bo1y2txk5qfxf" path="res://godot-media/images/L.png" id="14_evd32"]
 [ext_resource type="Texture2D" uid="uid://bs0sdjldfa8j4" path="res://godot-media/images/Y.png" id="15_htvvc"]
+[ext_resource type="Texture2D" uid="uid://bb3045ld4jo7u" path="res://godot-media/images/Detonators/Detonator1.png" id="16_cmyb2"]
+[ext_resource type="Script" uid="uid://dcwjyu352ua3g" path="res://modes/hans_diehard/slides/detonators.gd" id="16_evd32"]
+[ext_resource type="Texture2D" uid="uid://dgj3qlcbcqwa7" path="res://godot-media/images/Detonators/Detonator7.png" id="16_mugig"]
+[ext_resource type="Texture2D" uid="uid://bjquoenugp2oh" path="res://godot-media/images/Detonators/Detonator2.png" id="17_evd32"]
+[ext_resource type="Texture2D" uid="uid://duffsm3leqd04" path="res://godot-media/images/Detonators/Detonator3.png" id="18_htvvc"]
+[ext_resource type="Texture2D" uid="uid://d1oeuf2cfd8n5" path="res://godot-media/images/Detonators/Detonator4.png" id="19_jmbaf"]
+[ext_resource type="Texture2D" uid="uid://d247imuretpi0" path="res://godot-media/images/Detonators/Detonator5.png" id="20_5xuoq"]
+[ext_resource type="Texture2D" uid="uid://kgm007q4a0pd" path="res://godot-media/images/Detonators/Detonator6.png" id="21_hl42m"]
+[ext_resource type="Texture2D" uid="uid://cyuh0skrfoso2" path="res://godot-media/images/Detonators/Detonator8.png" id="23_vd1jh"]
 
 [node name="hans_diehard_background" type="Control" unique_id=1876849087]
 layout_mode = 3
@@ -168,3 +177,61 @@ texture = ExtResource("14_evd32")
 position = Vector2(266.5, 822)
 scale = Vector2(0.134868, 0.103093)
 texture = ExtResource("15_htvvc")
+
+[node name="detonators" type="Control" parent="." unique_id=770967386]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("16_evd32")
+
+[node name="1_detonator" type="Sprite2D" parent="detonators" unique_id=500312049]
+position = Vector2(1827.9999, 744.5)
+scale = Vector2(0.2160736, 0.27018303)
+texture = ExtResource("16_cmyb2")
+
+[node name="2_detonator" type="Sprite2D" parent="detonators" unique_id=1249807803]
+position = Vector2(1827, 742)
+scale = Vector2(0.22397895, 0.2755651)
+texture = ExtResource("17_evd32")
+
+[node name="3_detonator" type="Sprite2D" parent="detonators" unique_id=981257424]
+position = Vector2(1823, 733)
+scale = Vector2(0.23978893, 0.29601723)
+texture = ExtResource("18_htvvc")
+
+[node name="4_detonator" type="Sprite2D" parent="detonators" unique_id=876579687]
+position = Vector2(1823.5, 734.4375)
+scale = Vector2(0.23847179, 0.29372993)
+texture = ExtResource("19_jmbaf")
+
+[node name="5_detonator" type="Sprite2D" parent="detonators" unique_id=738464055]
+position = Vector2(1821, 734)
+scale = Vector2(0.2424241, 0.29278785)
+texture = ExtResource("20_5xuoq")
+
+[node name="6_detonator" type="Sprite2D" parent="detonators" unique_id=885404107]
+position = Vector2(1821, 734.5)
+scale = Vector2(0.25131753, 0.2981701)
+texture = ExtResource("21_hl42m")
+
+[node name="7_detonator" type="Sprite2D" parent="detonators" unique_id=486002202]
+position = Vector2(1824, 736.9688)
+scale = Vector2(0.25164688, 0.29702646)
+texture = ExtResource("16_mugig")
+
+[node name="8_detonator" type="Sprite2D" parent="detonators" unique_id=724448223]
+position = Vector2(1722, 590)
+scale = Vector2(0.26218727, 0.3132401)
+texture = ExtResource("23_vd1jh")
+centered = false
+
+[node name="DetonatorsRemaining" type="Label" parent="detonators" unique_id=1089960136]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
