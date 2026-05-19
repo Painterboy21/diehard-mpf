@@ -8,6 +8,8 @@ mode:
     - mode_ambush_stopped
     - hans_diehard_won_complete
     - hans_diehard_failed_complete
+    - hans_dieharder_won_complete
+    - hans_dieharder_failed_complete
 
   stop_events:
     - ball_ended
@@ -15,6 +17,7 @@ mode:
     - multiball_central_park_started
     - mode_ambush_started
     - start_hans_diehard
+    - start_hans_dieharder
   priority: 150
 
 

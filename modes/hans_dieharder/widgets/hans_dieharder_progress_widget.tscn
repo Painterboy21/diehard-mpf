@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://d3sjdnflo7xki"]
+
+[ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_ddhfd"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="2_rcen2"]
+[ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="3_4jtvh"]
+
+[node name="hans_dieharder_progress_widget" type="Control" unique_id=1421029567]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 184.0
+offset_top = 31.0
+offset_right = 184.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ddhfd")
+
+[node name="Label" type="Label" parent="." unique_id=1372042392]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 117.0
+offset_bottom = 167.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.029999971, 0.029999971, 1)
+theme_override_colors/font_shadow_color = Color(0.99, 0.99, 0.99, 0.99215686)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/font = ExtResource("2_rcen2")
+theme_override_font_sizes/font_size = 90
+text = "HIT THE STANDUP TARGETS-DETONATORS LEFT:"
+
+[node name="MPFVariable" type="Label" parent="." unique_id=746287948]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 1715.0
+offset_right = 5.0
+offset_bottom = 123.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.019607844, 0.019607844, 1)
+theme_override_colors/font_shadow_color = Color(0.98, 0.98, 0.98, 0.9843137)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/font = ExtResource("2_rcen2")
+theme_override_font_sizes/font_size = 90
+script = ExtResource("3_4jtvh")
+variable_name = "hans_dieharder_remaining"
+template_string = "%s"
+initialize_empty = false
+update_event = "player_hans_diehard_remainings"

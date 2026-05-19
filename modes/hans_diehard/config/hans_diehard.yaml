@@ -1,7 +1,8 @@
 #config_version=6
 
 mode:
-  start_events: start_hans_diehard
+  start_events:
+    - start_hans_diehard{current_player.hans_complete==0}
 
   stop_events:
     - hans_diehard_won_complete
@@ -99,9 +100,11 @@ event_player:
     - hans_diehard_message_start
     - nakatomi_entrance_lock_close
     - release_villain_select_vuk
+    - wire_ramp_exit_open
 
   mode_hans_diehard_stopping:
     - villain_mode_stopped
+    - wire_ramp_exit_closed
 
   hans_diehard_h_hit:
     - hans_diehard_valid_h
@@ -323,6 +326,17 @@ light_player:
 
     SPOTS:
       color: 332200
+
+  hans_diehard_valid_h:
+    l30: off
+  hans_diehard_valid_o:
+    l31: off
+  hans_diehard_valid_l1:
+    l32: off
+  hans_diehard_valid_l2:
+    l33: off
+  hans_diehard_valid_y:
+    l34: off
 
 slide_player:
   mode_hans_diehard_started:

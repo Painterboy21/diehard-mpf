@@ -1,12 +1,12 @@
 #config_version=6
 
 mode:
-  start_events: start_hans_dieharder
+  start_events: start_hans_dieharder{current_player.hans_complete==0}
   stop_events:
-    - ball_ended
-    - hans_dieharder_won
-    - hans_dieharder_failed
+    - hans_dieharder_won_complete
+    - hans_dieharder_failed_complete
   priority: 170
+
 
 timers:
   hans_dieharder_timer:
@@ -18,10 +18,11 @@ timers:
     control_events:
       - event: mode_hans_dieharder_started
         action: restart
-      - event: hans_dieharder_won
+      - event: hans_dieharder_won_complete
         action: stop
-      - event: hans_dieharder_failed
+      - event: hans_dieharder_failed_complete
         action: stop
+
 
 counters:
   hans_dieharder_detonators:
@@ -38,6 +39,7 @@ counters:
     reset_on_complete: false
     events_when_complete:
       - hans_dieharder_complete
+
 
 shots:
   hans_dieharder_h:
@@ -80,6 +82,7 @@ shots:
     disable_events:
       - hans_dieharder_valid_y
 
+
 event_player:
   mode_hans_dieharder_started:
     - villain_mode_started
@@ -93,22 +96,20 @@ event_player:
     - hans_dieharder_message_start
     - nakatomi_entrance_lock_close
     - release_villain_select_vuk
-
+    - wire_ramp_exit_open
   mode_hans_dieharder_stopping:
     - villain_mode_stopped
+    - enable_hans_dieharder_flippers
+    - wire_ramp_exit_closed
 
   hans_dieharder_h_hit:
     - hans_dieharder_valid_h
-
   hans_dieharder_o_hit:
     - hans_dieharder_valid_o
-
   hans_dieharder_l1_hit:
     - hans_dieharder_valid_l1
-
   hans_dieharder_l2_hit:
     - hans_dieharder_valid_l2
-
   hans_dieharder_y_hit:
     - hans_dieharder_valid_y
 
@@ -116,39 +117,49 @@ event_player:
     - hans_dieharder_h_ready|3s
     - hans_dieharder_update_display
     - hans_dieharder_target_hit
-
   hans_dieharder_valid_o:
     - hans_dieharder_o_ready|3s
     - hans_dieharder_update_display
     - hans_dieharder_target_hit
-
   hans_dieharder_valid_l1:
     - hans_dieharder_l1_ready|3s
     - hans_dieharder_update_display
     - hans_dieharder_target_hit
-
   hans_dieharder_valid_l2:
     - hans_dieharder_l2_ready|3s
     - hans_dieharder_update_display
     - hans_dieharder_target_hit
-
   hans_dieharder_valid_y:
     - hans_dieharder_y_ready|3s
     - hans_dieharder_update_display
     - hans_dieharder_target_hit
 
   hans_dieharder_complete:
-    - hans_dieharder_completed_sequence
     - hans_dieharder_completed_slide|4s
-    - hans_dieharder_won|8s
+    - hans_dieharder_won_complete|8s
+
 
   timer_hans_dieharder_timer_complete:
-    - hans_dieharder_failed
+    - hans_dieharder_fail_mode
+
+
+  ball_drain{current_player.villain_mode_running==1 and current_player.hans_dieharder_failed_active==0}:
+    - hans_dieharder_fail_mode
+    - hans_dieharder_failed_complete|4s
+
+ 
+  ball_drain{current_player.hans_dieharder_failed_active==1}:
+    - hans_dieharder_failed_complete|4s
+
 
 variable_player:
   mode_hans_dieharder_started:
     villain_mode_running:
       int: 1
+      action: set
+
+    hans_dieharder_failed_active:
+      int: 0
       action: set
 
     hans_dieharder_progress:
@@ -179,14 +190,24 @@ variable_player:
       int: 1
       action: add
 
-  hans_dieharder_won:
+  hans_dieharder_fail_mode:
+    hans_dieharder_failed_active:
+      int: 1
+      action: set
+
+  hans_dieharder_won_complete:
     score: 3000000
+
+  
     hans_complete:
       int: 1
       action: set
+
     hans_dieharder_complete:
       int: 1
       action: set
+
+   
     hans_bonus:
       int: 1
       action: set
@@ -196,13 +217,28 @@ variable_player:
       int: 0
       action: set
 
+    hans_dieharder_failed_active:
+      int: 0
+      action: set
+
+
 show_player:
+  hans_dieharder_target_hit:
+    flash_color:
+      key: hans_dieharder_gi_red_hit_flash
+      priority: 300
+      loops: 3
+      speed: 10
+      show_tokens:
+        lights: GI
+        color: ff0000
+
   mode_hans_dieharder_started:
     flash_color:
-      key: hans_dieharder_flash
+      key: hans_dieharder_gruber_flash
       priority: 170
       loops: -1
-      speed: 6
+      speed: 8
       show_tokens:
         lights: l43
         color: red
@@ -250,25 +286,23 @@ show_player:
   hans_dieharder_valid_h:
     hans_dieharder_h_flash:
       action: stop
-
   hans_dieharder_valid_o:
     hans_dieharder_o_flash:
       action: stop
-
   hans_dieharder_valid_l1:
     hans_dieharder_l1_flash:
       action: stop
-
   hans_dieharder_valid_l2:
     hans_dieharder_l2_flash:
       action: stop
-
   hans_dieharder_valid_y:
     hans_dieharder_y_flash:
       action: stop
 
-  mode_hans_dieharder_stopping:
-    hans_dieharder_flash:
+  hans_dieharder_fail_mode:
+    hans_dieharder_gi_red_hit_flash:
+      action: stop
+    hans_dieharder_gruber_flash:
       action: stop
     hans_dieharder_h_flash:
       action: stop
@@ -281,31 +315,51 @@ show_player:
     hans_dieharder_y_flash:
       action: stop
 
+  mode_hans_dieharder_stopping:
+    hans_dieharder_gi_red_hit_flash:
+      action: stop
+    hans_dieharder_gruber_flash:
+      action: stop
+    hans_dieharder_h_flash:
+      action: stop
+    hans_dieharder_o_flash:
+      action: stop
+    hans_dieharder_l1_flash:
+      action: stop
+    hans_dieharder_l2_flash:
+      action: stop
+    hans_dieharder_y_flash:
+      action: stop
+
+
 light_player:
   mode_hans_dieharder_started:
     GI:
-      color: 0bc80b
+      color: 00ff00
+
+    SPOTS:
+      color: 332200
 
   hans_dieharder_valid_h:
     l30: off
-
   hans_dieharder_valid_o:
     l31: off
-
   hans_dieharder_valid_l1:
     l32: off
-
   hans_dieharder_valid_l2:
     l33: off
-
   hans_dieharder_valid_y:
     l34: off
 
-  hans_dieharder_won:
-    l43: green
-
-  hans_dieharder_failed:
-    l43: red
+  hans_dieharder_fail_mode:
+    GI: off
+    SPOTS: off
+    l30: off
+    l31: off
+    l32: off
+    l33: off
+    l34: off
+    l43: off
 
   mode_hans_dieharder_stopping:
     l30: off
@@ -315,74 +369,96 @@ light_player:
     l34: off
     l43: off
 
+coil_player:
+  hans_dieharder_fail_mode:
+    c_right_flipper_main: disable
+    c_left_flipper_main: disable
+
+  enable_hans_dieharder_flippers:
+    c_left_flipper_main: enable
+    c_right_flipper_main: enable
+
+
 slide_player:
   mode_hans_dieharder_started:
-    hans_dieharder_progress:
+    hans_dieharder_background:
       action: play
       expire: 0s
+      priority: 500
 
   mode_hans_dieharder_stopping:
-    hans_dieharder_progress:
+    hans_dieharder_background:
       action: remove
 
   logicblock_hans_dieharder_detonators_hit{count==1}:
     detonator_1:
       action: play
       expire: 4s
+      priority: 600
 
   logicblock_hans_dieharder_detonators_hit{count==2}:
     detonator_2:
       action: play
       expire: 4s
+      priority: 600
 
   logicblock_hans_dieharder_detonators_hit{count==3}:
     detonator_3:
       action: play
       expire: 4s
+      priority: 600
 
   logicblock_hans_dieharder_detonators_hit{count==4}:
     detonator_4:
       action: play
       expire: 4s
+      priority: 600
 
   logicblock_hans_dieharder_detonators_hit{count==5}:
     detonator_5:
       action: play
       expire: 4s
+      priority: 600
 
   logicblock_hans_dieharder_detonators_hit{count==6}:
     detonator_6:
       action: play
       expire: 4s
+      priority: 600
 
   logicblock_hans_dieharder_detonators_hit{count==7}:
     detonator_7:
       action: play
       expire: 4s
+      priority: 600
 
-  logicblock_hans_dieharder_detonators_complete:
+  logicblock_hans_dieharder_detonators_hit{count==8}:
     detonator_8:
       action: play
       expire: 4s
+      priority: 600
 
   hans_dieharder_completed_slide:
     detonators_completed:
       action: play
       expire: 4s
+      priority: 10000
 
-  hans_dieharder_failed:
+  hans_dieharder_fail_mode:
     hans_ball_lost:
       action: play
       expire: 4s
+      priority: 10000
+
 
 widget_player:
   mode_hans_dieharder_started:
     hans_dieharder_timer_widget:
-      slide: hans_dieharder_progress
+      slide: hans_dieharder_background
       action: play
 
-    hans_diehard_progress_widget:
-      slide: hans_dieharder_progress
+    hans_dieharder_progress_widget:
+      slide: hans_dieharder_background
       action: play
 
   mode_hans_dieharder_stopping:
@@ -391,3 +467,15 @@ widget_player:
 
     hans_dieharder_progress_widget:
       action: remove
+
+
+sound_player:
+  hans_dieharder_music_start:
+    holly_meets_hans:
+      action: play
+      loops: -1
+      volume: 0.8
+
+  mode_hans_dieharder_stopping:
+    holly_meets_hans:
+      action: stop

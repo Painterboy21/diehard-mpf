@@ -1,8 +1,16 @@
 #config_version=6
 
 mode:
-  start_events: ball_started
-  stop_events: ball_ended
+  start_events: 
+    - ball_started
+    - hans_diehard_won_complete
+    - hans_diehard_failed_complete
+    - hans_dieharder_won_complete
+    - hans_dieharder_failed_complete
+  stop_events: 
+    - ball_ended
+    - start_hans_diehard
+    - start_hans_dieharder
   priority: 120
 
 ball_saves: 
