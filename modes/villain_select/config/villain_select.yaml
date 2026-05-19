@@ -18,7 +18,7 @@ mode_settings:
     - villain_instructions
     - Katya_Villain_Select
     - Col_Stuart_Villain_Select
-    - Hans_Gruber_Villain_Select
+    - Hans_Gruber_Villain_Select{current_player.hans_complete==0}
     - Simon_Gruber_Villain_Select
     - Karl_Vreski_Villain_Select
 
@@ -44,7 +44,7 @@ event_player:
     - set_villain_col
     - start_col_difficulty_select|250ms
 
-  carousel_item_selected{carousel=="villain_select" and item=="Hans_Gruber_Villain_Select"}:
+  carousel_item_selected{carousel=="villain_select" and item=="Hans_Gruber_Villain_Select" and current_player.hans_complete==0}:
     - set_villain_hans
     - start_hans_difficulty_select|250ms
 
@@ -63,7 +63,7 @@ event_player:
   carousel_item_highlighted{carousel=="villain_select" and item=="Col_Stuart_Villain_Select"}:
     - flash_col_light
 
-  carousel_item_highlighted{carousel=="villain_select" and item=="Hans_Gruber_Villain_Select"}:
+  carousel_item_highlighted{carousel=="villain_select" and item=="Hans_Gruber_Villain_Select" and current_player.hans_complete==0}:
     - flash_hans_light
 
   carousel_item_highlighted{carousel=="villain_select" and item=="Karl_Vreski_Villain_Select"}:
