@@ -72,7 +72,7 @@ light_player:
     SPOTS_BUMPER:
       color: 969670
     s_actionbtn:
-      color: 969696
+      color: f99e01
 
 
   player_hans_complete{value==1}:
