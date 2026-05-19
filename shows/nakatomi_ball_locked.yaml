@@ -1,6 +1,7 @@
 #show_version=6
 - time: 0.00000
   lights:
+    NONRGB: "000000"
     l84: "e58300"
     l15: "cd7100"
     l14: "d27600"
