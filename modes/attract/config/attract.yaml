@@ -1,57 +1,74 @@
 #config_version=6
 
 mode:
-  start_events: game_ended, reset_complete
-  stop_events: game_start, service_mode_entered
+  start_events:
+    - game_ended
+    - reset_complete
+  stop_events:
+    - game_start
+    - service_mode_entered
   priority: 10
 
-event_player: 
+event_player:
   mode_attract_started:
     - play_show_xmas
     - play_show_start_button_flash
+
   s_left_flipper_active:
     - rotate_attract_left
     - reset_idle_timer
+
   s_right_flipper_active:
     - rotate_attract_right
     - reset_idle_timer
+
   timer_attract_idle_complete:
     - play_show_xmas
 
-
-light_player: 
-  mode_attract_started: 
-    GI: 
+light_player:
+  mode_attract_started:
+    GI:
       color: 000000
 
+  mode_attract_stopping:
+    GI:
+      color: off
 
-show_player: 
-  play_show_xmas: 
-    attract_show_runner: 
+show_player:
+  play_show_xmas:
+    attract_show_runner:
       key: key_attract_christmas
       loops: 0
-  play_show_start_button_flash: 
-    flash_start_button: 
+
+  play_show_start_button_flash:
+    flash_start_button:
       key: key_attract_start_button_flash
 
-
-slide_player: 
-  mode_attract_started: 
+slide_player:
+  mode_attract_started:
     attract:
       action: play
       expire: 0s
 
+  s_actionbtn_active:
+    attract_instructions:
+      action: play
+      expire: 0s
+      priority: 100
 
-timers: 
+  s_actionbtn_inactive:
+    attract_instructions:
+      action: remove
+
+
+timers:
   attract_idle:
     start_value: 0
     end_value: 18
     direction: up
-    control_events: 
+    control_events:
       - event: reset_idle_timer
         action: reset
-    restart_on_complete: True
-    start_running: True
+    restart_on_complete: true
+    start_running: true
     tick_interval: 10000ms
-
-

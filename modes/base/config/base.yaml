@@ -17,6 +17,8 @@ ball_holds:
       - ball_ended
       - start_hans_diehard
       - start_hans_dieharder
+      - start_katya_diehard
+      - start_katya_dieharder
 
 
 
@@ -72,7 +74,7 @@ light_player:
     SPOTS_BUMPER:
       color: 969670
     s_actionbtn:
-      color: f99e01
+      color: ff0000
 
 
   player_hans_complete{value==1}:

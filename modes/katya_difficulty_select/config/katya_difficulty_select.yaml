@@ -60,7 +60,7 @@ event_player:
     - villain_intro_finished|3s
   villain_intro_finished:
     - release_villain_select_vuk
-    - start_katya
+    - start_katya_diehard
     - villain_selection_complete|100ms
 
 
