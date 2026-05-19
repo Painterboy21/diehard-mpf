@@ -62,6 +62,7 @@ show_player:
     park_mb_ball_locked: 
       key: key_central_park_ball_locked
       loops: 0
+      priority: 999
       events_when_completed: trigger_central_park_ball_locked
   central_park_start_multiball_hit:
     park_mb_start:
