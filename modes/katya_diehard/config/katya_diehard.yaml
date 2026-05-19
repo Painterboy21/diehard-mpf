@@ -1,0 +1,257 @@
+#config_version=6
+
+mode:
+  start_events: start_katya_diehard
+
+  stop_events:
+    - katya_completed
+    - katya_failed
+    - villain_selection_complete
+    - ball_ended
+
+  priority: 250
+
+light_player:
+  mode_katya_diehard_started:
+    GI:
+      color: ff00ff
+
+    SPOTS:
+      color: 400040
+
+    SPOTS_BUMPER:
+      color: 700070
+
+  katya_loops_complete:
+    l52:
+      color: ff0000
+
+shows:
+  katya_loop_flash:
+    - duration: 200ms
+      lights:
+        l20: ff00ff
+        l22: ff00ff
+        l23: ff00ff
+
+    - duration: 200ms
+      lights:
+        l20: off
+        l22: off
+        l23: off
+
+  katya_captive_flash:
+    - duration: 120ms
+      lights:
+        l52: ff0000
+
+    - duration: 120ms
+      lights:
+        l52: off
+
+show_player:
+  mode_katya_diehard_started:
+    katya_loop_flash:
+      loops: -1
+
+  katya_loops_complete:
+    katya_loop_flash:
+      action: stop
+
+    katya_captive_flash:
+      loops: -1
+
+  katya_completed:
+    katya_captive_flash:
+      action: stop
+
+  katya_failed:
+    katya_loop_flash:
+      action: stop
+
+    katya_captive_flash:
+      action: stop
+
+event_player:
+  mode_katya_diehard_started:
+    - katya_start
+
+  timer_katya_timer_complete:
+    - katya_failed
+
+  ball_ended:
+    - katya_failed
+
+  katya_left_loop_hit{device.counters.katya_loop_counter.value<5}:
+    - katya_loop_hit_scored
+
+  katya_right_loop_hit{device.counters.katya_loop_counter.value<5}:
+    - katya_loop_hit_scored
+
+  katya_upper_loop_hit{device.counters.katya_loop_counter.value<5}:
+    - katya_loop_hit_scored
+
+  counter_katya_loop_counter_complete:
+    - katya_loops_complete
+
+  katya_captive_final_hit:
+    - katya_completed
+
+shots:
+  katya_left_loop:
+    hit_events: left_orbit_hit
+    enable_events: mode_katya_diehard_started
+    disable_events:
+      - katya_loops_complete
+      - katya_completed
+      - katya_failed
+
+    show_tokens:
+      lights: l20
+      color: ff00ff
+
+  katya_right_loop:
+    hit_events: right_orbit_hit
+    enable_events: mode_katya_diehard_started
+    disable_events:
+      - katya_loops_complete
+      - katya_completed
+      - katya_failed
+
+    show_tokens:
+      lights: l22
+      color: ff00ff
+
+  katya_upper_loop:
+    switch: s_upper_pf_entrance
+    enable_events: mode_katya_diehard_started
+    disable_events:
+      - katya_loops_complete
+      - katya_completed
+      - katya_failed
+
+    show_tokens:
+      lights: l23
+      color: ff00ff
+
+  katya_captive_final:
+    switch: s_captiveball
+    enable_events: katya_loops_complete
+    disable_events:
+      - katya_completed
+      - katya_failed
+
+    show_tokens:
+      lights: l52
+      color: ff0000
+
+counters:
+  katya_loop_counter:
+    count_events:
+      - katya_left_loop_hit
+      - katya_right_loop_hit
+      - katya_upper_loop_hit
+
+    starting_count: 0
+
+    count_complete_value: 5
+
+    events_when_complete:
+      - katya_loops_complete
+
+    reset_events:
+      - mode_katya_diehard_started
+
+timers:
+  katya_timer:
+    start_value: 93
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: true
+
+slide_player:
+  mode_katya_diehard_started:
+    katya_mode:
+      action: play
+      expire: 0s
+
+  katya_loops_complete:
+    katya_shoot_captive:
+      action: play
+      expire: 3s
+
+  katya_completed:
+    katya_defeated:
+      action: play
+      expire: 4s
+
+  katya_failed:
+    katya_failed:
+      action: play
+      expire: 4s
+
+widget_player:
+  katya_loop_hit_scored:
+    katya_loop_hit:
+      action: play
+      expire: 2s
+
+  katya_loops_complete:
+    katya_captive_widget:
+      action: play
+      expire: 3s
+
+variable_player:
+  katya_start:
+    katya_shots:
+      int: 0
+      action: set
+
+    katya_mode_complete:
+      int: 0
+      action: set
+
+    mode_running:
+      string: katya
+      action: set
+
+  katya_loop_hit_scored:
+    score:
+      action: add
+      int: 1500000
+
+    villain_bonus:
+      action: add
+      int: 1500000
+
+    katya_shots:
+      action: add
+      int: 1
+
+  katya_captive_final_hit:
+    score:
+      action: add
+      int: 3000000
+
+    villain_bonus:
+      action: add
+      int: 3000000
+
+  katya_completed:
+    katya_mode_complete:
+      int: 1
+      action: set
+
+    modes_complete:
+      action: add
+      int: 1
+
+    mode_running:
+      string: none
+      action: set
+
+  katya_failed:
+    mode_running:
+      string: none
+      action: set
