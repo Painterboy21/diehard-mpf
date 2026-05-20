@@ -236,12 +236,13 @@ show_player:
   mode_hans_dieharder_started:
     flash_color:
       key: hans_dieharder_gruber_flash
-      priority: 170
+      priority: 160
       loops: -1
-      speed: 8
+      speed: 6
+
       show_tokens:
         lights: l43
-        color: red
+        color: 00ff00
 
   hans_dieharder_h_ready:
     hans_bullet_flash:
