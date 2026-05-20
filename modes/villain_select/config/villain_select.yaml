@@ -1,7 +1,8 @@
 #config_version=6
 
 mode:
-  start_events: start_villain_select
+  start_events: 
+    - start_villain_select
   stop_events:
     - start_col_difficulty_select
     - start_hans_difficulty_select
@@ -13,6 +14,15 @@ mode:
   priority: 300
   code: mpf.modes.carousel.code.carousel.Carousel
 
+
+light_player:
+  mode_villain_select_started:
+    GI:
+      color: 000000
+    SPOTS:
+      color: 000000
+
+      
 mode_settings:
   selectable_items:
     - villain_instructions

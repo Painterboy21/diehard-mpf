@@ -10,6 +10,8 @@ mode:
     - hans_diehard_failed_complete
     - hans_dieharder_won_complete
     - hans_dieharder_failed_complete
+    - katya_completed
+    - katya_failed
   stop_events:
     - ball_ended
     - multiball_nakatomi_started
@@ -19,6 +21,8 @@ mode:
     - airplane_ball_3_locked_complete
     - start_hans_diehard
     - start_hans_dieharder
+    - start_katya_diehard
+    - start_katya_dieharder
   priority: 120
   
 event_player: 
