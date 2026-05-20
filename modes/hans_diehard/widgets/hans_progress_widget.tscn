@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_68uhx")
 
-[node name="Label" type="Label" parent="." unique_id=1372042392]
+[node name="hans" type="Label" parent="." unique_id=1372042392]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0

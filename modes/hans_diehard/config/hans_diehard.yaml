@@ -216,7 +216,6 @@ show_player:
       priority: 300
       loops: 3
       speed: 10
-
       show_tokens:
         lights: GI
         color: ff0000
@@ -227,10 +226,9 @@ show_player:
       priority: 160
       loops: -1
       speed: 6
-
       show_tokens:
         lights: l43
-        color: red
+        color: 00ff00
 
   hans_diehard_h_ready:
     hans_bullet_flash:
