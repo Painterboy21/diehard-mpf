@@ -323,9 +323,12 @@ light_player:
   mode_hans_diehard_started:
     GI:
       color: 00ff00
-
     SPOTS:
       color: 332200
+    l1000:
+      color: 00ff00
+    l1001:
+      color: 00ff00
 
   hans_diehard_valid_h:
     l30: off

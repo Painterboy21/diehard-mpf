@@ -7,10 +7,16 @@ mode:
     - hans_diehard_failed_complete
     - hans_dieharder_won_complete
     - hans_dieharder_failed_complete
+    - katya_completed
+    - katya_failed
+    - katya_completed
+    - katya_failed
   stop_events: 
     - ball_ended
     - start_hans_diehard
     - start_hans_dieharder
+    - start_katya_diehard
+    - start_katya_dieharder
   priority: 120
 
 ball_saves: 

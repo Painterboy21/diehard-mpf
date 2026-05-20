@@ -10,7 +10,8 @@ mode:
     - hans_diehard_failed_complete
     - hans_dieharder_won_complete
     - hans_dieharder_failed_complete
-
+    - katya_completed
+    - katya_failed
   stop_events:
     - ball_ended
     - multiball_nakatomi_started
@@ -18,6 +19,8 @@ mode:
     - mode_ambush_started
     - start_hans_diehard
     - start_hans_dieharder
+    - start_katya_diehard
+    - start_katya_dieharder
   priority: 150
 
 
