@@ -1,13 +1,10 @@
 #config_version=6
 
 mode:
-  start_events: 
-    - start_katya_diehard
-    - start_katya_diehard{current_player.katya_complete!=1}
+  start_events: start_katya_diehard{current_player.katya_complete!=1}
   stop_events:
     - katya_completed
     - katya_failed
-    - ball_ended
   priority: 250
 
 light_player:
@@ -26,6 +23,8 @@ light_player:
   katya_completed:
     l1000: off
     l1001: off
+    l42:
+      color: ff00ff
 
   katya_failed:
     l1000: off
@@ -157,22 +156,33 @@ show_player:
     katya_insert_flash:
       action: stop
 
-
-
-
-
-
 event_player:
   mode_katya_diehard_started:
-    - katya_start
-    - nakatomi_entrance_lock_close
-    - wire_ramp_exit_open
-    
+  - katya_start
+  - reset_bullet_total
+  - reset_bullets
+  - nakatomi_entrance_lock_close
+  - wire_ramp_exit_open
+
   timer_katya_timer_complete:
-    - katya_failed
+    - katya_escape_sequence
 
   ball_ended:
-    - katya_failed
+    - katya_escape_sequence
+
+  katya_escape_sequence:
+    - katya_failed_delay
+
+  katya_failed_delay:
+    - katya_failed|4s
+
+  katya_failed:
+    - reset_bullet_total
+    - reset_bullets 
+
+  katya_completed:
+    - reset_bullet_total
+    - reset_bullets
 
   katya_left_loop_hit{device.counters.katya_loop_counter.value<5}:
     - katya_loop_hit_scored
@@ -190,8 +200,11 @@ event_player:
     - katya_loops_complete
 
   katya_captive_final_hit:
-    - katya_completed
+    - katya_victory_sequence
 
+  katya_victory_sequence:
+    - katya_completed_show
+    - katya_completed|4s
 
 shots:
   katya_left_loop:
@@ -250,54 +263,88 @@ slide_player:
   mode_katya_diehard_started:
     katya_diehard_background:
       action: play
-      expire: 0s
+ 
 
-  katya_completed:
+  katya_loop_hit_scored{current_player.katya_shots==1}:
+    katya_hit_1:
+      action: play
+
+
+  katya_loop_hit_scored{current_player.katya_shots==2}:
+    katya_hit_2:
+      action: play
+   
+
+  katya_loop_hit_scored{current_player.katya_shots==3}:
+    katya_hit_3:
+      action: play
+
+
+  katya_loop_hit_scored{current_player.katya_shots==4}:
+    katya_hit_4:
+      action: play
+
+
+  katya_loop_hit_scored{current_player.katya_shots==5}:
+    katya_hit_5:
+      action: play
+
+
+  katya_completed_show:
     katya_diehard_background:
       action: remove
+
+    katya_defeated:
+      action: play
+
 
   katya_failed:
     katya_diehard_background:
       action: remove
+
+    katya_escaped:
+      action: play
+
 
 widget_player:
   mode_katya_diehard_started:
     katya_timer_widget:
       action: play
+
     katya_diehard_progress_widget:
       action: play
 
   katya_completed:
     katya_timer_widget:
       action: remove
+
     katya_diehard_progress_widget:
       action: remove
 
   katya_failed:
     katya_timer_widget:
       action: remove
+
     katya_diehard_progress_widget:
       action: remove
 
-
-
 variable_player:
   katya_start:
+    villain_mode_running:
+      int: 1
+      action: set
+
     katya_shots:
       int: 0
       action: set
+
     katya_diehard_remaining:
       int: 93
       action: set
-    katya_complete:
-      int: 0
-      action: set
+
     villain_bonus:
       int: 500000
       action: add
-    mode_running:
-      string: katya
-      action: set
 
   timer_katya_timer_tick:
     katya_diehard_remaining:
@@ -308,9 +355,11 @@ variable_player:
     score:
       action: add
       int: 1500000
+
     villain_bonus:
       action: add
       int: 1500000
+
     katya_shots:
       action: add
       int: 1
@@ -319,6 +368,7 @@ variable_player:
     score:
       action: add
       int: 3000000
+
     villain_bonus:
       action: add
       int: 3000000
@@ -327,14 +377,23 @@ variable_player:
     katya_complete:
       int: 1
       action: set
+
     modes_complete:
       action: add
       int: 1
-    mode_running:
-      string: none
+
+  mode_katya_diehard_stopping:
+    villain_mode_running:
+      int: 0
       action: set
 
-  katya_failed:
-    mode_running:
-      string: none
-      action: set
+sound_player:
+  katya_diehard_music_start:
+    katyatheme:
+      action: play
+      loops: -1
+      volume: 0.7
+
+  mode_katya_diehard_stopping:
+    katyatheme:
+      action: stop

@@ -154,4 +154,11 @@ player_vars:
   mystery_add_a_ball_nakatomi_awarded:
     initial_value: 0
     value_type: int
+  
+  hans_complete:
+    initial_value: 0
+    value_type: int
+  katya_complete:
+    initial_value: 0
+    value_type: int
 

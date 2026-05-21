@@ -14,7 +14,7 @@ mode:
   priority: 300
   code: mpf.modes.carousel.code.carousel.Carousel
 
-
+    
 light_player:
   mode_villain_select_started:
     GI:
@@ -26,7 +26,7 @@ light_player:
 mode_settings:
   selectable_items:
     - villain_instructions
-    - Katya_Villain_Select
+    - Katya_Villain_Select{current_player.katya_complete==0}
     - Col_Stuart_Villain_Select
     - Hans_Gruber_Villain_Select{current_player.hans_complete==0}
     - Simon_Gruber_Villain_Select

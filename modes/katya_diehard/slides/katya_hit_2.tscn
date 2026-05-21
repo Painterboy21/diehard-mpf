@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dhfagiulioph"]
+
+[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_37kxm"]
+[ext_resource type="VideoStream" uid="uid://xfd3ucy36x4" path="res://modes/katya_diehard/slides/Katya8.ogv" id="2_7wwqa"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_lbe2c"]
+
+[node name="Katya_hit_2" type="Control" unique_id=993776050]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_37kxm")
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=1991133302]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_7wwqa")
+volume_db = 7.999999
+autoplay = true
+script = ExtResource("3_lbe2c")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"

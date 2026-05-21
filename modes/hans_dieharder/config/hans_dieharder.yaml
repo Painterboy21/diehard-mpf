@@ -97,6 +97,8 @@ event_player:
     - nakatomi_entrance_lock_close
     - release_villain_select_vuk
     - wire_ramp_exit_open
+    - reset_bullet_total
+    - reset_bullets
   mode_hans_dieharder_stopping:
     - villain_mode_stopped
     - enable_hans_dieharder_flippers
@@ -137,6 +139,9 @@ event_player:
   hans_dieharder_complete:
     - hans_dieharder_completed_slide|4s
     - hans_dieharder_won_complete|8s
+    - reset_bullet_total
+    - reset_bullets
+
 
 
   timer_hans_dieharder_timer_complete:
@@ -146,6 +151,8 @@ event_player:
   ball_drain{current_player.villain_mode_running==1 and current_player.hans_dieharder_failed_active==0}:
     - hans_dieharder_fail_mode
     - hans_dieharder_failed_complete|4s
+    - reset_bullet_total
+    - reset_bullets
 
  
   ball_drain{current_player.hans_dieharder_failed_active==1}:
