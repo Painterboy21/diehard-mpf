@@ -85,7 +85,15 @@ light_player:
     l43:
       color: 00ff00
       priority: 1000
- 
+  mode_base_started{current_player.katya_complete==1}:
+    l42:
+      color: ff00ff
+      priority: 1000
+  player_katya_complete{value==1}:
+    l42:
+      color: ff00ff
+      priority: 1000
+      
   nakatomi_super_jackpot_collected: 
     l57: 
       color: 00ff00

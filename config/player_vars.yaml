@@ -92,6 +92,7 @@ player_vars:
     initial_value: 0
     value_type: int
     
+ # nakatomi multiball   
   ball_locking_nakatomi:
     initial_value: 0
     value_type: int
@@ -116,6 +117,7 @@ player_vars:
     initial_value: 0
     value_type: int
 
+#central multiball
   central_park_played:
     initial_value: 0
     value_type: int
@@ -126,6 +128,7 @@ player_vars:
     initial_value: 0
     value_type: int
 
+#airplane multiball
   airplane_virtual_locks:
     initial_value: 0
     value_type: int
@@ -145,6 +148,7 @@ player_vars:
     initial_value: 0
     value_type: int
 
+#mystery
   mystery_add_a_ball_airplane_awarded:
     initial_value: 0
     value_type: int
@@ -154,7 +158,8 @@ player_vars:
   mystery_add_a_ball_nakatomi_awarded:
     initial_value: 0
     value_type: int
-  
+
+#villains
   hans_complete:
     initial_value: 0
     value_type: int
