@@ -444,6 +444,22 @@ variable_player:
       action: set
       int: 0
 
-
-
-
+  mode_base_started: 
+    eob_bonus_bullet:
+      action: set
+      int: 0
+    eob_bonus_multiball:
+      action: set
+      int: 0
+    eob_bonus_ambush:
+      action: set
+      int: 0
+    eob_bonus_holly:
+      action: set
+      int: 0
+    eob_bonus_villains:
+      action: set
+      int: 0
+    eob_bonus_x:
+      action: set
+      int: 0

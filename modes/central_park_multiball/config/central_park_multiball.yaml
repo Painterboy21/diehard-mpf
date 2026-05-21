@@ -277,6 +277,9 @@ variable_player:
     cp_super_jackpots_collected:
       action: set
       int: 0
+    eob_bonus_multiball:
+      action: add
+      int: 300000
 
   multiball_central_park_started:
     central_park_played:

@@ -146,6 +146,9 @@ variable_player:
     ball_locking_nakatomi: 
       action: set
       int: 1
+    eob_bonus_multiball:
+      action: add
+      int: 100000
 
   trigger_nakatomi_ball_locked.10: 
     ball_locking_nakatomi: 
@@ -154,8 +157,6 @@ variable_player:
     nakatomi_balls_locked: 
       action: add
       int: 1
-
-
 
 coil_player: 
   trigger_nakatomi_ball_locked: c_towervuk_eject
