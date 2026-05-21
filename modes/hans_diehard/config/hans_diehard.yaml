@@ -101,10 +101,13 @@ event_player:
     - nakatomi_entrance_lock_close
     - release_villain_select_vuk
     - wire_ramp_exit_open
+    - reset_bullet_total
+    - reset_bullets
 
   mode_hans_diehard_stopping:
     - villain_mode_stopped
     - wire_ramp_exit_closed
+
 
   hans_diehard_h_hit:
     - hans_diehard_valid_h
@@ -149,7 +152,8 @@ event_player:
   hans_diehard_complete:
     - hans_diehard_completed_slide|4s
     - hans_diehard_won_complete|8s
-
+    - reset_bullet_total
+    - reset_bullets
   timer_hans_diehard_timer_complete:
     - hans_lost_slide
     - hans_diehard_failed_complete|4s
@@ -157,6 +161,10 @@ event_player:
   ball_drain:
     - hans_lost_slide
     - hans_diehard_failed_complete|4s
+    - reset_bullet_total
+    - reset_bullets
+
+
 
 variable_player:
   mode_hans_diehard_started:
@@ -428,12 +436,12 @@ widget_player:
       action: remove
 
 sound_player:
-  hans_diehard_music_start:
+  hans_dieharder_music_start:
     holly_meets_hans:
       action: play
       loops: -1
-      volume: 0.7
+      volume: 0.8
 
-  mode_hans_diehard_stopping:
+  mode_hans_dieharder_stopping:
     holly_meets_hans:
       action: stop

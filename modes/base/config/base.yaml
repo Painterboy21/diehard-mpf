@@ -77,46 +77,64 @@ light_player:
       color: ff0000
 
 
-  player_hans_complete{value==1}:
-    l43: 
+  mode_base_started{current_player.hans_complete==1}:
+    l43:
       color: 00ff00
-
+      priority: 1000
+  player_hans_complete{value==1}:
+    l43:
+      color: 00ff00
+      priority: 1000
+ 
   nakatomi_super_jackpot_collected: 
     l57: 
       color: 00ff00
+      priority: 50
   multiball_nakatomi_ended{current_player.nakatomi_super_jackpot_collected==0}:
     l57: 
       color: ff0000
+      priority: 50
   mode_base_started{current_player.played_nakatomi_multiball==1 and current_player.nakatomi_super_jackpot_collected==0}:
     l57: 
       color: ff0000
+      priority: 50    
   mode_base_started{current_player.played_nakatomi_multiball==1 and current_player.nakatomi_super_jackpot_collected==1}:
     l57: 
       color: 00ff00
+      priority: 50 
   score_park_super_jackpot_hit: 
     l59: 
       color: 00ff00
+      priority: 50 
   multiball_central_park_ended{current_player.score_park_super_jackpot_hit==0}:
     l59: 
       color: ff0000
+      priority: 50 
   mode_base_started{current_player.central_park_played==1 and current_player.score_park_super_jackpot_hit==0}:
     l59: 
       color: ff0000
+      priority: 50 
   mode_base_started{current_player.central_park_played==1 and current_player.score_park_super_jackpot_hit==1}:
     l59: 
       color: 00ff00
+      priority: 50 
   airplane_super_jackpot_hit: 
     l58: 
       color: 00ff00
+      priority: 50 
   multiball_airplane_ended{current_player.score_airplane_super_jackpot_hit==0}:
     l58: 
       color: ff0000
+      priority: 50 
   mode_base_started{current_player.airplane_multiball_played==1 and current_player.score_airplane_super_jackpot_hit==0}:
     l58: 
       color: ff0000
+      priority: 50 
+
   mode_base_started{current_player.airplane_multiball_played==1 and current_player.score_airplane_super_jackpot_hit==1}:
     l58: 
       color: 00ff00
+      priority: 50 
 
 
 random_event_player: 
@@ -411,6 +429,7 @@ sound_player:
   inlanerollover3_fx: 
     inlanerollover3_fx: 
       action: play
+
 
 
 variable_player: 
