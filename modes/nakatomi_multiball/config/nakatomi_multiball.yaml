@@ -158,6 +158,9 @@ variable_player:
     nakatomi_multiball_supers_locked: 
       action: set
       int: 0
+    eob_bonus_multiball:
+      action: add
+      int: 300000
 
   nakatomi_super_jackpot_collected: 
     nakatomi_multiball_supers_locked: 

@@ -319,6 +319,9 @@ variable_player:
     airplane_mb_stage:
       int: 1
       action: set
+    eob_bonus_multiball:
+      action: add
+      int: 300000
 
   airplane_captive_jackpot_select_hit:
     score:

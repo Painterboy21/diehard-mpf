@@ -85,3 +85,8 @@ timers:
     tick_interval: 1000ms
 
 
+variable_player:
+  mode_started:
+    score:
+      int: (current_player.eob_bonus_bullets + current_player.eob_bonus_ambush + current_player.eob_bonus_multiball + current_player.eob_bonus_holly + current_player.eob_bonus_villains + current_player.eob_bonus_x) * current_player.eob_bonus_x
+      action: add

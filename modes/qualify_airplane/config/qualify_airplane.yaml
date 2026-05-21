@@ -198,6 +198,9 @@ variable_player:
     airplane_lock_lit:
       int: 0
       action: set
+    eob_bonus_multiball:
+      action: add
+      int: 100000
   airplane_ball_2_locked_complete:
     airplane_virtual_locks:
       int: 1
@@ -205,6 +208,9 @@ variable_player:
     airplane_lock_lit:
       int: 0
       action: set
+    eob_bonus_multiball:
+      action: add
+      int: 100000
   airplane_ball_3_locked_complete:
     airplane_virtual_locks:
       int: 1
@@ -212,6 +218,9 @@ variable_player:
     airplane_lock_lit:
       int: 0
       action: set
+    eob_bonus_multiball:
+      action: add
+      int: 100000
   counter_airplane_light_lock_hit:
     score:
       int: 50000
