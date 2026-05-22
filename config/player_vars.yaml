@@ -46,9 +46,6 @@ player_vars:
   ambush:
     initial_value: 0
     value_type: int
-  airplane_mb_stage2:
-    initial_value: 0
-    value_type: int
   mystery_awarded_index:
     initial_value: 0
     value_type: int
@@ -73,6 +70,8 @@ player_vars:
   eob_bonus_x:
     initial_value: 0
     value_type: int
+
+  #bullets
   bullet_combo_hits:
     initial_value: 0
     value_type: int
@@ -145,6 +144,9 @@ player_vars:
     initial_value: 0
     value_type: int
   last_jackpot_value:
+    initial_value: 0
+    value_type: int
+  airplane_mb_stage2:
     initial_value: 0
     value_type: int
 
