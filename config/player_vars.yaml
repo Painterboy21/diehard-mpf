@@ -19,9 +19,6 @@ player_vars:
   time_ball_save:
     initial_value: 0
     value_type: int
-  bonus_multiplier:
-    initial_value: 1
-    value_type: int
   bonus_x_held:
     initial_value: 0
     value_type: int
@@ -67,9 +64,7 @@ player_vars:
   eob_bonus_villains:
     initial_value: 0
     value_type: int
-  eob_bonus_x:
-    initial_value: 0
-    value_type: int
+
 
   #bullets
   bullet_combo_hits:
@@ -202,5 +197,18 @@ player_vars:
     initial_value: 0
     value_type: int
   katya_dieharder_completion_active:
+    initial_value: 0
+    value_type: int
+
+#bonus multiplyers
+  bonus_multiplier:
+    initial_value: 1
+  bonus_x_1_lit:
+    initial_value: 0
+  bonus_x_2_lit:
+    initial_value: 0
+  bonus_x_3_lit:
+    initial_value: 0
+  eob_bonus_x:
     initial_value: 0
     value_type: int

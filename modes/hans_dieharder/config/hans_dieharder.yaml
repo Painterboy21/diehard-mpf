@@ -205,13 +205,11 @@ event_player:
     - reset_bullet_total
     - reset_bullets
 
+
 variable_player:
   mode_hans_dieharder_started:
     villain_mode_running:
       int: 1
-      action: set
-    hans_dieharder_failed_active:
-      int: 0
       action: set
     hans_dieharder_completion_active:
       int: 0
@@ -220,18 +218,10 @@ variable_player:
       int: 0
       action: set
     hans_dieharder_time:
-      int: 93
+      int: 123
       action: set
     hans_dieharder_remaining:
       int: 8
-      action: set
-    villain_bonus:
-      int: 500000
-      action: add
-
-  logicblock_hans_dieharder_detonators_hit{count==8}:
-    hans_dieharder_completion_active:
-      int: 1
       action: set
 
   timer_hans_dieharder_timer_tick:
@@ -245,41 +235,36 @@ variable_player:
       action: set
 
   hans_dieharder_target_hit{device.counters.hans_dieharder_detonators.value<8}:
-    score: 1000000
-    villain_bonus:
-      int: 1000000
-      action: add
+    score: 2000000
     hans_dieharder_progress:
       int: 1
       action: add
 
-  hans_dieharder_fail_mode:
-    hans_dieharder_failed_active:
+  hans_dieharder_complete:
+    hans_dieharder_completion_active:
       int: 1
       action: set
 
   hans_dieharder_won_complete:
-    score: 3000000
-    villain_bonus:
-      int: 3000000
-      action: add
+    score: 5000000
+
     hans_complete:
       int: 1
       action: set
+
     hans_dieharder_complete:
       int: 1
       action: set
-    hans_bonus:
-      int: 1
-      action: set
+
+    eob_bonus_villains:
+      int: 1000000
+      action: add
 
   mode_hans_dieharder_stopping:
     villain_mode_running:
       int: 0
       action: set
-    hans_dieharder_failed_active:
-      int: 0
-      action: set
+
     hans_dieharder_completion_active:
       int: 0
       action: set

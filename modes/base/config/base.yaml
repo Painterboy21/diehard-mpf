@@ -86,7 +86,7 @@ light_player:
     SPOTS_BUMPER:
       color: 969670
     s_actionbtn:
-      color: ff0000
+      color: 969696
 
 
   mode_base_started{current_player.hans_complete==1}:

@@ -214,9 +214,11 @@ variable_player:
     ambush_value:
       int: -80000
       action: add
-
   ambush_collected:
     score: current_player.ambush_value
+    eob_bonus_ambush:
+      int: current_player.ambush_value
+      action: add
 
   ambush_finished:
     ambush_value:
