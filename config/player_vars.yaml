@@ -164,8 +164,43 @@ player_vars:
 #villains
   hans_complete:
     initial_value: 0
-    value_type: int
+  hans_dieharder_complete:
+    initial_value: 0
+  hans_dieharder_progress:
+    initial_value: 0
+  hans_dieharder_time:
+    initial_value: 93
+  hans_dieharder_remaining:
+    initial_value: 8
+  hans_dieharder_failed_active:
+    initial_value: 0
+  hans_bonus:
+    initial_value: 0
+  hans_diehard_completion_active:
+    initial_value: 0
+
+
   katya_complete:
     initial_value: 0
     value_type: int
-
+  katya_dieharder_complete:
+    initial_value: 0
+    value_type: int
+  katya_diehard_completion_active:
+    initial_value: 0
+    value_type: int
+  katya_dieharder_shots:
+    initial_value: 0
+    value_type: int
+  katya_dieharder_time:
+    initial_value: 93
+    value_type: int
+  katya_dieharder_failed_active:
+    initial_value: 0
+    value_type: int
+  katya_bonus:
+    initial_value: 0
+    value_type: int
+  katya_dieharder_completion_active:
+    initial_value: 0
+    value_type: int

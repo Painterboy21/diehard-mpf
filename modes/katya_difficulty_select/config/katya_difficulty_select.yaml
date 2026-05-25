@@ -6,9 +6,7 @@ mode:
   stop_events:
     - villain_selection_complete
     - ball_ended
-
   priority: 310
-
   code: mpf.modes.carousel.code.carousel.Carousel
 
 mode_settings:
@@ -68,14 +66,14 @@ event_player:
     - katya_mode_start_warning|2.5s
     - start_katya_diehard|3s
     - villain_intro_finished|3.1s
-
   carousel_item_selected{carousel=="katya_difficulty_select" and item=="katya_die_harder" and current_player.katya_complete!=1}:
-    - set_difficulty_die_harder
-    - hide_katya_difficulty_select
-    - play_katya_intro
-    - katya_mode_start_warning|2.5s
-    - start_katya_dieharder|3s
-    - villain_intro_finished|3.1s
+  - set_difficulty_die_harder
+  - hide_katya_difficulty_select
+  - play_katya_intro
+  - katya_mode_start_warning|2.5s
+  - start_katya_dieharder|3s
+  - villain_intro_finished|3.1s
+
 
   villain_intro_finished:
     - release_villain_select_vuk

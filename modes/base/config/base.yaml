@@ -9,16 +9,25 @@ mode:
 ball_holds:
   villain_hold:
     enable_events: villain_start_lit
-    disable_events: ball_ended,villain_mode_started
+    disable_events:
+      - ball_ended
+      - villain_mode_started
     hold_devices: rightvuk
     balls_to_hold: 1
     release_all_events:
       - tilt
       - ball_ended
+      - villain_mode_started
       - start_hans_diehard
       - start_hans_dieharder
       - start_katya_diehard
       - start_katya_dieharder
+      - start_karl_diehard
+      - start_karl_dieharder
+      - start_simon_diehard
+      - start_simon_dieharder
+      - start_col_diehard
+      - start_col_dieharder
 
 
 
@@ -63,7 +72,10 @@ event_player:
   s_air_duct_active:
     - show_airduct
     - show_airduct2
-
+  villain_mode_started:
+    - stop_base_music
+  start_airplane_multiball:
+    - stop_base_music
 
 light_player: 
   mode_base_started: 
@@ -134,12 +146,12 @@ light_player:
     l58: 
       color: ff0000
       priority: 50 
-  mode_base_started{current_player.airplane_multiball_played==1 and current_player.score_airplane_super_jackpot_hit==0}:
+  mode_base_started{current_player.airplane_mb_played==1 and current_player.score_airplane_super_jackpot_hit==0}:
     l58: 
       color: ff0000
       priority: 50 
 
-  mode_base_started{current_player.airplane_multiball_played==1 and current_player.score_airplane_super_jackpot_hit==1}:
+  mode_base_started{current_player.airplane_mb_played==1 and current_player.score_airplane_super_jackpot_hit==1}:
     l58: 
       color: 00ff00
       priority: 50 
@@ -355,7 +367,7 @@ slide_player:
     nakatomi_mb_failed:
       action: play
       expire: 0s
-  multiball_airplane_ended{current_player.airplane_multiball_played==1 and current_player.score_airplane_super_jackpot_hit==0}:
+  multiball_airplane_ended{current_player.airplane_mb_played==1 and current_player.score_airplane_super_jackpot_hit==0}:
     airplane_mb_failed:
       action: play
       expire: 0s
@@ -377,6 +389,20 @@ sound_player:
     gameplay_music_battle: 
       key: main_snd_music
       action: play
+  stop_base_music:
+    gameplay_music_beethoven:
+      key: main_snd_music
+      action: stop
+    gameplay_music_assault:
+      key: main_snd_music
+      action: stop
+    gameplay_music_finlandia:
+      key: main_snd_music
+      action: stop
+    gameplay_music_battle:
+      key: main_snd_music
+      action: stop
+
   s_left_sling_active: 
     sling_1: 
       action: play
