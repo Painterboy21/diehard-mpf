@@ -316,9 +316,11 @@ variable_player:
     airplane_mb_played:
       int: 1
       action: set
+
     airplane_mb_stage:
       int: 1
       action: set
+
     eob_bonus_multiball:
       action: add
       int: 300000
@@ -326,7 +328,7 @@ variable_player:
   airplane_captive_jackpot_select_hit:
     score:
       action: add
-      int: 500000
+      int: "500000 * current_player.playfield_multiplier"
 
   airplane_light_super_jackpot:
     airplane_super_jackpot_available:
@@ -341,10 +343,12 @@ variable_player:
   airplane_super_jackpot_score_stage_1:
     score:
       action: add
-      int: 10000000
+      int: "10000000 * current_player.playfield_multiplier"
+
     last_jackpot_value:
       action: set
-      int: 10000000
+      int: "10000000 * current_player.playfield_multiplier"
+
     airplane_mb_stage:
       int: 2
       action: set
@@ -352,87 +356,98 @@ variable_player:
   airplane_super_jackpot_score_stage_2:
     score:
       action: add
-      int: 20000000
+      int: "20000000 * current_player.playfield_multiplier"
+
     last_jackpot_value:
       action: set
-      int: 20000000
+      int: "20000000 * current_player.playfield_multiplier"
 
   airplane_left_orbit_jackpot_hit{current_player.airplane_mb_stage==1}:
     score:
       action: add
-      int: 2000000
+      int: "2000000 * current_player.playfield_multiplier"
+
     last_jackpot_value:
       action: set
-      int: 2000000
+      int: "2000000 * current_player.playfield_multiplier"
 
   airplane_right_orbit_jackpot_hit{current_player.airplane_mb_stage==1}:
     score:
       action: add
-      int: 2000000
+      int: "2000000 * current_player.playfield_multiplier"
+
     last_jackpot_value:
       action: set
-      int: 2000000
+      int: "2000000 * current_player.playfield_multiplier"
 
   airplane_mid_orbit_jackpot_hit{current_player.airplane_mb_stage==1}:
     score:
       action: add
-      int: 2000000
+      int: "2000000 * current_player.playfield_multiplier"
+
     last_jackpot_value:
       action: set
-      int: 2000000
+      int: "2000000 * current_player.playfield_multiplier"
 
   airplane_air_duct_jackpot_hit{current_player.airplane_mb_stage==1}:
     score:
       action: add
-      int: 2000000
+      int: "2000000 * current_player.playfield_multiplier"
+
     last_jackpot_value:
       action: set
-      int: 2000000
+      int: "2000000 * current_player.playfield_multiplier"
 
   airplane_upper_pf_jackpot_hit{current_player.airplane_mb_stage==1}:
     score:
       action: add
-      int: 2000000
+      int: "2000000 * current_player.playfield_multiplier"
+
     last_jackpot_value:
       action: set
-      int: 2000000
+      int: "2000000 * current_player.playfield_multiplier"
 
   airplane_left_orbit_jackpot_hit{current_player.airplane_mb_stage>=2}:
     score:
       action: add
-      int: 4000000
+      int: "4000000 * current_player.playfield_multiplier"
+
     last_jackpot_value:
       action: set
-      int: 4000000
+      int: "4000000 * current_player.playfield_multiplier"
 
   airplane_right_orbit_jackpot_hit{current_player.airplane_mb_stage>=2}:
     score:
       action: add
-      int: 4000000
+      int: "4000000 * current_player.playfield_multiplier"
+
     last_jackpot_value:
       action: set
-      int: 4000000
+      int: "4000000 * current_player.playfield_multiplier"
 
   airplane_mid_orbit_jackpot_hit{current_player.airplane_mb_stage>=2}:
     score:
       action: add
-      int: 4000000
+      int: "4000000 * current_player.playfield_multiplier"
+
     last_jackpot_value:
       action: set
-      int: 4000000
+      int: "4000000 * current_player.playfield_multiplier"
 
   airplane_air_duct_jackpot_hit{current_player.airplane_mb_stage>=2}:
     score:
       action: add
-      int: 4000000
+      int: "4000000 * current_player.playfield_multiplier"
+
     last_jackpot_value:
       action: set
-      int: 4000000
+      int: "4000000 * current_player.playfield_multiplier"
 
   airplane_upper_pf_jackpot_hit{current_player.airplane_mb_stage>=2}:
     score:
       action: add
-      int: 4000000
+      int: "4000000 * current_player.playfield_multiplier"
+
     last_jackpot_value:
       action: set
-      int: 4000000
+      int: "4000000 * current_player.playfield_multiplier"

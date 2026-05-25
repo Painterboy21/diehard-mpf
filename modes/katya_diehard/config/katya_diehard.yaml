@@ -161,15 +161,19 @@ variable_player:
     villain_mode_running:
       int: 1
       action: set
+
     katya_diehard_completion_active:
       int: 0
       action: set
+
     katya_shots:
       int: 0
       action: set
+
     katya_diehard_remaining:
       int: 93
       action: set
+
     villain_bonus:
       int: 500000
       action: add
@@ -182,10 +186,12 @@ variable_player:
   katya_loop_hit_scored:
     score:
       action: add
-      int: 1500000
+      int: "1500000 * current_player.playfield_multiplier"
+
     villain_bonus:
       action: add
       int: 1500000
+
     katya_shots:
       action: add
       int: 1
@@ -194,6 +200,7 @@ variable_player:
     katya_completion_active:
       int: 1
       action: set
+
     eob_bonus_villains:
       int: 1000000
       action: add
@@ -201,7 +208,8 @@ variable_player:
   katya_captive_final_hit:
     score:
       action: add
-      int: 3000000
+      int: "3000000 * current_player.playfield_multiplier"
+
     villain_bonus:
       action: add
       int: 3000000
@@ -210,6 +218,7 @@ variable_player:
     katya_complete:
       int: 1
       action: set
+
     modes_complete:
       action: add
       int: 1
@@ -218,6 +227,7 @@ variable_player:
     villain_mode_running:
       int: 0
       action: set
+
     katya_diehard_completion_active:
       int: 0
       action: set

@@ -198,7 +198,7 @@ event_player:
   hans_diehard_failed_complete:
     - reset_bullet_total
     - reset_bullets
-
+    
 variable_player:
   mode_hans_diehard_started:
     villain_mode_running:
@@ -224,11 +224,13 @@ variable_player:
 
   logicblock_hans_diehard_detonators_hit:
     hans_diehard_remaining:
-      int: 8 - device.counters.hans_diehard_detonators.value
+      int: "8 - device.counters.hans_diehard_detonators.value"
       action: set
 
   hans_diehard_target_hit{device.counters.hans_diehard_detonators.value<8}:
-    score: 1000000
+    score:
+      int: "1000000 * current_player.playfield_multiplier"
+      action: add
     hans_diehard_progress:
       int: 1
       action: add
@@ -239,7 +241,9 @@ variable_player:
       action: set
 
   hans_diehard_won_complete:
-    score: 3000000
+    score:
+      int: "3000000 * current_player.playfield_multiplier"
+      action: add
     hans_complete:
       int: 1
       action: set
@@ -257,6 +261,7 @@ variable_player:
     hans_diehard_completion_active:
       int: 0
       action: set
+
 
 
 show_player:

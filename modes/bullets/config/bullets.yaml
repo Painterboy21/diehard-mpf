@@ -223,14 +223,13 @@ timers:
 
 variable_player:
   bullet_new_unique_shot:
-
     bullet_hits:
       action: add
-      int: 1 + current_player.bullet_combo_hits
+      int: "1 + current_player.bullet_combo_hits"
 
-    eob_bonus_bullet:
+    eob_bonus_bullets:
       action: add
-      int: 35000 * (1 + current_player.bullet_combo_hits)
+      int: "35000 * (1 + current_player.bullet_combo_hits)"
 
     bullet_combo_hits:
       action: add
