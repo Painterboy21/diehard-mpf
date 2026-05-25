@@ -150,47 +150,51 @@ show_player:
       speed: 2
   
 
-variable_player: 
-  mode_nakatomi_multiball_started: 
-    played_nakatomi_multiball: 
+coil_player: 
+  ball_hold_nakatomi_super_hold_held_ball: c_towervuk_eject
+
+variable_player:
+  mode_nakatomi_multiball_started:
+    played_nakatomi_multiball:
       action: set
       int: 1
-    nakatomi_multiball_supers_locked: 
+
+    nakatomi_multiball_supers_locked:
       action: set
       int: 0
+
     eob_bonus_multiball:
       action: add
       int: 300000
 
-  nakatomi_super_jackpot_collected: 
-    nakatomi_multiball_supers_locked: 
+  nakatomi_super_jackpot_collected:
+    nakatomi_multiball_supers_locked:
       action: add
       int: 1
 
   nakatomi_disable_super_jackpot:
-    nakatomi_multiball_supers_locked: 
+    nakatomi_multiball_supers_locked:
       action: set
       int: 0
-  
-  jackpot_2mil: 
-    score: 
-      action: add
-      int: 2000000
-    last_jackpot_value: 
-      action: set
-      int: 2000000
 
-  jackpot_20mil: 
-    score: 
+  jackpot_2mil:
+    score:
       action: add
-      int: 20000000
-    last_jackpot_value: 
+      int: "2000000 * current_player.playfield_multiplier"
+
+    last_jackpot_value:
       action: set
-      int: 20000000
-    nakatomi_super_jackpot_collected: 
+      int: "2000000 * current_player.playfield_multiplier"
+
+  jackpot_20mil:
+    score:
+      action: add
+      int: "20000000 * current_player.playfield_multiplier"
+
+    last_jackpot_value:
+      action: set
+      int: "20000000 * current_player.playfield_multiplier"
+
+    nakatomi_super_jackpot_collected:
       action: set
       int: 1
-
-
-coil_player: 
-  ball_hold_nakatomi_super_hold_held_ball: c_towervuk_eject

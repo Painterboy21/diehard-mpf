@@ -1,0 +1,291 @@
+#config_version=6
+
+mode:
+  start_events:
+    - start_karl_diehard{current_player.karl_played==0}
+  stop_events:
+    - karl_diehard_completed
+    - karl_diehard_failed
+    - ball_ended
+  priority: 170
+
+
+timers:
+  karl_diehard_timer:
+    start_value: 90
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+
+    control_events:
+      - event: mode_karl_diehard_started
+        action: restart
+
+      - event: karl_diehard_completed
+        action: stop
+
+      - event: karl_diehard_failed
+        action: stop
+
+      - event: karl_add_time
+        action: add
+        value: 20
+
+
+ball_saves:
+  karl_complete_ball_save:
+    active_time: 8s
+    hurry_up_time: 3s
+    grace_period: 2s
+    balls_to_save: 1
+    auto_launch: true
+
+    enable_events:
+      - karl_diehard_completed
+
+
+shots:
+  karl_left_spinner:
+    switch: s_spinner_left
+
+    enable_events:
+      - mode_karl_diehard_started
+
+    disable_events:
+      - karl_diehard_completed
+      - karl_diehard_failed
+
+
+  karl_right_spinner:
+    switch: s_spinner_right
+
+    enable_events:
+      - mode_karl_diehard_started
+
+    disable_events:
+      - karl_diehard_completed
+      - karl_diehard_failed
+
+
+  karl_pop_1:
+    switch: s_bumper1
+
+    enable_events:
+      - mode_karl_diehard_started
+
+    disable_events:
+      - karl_diehard_completed
+      - karl_diehard_failed
+
+
+  karl_pop_2:
+    switch: s_bumper2
+
+    enable_events:
+      - mode_karl_diehard_started
+
+    disable_events:
+      - karl_diehard_completed
+      - karl_diehard_failed
+
+
+event_player:
+  mode_karl_diehard_started:
+    - villain_mode_started
+    - stop_base_music
+    - godot_karl_intro
+    - godot_karl_mode_music
+    - godot_karl_health_show
+    - godot_karl_start_message
+
+  karl_left_spinner_hit:
+    - karl_spinner_scored
+
+  karl_right_spinner_hit:
+    - karl_spinner_scored
+
+  karl_pop_1_hit:
+    - karl_bumper_scored
+
+  karl_pop_2_hit:
+    - karl_bumper_scored
+
+  karl_spinner_scored:
+    - godot_karl_damage_update
+    - godot_karl_message_update
+    - karl_damage_flash
+
+  karl_bumper_scored:
+    - godot_karl_damage_update
+    - godot_karl_message_update
+    - godot_karl_random_fight
+    - karl_damage_flash
+
+  timer_karl_diehard_timer_tick:
+    - godot_karl_john_health_update
+
+  player_karl_damage{value>=100}:
+    - karl_diehard_completed
+
+  karl_diehard_completed:
+    - godot_karl_defeated
+    - godot_karl_music_stop
+    - godot_karl_health_hide
+    - karl_complete_flash_start
+
+  timer_karl_diehard_timer_complete:
+    - karl_diehard_failed
+
+  karl_diehard_failed:
+    - godot_karl_failed
+    - godot_karl_music_stop
+    - godot_karl_health_hide
+
+
+variable_player:
+  mode_karl_diehard_started:
+
+    karl_played:
+      action: set
+      int: 1
+
+    karl_damage:
+      action: set
+      int: 0
+
+    karl_complete:
+      action: set
+      int: 0
+
+    karl_bonus:
+      action: set
+      int: 0
+
+    karl_villain_score:
+      action: set
+      int: 500000
+
+
+  karl_spinner_scored:
+    score: 90000
+
+    karl_damage: 1
+
+    karl_villain_score: 90000
+
+
+  karl_bumper_scored:
+    score: 450000
+
+    karl_damage: 5
+
+    karl_villain_score: 450000
+
+
+  karl_diehard_completed:
+    score: 3000000
+
+    karl_complete:
+      action: set
+      int: 1
+
+    karl_bonus:
+      action: set
+      int: 1
+
+    bonus_multiplier:
+      action: set
+      int: 6
+
+
+sound_player:
+  mode_karl_diehard_started:
+    music_karl_mode:
+      action: play
+      loops: -1
+      key: karl_music
+      volume: 0.45
+
+
+  karl_spinner_scored:
+    sfx_spinner_hit:
+      action: play
+      volume: 0.7
+
+
+  karl_bumper_scored:
+    sfx_karl_hit:
+      action: play
+      volume: 0.9
+
+
+  karl_diehard_completed:
+    music_karl_mode:
+      action: stop
+      key: karl_music
+
+    sfx_karl_defeated:
+      action: play
+      volume: 1.0
+
+
+  karl_diehard_failed:
+    music_karl_mode:
+      action: stop
+      key: karl_music
+
+    sfx_karl_failed:
+      action: play
+      volume: 1.0
+
+
+light_player:
+  mode_karl_diehard_started:
+    l40:
+      color: de0b0b
+      priority: 170
+
+
+  karl_diehard_completed:
+    l40:
+      color: de0b0b
+      priority: 200
+
+
+  karl_diehard_failed:
+    l40:
+      color: off
+      priority: 200
+
+
+show_player:
+  mode_karl_diehard_started:
+    karl_mode_flash:
+      loops: -1
+      speed: 1
+      priority: 175
+
+
+  karl_damage_flash:
+    karl_damage_flash:
+      loops: 0
+      speed: 1
+      priority: 190
+
+
+  karl_complete_flash_start:
+    karl_complete_ballsave_flash:
+      loops: 20
+      speed: 1
+      priority: 210
+
+
+  karl_diehard_completed:
+    karl_mode_flash:
+      action: stop
+
+
+  karl_diehard_failed:
+    karl_mode_flash:
+      action: stop

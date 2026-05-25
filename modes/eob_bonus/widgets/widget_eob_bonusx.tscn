@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://c85sdor6cnpot" path="res://modes/eob_bonus/assets/target.png" id="2_d2376"]
 [ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="3_arrxm"]
 [ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="4_i20gh"]
-[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="5_d2376"]
 
 [sub_resource type="Animation" id="Animation_oj6er"]
 length = 0.001
@@ -96,23 +95,3 @@ metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2106804637]
 libraries/ = SubResource("AnimationLibrary_pi4ew")
-
-[node name="MPFVariable8" type="Label" parent="." unique_id=101808050]
-layout_mode = 0
-offset_left = 1147.0
-offset_top = 796.0
-offset_right = 1206.0
-offset_bottom = 919.0
-theme_override_colors/font_color = Color(1, 0.98, 0.98, 1)
-theme_override_colors/font_shadow_color = Color(0.01, 0.01, 0.01, 0.9882353)
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_offset_y = 2
-theme_override_constants/shadow_outline_size = 31
-theme_override_fonts/font = ExtResource("5_d2376")
-theme_override_font_sizes/font_size = 100
-text = "5"
-script = ExtResource("4_i20gh")
-variable_name = "bonus_multiplier"
-template_string = "%s"
-initialize_empty = false
-metadata/_custom_type_script = "uid://bfvhmv2eirpua"
