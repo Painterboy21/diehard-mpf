@@ -219,6 +219,7 @@ modes:
   - hans_dieharder
   - katya_diehard
   - katya_dieharder
+  - bonus_x
   
 machine:
     balls_installed: 6

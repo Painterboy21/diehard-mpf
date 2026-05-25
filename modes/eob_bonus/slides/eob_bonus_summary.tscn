@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_xc6x3"]
 [ext_resource type="Theme" uid="uid://cfix632dro1cx" path="res://godot-media/themes/lbl_holly.tres" id="4_s2jgj"]
 [ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="5_cmna3"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="6_cmna3"]
 
 [node name="EobBonusSummary" type="Control" unique_id=266257104]
 layout_mode = 3
@@ -54,9 +55,10 @@ layout_mode = 2
 theme = ExtResource("4_s2jgj")
 text = "2,567,534"
 script = ExtResource("5_cmna3")
-variable_name = "eob_bonus_bullet"
+variable_name = "eob_bonus_bullets"
 comma_separate = true
-min_digits = 2
+min_digits = 0
+initialize_empty = false
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [node name="Control2" type="Control" parent="HBoxContainer/VBoxContainer2" unique_id=652305986]
@@ -126,7 +128,8 @@ text = "2,567,534"
 script = ExtResource("5_cmna3")
 variable_name = "eob_bonus_x"
 comma_separate = true
-min_digits = 2
+min_digits = 0
+initialize_empty = false
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer" unique_id=604530879]
@@ -146,3 +149,23 @@ metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 [node name="Control6" type="Control" parent="HBoxContainer/VBoxContainer3" unique_id=7477907]
 custom_minimum_size = Vector2(0, 82.685)
 layout_mode = 2
+
+[node name="MPFVariable8" type="Label" parent="." unique_id=1351747994]
+layout_mode = 0
+offset_left = 329.0
+offset_top = 872.0
+offset_right = 369.0
+offset_bottom = 968.0
+theme_override_colors/font_color = Color(1, 0.01999998, 0.01999998, 1)
+theme_override_colors/font_shadow_color = Color(0.99, 0.99, 0.99, 0.9882353)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/font = ExtResource("6_cmna3")
+theme_override_font_sizes/font_size = 60
+text = "5"
+script = ExtResource("5_cmna3")
+variable_name = "bonus_multiplier"
+template_string = "%s"
+initialize_empty = false
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"

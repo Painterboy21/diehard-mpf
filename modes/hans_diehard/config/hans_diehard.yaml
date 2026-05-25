@@ -246,6 +246,9 @@ variable_player:
     hans_diehard_complete:
       int: 1
       action: set
+    eob_bonus_villains:
+      int: 1000000
+      action: add
 
   mode_hans_diehard_stopping:
     villain_mode_running:
@@ -254,6 +257,7 @@ variable_player:
     hans_diehard_completion_active:
       int: 0
       action: set
+
 
 show_player:
   ball_save_hans_diehard_complete_save_enabled:

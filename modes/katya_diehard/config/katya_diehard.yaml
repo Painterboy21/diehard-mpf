@@ -30,8 +30,7 @@ ball_saves:
     balls_to_save: 1
     enable_events:
       - katya_victory_sequence
-    disable_events:
-      - mode_katya_diehard_stopping
+
 
 counters:
   katya_loop_counter:
@@ -192,9 +191,12 @@ variable_player:
       int: 1
 
   katya_victory_sequence:
-    katya_diehard_completion_active:
+    katya_completion_active:
       int: 1
       action: set
+    eob_bonus_villains:
+      int: 1000000
+      action: add
 
   katya_captive_final_hit:
     score:

@@ -1,7 +1,7 @@
 #config_version=6
 
 mode:
-  start_events: 
+  start_events:
     - start_villain_select
   stop_events:
     - start_col_difficulty_select
@@ -14,7 +14,6 @@ mode:
   priority: 300
   code: mpf.modes.carousel.code.carousel.Carousel
 
-    
 light_player:
   mode_villain_select_started:
     GI:
@@ -22,7 +21,6 @@ light_player:
     SPOTS:
       color: 000000
 
-      
 mode_settings:
   selectable_items:
     - villain_instructions
@@ -34,8 +32,10 @@ mode_settings:
 
   next_item_events:
     - s_right_flipper_active
+
   previous_item_events:
     - s_left_flipper_active
+
   select_item_events:
     - s_fire_active
     - s_actionbtn_active
@@ -45,6 +45,10 @@ slide_player:
     villain_select:
       action: play
       expire: 0s
+
+  mode_villain_select_stopping:
+    villain_select:
+      action: remove
 
 event_player:
   carousel_item_selected{carousel=="villain_select" and item=="villain_instructions"}:
@@ -62,7 +66,7 @@ event_player:
     - set_villain_karl
     - start_karl_difficulty_select|250ms
 
-  carousel_item_selected{carousel=="villain_select" and item=="Katya_Villain_Select"}:
+  carousel_item_selected{carousel=="villain_select" and item=="Katya_Villain_Select" and current_player.katya_complete==0}:
     - set_villain_katya
     - start_katya_difficulty_select|250ms
 
@@ -79,7 +83,7 @@ event_player:
   carousel_item_highlighted{carousel=="villain_select" and item=="Karl_Vreski_Villain_Select"}:
     - flash_karl_light
 
-  carousel_item_highlighted{carousel=="villain_select" and item=="Katya_Villain_Select"}:
+  carousel_item_highlighted{carousel=="villain_select" and item=="Katya_Villain_Select" and current_player.katya_complete==0}:
     - flash_katya_light
 
   carousel_item_highlighted{carousel=="villain_select" and item=="Simon_Gruber_Villain_Select"}:

@@ -11,6 +11,8 @@ mode:
     - katya_failed
     - katya_completed
     - katya_failed
+    - katya_dieharder_completed
+    - katya_dieharder_failed
   stop_events: 
     - ball_ended
     - start_hans_diehard

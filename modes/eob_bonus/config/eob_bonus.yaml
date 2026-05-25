@@ -6,87 +6,110 @@ mode:
   priority: 9999
   use_wait_queue: true
 
-combo_switches: 
+
+combo_switches:
   flipper_cancel_bonus:
     switches_1: s_left_flipper
     switches_2: s_right_flipper
-    events_when_both: 
+    events_when_both:
       - show_bonus_summary
 
-event_player: 
+
+event_player:
   timer_eob_bonus_complete:
     - show_bonus_summary
+    - calculate_eob_bonus_x
+  calculate_eob_bonus_x:
+    - show_bonus_summary|250ms
+
   timer_eob_bonus_summary_complete:
     - bonus_finished
+  
   mode_eob_bonus_started:
     - stop_main_music1
     - stop_main_music2
     - stop_main_music3
     - stop_main_music4
+ 
 
 
-show_player: 
-  mode_eob_bonus_started: 
-    eob_bonus: 
+show_player:
+  mode_eob_bonus_started:
+    eob_bonus:
       key: key_eob_bonus
       loops: 0
-  show_bonus_summary: 
-    eob_bonus: 
+
+  show_bonus_summary:
+    eob_bonus:
       action: stop
       key: key_eob_bonus
 
 
-slide_player: 
-  show_bonus_summary: 
+slide_player:
+  show_bonus_summary:
     eob_bonus_summary:
       action: play
       expire: 0s
 
 
-sound_player: 
-  stop_main_music1: 
-    gameplay_music_beethoven: 
+sound_player:
+  stop_main_music1:
+    gameplay_music_beethoven:
       key: main_snd_music
       action: stop
-  stop_main_music2: 
-    gameplay_music_assault: 
+
+  stop_main_music2:
+    gameplay_music_assault:
       key: main_snd_music
       action: stop
-  stop_main_music3: 
-    gameplay_music_finlandia: 
+
+  stop_main_music3:
+    gameplay_music_finlandia:
       key: main_snd_music
       action: stop
-  stop_main_music4: 
-    gameplay_music_battle: 
+
+  stop_main_music4:
+    gameplay_music_battle:
       key: main_snd_music
       action: stop
 
 
-timers: 
+timers:
   eob_bonus:
     start_value: 0
     end_value: 12
     direction: up
-    control_events: 
+    control_events:
       - event: show_bonus_summary
         action: stop
-    restart_on_complete: False
-    start_running: True
+    restart_on_complete: false
+    start_running: true
     tick_interval: 1000ms
+
   eob_bonus_summary:
     start_value: 0
     end_value: 3
     direction: up
-    control_events: 
+    control_events:
       - event: show_bonus_summary
         action: start
-    restart_on_complete: False
-    start_running: False
+    restart_on_complete: false
+    start_running: false
     tick_interval: 1000ms
 
-
 variable_player:
-  mode_started:
+  mode_eob_bonus_started:
+    eob_bonus_total:
+      int: current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains
+      action: set
+
+    eob_bonus_x:
+      int: (current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains) * current_player.bonus_multiplier
+      action: set
+
+
+  timer_eob_bonus_complete:
     score:
-      int: (current_player.eob_bonus_bullets + current_player.eob_bonus_ambush + current_player.eob_bonus_multiball + current_player.eob_bonus_holly + current_player.eob_bonus_villains + current_player.eob_bonus_x) * current_player.eob_bonus_x
+      int: current_player.eob_bonus_x
       action: add
+ 

@@ -36,8 +36,7 @@ ball_saves:
     balls_to_save: 1
     enable_events:
       - katya_dieharder_victory_sequence
-    disable_events:
-      - mode_katya_dieharder_stopping
+
 
 counters:
   katya_dieharder_loop_counter:
@@ -227,6 +226,10 @@ variable_player:
     katya_dieharder_completion_active:
       int: 1
       action: set
+
+    eob_bonus_villains:
+      int: 1000000
+      action: add
 
   katya_dieharder_fail_mode:
     katya_dieharder_failed_active:
