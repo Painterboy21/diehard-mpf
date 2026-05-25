@@ -109,15 +109,16 @@ slide_player:
       action: play
       expire: 0s
 
+event_player:
+  slide_centralpark_mb_removed:
+   - start_central_park_multiball
+
 variable_player:
   trigger_central_park_ball_locked:
     score:
       action: add
-      int: 250000
+      int: "250000 * current_player.playfield_multiplier"
+
     eob_bonus_multiball:
       action: add
       int: 100000
-
-event_player:
-  slide_centralpark_mb_removed:
-   - start_central_park_multiball

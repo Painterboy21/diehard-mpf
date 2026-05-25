@@ -274,9 +274,11 @@ variable_player:
     park_super_jackpot_available:
       action: set
       int: 0
+
     cp_super_jackpots_collected:
       action: set
       int: 0
+
     eob_bonus_multiball:
       action: add
       int: 300000
@@ -290,6 +292,7 @@ variable_player:
     park_super_jackpot_available:
       action: set
       int: 1
+
     cp_super_jackpots_collected:
       action: set
       int: 0
@@ -298,6 +301,7 @@ variable_player:
     cp_super_jackpots_collected:
       action: add
       int: 1
+
     score_park_super_jackpot_hit:
       action: set
       int: 1
@@ -306,6 +310,7 @@ variable_player:
     park_super_jackpot_available:
       action: set
       int: 0
+
     cp_super_jackpots_collected:
       action: set
       int: 0
@@ -313,36 +318,36 @@ variable_player:
   score_park_jackpot:
     score:
       action: add
-      int: 2000000
+      int: "2000000 * current_player.playfield_multiplier"
+
     last_jackpot_value:
       action: set
-      int: 2000000
+      int: "2000000 * current_player.playfield_multiplier"
 
   score_park_super_jackpot_1:
     score:
       action: add
-      int: 10000000
+      int: "10000000 * current_player.playfield_multiplier"
 
     last_jackpot_value:
       action: set
-      int: 10000000
+      int: "10000000 * current_player.playfield_multiplier"
 
   score_park_super_jackpot_2:
     score:
       action: add
-      int: 15000000
+      int: "15000000 * current_player.playfield_multiplier"
 
     last_jackpot_value:
       action: set
-      int: 15000000
+      int: "15000000 * current_player.playfield_multiplier"
 
   score_park_super_jackpot_3:
     score:
       action: add
-      int: 20000000
+      int: "20000000 * current_player.playfield_multiplier"
 
     last_jackpot_value:
       action: set
-      int: 20000000
-
+      int: "20000000 * current_player.playfield_multiplier"
   

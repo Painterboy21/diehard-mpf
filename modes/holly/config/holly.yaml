@@ -147,20 +147,22 @@ sound_player:
       action: play
 
 
-variable_player: 
-  holly_targets_hit: 
-    score: 
+variable_player:
+  holly_targets_hit:
+    score:
       action: add
-      int: 5000
-    eob_bonus_holly: 
+      int: "5000 * current_player.playfield_multiplier"
+
+    eob_bonus_holly:
       action: add
       int: 4000
 
-  holly_targets_on_complete: 
-    score: 
+  holly_targets_on_complete:
+    score:
       action: add
-      int: 50000
-    eob_bonus_holly: 
+      int: "50000 * current_player.playfield_multiplier"
+
+    eob_bonus_holly:
       action: add
       int: 200000
 
