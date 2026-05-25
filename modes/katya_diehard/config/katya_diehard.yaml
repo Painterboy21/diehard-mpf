@@ -1,11 +1,224 @@
 #config_version=6
 
 mode:
-  start_events: start_katya_diehard{current_player.katya_complete!=1}
+  start_events:
+    - start_katya_diehard{current_player.katya_complete!=1}
   stop_events:
     - katya_completed
     - katya_failed
   priority: 250
+
+timers:
+  katya_timer:
+    start_value: 93
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: true
+    control_events:
+      - event: katya_completed
+        action: stop
+      - event: katya_failed
+        action: stop
+
+ball_saves:
+  katya_diehard_complete_save:
+    active_time: 8s
+    hurry_up_time: 3s
+    grace_period: 5s
+    auto_launch: true
+    balls_to_save: 1
+    enable_events:
+      - katya_victory_sequence
+    disable_events:
+      - mode_katya_diehard_stopping
+
+counters:
+  katya_loop_counter:
+    count_events:
+      - katya_left_loop_hit
+      - katya_right_loop_hit
+      - katya_upper_loop_hit
+    starting_count: 0
+    count_complete_value: 5
+    direction: up
+    persist_state: false
+    reset_on_complete: false
+    events_when_complete:
+      - katya_loops_complete
+    reset_events:
+      - mode_katya_diehard_started
+
+shots:
+  katya_left_loop:
+    hit_events: left_orbit_hit
+    enable_events:
+      - mode_katya_diehard_started
+      - katya_left_loop_relight
+    disable_events:
+      - katya_left_loop_hit
+      - katya_loops_complete
+      - katya_completed
+      - katya_failed
+
+  katya_right_loop:
+    hit_events: right_orbit_hit
+    enable_events:
+      - mode_katya_diehard_started
+      - katya_right_loop_relight
+    disable_events:
+      - katya_right_loop_hit
+      - katya_loops_complete
+      - katya_completed
+      - katya_failed
+
+  katya_upper_loop:
+    switch: s_mid_orbit
+    enable_events:
+      - mode_katya_diehard_started
+      - katya_upper_loop_relight
+    disable_events:
+      - katya_upper_loop_hit
+      - katya_loops_complete
+      - katya_completed
+      - katya_failed
+
+  katya_captive_final:
+    switch: s_captiveball
+    enable_events:
+      - katya_loops_complete
+    disable_events:
+      - katya_completed
+      - katya_failed
+
+event_player:
+  mode_katya_diehard_started:
+    - villain_mode_started
+    - katya_start
+    - katya_diehard_music_start
+    - reset_bullet_total
+    - reset_bullets
+    - nakatomi_entrance_lock_close
+    - wire_ramp_exit_open
+
+  mode_katya_diehard_stopping:
+    - villain_mode_stopped
+
+  timer_katya_timer_complete:
+    - katya_escape_sequence
+
+  ball_ended{current_player.katya_diehard_completion_active==0}:
+    - katya_escape_sequence
+
+  ball_ended{current_player.katya_diehard_completion_active==1}:
+    - reset_bullet_total
+    - reset_bullets
+
+  ball_drain{current_player.katya_diehard_completion_active==0}:
+    - katya_ball_drain_escape
+
+  ball_drain{current_player.katya_diehard_completion_active==1}:
+    - reset_bullet_total
+    - reset_bullets
+
+  katya_ball_drain_escape:
+    - katya_failed|4s
+
+  katya_escape_sequence:
+    - katya_failed_delay
+
+  katya_failed_delay:
+    - katya_failed|4s
+
+  katya_failed:
+    - reset_bullet_total
+    - reset_bullets
+
+  katya_completed:
+    - reset_bullet_total
+    - reset_bullets
+
+  katya_left_loop_hit{device.counters.katya_loop_counter.value<5}:
+    - katya_loop_hit_scored
+    - katya_left_loop_relight|3s
+
+  katya_right_loop_hit{device.counters.katya_loop_counter.value<5}:
+    - katya_loop_hit_scored
+    - katya_right_loop_relight|3s
+
+  katya_upper_loop_hit{device.counters.katya_loop_counter.value<5}:
+    - katya_loop_hit_scored
+    - katya_upper_loop_relight|3s
+
+  katya_captive_final_hit:
+    - katya_victory_sequence
+
+  katya_victory_sequence:
+    - katya_completed_show
+    - katya_completed|4s
+
+variable_player:
+  katya_start:
+    villain_mode_running:
+      int: 1
+      action: set
+    katya_diehard_completion_active:
+      int: 0
+      action: set
+    katya_shots:
+      int: 0
+      action: set
+    katya_diehard_remaining:
+      int: 93
+      action: set
+    villain_bonus:
+      int: 500000
+      action: add
+
+  timer_katya_timer_tick:
+    katya_diehard_remaining:
+      int: ticks
+      action: set
+
+  katya_loop_hit_scored:
+    score:
+      action: add
+      int: 1500000
+    villain_bonus:
+      action: add
+      int: 1500000
+    katya_shots:
+      action: add
+      int: 1
+
+  katya_victory_sequence:
+    katya_diehard_completion_active:
+      int: 1
+      action: set
+
+  katya_captive_final_hit:
+    score:
+      action: add
+      int: 3000000
+    villain_bonus:
+      action: add
+      int: 3000000
+
+  katya_completed:
+    katya_complete:
+      int: 1
+      action: set
+    modes_complete:
+      action: add
+      int: 1
+
+  mode_katya_diehard_stopping:
+    villain_mode_running:
+      int: 0
+      action: set
+    katya_diehard_completion_active:
+      int: 0
+      action: set
 
 light_player:
   mode_katya_diehard_started:
@@ -90,6 +303,33 @@ shows:
         l42: off
 
 show_player:
+  ball_save_katya_diehard_complete_save_enabled:
+    flash_color_with_fade:
+      key: katya_diehard_ball_save_flash
+      loops: -1
+      speed: 2
+      show_tokens:
+        lights: BALL_SAVE
+        color: ff00ff
+        fade: 500
+
+  ball_save_katya_diehard_complete_save_hurry_up:
+    flash_color:
+      key: katya_diehard_ball_save_flash
+      loops: -1
+      speed: 7
+      show_tokens:
+        lights: BALL_SAVE
+        color: ff00ff
+
+  ball_save_katya_diehard_complete_save_disabled:
+    flash_color_with_fade:
+      action: stop
+      key: katya_diehard_ball_save_flash
+    flash_color:
+      action: stop
+      key: katya_diehard_ball_save_flash
+
   mode_katya_diehard_started:
     katya_left_loop_flash:
       loops: -1
@@ -139,12 +379,16 @@ show_player:
       loops: -1
 
   katya_completed:
+    katya_diehard_ball_save_flash:
+      action: stop
     katya_captive_flash:
       action: stop
     katya_insert_flash:
       action: stop
 
   katya_failed:
+    katya_diehard_ball_save_flash:
+      action: stop
     katya_left_loop_flash:
       action: stop
     katya_right_loop_flash:
@@ -156,139 +400,60 @@ show_player:
     katya_insert_flash:
       action: stop
 
-event_player:
-  mode_katya_diehard_started:
-  - katya_start
-  - reset_bullet_total
-  - reset_bullets
-  - nakatomi_entrance_lock_close
-  - wire_ramp_exit_open
-
-  timer_katya_timer_complete:
-    - katya_escape_sequence
-
-  ball_ended:
-    - katya_escape_sequence
-
-  katya_escape_sequence:
-    - katya_failed_delay
-
-  katya_failed_delay:
-    - katya_failed|4s
-
-  katya_failed:
-    - reset_bullet_total
-    - reset_bullets 
-
-  katya_completed:
-    - reset_bullet_total
-    - reset_bullets
-
-  katya_left_loop_hit{device.counters.katya_loop_counter.value<5}:
-    - katya_loop_hit_scored
-    - katya_left_loop_relight|3s
-
-  katya_right_loop_hit{device.counters.katya_loop_counter.value<5}:
-    - katya_loop_hit_scored
-    - katya_right_loop_relight|3s
-
-  katya_upper_loop_hit{device.counters.katya_loop_counter.value<5}:
-    - katya_loop_hit_scored
-    - katya_upper_loop_relight|3s
-
-  counter_katya_loop_counter_complete:
-    - katya_loops_complete
-
-  katya_captive_final_hit:
-    - katya_victory_sequence
-
-  katya_victory_sequence:
-    - katya_completed_show
-    - katya_completed|4s
-
-shots:
-  katya_left_loop:
-    hit_events: left_orbit_hit
-    enable_events: mode_katya_diehard_started
-    disable_events:
-      - katya_loops_complete
-      - katya_completed
-      - katya_failed
-
-  katya_right_loop:
-    hit_events: right_orbit_hit
-    enable_events: mode_katya_diehard_started
-    disable_events:
-      - katya_loops_complete
-      - katya_completed
-      - katya_failed
-
-  katya_upper_loop:
-    switch: s_mid_orbit
-    enable_events: mode_katya_diehard_started
-    disable_events:
-      - katya_loops_complete
-      - katya_completed
-      - katya_failed
-
-  katya_captive_final:
-    switch: s_captiveball
-    enable_events: katya_loops_complete
-    disable_events:
-      - katya_completed
-      - katya_failed
-
-counters:
-  katya_loop_counter:
-    count_events:
-      - katya_left_loop_hit
-      - katya_right_loop_hit
-      - katya_upper_loop_hit
-    starting_count: 0
-    count_complete_value: 5
-    events_when_complete:
-      - katya_loops_complete
-    reset_events:
-      - mode_katya_diehard_started
-
-timers:
-  katya_timer:
-    start_value: 93
-    end_value: 0
-    direction: down
-    tick_interval: 1s
-    start_running: true
+  mode_katya_diehard_stopping:
+    katya_diehard_ball_save_flash:
+      action: stop
+    katya_left_loop_flash:
+      action: stop
+    katya_right_loop_flash:
+      action: stop
+    katya_upper_loop_flash:
+      action: stop
+    katya_captive_flash:
+      action: stop
+    katya_insert_flash:
+      action: stop
 
 slide_player:
   mode_katya_diehard_started:
     katya_diehard_background:
       action: play
- 
+      expire: 0s
+      priority: 500
+
+  mode_katya_diehard_stopping:
+    katya_diehard_background:
+      action: remove
 
   katya_loop_hit_scored{current_player.katya_shots==1}:
     katya_hit_1:
       action: play
-
+      expire: 4s
+      priority: 600
 
   katya_loop_hit_scored{current_player.katya_shots==2}:
     katya_hit_2:
       action: play
-   
+      expire: 4s
+      priority: 600
 
   katya_loop_hit_scored{current_player.katya_shots==3}:
     katya_hit_3:
       action: play
-
+      expire: 4s
+      priority: 600
 
   katya_loop_hit_scored{current_player.katya_shots==4}:
     katya_hit_4:
       action: play
-
+      expire: 4s
+      priority: 600
 
   katya_loop_hit_scored{current_player.katya_shots==5}:
     katya_hit_5:
       action: play
-
+      expire: 4s
+      priority: 600
 
   katya_completed_show:
     katya_diehard_background:
@@ -296,7 +461,17 @@ slide_player:
 
     katya_defeated:
       action: play
+      expire: 4s
+      priority: 10000
 
+  katya_ball_drain_escape:
+    katya_diehard_background:
+      action: remove
+
+    katya_escaped:
+      action: play
+      expire: 4s
+      priority: 10000
 
   katya_failed:
     katya_diehard_background:
@@ -304,96 +479,45 @@ slide_player:
 
     katya_escaped:
       action: play
-
+      expire: 4s
+      priority: 10000
 
 widget_player:
   mode_katya_diehard_started:
     katya_timer_widget:
+      slide: katya_diehard_background
+      action: play
+    katya_diehard_progress_widget:
+      slide: katya_diehard_background
       action: play
 
+  mode_katya_diehard_stopping:
+    katya_timer_widget:
+      action: remove
     katya_diehard_progress_widget:
-      action: play
+      action: remove
 
   katya_completed:
     katya_timer_widget:
       action: remove
-
     katya_diehard_progress_widget:
       action: remove
 
   katya_failed:
     katya_timer_widget:
       action: remove
-
     katya_diehard_progress_widget:
       action: remove
-
-variable_player:
-  katya_start:
-    villain_mode_running:
-      int: 1
-      action: set
-
-    katya_shots:
-      int: 0
-      action: set
-
-    katya_diehard_remaining:
-      int: 93
-      action: set
-
-    villain_bonus:
-      int: 500000
-      action: add
-
-  timer_katya_timer_tick:
-    katya_diehard_remaining:
-      int: -1
-      action: add
-
-  katya_loop_hit_scored:
-    score:
-      action: add
-      int: 1500000
-
-    villain_bonus:
-      action: add
-      int: 1500000
-
-    katya_shots:
-      action: add
-      int: 1
-
-  katya_captive_final_hit:
-    score:
-      action: add
-      int: 3000000
-
-    villain_bonus:
-      action: add
-      int: 3000000
-
-  katya_completed:
-    katya_complete:
-      int: 1
-      action: set
-
-    modes_complete:
-      action: add
-      int: 1
-
-  mode_katya_diehard_stopping:
-    villain_mode_running:
-      int: 0
-      action: set
 
 sound_player:
   katya_diehard_music_start:
     katyatheme:
+      key: main_music
       action: play
       loops: -1
       volume: 0.7
 
   mode_katya_diehard_stopping:
     katyatheme:
+      key: main_music
       action: stop

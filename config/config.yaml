@@ -218,7 +218,8 @@ modes:
   - hans_diehard
   - hans_dieharder
   - katya_diehard
-
+  - katya_dieharder
+  
 machine:
     balls_installed: 6
 game:

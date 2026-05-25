@@ -3,12 +3,10 @@
 mode:
   start_events:
     - start_hans_diehard{current_player.hans_complete==0}
-
   stop_events:
     - hans_diehard_won_complete
     - hans_diehard_failed_complete
-
-  priority: 160
+  priority: 170
 
 timers:
   hans_diehard_timer:
@@ -17,16 +15,24 @@ timers:
     direction: down
     tick_interval: 1s
     start_running: false
-
     control_events:
       - event: mode_hans_diehard_started
         action: restart
-
       - event: hans_diehard_won_complete
         action: stop
-
       - event: hans_diehard_failed_complete
         action: stop
+
+ball_saves:
+  hans_diehard_complete_save:
+    active_time: 8s
+    hurry_up_time: 1s
+    grace_period: 1s
+    auto_launch: true
+    balls_to_save: 1
+    enable_events:
+      - logicblock_hans_diehard_detonators_hit{count==8}
+    disable_events: mode_hans_diehard_stopping
 
 counters:
   hans_diehard_detonators:
@@ -36,13 +42,13 @@ counters:
       - hans_diehard_valid_l1
       - hans_diehard_valid_l2
       - hans_diehard_valid_y
-
     starting_count: 0
     count_complete_value: 8
     direction: up
     persist_state: false
     reset_on_complete: false
-
+    reset_events:
+      - mode_hans_diehard_started
     events_when_complete:
       - hans_diehard_complete
 
@@ -54,6 +60,9 @@ shots:
       - hans_diehard_h_ready
     disable_events:
       - hans_diehard_valid_h
+      - hans_diehard_complete
+      - hans_diehard_won_complete
+      - hans_diehard_failed_complete
 
   hans_diehard_o:
     switch: s_holly_o
@@ -62,6 +71,9 @@ shots:
       - hans_diehard_o_ready
     disable_events:
       - hans_diehard_valid_o
+      - hans_diehard_complete
+      - hans_diehard_won_complete
+      - hans_diehard_failed_complete
 
   hans_diehard_l1:
     switch: s_holly_l
@@ -70,6 +82,9 @@ shots:
       - hans_diehard_l1_ready
     disable_events:
       - hans_diehard_valid_l1
+      - hans_diehard_complete
+      - hans_diehard_won_complete
+      - hans_diehard_failed_complete
 
   hans_diehard_l2:
     switch: s_holly_l1
@@ -78,6 +93,9 @@ shots:
       - hans_diehard_l2_ready
     disable_events:
       - hans_diehard_valid_l2
+      - hans_diehard_complete
+      - hans_diehard_won_complete
+      - hans_diehard_failed_complete
 
   hans_diehard_y:
     switch: s_holly_y
@@ -86,6 +104,9 @@ shots:
       - hans_diehard_y_ready
     disable_events:
       - hans_diehard_valid_y
+      - hans_diehard_complete
+      - hans_diehard_won_complete
+      - hans_diehard_failed_complete
 
 event_player:
   mode_hans_diehard_started:
@@ -107,7 +128,6 @@ event_player:
   mode_hans_diehard_stopping:
     - villain_mode_stopped
     - wire_ramp_exit_closed
-
 
   hans_diehard_h_hit:
     - hans_diehard_valid_h
@@ -154,32 +174,45 @@ event_player:
     - hans_diehard_won_complete|8s
     - reset_bullet_total
     - reset_bullets
-  timer_hans_diehard_timer_complete:
-    - hans_lost_slide
-    - hans_diehard_failed_complete|4s
 
-  ball_drain:
+  timer_hans_diehard_timer_complete:
     - hans_lost_slide
     - hans_diehard_failed_complete|4s
     - reset_bullet_total
     - reset_bullets
 
+  ball_drain{current_player.hans_diehard_completion_active==0}:
+    - hans_lost_slide
+    - hans_diehard_failed_complete|4s
+    - reset_bullet_total
+    - reset_bullets
 
+  ball_drain{current_player.hans_diehard_completion_active==1}:
+    - reset_bullet_total
+    - reset_bullets
+
+  hans_diehard_won_complete:
+    - reset_bullet_total
+    - reset_bullets
+
+  hans_diehard_failed_complete:
+    - reset_bullet_total
+    - reset_bullets
 
 variable_player:
   mode_hans_diehard_started:
     villain_mode_running:
       int: 1
       action: set
-
+    hans_diehard_completion_active:
+      int: 0
+      action: set
     hans_diehard_progress:
       int: 0
       action: set
-
     hans_diehard_time:
       int: 93
       action: set
-
     hans_diehard_remaining:
       int: 8
       action: set
@@ -196,18 +229,20 @@ variable_player:
 
   hans_diehard_target_hit{device.counters.hans_diehard_detonators.value<8}:
     score: 1000000
-
     hans_diehard_progress:
       int: 1
       action: add
 
-  hans_diehard_won_complete:
-    score: 3000000
-
-    hans_complete:
+  hans_diehard_complete:
+    hans_diehard_completion_active:
       int: 1
       action: set
 
+  hans_diehard_won_complete:
+    score: 3000000
+    hans_complete:
+      int: 1
+      action: set
     hans_diehard_complete:
       int: 1
       action: set
@@ -216,8 +251,34 @@ variable_player:
     villain_mode_running:
       int: 0
       action: set
+    hans_diehard_completion_active:
+      int: 0
+      action: set
 
 show_player:
+  ball_save_hans_diehard_complete_save_enabled:
+    flash_color_with_fade:
+      key: hans_diehard_ball_save_flash
+      loops: -1
+      speed: 2
+      show_tokens:
+        lights: BALL_SAVE
+        color: ffff00
+        fade: 500
+
+  ball_save_hans_diehard_complete_save_hurry_up:
+    flash_color:
+      key: hans_diehard_ball_save_flash
+      loops: -1
+      speed: 7
+      show_tokens:
+        lights: BALL_SAVE
+        color: ffff00
+
+  ball_save_hans_diehard_complete_save_disabled:
+    hans_diehard_ball_save_flash:
+      action: stop
+
   hans_diehard_target_hit:
     flash_color:
       key: hans_gi_red_hit_flash
@@ -243,7 +304,6 @@ show_player:
       key: hans_h_flash
       priority: 170
       loops: -1
-
       show_tokens:
         light: l30
 
@@ -252,7 +312,6 @@ show_player:
       key: hans_o_flash
       priority: 170
       loops: -1
-
       show_tokens:
         light: l31
 
@@ -261,7 +320,6 @@ show_player:
       key: hans_l1_flash
       priority: 170
       loops: -1
-
       show_tokens:
         light: l32
 
@@ -270,7 +328,6 @@ show_player:
       key: hans_l2_flash
       priority: 170
       loops: -1
-
       show_tokens:
         light: l33
 
@@ -279,7 +336,6 @@ show_player:
       key: hans_y_flash
       priority: 170
       loops: -1
-
       show_tokens:
         light: l34
 
@@ -306,22 +362,16 @@ show_player:
   mode_hans_diehard_stopping:
     hans_gi_red_hit_flash:
       action: stop
-
     hans_gruber_flash:
       action: stop
-
     hans_h_flash:
       action: stop
-
     hans_o_flash:
       action: stop
-
     hans_l1_flash:
       action: stop
-
     hans_l2_flash:
       action: stop
-
     hans_y_flash:
       action: stop
 
@@ -338,14 +388,30 @@ light_player:
 
   hans_diehard_valid_h:
     l30: off
+
   hans_diehard_valid_o:
     l31: off
+
   hans_diehard_valid_l1:
     l32: off
+
   hans_diehard_valid_l2:
     l33: off
+
   hans_diehard_valid_y:
     l34: off
+
+  hans_diehard_won_complete:
+    l1000: off
+    l1001: off
+    l43:
+      color: 00ff00
+
+  hans_diehard_failed_complete:
+    l1000: off
+    l1001: off
+
+
 
 slide_player:
   mode_hans_diehard_started:
@@ -407,12 +473,16 @@ slide_player:
       priority: 600
 
   hans_diehard_completed_slide:
+    hans_diehard_background:
+      action: remove
     detonators_completed:
       action: play
       expire: 4s
       priority: 10000
 
   hans_lost_slide:
+    hans_diehard_background:
+      action: remove
     hans_lost:
       action: play
       expire: 4s
@@ -423,7 +493,6 @@ widget_player:
     hans_timer_widget:
       slide: hans_diehard_background
       action: play
-
     hans_progress_widget:
       slide: hans_diehard_background
       action: play
@@ -431,17 +500,30 @@ widget_player:
   mode_hans_diehard_stopping:
     hans_timer_widget:
       action: remove
+    hans_progress_widget:
+      action: remove
 
+  hans_diehard_won_complete:
+    hans_timer_widget:
+      action: remove
+    hans_progress_widget:
+      action: remove
+
+  hans_diehard_failed_complete:
+    hans_timer_widget:
+      action: remove
     hans_progress_widget:
       action: remove
 
 sound_player:
-  hans_dieharder_music_start:
+  hans_diehard_music_start:
     holly_meets_hans:
+      key: main_music
       action: play
       loops: -1
       volume: 0.8
 
-  mode_hans_dieharder_stopping:
+  mode_hans_diehard_stopping:
     holly_meets_hans:
+      key: main_music
       action: stop
