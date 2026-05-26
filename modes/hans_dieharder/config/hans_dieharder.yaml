@@ -251,7 +251,7 @@ variable_player:
       int: 1
       action: set
 
-  hans_dieharder_won_complete:
+  hans_dieharder_won_complete{current_player.hans_complete==0}:
     score:
       int: "5000000 * current_player.playfield_multiplier"
       action: add
@@ -276,6 +276,10 @@ variable_player:
     hans_dieharder_completion_active:
       int: 0
       action: set
+
+    villains_completed:
+      action: add
+      int: 1
 
 show_player:
   ball_save_hans_dieharder_complete_save_enabled:

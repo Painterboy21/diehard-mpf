@@ -64,6 +64,9 @@ player_vars:
   eob_bonus_villains:
     initial_value: 0
     value_type: int
+  villains_completed:
+    initial_value: 0
+    value_type: int
 
 
   #bullets
