@@ -30,30 +30,11 @@ shakers:
       s_captiveball_active:
         power: 0.250
         duration: 280ms
-# super jets
-      super_jets_left_shaker:
-        power: 0.600
-        duration: 70ms
-      super_jets_right_shaker:
-        power: 0.600
-        duration: 70ms
-# ambush
-      ambush_started_shaker:
-        power: 0.450
-        duration: 350ms
-      ambush_shot_shaker:
-        power: 0.350
-        duration: 120ms
-      ambush_collected_shaker:
-        power: 0.650
-        duration: 500ms
-      ambush_failed_shaker:
-        power: 0.250
-        duration: 250ms
 # nakatomi
       nakatomi_jackpots_hit:
         power: 0.300
         duration: 350ms
+
 # central park  
       central_park_lock_left_hit:
         power: 0.200
