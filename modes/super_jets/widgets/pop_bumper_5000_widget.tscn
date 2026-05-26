@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dqk0x0ravebi0"]
+
+[ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_2ywqg"]
+[ext_resource type="Texture2D" uid="uid://dvtvwyypqg1p7" path="res://godot-media/images/bullet5000.png" id="2_7ghop"]
+
+[node name="pop_bumper_5000_widget" type="Control" unique_id=1063023180]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2ywqg")
+metadata/_custom_type_script = "uid://d4ky3s4bg1ouq"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1574913984]
+position = Vector2(415, 636)
+texture = ExtResource("2_7ghop")
