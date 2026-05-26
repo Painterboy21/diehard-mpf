@@ -32,12 +32,12 @@ coils:
  # Magnets
   c_trmagr:
     number: e-15
-    default_pulse_ms: 190ms
-    default_hold_power: 0.95
+    default_pulse_ms: 100ms
+    default_hold_power: 0.7
   c_trmagl:
     number: e-14
-    default_pulse_ms: 120ms
-    default_hold_power: 0.85
+    default_pulse_ms: 100ms
+    default_hold_power: 0.7
 
  # Plunger & Trough
   c_plunger:
