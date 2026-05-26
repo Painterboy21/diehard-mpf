@@ -39,6 +39,7 @@ event_player:
     - ambush_enable_shots
     - ambush_reset_values
     - ambush_start_timers
+    - ambush_started_shaker
 
   timer_ambush_display_timer_tick:
     - ambush_display_tick
@@ -54,18 +55,23 @@ event_player:
 
   ambush_left_loop_hit:
     - ambush_extend
+    - ambush_shot_shaker
 
   ambush_left_ramp_wire_hit:
     - ambush_extend
+    - ambush_shot_shaker
 
   ambush_right_loop_hit:
     - ambush_extend
+    - ambush_shot_shaker
 
   ambush_upper_loop_hit:
     - ambush_extend
+    - ambush_shot_shaker
 
   ambush_captive_hit:
     - ambush_extend
+    - ambush_shot_shaker
 
   ambush_right_ramp_collect_hit:
     - ambush_collected
@@ -73,12 +79,14 @@ event_player:
   ambush_collected:
     - wire_ramp_exit_closed
     - ambush_finish_delay_start
+    - ambush_collected_shaker
 
   timer_ambush_finish_delay_complete:
     - ambush_finished
 
   ambush_failed:
     - wire_ramp_exit_closed
+    - ambush_failed_shaker
 
   ball_ended:
     - wire_ramp_exit_closed
