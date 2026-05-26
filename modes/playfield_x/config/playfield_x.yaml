@@ -1,5 +1,15 @@
 #config_version=6
 
+widgets:
+  playfield_2x:
+    widget: playfield_2x
+  playfield_3x:
+    widget: playfield_3x
+  playfield_4x:
+    widget: playfield_4x
+  playfield_5x:
+    widget: playfield_5x
+
 mode:
   start_events: ball_started
   stop_events: ball_ended
@@ -21,19 +31,22 @@ timers:
         action: stop
 
 event_player:
-  drop_target_bank1_down:
+  drop_target_bank1_down{current_player.playfield_multiplier<3 or current_player.stuart_bonus_active==1}:
     - pf_x_drop_1_lit
 
-  drop_target_bank2_down:
+  drop_target_bank2_down{current_player.playfield_multiplier<3 or current_player.stuart_bonus_active==1}:
     - pf_x_drop_2_lit
 
-  drop_target_bank3_down:
+  drop_target_bank3_down{current_player.playfield_multiplier<3 or current_player.stuart_bonus_active==1}:
     - pf_x_drop_3_lit
 
-  drop_target_bank_bank_down{current_player.stuart_bonus_active!=1 and current_player.playfield_multiplier<3}:
+  drop_target_bank_bank_down{current_player.playfield_multiplier==1}:
     - playfield_x_qualified
 
-  drop_target_bank_bank_down{current_player.stuart_bonus_active==1 and current_player.playfield_multiplier<5}:
+  drop_target_bank_bank_down{current_player.playfield_multiplier==2}:
+    - playfield_x_qualified
+
+  drop_target_bank_bank_down{current_player.stuart_bonus_active==1 and current_player.playfield_multiplier>=3 and current_player.playfield_multiplier<5}:
     - playfield_x_qualified
 
   s_popbumper_left_active{current_player.playfield_x_qualified==1}:
@@ -104,13 +117,34 @@ variable_player:
       int: 0
       action: set
 
+widget_player:
+  playfield_x_started{current_player.playfield_multiplier==2}:
+    playfield_2x:
+      action: play
+      expire: 2s
+
+  playfield_x_started{current_player.playfield_multiplier==3}:
+    playfield_3x:
+      action: play
+      expire: 2s
+
+  playfield_x_started{current_player.playfield_multiplier==4}:
+    playfield_4x:
+      action: play
+      expire: 2s
+
+  playfield_x_started{current_player.playfield_multiplier==5}:
+    playfield_5x:
+      action: play
+      expire: 2s
+
 show_player:
   pf_x_drop_1_lit:
     flash_color:
       key: pf_x_l18_yellow_slow
       speed: 2
       loops: -1
-      priority: 90
+      priority: 1000
       show_tokens:
         lights: l18
         color: yellow
@@ -122,7 +156,7 @@ show_player:
       key: pf_x_l18_yellow_fast
       speed: 5
       loops: -1
-      priority: 90
+      priority: 1000
       show_tokens:
         lights: l18
         color: yellow
@@ -132,36 +166,42 @@ show_player:
       action: stop
     pf_x_l18_yellow_fast:
       action: stop
+    pf_x_l18_green_ready:
+      action: stop
     flash_color:
       key: pf_x_l18_green_ready
       speed: 8
       loops: -1
-      priority: 95
+      priority: 1000
       show_tokens:
         lights: l18
         color: green
 
   playfield_x_collected:
+    pf_x_l18_yellow_slow:
+      action: stop
+    pf_x_l18_yellow_fast:
+      action: stop
     pf_x_l18_green_ready:
       action: stop
-    flash_color:
-      key: pf_x_l18_red_collect
-      speed: 10
-      loops: 4
-      priority: 110
-      show_tokens:
-        lights: l18
-        color: red
+    pf_x_2x_flash:
+      action: stop
+    pf_x_3x_flash:
+      action: stop
+    pf_x_4x_flash:
+      action: stop
+    pf_x_5x_flash:
+      action: stop
 
   playfield_x_started{current_player.playfield_multiplier==2}:
     flash_color:
       key: pf_x_2x_flash
       speed: 5
       loops: -1
-      priority: 91
+      priority: 1000
       show_tokens:
         lights: l12
-        color: ffcc00
+        color: yellow
 
   playfield_x_started{current_player.playfield_multiplier==3}:
     pf_x_2x_flash:
@@ -170,10 +210,10 @@ show_player:
       key: pf_x_3x_flash
       speed: 5
       loops: -1
-      priority: 91
+      priority: 1000
       show_tokens:
         lights: l13
-        color: ffcc00
+        color: yellow
 
   playfield_x_started{current_player.playfield_multiplier==4}:
     pf_x_3x_flash:
@@ -182,10 +222,10 @@ show_player:
       key: pf_x_4x_flash
       speed: 5
       loops: -1
-      priority: 91
+      priority: 1000
       show_tokens:
         lights: l15
-        color: ffcc00
+        color: yellow
 
   playfield_x_started{current_player.playfield_multiplier==5}:
     pf_x_4x_flash:
@@ -194,10 +234,10 @@ show_player:
       key: pf_x_5x_flash
       speed: 5
       loops: -1
-      priority: 91
+      priority: 1000
       show_tokens:
         lights: l14
-        color: ffcc00
+        color: yellow
 
   playfield_x_expired:
     pf_x_l18_yellow_slow:
@@ -232,90 +272,79 @@ show_player:
       action: stop
 
 light_player:
+  playfield_x_collected:
+    l18:
+      color: off
+      priority: 1000
+
   playfield_x_started{current_player.playfield_multiplier==2}:
-    l12:
-      color: ffcc00
-      priority: 90
+    l18:
+      color: off
+      priority: 1000
 
   playfield_x_started{current_player.playfield_multiplier==3}:
     l12:
-      color: ffcc00
-      priority: 90
-    l13:
-      color: ffcc00
-      priority: 90
+      color: white
+      priority: 1000
+    l18:
+      color: off
+      priority: 1000
 
   playfield_x_started{current_player.playfield_multiplier==4}:
     l12:
-      color: ffcc00
-      priority: 90
+      color: white
+      priority: 1000
     l13:
-      color: ffcc00
-      priority: 90
-    l15:
-      color: ffcc00
-      priority: 90
+      color: white
+      priority: 1000
+    l18:
+      color: off
+      priority: 1000
 
   playfield_x_started{current_player.playfield_multiplier==5}:
     l12:
-      color: ffcc00
-      priority: 90
+      color: white
+      priority: 1000
     l13:
-      color: ffcc00
-      priority: 90
+      color: white
+      priority: 1000
     l15:
-      color: ffcc00
-      priority: 90
-    l14:
-      color: ffcc00
-      priority: 90
+      color: white
+      priority: 1000
+    l18:
+      color: off
+      priority: 1000
 
   playfield_x_expired:
     l12:
       color: off
+      priority: 1000
     l13:
       color: off
+      priority: 1000
     l14:
       color: off
+      priority: 1000
     l15:
       color: off
+      priority: 1000
     l18:
       color: off
+      priority: 1000
 
   ball_ended:
     l12:
       color: off
+      priority: 1000
     l13:
       color: off
+      priority: 1000
     l14:
       color: off
+      priority: 1000
     l15:
       color: off
+      priority: 1000
     l18:
       color: off
-
-widget_player:
-  mode_playfield_x_started:
-    playfield_1x:
-      action: play
-      expire: 2s
-
-  playfield_x_started{current_player.playfield_multiplier==2}:
-    playfield_2x:
-      action: play
-      expire: 2s
-
-  playfield_x_started{current_player.playfield_multiplier==3}:
-    playfield_3x:
-      action: play
-      expire: 2s
-
-  playfield_x_started{current_player.playfield_multiplier==4}:
-    playfield_4x:
-      action: play
-      expire: 2s
-
-  playfield_x_started{current_player.playfield_multiplier==5}:
-    playfield_5x:
-      action: play
-      expire: 2s
+      priority: 1000
