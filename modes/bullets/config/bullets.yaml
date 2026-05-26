@@ -28,31 +28,58 @@ mode:
   priority: 110
   
 event_player:
+  mode_bullets_started:
+    - bullets_check_minimum
+
+  bullets_check_minimum{current_player.bullet_hits < 9 and current_player.villains_completed==0}:
+    - bullets_set_minimum_9
+
+  bullets_check_minimum{current_player.bullet_hits < 7 and current_player.villains_completed==1}:
+    - bullets_set_minimum_7
+
+  bullets_check_minimum{current_player.bullet_hits < 5 and current_player.villains_completed==2}:
+    - bullets_set_minimum_5
+
+  bullets_check_minimum{current_player.bullet_hits < 3 and current_player.villains_completed==3}:
+    - bullets_set_minimum_3
+
+  bullets_check_minimum{current_player.bullet_hits < 1 and current_player.villains_completed>=4}:
+    - bullets_set_minimum_1
+
   left_orbit_hit{current_player.shot_bullet_left_orbit == 0}:
     - bullet_new_unique_shot
     - bullet_lock_left_orbit
+
   right_orbit_hit{current_player.shot_bullet_right_orbit == 0}:
     - bullet_new_unique_shot
     - bullet_lock_right_orbit
+
   bullet_mid_orbit_hit{current_player.shot_bullet_mid_orbit == 0}:
     - bullet_new_unique_shot
     - bullet_lock_mid_orbit
+
   bullet_air_duct_hit{current_player.shot_bullet_air_duct == 0}:
     - bullet_new_unique_shot
     - bullet_lock_air_duct
+
   bullet_upper_pf_hit{current_player.shot_bullet_upper_pf == 0}:
     - bullet_new_unique_shot
     - bullet_lock_upper_pf
+
   timer_bullets_combo_complete:
     - reset_bullets
+
   mode_bullets_stopping:
     - reset_bullets
+
   player_bullet_combo_hits{value==5}:
     - bullets_combo_max
     - villain_start_lit
     - reset_bullets|100ms
+
   player_bullet_hits{value>=15}:
     - villain_start_lit
+
   ball_hold_villain_hold_full:
     - start_villain_select
     - reset_bullet_total
@@ -250,3 +277,28 @@ variable_player:
     bullet_combo_hits:
       action: set
       int: 0
+      
+  bullets_set_minimum_9:
+    bullet_hits:
+      action: set
+      int: 9
+
+  bullets_set_minimum_7:
+    bullet_hits:
+      action: set
+      int: 7
+
+  bullets_set_minimum_5:
+    bullet_hits:
+      action: set
+      int: 5
+
+  bullets_set_minimum_3:
+    bullet_hits:
+      action: set
+      int: 3
+
+  bullets_set_minimum_1:
+    bullet_hits:
+      action: set
+      int: 1

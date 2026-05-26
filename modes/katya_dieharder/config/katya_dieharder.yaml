@@ -327,3 +327,7 @@ variable_player:
     katya_dieharder_completion_active:
       int: 0
       action: set
+
+    villains_completed:
+      int: 1
+      action: add
