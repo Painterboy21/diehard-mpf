@@ -198,7 +198,7 @@ event_player:
   hans_diehard_failed_complete:
     - reset_bullet_total
     - reset_bullets
-    
+
 variable_player:
   mode_hans_diehard_started:
     villain_mode_running:
@@ -224,13 +224,11 @@ variable_player:
 
   logicblock_hans_diehard_detonators_hit:
     hans_diehard_remaining:
-      int: "8 - device.counters.hans_diehard_detonators.value"
+      int: 8 - device.counters.hans_diehard_detonators.value
       action: set
 
   hans_diehard_target_hit{device.counters.hans_diehard_detonators.value<8}:
-    score:
-      int: "1000000 * current_player.playfield_multiplier"
-      action: add
+    score: "1000000 * current_player.playfield_multiplier"
     hans_diehard_progress:
       int: 1
       action: add
@@ -240,22 +238,14 @@ variable_player:
       int: 1
       action: set
 
-  hans_diehard_won_complete{current_player.hans_complete==0}:
-    score:
-      int: "3000000 * current_player.playfield_multiplier"
-      action: add
+  hans_diehard_won_complete:
+    score: 3000000 
     hans_complete:
       int: 1
       action: set
     hans_diehard_complete:
       int: 1
       action: set
-    villains_completed:
-      int: 1
-      action: add
-    eob_bonus_villains:
-      int: 1000000
-      action: add
 
   mode_hans_diehard_stopping:
     villain_mode_running:
@@ -264,3 +254,276 @@ variable_player:
     hans_diehard_completion_active:
       int: 0
       action: set
+
+show_player:
+  ball_save_hans_diehard_complete_save_enabled:
+    flash_color_with_fade:
+      key: hans_diehard_ball_save_flash
+      loops: -1
+      speed: 2
+      show_tokens:
+        lights: BALL_SAVE
+        color: ffff00
+        fade: 500
+
+  ball_save_hans_diehard_complete_save_hurry_up:
+    flash_color:
+      key: hans_diehard_ball_save_flash
+      loops: -1
+      speed: 7
+      show_tokens:
+        lights: BALL_SAVE
+        color: ffff00
+
+  ball_save_hans_diehard_complete_save_disabled:
+    hans_diehard_ball_save_flash:
+      action: stop
+
+  hans_diehard_target_hit:
+    flash_color:
+      key: hans_gi_red_hit_flash
+      priority: 300
+      loops: 3
+      speed: 10
+      show_tokens:
+        lights: GI
+        color: ff0000
+
+  mode_hans_diehard_started:
+    flash_color:
+      key: hans_gruber_flash
+      priority: 160
+      loops: -1
+      speed: 6
+      show_tokens:
+        lights: l43
+        color: 00ff00
+
+  hans_diehard_h_ready:
+    hans_bullet_flash:
+      key: hans_h_flash
+      priority: 170
+      loops: -1
+      show_tokens:
+        light: l30
+
+  hans_diehard_o_ready:
+    hans_bullet_flash:
+      key: hans_o_flash
+      priority: 170
+      loops: -1
+      show_tokens:
+        light: l31
+
+  hans_diehard_l1_ready:
+    hans_bullet_flash:
+      key: hans_l1_flash
+      priority: 170
+      loops: -1
+      show_tokens:
+        light: l32
+
+  hans_diehard_l2_ready:
+    hans_bullet_flash:
+      key: hans_l2_flash
+      priority: 170
+      loops: -1
+      show_tokens:
+        light: l33
+
+  hans_diehard_y_ready:
+    hans_bullet_flash:
+      key: hans_y_flash
+      priority: 170
+      loops: -1
+      show_tokens:
+        light: l34
+
+  hans_diehard_valid_h:
+    hans_h_flash:
+      action: stop
+
+  hans_diehard_valid_o:
+    hans_o_flash:
+      action: stop
+
+  hans_diehard_valid_l1:
+    hans_l1_flash:
+      action: stop
+
+  hans_diehard_valid_l2:
+    hans_l2_flash:
+      action: stop
+
+  hans_diehard_valid_y:
+    hans_y_flash:
+      action: stop
+
+  mode_hans_diehard_stopping:
+    hans_gi_red_hit_flash:
+      action: stop
+    hans_gruber_flash:
+      action: stop
+    hans_h_flash:
+      action: stop
+    hans_o_flash:
+      action: stop
+    hans_l1_flash:
+      action: stop
+    hans_l2_flash:
+      action: stop
+    hans_y_flash:
+      action: stop
+
+light_player:
+  mode_hans_diehard_started:
+    GI:
+      color: 00ff00
+    SPOTS:
+      color: 332200
+    l1000:
+      color: 00ff00
+    l1001:
+      color: 00ff00
+
+  hans_diehard_valid_h:
+    l30: off
+
+  hans_diehard_valid_o:
+    l31: off
+
+  hans_diehard_valid_l1:
+    l32: off
+
+  hans_diehard_valid_l2:
+    l33: off
+
+  hans_diehard_valid_y:
+    l34: off
+
+  hans_diehard_won_complete:
+    l1000: off
+    l1001: off
+    l43:
+      color: 00ff00
+
+  hans_diehard_failed_complete:
+    l1000: off
+    l1001: off
+
+
+
+slide_player:
+  mode_hans_diehard_started:
+    hans_diehard_background:
+      action: play
+      expire: 0s
+      priority: 500
+
+  mode_hans_diehard_stopping:
+    hans_diehard_background:
+      action: remove
+
+  logicblock_hans_diehard_detonators_hit{count==1}:
+    detonator_1:
+      action: play
+      expire: 4s
+      priority: 600
+
+  logicblock_hans_diehard_detonators_hit{count==2}:
+    detonator_2:
+      action: play
+      expire: 4s
+      priority: 600
+
+  logicblock_hans_diehard_detonators_hit{count==3}:
+    detonator_3:
+      action: play
+      expire: 4s
+      priority: 600
+
+  logicblock_hans_diehard_detonators_hit{count==4}:
+    detonator_4:
+      action: play
+      expire: 4s
+      priority: 600
+
+  logicblock_hans_diehard_detonators_hit{count==5}:
+    detonator_5:
+      action: play
+      expire: 4s
+      priority: 600
+
+  logicblock_hans_diehard_detonators_hit{count==6}:
+    detonator_6:
+      action: play
+      expire: 4s
+      priority: 600
+
+  logicblock_hans_diehard_detonators_hit{count==7}:
+    detonator_7:
+      action: play
+      expire: 4s
+      priority: 600
+
+  logicblock_hans_diehard_detonators_hit{count==8}:
+    detonator_8:
+      action: play
+      expire: 4s
+      priority: 600
+
+  hans_diehard_completed_slide:
+    hans_diehard_background:
+      action: remove
+    detonators_completed:
+      action: play
+      expire: 4s
+      priority: 10000
+
+  hans_lost_slide:
+    hans_diehard_background:
+      action: remove
+    hans_lost:
+      action: play
+      expire: 4s
+      priority: 10000
+
+widget_player:
+  mode_hans_diehard_started:
+    hans_timer_widget:
+      slide: hans_diehard_background
+      action: play
+    hans_progress_widget:
+      slide: hans_diehard_background
+      action: play
+
+  mode_hans_diehard_stopping:
+    hans_timer_widget:
+      action: remove
+    hans_progress_widget:
+      action: remove
+
+  hans_diehard_won_complete:
+    hans_timer_widget:
+      action: remove
+    hans_progress_widget:
+      action: remove
+
+  hans_diehard_failed_complete:
+    hans_timer_widget:
+      action: remove
+    hans_progress_widget:
+      action: remove
+
+sound_player:
+  hans_diehard_music_start:
+    holly_meets_hans:
+      key: main_music
+      action: play
+      loops: -1
+      volume: 0.8
+
+  mode_hans_diehard_stopping:
+    holly_meets_hans:
+      key: main_music
+      action: stop

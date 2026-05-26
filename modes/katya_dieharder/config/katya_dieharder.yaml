@@ -19,14 +19,11 @@ timers:
       - event: katya_dieharder_start_normal_timer
         action: restart
         value: 93
-
       - event: katya_dieharder_start_bonus_timer
         action: restart
         value: 123
-
       - event: katya_dieharder_completed
         action: stop
-
       - event: katya_dieharder_failed
         action: stop
 
@@ -39,6 +36,8 @@ ball_saves:
     balls_to_save: 1
     enable_events:
       - katya_dieharder_victory_sequence
+    disable_events:
+      - mode_katya_dieharder_stopping
 
 counters:
   katya_dieharder_loop_counter:
@@ -182,68 +181,23 @@ event_player:
     - katya_dieharder_completed_show
     - katya_dieharder_completed|4s
 
-
-light_player:
-  mode_katya_dieharder_started:
-    GI:
-      color: ff00ff
-
-    SPOTS:
-      color: 400040
-
-    SPOTS_BUMPER:
-      color: 700070
-
-    l1000:
-      color: ff00ff
-
-    l1001:
-      color: ff00ff
-
-  katya_dieharder_completed:
-    l1000: off
-    l1001: off
-
-    l42:
-      color: ff00ff
-
-  katya_dieharder_failed:
-    l1000: off
-    l1001: off
-
-  katya_dieharder_fail_mode:
-    GI: off
-    SPOTS: off
-    SPOTS_BUMPER: off
-    INSERT: off
-    LeftSling: off
-    RightSling: off
-
-    l1000: off
-    l1001: off
-
 variable_player:
   katya_dieharder_start:
     villain_mode_running:
       int: 1
       action: set
-
     katya_dieharder_failed_active:
       int: 0
       action: set
-
     katya_dieharder_completion_active:
       int: 0
       action: set
-
     katya_dieharder_shots:
       int: 0
       action: set
-
     katya_dieharder_time:
       int: 93
       action: set
-
     villain_bonus:
       int: 500000
       action: add
@@ -260,13 +214,11 @@ variable_player:
 
   katya_dieharder_loop_hit_scored:
     score:
-      int: "1500000 * current_player.playfield_multiplier"
+      int: 1500000
       action: add
-
     villain_bonus:
       int: 1500000
       action: add
-
     katya_dieharder_shots:
       int: 1
       action: add
@@ -276,14 +228,6 @@ variable_player:
       int: 1
       action: set
 
-    eob_bonus_villains:
-      int: 1000000
-      action: add
-
-    score:
-      int: current_player.score
-      action: add
-
   katya_dieharder_fail_mode:
     katya_dieharder_failed_active:
       int: 1
@@ -291,9 +235,8 @@ variable_player:
 
   katya_dieharder_captive_final_hit:
     score:
-      int: "3000000 * current_player.playfield_multiplier"
+      int: 3000000
       action: add
-
     villain_bonus:
       int: 3000000
       action: add
@@ -302,15 +245,12 @@ variable_player:
     katya_complete:
       int: 1
       action: set
-
     katya_dieharder_complete:
       int: 1
       action: set
-
     katya_bonus:
       int: 1
       action: set
-
     modes_complete:
       int: 1
       action: add
@@ -319,15 +259,359 @@ variable_player:
     villain_mode_running:
       int: 0
       action: set
-
     katya_dieharder_failed_active:
       int: 0
       action: set
-
     katya_dieharder_completion_active:
       int: 0
       action: set
 
-    villains_completed:
-      int: 1
-      action: add
+light_player:
+  mode_katya_dieharder_started:
+    GI:
+      color: ff00ff
+    SPOTS:
+      color: 400040
+    SPOTS_BUMPER:
+      color: 700070
+    l1000:
+      color: ff00ff
+    l1001:
+      color: ff00ff
+
+  katya_dieharder_completed:
+    l1000: off
+    l1001: off
+    l42:
+      color: ff00ff
+
+  katya_dieharder_failed:
+    l1000: off
+    l1001: off
+
+  katya_dieharder_fail_mode:
+    GI: off
+    SPOTS: off
+    SPOTS_BUMPER: off
+    l20: off
+    l22: off
+    l23: off
+    l42: off
+    l52: off
+    l1000: off
+    l1001: off
+
+shows:
+  katya_dieharder_left_loop_flash:
+    - duration: 200ms
+      lights:
+        l20: ff00ff
+    - duration: 200ms
+      lights:
+        l20: off
+
+  katya_dieharder_right_loop_flash:
+    - duration: 200ms
+      lights:
+        l22: ff00ff
+    - duration: 200ms
+      lights:
+        l22: off
+
+  katya_dieharder_upper_loop_flash:
+    - duration: 200ms
+      lights:
+        l23: ff00ff
+    - duration: 200ms
+      lights:
+        l23: off
+
+  katya_dieharder_captive_flash:
+    - duration: 120ms
+      lights:
+        l52: ff0000
+    - duration: 120ms
+      lights:
+        l52: off
+
+  katya_dieharder_hit_flashers:
+    - duration: 80ms
+      lights:
+        f142: ff00ff
+        f143: ff00ff
+        f144: ff00ff
+        f145: ff00ff
+        f146: ff00ff
+        f147: ff00ff
+    - duration: 80ms
+      lights:
+        f142: off
+        f143: off
+        f144: off
+        f145: off
+        f146: off
+        f147: off
+
+  katya_dieharder_insert_flash:
+    - duration: 200ms
+      lights:
+        l42: ff00ff
+    - duration: 200ms
+      lights:
+        l42: off
+
+show_player:
+  ball_save_katya_dieharder_complete_save_enabled:
+    flash_color_with_fade:
+      key: katya_dieharder_ball_save_flash
+      loops: -1
+      speed: 2
+      show_tokens:
+        lights: BALL_SAVE
+        color: ff00ff
+        fade: 500
+
+  ball_save_katya_dieharder_complete_save_hurry_up:
+    flash_color:
+      key: katya_dieharder_ball_save_flash
+      loops: -1
+      speed: 7
+      show_tokens:
+        lights: BALL_SAVE
+        color: ff00ff
+
+  ball_save_katya_dieharder_complete_save_disabled:
+    flash_color_with_fade:
+      action: stop
+      key: katya_dieharder_ball_save_flash
+    flash_color:
+      action: stop
+      key: katya_dieharder_ball_save_flash
+
+  mode_katya_dieharder_started:
+    katya_dieharder_left_loop_flash:
+      loops: -1
+    katya_dieharder_right_loop_flash:
+      loops: -1
+    katya_dieharder_upper_loop_flash:
+      loops: -1
+    katya_dieharder_insert_flash:
+      loops: -1
+
+  katya_dieharder_loop_hit_scored:
+    katya_dieharder_hit_flashers:
+      loops: 2
+
+  katya_dieharder_left_loop_hit:
+    katya_dieharder_left_loop_flash:
+      action: stop
+
+  katya_dieharder_left_loop_relight:
+    katya_dieharder_left_loop_flash:
+      loops: -1
+
+  katya_dieharder_right_loop_hit:
+    katya_dieharder_right_loop_flash:
+      action: stop
+
+  katya_dieharder_right_loop_relight:
+    katya_dieharder_right_loop_flash:
+      loops: -1
+
+  katya_dieharder_upper_loop_hit:
+    katya_dieharder_upper_loop_flash:
+      action: stop
+
+  katya_dieharder_upper_loop_relight:
+    katya_dieharder_upper_loop_flash:
+      loops: -1
+
+  katya_dieharder_loops_complete:
+    katya_dieharder_left_loop_flash:
+      action: stop
+    katya_dieharder_right_loop_flash:
+      action: stop
+    katya_dieharder_upper_loop_flash:
+      action: stop
+    katya_dieharder_captive_flash:
+      loops: -1
+
+  katya_dieharder_completed:
+    flash_color_with_fade:
+      action: stop
+      key: katya_dieharder_ball_save_flash
+    flash_color:
+      action: stop
+      key: katya_dieharder_ball_save_flash
+    katya_dieharder_captive_flash:
+      action: stop
+    katya_dieharder_insert_flash:
+      action: stop
+
+  katya_dieharder_failed:
+    flash_color_with_fade:
+      action: stop
+      key: katya_dieharder_ball_save_flash
+    flash_color:
+      action: stop
+      key: katya_dieharder_ball_save_flash
+    katya_dieharder_left_loop_flash:
+      action: stop
+    katya_dieharder_right_loop_flash:
+      action: stop
+    katya_dieharder_upper_loop_flash:
+      action: stop
+    katya_dieharder_captive_flash:
+      action: stop
+    katya_dieharder_insert_flash:
+      action: stop
+
+  katya_dieharder_fail_mode:
+    flash_color_with_fade:
+      action: stop
+      key: katya_dieharder_ball_save_flash
+    flash_color:
+      action: stop
+      key: katya_dieharder_ball_save_flash
+    katya_dieharder_left_loop_flash:
+      action: stop
+    katya_dieharder_right_loop_flash:
+      action: stop
+    katya_dieharder_upper_loop_flash:
+      action: stop
+    katya_dieharder_captive_flash:
+      action: stop
+    katya_dieharder_insert_flash:
+      action: stop
+
+  mode_katya_dieharder_stopping:
+    flash_color_with_fade:
+      action: stop
+      key: katya_dieharder_ball_save_flash
+    flash_color:
+      action: stop
+      key: katya_dieharder_ball_save_flash
+    katya_dieharder_left_loop_flash:
+      action: stop
+    katya_dieharder_right_loop_flash:
+      action: stop
+    katya_dieharder_upper_loop_flash:
+      action: stop
+    katya_dieharder_captive_flash:
+      action: stop
+    katya_dieharder_insert_flash:
+      action: stop
+
+coil_player:
+  katya_dieharder_fail_mode:
+    c_right_flipper_main: disable
+    c_left_flipper_main: disable
+
+  enable_katya_dieharder_flippers:
+    c_left_flipper_main: enable
+    c_right_flipper_main: enable
+
+slide_player:
+  mode_katya_dieharder_started:
+    katya_dieharder_background:
+      action: play
+      expire: 0s
+      priority: 600
+
+  mode_katya_dieharder_stopping:
+    katya_dieharder_background:
+      action: remove
+
+  katya_dieharder_loop_hit_scored{current_player.katya_dieharder_shots==1}:
+    katya_hit_1:
+      action: play
+      expire: 4s
+      priority: 700
+
+  katya_dieharder_loop_hit_scored{current_player.katya_dieharder_shots==2}:
+    katya_hit_2:
+      action: play
+      expire: 4s
+      priority: 700
+
+  katya_dieharder_loop_hit_scored{current_player.katya_dieharder_shots==3}:
+    katya_hit_3:
+      action: play
+      expire: 4s
+      priority: 700
+
+  katya_dieharder_loop_hit_scored{current_player.katya_dieharder_shots==4}:
+    katya_hit_4:
+      action: play
+      expire: 4s
+      priority: 700
+
+  katya_dieharder_loop_hit_scored{current_player.katya_dieharder_shots==5}:
+    katya_hit_5:
+      action: play
+      expire: 4s
+      priority: 700
+
+  katya_dieharder_completed_show:
+    katya_diehard_background:
+      action: remove
+    katya_defeated:
+      action: play
+      expire: 4s
+      priority: 10000
+
+  katya_dieharder_ball_drain_escape:
+    katya_diehard_background:
+      action: remove
+    katya_escaped:
+      action: play
+      expire: 4s
+      priority: 10000
+
+  katya_dieharder_fail_mode:
+    katya_diehard_background:
+      action: remove
+    katya_ball_lost:
+      action: play
+      expire: 4s
+      priority: 10000
+
+widget_player:
+  mode_katya_dieharder_started:
+    katya_dieharder_timer_widget:
+      slide: katya_dieharder_background
+      action: play
+    katya_dieharder_progress_widget:
+      slide: katya_dieharder_background
+      action: play
+
+  mode_katya_dieharder_stopping:
+    katya_dieharder_timer_widget:
+      action: remove
+    katya_dieharder_progress_widget:
+      action: remove
+
+  katya_dieharder_completed:
+    katya_dieharder_timer_widget:
+      action: remove
+    katya_dieharder_progress_widget:
+      action: remove
+
+  katya_dieharder_failed:
+    katya_dieharder_timer_widget:
+      action: remove
+    katya_dieharder_progress_widget:
+      action: remove
+
+sound_player:
+  katya_dieharder_music_start:
+    katyatheme:
+      key: main_music
+      action: play
+      loops: -1
+      volume: 0.7
+
+  mode_katya_dieharder_stopping:
+    katyatheme:
+      key: main_music
+      action: stop

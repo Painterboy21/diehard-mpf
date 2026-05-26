@@ -1,0 +1,127 @@
+#config_version=6
+
+widgets:
+  pop_bumper_5000_widget:
+    widget: pop_bumper_5000_widget
+
+  pop_bumper_200000_widget:
+    widget: pop_bumper_200000_widget
+
+mode:
+  start_events: ball_started
+  stop_events: ball_ended
+  priority: 95
+
+counters:
+  super_jets_counter:
+    count_events:
+      - s_popbumper_left_active
+      - s_popbumper_right_active
+    starting_count: 0
+    count_complete_value: 25
+    reset_on_complete: true
+    events_when_complete:
+      - super_jets_started
+
+timers:
+  super_jets_timer:
+    start_value: 20
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - event: super_jets_started
+        action: restart
+      - event: super_jets_ended
+        action: stop
+      - event: ball_ended
+        action: stop
+
+event_player:
+  timer_super_jets_timer_complete:
+    - super_jets_ended
+
+  s_popbumper_left_active{current_player.super_jets==1}:
+    - super_jets_left_shaker
+
+  s_popbumper_right_active{current_player.super_jets==1}:
+    - super_jets_right_shaker
+
+variable_player:
+  mode_super_jets_started:
+    super_jets:
+      int: 0
+      action: set
+
+  super_jets_started:
+    super_jets:
+      int: 1
+      action: set
+
+  super_jets_ended:
+    super_jets:
+      int: 0
+      action: set
+
+  s_popbumper_left_active{current_player.super_jets==0}:
+    score:
+      int: "5000 * current_player.playfield_multiplier"
+      action: add
+
+  s_popbumper_right_active{current_player.super_jets==0}:
+    score:
+      int: "5000 * current_player.playfield_multiplier"
+      action: add
+
+  s_popbumper_left_active{current_player.super_jets==1}:
+    score:
+      int: "200000 * current_player.playfield_multiplier"
+      action: add
+
+  s_popbumper_right_active{current_player.super_jets==1}:
+    score:
+      int: "200000 * current_player.playfield_multiplier"
+      action: add
+
+widget_player:
+  s_popbumper_left_active{current_player.super_jets==0}:
+    pop_bumper_5000_widget:
+      action: play
+      expire: 1s
+
+  s_popbumper_right_active{current_player.super_jets==0}:
+    pop_bumper_5000_widget:
+      action: play
+      expire: 1s
+
+  s_popbumper_left_active{current_player.super_jets==1}:
+    pop_bumper_200000_widget:
+      action: play
+      expire: 1s
+
+  s_popbumper_right_active{current_player.super_jets==1}:
+    pop_bumper_200000_widget:
+      action: play
+      expire: 1s
+
+show_player:
+  s_popbumper_left_active{current_player.super_jets==1}:
+    flash_color:
+      key: super_jets_l75_red_flash
+      speed: 20
+      loops: 0
+      priority: 200
+      show_tokens:
+        lights: l75
+        color: red
+
+  s_popbumper_right_active{current_player.super_jets==1}:
+    flash_color:
+      key: super_jets_l75_red_flash
+      speed: 20
+      loops: 0
+      priority: 200
+      show_tokens:
+        lights: l75
+        color: red

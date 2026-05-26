@@ -163,21 +163,34 @@ autofire_coils:
     coil: c_popbumper_right
     switch: s_popbumper_right
 
-
-
 magnets:
   trmagrl:
     magnet_coil: c_trmagl
-    grab_ball_events: s_trmagl_active{machine.magnets_enabled}, central_park_start_multiball_hit
-    enable_events: ball_started
-    release_ball_events: s_trmagl_inactive, start_central_park_multiball
+    grab_ball_events:
+      - s_trmagl_active{machine.magnets_enabled}
+      - central_park_start_multiball_hit
+    enable_events:
+      - ball_started
+    release_ball_events:
+      - trmagl_fling_release
+      - start_central_park_multiball
 
   trmagr:
     magnet_coil: c_trmagr
-    grab_ball_events: s_trmagr_active{machine.magnets_enabled},  central_park_start_multiball_hit
-    enable_events: ball_started
-    release_ball_events: s_trmagr_inactive, start_central_park_multiball
+    grab_ball_events:
+      - s_trmagr_active{machine.magnets_enabled}
+      - central_park_start_multiball_hit
+    enable_events:
+      - ball_started
+    release_ball_events:
+      - trmagr_fling_release
+      - start_central_park_multiball
 
+event_player:
+  s_trmagl_active{machine.magnets_enabled}:
+    - trmagl_fling_release|350ms
+  s_trmagr_active{machine.magnets_enabled}:
+    - trmagr_fling_release|350ms
 
 machine_vars:
   var_which_attract: #to track which attract screen you are currently on
@@ -206,6 +219,7 @@ modes:
   - skillshot
   - eob_bonus
   - service
+  - super_jets
   - qualify_nakatomi
   - nakatomi_multiball
   - qualify_central_park
