@@ -45,7 +45,10 @@ multiballs:
     start_events: mode_nakatomi_multiball_started
     ball_count: 3
     ball_count_type: total
-    shoot_again: 30s
+    shoot_again: 20000
+    hurry_up_time: 3000
+    grace_period: 2000
+    ball_locks: tower_vuk
 
     
 shot_groups: 

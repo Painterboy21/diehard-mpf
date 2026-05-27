@@ -110,3 +110,13 @@ widget_player:
 
 
 
+variable_player:
+  qualify_ambush_complete:
+    ambush_qualified:
+      int: 1
+      action: set
+
+  mode_ambush_started:
+    ambush_qualified:
+      int: 0
+      action: set

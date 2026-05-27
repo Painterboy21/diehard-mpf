@@ -221,7 +221,7 @@ variable_player:
       action: add
 
   eob_bonus_ambush:
-    int: current_player.ambush_value
+    int: "200000 * current_player.ambush_level"
     action: add
   ambush_finished:
     ambush_value:
@@ -416,7 +416,7 @@ show_player:
       priority: 390
       show_tokens:
         led: l24
-        color: white
+        color: purple
 
   ambush_left_loop_hit:
     ambush_l20_flash:
