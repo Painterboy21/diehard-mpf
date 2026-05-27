@@ -13,6 +13,7 @@ event_player:
   mode_attract_started:
     - play_show_xmas
     - play_show_start_button_flash
+    - iscored_refresh_scores
 
   s_left_flipper_active:
     - rotate_attract_left
@@ -24,6 +25,7 @@ event_player:
 
   timer_attract_idle_complete:
     - play_show_xmas
+    - iscored_refresh_scores
 
 light_player:
   mode_attract_started:
@@ -59,7 +61,6 @@ slide_player:
   s_actionbtn_inactive:
     attract_instructions:
       action: remove
-
 
 timers:
   attract_idle:

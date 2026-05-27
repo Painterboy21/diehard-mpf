@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://cfix632dro1cx" path="res://godot-media/themes/lbl_holly.tres" id="3_f161n"]
 [ext_resource type="Script" uid="uid://b3jcb5pfjctkh" path="res://slides/attract.gd" id="3_hhxni"]
 [ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="4_cq3lo"]
+[ext_resource type="PackedScene" uid="uid://bxwceiokhxrib" path="res://modes/iscored_sync/slides/iscored_leaderboard.tscn" id="5_cq3lo"]
 
 [node name="Attract" type="Control" unique_id=661243709]
 layout_mode = 3
@@ -250,3 +251,6 @@ variable_type = 2
 variable_name = "score3_value"
 comma_separate = true
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="iscored_leaderboard" parent="." unique_id=1029941091 instance=ExtResource("5_cq3lo")]
+layout_mode = 1
