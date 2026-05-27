@@ -236,6 +236,7 @@ modes:
   - katya_dieharder
   - bonus_x
   - playfield_x
+  - iscored_sync
   
 machine:
     balls_installed: 6
