@@ -56,14 +56,11 @@ event_player:
 
 
   # ------------------------------------------------------------
-  # REAL MACHINE H/O VAULT QUALIFY
-  #
-  # 1st Mystery = HO
-  # 2nd Mystery = HOHO
-  # 3rd Mystery = HOHOHO
-  # Then back to HO.
-  #
-  # H and O can be hit in any order.
+  # H/O VAULT QUALIFY
+  # 1st = HO
+  # 2nd = HOHO
+  # 3rd = HOHOHO
+  # then back to HO
   # ------------------------------------------------------------
 
   s_holly_h_active{current_player.mystery_vault_open == 0}:
@@ -133,7 +130,6 @@ event_player:
 
   # ------------------------------------------------------------
   # MYSTERY AWARDS
-  # Godot reads mystery_awarded_index for the final display text.
   # ------------------------------------------------------------
 
   mystery_award_add_a_ball:
@@ -142,17 +138,6 @@ event_player:
 
   mystery_award_points:
     - mystery_awarded
-
-
-  # ------------------------------------------------------------
-  # ADVANCE NAKATOMI
-  #
-  # This used to be "tower lock".
-  # The display index is still 1, but Godot should show Advance Nakatomi.
-  #
-  # qualify_nakatomi_on_complete is the real event your Nakatomi qualify
-  # mode already uses to light/open the Nakatomi lock.
-  # ------------------------------------------------------------
 
   mystery_award_tower_lock:
     - qualify_nakatomi_on_complete
@@ -163,8 +148,58 @@ event_player:
     - airplane_disable_lock_counter
     - mystery_awarded
 
+
+  # ------------------------------------------------------------
+  # ADVANCE PARK
+  #
+  # Chooses a random unlit CP lane.
+  # If a chosen lane is already lit, it rolls again.
+  # If all 3 are already lit, it awards points instead.
+  #
+  # Mystery only posts the CP lane award event.
+  # qualify_central_park owns the actual shot/light state.
+  # ------------------------------------------------------------
+
   mystery_award_park_lock:
-    - mystery_awarded
+    - mystery_choose_park_lane
+
+  mystery_choose_park_lane{current_player.shot_central_park_lock_left == 1 and current_player.shot_central_park_lock_middle == 1 and current_player.shot_central_park_lock_right == 1}:
+    - mystery_award_points
+
+  mystery_choose_park_lane{current_player.shot_central_park_lock_left == 0 or current_player.shot_central_park_lock_middle == 0 or current_player.shot_central_park_lock_right == 0}:
+    - mystery_choose_park_lane_random
+
+
+  mystery_try_cp_left_lane{current_player.shot_central_park_lock_left == 0}:
+    - mystery_award_cp_left_lane
+
+  mystery_try_cp_left_lane{current_player.shot_central_park_lock_left == 1}:
+    - mystery_choose_park_lane|1ms
+
+
+  mystery_try_cp_middle_lane{current_player.shot_central_park_lock_middle == 0}:
+    - mystery_award_cp_middle_lane
+
+  mystery_try_cp_middle_lane{current_player.shot_central_park_lock_middle == 1}:
+    - mystery_choose_park_lane|1ms
+
+
+  mystery_try_cp_right_lane{current_player.shot_central_park_lock_right == 0}:
+    - mystery_award_cp_right_lane
+
+  mystery_try_cp_right_lane{current_player.shot_central_park_lock_right == 1}:
+    - mystery_choose_park_lane|1ms
+
+
+  mystery_award_cp_left_lane:
+    - mystery_awarded|100ms
+
+  mystery_award_cp_middle_lane:
+    - mystery_awarded|100ms
+
+  mystery_award_cp_right_lane:
+    - mystery_awarded|100ms
+
 
   mystery_award_villain:
     - mystery_awarded
@@ -190,11 +225,6 @@ event_player:
   mystery_award_extra_ball_lit:
     - mystery_awarded
 
-
-  # ------------------------------------------------------------
-  # AMBUSH FROM MYSTERY
-  # ------------------------------------------------------------
-
   mystery_award_ambush:
     - mystery_awarded
     - mystery_start_ambush_from_vault|1000ms
@@ -213,10 +243,23 @@ event_player:
     - mystery_reset_ho_counts
 
 
+# ------------------------------------------------------------
+# FORCE TEST ADVANCE PARK
+# Put the normal award pool back after this test.
+# ------------------------------------------------------------
+
 random_event_player:
   mystery_pick_normal_award:
     events:
-      mystery_award_airplane_lock: 1
+      mystery_award_park_lock: 1
+    scope: player
+    force_all: false
+
+  mystery_choose_park_lane_random:
+    events:
+      mystery_try_cp_left_lane: 1
+      mystery_try_cp_middle_lane: 1
+      mystery_try_cp_right_lane: 1
     scope: player
     force_all: false
 
@@ -273,10 +316,6 @@ widget_player:
 
 
 variable_player:
-  # ------------------------------------------------------------
-  # MODE START / DEFAULTS
-  # ------------------------------------------------------------
-
   mode_mystery_started:
     mystery_multiball_active:
       action: set
@@ -313,8 +352,7 @@ variable_player:
 
 
   # ------------------------------------------------------------
-  # H HIT COUNTING
-  # Capped to current HO level.
+  # H COUNTING
   # ------------------------------------------------------------
 
   s_holly_h_active{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level <= 1 and current_player.mystery_h_hits < 1}:
@@ -334,8 +372,7 @@ variable_player:
 
 
   # ------------------------------------------------------------
-  # O HIT COUNTING
-  # Capped to current HO level.
+  # O COUNTING
   # ------------------------------------------------------------
 
   s_holly_o_active{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level <= 1 and current_player.mystery_o_hits < 1}:
@@ -356,11 +393,6 @@ variable_player:
 
   # ------------------------------------------------------------
   # HO LEVEL ADVANCE
-  #
-  # Safe version:
-  # 1 -> 2
-  # 2 -> 3
-  # 3 -> 1
   # ------------------------------------------------------------
 
   mystery_advance_ho_level:
@@ -386,7 +418,6 @@ variable_player:
 
   # ------------------------------------------------------------
   # AWARD VALUES / DISPLAY INDEX
-  # These match your simple Godot award_names list.
   # ------------------------------------------------------------
 
   mystery_award_points:
@@ -414,13 +445,41 @@ variable_player:
       action: set
       int: 2
 
-  mystery_award_park_lock:
+
+  # ------------------------------------------------------------
+  # PARK DISPLAY INDEX ONLY
+  #
+  # Do NOT manually set shot_central_park_lock_* here.
+  # qualify_central_park handles actual shot/light state from:
+  # mystery_award_cp_left_lane
+  # mystery_award_cp_middle_lane
+  # mystery_award_cp_right_lane
+  # ------------------------------------------------------------
+
+  mystery_award_cp_left_lane:
     park_locks:
       action: add
       int: 1
     mystery_awarded_index:
       action: set
       int: 3
+
+  mystery_award_cp_middle_lane:
+    park_locks:
+      action: add
+      int: 1
+    mystery_awarded_index:
+      action: set
+      int: 3
+
+  mystery_award_cp_right_lane:
+    park_locks:
+      action: add
+      int: 1
+    mystery_awarded_index:
+      action: set
+      int: 3
+
 
   mystery_award_villain:
     collected_bullets:
