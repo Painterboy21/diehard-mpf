@@ -58,9 +58,9 @@ event_player:
   # ------------------------------------------------------------
   # REAL MACHINE H/O VAULT QUALIFY
   #
-  # 1st vault = HO
-  # 2nd vault = HOHO
-  # 3rd vault = HOHOHO
+  # 1st Mystery = HO
+  # 2nd Mystery = HOHO
+  # 3rd Mystery = HOHOHO
   # Then back to HO.
   #
   # H and O can be hit in any order.
@@ -133,8 +133,7 @@ event_player:
 
   # ------------------------------------------------------------
   # MYSTERY AWARDS
-  # Keep these simple again.
-  # Godot uses mystery_awarded_index to show the final text.
+  # Godot reads mystery_awarded_index for the final display text.
   # ------------------------------------------------------------
 
   mystery_award_add_a_ball:
@@ -144,8 +143,21 @@ event_player:
   mystery_award_points:
     - mystery_awarded
 
+
+  # ------------------------------------------------------------
+  # ADVANCE NAKATOMI
+  #
+  # This used to be "tower lock".
+  # The display index is still 1, but Godot should show Advance Nakatomi.
+  #
+  # qualify_nakatomi_on_complete is the real event your Nakatomi qualify
+  # mode already uses to light/open the Nakatomi lock.
+  # ------------------------------------------------------------
+
   mystery_award_tower_lock:
+    - qualify_nakatomi_on_complete
     - mystery_awarded
+
 
   mystery_award_airplane_lock:
     - mystery_awarded
@@ -180,7 +192,6 @@ event_player:
 
   # ------------------------------------------------------------
   # AMBUSH FROM MYSTERY
-  # This is the only award with an extra delayed start.
   # ------------------------------------------------------------
 
   mystery_award_ambush:
@@ -204,19 +215,7 @@ event_player:
 random_event_player:
   mystery_pick_normal_award:
     events:
-      mystery_award_points: 20
-      mystery_award_tower_lock: 8
-      mystery_award_airplane_lock: 8
-      mystery_award_park_lock: 8
-      mystery_award_villain: 8
-      mystery_award_ball_save: 8
-      mystery_award_bonus_x: 8
-      mystery_award_hold_bonus_x: 8
-      mystery_award_super_spinner: 8
-      mystery_award_super_jets: 8
-      mystery_award_playfield_x: 8
-      mystery_award_ambush: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_tower_lock: 1
     scope: player
     force_all: false
 
@@ -356,18 +355,17 @@ variable_player:
 
   # ------------------------------------------------------------
   # HO LEVEL ADVANCE
-  # HO -> HOHO -> HOHOHO -> HO
+  #
+  # Safe version:
+  # 1 -> 2
+  # 2 -> 3
+  # 3 -> 1
   # ------------------------------------------------------------
 
-  mystery_advance_ho_level{current_player.mystery_ho_level < 3}:
-    mystery_ho_level:
-      action: add
-      int: 1
-
-  mystery_advance_ho_level{current_player.mystery_ho_level >= 3}:
+  mystery_advance_ho_level:
     mystery_ho_level:
       action: set
-      int: 1
+      int: "(current_player.mystery_ho_level % 3) + 1"
 
 
   # ------------------------------------------------------------

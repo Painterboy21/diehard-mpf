@@ -46,18 +46,17 @@ var available_videos: Array[String] = [
 ]
 
 
-# This must match your MPF mystery_awarded_index.
 var award_names: Array[String] = [
 	"Award Points",        # 0
-	"Advance Tower",       # 1
+	"Advance Nakatomi",    # 1
 	"Advance Airplane",    # 2
 	"Advance Park",        # 3
 	"Bullets",             # 4
 	"Ball Save",           # 5
 	"Bonus X",             # 6
 	"Hold Bonus X",        # 7
-	"Advance Bumpers",     # 8
-	"Advance Spinner",     # 9
+	"Super Jets",          # 8
+	"Super Spinner",       # 9
 	"Playfield X",         # 10
 	"Ambush",              # 11
 	"Light Extra Ball",    # 12
@@ -77,8 +76,6 @@ func _ready() -> void:
 	self.finished.connect(_on_video_finished)
 	flash_timer.timeout.connect(_on_timer_timeout)
 
-	# Keep this simple.
-	# Old working Mystery YAML fires mystery_awarded and updates mystery_awarded_index.
 	MPF.server.add_event_handler("mystery_awarded", self._mystery_awarded)
 	MPF.game.connect("player_update", self._on_player_update)
 
@@ -104,8 +101,8 @@ func _on_timer_timeout() -> void:
 	if not flashing:
 		return
 
-	# This is only the roulette animation.
-	# It is not the real award.
+	# Roulette animation only.
+	# This is NOT the final award.
 	award_label.text = award_names[current_index]
 	current_index = (current_index + 1) % award_names.size()
 
@@ -114,7 +111,6 @@ func _on_player_update(var_name: String, value: Variant) -> void:
 	if var_name == "mystery_awarded_index":
 		last_award_index = int(value)
 
-		# If the scroll has already stopped, update the label immediately.
 		if not flashing:
 			_show_award_by_index(last_award_index)
 
@@ -127,11 +123,8 @@ func _mystery_awarded(payload: Dictionary) -> void:
 		_show_award_by_index(last_award_index)
 		return
 
-	# Backup: pull the value straight from MPF player vars.
 	if MPF.game.player != null:
-		var index = MPF.game.player.get("mystery_awarded_index")
-		if index != null:
-			_show_award_by_index(int(index))
+		_show_award_by_index(int(MPF.game.player.mystery_awarded_index))
 
 
 func _show_award_by_index(index: int) -> void:
