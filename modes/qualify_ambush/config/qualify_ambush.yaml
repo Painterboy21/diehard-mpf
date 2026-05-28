@@ -36,10 +36,14 @@ ball_holds:
     balls_to_hold: 1
     release_all_events: tilt, start_ambush.2
 
+
 event_player: 
   timer_ambush_hold_complete:
     - start_ambush
 
+  qualify_ambush_start_from_mystery:
+    - start_ambush
+    - ambush_start_timers|250ms
 
 shot_groups: 
   qualify_ambush:

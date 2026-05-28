@@ -56,7 +56,7 @@ var award_names: Array[String] = [
 	"Bonus X",             # 6
 	"Hold Bonus X",        # 7
 	"Super Jets",          # 8
-	"Super Spinner",       # 9
+	"Super Spinners",      # 9
 	"Playfield X",         # 10
 	"Ambush",              # 11
 	"Light Extra Ball",    # 12
@@ -67,12 +67,14 @@ var award_names: Array[String] = [
 @onready var flash_timer: Timer = $Timer
 @onready var award_label: Label = $"../VBoxContainer/VaultAward"
 
+# Change this path if your Godot widget node is somewhere else.
+@onready var bonus_x_held_widget: CanvasItem = $"../VBoxContainer/BonusXHeldWidget"
+
+
 var current_index := 0
 var flashing := false
 var last_award_index := -1
 
-# Used for the roulette text.
-# This lets us remove Bullets from the scroll if bullet_hits is already full.
 var scroll_award_indexes: Array[int] = []
 var scroll_position := 0
 
@@ -82,7 +84,13 @@ func _ready() -> void:
 	flash_timer.timeout.connect(_on_timer_timeout)
 
 	MPF.server.add_event_handler("mystery_awarded", self._mystery_awarded)
+	MPF.server.add_event_handler("show_bonus_x_held_widget", self._show_bonus_x_held_widget)
+	MPF.server.add_event_handler("hide_bonus_x_held_widget", self._hide_bonus_x_held_widget)
+
 	MPF.game.connect("player_update", self._on_player_update)
+
+	if bonus_x_held_widget:
+		bonus_x_held_widget.visible = false
 
 	var stream: VideoStream = load(available_videos.pick_random())
 	self.stream = stream
@@ -108,16 +116,18 @@ func start_award_flash() -> void:
 func _build_scroll_award_indexes() -> void:
 	scroll_award_indexes.clear()
 
-	var bullets_full := false
-	var bullet_value = _get_player_var("bullet_hits", 0)
-
-	if int(bullet_value) >= 15:
-		bullets_full = true
+	var bullets_full := int(_get_player_var("bullet_hits", 0)) >= 15
+	var super_spinners_awarded := int(_get_player_var("super_spinners", 0)) == 1
 
 	for i in range(award_names.size()):
-		# Index 4 is Bullets.
-		# Skip it from the roulette if bullets are already full.
+		# Index 4 = Bullets.
+		# Skip from roulette if bullets are already full.
 		if bullets_full and i == 4:
+			continue
+
+		# Index 9 = Super Spinners.
+		# Skip from roulette if Super Spinners already awarded.
+		if super_spinners_awarded and i == 9:
 			continue
 
 		scroll_award_indexes.append(i)
@@ -165,11 +175,22 @@ func _show_award_by_index(index: int) -> void:
 	print("Mystery final award: ", award_names[index])
 
 
+func _show_bonus_x_held_widget(payload: Dictionary = {}) -> void:
+	if bonus_x_held_widget:
+		bonus_x_held_widget.visible = true
+		print("Bonus X Held widget shown")
+
+
+func _hide_bonus_x_held_widget(payload: Dictionary = {}) -> void:
+	if bonus_x_held_widget:
+		bonus_x_held_widget.visible = false
+		print("Bonus X Held widget hidden")
+
+
 func _get_player_var(var_name: String, default_value: Variant = null) -> Variant:
 	if MPF.game.player == null:
 		return default_value
 
-	# MPF.game.player normally supports get().
 	var value = MPF.game.player.get(var_name)
 
 	if value == null:
