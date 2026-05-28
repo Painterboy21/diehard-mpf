@@ -50,9 +50,15 @@ event_player:
   mode_mystery_started:
     - mystery_close_vault
     - mystery_reset_ho_counts
+    - mystery_clear_pending_ambush
+    - hide_bonus_x_held_widget
+    - mystery_villain_inactive
 
   mode_mystery_started{current_player.mystery_ho_level == 0}:
     - mystery_init_ho_level
+
+  mode_mystery_started{current_player.super_spinners == None}:
+    - mystery_init_super_spinners
 
 
   # ------------------------------------------------------------
@@ -126,6 +132,23 @@ event_player:
 
   multiball_central_park_ended:
     - mystery_multiball_inactive
+
+
+  # ------------------------------------------------------------
+  # VILLAIN TRACKING
+  # Stops Mystery Ambush being picked during villain modes.
+  # ------------------------------------------------------------
+
+  villain_mode_started:
+    - mystery_villain_active
+
+  villain_mode_ended:
+    - mystery_villain_inactive
+
+  ball_ended:
+    - hide_bonus_x_held_widget
+    - mystery_villain_inactive
+    - mystery_clear_pending_ambush
 
 
   # ------------------------------------------------------------
@@ -231,15 +254,23 @@ event_player:
 
   # ------------------------------------------------------------
   # HOLD BONUS X
-  # Turns Bonus X lights red until the next ball.
+  # Uses Godot events for your held widget.
   # ------------------------------------------------------------
 
   mystery_award_hold_bonus_x:
+    - show_bonus_x_held_widget
+    - hide_bonus_x_held_widget|4s
     - mystery_awarded
 
 
-  mystery_award_super_spinner:
+  # ------------------------------------------------------------
+  # SUPER SPINNERS
+  # ------------------------------------------------------------
+
+  mystery_award_super_spinners:
+    - super_spinners_start
     - mystery_awarded
+
 
   mystery_award_super_jets:
     - mystery_awarded
@@ -250,11 +281,28 @@ event_player:
   mystery_award_extra_ball_lit:
     - mystery_awarded
 
+
+  # ------------------------------------------------------------
+  # AMBUSH FROM MYSTERY
+  #
+  # Important:
+  # Do NOT fire start_ambush immediately.
+  # Do NOT fake ball_hold_ambush_hold_full.
+  #
+  # Mystery ball is in the vault, not the right VUK.
+  # So we mark Ambush as pending, finish Mystery, wait for the
+  # Mystery slide to be removed, then start Ambush cleanly.
+  # ------------------------------------------------------------
+
   mystery_award_ambush:
+    - mystery_set_pending_ambush
     - mystery_awarded
-    - mystery_start_ambush_from_vault|1000ms
+
+  slide_mystery_removed{current_player.mystery_pending_ambush == 1}:
+    - mystery_start_ambush_from_vault
 
   mystery_start_ambush_from_vault:
+    - mystery_clear_pending_ambush
     - start_ambush
 
 
@@ -267,12 +315,29 @@ event_player:
     - mystery_advance_ho_level
     - mystery_reset_ho_counts
 
+
+# ------------------------------------------------------------
+# TEST RANDOM PLAYER
+# Forces Mystery to pick Ambush only.
+#
+# If a villain mode is active, it gives points instead.
+# Multiball already routes to Add-A-Ball before this random picker.
+# ------------------------------------------------------------
+
 random_event_player:
-  mystery_pick_normal_award:
+
+  mystery_pick_normal_award{current_player.mystery_villain_active == 0}:
     events:
-      mystery_award_hold_bonus_x: 1
+      mystery_award_ambush: 1
     scope: player
     force_all: false
+
+  mystery_pick_normal_award{current_player.mystery_villain_active == 1}:
+    events:
+      mystery_award_points: 1
+    scope: player
+    force_all: false
+
 
   mystery_choose_park_lane_random:
     events:
@@ -324,7 +389,7 @@ show_player:
       key: mystery_bonus_x_lights_flash
       speed: 10
       loops: 8
-      priority: 1000
+      priority: 900
       show_tokens:
         lights: l1,l2,l3
         color: yellow
@@ -336,29 +401,23 @@ slide_player:
       action: play
       expire: 7s
 
+
 widget_player:
   mystery_ho_progress:
     mystery_qualify:
       action: play
       expire: 3s
 
-  mystery_award_hold_bonus_x:
-    bonus_x_held_widget:
-      action: play
-      expire: 4s
-
-  mode_mystery_started:
-    bonus_x_held_widget:
-      action: remove
-
-  ball_ended:
-    bonus_x_held_widget:
-      action: remove
-
 
 variable_player:
   mode_mystery_started:
     mystery_multiball_active:
+      action: set
+      int: 0
+    mystery_villain_active:
+      action: set
+      int: 0
+    mystery_pending_ambush:
       action: set
       int: 0
     mystery_vault_open:
@@ -369,6 +428,11 @@ variable_player:
     mystery_ho_level:
       action: set
       int: 1
+
+  mystery_init_super_spinners:
+    super_spinners:
+      action: set
+      int: 0
 
 
   # ------------------------------------------------------------
@@ -443,7 +507,7 @@ variable_player:
 
 
   # ------------------------------------------------------------
-  # MULTIBALL STATE
+  # MULTIBALL / VILLAIN STATE
   # ------------------------------------------------------------
 
   mystery_multiball_active:
@@ -453,6 +517,36 @@ variable_player:
 
   mystery_multiball_inactive:
     mystery_multiball_active:
+      action: set
+      int: 0
+
+  mystery_villain_active:
+    mystery_villain_active:
+      action: set
+      int: 1
+
+  mystery_villain_inactive:
+    mystery_villain_active:
+      action: set
+      int: 0
+
+
+  # ------------------------------------------------------------
+  # PENDING AMBUSH FROM MYSTERY
+  # ------------------------------------------------------------
+
+  mystery_set_pending_ambush:
+    mystery_pending_ambush:
+      action: set
+      int: 1
+
+  mystery_clear_pending_ambush:
+    mystery_pending_ambush:
+      action: set
+      int: 0
+
+  ball_ended:
+    mystery_pending_ambush:
       action: set
       int: 0
 
@@ -519,7 +613,6 @@ variable_player:
 
   # ------------------------------------------------------------
   # BULLETS / VILLAIN
-  # Only gives Bullets if bullet_hits is not already full.
   # ------------------------------------------------------------
 
   mystery_award_villain{current_player.bullet_hits < 15}:
@@ -573,6 +666,10 @@ variable_player:
       int: 7
 
 
+  # ------------------------------------------------------------
+  # SUPER JETS
+  # ------------------------------------------------------------
+
   mystery_award_super_jets:
     super_jets:
       action: set
@@ -581,13 +678,23 @@ variable_player:
       action: set
       int: 8
 
-  mystery_award_super_spinner:
-    super_spinner:
+
+  # ------------------------------------------------------------
+  # SUPER SPINNERS
+  # ------------------------------------------------------------
+
+  mystery_award_super_spinners:
+    super_spinners:
       action: set
       int: 1
     mystery_awarded_index:
       action: set
       int: 9
+
+
+  # ------------------------------------------------------------
+  # PLAYFIELD X / AMBUSH / EXTRA BALL
+  # ------------------------------------------------------------
 
   mystery_award_playfield_x:
     playfield_multiplier:

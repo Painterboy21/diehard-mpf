@@ -285,7 +285,7 @@ show_player:
         lights1: l82
         lights2: l83
         flasher: f140
-  SpinnerLeft_active: 
+  SpinnerLeft_active{current_player.super_spinners != 1}: 
     flicker_color: 
       key: key_s_left_spinner_active
       loops: 0
@@ -293,7 +293,7 @@ show_player:
       show_tokens: 
         lights: l70
         color: FFFFFF
-  SpinnerRight_active: 
+  SpinnerRight_active{current_player.super_spinners != 1}: 
     flicker_color: 
       key: key_s_right_spinner_active
       loops: 0
@@ -301,6 +301,24 @@ show_player:
       show_tokens: 
         lights: l71
         color: FFFFFF
+  SpinnerLeft_active{current_player.super_spinners == 1}: 
+    flicker_color: 
+      key: key_s_left_spinner_active_super
+      loops: 0
+      speed: 2
+      priority: 900
+      show_tokens: 
+        lights: l70
+        color: red
+  SpinnerRight_active{current_player.super_spinners == 1}: 
+    flicker_color: 
+      key: key_s_right_spinner_active_super
+      loops: 0
+      speed: 2
+      priority: 900
+      show_tokens: 
+        lights: l71
+        color: red
   flash_bumper_explosion: 
     flicker_color: 
       key: key_flash_bumper_explosion
