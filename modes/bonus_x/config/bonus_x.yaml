@@ -58,23 +58,23 @@ shows:
 
 
 event_player:
-  bonus_x_target_1_hit{current_player.bonus_x_1_lit==0}:
+  bonus_x_target_1_hit{current_player.bonus_x_1_lit == 0}:
     - bonus_x_target_1_collected
 
-  bonus_x_target_2_hit{current_player.bonus_x_2_lit==0}:
+  bonus_x_target_2_hit{current_player.bonus_x_2_lit == 0}:
     - bonus_x_target_2_collected
 
-  bonus_x_target_3_hit{current_player.bonus_x_3_lit==0}:
+  bonus_x_target_3_hit{current_player.bonus_x_3_lit == 0}:
     - bonus_x_target_3_collected
 
 
-  bonus_x_target_1_collected{current_player.bonus_x_2_lit==1 and current_player.bonus_x_3_lit==1}:
+  bonus_x_target_1_collected{current_player.bonus_x_2_lit == 1 and current_player.bonus_x_3_lit == 1}:
     - bonus_x_bank_complete
 
-  bonus_x_target_2_collected{current_player.bonus_x_1_lit==1 and current_player.bonus_x_3_lit==1}:
+  bonus_x_target_2_collected{current_player.bonus_x_1_lit == 1 and current_player.bonus_x_3_lit == 1}:
     - bonus_x_bank_complete
 
-  bonus_x_target_3_collected{current_player.bonus_x_1_lit==1 and current_player.bonus_x_2_lit==1}:
+  bonus_x_target_3_collected{current_player.bonus_x_1_lit == 1 and current_player.bonus_x_2_lit == 1}:
     - bonus_x_bank_complete
 
 
@@ -83,115 +83,85 @@ event_player:
 
 
 variable_player:
-
   bonus_x_target_1_collected:
-
     score: 250
-
     bonus_x_1_lit:
       int: 1
       action: set
 
-
   bonus_x_target_2_collected:
-
     score: 250
-
     bonus_x_2_lit:
       int: 1
       action: set
 
-
   bonus_x_target_3_collected:
-
     score: 250
-
     bonus_x_3_lit:
       int: 1
       action: set
 
 
   bonus_x_bank_complete{current_player.bonus_multiplier < 6}:
-
     bonus_multiplier:
       int: 1
       action: add
 
-
   bonus_x_bank_complete{current_player.bonus_multiplier >= 6}:
-
     score: 100000
 
 
   bonus_x_reset_bank:
-
     bonus_x_1_lit:
       int: 0
       action: set
-
     bonus_x_2_lit:
       int: 0
       action: set
-
     bonus_x_3_lit:
       int: 0
       action: set
 
 
 light_player:
-
   mode_bonus_x_started:
-
     l1:
       color: off
-
     l2:
       color: off
-
     l3:
       color: off
 
 
   bonus_x_target_1_collected:
-
     l1:
       color: white
 
-
   bonus_x_target_2_collected:
-
     l2:
       color: white
 
-
   bonus_x_target_3_collected:
-
     l3:
       color: white
 
 
   bonus_x_reset_bank:
-
     l1:
       color: off
-
     l2:
       color: off
-
     l3:
       color: off
 
 
 show_player:
-
   bonus_x_bank_complete:
-
     bonus_x_complete_flash:
-      loops: 0
+      loops: 1
 
 
 random_event_player:
-
   bonus_x_target_1_collected:
     events:
       - bonusx_sound_1
@@ -212,20 +182,14 @@ random_event_player:
 
 
 sound_player:
-
   bonusx_sound_1:
-
     Target_Hit_1:
       action: play
 
-
   bonusx_sound_2:
-
     Target_Hit_2:
       action: play
 
-
   bonusx_sound_3:
-
     Target_Hit_3:
       action: play

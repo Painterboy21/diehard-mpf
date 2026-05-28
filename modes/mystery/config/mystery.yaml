@@ -211,7 +211,7 @@ event_player:
 
   # ------------------------------------------------------------
   # BALL SAVE
-  # Uses your existing ball_save_3 event.
+  # Uses your existing ball_save_three event.
   # ------------------------------------------------------------
 
   mystery_award_ball_save:
@@ -219,11 +219,24 @@ event_player:
     - mystery_awarded
 
 
+  # ------------------------------------------------------------
+  # BONUS X
+  # Adds Bonus X and flashes the Ball X / Bonus X lights.
+  # ------------------------------------------------------------
+
   mystery_award_bonus_x:
+    - mystery_bonus_x_flash
     - mystery_awarded
+
+
+  # ------------------------------------------------------------
+  # HOLD BONUS X
+  # Turns Bonus X lights red until the next ball.
+  # ------------------------------------------------------------
 
   mystery_award_hold_bonus_x:
     - mystery_awarded
+
 
   mystery_award_super_spinner:
     - mystery_awarded
@@ -254,16 +267,10 @@ event_player:
     - mystery_advance_ho_level
     - mystery_reset_ho_counts
 
-
-# ------------------------------------------------------------
-# FORCE TEST BALL SAVE
-# Put the normal award pool back after this test.
-# ------------------------------------------------------------
-
 random_event_player:
   mystery_pick_normal_award:
     events:
-      mystery_award_ball_save: 1
+      mystery_award_hold_bonus_x: 1
     scope: player
     force_all: false
 
@@ -312,6 +319,16 @@ show_player:
         lights: f147
         color: 00ff00
 
+  mystery_bonus_x_flash:
+    flash_color:
+      key: mystery_bonus_x_lights_flash
+      speed: 10
+      loops: 8
+      priority: 1000
+      show_tokens:
+        lights: l1,l2,l3
+        color: yellow
+
 
 slide_player:
   ball_hold_mystery_hold_full:
@@ -319,12 +336,24 @@ slide_player:
       action: play
       expire: 7s
 
-
 widget_player:
   mystery_ho_progress:
     mystery_qualify:
       action: play
       expire: 3s
+
+  mystery_award_hold_bonus_x:
+    bonus_x_held_widget:
+      action: play
+      expire: 4s
+
+  mode_mystery_started:
+    bonus_x_held_widget:
+      action: remove
+
+  ball_ended:
+    bonus_x_held_widget:
+      action: remove
 
 
 variable_player:
@@ -518,6 +547,10 @@ variable_player:
       int: 5
 
 
+  # ------------------------------------------------------------
+  # BONUS X
+  # ------------------------------------------------------------
+
   mystery_award_bonus_x:
     bonus_multiplier:
       action: add
@@ -526,6 +559,11 @@ variable_player:
       action: set
       int: 6
 
+
+  # ------------------------------------------------------------
+  # HOLD BONUS X
+  # ------------------------------------------------------------
+
   mystery_award_hold_bonus_x:
     bonus_x_held:
       action: set
@@ -533,6 +571,7 @@ variable_player:
     mystery_awarded_index:
       action: set
       int: 7
+
 
   mystery_award_super_jets:
     super_jets:
