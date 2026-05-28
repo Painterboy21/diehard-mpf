@@ -158,8 +158,9 @@ event_player:
     - qualify_nakatomi_on_complete
     - mystery_awarded
 
-
   mystery_award_airplane_lock:
+    - lock_lit
+    - airplane_disable_lock_counter
     - mystery_awarded
 
   mystery_award_park_lock:
@@ -215,7 +216,7 @@ event_player:
 random_event_player:
   mystery_pick_normal_award:
     events:
-      mystery_award_tower_lock: 1
+      mystery_award_airplane_lock: 1
     scope: player
     force_all: false
 
