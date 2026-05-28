@@ -5,6 +5,7 @@ mode:
   stop_events: ball_ended
   priority: 115
 
+
 ball_holds:
   mystery_hold:
     enable_events: mystery_open_vault
@@ -15,14 +16,6 @@ ball_holds:
       - tilt
       - mystery_awarded
 
-shot_groups:
-  mystery_ho:
-    shots:
-      - vault_h
-      - vault_o
-    restart_events:
-      - mystery_ho_qualified_step
-      - mystery_awarded
 
 shots:
   vault_h:
@@ -52,15 +45,49 @@ shots:
       - events: mystery_open_vault
         state: 1
 
+
 event_player:
   mode_mystery_started:
     - mystery_close_vault
+    - mystery_reset_ho_counts
 
-  mystery_ho_on_complete{current_player.mystery_hits_count < 2}:
-    - mystery_ho_qualified_step
+  mode_mystery_started{current_player.mystery_ho_level == 0}:
+    - mystery_init_ho_level
 
-  mystery_ho_on_complete{current_player.mystery_hits_count >= 2}:
+
+  # ------------------------------------------------------------
+  # REAL MACHINE H/O VAULT QUALIFY
+  #
+  # 1st vault = HO
+  # 2nd vault = HOHO
+  # 3rd vault = HOHOHO
+  # Then back to HO.
+  #
+  # H and O can be hit in any order.
+  # ------------------------------------------------------------
+
+  s_holly_h_active{current_player.mystery_vault_open == 0}:
+    - mystery_ho_progress
+    - mystery_check_ho|2ms
+
+  s_holly_o_active{current_player.mystery_vault_open == 0}:
+    - mystery_ho_progress
+    - mystery_check_ho|2ms
+
+
+  mystery_check_ho{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level <= 1 and current_player.mystery_h_hits >= 1 and current_player.mystery_o_hits >= 1}:
     - mystery_open_vault
+
+  mystery_check_ho{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level == 2 and current_player.mystery_h_hits >= 2 and current_player.mystery_o_hits >= 2}:
+    - mystery_open_vault
+
+  mystery_check_ho{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level >= 3 and current_player.mystery_h_hits >= 3 and current_player.mystery_o_hits >= 3}:
+    - mystery_open_vault
+
+
+  # ------------------------------------------------------------
+  # VAULT HOLD / MYSTERY SCROLL
+  # ------------------------------------------------------------
 
   ball_hold_mystery_hold_full:
     - mystery_close_vault
@@ -69,27 +96,46 @@ event_player:
   timer_mystery_scroll_complete:
     - mystery_pick_award
 
-  # Add-A-Ball first if a multiball is active
+
+  # ------------------------------------------------------------
+  # AWARD PICKING
+  # ------------------------------------------------------------
+
   mystery_pick_award{current_player.mystery_multiball_active == 1}:
     - mystery_award_add_a_ball
 
   mystery_pick_award{current_player.mystery_multiball_active == 0}:
     - mystery_pick_normal_award
 
-  # These events track your main multiballs
+
+  # ------------------------------------------------------------
+  # MULTIBALL TRACKING
+  # ------------------------------------------------------------
+
   multiball_nakatomi_started:
     - mystery_multiball_active
+
   multiball_airplane_started:
     - mystery_multiball_active
+
   multiball_central_park_started:
     - mystery_multiball_active
 
   multiball_nakatomi_ended:
     - mystery_multiball_inactive
+
   multiball_airplane_ended:
     - mystery_multiball_inactive
+
   multiball_central_park_ended:
     - mystery_multiball_inactive
+
+
+  # ------------------------------------------------------------
+  # MYSTERY AWARDS
+  # Keep these simple again.
+  # Godot uses mystery_awarded_index to show the final text.
+  # ------------------------------------------------------------
 
   mystery_award_add_a_ball:
     - add_a_ball_in_multiball
@@ -97,34 +143,63 @@ event_player:
 
   mystery_award_points:
     - mystery_awarded
+
   mystery_award_tower_lock:
     - mystery_awarded
+
   mystery_award_airplane_lock:
     - mystery_awarded
+
   mystery_award_park_lock:
     - mystery_awarded
+
   mystery_award_villain:
     - mystery_awarded
+
   mystery_award_ball_save:
     - mystery_awarded
+
   mystery_award_bonus_x:
     - mystery_awarded
+
   mystery_award_hold_bonus_x:
     - mystery_awarded
+
   mystery_award_super_spinner:
     - mystery_awarded
+
   mystery_award_super_jets:
     - mystery_awarded
+
   mystery_award_playfield_x:
     - mystery_awarded
-  mystery_award_ambush:
-    - mystery_awarded
+
   mystery_award_extra_ball_lit:
     - mystery_awarded
 
+
+  # ------------------------------------------------------------
+  # AMBUSH FROM MYSTERY
+  # This is the only award with an extra delayed start.
+  # ------------------------------------------------------------
+
+  mystery_award_ambush:
+    - mystery_awarded
+    - mystery_start_ambush_from_vault|1000ms
+
+  mystery_start_ambush_from_vault:
+    - start_ambush
+
+
+  # ------------------------------------------------------------
+  # CLEANUP AFTER AWARD
+  # ------------------------------------------------------------
+
   mystery_awarded:
     - mystery_close_vault
-    - mystery_reset_ho
+    - mystery_advance_ho_level
+    - mystery_reset_ho_counts
+
 
 random_event_player:
   mystery_pick_normal_award:
@@ -145,6 +220,7 @@ random_event_player:
     scope: player
     force_all: false
 
+
 timers:
   mystery_scroll:
     start_value: 0
@@ -156,6 +232,7 @@ timers:
     control_events:
       - event: mystery_scroll_start
         action: restart
+
 
 show_player:
   mystery_open_vault:
@@ -180,28 +257,122 @@ show_player:
         lights: f147
         color: 00ff00
 
+
 slide_player:
   ball_hold_mystery_hold_full:
     mystery:
       action: play
       expire: 7s
 
+
 widget_player:
-  mystery_ho_qualified_step:
+  mystery_ho_progress:
     mystery_qualify:
       action: play
       expire: 3s
 
+
 variable_player:
-  mystery_ho_qualified_step:
-    mystery_hits_count:
+  # ------------------------------------------------------------
+  # MODE START / DEFAULTS
+  # ------------------------------------------------------------
+
+  mode_mystery_started:
+    mystery_multiball_active:
+      action: set
+      int: 0
+    mystery_vault_open:
+      action: set
+      int: 0
+
+  mystery_init_ho_level:
+    mystery_ho_level:
+      action: set
+      int: 1
+
+
+  # ------------------------------------------------------------
+  # VAULT OPEN / RESET
+  # ------------------------------------------------------------
+
+  mystery_open_vault:
+    mystery_vault_open:
+      action: set
+      int: 1
+
+  mystery_reset_ho_counts:
+    mystery_h_hits:
+      action: set
+      int: 0
+    mystery_o_hits:
+      action: set
+      int: 0
+    mystery_vault_open:
+      action: set
+      int: 0
+
+
+  # ------------------------------------------------------------
+  # H HIT COUNTING
+  # Capped to current HO level.
+  # ------------------------------------------------------------
+
+  s_holly_h_active{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level <= 1 and current_player.mystery_h_hits < 1}:
+    mystery_h_hits:
       action: add
       int: 1
 
-  mystery_reset_ho:
-    mystery_hits_count:
+  s_holly_h_active{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level == 2 and current_player.mystery_h_hits < 2}:
+    mystery_h_hits:
+      action: add
+      int: 1
+
+  s_holly_h_active{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level >= 3 and current_player.mystery_h_hits < 3}:
+    mystery_h_hits:
+      action: add
+      int: 1
+
+
+  # ------------------------------------------------------------
+  # O HIT COUNTING
+  # Capped to current HO level.
+  # ------------------------------------------------------------
+
+  s_holly_o_active{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level <= 1 and current_player.mystery_o_hits < 1}:
+    mystery_o_hits:
+      action: add
+      int: 1
+
+  s_holly_o_active{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level == 2 and current_player.mystery_o_hits < 2}:
+    mystery_o_hits:
+      action: add
+      int: 1
+
+  s_holly_o_active{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level >= 3 and current_player.mystery_o_hits < 3}:
+    mystery_o_hits:
+      action: add
+      int: 1
+
+
+  # ------------------------------------------------------------
+  # HO LEVEL ADVANCE
+  # HO -> HOHO -> HOHOHO -> HO
+  # ------------------------------------------------------------
+
+  mystery_advance_ho_level{current_player.mystery_ho_level < 3}:
+    mystery_ho_level:
+      action: add
+      int: 1
+
+  mystery_advance_ho_level{current_player.mystery_ho_level >= 3}:
+    mystery_ho_level:
       action: set
-      int: 0
+      int: 1
+
+
+  # ------------------------------------------------------------
+  # MULTIBALL STATE
+  # ------------------------------------------------------------
 
   mystery_multiball_active:
     mystery_multiball_active:
@@ -212,6 +383,12 @@ variable_player:
     mystery_multiball_active:
       action: set
       int: 0
+
+
+  # ------------------------------------------------------------
+  # AWARD VALUES / DISPLAY INDEX
+  # These match your simple Godot award_names list.
+  # ------------------------------------------------------------
 
   mystery_award_points:
     score: 2500000

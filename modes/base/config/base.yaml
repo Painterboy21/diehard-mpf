@@ -284,6 +284,7 @@ show_player:
       key: key_flash_bumper_explosion
       loops: 0
       speed: 2
+      priority: 10
       show_tokens: 
         lights: l75
         color: FFFFFF
