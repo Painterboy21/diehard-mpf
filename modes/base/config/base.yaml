@@ -77,6 +77,7 @@ event_player:
   start_airplane_multiball:
     - stop_base_music
 
+
 light_player: 
   mode_base_started: 
     GI: 
@@ -87,6 +88,27 @@ light_player:
       color: 969670
     s_actionbtn:
       color: 969696
+  hold_bonus_x_lights_on:
+    l1:
+      color: red
+      priority: 800
+    l2:
+      color: red
+      priority: 800
+    l3:
+      color: red
+      priority: 800
+
+  clear_hold_bonus_x_lights:
+    l1:
+      color: off
+      priority: 800
+    l2:
+      color: off
+      priority: 800
+    l3:
+      color: off
+      priority: 800
 
 
   mode_base_started{current_player.hans_complete==1}:
@@ -515,5 +537,10 @@ variable_player:
       action: set
       int: 0
     eob_bonus_x:
+      action: set
+      int: 0
+
+  clear_bonus_x_held_flag:
+    bonus_x_held:
       action: set
       int: 0
