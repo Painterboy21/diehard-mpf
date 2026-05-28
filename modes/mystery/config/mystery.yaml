@@ -265,6 +265,7 @@ event_player:
 
   # ------------------------------------------------------------
   # SUPER SPINNERS
+  # Timed power-up mode handles timer/scoring.
   # ------------------------------------------------------------
 
   mystery_award_super_spinners:
@@ -275,8 +276,19 @@ event_player:
   mystery_award_super_jets:
     - mystery_awarded
 
+
+  # ------------------------------------------------------------
+  # PLAYFIELD X
+  # Uses your real playfield_x flow.
+  # Do not add playfield_multiplier directly here.
+  # ------------------------------------------------------------
+
   mystery_award_playfield_x:
+    - increase_playfield_x
+    - playfield_x_collected|10ms
+    - playfield_x_started|20ms
     - mystery_awarded
+
 
   mystery_award_extra_ball_lit:
     - mystery_awarded
@@ -285,13 +297,9 @@ event_player:
   # ------------------------------------------------------------
   # AMBUSH FROM MYSTERY
   #
-  # Important:
-  # Do NOT fire start_ambush immediately.
-  # Do NOT fake ball_hold_ambush_hold_full.
-  #
-  # Mystery ball is in the vault, not the right VUK.
-  # So we mark Ambush as pending, finish Mystery, wait for the
-  # Mystery slide to be removed, then start Ambush cleanly.
+  # Do NOT start Ambush while Mystery slide is active.
+  # Set pending flag, wait for slide_mystery_removed,
+  # then start Ambush cleanly.
   # ------------------------------------------------------------
 
   mystery_award_ambush:
@@ -316,25 +324,165 @@ event_player:
     - mystery_reset_ho_counts
 
 
-# ------------------------------------------------------------
-# TEST RANDOM PLAYER
-# Forces Mystery to pick Ambush only.
-#
-# If a villain mode is active, it gives points instead.
-# Multiball already routes to Add-A-Ball before this random picker.
-# ------------------------------------------------------------
-
 random_event_player:
 
-  mystery_pick_normal_award{current_player.mystery_villain_active == 0}:
+  # ------------------------------------------------------------
+  # Bullets available, Super Spinners available, no villain mode
+  # ------------------------------------------------------------
+
+  mystery_pick_normal_award{current_player.bullet_hits < 15 and current_player.super_spinners == 0 and current_player.mystery_villain_active == 0}:
     events:
-      mystery_award_ambush: 1
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_ambush: 8
+      mystery_award_extra_ball_lit: 4
     scope: player
     force_all: false
 
-  mystery_pick_normal_award{current_player.mystery_villain_active == 1}:
+
+  # ------------------------------------------------------------
+  # Bullets full, Super Spinners available, no villain mode
+  # ------------------------------------------------------------
+
+  mystery_pick_normal_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 0 and current_player.mystery_villain_active == 0}:
     events:
-      mystery_award_points: 1
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_ambush: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+
+  # ------------------------------------------------------------
+  # Bullets available, Super Spinners active, no villain mode
+  # ------------------------------------------------------------
+
+  mystery_pick_normal_award{current_player.bullet_hits < 15 and current_player.super_spinners == 1 and current_player.mystery_villain_active == 0}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_ambush: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+
+  # ------------------------------------------------------------
+  # Bullets full, Super Spinners active, no villain mode
+  # ------------------------------------------------------------
+
+  mystery_pick_normal_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 1 and current_player.mystery_villain_active == 0}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_ambush: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+
+  # ------------------------------------------------------------
+  # Villain active:
+  # No Ambush during villain mode.
+  # ------------------------------------------------------------
+
+  mystery_pick_normal_award{current_player.bullet_hits < 15 and current_player.super_spinners == 0 and current_player.mystery_villain_active == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+
+  mystery_pick_normal_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 0 and current_player.mystery_villain_active == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+
+  mystery_pick_normal_award{current_player.bullet_hits < 15 and current_player.super_spinners == 1 and current_player.mystery_villain_active == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+
+  mystery_pick_normal_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 1 and current_player.mystery_villain_active == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
     scope: player
     force_all: false
 
@@ -697,9 +845,6 @@ variable_player:
   # ------------------------------------------------------------
 
   mystery_award_playfield_x:
-    playfield_multiplier:
-      action: add
-      int: 1
     mystery_awarded_index:
       action: set
       int: 10
