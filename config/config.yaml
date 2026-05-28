@@ -88,7 +88,15 @@ config:
   - player_vars.yaml
  # - shaker.yaml
 
-
+extra_ball_groups:
+  diehard_extra_balls:
+    enabled: true
+    max_per_game: 2
+    max_lit: 1
+    light_events:
+      - light_extra_ball
+    award_lit_events:
+      - collect_lit_extra_ball
 
 
 flippers:
@@ -238,6 +246,7 @@ modes:
   - bonus_x
   - playfield_x
   - iscored_sync
+  - extra_ball
   
 machine:
     balls_installed: 6

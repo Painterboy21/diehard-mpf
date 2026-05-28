@@ -1,0 +1,190 @@
+#config_version=6
+
+mode:
+  start_events:
+    - ball_started
+  stop_events:
+    - ball_ended
+  priority: 155
+
+
+extra_balls:
+  diehard_extra_ball:
+    group: diehard_extra_balls
+    enabled: true
+    award_events:
+      - collect_lit_extra_ball
+    max_per_game: 2
+
+
+event_player:
+
+  # ------------------------------------------------------------
+  # Light Extra Ball sources
+  # ------------------------------------------------------------
+
+  light_extra_ball_from_mystery:
+    - light_extra_ball
+    - extra_ball_lit
+
+  light_extra_ball_from_modes:
+    - light_extra_ball
+    - extra_ball_lit
+
+  light_extra_ball_from_multiballs:
+    - light_extra_ball
+    - extra_ball_lit
+
+
+  # ------------------------------------------------------------
+  # Start flashing after the lit variable has been set.
+  # Small delay avoids the flash checking vars too early.
+  # ------------------------------------------------------------
+
+  extra_ball_lit:
+    - extra_ball_flash_on|50ms
+
+
+  # ------------------------------------------------------------
+  # Flash loop
+  # Only keeps looping while Extra Ball is lit and not collected.
+  # ------------------------------------------------------------
+
+  extra_ball_flash_on{current_player.extra_balls_lit == 1 and current_player.extra_ball_owed == 0}:
+    - extra_ball_flash_off|350ms
+
+  extra_ball_flash_off{current_player.extra_balls_lit == 1 and current_player.extra_ball_owed == 0}:
+    - extra_ball_flash_on|350ms
+
+
+  # ------------------------------------------------------------
+  # Debug / collect at real right VUK
+  # ------------------------------------------------------------
+
+  s_rightvuk_active:
+    - extra_ball_rightvuk_seen
+
+  s_rightvuk_active{current_player.extra_balls_lit == 1}:
+    - collect_lit_extra_ball
+    - extra_ball_collected
+
+
+  # ------------------------------------------------------------
+  # Extra ball has been used on next ball start
+  # ------------------------------------------------------------
+
+  mode_extra_ball_started{current_player.extra_ball_owed == 1}:
+    - extra_ball_used
+
+
+variable_player:
+
+  mode_extra_ball_started{current_player.extra_balls_lit == None}:
+    extra_balls_lit:
+      action: set
+      int: 0
+
+  mode_extra_ball_started{current_player.extra_ball_owed == None}:
+    extra_ball_owed:
+      action: set
+      int: 0
+
+  mode_extra_ball_started{current_player.extra_ball_mode_awarded == None}:
+    extra_ball_mode_awarded:
+      action: set
+      int: 0
+
+  mode_extra_ball_started{current_player.extra_ball_mball_awarded == None}:
+    extra_ball_mball_awarded:
+      action: set
+      int: 0
+
+
+  # ------------------------------------------------------------
+  # Extra Ball lit
+  # ------------------------------------------------------------
+
+  extra_ball_lit:
+    extra_balls_lit:
+      action: set
+      int: 1
+
+
+  # ------------------------------------------------------------
+  # Extra Ball collected
+  # Actual MPF extra ball is awarded by collect_lit_extra_ball.
+  # ------------------------------------------------------------
+
+  extra_ball_collected:
+    extra_balls_lit:
+      action: set
+      int: 0
+    extra_ball_owed:
+      action: set
+      int: 1
+
+
+  # ------------------------------------------------------------
+  # Extra Ball used
+  # ------------------------------------------------------------
+
+  extra_ball_used:
+    extra_ball_owed:
+      action: set
+      int: 0
+
+
+light_player:
+
+  # ------------------------------------------------------------
+  # Flashing while lit
+  # ------------------------------------------------------------
+
+  extra_ball_flash_on{current_player.extra_balls_lit == 1 and current_player.extra_ball_owed == 0}:
+    l63:
+      color: red
+      priority: 9999
+
+  extra_ball_flash_off{current_player.extra_balls_lit == 1 and current_player.extra_ball_owed == 0}:
+    l63:
+      color: off
+      priority: 9999
+
+
+  # ------------------------------------------------------------
+  # If the mode restarts while Extra Ball is still lit,
+  # restart the flash loop.
+  # ------------------------------------------------------------
+
+  mode_extra_ball_started{current_player.extra_balls_lit == 1 and current_player.extra_ball_owed == 0}:
+    l63:
+      color: red
+      priority: 9999
+
+
+  # ------------------------------------------------------------
+  # Collected / owed:
+  # l63 stays solid red until the extra ball is used.
+  # ------------------------------------------------------------
+
+  extra_ball_collected:
+    l63:
+      color: red
+      priority: 9999
+
+
+  # ------------------------------------------------------------
+  # Used:
+  # next ball has started, turn it off.
+  # ------------------------------------------------------------
+
+  extra_ball_used:
+    l63:
+      color: off
+      priority: 9999
+
+
+  ball_ended{current_player.extra_ball_owed == 0 and current_player.extra_balls_lit == 0}:
+    l63:
+      color: off
+      priority: 9999
