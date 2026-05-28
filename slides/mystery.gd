@@ -71,6 +71,11 @@ var current_index := 0
 var flashing := false
 var last_award_index := -1
 
+# Used for the roulette text.
+# This lets us remove Bullets from the scroll if bullet_hits is already full.
+var scroll_award_indexes: Array[int] = []
+var scroll_position := 0
+
 
 func _ready() -> void:
 	self.finished.connect(_on_video_finished)
@@ -89,22 +94,46 @@ func _ready() -> void:
 func start_award_flash() -> void:
 	flashing = true
 	current_index = 0
+	scroll_position = 0
 	last_award_index = -1
 
-	if award_label:
-		award_label.text = award_names[0]
+	_build_scroll_award_indexes()
+
+	if award_label and scroll_award_indexes.size() > 0:
+		award_label.text = award_names[scroll_award_indexes[0]]
 
 	flash_timer.start()
+
+
+func _build_scroll_award_indexes() -> void:
+	scroll_award_indexes.clear()
+
+	var bullets_full := false
+	var bullet_value = _get_player_var("bullet_hits", 0)
+
+	if int(bullet_value) >= 15:
+		bullets_full = true
+
+	for i in range(award_names.size()):
+		# Index 4 is Bullets.
+		# Skip it from the roulette if bullets are already full.
+		if bullets_full and i == 4:
+			continue
+
+		scroll_award_indexes.append(i)
 
 
 func _on_timer_timeout() -> void:
 	if not flashing:
 		return
 
-	# Roulette animation only.
-	# This is NOT the final award.
-	award_label.text = award_names[current_index]
-	current_index = (current_index + 1) % award_names.size()
+	if scroll_award_indexes.size() == 0:
+		return
+
+	var award_index := scroll_award_indexes[scroll_position]
+	award_label.text = award_names[award_index]
+
+	scroll_position = (scroll_position + 1) % scroll_award_indexes.size()
 
 
 func _on_player_update(var_name: String, value: Variant) -> void:
@@ -123,8 +152,8 @@ func _mystery_awarded(payload: Dictionary) -> void:
 		_show_award_by_index(last_award_index)
 		return
 
-	if MPF.game.player != null:
-		_show_award_by_index(int(MPF.game.player.mystery_awarded_index))
+	var index = _get_player_var("mystery_awarded_index", -1)
+	_show_award_by_index(int(index))
 
 
 func _show_award_by_index(index: int) -> void:
@@ -134,6 +163,19 @@ func _show_award_by_index(index: int) -> void:
 
 	award_label.text = award_names[index]
 	print("Mystery final award: ", award_names[index])
+
+
+func _get_player_var(var_name: String, default_value: Variant = null) -> Variant:
+	if MPF.game.player == null:
+		return default_value
+
+	# MPF.game.player normally supports get().
+	var value = MPF.game.player.get(var_name)
+
+	if value == null:
+		return default_value
+
+	return value
 
 
 func _on_video_finished() -> void:

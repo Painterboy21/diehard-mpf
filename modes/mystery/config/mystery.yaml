@@ -151,13 +151,8 @@ event_player:
 
   # ------------------------------------------------------------
   # ADVANCE PARK
-  #
-  # Chooses a random unlit CP lane.
-  # If a chosen lane is already lit, it rolls again.
-  # If all 3 are already lit, it awards points instead.
-  #
-  # Mystery only posts the CP lane award event.
-  # qualify_central_park owns the actual shot/light state.
+  # Chooses a random unlit Central Park lane.
+  # Central Park qualify owns the shot/lamp state.
   # ------------------------------------------------------------
 
   mystery_award_park_lock:
@@ -201,11 +196,28 @@ event_player:
     - mystery_awarded|100ms
 
 
-  mystery_award_villain:
+  # ------------------------------------------------------------
+  # BULLETS / VILLAIN AWARD
+  # If bullets are full, reroll instead.
+  # ------------------------------------------------------------
+
+  mystery_award_villain{current_player.bullet_hits < 15}:
+    - villain_start_lit
     - mystery_awarded
 
+  mystery_award_villain{current_player.bullet_hits >= 15}:
+    - mystery_pick_normal_award
+
+
+  # ------------------------------------------------------------
+  # BALL SAVE
+  # Uses your existing ball_save_3 event.
+  # ------------------------------------------------------------
+
   mystery_award_ball_save:
+    - ball_save_three
     - mystery_awarded
+
 
   mystery_award_bonus_x:
     - mystery_awarded
@@ -244,14 +256,14 @@ event_player:
 
 
 # ------------------------------------------------------------
-# FORCE TEST ADVANCE PARK
+# FORCE TEST BALL SAVE
 # Put the normal award pool back after this test.
 # ------------------------------------------------------------
 
 random_event_player:
   mystery_pick_normal_award:
     events:
-      mystery_award_park_lock: 1
+      mystery_award_ball_save: 1
     scope: player
     force_all: false
 
@@ -448,12 +460,7 @@ variable_player:
 
   # ------------------------------------------------------------
   # PARK DISPLAY INDEX ONLY
-  #
-  # Do NOT manually set shot_central_park_lock_* here.
-  # qualify_central_park handles actual shot/light state from:
-  # mystery_award_cp_left_lane
-  # mystery_award_cp_middle_lane
-  # mystery_award_cp_right_lane
+  # qualify_central_park handles actual shot/light state.
   # ------------------------------------------------------------
 
   mystery_award_cp_left_lane:
@@ -481,13 +488,26 @@ variable_player:
       int: 3
 
 
-  mystery_award_villain:
-    collected_bullets:
+  # ------------------------------------------------------------
+  # BULLETS / VILLAIN
+  # Only gives Bullets if bullet_hits is not already full.
+  # ------------------------------------------------------------
+
+  mystery_award_villain{current_player.bullet_hits < 15}:
+    bullet_hits:
       action: set
       int: 15
+    bullet_combo_hits:
+      action: set
+      int: 0
     mystery_awarded_index:
       action: set
       int: 4
+
+
+  # ------------------------------------------------------------
+  # BALL SAVE
+  # ------------------------------------------------------------
 
   mystery_award_ball_save:
     mystery_ball_save_awarded:
@@ -496,6 +516,7 @@ variable_player:
     mystery_awarded_index:
       action: set
       int: 5
+
 
   mystery_award_bonus_x:
     bonus_multiplier:
