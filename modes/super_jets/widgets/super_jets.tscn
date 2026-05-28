@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://co8cjj3onpmq"]
+[gd_scene format=3 uid="uid://b1actvwrfbg1v"]
 
-[ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_0meg0"]
-[ext_resource type="FontFile" uid="uid://8bwe3lenjji0" path="res://godot-media/fonts/DieHardVPX-Regular.ttf" id="2_0meg0"]
+[ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_5over"]
+[ext_resource type="FontFile" uid="uid://8bwe3lenjji0" path="res://godot-media/fonts/DieHardVPX-Regular.ttf" id="2_npbos"]
 
 [sub_resource type="Animation" id="Animation_3ftjh"]
 length = 3.0
@@ -35,68 +35,42 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0.011764706), Color(1, 1, 1, 1), Color(1, 1, 1, 0.019607844), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_qnm6p"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vtidx"]
 _data = {
 &"RESET": SubResource("Animation_3ftjh"),
 &"playfield x": SubResource("Animation_g2g34")
 }
 
-[node name="playfield_3x" type="Control" unique_id=690265456]
-modulate = Color(1, 1, 1, 0.4503264)
+[node name="super_jets" type="Control" unique_id=375163772]
+modulate = Color(1, 1, 1, 0.8193615)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -667.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_0meg0")
+script = ExtResource("1_5over")
 metadata/_custom_type_script = "uid://d4ky3s4bg1ouq"
 
-[node name="Label" type="Label" parent="." unique_id=511965741]
+[node name="Label" type="Label" parent="." unique_id=1247819788]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
+offset_bottom = 217.0
 grow_horizontal = 2
-grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.01999998, 0.01999998, 1)
 theme_override_colors/font_shadow_color = Color(0.99, 0.98010004, 0.98010004, 0.99215686)
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 2
 theme_override_constants/shadow_outline_size = 6
-theme_override_fonts/font = ExtResource("2_0meg0")
+theme_override_fonts/font = ExtResource("2_npbos")
 theme_override_font_sizes/font_size = 80
-text = "PLAYFIELD
-MULTIPLER
+text = "SUPER JETS
 "
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="." unique_id=701704134]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 498.0
-offset_top = 580.0
-offset_right = -531.0
-offset_bottom = -177.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.01999998, 0.01999998, 1)
-theme_override_colors/font_shadow_color = Color(0.99, 0.98010004, 0.98010004, 0.99215686)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-theme_override_constants/shadow_outline_size = 0
-theme_override_fonts/font = ExtResource("2_0meg0")
-theme_override_font_sizes/font_size = 120
-text = "3X
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1756772645]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=969077336]
 reset_on_save = false
-libraries/ = SubResource("AnimationLibrary_qnm6p")
+libraries/ = SubResource("AnimationLibrary_vtidx")
 autoplay = &"RESET"

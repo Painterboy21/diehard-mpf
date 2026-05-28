@@ -1,5 +1,6 @@
 extends VideoStreamPlayer
-# Playlist of video files (local resources)
+
+
 var available_videos: Array[String] = [
 	"res://videos/john/john1.ogv",
 	"res://videos/john/john2.ogv",
@@ -45,67 +46,102 @@ var available_videos: Array[String] = [
 ]
 
 
+# This must match your MPF mystery_awarded_index.
 var award_names: Array[String] = [
-	"Award Points",
-	"Advance Tower",
-	"Advance Airplane",
-	"Advance Park",
-	"Bullets",
-	"Ball Save",
-	"Bonus X",
-	"Hold Bonus X",
-	"Advance Bumpers",
-	"Advance Spinner",
-	"Playfield X",
-	"Ambush",
-	"Light Extra Ball",
+	"Award Points",        # 0
+	"Advance Tower",       # 1
+	"Advance Airplane",    # 2
+	"Advance Park",        # 3
+	"Bullets",             # 4
+	"Ball Save",           # 5
+	"Bonus X",             # 6
+	"Hold Bonus X",        # 7
+	"Advance Bumpers",     # 8
+	"Advance Spinner",     # 9
+	"Playfield X",         # 10
+	"Ambush",              # 11
+	"Light Extra Ball",    # 12
+	"Add a Ball",          # 13
 ]
 
+
 @onready var flash_timer: Timer = $Timer
-@onready var award_label = $"../VBoxContainer/VaultAward"
+@onready var award_label: Label = $"../VBoxContainer/VaultAward"
 
 var current_index := 0
 var flashing := false
-var flash_duration := 2.0        # total time to flash
-var elapsed_time := 0.0          # accumulator
+var last_award_index := -1
+
 
 func _ready() -> void:
 	self.finished.connect(_on_video_finished)
-	self.flash_timer.timeout.connect(_on_timer_timeout)
+	flash_timer.timeout.connect(_on_timer_timeout)
 
+	# Keep this simple.
+	# Old working Mystery YAML fires mystery_awarded and updates mystery_awarded_index.
 	MPF.server.add_event_handler("mystery_awarded", self._mystery_awarded)
 	MPF.game.connect("player_update", self._on_player_update)
 
 	var stream: VideoStream = load(available_videos.pick_random())
 	self.stream = stream
 	self.play()
-	self.start_award_flash()
 
-func start_award_flash():
+	start_award_flash()
+
+
+func start_award_flash() -> void:
 	flashing = true
-	elapsed_time = 0.0
 	current_index = 0
+	last_award_index = -1
+
+	if award_label:
+		award_label.text = award_names[0]
+
 	flash_timer.start()
 
-func _on_video_finished() -> void:
-	#self.get_parent().remove()
-	print("Video Finished")
 
 func _on_timer_timeout() -> void:
-	if flashing:
-		elapsed_time += flash_timer.wait_time
-		# cycle text
-		award_label.text = award_names[current_index]
-		current_index = (current_index + 1) % award_names.size()
+	if not flashing:
+		return
+
+	# This is only the roulette animation.
+	# It is not the real award.
+	award_label.text = award_names[current_index]
+	current_index = (current_index + 1) % award_names.size()
+
+
+func _on_player_update(var_name: String, value: Variant) -> void:
+	if var_name == "mystery_awarded_index":
+		last_award_index = int(value)
+
+		# If the scroll has already stopped, update the label immediately.
+		if not flashing:
+			_show_award_by_index(last_award_index)
+
 
 func _mystery_awarded(payload: Dictionary) -> void:
-	print(payload)
 	flashing = false
 	flash_timer.stop()
-	
-func _on_player_update(var_name: String, value: Variant) -> void:
-	if var_name == 'mystery_awarded_index':
-		if value == 13:	
-			award_label.text = "Add a Ball"
-		else:
-			award_label.text = award_names[MPF.game.player.mystery_awarded_index]
+
+	if last_award_index >= 0:
+		_show_award_by_index(last_award_index)
+		return
+
+	# Backup: pull the value straight from MPF player vars.
+	if MPF.game.player != null:
+		var index = MPF.game.player.get("mystery_awarded_index")
+		if index != null:
+			_show_award_by_index(int(index))
+
+
+func _show_award_by_index(index: int) -> void:
+	if index < 0 or index >= award_names.size():
+		print("Mystery award index out of range: ", index)
+		return
+
+	award_label.text = award_names[index]
+	print("Mystery final award: ", award_names[index])
+
+
+func _on_video_finished() -> void:
+	print("Video Finished")

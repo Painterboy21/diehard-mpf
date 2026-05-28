@@ -1,8 +1,12 @@
 #config_version=6
 
 widgets:
+
   pop_bumper_5000_widget:
     widget: pop_bumper_5000_widget
+
+  pop_bumper_25000_widget:
+    widget: pop_bumper_25000_widget
 
   pop_bumper_200000_widget:
     widget: pop_bumper_200000_widget
@@ -85,25 +89,40 @@ variable_player:
       action: add
 
 widget_player:
+  super_jets_started:
+    super_jets:
+      action: play
+      expire: 4s
+
+
   s_popbumper_left_active{current_player.super_jets==0}:
     pop_bumper_5000_widget:
       action: play
-      expire: 1s
+      expire: 3s
+
+    pop_bumper_25000_widget:
+      action: play
+      expire: 3s
+    
 
   s_popbumper_right_active{current_player.super_jets==0}:
     pop_bumper_5000_widget:
       action: play
-      expire: 1s
+      expire: 3s
+
+    pop_bumper_25000_widget:
+      action: play
+      expire: 3s
 
   s_popbumper_left_active{current_player.super_jets==1}:
     pop_bumper_200000_widget:
       action: play
-      expire: 1s
+      expire: 3s
 
   s_popbumper_right_active{current_player.super_jets==1}:
     pop_bumper_200000_widget:
       action: play
-      expire: 1s
+      expire: 3s
 
 show_player:
   s_popbumper_left_active{current_player.super_jets==1}:

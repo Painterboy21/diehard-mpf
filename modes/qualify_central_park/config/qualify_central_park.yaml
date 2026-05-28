@@ -47,16 +47,27 @@ shots:
     profile: profile_central_park_lock
     show_tokens: 
       lights: l76
+    control_events:
+      - events: mystery_award_cp_left_lane
+        state: 1
+
   central_park_lock_middle:
     switch: s_TrPF2
     profile: profile_central_park_lock
     show_tokens: 
       lights: l77
+    control_events:
+      - events: mystery_award_cp_middle_lane
+        state: 1
+
   central_park_lock_right:
     switch: s_TrPF3
     profile: profile_central_park_lock
     show_tokens: 
       lights: l78
+    control_events:
+      - events: mystery_award_cp_right_lane
+        state: 1
 
   central_park_start_multiball:
     profile: cp_start_multiball_profile
