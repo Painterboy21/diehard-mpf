@@ -53,6 +53,12 @@ event_player:
     - mystery_clear_pending_ambush
     - hide_bonus_x_held_widget
     - mystery_villain_inactive
+    - mystery_ambush_inactive
+    - mystery_multiball_inactive
+    - mystery_clear_add_time_available
+
+  mode_mystery_started{current_player.mystery_ho_level == None}:
+    - mystery_init_ho_level
 
   mode_mystery_started{current_player.mystery_ho_level == 0}:
     - mystery_init_ho_level
@@ -102,17 +108,28 @@ event_player:
 
   # ------------------------------------------------------------
   # AWARD PICKING
+  #
+  # VPW parity:
+  # First Mystery during villain mode gives ADD MORE TIME.
+  # After that, normal Mystery awards continue.
   # ------------------------------------------------------------
 
   mystery_pick_award{current_player.mystery_multiball_active == 1}:
     - mystery_award_add_a_ball
 
-  mystery_pick_award{current_player.mystery_multiball_active == 0}:
+  mystery_pick_award{current_player.mystery_multiball_active == 0 and current_player.mystery_villain_active == 1 and current_player.mystery_add_time_available == 1}:
+    - mystery_award_add_time
+
+  mystery_pick_award{current_player.mystery_multiball_active == 0 and current_player.mystery_villain_active == 0}:
+    - mystery_pick_normal_award
+
+  mystery_pick_award{current_player.mystery_multiball_active == 0 and current_player.mystery_villain_active == 1 and current_player.mystery_add_time_available == 0}:
     - mystery_pick_normal_award
 
 
   # ------------------------------------------------------------
   # MULTIBALL TRACKING
+  # Blocks Ambush and gives Add-A-Ball from Mystery.
   # ------------------------------------------------------------
 
   multiball_nakatomi_started:
@@ -136,19 +153,54 @@ event_player:
 
   # ------------------------------------------------------------
   # VILLAIN TRACKING
-  # Stops Mystery Ambush being picked during villain modes.
+  # Blocks Ambush during villain modes.
+  # Also makes the first Mystery during villain mode add time.
   # ------------------------------------------------------------
 
   villain_mode_started:
     - mystery_villain_active
+    - mystery_set_add_time_available
+
+  villain_mode_stopped:
+    - mystery_villain_inactive
+    - mystery_clear_add_time_available
 
   villain_mode_ended:
     - mystery_villain_inactive
+    - mystery_clear_add_time_available
+
+
+  # ------------------------------------------------------------
+  # AMBUSH TRACKING
+  # Blocks Mystery from giving Ambush while Ambush is already active.
+  # ------------------------------------------------------------
+
+  start_ambush:
+    - mystery_ambush_active
+
+  mode_ambush_started:
+    - mystery_ambush_active
+
+  mode_ambush_stopped:
+    - mystery_ambush_inactive
+
+  ambush_finished:
+    - mystery_ambush_inactive
+
+  ambush_failed:
+    - mystery_ambush_inactive
+
+  stop_ambush:
+    - mystery_ambush_inactive
+
 
   ball_ended:
     - hide_bonus_x_held_widget
     - mystery_villain_inactive
+    - mystery_ambush_inactive
+    - mystery_multiball_inactive
     - mystery_clear_pending_ambush
+    - mystery_clear_add_time_available
 
 
   # ------------------------------------------------------------
@@ -170,6 +222,23 @@ event_player:
     - lock_lit
     - airplane_disable_lock_counter
     - mystery_awarded
+
+
+  # ------------------------------------------------------------
+  # ADD TIME
+  # VPW: first Mystery during villain mode adds 20 seconds.
+  #
+  # Important:
+  # mystery_set_award_add_time sets the display index BEFORE
+  # mystery_awarded fires, so the vault says ADD MORE TIME
+  # instead of showing the previous award.
+  # ------------------------------------------------------------
+
+  mystery_award_add_time:
+    - mystery_set_award_add_time
+    - add_villain_time_from_mystery
+    - mystery_clear_add_time_available
+    - mystery_awarded|100ms
 
 
   # ------------------------------------------------------------
@@ -296,7 +365,7 @@ event_player:
 
   # ------------------------------------------------------------
   # LIGHT EXTRA BALL
-  # Uses new extra_ball mode.
+  # Uses extra_ball mode.
   # Do not add extra_balls_lit directly here.
   # ------------------------------------------------------------
 
@@ -308,14 +377,31 @@ event_player:
   # ------------------------------------------------------------
   # AMBUSH FROM MYSTERY
   #
-  # Do NOT start Ambush while Mystery slide is active.
-  # Set pending flag, wait for slide_mystery_removed,
-  # then start Ambush cleanly.
+  # Do NOT allow Mystery/Vault to issue Ambush during:
+  # - villain modes
+  # - multiball
+  # - Ambush itself
+  # - pending Ambush already waiting for slide removal
+  #
+  # If blocked, it safely gives points instead.
   # ------------------------------------------------------------
 
-  mystery_award_ambush:
+  mystery_award_ambush{current_player.mystery_villain_active == 0 and current_player.mystery_multiball_active == 0 and current_player.mystery_ambush_active == 0 and current_player.mystery_pending_ambush == 0}:
     - mystery_set_pending_ambush
     - mystery_awarded
+
+  mystery_award_ambush{current_player.mystery_villain_active == 1}:
+    - mystery_award_points
+
+  mystery_award_ambush{current_player.mystery_multiball_active == 1}:
+    - mystery_award_points
+
+  mystery_award_ambush{current_player.mystery_ambush_active == 1}:
+    - mystery_award_points
+
+  mystery_award_ambush{current_player.mystery_pending_ambush == 1}:
+    - mystery_award_points
+
 
   slide_mystery_removed{current_player.mystery_pending_ambush == 1}:
     - mystery_start_ambush_from_vault
@@ -336,11 +422,228 @@ event_player:
 
 
 random_event_player:
-  mystery_pick_normal_award:
+
+  # ------------------------------------------------------------
+  # AMBUSH ALLOWED
+  # Bullets available, Super Spinners available.
+  # ------------------------------------------------------------
+
+  mystery_pick_normal_award{current_player.bullet_hits < 15 and current_player.super_spinners == 0 and current_player.mystery_villain_active == 0 and current_player.mystery_multiball_active == 0 and current_player.mystery_ambush_active == 0 and current_player.mystery_pending_ambush == 0}:
     events:
-      mystery_award_extra_ball_lit: 1
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_ambush: 8
+      mystery_award_extra_ball_lit: 4
     scope: player
     force_all: false
+
+
+  # ------------------------------------------------------------
+  # AMBUSH ALLOWED
+  # Bullets full, Super Spinners available.
+  # ------------------------------------------------------------
+
+  mystery_pick_normal_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 0 and current_player.mystery_villain_active == 0 and current_player.mystery_multiball_active == 0 and current_player.mystery_ambush_active == 0 and current_player.mystery_pending_ambush == 0}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_ambush: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+
+  # ------------------------------------------------------------
+  # AMBUSH ALLOWED
+  # Bullets available, Super Spinners already active.
+  # ------------------------------------------------------------
+
+  mystery_pick_normal_award{current_player.bullet_hits < 15 and current_player.super_spinners == 1 and current_player.mystery_villain_active == 0 and current_player.mystery_multiball_active == 0 and current_player.mystery_ambush_active == 0 and current_player.mystery_pending_ambush == 0}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_ambush: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+
+  # ------------------------------------------------------------
+  # AMBUSH ALLOWED
+  # Bullets full, Super Spinners already active.
+  # ------------------------------------------------------------
+
+  mystery_pick_normal_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 1 and current_player.mystery_villain_active == 0 and current_player.mystery_multiball_active == 0 and current_player.mystery_ambush_active == 0 and current_player.mystery_pending_ambush == 0}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_ambush: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+
+  # ------------------------------------------------------------
+  # AMBUSH BLOCKED — VILLAIN ACTIVE
+  # First villain Mystery is handled above as ADD TIME.
+  # These pools are for later villain Mysteries.
+  # ------------------------------------------------------------
+
+  mystery_pick_normal_award{current_player.bullet_hits < 15 and current_player.super_spinners == 0 and current_player.mystery_villain_active == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+
+  mystery_pick_normal_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 0 and current_player.mystery_villain_active == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+
+  mystery_pick_normal_award{current_player.bullet_hits < 15 and current_player.super_spinners == 1 and current_player.mystery_villain_active == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+
+  mystery_pick_normal_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 1 and current_player.mystery_villain_active == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+
+  # ------------------------------------------------------------
+  # AMBUSH BLOCKED — MULTIBALL ACTIVE
+  # Usually multiball routes to Add-A-Ball before this point,
+  # but this keeps the pool safe.
+  # ------------------------------------------------------------
+
+  mystery_pick_normal_award{current_player.mystery_multiball_active == 1}:
+    events:
+      mystery_award_add_a_ball: 1
+    scope: player
+    force_all: false
+
+
+  # ------------------------------------------------------------
+  # AMBUSH BLOCKED — AMBUSH ACTIVE OR PENDING
+  # ------------------------------------------------------------
+
+  mystery_pick_normal_award{current_player.mystery_ambush_active == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+  mystery_pick_normal_award{current_player.mystery_pending_ambush == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+
+  # ------------------------------------------------------------
+  # PARK RANDOM LANE
+  # ------------------------------------------------------------
 
   mystery_choose_park_lane_random:
     events:
@@ -402,6 +705,7 @@ slide_player:
   ball_hold_mystery_hold_full:
     mystery:
       action: play
+      priority: 9999
       expire: 7s
 
 
@@ -420,7 +724,13 @@ variable_player:
     mystery_villain_active:
       action: set
       int: 0
+    mystery_ambush_active:
+      action: set
+      int: 0
     mystery_pending_ambush:
+      action: set
+      int: 0
+    mystery_add_time_available:
       action: set
       int: 0
     mystery_vault_open:
@@ -510,7 +820,7 @@ variable_player:
 
 
   # ------------------------------------------------------------
-  # MULTIBALL / VILLAIN STATE
+  # MULTIBALL / VILLAIN / AMBUSH / ADD TIME STATE
   # ------------------------------------------------------------
 
   mystery_multiball_active:
@@ -533,6 +843,26 @@ variable_player:
       action: set
       int: 0
 
+  mystery_ambush_active:
+    mystery_ambush_active:
+      action: set
+      int: 1
+
+  mystery_ambush_inactive:
+    mystery_ambush_active:
+      action: set
+      int: 0
+
+  mystery_set_add_time_available:
+    mystery_add_time_available:
+      action: set
+      int: 1
+
+  mystery_clear_add_time_available:
+    mystery_add_time_available:
+      action: set
+      int: 0
+
 
   # ------------------------------------------------------------
   # PENDING AMBUSH FROM MYSTERY
@@ -544,11 +874,6 @@ variable_player:
       int: 1
 
   mystery_clear_pending_ambush:
-    mystery_pending_ambush:
-      action: set
-      int: 0
-
-  ball_ended:
     mystery_pending_ambush:
       action: set
       int: 0
@@ -696,7 +1021,7 @@ variable_player:
 
 
   # ------------------------------------------------------------
-  # PLAYFIELD X / AMBUSH / EXTRA BALL
+  # PLAYFIELD X / AMBUSH / EXTRA BALL / ADD TIME
   # ------------------------------------------------------------
 
   mystery_award_playfield_x:
@@ -724,3 +1049,8 @@ variable_player:
     mystery_awarded_index:
       action: set
       int: 13
+
+  mystery_set_award_add_time:
+    mystery_awarded_index:
+      action: set
+      int: 14

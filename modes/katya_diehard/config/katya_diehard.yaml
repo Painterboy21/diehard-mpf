@@ -20,6 +20,9 @@ timers:
         action: stop
       - event: katya_failed
         action: stop
+      - event: add_villain_time_from_mystery
+        action: add
+        value: 20
 
 ball_saves:
   katya_diehard_complete_save:

@@ -22,6 +22,9 @@ timers:
         action: stop
       - event: hans_diehard_failed_complete
         action: stop
+      - event: add_villain_time_from_mystery
+        action: add
+        value: 20
 
 ball_saves:
   hans_diehard_complete_save:
