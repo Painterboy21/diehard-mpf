@@ -39,6 +39,8 @@ event_player:
   multiball_nakatomi_ended.1:
     - nakatomi_lock_close
     - nakatomi_entrance_lock_close
+  nakatomi_super_jackpot_collected:
+    - count_nakatomi_for_extra_ball
 
 multiballs:
   nakatomi:

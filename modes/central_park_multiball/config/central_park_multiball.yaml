@@ -79,6 +79,8 @@ event_player:
     - show_widget_park_jackpot_lit
   player_shot_cp_bullets_advance{value!=1}:
     - remove_widget_park_jackpot_lit
+  score_park_super_jackpot_hit:
+    - count_park_for_extra_ball
 
 multiballs:
   central_park:

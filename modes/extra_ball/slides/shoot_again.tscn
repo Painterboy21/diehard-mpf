@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bueg3sk6nh03a"]
+
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_pg4cb"]
+[ext_resource type="VideoStream" uid="uid://jbnyihjpknqs" path="res://modes/extra_ball/slides/ShootAgain.ogv" id="2_1b63o"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_3535v"]
+
+[node name="shoot_again" type="Control" unique_id=1109415145]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pg4cb")
+metadata/_custom_type_script = "uid://dru3usokwlhd3"
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=852581281]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_1b63o")
+autoplay = true
+script = ExtResource("3_3535v")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
