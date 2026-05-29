@@ -4,10 +4,10 @@ coils:
  # Slingshots
   c_left_sling:
     number: d-6
-    default_pulse_ms: 50ms
+    default_pulse_ms: 80ms
   c_right_sling:
     number: d-7
-    default_pulse_ms: 50ms
+    default_pulse_ms: 80ms
 
  # Flippers
   c_left_flipper_main:
@@ -42,10 +42,10 @@ coils:
  # Plunger & Trough
   c_plunger:
     number: d-0
-    default_pulse_ms: 90ms
+    default_pulse_ms: 120ms
   c_trough_eject:
     number: d-1
-    default_pulse_ms: 20ms
+    default_pulse_ms: 40ms
 
 
  # Three Drop Targets

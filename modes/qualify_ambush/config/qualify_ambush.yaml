@@ -28,99 +28,145 @@ mode:
     - start_katya_dieharder
   priority: 120
 
-ball_holds: 
+ball_holds:
   ambush_hold:
-    enable_events: qualify_ambush_on_complete
-    disable_events: start_ambush.1
+    enable_events:
+      - qualify_ambush_on_complete
+    disable_events:
+      - mode_ambush_started
+      - ball_ended
+      - tilt
     hold_devices: rightkicker
     balls_to_hold: 1
-    release_all_events: tilt, start_ambush.2
+    release_all_events:
+      - start_ambush
+      - ball_ended
+      - tilt
 
+event_player:
+  # VUK is full, hold the ball and let the slide/timer run.
+  ball_hold_ambush_hold_full:
+    - ambush_hold_timer_start
 
-event_player: 
+  # After the 3 second hold/slide, start normal Ambush.
   timer_ambush_hold_complete:
     - start_ambush
 
+  # Used if another mode, like Mystery, wants to start Ambush directly.
   qualify_ambush_start_from_mystery:
     - start_ambush
     - ambush_start_timers|250ms
 
-shot_groups: 
+shot_groups:
   qualify_ambush:
-    shots: die_inlane_d,die_inlane_i,die_inlane_e
-    restart_events: start_ambush.2
-    rotate_left_events: s_left_flipper_active
-    rotate_right_events: s_right_flipper_active
+    shots:
+      - die_inlane_d
+      - die_inlane_i
+      - die_inlane_e
+    restart_events:
+      - start_ambush
+    rotate_left_events:
+      - s_left_flipper_active
+    rotate_right_events:
+      - s_right_flipper_active
 
-shots: 
+shots:
   die_inlane_d:
     switch: s_swleftoutlane
     profile: qualify_ambush
-    show_tokens: 
+    show_tokens:
       lights: l5
+
   die_inlane_i:
     switch: s_swleftinlane
     profile: qualify_ambush
-    show_tokens: 
+    show_tokens:
       lights: l4
+
   die_inlane_e:
     switch: s_swrightinlane
     profile: qualify_ambush
-    show_tokens: 
+    show_tokens:
       lights: l6
+
   die_inlane_ambush:
     switch: s_rightkicker
     profile: ambush
-    show_tokens: 
+    show_tokens:
       lights: l9
-    control_events: 
+    control_events:
       - events: qualify_ambush_on_complete
         state: 1
-      - events: start_ambush.2
+      - events: start_ambush
+        state: 0
+      - events: mode_ambush_started
+        state: 0
+      - events: ball_ended
+        state: 0
+      - events: tilt
         state: 0
 
-show_player: 
-  ball_hold_ambush_hold_full: 
-    ambush_start: 
+show_player:
+  ball_hold_ambush_hold_full:
+    ambush_start:
       key: key_ambush_start
       loops: 0
       speed: 2
 
-
-slide_player: 
-  ball_hold_ambush_hold_full: 
+slide_player:
+  ball_hold_ambush_hold_full:
     ambush_started:
       action: play
       expire: 3s
 
-
-timers: 
+timers:
   ambush_hold:
     start_value: 0
     end_value: 3
     direction: up
-    control_events: 
+    tick_interval: 1000ms
+    restart_on_complete: false
+    start_running: false
+    control_events:
       - event: ball_hold_ambush_hold_full
         action: restart
-    restart_on_complete: False
-    start_running: False
-    tick_interval: 1000ms
+      - event: ambush_hold_timer_start
+        action: restart
+      - event: start_ambush
+        action: stop
+      - event: ball_ended
+        action: stop
+      - event: tilt
+        action: stop
 
-widget_player: 
-  qualify_ambush_on_complete: 
+widget_player:
+  qualify_ambush_on_complete:
     qualify_ambush:
       action: play
       expire: 3s
 
-
-
 variable_player:
-  qualify_ambush_complete:
+  qualify_ambush_on_complete:
     ambush_qualified:
-      int: 1
       action: set
+      int: 1
+
+  start_ambush:
+    ambush_qualified:
+      action: set
+      int: 0
 
   mode_ambush_started:
     ambush_qualified:
-      int: 0
       action: set
+      int: 0
+
+  ball_ended:
+    ambush_qualified:
+      action: set
+      int: 0
+
+  tilt:
+    ambush_qualified:
+      action: set
+      int: 0

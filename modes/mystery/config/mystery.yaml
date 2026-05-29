@@ -22,17 +22,11 @@ shots:
     switch: s_holly_h
     profile: profile_mystery_ho
     start_enabled: true
-    show_tokens:
-      lights: l30
-      color: 00ff00
 
   vault_o:
     switch: s_holly_o
     profile: profile_mystery_ho
     start_enabled: true
-    show_tokens:
-      lights: l31
-      color: 00ff00
 
   vault_mystery:
     profile: profile_mystery
@@ -730,8 +724,8 @@ timers:
       - event: mystery_scroll_start
         action: restart
 
-
 show_player:
+
   mystery_open_vault:
     flicker_color:
       key: key_mystery_open_vault
@@ -745,21 +739,55 @@ show_player:
       action: stop
       key: key_mystery_open_vault
 
+  ball_hold_mystery_hold_full:
+    mystery_vault_start_show:
+      key: key_mystery_vault_start
+      loops: 1
+      speed: 1
+      priority: 1700
+
+    mystery_vault_running_show:
+      key: key_mystery_vault_running
+      loops: 0
+      speed: 1
+      priority: 1180
+
   mystery_awarded:
-    flicker_color:
-      key: key_mystery_awarded
-      loops: 2
-      speed: 4
-      show_tokens:
-        lights: f147
-        color: 00ff00
+    mystery_vault_start_show:
+      action: stop
+      key: key_mystery_vault_start
+
+    mystery_vault_running_show:
+      action: stop
+      key: key_mystery_vault_running
+
+    mystery_vault_award_show:
+      key: key_mystery_vault_award
+      loops: 1
+      speed: 1
+      priority: 1700
+
+  slide_mystery_removed:
+    mystery_vault_start_show:
+      action: stop
+      key: key_mystery_vault_start
+
+    mystery_vault_running_show:
+      action: stop
+      key: key_mystery_vault_running
+
+    mystery_vault_release_show:
+      key: key_mystery_vault_release
+      loops: 1
+      speed: 1
+      priority: 1700
 
   mystery_bonus_x_flash:
     flash_color:
       key: mystery_bonus_x_lights_flash
       speed: 10
       loops: 8
-      priority: 900
+      priority: 1000
       show_tokens:
         lights: l1,l2,l3
         color: yellow

@@ -86,7 +86,7 @@ config:
   - shot_profiles.yaml
   - switches.yaml
   - player_vars.yaml
- # - shaker.yaml
+  - shaker.yaml
 
 extra_ball_groups:
   diehard_extra_balls:
@@ -149,10 +149,13 @@ drop_targets:
 
 drop_target_banks:
   bank:
-    drop_targets: bank1, bank2, bank3
+    drop_targets:
+      - bank1
+      - bank2
+      - bank3
     reset_coils: c_reset_drop_targets
     reset_events:
-      - drop_target_bank_bank_down
+      - reset_drop_targets_after_delay
 
 autofire_coils:
   left_sling:
@@ -199,6 +202,9 @@ event_player:
     - trmagl_fling_release|350ms
   s_trmagr_active{machine.magnets_enabled}:
     - trmagr_fling_release|350ms
+
+  drop_target_bank_bank_down:
+    - reset_drop_targets_after_delay|1s
 
 machine_vars:
   var_which_attract: #to track which attract screen you are currently on
