@@ -161,13 +161,13 @@ event_player:
   katya_dieharder_failed:
     - reset_bullet_total
     - reset_bullets
-    - wire_ramp_exit_close
+    - wire_ramp_exit_open
 
   katya_dieharder_completed:
     - reset_bullet_total
     - reset_bullets
     - count_katya_for_extra_ball
-    - wire_ramp_exit_close
+    - wire_ramp_exit_open
 
   katya_dieharder_left_loop_hit{device.counters.katya_dieharder_loop_counter.value<5}:
     - katya_dieharder_loop_hit_scored

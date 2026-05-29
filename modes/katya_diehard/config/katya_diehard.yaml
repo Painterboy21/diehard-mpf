@@ -135,13 +135,13 @@ event_player:
   katya_failed:
     - reset_bullet_total
     - reset_bullets
-    - wire_ramp_exit_close
+    - wire_ramp_exit_open
 
   katya_completed:
     - reset_bullet_total
     - reset_bullets
     - count_katya_for_extra_ball
-    - wire_ramp_exit_close
+    - wire_ramp_exit_open
     
   katya_left_loop_hit{device.counters.katya_loop_counter.value<5}:
     - katya_loop_hit_scored

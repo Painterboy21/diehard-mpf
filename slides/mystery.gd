@@ -124,7 +124,9 @@ func _build_scroll_award_indexes() -> void:
 	var multiball_active := int(_get_player_var("mystery_multiball_active", 0)) == 1
 	var ambush_active := int(_get_player_var("mystery_ambush_active", 0)) == 1
 	var pending_ambush := int(_get_player_var("mystery_pending_ambush", 0)) == 1
+
 	var add_time_available := int(_get_player_var("mystery_add_time_available", 0)) == 1
+	var add_a_ball_available := int(_get_player_var("mystery_add_a_ball_available", 0)) == 1
 
 	for i in range(award_names.size()):
 		# Index 4 = Bullets.
@@ -143,8 +145,8 @@ func _build_scroll_award_indexes() -> void:
 			continue
 
 		# Index 13 = Add a Ball.
-		# Only show Add a Ball during multiball.
-		if i == 13 and not multiball_active:
+		# Only show Add a Ball for the first Mystery during multiball.
+		if i == 13 and not (multiball_active and add_a_ball_available):
 			continue
 
 		# Index 14 = Add More Time.

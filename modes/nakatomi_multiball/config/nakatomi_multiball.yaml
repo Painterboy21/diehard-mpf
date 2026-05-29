@@ -52,6 +52,11 @@ multiballs:
     grace_period: 2000
     ball_locks: tower_vuk
 
+    add_a_ball_events:
+      - add_a_ball_in_multiball
+
+    add_a_ball_shoot_again: 10s
+
     
 shot_groups: 
   nakatomi_jackpots:
