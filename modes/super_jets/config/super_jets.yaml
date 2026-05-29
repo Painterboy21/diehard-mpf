@@ -92,22 +92,26 @@ widget_player:
   super_jets_started:
     super_jets:
       action: play
+      priority: 9999
       expire: 4s
 
 
   s_popbumper_left_active{current_player.super_jets==0}:
     pop_bumper_5000_widget:
       action: play
+      priority: 9999
       expire: 3s
 
     pop_bumper_25000_widget:
       action: play
+      priority: 9999
       expire: 3s
     
 
   s_popbumper_right_active{current_player.super_jets==0}:
     pop_bumper_5000_widget:
       action: play
+      priority: 9999
       expire: 3s
 
     pop_bumper_25000_widget:

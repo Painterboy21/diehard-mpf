@@ -61,6 +61,7 @@ var award_names: Array[String] = [
 	"Ambush",              # 11
 	"Light Extra Ball",    # 12
 	"Add a Ball",          # 13
+	"Add More Time",       # 14
 ]
 
 
@@ -119,6 +120,12 @@ func _build_scroll_award_indexes() -> void:
 	var bullets_full := int(_get_player_var("bullet_hits", 0)) >= 15
 	var super_spinners_awarded := int(_get_player_var("super_spinners", 0)) == 1
 
+	var villain_active := int(_get_player_var("mystery_villain_active", 0)) == 1
+	var multiball_active := int(_get_player_var("mystery_multiball_active", 0)) == 1
+	var ambush_active := int(_get_player_var("mystery_ambush_active", 0)) == 1
+	var pending_ambush := int(_get_player_var("mystery_pending_ambush", 0)) == 1
+	var add_time_available := int(_get_player_var("mystery_add_time_available", 0)) == 1
+
 	for i in range(award_names.size()):
 		# Index 4 = Bullets.
 		# Skip from roulette if bullets are already full.
@@ -128,6 +135,21 @@ func _build_scroll_award_indexes() -> void:
 		# Index 9 = Super Spinners.
 		# Skip from roulette if Super Spinners already awarded.
 		if super_spinners_awarded and i == 9:
+			continue
+
+		# Index 11 = Ambush.
+		# Skip from roulette if Ambush is blocked.
+		if i == 11 and (villain_active or multiball_active or ambush_active or pending_ambush):
+			continue
+
+		# Index 13 = Add a Ball.
+		# Only show Add a Ball during multiball.
+		if i == 13 and not multiball_active:
+			continue
+
+		# Index 14 = Add More Time.
+		# Only show this during the first Mystery in a villain mode.
+		if i == 14 and not (villain_active and add_time_available):
 			continue
 
 		scroll_award_indexes.append(i)
