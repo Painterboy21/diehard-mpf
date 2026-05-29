@@ -46,6 +46,10 @@ metadata/_custom_type_script = "uid://bov7mrgxslshq"
 
 [node name="hans_dieharder_timer_widget" parent="." unique_id=1684703874 instance=ExtResource("4_3055c")]
 layout_mode = 1
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
 
 [node name="hans_dieharder_progress_widget" parent="." unique_id=1421029567 instance=ExtResource("5_xr35f")]
 layout_mode = 1
