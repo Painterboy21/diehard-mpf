@@ -25,21 +25,24 @@ event_player:
   nakatomi_jackpots_on_hit.1:
     - jackpot_2mil
     - nakatomi_jackpot_collected
+
   nakatomi_jackpots_off_complete:
     - nakatomi_enable_super_jackpot
     - nakatomi_lock_open
     - nakatomi_entrance_lock_open
+
   ball_hold_nakatomi_super_hold_held_ball:
     - jackpot_20mil
     - nakatomi_super_jackpot_collected
     - nakatomi_entrance_lock_close
+
   slide_nakatomi_super_jackpot_removed{device.ball_holds.nakatomi_super_hold.balls_held==2}:
     - nakatomi_disable_super_jackpot
     - nakatomi_lock_close
+
   multiball_nakatomi_ended.1:
     - nakatomi_lock_close
     - nakatomi_entrance_lock_close
-  nakatomi_super_jackpot_collected:
     - count_nakatomi_for_extra_ball
 
 multiballs:

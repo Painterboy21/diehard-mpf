@@ -73,13 +73,17 @@ event_player:
 
   player_shot_cp_bullets_advance{value==0}:
     - show_widget_park_jackpot_unlit
+
   player_shot_cp_bullets_advance{value!=0}:
     - remove_widget_park_jackpot_unlit
+
   player_shot_cp_bullets_advance{value==1}:
     - show_widget_park_jackpot_lit
+
   player_shot_cp_bullets_advance{value!=1}:
     - remove_widget_park_jackpot_lit
-  score_park_super_jackpot_hit:
+
+  multiball_central_park_ended:
     - count_park_for_extra_ball
 
 multiballs:

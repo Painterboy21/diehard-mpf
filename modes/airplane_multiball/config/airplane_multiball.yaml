@@ -129,6 +129,8 @@ event_player:
     - airplane_disable_super_jackpot
     - reset_airplane_stage_2_jackpot_counter
     - airplane_enable_captive_for_jackpot|100ms
+
+  multiball_airplane_ended:
     - count_airplane_for_extra_ball
     
 random_event_player:

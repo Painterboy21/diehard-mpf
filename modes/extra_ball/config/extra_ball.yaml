@@ -37,8 +37,8 @@ event_player:
 
   # ------------------------------------------------------------
   # LIGHT EXTRA BALL SOURCES
-  # Only lights if fewer than 2 Extra Balls awarded,
-  # no EB already lit, and no EB currently owed.
+  # Only lights if fewer than 2 Extra Balls have been awarded,
+  # no EB is already lit, and no EB is currently owed.
   # ------------------------------------------------------------
 
   light_extra_ball_from_mystery{current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0 and current_player.extra_ball_owed == 0}:
@@ -74,9 +74,7 @@ event_player:
 
   # ------------------------------------------------------------
   # RIGHT VUK COLLECTION
-  #
-  # Ball is now HELD in the right VUK until the extra_ball slide
-  # is removed.
+  # Ball is held in rightvuk until the extra_ball slide is removed.
   # ------------------------------------------------------------
 
   s_rightvuk_active:
@@ -89,9 +87,7 @@ event_player:
 
   # ------------------------------------------------------------
   # EXTRA BALL USED / SHOOT AGAIN
-  #
-  # Shoot Again appears on the NEXT ball,
-  # just before / over the skillshot.
+  # Shoot Again appears on the NEXT ball, then EB owed is cleared.
   # ------------------------------------------------------------
 
   mode_extra_ball_started{current_player.extra_ball_owed == 1}:
@@ -102,6 +98,7 @@ event_player:
   # ------------------------------------------------------------
   # VILLAIN EXTRA BALL RULE
   # Complete any 2 unique villains = light Extra Ball once.
+  # Same villain only counts once across Die Hard / Die Harder.
   # ------------------------------------------------------------
 
   count_hans_for_extra_ball:
@@ -127,8 +124,14 @@ event_player:
 
   # ------------------------------------------------------------
   # MULTIBALL EXTRA BALL RULE
-  # Complete any 2 of 3 multiball super goals:
-  # Nakatomi / Airplane / Central Park.
+  #
+  # New rule:
+  # Any 2 different multiballs have been played/ended.
+  # Fail OR completion both count.
+  #
+  # Airplane / Nakatomi / Central Park each count once.
+  # Extra Ball can light as long as fewer than 2 total EB
+  # have been issued/collected this game.
   # ------------------------------------------------------------
 
   count_nakatomi_for_extra_ball:
@@ -141,7 +144,7 @@ event_player:
     - check_multiball_extra_ball|20ms
 
 
-  check_multiball_extra_ball{current_player.multiball_extra_ball_count >= 2 and current_player.extra_ball_mball_awarded == 0 and current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0 and current_player.extra_ball_owed == 0}:
+  check_multiball_extra_ball{current_player.multiball_extra_ball_count >= 2 and current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0 and current_player.extra_ball_owed == 0}:
     - light_extra_ball_from_multiballs
     - mark_mball_extra_ball_awarded
 
@@ -313,8 +316,10 @@ variable_player:
 
 
   # ------------------------------------------------------------
-  # COUNT MULTIBALL GOALS
-  # Any 2 of 3 lights the multiball Extra Ball.
+  # COUNT MULTIBALLS PLAYED/ENDED
+  # Any 2 different multiballs lights the multiball Extra Ball.
+  # Fail OR completion both count because these are hooked to
+  # multiball ended events.
   # ------------------------------------------------------------
 
   count_nakatomi_for_extra_ball{current_player.nakatomi_eb_counted == 0}:
