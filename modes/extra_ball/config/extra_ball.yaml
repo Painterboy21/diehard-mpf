@@ -17,38 +17,53 @@ extra_balls:
     max_per_game: 2
 
 
+ball_holds:
+  extra_ball_collect_hold:
+    enable_events:
+      - extra_ball_lit
+    disable_events:
+      - slide_extra_ball_removed
+      - extra_ball_used
+      - ball_ended
+    hold_devices: rightvuk
+    balls_to_hold: 1
+    release_all_events:
+      - slide_extra_ball_removed
+      - tilt
+      - ball_ended
+
+
 event_player:
 
   # ------------------------------------------------------------
-  # Light Extra Ball sources
+  # LIGHT EXTRA BALL SOURCES
+  # Only lights if fewer than 2 Extra Balls awarded,
+  # no EB already lit, and no EB currently owed.
   # ------------------------------------------------------------
 
-  light_extra_ball_from_mystery:
+  light_extra_ball_from_mystery{current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0 and current_player.extra_ball_owed == 0}:
     - light_extra_ball
     - extra_ball_lit
 
-  light_extra_ball_from_modes:
+  light_extra_ball_from_modes{current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0 and current_player.extra_ball_owed == 0}:
     - light_extra_ball
     - extra_ball_lit
 
-  light_extra_ball_from_multiballs:
+  light_extra_ball_from_multiballs{current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0 and current_player.extra_ball_owed == 0}:
     - light_extra_ball
     - extra_ball_lit
 
 
   # ------------------------------------------------------------
-  # Start flashing after the lit variable has been set.
-  # Small delay avoids the flash checking vars too early.
+  # FLASH LOOP
+  # Extra Ball lit = flashing red l63.
   # ------------------------------------------------------------
 
   extra_ball_lit:
     - extra_ball_flash_on|50ms
 
-
-  # ------------------------------------------------------------
-  # Flash loop
-  # Only keeps looping while Extra Ball is lit and not collected.
-  # ------------------------------------------------------------
+  mode_extra_ball_started{current_player.extra_balls_lit == 1 and current_player.extra_ball_owed == 0}:
+    - extra_ball_flash_on|50ms
 
   extra_ball_flash_on{current_player.extra_balls_lit == 1 and current_player.extra_ball_owed == 0}:
     - extra_ball_flash_off|350ms
@@ -58,26 +73,84 @@ event_player:
 
 
   # ------------------------------------------------------------
-  # Debug / collect at real right VUK
+  # RIGHT VUK COLLECTION
+  #
+  # Ball is now HELD in the right VUK until the extra_ball slide
+  # is removed.
   # ------------------------------------------------------------
 
   s_rightvuk_active:
     - extra_ball_rightvuk_seen
 
-  s_rightvuk_active{current_player.extra_balls_lit == 1}:
+  ball_hold_extra_ball_collect_hold_full:
     - collect_lit_extra_ball
     - extra_ball_collected
 
 
   # ------------------------------------------------------------
-  # Extra ball has been used on next ball start
+  # EXTRA BALL USED / SHOOT AGAIN
+  #
+  # Shoot Again appears on the NEXT ball,
+  # just before / over the skillshot.
   # ------------------------------------------------------------
 
   mode_extra_ball_started{current_player.extra_ball_owed == 1}:
-    - extra_ball_used
+    - show_shoot_again_slide
+    - extra_ball_used|2s
+
+
+  # ------------------------------------------------------------
+  # VILLAIN EXTRA BALL RULE
+  # Complete any 2 unique villains = light Extra Ball once.
+  # ------------------------------------------------------------
+
+  count_hans_for_extra_ball:
+    - check_villain_extra_ball|20ms
+
+  count_karl_for_extra_ball:
+    - check_villain_extra_ball|20ms
+
+  count_katya_for_extra_ball:
+    - check_villain_extra_ball|20ms
+
+  count_simon_for_extra_ball:
+    - check_villain_extra_ball|20ms
+
+  count_stuart_for_extra_ball:
+    - check_villain_extra_ball|20ms
+
+
+  check_villain_extra_ball{current_player.villain_extra_ball_count >= 2 and current_player.extra_ball_mode_awarded == 0 and current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0 and current_player.extra_ball_owed == 0}:
+    - light_extra_ball_from_modes
+    - mark_mode_extra_ball_awarded
+
+
+  # ------------------------------------------------------------
+  # MULTIBALL EXTRA BALL RULE
+  # Complete any 2 of 3 multiball super goals:
+  # Nakatomi / Airplane / Central Park.
+  # ------------------------------------------------------------
+
+  count_nakatomi_for_extra_ball:
+    - check_multiball_extra_ball|20ms
+
+  count_airplane_for_extra_ball:
+    - check_multiball_extra_ball|20ms
+
+  count_park_for_extra_ball:
+    - check_multiball_extra_ball|20ms
+
+
+  check_multiball_extra_ball{current_player.multiball_extra_ball_count >= 2 and current_player.extra_ball_mball_awarded == 0 and current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0 and current_player.extra_ball_owed == 0}:
+    - light_extra_ball_from_multiballs
+    - mark_mball_extra_ball_awarded
 
 
 variable_player:
+
+  # ------------------------------------------------------------
+  # BASIC EXTRA BALL VARS
+  # ------------------------------------------------------------
 
   mode_extra_ball_started{current_player.extra_balls_lit == None}:
     extra_balls_lit:
@@ -86,6 +159,11 @@ variable_player:
 
   mode_extra_ball_started{current_player.extra_ball_owed == None}:
     extra_ball_owed:
+      action: set
+      int: 0
+
+  mode_extra_ball_started{current_player.diehard_extra_balls_awarded == None}:
+    diehard_extra_balls_awarded:
       action: set
       int: 0
 
@@ -101,7 +179,7 @@ variable_player:
 
 
   # ------------------------------------------------------------
-  # Extra Ball lit
+  # EXTRA BALL LIT / COLLECTED / USED
   # ------------------------------------------------------------
 
   extra_ball_lit:
@@ -110,11 +188,6 @@ variable_player:
       int: 1
 
 
-  # ------------------------------------------------------------
-  # Extra Ball collected
-  # Actual MPF extra ball is awarded by collect_lit_extra_ball.
-  # ------------------------------------------------------------
-
   extra_ball_collected:
     extra_balls_lit:
       action: set
@@ -122,11 +195,10 @@ variable_player:
     extra_ball_owed:
       action: set
       int: 1
+    diehard_extra_balls_awarded:
+      action: add
+      int: 1
 
-
-  # ------------------------------------------------------------
-  # Extra Ball used
-  # ------------------------------------------------------------
 
   extra_ball_used:
     extra_ball_owed:
@@ -134,10 +206,161 @@ variable_player:
       int: 0
 
 
+  # ------------------------------------------------------------
+  # INITIALISE VILLAIN EXTRA BALL COUNTERS
+  # ------------------------------------------------------------
+
+  mode_extra_ball_started{current_player.villain_extra_ball_count == None}:
+    villain_extra_ball_count:
+      action: set
+      int: 0
+
+  mode_extra_ball_started{current_player.hans_eb_counted == None}:
+    hans_eb_counted:
+      action: set
+      int: 0
+
+  mode_extra_ball_started{current_player.karl_eb_counted == None}:
+    karl_eb_counted:
+      action: set
+      int: 0
+
+  mode_extra_ball_started{current_player.katya_eb_counted == None}:
+    katya_eb_counted:
+      action: set
+      int: 0
+
+  mode_extra_ball_started{current_player.simon_eb_counted == None}:
+    simon_eb_counted:
+      action: set
+      int: 0
+
+  mode_extra_ball_started{current_player.stuart_eb_counted == None}:
+    stuart_eb_counted:
+      action: set
+      int: 0
+
+
+  # ------------------------------------------------------------
+  # COUNT VILLAINS
+  # Each villain counts once only.
+  # ------------------------------------------------------------
+
+  count_hans_for_extra_ball{current_player.hans_eb_counted == 0}:
+    hans_eb_counted:
+      action: set
+      int: 1
+    villain_extra_ball_count:
+      action: add
+      int: 1
+
+  count_karl_for_extra_ball{current_player.karl_eb_counted == 0}:
+    karl_eb_counted:
+      action: set
+      int: 1
+    villain_extra_ball_count:
+      action: add
+      int: 1
+
+  count_katya_for_extra_ball{current_player.katya_eb_counted == 0}:
+    katya_eb_counted:
+      action: set
+      int: 1
+    villain_extra_ball_count:
+      action: add
+      int: 1
+
+  count_simon_for_extra_ball{current_player.simon_eb_counted == 0}:
+    simon_eb_counted:
+      action: set
+      int: 1
+    villain_extra_ball_count:
+      action: add
+      int: 1
+
+  count_stuart_for_extra_ball{current_player.stuart_eb_counted == 0}:
+    stuart_eb_counted:
+      action: set
+      int: 1
+    villain_extra_ball_count:
+      action: add
+      int: 1
+
+
+  # ------------------------------------------------------------
+  # INITIALISE MULTIBALL EXTRA BALL COUNTERS
+  # ------------------------------------------------------------
+
+  mode_extra_ball_started{current_player.multiball_extra_ball_count == None}:
+    multiball_extra_ball_count:
+      action: set
+      int: 0
+
+  mode_extra_ball_started{current_player.nakatomi_eb_counted == None}:
+    nakatomi_eb_counted:
+      action: set
+      int: 0
+
+  mode_extra_ball_started{current_player.airplane_eb_counted == None}:
+    airplane_eb_counted:
+      action: set
+      int: 0
+
+  mode_extra_ball_started{current_player.park_eb_counted == None}:
+    park_eb_counted:
+      action: set
+      int: 0
+
+
+  # ------------------------------------------------------------
+  # COUNT MULTIBALL GOALS
+  # Any 2 of 3 lights the multiball Extra Ball.
+  # ------------------------------------------------------------
+
+  count_nakatomi_for_extra_ball{current_player.nakatomi_eb_counted == 0}:
+    nakatomi_eb_counted:
+      action: set
+      int: 1
+    multiball_extra_ball_count:
+      action: add
+      int: 1
+
+  count_airplane_for_extra_ball{current_player.airplane_eb_counted == 0}:
+    airplane_eb_counted:
+      action: set
+      int: 1
+    multiball_extra_ball_count:
+      action: add
+      int: 1
+
+  count_park_for_extra_ball{current_player.park_eb_counted == 0}:
+    park_eb_counted:
+      action: set
+      int: 1
+    multiball_extra_ball_count:
+      action: add
+      int: 1
+
+
+  # ------------------------------------------------------------
+  # MARK EXTRA BALL SOURCE AWARDED
+  # ------------------------------------------------------------
+
+  mark_mode_extra_ball_awarded:
+    extra_ball_mode_awarded:
+      action: set
+      int: 1
+
+  mark_mball_extra_ball_awarded:
+    extra_ball_mball_awarded:
+      action: set
+      int: 1
+
+
 light_player:
 
   # ------------------------------------------------------------
-  # Flashing while lit
+  # FLASHING WHILE LIT
   # ------------------------------------------------------------
 
   extra_ball_flash_on{current_player.extra_balls_lit == 1 and current_player.extra_ball_owed == 0}:
@@ -152,19 +375,8 @@ light_player:
 
 
   # ------------------------------------------------------------
-  # If the mode restarts while Extra Ball is still lit,
-  # restart the flash loop.
-  # ------------------------------------------------------------
-
-  mode_extra_ball_started{current_player.extra_balls_lit == 1 and current_player.extra_ball_owed == 0}:
-    l63:
-      color: red
-      priority: 9999
-
-
-  # ------------------------------------------------------------
-  # Collected / owed:
-  # l63 stays solid red until the extra ball is used.
+  # COLLECTED / OWED
+  # Solid red until the extra ball is used.
   # ------------------------------------------------------------
 
   extra_ball_collected:
@@ -174,8 +386,18 @@ light_player:
 
 
   # ------------------------------------------------------------
-  # Used:
-  # next ball has started, turn it off.
+  # SHOOT AGAIN / NEXT BALL
+  # Keep lamp solid while Shoot Again slide is shown.
+  # ------------------------------------------------------------
+
+  show_shoot_again_slide:
+    l63:
+      color: red
+      priority: 9999
+
+
+  # ------------------------------------------------------------
+  # USED / OFF
   # ------------------------------------------------------------
 
   extra_ball_used:
@@ -188,3 +410,41 @@ light_player:
     l63:
       color: off
       priority: 9999
+
+
+slide_player:
+
+  # ------------------------------------------------------------
+  # EXTRA BALL LIT
+  # ------------------------------------------------------------
+
+  extra_ball_lit:
+    extra_ball_lit:
+      action: play
+      priority: 900
+      expire: 3s
+
+
+  # ------------------------------------------------------------
+  # EXTRA BALL COLLECTED
+  # Ball is held in rightvuk until this slide is removed.
+  # ------------------------------------------------------------
+
+  extra_ball_collected:
+    extra_ball:
+      action: play
+      priority: 950
+      expire: 2s
+
+
+  # ------------------------------------------------------------
+  # SHOOT AGAIN
+  # This plays on the next ball from mode_extra_ball_started.
+  # Priority high so it appears over skillshot briefly.
+  # ------------------------------------------------------------
+
+  show_shoot_again_slide:
+    shoot_again:
+      action: play
+      priority: 9999
+      expire: 2s

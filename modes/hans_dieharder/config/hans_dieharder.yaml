@@ -200,6 +200,7 @@ event_player:
   hans_dieharder_won_complete:
     - reset_bullet_total
     - reset_bullets
+    - count_hans_for_extra_ball
 
   hans_dieharder_failed_complete:
     - reset_bullet_total
@@ -434,7 +435,7 @@ light_player:
     GI:
       color: 00ff00
     SPOTS:
-      color: 332200
+      color: 505050
     l1000:
       color: 00ff00
     l1001:

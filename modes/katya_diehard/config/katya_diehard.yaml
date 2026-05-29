@@ -132,11 +132,14 @@ event_player:
   katya_failed:
     - reset_bullet_total
     - reset_bullets
+    - wire_ramp_exit_close
 
   katya_completed:
     - reset_bullet_total
     - reset_bullets
-
+    - count_katya_for_extra_ball
+    - wire_ramp_exit_close
+    
   katya_left_loop_hit{device.counters.katya_loop_counter.value<5}:
     - katya_loop_hit_scored
     - katya_left_loop_relight|3s
@@ -241,7 +244,7 @@ light_player:
     GI:
       color: ff00ff
     SPOTS:
-      color: 400040
+      color: 505050
     SPOTS_BUMPER:
       color: 700070
     l1000:
