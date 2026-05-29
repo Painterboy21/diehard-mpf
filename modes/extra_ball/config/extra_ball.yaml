@@ -37,8 +37,6 @@ event_player:
 
   # ------------------------------------------------------------
   # LIGHT EXTRA BALL SOURCES
-  # Only lights if fewer than 2 Extra Balls have been awarded,
-  # no EB is already lit, and no EB is currently owed.
   # ------------------------------------------------------------
 
   light_extra_ball_from_mystery{current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0 and current_player.extra_ball_owed == 0}:
@@ -74,19 +72,27 @@ event_player:
 
   # ------------------------------------------------------------
   # RIGHT VUK COLLECTION
-  # Ball is held in rightvuk until the extra_ball slide is removed.
+  #
+  # The switch collects the Extra Ball immediately.
+  # The ball hold keeps the ball in the VUK until the
+  # extra_ball slide is removed.
   # ------------------------------------------------------------
 
   s_rightvuk_active:
     - extra_ball_rightvuk_seen
 
-  ball_hold_extra_ball_collect_hold_full:
+  s_rightvuk_active{current_player.extra_balls_lit == 1}:
+    - collect_lit_extra_ball
+    - extra_ball_collected
+
+  ball_hold_extra_ball_collect_hold_full{current_player.extra_balls_lit == 1}:
     - collect_lit_extra_ball
     - extra_ball_collected
 
 
   # ------------------------------------------------------------
   # EXTRA BALL USED / SHOOT AGAIN
+  #
   # Shoot Again appears on the NEXT ball, then EB owed is cleared.
   # ------------------------------------------------------------
 
@@ -125,13 +131,9 @@ event_player:
   # ------------------------------------------------------------
   # MULTIBALL EXTRA BALL RULE
   #
-  # New rule:
   # Any 2 different multiballs have been played/ended.
   # Fail OR completion both count.
-  #
   # Airplane / Nakatomi / Central Park each count once.
-  # Extra Ball can light as long as fewer than 2 total EB
-  # have been issued/collected this game.
   # ------------------------------------------------------------
 
   count_nakatomi_for_extra_ball:
@@ -318,8 +320,6 @@ variable_player:
   # ------------------------------------------------------------
   # COUNT MULTIBALLS PLAYED/ENDED
   # Any 2 different multiballs lights the multiball Extra Ball.
-  # Fail OR completion both count because these are hooked to
-  # multiball ended events.
   # ------------------------------------------------------------
 
   count_nakatomi_for_extra_ball{current_player.nakatomi_eb_counted == 0}:
@@ -445,7 +445,6 @@ slide_player:
   # ------------------------------------------------------------
   # SHOOT AGAIN
   # This plays on the next ball from mode_extra_ball_started.
-  # Priority high so it appears over skillshot briefly.
   # ------------------------------------------------------------
 
   show_shoot_again_slide:
