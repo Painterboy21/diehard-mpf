@@ -6,6 +6,7 @@ mode:
   stop_events:
     - katya_dieharder_completed
     - katya_dieharder_failed
+    - wire_ramp_exit_closed
   priority: 170
 
 timers:
@@ -30,8 +31,18 @@ timers:
         action: add
         value: 20
 
-        
 ball_saves:
+  katya_dieharder_start_save:
+    active_time: 2s
+    hurry_up_time: 0s
+    grace_period: 0s
+    auto_launch: true
+    balls_to_save: 1
+    enable_events:
+      - mode_katya_dieharder_started
+    disable_events:
+      - mode_katya_dieharder_stopping
+
   katya_dieharder_complete_save:
     active_time: 8s
     hurry_up_time: 3s
@@ -161,13 +172,15 @@ event_player:
   katya_dieharder_failed:
     - reset_bullet_total
     - reset_bullets
-    - wire_ramp_exit_open
+    - wire_ramp_exit_closed
+
 
   katya_dieharder_completed:
     - reset_bullet_total
     - reset_bullets
     - count_katya_for_extra_ball
-    - wire_ramp_exit_open
+    - wire_ramp_exit_closed
+
 
   katya_dieharder_left_loop_hit{device.counters.katya_dieharder_loop_counter.value<5}:
     - katya_dieharder_loop_hit_scored
@@ -368,6 +381,19 @@ shows:
         l42: off
 
 show_player:
+  ball_save_katya_dieharder_start_save_enabled:
+    flash_color:
+      key: katya_dieharder_start_save_flash
+      loops: -1
+      speed: 8
+      show_tokens:
+        lights: BALL_SAVE
+        color: ff00ff
+
+  ball_save_katya_dieharder_start_save_disabled:
+    katya_dieharder_start_save_flash:
+      action: stop
+
   ball_save_katya_dieharder_complete_save_enabled:
     flash_color_with_fade:
       key: katya_dieharder_ball_save_flash
@@ -444,6 +470,8 @@ show_player:
       loops: -1
 
   katya_dieharder_completed:
+    katya_dieharder_start_save_flash:
+      action: stop
     flash_color_with_fade:
       action: stop
       key: katya_dieharder_ball_save_flash
@@ -456,6 +484,8 @@ show_player:
       action: stop
 
   katya_dieharder_failed:
+    katya_dieharder_start_save_flash:
+      action: stop
     flash_color_with_fade:
       action: stop
       key: katya_dieharder_ball_save_flash
@@ -474,6 +504,8 @@ show_player:
       action: stop
 
   katya_dieharder_fail_mode:
+    katya_dieharder_start_save_flash:
+      action: stop
     flash_color_with_fade:
       action: stop
       key: katya_dieharder_ball_save_flash
@@ -492,6 +524,8 @@ show_player:
       action: stop
 
   mode_katya_dieharder_stopping:
+    katya_dieharder_start_save_flash:
+      action: stop
     flash_color_with_fade:
       action: stop
       key: katya_dieharder_ball_save_flash
@@ -560,7 +594,7 @@ slide_player:
       priority: 700
 
   katya_dieharder_completed_show:
-    katya_diehard_background:
+    katya_dieharder_background:
       action: remove
     katya_defeated:
       action: play
@@ -568,7 +602,7 @@ slide_player:
       priority: 10000
 
   katya_dieharder_ball_drain_escape:
-    katya_diehard_background:
+    katya_dieharder_background:
       action: remove
     katya_escaped:
       action: play
@@ -576,7 +610,7 @@ slide_player:
       priority: 10000
 
   katya_dieharder_fail_mode:
-    katya_diehard_background:
+    katya_dieharder_background:
       action: remove
     katya_ball_lost:
       action: play

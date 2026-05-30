@@ -33,13 +33,26 @@ show_player:
       show_tokens:
         lights: l43, l1000, l1001
         color: 00ff00
+    InsertsVillainSpinOrange:
+      loops: -1
+      speed: 50
 
   set_difficulty_die_hard:
     selected_villain_flash:
       action: stop
+    InsertsVillainSpinOrange:
+      action: stop
 
   set_difficulty_die_harder:
     selected_villain_flash:
+      action: stop
+    InsertsVillainSpinOrange:
+      action: stop
+
+  mode_hans_difficulty_select_stopped:
+    selected_villain_flash:
+      action: stop
+    InsertsVillainSpinOrange:
       action: stop
 
 slide_player:
@@ -101,3 +114,8 @@ light_player:
 
   start_hans_dieharder:
     f142: off
+
+    GI:
+      color: 000000
+    SPOTS:
+      color: 000000

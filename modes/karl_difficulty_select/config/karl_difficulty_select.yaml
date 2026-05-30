@@ -9,6 +9,13 @@ mode:
   code: mpf.modes.carousel.code.carousel.Carousel
 
 
+light_player:
+  mode_villain_select_started:
+    GI:
+      color: 000000
+    SPOTS:
+      color: 000000
+      
 mode_settings:
   selectable_items:
     - karl_die_hard
@@ -31,11 +38,26 @@ show_player:
       show_tokens:
         lights: l40, l1000, l1001
         color: ff8800
+    InsertsVillainSpinOrange:
+      loops: -1
+      speed: 50
+
   set_difficulty_die_hard:
     selected_villain_flash:
       action: stop
+    InsertsVillainSpinOrange:
+      action: stop
+
   set_difficulty_die_harder:
     selected_villain_flash:
+      action: stop
+    InsertsVillainSpinOrange:
+      action: stop
+
+  mode_karl_difficulty_select_stopped:
+    selected_villain_flash:
+      action: stop
+    InsertsVillainSpinOrange:
       action: stop
       
 slide_player:
@@ -43,11 +65,11 @@ slide_player:
     karl_difficulty_select:
       action: play
       expire: 0s
+
   play_karl_intro:
     karl_intro:
       action: play
       expire: 3s
-
 
 event_player:
   carousel_item_selected{carousel=="karl_difficulty_select" and item=="karl_die_hard"}:

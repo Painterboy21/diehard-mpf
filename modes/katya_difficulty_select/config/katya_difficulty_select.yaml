@@ -9,6 +9,8 @@ mode:
   priority: 310
   code: mpf.modes.carousel.code.carousel.Carousel
 
+
+      
 mode_settings:
   selectable_items:
     - katya_die_hard
@@ -32,15 +34,28 @@ show_player:
       loops: -1
       speed: 6
       show_tokens:
-        lights: l42,l1000,l1001
+        lights: l42, l1000, l1001
         color: ff00aa
+    InsertsVillainSpinOrange:
+      loops: -1
+      speed: 50
 
   set_difficulty_die_hard:
     selected_villain_flash:
       action: stop
+    InsertsVillainSpinOrange:
+      action: stop
 
   set_difficulty_die_harder:
     selected_villain_flash:
+      action: stop
+    InsertsVillainSpinOrange:
+      action: stop
+
+  mode_katya_difficulty_select_stopped:
+    selected_villain_flash:
+      action: stop
+    InsertsVillainSpinOrange:
       action: stop
 
 slide_player:
@@ -101,3 +116,8 @@ light_player:
 
   start_katya_dieharder:
     f142: off
+
+    GI:
+      color: 000000
+    SPOTS:
+      color: 000000
