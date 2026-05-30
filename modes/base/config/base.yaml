@@ -58,25 +58,117 @@ event_player:
   s_popbumper_left_active:
     - flash_bumper_left
     - flash_bumper_explosion
+
   s_popbumper_right_active:
     - flash_bumper_right
     - flash_bumper_explosion
+
   ball_save_one_saving_ball:
     - ball_save_saving_ball
+
   ball_save_two_saving_ball:
     - ball_save_saving_ball
+
   ball_save_three_saving_ball:
     - ball_save_saving_ball
+
   ball_save_holly_saving_ball:
     - ball_save_saving_ball
+
   s_air_duct_active:
     - show_airduct
     - show_airduct2
+
+
+  # ------------------------------------------------------------
+  # STOP BASE MUSIC WHEN A BIG MODE TAKES OVER
+  # ------------------------------------------------------------
+
   villain_mode_started:
     - stop_base_music
+
   start_airplane_multiball:
     - stop_base_music
 
+  multiball_airplane_started:
+    - stop_base_music
+
+  multiball_nakatomi_started:
+    - stop_base_music
+
+  multiball_central_park_started:
+    - stop_base_music
+
+  start_ambush:
+    - stop_base_music
+
+  mode_ambush_started:
+    - stop_base_music
+
+
+  # ------------------------------------------------------------
+  # RESUME BASE MUSIC WHEN BIG MODES END
+  # ------------------------------------------------------------
+
+  villain_mode_stopped:
+    - resume_base_music|500ms
+
+  villain_mode_ended:
+    - resume_base_music|500ms
+
+  hans_diehard_won_complete:
+    - resume_base_music|500ms
+
+  hans_diehard_failed_complete:
+    - resume_base_music|500ms
+
+  hans_dieharder_won_complete:
+    - resume_base_music|500ms
+
+  hans_dieharder_failed_complete:
+    - resume_base_music|500ms
+
+  katya_completed:
+    - resume_base_music|500ms
+
+  katya_failed:
+    - resume_base_music|500ms
+
+  katya_dieharder_completed:
+    - resume_base_music|500ms
+
+  katya_dieharder_failed:
+    - resume_base_music|500ms
+
+  karl_diehard_completed:
+    - resume_base_music|500ms
+
+  karl_diehard_failed:
+    - resume_base_music|500ms
+
+  karl_dieharder_completed:
+    - resume_base_music|500ms
+
+  karl_dieharder_failed:
+    - resume_base_music|500ms
+
+  ambush_finished:
+    - resume_base_music|500ms
+
+  ambush_failed:
+    - resume_base_music|500ms
+
+  mode_ambush_stopped:
+    - resume_base_music|500ms
+
+  multiball_airplane_ended:
+    - resume_base_music|500ms
+
+  multiball_nakatomi_ended:
+    - resume_base_music|500ms
+
+  multiball_central_park_ended:
+    - resume_base_music|500ms
 
 light_player: 
   mode_base_started: 
@@ -187,6 +279,15 @@ random_event_player:
       gameplay_music_3: 1
       gameplay_music_4: 1
     scope: player
+
+  resume_base_music: 
+    events:
+      gameplay_music_1: 1
+      gameplay_music_2: 1
+      gameplay_music_3: 1
+      gameplay_music_4: 1
+    scope: player
+
   SpinnerLeft_active: 
     events:
       spinner_fx1: 1
@@ -198,6 +299,7 @@ random_event_player:
       spinner_fx7: 1
       spinner_fx8: 1
     scope: player
+
   SpinnerRight_active: 
     events:
       spinner_fx1: 1
@@ -209,34 +311,40 @@ random_event_player:
       spinner_fx7: 1
       spinner_fx8: 1
     scope: player
+
   flash_bumper_explosion: 
     events:
       popbumper_fx1: 1
       popbumper_fx2: 1
       popbumper_fx3: 1
     scope: player
+
   left_orbit_hit: 
     events:
       orbit_fx1: 1
       orbit_fx2: 1
     scope: player
+
   right_orbit_hit: 
     events:
       orbit_fx1: 1
       orbit_fx2: 1
     scope: player
+
   s_TrPF1_active: 
     events:
       inlanerollover1_fx: 1
       inlanerollover2_fx: 1
       inlanerollover3_fx: 1 
     scope: player
+
   s_TrPF2_active: 
     events:
       inlanerollover1_fx: 1
       inlanerollover2_fx: 1
       inlanerollover3_fx: 1 
     scope: player
+
   s_TrPF3_active: 
     events:
       inlanerollover1_fx: 1
