@@ -8,7 +8,13 @@ mode:
   priority: 310
   code: mpf.modes.carousel.code.carousel.Carousel
 
-
+light_player:
+  mode_villain_select_started:
+    GI:
+      color: 000000
+    SPOTS:
+      color: 000000
+      
 mode_settings:
   selectable_items:
     - simon_die_hard
@@ -31,13 +37,28 @@ show_player:
       show_tokens:
         lights: l41, l1000, l1001
         color: ffffff
+    InsertsVillainSpinOrange:
+      loops: -1
+      speed: 50
+
   set_difficulty_die_hard:
     selected_villain_flash:
       action: stop
+    InsertsVillainSpinOrange:
+      action: stop
+
   set_difficulty_die_harder:
     selected_villain_flash:
       action: stop
-      
+    InsertsVillainSpinOrange:
+      action: stop
+
+  mode_simon_difficulty_select_stopped:
+    selected_villain_flash:
+      action: stop
+    InsertsVillainSpinOrange:
+      action: stop
+
 slide_player:
   mode_simon_difficulty_select_started:
     simon_difficulty_select:

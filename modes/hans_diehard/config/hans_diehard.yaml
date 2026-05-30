@@ -27,6 +27,16 @@ timers:
         value: 20
 
 ball_saves:
+  hans_diehard_start_save:
+    active_time: 2s
+    hurry_up_time: 0s
+    grace_period: 0s
+    auto_launch: true
+    balls_to_save: 1
+    enable_events:
+      - mode_hans_diehard_started
+    disable_events: mode_hans_diehard_stopping
+
   hans_diehard_complete_save:
     active_time: 8s
     hurry_up_time: 1s
@@ -260,6 +270,19 @@ variable_player:
       action: set
 
 show_player:
+  ball_save_hans_diehard_start_save_enabled:
+    flash_color:
+      key: hans_diehard_start_save_flash
+      loops: -1
+      speed: 8
+      show_tokens:
+        lights: BALL_SAVE
+        color: 00ff00
+
+  ball_save_hans_diehard_start_save_disabled:
+    hans_diehard_start_save_flash:
+      action: stop
+
   ball_save_hans_diehard_complete_save_enabled:
     flash_color_with_fade:
       key: hans_diehard_ball_save_flash
@@ -364,6 +387,10 @@ show_player:
       action: stop
 
   mode_hans_diehard_stopping:
+    hans_diehard_start_save_flash:
+      action: stop
+    hans_diehard_ball_save_flash:
+      action: stop
     hans_gi_red_hit_flash:
       action: stop
     hans_gruber_flash:
@@ -414,8 +441,6 @@ light_player:
   hans_diehard_failed_complete:
     l1000: off
     l1001: off
-
-
 
 slide_player:
   mode_hans_diehard_started:

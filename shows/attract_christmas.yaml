@@ -8,10 +8,6 @@
     l128: stop
     l127: stop
     l126: stop
-    l82: stop
-    l83: stop
-    l80: stop
-    l81: stop
     l73: stop
     f140: stop
     f147: stop
@@ -427,8 +423,6 @@
 
 - time: 2.26667s
   lights:
-    l83: daf9da%100
-    l81: ff1e1e%100
     l73: ffdfdf%100
     f140: ff0e0e%100
     l72: ff5454%100
@@ -442,10 +436,6 @@
 
 - time: 2.3s
   lights:
-    l82: effcef%100
-    l83: e0fae0%100
-    l80: f60901%100
-    l81: ff1919%100
     l73: ffd9d9%100
     f140: ff0808%100
     l72: stop
@@ -459,10 +449,6 @@
 
 - time: 2.33333s
   lights:
-    l82: f5fdf5%100
-    l83: e6fbe6%100
-    l80: 02db02%100
-    l81: ff1313%100
     l73: ffd3d3%100
     f140: ff0202%100
     l43: 74eb74%100
@@ -474,10 +460,6 @@
 
 - time: 2.36667s
   lights:
-    l82: fafefa%100
-    l83: ebfceb%100
-    l80: 07dc07%100
-    l81: ff0d0d%100
     l73: stop
     f140: 01db01%100
     f141: ebfceb%100
@@ -489,10 +471,6 @@
 
 - time: 2.4s
   lights:
-    l82: fffdfd%100
-    l83: f0fdf0%100
-    l80: 0ddc0d%100
-    l81: ff0707%100
     f140: 07dc07%100
     f141: f0fdf0%100
     l43: 7fed7f%100
@@ -505,10 +483,6 @@
 
 - time: 2.43333s
   lights:
-    l82: fff7f7%100
-    l83: f6fdf6%100
-    l80: 12dd12%100
-    l81: e01b01%100
     f140: 0cdc0c%100
     f141: f6fdf6%100
     l43: 84ed84%100
@@ -521,10 +495,6 @@
 
 - time: 2.46667s
   lights:
-    l82: fff1f1%100
-    l83: fbfefb%100
-    l80: 18de18%100
-    l81: 02db02%100
     f140: 12dd12%100
     f141: fbfefb%100
     l43: 8aee8a%100
@@ -537,10 +507,6 @@
 
 - time: 2.5s
   lights:
-    l82: ffebeb%100
-    l83: fffcfc%100
-    l80: 1ddf1d%100
-    l81: 07dc07%100
     f140: 17de17%100
     f141: fffcfc%100
     l43: 8fef8f%100
@@ -553,10 +519,6 @@
 
 - time: 2.53333s
   lights:
-    l82: ffe5e5%100
-    l83: fff6f6%100
-    l80: 23e023%100
-    l81: 0ddc0d%100
     f140: 1ddf1d%100
     f141: fff6f6%100
     l43: 95f095%100
@@ -569,10 +531,6 @@
 
 - time: 2.56667s
   lights:
-    l82: ffe0e0%100
-    l83: fff1f1%100
-    l80: 28e028%100
-    l81: 12dd12%100
     f140: 22df22%100
     f141: fff1f1%100
     l43: 9af09a%100
@@ -585,10 +543,6 @@
 
 - time: 2.6s
   lights:
-    l82: ffdada%100
-    l83: ffeaea%100
-    l80: 2ee12e%100
-    l81: 18de18%100
     f140: 27e027%100
     f141: ffeaea%100
     l43: 9ff19f%100
@@ -601,10 +555,6 @@
 
 - time: 2.63333s
   lights:
-    l82: ffd3d3%100
-    l83: ffe4e4%100
-    l80: 33e233%100
-    l81: 1edf1e%100
     f140: 2de12d%100
     f141: ffe4e4%100
     l43: a5f2a5%100
@@ -618,10 +568,6 @@
 
 - time: 2.66667s
   lights:
-    l82: ffcdcd%100
-    l83: ffdede%100
-    l80: 39e339%100
-    l81: 23e023%100
     f140: 33e233%100
     f141: ffdede%100
     l43: abf3ab%100
@@ -635,10 +581,6 @@
 
 - time: 2.7s
   lights:
-    l82: ffc8c8%100
-    l83: ffd8d8%100
-    l80: 3ee33e%100
-    l81: 29e029%100
     f140: 38e238%100
     f141: ffd8d8%100
     l43: b0f3b0%100
@@ -652,10 +594,6 @@
 
 - time: 2.73333s
   lights:
-    l82: ffc2c2%100
-    l83: ffd2d2%100
-    l80: 44e444%100
-    l81: 2ee12e%100
     f140: 3ee33e%100
     f141: ffd2d2%100
     l43: b6f4b6%100
@@ -669,10 +607,6 @@
 
 - time: 2.76667s
   lights:
-    l82: ffbcbc%100
-    l83: ffcdcd%100
-    l80: 49e549%100
-    l81: 33e233%100
     f140: 43e443%100
     f141: ffcdcd%100
     l43: bbf5bb%100
@@ -687,10 +621,6 @@
 
 - time: 2.8s
   lights:
-    l82: ffb6b6%100
-    l83: ffc7c7%100
-    l80: 4fe64f%100
-    l81: 39e339%100
     f140: 49e549%100
     f141: ffc7c7%100
     l43: c1f6c1%100
@@ -703,10 +633,6 @@
 
 - time: 2.83333s
   lights:
-    l82: ffb0b0%100
-    l83: ffc1c1%100
-    l80: 54e654%100
-    l81: 3ee33e%100
     f140: 4ee54e%100
     f141: ffc1c1%100
     l43: c6f6c6%100
@@ -721,10 +647,6 @@
 
 - time: 2.86667s
   lights:
-    l82: ffaaaa%100
-    l83: ffbbbb%100
-    l80: 5ae75a%100
-    l81: 44e444%100
     f140: 54e654%100
     f141: ffbbbb%100
     l43: ccf7cc%100
@@ -739,10 +661,6 @@
 
 - time: 2.9s
   lights:
-    l82: ffa5a5%100
-    l83: ffb5b5%100
-    l80: 5fe85f%100
-    l81: 49e549%100
     f140: 59e759%100
     f141: ffb5b5%100
     l43: d1f8d1%100
@@ -757,10 +675,6 @@
 
 - time: 2.93333s
   lights:
-    l82: ff9f9f%100
-    l83: ffafaf%100
-    l80: 65e965%100
-    l81: 4fe64f%100
     f140: stop
     f141: ffafaf%100
     l43: d7f9d7%100
@@ -776,10 +690,6 @@
 
 - time: 2.96667s
   lights:
-    l82: ff9898%100
-    l83: ffaaaa%100
-    l80: 6ae96a%100
-    l81: 54e654%100
     f141: ffaaaa%100
     l43: dcfadc%100
     l42: fcfefc%100
@@ -795,10 +705,6 @@
 
 - time: 3s
   lights:
-    l82: ff9393%100
-    l83: stop
-    l80: 70ea70%100
-    l81: stop
     f141: ffa4a4%100
     l43: stop
     l42: fffbfb%100
@@ -814,8 +720,6 @@
 
 - time: 3.03333s
   lights:
-    l82: stop
-    l80: stop
     f141: ff9e9e%100
     l42: fff5f5%100
     l41: b3f4b3%100

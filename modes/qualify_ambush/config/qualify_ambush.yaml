@@ -44,15 +44,27 @@ ball_holds:
       - tilt
 
 event_player:
-  # VUK is full, hold the ball and let the slide/timer run.
+
   ball_hold_ambush_hold_full:
     - ambush_hold_timer_start
 
-  # After the 3 second hold/slide, start normal Ambush.
-  timer_ambush_hold_complete:
+
+  s_rightkicker_active{current_player.ambush_qualified == 1}:
+    - ambush_hold_timer_start
+
+  balldevice_rightkicker_ball_enter{current_player.ambush_qualified == 1}:
+    - ambush_hold_timer_start
+
+  s_rightvuk_active{current_player.ambush_qualified == 1}:
+    - ambush_hold_timer_start
+
+  balldevice_rightvuk_ball_enter{current_player.ambush_qualified == 1}:
+    - ambush_hold_timer_start
+
+
+  timer_ambush_hold_complete{current_player.ambush_qualified == 1}:
     - start_ambush
 
-  # Used if another mode, like Mystery, wants to start Ambush directly.
   qualify_ambush_start_from_mystery:
     - start_ambush
     - ambush_start_timers|250ms

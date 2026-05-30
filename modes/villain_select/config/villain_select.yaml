@@ -128,11 +128,16 @@ show_player:
       show_tokens:
         lights: l10
         color: ffff00
-
+    InsertsVillainSpinOrange:
+      loops: -1
+      speed: 50 
+      
   start_col_difficulty_select:
     villain_select_insert_flash:
       action: stop
     villain_flash:
+      action: stop
+    InsertsVillainSpinOrange:
       action: stop
 
   start_hans_difficulty_select:
@@ -140,11 +145,15 @@ show_player:
       action: stop
     villain_flash:
       action: stop
+    InsertsVillainSpinOrange:
+      action: stop
 
   start_karl_difficulty_select:
     villain_select_insert_flash:
       action: stop
     villain_flash:
+      action: stop
+    InsertsVillainSpinOrange:
       action: stop
 
   start_katya_difficulty_select:
@@ -152,15 +161,27 @@ show_player:
       action: stop
     villain_flash:
       action: stop
+    InsertsVillainSpinOrange:
+      action: stop
 
   start_simon_difficulty_select:
     villain_select_insert_flash:
       action: stop
     villain_flash:
       action: stop
+    InsertsVillainSpinOrange:
+      action: stop
 
   stop_villain_flash:
     villain_flash:
+      action: stop
+
+  mode_villain_select_stopped:
+    villain_select_insert_flash:
+      action: stop
+    villain_flash:
+      action: stop
+    InsertsVillainSpinOrange:
       action: stop
 
   flash_col_light:
