@@ -1,5 +1,4 @@
 #config_version=6
-
 mode:
   start_events:
     - ball_started
@@ -7,22 +6,70 @@ mode:
     - multiball_central_park_ended
     - multiball_airplane_ended
     - mode_ambush_stopped
+
+    # Hans finished
     - hans_diehard_won_complete
     - hans_diehard_failed_complete
     - hans_dieharder_won_complete
     - hans_dieharder_failed_complete
+
+    # Katya finished
     - katya_completed
     - katya_failed
+    - katya_dieharder_completed
+    - katya_dieharder_failed
+
+    # Karl finished
+    - karl_diehard_completed
+    - karl_diehard_failed
+    - karl_dieharder_completed
+    - karl_dieharder_failed
+
+    # Simon finished
+    - simon_completed
+    - simon_failed
+    - simon_dieharder_completed
+    - simon_dieharder_failed
+
+    # Stuart / Col finished
+    - stuart_completed
+    - stuart_failed
+    - stuart_dieharder_completed
+    - stuart_dieharder_failed
+    - col_completed
+    - col_failed
+    - col_dieharder_completed
+    - col_dieharder_failed
+
   stop_events:
     - ball_ended
     - multiball_nakatomi_started
     - multiball_central_park_started
     - multiball_airplane_started
     - start_ambush
+
+    # Hans started
     - start_hans_diehard
     - start_hans_dieharder
+
+    # Katya started
     - start_katya_diehard
     - start_katya_dieharder
+
+    # Karl started
+    - start_karl_diehard
+    - start_karl_dieharder
+
+    # Simon started
+    - start_simon_diehard
+    - start_simon_dieharder
+
+    # Stuart / Col started
+    - start_stuart_diehard
+    - start_stuart_dieharder
+    - start_col_diehard
+    - start_col_dieharder
+
   priority: 110
 
 event_player:

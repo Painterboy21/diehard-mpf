@@ -1,12 +1,23 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# MODE
+# EOB bonus starts from MPF's ball_ending queue.
+#
+# Keep this original start event.
+# The Karl delay is handled by the show/timer gates below,
+# not by changing the mode start event.
+# ------------------------------------------------------------
 mode:
   start_events: ball_ending{game.tilted == False}
   stop_events: bonus_finished
   priority: 9999
   use_wait_queue: true
 
-
+# ------------------------------------------------------------
+# COMBO SWITCHES
+# Press both flippers to skip straight to the bonus summary.
+# ------------------------------------------------------------
 combo_switches:
   flipper_cancel_bonus:
     switches_1: s_left_flipper
@@ -14,27 +25,47 @@ combo_switches:
     events_when_both:
       - show_bonus_summary
 
-
+# ------------------------------------------------------------
+# EVENT PLAYER
+# Handles EOB bonus completion, summary start, final finish,
+# and stopping normal gameplay music.
+# ------------------------------------------------------------
 event_player:
   timer_eob_bonus_complete:
     - show_bonus_summary
     - calculate_eob_bonus_x
+
   calculate_eob_bonus_x:
     - show_bonus_summary|250ms
 
   timer_eob_bonus_summary_complete:
     - bonus_finished
-  
+
   mode_eob_bonus_started:
     - stop_main_music1
     - stop_main_music2
     - stop_main_music3
     - stop_main_music4
- 
 
-
+# ------------------------------------------------------------
+# SHOW PLAYER
+# Runs the EOB bonus video/show.
+#
+# Normal ball drain:
+#   Start EOB show on mode_eob_bonus_started.
+#
+# Karl escaped drain:
+#   If karl_result_started == 1, do not start the EOB show yet.
+#   Start it after karl_diehard_failed, which fires after the
+#   KarlEscaped slide has played and removed.
+# ------------------------------------------------------------
 show_player:
-  mode_eob_bonus_started:
+  mode_eob_bonus_started{current_player.karl_result_started != 1}:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  karl_diehard_failed:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
@@ -44,14 +75,20 @@ show_player:
       action: stop
       key: key_eob_bonus
 
-
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# Shows the final EOB bonus summary slide.
+# ------------------------------------------------------------
 slide_player:
   show_bonus_summary:
     eob_bonus_summary:
       action: play
       expire: 0s
 
-
+# ------------------------------------------------------------
+# SOUND PLAYER
+# Stops normal gameplay music when EOB starts.
+# ------------------------------------------------------------
 sound_player:
   stop_main_music1:
     gameplay_music_beethoven:
@@ -73,30 +110,54 @@ sound_player:
       key: main_snd_music
       action: stop
 
-
+# ------------------------------------------------------------
+# TIMERS
+# eob_bonus:
+#   Runs the main EOB count/video timing.
+#
+# Important Karl fix:
+#   start_running is false now.
+#   Normal drain starts it on mode_eob_bonus_started.
+#   Karl escaped drain starts it on karl_diehard_failed, after
+#   KarlEscaped has finished.
+#
+# eob_bonus_summary:
+#   Runs the final summary slide timing.
+# ------------------------------------------------------------
 timers:
   eob_bonus:
     start_value: 0
     end_value: 12
     direction: up
+    tick_interval: 1000ms
+    start_running: false
+    restart_on_complete: false
     control_events:
+      - event: mode_eob_bonus_started{current_player.karl_result_started != 1}
+        action: restart
+      - event: karl_diehard_failed
+        action: restart
       - event: show_bonus_summary
         action: stop
-    restart_on_complete: false
-    start_running: true
-    tick_interval: 1000ms
 
   eob_bonus_summary:
     start_value: 0
     end_value: 3
     direction: up
+    tick_interval: 1000ms
+    start_running: false
+    restart_on_complete: false
     control_events:
       - event: show_bonus_summary
         action: start
-    restart_on_complete: false
-    start_running: false
-    tick_interval: 1000ms
 
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# Calculates EOB bonus total and multiplier-adjusted total
+# when EOB mode starts.
+#
+# Score is added when the main EOB timer completes.
+# ------------------------------------------------------------
 variable_player:
   mode_eob_bonus_started:
     eob_bonus_total:
@@ -107,9 +168,7 @@ variable_player:
       int: (current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains) * current_player.bonus_multiplier
       action: set
 
-
   timer_eob_bonus_complete:
     score:
       int: current_player.eob_bonus_x
       action: add
- 

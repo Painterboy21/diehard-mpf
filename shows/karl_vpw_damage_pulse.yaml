@@ -1,0 +1,26 @@
+#show_version=6
+
+# VPW-style Karl damage pulse.
+# l40 removed so Karl villain insert stays solid orange during mode.
+# Real-machine version: l130/l138 removed.
+# No l80/l81/l82/l83.
+
+- duration: 80ms
+  lights:
+    l70: "37DE07"
+    l71: "37DE07"
+
+- duration: 80ms
+  lights:
+    l70: off
+    l71: off
+
+- duration: 80ms
+  lights:
+    l70: "37DE07"
+    l71: "37DE07"
+
+- duration: 80ms
+  lights:
+    l70: off
+    l71: off

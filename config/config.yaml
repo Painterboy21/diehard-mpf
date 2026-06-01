@@ -1,32 +1,42 @@
 #config_version=6
 
-
+# ------------------------------------------------------------
+# HARDWARE
+# FAST Neuron hardware platform.
+# ------------------------------------------------------------
 hardware:
-    platform: fast
+  platform: fast
 
+# ------------------------------------------------------------
+# FAST CONFIG
+# FAST controller, I/O boards, expansion boards, and audio.
+#
+# Clean-up only:
+#   No controller, boards, ports, volume values, or audio
+#   settings have been changed.
+# ------------------------------------------------------------
 fast:
-
   net:
     controller: neuron
     io_loop:
-        j:
-          model: FP-I/O-0024
-          order: 1
-        d:
-          model: FP-I/O-3208
-          order: 2
-        e:
-          model: FP-I/O-1616
-          order: 3
-        f:
-          model: FP-I/O-1616
-          order: 4
+      j:
+        model: FP-I/O-0024
+        order: 1
+      d:
+        model: FP-I/O-3208
+        order: 2
+      e:
+        model: FP-I/O-1616
+        order: 3
+      f:
+        model: FP-I/O-1616
+        order: 4
 
   exp:
     port: auto
     boards:
       neuron:
-        model: FP-EXP-2000 
+        model: FP-EXP-2000
       playfield:
         model: FP-EXP-0071
       shakerboard:
@@ -34,40 +44,35 @@ fast:
       cab:
         model: FP-EXP-0081
 
-        
   aud:
     port: auto
     debug: false
-
     main_amp_enabled: true
     sub_amp_enabled: true
     headphones_amp_enabled: true
-
     main_steps: 20
     sub_steps: 20
     headphones_steps: 20
-
     default_main_volume: 30
     default_sub_volume: 60
     default_headphones_volume: 10
-
     persist_volume_settings: true
-
     max_hw_volume_main: 63
     max_hw_volume_sub: 63
     max_hw_volume_headphones: 63
-
     main_levels_list: None
     sub_levels_list: None
     headphones_levels_list: None
-
     link_sub_to_main: true
     link_headphones_to_main: false
-
     headphones_level: headphones
     mute_speakers_with_headphones: true
 
-
+# ------------------------------------------------------------
+# VIRTUAL PLATFORM START ACTIVE SWITCHES
+# Used when running virtually/simulated so the trough starts
+# with balls already present.
+# ------------------------------------------------------------
 virtual_platform_start_active_switches:
   - s_trough1
   - s_trough2
@@ -76,9 +81,10 @@ virtual_platform_start_active_switches:
   - s_trough5
   - s_trough6
 
-
-
-
+# ------------------------------------------------------------
+# CONFIG FILES
+# Main included config files.
+# ------------------------------------------------------------
 config:
   - ball_devices.yaml
   - coils.yaml
@@ -88,6 +94,11 @@ config:
   - player_vars.yaml
   - shaker.yaml
 
+# ------------------------------------------------------------
+# EXTRA BALL GROUPS
+# Die Hard extra ball group.
+# Max 2 per game, max 1 lit.
+# ------------------------------------------------------------
 extra_ball_groups:
   diehard_extra_balls:
     enabled: true
@@ -98,7 +109,12 @@ extra_ball_groups:
     award_lit_events:
       - collect_lit_extra_ball
 
-
+# ------------------------------------------------------------
+# FLIPPERS
+# Main lower flippers and left top flipper.
+# Flippers enable on ball start / autofire / flipper_on.
+# Flippers disable on ball_will_end / service / disable events.
+# ------------------------------------------------------------
 flippers:
   left_flipper:
     main_coil: c_left_flipper_main
@@ -130,16 +146,24 @@ flippers:
     enable_events: ball_started, enableAutofire, flipper_on
     disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
 
+# ------------------------------------------------------------
+# DROP TARGETS
+# Three-bank drop targets plus vault drop target.
+# Vault target has both reset and knockdown coils.
+# ------------------------------------------------------------
 drop_targets:
   bank1:
     switch: s_drop_target_1
     reset_coil: c_reset_drop_targets
+
   bank2:
     switch: s_drop_target_2
     reset_coil: c_reset_drop_targets
+
   bank3:
     switch: s_drop_target_3
     reset_coil: c_reset_drop_targets
+
   bank5:
     switch: s_push_drop_target_5
     reset_coil: c_reset_drop_target_vault
@@ -147,6 +171,11 @@ drop_targets:
     knockdown_events: mystery_close_vault
     reset_events: ball_starting, machine_reset_phase_3, mystery_open_vault
 
+# ------------------------------------------------------------
+# DROP TARGET BANKS
+# Main three-bank drop target reset group.
+# Reset is triggered by reset_drop_targets_after_delay.
+# ------------------------------------------------------------
 drop_target_banks:
   bank:
     drop_targets:
@@ -157,23 +186,37 @@ drop_target_banks:
     reset_events:
       - reset_drop_targets_after_delay
 
+# ------------------------------------------------------------
+# AUTOFIRE COILS
+# Slingshots, captive ball/airplane, and two pop bumpers.
+# ------------------------------------------------------------
 autofire_coils:
   left_sling:
     coil: c_left_sling
     switch: s_left_sling
+
   right_sling:
     coil: c_right_sling
     switch: s_right_sling
+
   airplane:
     coil: c_captivetarget
     switch: s_captiveball
+
   popbumper_left:
     coil: c_popbumper_left
     switch: s_popbumper_left
+
   popbumper_right:
     coil: c_popbumper_right
     switch: s_popbumper_right
 
+# ------------------------------------------------------------
+# MAGNETS
+# Left and right top ramp magnets.
+# Enabled on ball_started and release on timed fling/release
+# or Central Park multiball start.
+# ------------------------------------------------------------
 magnets:
   trmagrl:
     magnet_coil: c_trmagl
@@ -197,26 +240,41 @@ magnets:
       - trmagr_fling_release
       - start_central_park_multiball
 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# Magnet release delays and delayed drop-target-bank reset.
+# ------------------------------------------------------------
 event_player:
   s_trmagl_active{machine.magnets_enabled}:
     - trmagl_fling_release|350ms
+
   s_trmagr_active{machine.magnets_enabled}:
     - trmagr_fling_release|350ms
 
   drop_target_bank_bank_down:
     - reset_drop_targets_after_delay|1s
 
+# ------------------------------------------------------------
+# MACHINE VARS
+# Machine-wide variables.
+# ------------------------------------------------------------
 machine_vars:
-  var_which_attract: #to track which attract screen you are currently on
+  var_which_attract:
     value_type: int
     initial_value: 0
     persist: false
+
   magnets_enabled:
     value_type: int
     initial_value: 0
     persist: false
 
-
+# ------------------------------------------------------------
+# MODES
+# Main mode list.
+# Clean-up only:
+#   Mode order and mode names have not been changed.
+# ------------------------------------------------------------
 modes:
   - attract
   - qualify_airplane
@@ -249,51 +307,78 @@ modes:
   - hans_dieharder
   - katya_diehard
   - katya_dieharder
+  - karl_diehard
   - bonus_x
   - playfield_x
   - iscored_sync
   - extra_ball
-  
+
+# ------------------------------------------------------------
+# MACHINE / GAME
+# Installed balls and game settings.
+# ------------------------------------------------------------
 machine:
-    balls_installed: 6
+  balls_installed: 6
+
 game:
-    balls_per_game: 3
-    max_players: 4
+  balls_per_game: 3
+  max_players: 4
+
+# ------------------------------------------------------------
+# PLAYFIELDS
+# Main playfield source device.
+# ------------------------------------------------------------
 playfields:
   playfield:
     default_source_device: bd_plunger
     tags: default
 
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# Cabinet volume controls for FAST audio.
+# ------------------------------------------------------------
 variable_player:
   increase_main_volume:
     fast_audio_main_volume:
       action: add_machine
       int: 1
+
   decrease_main_volume:
     fast_audio_main_volume:
       action: add_machine
       int: -1
+
   increase_sub_volume:
     fast_audio_sub_volume:
       action: add_machine
       int: 30
+
   decrease_sub_volume:
     fast_audio_sub_volume:
       action: add_machine
       int: -10
+
   increase_headphones_volume:
     fast_audio_headphones_volume:
       action: add_machine
       int: 1
+
   decrease_headphones_volume:
     fast_audio_headphones_volume:
       action: add_machine
       int: -1
 
-
+# ------------------------------------------------------------
+# SERVOS
+# Physical servo devices:
+#   servo1 = left side wire ramp exit
+#   servo2 = Nakatomi lock entrance
+#   servo3 = Nakatomi multiball lock
+#   servo4 = vault door
+# ------------------------------------------------------------
 servos:
   servo1:
-    number: playfield-1 # left side wire ramp exit
+    number: playfield-1
     platform_settings:
       min_us: 0.2
       max_us: 0.2
@@ -306,7 +391,7 @@ servos:
       0.90: wire_ramp_exit_open
 
   servo2:
-    number: playfield-2 #nakatomi lock entrance
+    number: playfield-2
     platform_settings:
       min_us: 400
       max_us: 2500
@@ -319,7 +404,7 @@ servos:
       0.90: nakatomi_entrance_lock_open
 
   servo3:
-    number: playfield-3 #nakatomi multiball
+    number: playfield-3
     platform_settings:
       min_us: 1350
       max_us: 2500
@@ -332,7 +417,7 @@ servos:
       0.9: nakatomi_lock_close
 
   servo4:
-    number: playfield-4 # vault door
+    number: playfield-4
     platform_settings:
       min_us: 650
       max_us: 2500
@@ -344,12 +429,17 @@ servos:
       0.1: mystery_close_vault
       0.90: mystery_open_vault
 
-
+# ------------------------------------------------------------
+# COIL PLAYER
+# Enables cabinet coin return and start button lights after
+# reset_complete.
+# ------------------------------------------------------------
 coil_player:
   reset_complete:
     c_cab_coin_return_left_right:
       action: enable
       hold_power: 1
+
     c_cab_start_button:
       action: enable
       hold_power: 0.4

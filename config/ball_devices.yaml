@@ -1,7 +1,27 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# BALL DEVICES
+# Defines every physical ball device in the machine:
+#   - trough
+#   - plunger lane
+#   - vault kicker
+#   - right kicker
+#   - upper ramp device
+#   - right VUK
+#   - tower VUK
+#   - captive ball / airplane device
+#
+# Clean-up only:
+#   No device names, switches, coils, timeouts, tags, targets,
+#   or events have been changed.
+# ------------------------------------------------------------
 ball_devices:
-
+  # ------------------------------------------------------------
+  # TROUGH
+  # Main ball trough with jam switch and eject to plunger lane.
+  # Tags include trough, home, and drain.
+  # ------------------------------------------------------------
   trough:
     ball_switches: s_trough1, s_trough2, s_trough3, s_trough4, s_trough5, s_trough6, s_trough_jam
     eject_coil: c_trough_eject
@@ -9,33 +29,59 @@ ball_devices:
     jam_switch: s_trough_jam
     eject_coil_jam_pulse: 15ms
     eject_targets: bd_plunger
-  
+
+  # ------------------------------------------------------------
+  # PLUNGER LANE
+  # Holds the ball in the plunger lane.
+  # Player controlled eject uses the fire/action button switch.
+  # ------------------------------------------------------------
   bd_plunger:
     ball_switches: s_plunger_lane
     eject_coil: c_plunger
     player_controlled_eject_event: s_fire_active
 
+  # ------------------------------------------------------------
+  # VAULT KICKER
+  # Used by vault/mystery/ambush style ball holds and releases.
+  # ------------------------------------------------------------
   kickervault1_eject:
     ball_switches: s_kickervault1
     eject_coil: c_kickervault1_eject
 
+  # ------------------------------------------------------------
+  # RIGHT KICKER
+  # Standard right kicker device.
+  # ------------------------------------------------------------
   rightkicker:
     ball_switches: s_rightkicker
-    eject_coil:   c_rightkicker_eject
+    eject_coil: c_rightkicker_eject
     eject_timeouts: 1s
 
+  # ------------------------------------------------------------
+  # UPPER RAMP DEVICE
+  # Upper ramp ball device.
+  # ------------------------------------------------------------
   UrampUp001:
     ball_switches: s_UrampUp001
     eject_coil: c_UrampUp001_eject
     eject_timeouts: 1s
 
-
+  # ------------------------------------------------------------
+  # RIGHT VUK
+  # Right VUK device.
+  # Also used elsewhere for right VUK collections.
+  # ------------------------------------------------------------
   rightvuk:
     ball_switches: s_rightvuk
     eject_coil: c_rightvuk_eject
     eject_timeouts: 1s
 
-
+  # ------------------------------------------------------------
+  # TOWER VUK
+  # Nakatomi tower VUK.
+  # Mechanical eject device with 3-ball capacity.
+  # Ejects all balls when Nakatomi multiball starts.
+  # ------------------------------------------------------------
   tower_vuk:
     entrance_switch: s_towervuk
     ball_capacity: 3
@@ -44,7 +90,11 @@ ball_devices:
     eject_targets: playfield
     eject_timeouts: 250ms
     eject_all_events: multiball_nakatomi_started
-    
+
+  # ------------------------------------------------------------
+  # AIRPLANE / CAPTIVE BALL
+  # Captive ball / airplane device.
+  # ------------------------------------------------------------
   airplane:
     ball_switches: s_captiveball
     eject_coil: c_captivetarget

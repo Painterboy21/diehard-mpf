@@ -1,0 +1,24 @@
+#show_version=6
+
+# Karl failed / timeout.
+# l40 removed so light_player turns Karl insert off cleanly.
+
+- duration: 120ms
+  lights:
+    GI: "300000"
+    SPOTS: "300000"
+
+- duration: 120ms
+  lights:
+    GI: off
+    SPOTS: off
+
+- duration: 120ms
+  lights:
+    GI: "300000"
+    SPOTS: "300000"
+
+- duration: 120ms
+  lights:
+    GI: off
+    SPOTS: off

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bx7uj1an6uhld"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_ccq6c"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_ccq6c"]
 [ext_resource type="VideoStream" uid="uid://bspyuxy5xirkc" path="res://modes/hans_diehard/slides/HansEscapes.ogv" id="2_hi4rw"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_8quk2"]
 
@@ -21,6 +21,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_hi4rw")
+volume_db = 8.57
 autoplay = true
 script = ExtResource("3_8quk2")
 end_behavior = 1

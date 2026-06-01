@@ -1,0 +1,177 @@
+[gd_scene format=3 uid="uid://bp0gwj7woh24x"]
+
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_edtd4"]
+[ext_resource type="VideoStream" uid="uid://d11wn3dk276s4" path="res://videos/DieHard1Background.ogv" id="2_vfsqa"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_xwulq"]
+[ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="4_a7o34"]
+[ext_resource type="Script" uid="uid://bfn5c61jgc8ds" path="res://modes/karl_diehard/slides/johnhealth.gd" id="4_vfsqa"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="5_hu8xq"]
+[ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="6_6gdef"]
+[ext_resource type="Texture2D" uid="uid://ytwrcjpchkp8" path="res://godot-media/images/player 1 overlay.png" id="7_bycmc"]
+[ext_resource type="Texture2D" uid="uid://cgdg61xeojmu8" path="res://godot-media/images/hollywhite.png" id="8_2v516"]
+[ext_resource type="Script" uid="uid://bh8uniugrpk3c" path="res://slides/holly_letters.gd" id="9_5jq6a"]
+[ext_resource type="Texture2D" uid="uid://c0tj7020wfqu7" path="res://godot-media/images/H.png" id="10_men0g"]
+[ext_resource type="Texture2D" uid="uid://binlmwaj3sxtd" path="res://godot-media/images/O.png" id="11_71kb3"]
+[ext_resource type="Texture2D" uid="uid://bo1y2txk5qfxf" path="res://godot-media/images/L.png" id="12_kwlll"]
+[ext_resource type="Texture2D" uid="uid://bs0sdjldfa8j4" path="res://godot-media/images/Y.png" id="13_kbrnf"]
+
+[node name="karl_diehard_background" type="Control" unique_id=1876849087]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_edtd4")
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=2017886156]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_vfsqa")
+autoplay = true
+loop = true
+script = ExtResource("3_xwulq")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
+
+[node name="johnhealth" type="TextureRect" parent="." unique_id=1745350901]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_vfsqa")
+
+[node name="Control2" type="Control" parent="." unique_id=967988825]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="main_score" type="Label" parent="Control2" unique_id=1048838247]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -98.0
+offset_bottom = -98.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+theme = ExtResource("4_a7o34")
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("5_hu8xq")
+variable_name = "score"
+comma_separate = true
+
+[node name="current_ball" type="Label" parent="Control2" unique_id=1769272716]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -292.66998
+offset_bottom = -212.66998
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_6gdef")
+text = "Ball 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("5_hu8xq")
+variable_name = "ball"
+comma_separate = true
+template_string = "Ball %s"
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=1589179317]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.777
+
+[node name="score_overlay" type="TextureRect" parent="AspectRatioContainer" unique_id=1107110937]
+layout_mode = 2
+texture = ExtResource("7_bycmc")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="AspectRatioContainer" unique_id=1695330213]
+layout_mode = 2
+
+[node name="player_1_score" type="Label" parent="AspectRatioContainer/Control" unique_id=88526952]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -112.0
+offset_right = 554.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("4_a7o34")
+theme_override_font_sizes/font_size = 60
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("5_hu8xq")
+variable_type = 4
+variable_name = "score"
+comma_separate = true
+
+[node name="Hollywhite" type="Sprite2D" parent="." unique_id=1237423753]
+position = Vector2(160, 823)
+texture = ExtResource("8_2v516")
+
+[node name="HollyLetters" type="Control" parent="." unique_id=126271155]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_5jq6a")
+
+[node name="H" type="Sprite2D" parent="HollyLetters" unique_id=24461905]
+visible = false
+position = Vector2(130.5, 822.763)
+scale = Vector2(0.140065, 0.109528)
+texture = ExtResource("10_men0g")
+
+[node name="O" type="Sprite2D" parent="HollyLetters" unique_id=478243289]
+visible = false
+position = Vector2(175, 823)
+scale = Vector2(0.147368, 0.107018)
+texture = ExtResource("11_71kb3")
+
+[node name="L" type="Sprite2D" parent="HollyLetters" unique_id=108471217]
+visible = false
+position = Vector2(211.919, 821.967)
+scale = Vector2(0.138727, 0.103263)
+texture = ExtResource("12_kwlll")
+
+[node name="L1" type="Sprite2D" parent="HollyLetters" unique_id=1562401939]
+visible = false
+position = Vector2(242.094, 822)
+scale = Vector2(0.137007, 0.103201)
+texture = ExtResource("12_kwlll")
+
+[node name="Y" type="Sprite2D" parent="HollyLetters" unique_id=1523090683]
+visible = false
+position = Vector2(266.5, 822)
+scale = Vector2(0.134868, 0.103093)
+texture = ExtResource("13_kbrnf")

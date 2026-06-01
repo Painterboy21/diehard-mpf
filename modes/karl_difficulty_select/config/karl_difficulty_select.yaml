@@ -1,5 +1,11 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# MODE
+# Karl difficulty select carousel.
+# Starts from villain select and stops when the villain selection
+# is complete or the ball ends.
+# ------------------------------------------------------------
 mode:
   start_events: start_karl_difficulty_select
   stop_events:
@@ -8,26 +14,41 @@ mode:
   priority: 310
   code: mpf.modes.carousel.code.carousel.Carousel
 
-
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# Turns off GI and spots while Karl difficulty select is active.
+# ------------------------------------------------------------
 light_player:
-  mode_villain_select_started:
+  mode_karl_difficulty_select_started:
     GI:
       color: 000000
     SPOTS:
       color: 000000
-      
+
+# ------------------------------------------------------------
+# MODE SETTINGS
+# Karl difficulty choices and carousel controls.
+# ------------------------------------------------------------
 mode_settings:
   selectable_items:
     - karl_die_hard
     - karl_die_harder
+
   next_item_events:
     - s_right_flipper_active
+
   previous_item_events:
     - s_left_flipper_active
+
   select_item_events:
     - s_fire_active
     - s_actionbtn_active
 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# Flashes Karl insert/action button orange while choosing
+# difficulty, then stops the shows once a difficulty is chosen.
+# ------------------------------------------------------------
 show_player:
   mode_karl_difficulty_select_started:
     flash_color:
@@ -38,28 +59,43 @@ show_player:
       show_tokens:
         lights: l40, l1000, l1001
         color: ff8800
+
     InsertsVillainSpinOrange:
+      key: key_karl_difficulty_spin
       loops: -1
       speed: 50
 
   set_difficulty_die_hard:
-    selected_villain_flash:
+    flash_color:
       action: stop
+      key: selected_villain_flash
+
     InsertsVillainSpinOrange:
       action: stop
+      key: key_karl_difficulty_spin
 
   set_difficulty_die_harder:
-    selected_villain_flash:
+    flash_color:
       action: stop
+      key: selected_villain_flash
+
     InsertsVillainSpinOrange:
       action: stop
+      key: key_karl_difficulty_spin
 
   mode_karl_difficulty_select_stopped:
-    selected_villain_flash:
+    flash_color:
       action: stop
+      key: selected_villain_flash
+
     InsertsVillainSpinOrange:
       action: stop
-      
+      key: key_karl_difficulty_spin
+
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# Shows Karl difficulty select and Karl intro.
+# ------------------------------------------------------------
 slide_player:
   mode_karl_difficulty_select_started:
     karl_difficulty_select:
@@ -71,29 +107,66 @@ slide_player:
       action: play
       expire: 3s
 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# Starts the selected Karl mode after the intro.
+#
+# Important:
+#   reset_karl_result_state clears the previous fail/escaped
+#   state before posting start_karl_diehard again.
+# ------------------------------------------------------------
 event_player:
   carousel_item_selected{carousel=="karl_difficulty_select" and item=="karl_die_hard"}:
     - set_difficulty_die_hard
     - play_karl_intro
-    - villain_intro_finished|3s
+    - start_karl_diehard_after_intro|3s
+
   carousel_item_selected{carousel=="karl_difficulty_select" and item=="karl_die_harder"}:
     - set_difficulty_die_harder
     - play_karl_intro
-    - villain_intro_finished|3s
-  villain_intro_finished:
+    - start_karl_dieharder_after_intro|3s
+
+  start_karl_diehard_after_intro:
+    - reset_karl_result_state
     - release_villain_select_vuk
-    - start_karl_vreski
+    - start_karl_diehard
     - villain_selection_complete|100ms
 
+  start_karl_dieharder_after_intro:
+    - reset_karl_result_state
+    - release_villain_select_vuk
+    - start_karl_dieharder
+    - villain_selection_complete|100ms
 
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# Stores selected difficulty and clears Karl result variables
+# before starting Karl again.
+# ------------------------------------------------------------
 variable_player:
   set_difficulty_die_hard:
     selected_diehard_mode:
       string: die_hard
       action: set
 
-
   set_difficulty_die_harder:
     selected_diehard_mode:
       string: die_harder
       action: set
+
+  reset_karl_result_state:
+    karl_result_started:
+      action: set
+      int: 0
+
+    karl_result_display:
+      action: set
+      int: 0
+
+    karl_diehard_lost:
+      action: set
+      int: 0
+
+    karl_diehard_won:
+      action: set
+      int: 0
