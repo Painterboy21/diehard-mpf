@@ -1,11 +1,20 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# MODE
+# Base mode runs during normal gameplay.
+# Stops when the ball ends.
+# ------------------------------------------------------------
 mode:
   start_events: ball_started
   stop_events: ball_ended
   priority: 100
 
-
+# ------------------------------------------------------------
+# BALL HOLDS
+# Holds the ball at the right VUK when villain start is lit.
+# Releases when a villain mode starts, ball ends, or tilt happens.
+# ------------------------------------------------------------
 ball_holds:
   villain_hold:
     enable_events: villain_start_lit
@@ -29,9 +38,14 @@ ball_holds:
       - start_col_diehard
       - start_col_dieharder
 
-
-
-ball_saves: 
+# ------------------------------------------------------------
+# BALL SAVES
+# Base ball save awards:
+#   one   = 5 seconds
+#   two   = 7 seconds
+#   three = 10 seconds
+# ------------------------------------------------------------
+ball_saves:
   one:
     active_time: 5000ms
     grace_period: 2000ms
@@ -39,6 +53,7 @@ ball_saves:
     enable_events: ball_save_one
     auto_launch: true
     balls_to_save: -1
+
   two:
     active_time: 7000ms
     grace_period: 2000ms
@@ -46,6 +61,7 @@ ball_saves:
     enable_events: ball_save_two
     auto_launch: true
     balls_to_save: -1
+
   three:
     active_time: 10000ms
     grace_period: 2000ms
@@ -54,7 +70,12 @@ ball_saves:
     auto_launch: true
     balls_to_save: -1
 
-event_player: 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# Handles base playfield effects, stopping base music when big
+# modes start, and resuming base music when those modes finish.
+# ------------------------------------------------------------
+event_player:
   s_popbumper_left_active:
     - flash_bumper_left
     - flash_bumper_explosion
@@ -79,11 +100,9 @@ event_player:
     - show_airduct
     - show_airduct2
 
-
   # ------------------------------------------------------------
   # STOP BASE MUSIC WHEN A BIG MODE TAKES OVER
   # ------------------------------------------------------------
-
   villain_mode_started:
     - stop_base_music
 
@@ -105,11 +124,9 @@ event_player:
   mode_ambush_started:
     - stop_base_music
 
-
   # ------------------------------------------------------------
   # RESUME BASE MUSIC WHEN BIG MODES END
   # ------------------------------------------------------------
-
   villain_mode_stopped:
     - resume_base_music|500ms
 
@@ -170,9 +187,14 @@ event_player:
   multiball_central_park_ended:
     - resume_base_music|500ms
 
-light_player: 
-  mode_base_started: 
-    GI: 
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# Handles base GI/SPOTS, completed villain inserts,
+# completed/failed multiball inserts, and bonus X held lights.
+# ------------------------------------------------------------
+light_player:
+  mode_base_started:
+    GI:
       color: 969696
     SPOTS:
       color: 969696
@@ -180,6 +202,7 @@ light_player:
       color: 969670
     s_actionbtn:
       color: 969696
+
   hold_bonus_x_lights_on:
     l1:
       color: red
@@ -202,77 +225,102 @@ light_player:
       color: off
       priority: 800
 
-
   mode_base_started{current_player.hans_complete==1}:
     l43:
       color: 00ff00
       priority: 1000
+
   player_hans_complete{value==1}:
     l43:
       color: 00ff00
       priority: 1000
+
   mode_base_started{current_player.katya_complete==1}:
     l42:
       color: ff00ff
       priority: 1000
+
   player_katya_complete{value==1}:
     l42:
       color: ff00ff
       priority: 1000
-      
-  nakatomi_super_jackpot_collected: 
-    l57: 
+
+  mode_base_started{current_player.karl_complete==1}:
+    l40:
+      color: ff8800
+      priority: 1000
+
+  player_karl_complete{value==1}:
+    l40:
+      color: ff8800
+      priority: 1000
+
+  nakatomi_super_jackpot_collected:
+    l57:
       color: 00ff00
       priority: 50
+
   multiball_nakatomi_ended{current_player.nakatomi_super_jackpot_collected==0}:
-    l57: 
+    l57:
+      color: ff0000
+      priority:
+
+  mode_base_started{current_player.played_nakatomi_multiball==1 and current_player.nakatomi_super_jackpot_collected==0}:
+    l57:
       color: ff0000
       priority: 50
-  mode_base_started{current_player.played_nakatomi_multiball==1 and current_player.nakatomi_super_jackpot_collected==0}:
-    l57: 
-      color: ff0000
-      priority: 50    
+
   mode_base_started{current_player.played_nakatomi_multiball==1 and current_player.nakatomi_super_jackpot_collected==1}:
-    l57: 
+    l57:
       color: 00ff00
-      priority: 50 
-  score_park_super_jackpot_hit: 
-    l59: 
+      priority: 50
+
+  score_park_super_jackpot_hit:
+    l59:
       color: 00ff00
-      priority: 50 
+      priority: 50
+
   multiball_central_park_ended{current_player.score_park_super_jackpot_hit==0}:
-    l59: 
+    l59:
       color: ff0000
-      priority: 50 
+      priority: 50
+
   mode_base_started{current_player.central_park_played==1 and current_player.score_park_super_jackpot_hit==0}:
-    l59: 
+    l59:
       color: ff0000
-      priority: 50 
+      priority: 50
+
   mode_base_started{current_player.central_park_played==1 and current_player.score_park_super_jackpot_hit==1}:
-    l59: 
+    l59:
       color: 00ff00
-      priority: 50 
-  airplane_super_jackpot_hit: 
-    l58: 
+      priority: 50
+
+  airplane_super_jackpot_hit:
+    l58:
       color: 00ff00
-      priority: 50 
+      priority: 50
+
   multiball_airplane_ended{current_player.score_airplane_super_jackpot_hit==0}:
-    l58: 
+    l58:
       color: ff0000
-      priority: 50 
+      priority: 50
+
   mode_base_started{current_player.airplane_mb_played==1 and current_player.score_airplane_super_jackpot_hit==0}:
-    l58: 
+    l58:
       color: ff0000
-      priority: 50 
+      priority: 50
 
   mode_base_started{current_player.airplane_mb_played==1 and current_player.score_airplane_super_jackpot_hit==1}:
-    l58: 
+    l58:
       color: 00ff00
-      priority: 50 
+      priority: 50
 
-
-random_event_player: 
-  mode_base_started: 
+# ------------------------------------------------------------
+# RANDOM EVENT PLAYER
+# Randomizes base music and playfield sound effect events.
+# ------------------------------------------------------------
+random_event_player:
+  mode_base_started:
     events:
       gameplay_music_1: 1
       gameplay_music_2: 1
@@ -280,7 +328,7 @@ random_event_player:
       gameplay_music_4: 1
     scope: player
 
-  resume_base_music: 
+  resume_base_music:
     events:
       gameplay_music_1: 1
       gameplay_music_2: 1
@@ -288,7 +336,7 @@ random_event_player:
       gameplay_music_4: 1
     scope: player
 
-  SpinnerLeft_active: 
+  SpinnerLeft_active:
     events:
       spinner_fx1: 1
       spinner_fx2: 1
@@ -300,7 +348,7 @@ random_event_player:
       spinner_fx8: 1
     scope: player
 
-  SpinnerRight_active: 
+  SpinnerRight_active:
     events:
       spinner_fx1: 1
       spinner_fx2: 1
@@ -312,232 +360,291 @@ random_event_player:
       spinner_fx8: 1
     scope: player
 
-  flash_bumper_explosion: 
+  flash_bumper_explosion:
     events:
       popbumper_fx1: 1
       popbumper_fx2: 1
       popbumper_fx3: 1
     scope: player
 
-  left_orbit_hit: 
+  left_orbit_hit:
     events:
       orbit_fx1: 1
       orbit_fx2: 1
     scope: player
 
-  right_orbit_hit: 
+  right_orbit_hit:
     events:
       orbit_fx1: 1
       orbit_fx2: 1
     scope: player
 
-  s_TrPF1_active: 
+  s_TrPF1_active:
     events:
       inlanerollover1_fx: 1
       inlanerollover2_fx: 1
-      inlanerollover3_fx: 1 
+      inlanerollover3_fx: 1
     scope: player
 
-  s_TrPF2_active: 
+  s_TrPF2_active:
     events:
       inlanerollover1_fx: 1
       inlanerollover2_fx: 1
-      inlanerollover3_fx: 1 
+      inlanerollover3_fx: 1
     scope: player
 
-  s_TrPF3_active: 
+  s_TrPF3_active:
     events:
       inlanerollover1_fx: 1
       inlanerollover2_fx: 1
-      inlanerollover3_fx: 1 
+      inlanerollover3_fx: 1
     scope: player
 
-
-sequence_shots: 
+# ------------------------------------------------------------
+# SEQUENCE SHOTS
+# Left and right orbit switch sequences.
+# ------------------------------------------------------------
+sequence_shots:
   left_orbit:
-    switch_sequence: 
+    switch_sequence:
       - s_left_orbit
       - s_left_orbit2
     sequence_timeout: 1000ms
+
   right_orbit:
-    switch_sequence: 
+    switch_sequence:
       - s_right_orbit
       - s_right_orbit2
     sequence_timeout: 1000ms
 
-shots: 
+# ------------------------------------------------------------
+# SHOTS
+# Shoot again insert for base ball saves.
+# ------------------------------------------------------------
+shots:
   shoot_again:
     profile: shoot_again
-    show_tokens: 
+    show_tokens:
       color: ff0000
     enable_events: ball_save_one_enabled, ball_save_two_enabled, ball_save_three_enabled, ball_save_holly_enabled
     disable_events: ball_save_one_grace_period, ball_save_two_grace_period, ball_save_three_grace_period, ball_save_holly_grace_period
-    control_events: 
+    control_events:
       - events: ball_save_one_hurry_up, ball_save_two_hurry_up, ball_save_three_hurry_up, ball_save_holly_hurry_up
         state: 1
 
-show_player: 
-  s_left_sling_active: 
-    flash_sling: 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# Base playfield light shows and playfield feedback effects.
+# ------------------------------------------------------------
+show_player:
+  s_left_sling_active:
+    flash_sling:
       key: key_s_left_sling_active
       loops: 1
-      show_tokens: 
+      show_tokens:
         lights1: l80
         lights2: l81
         flasher: f141
-  s_right_sling_active: 
-    flash_sling: 
+
+  s_right_sling_active:
+    flash_sling:
       key: key_s_right_sling_active
       loops: 1
-      show_tokens: 
+      show_tokens:
         lights1: l82
         lights2: l83
         flasher: f140
-  SpinnerLeft_active{current_player.super_spinners != 1}: 
-    flicker_color: 
+
+  SpinnerLeft_active{current_player.super_spinners != 1}:
+    flicker_color:
       key: key_s_left_spinner_active
       loops: 0
       speed: 2
-      show_tokens: 
+      show_tokens:
         lights: l70
         color: FFFFFF
-  SpinnerRight_active{current_player.super_spinners != 1}: 
-    flicker_color: 
+
+  SpinnerRight_active{current_player.super_spinners != 1}:
+    flicker_color:
       key: key_s_right_spinner_active
       loops: 0
       speed: 2
-      show_tokens: 
+      show_tokens:
         lights: l71
         color: FFFFFF
-  SpinnerLeft_active{current_player.super_spinners == 1}: 
-    flicker_color: 
+
+  SpinnerLeft_active{current_player.super_spinners == 1}:
+    flicker_color:
       key: key_s_left_spinner_active_super
       loops: 0
       speed: 2
       priority: 900
-      show_tokens: 
+      show_tokens:
         lights: l70
         color: red
-  SpinnerRight_active{current_player.super_spinners == 1}: 
-    flicker_color: 
+
+  SpinnerRight_active{current_player.super_spinners == 1}:
+    flicker_color:
       key: key_s_right_spinner_active_super
       loops: 0
       speed: 2
       priority: 900
-      show_tokens: 
+      show_tokens:
         lights: l71
         color: red
-  flash_bumper_explosion: 
-    flicker_color: 
+
+  flash_bumper_explosion:
+    flicker_color:
       key: key_flash_bumper_explosion
       loops: 0
       speed: 2
       priority: 10
-      show_tokens: 
+      show_tokens:
         lights: l75
         color: FFFFFF
-  flash_bumper_left: 
-    flash_left_bumper: 
+
+  flash_bumper_left:
+    flash_left_bumper:
       key: key_flash_bumper_left
       priority: 1
       loops: 0
       speed: 2
-  flash_bumper_right: 
-    flash_right_bumper: 
+
+  flash_bumper_right:
+    flash_right_bumper:
       key: key_flash_bumper_right
       priority: 1
       loops: 0
       speed: 2
-  left_orbit_hit: 
-    left_orbit: 
+
+  left_orbit_hit:
+    left_orbit:
       key: key_left_orbit_hit
       priority: 1
       loops: 0
       speed: 2
-  right_orbit_hit: 
-    right_orbit: 
+
+  right_orbit_hit:
+    right_orbit:
       key: key_right_orbit_hit
       priority: 1
       loops: 0
       speed: 2
-  balldevice_rightvuk_ejecting_ball: 
-    flicker_color: 
+
+  balldevice_rightvuk_ejecting_ball:
+    flicker_color:
       key: key_balldevice_rightvuk_ejecting_ball
       priority: 1
       loops: 0
       speed: 4
-      show_tokens: 
+      show_tokens:
         lights: f142
         color: 00FF00
-  balldevice_bd_plunger_ejecting_ball.10{current_player.saving_ball==1}: 
-    swipe_up_red: 
+
+  balldevice_bd_plunger_ejecting_ball.10{current_player.saving_ball==1}:
+    swipe_up_red:
       key: key_balldevice_bd_plunger_ejecting_ball_save
       loops: 0
-  show_airduct: 
-    flash_color: 
+
+  show_airduct:
+    flash_color:
       key: key_airduct_enter_flash
       loops: 3
-      show_tokens: 
+      show_tokens:
         lights: AIRDUCT
         color: ffffff
-  show_airduct2: 
-    airduct: 
+
+  show_airduct2:
+    airduct:
       key: key_airduct_enter_show
       loops: 0
-  s_captiveball_active: 
-    flicker_color: 
+
+  s_captiveball_active:
+    flicker_color:
       key: key_captive_ball_hit_flasher
       priority: 1
       loops: 0
       speed: 4
-      show_tokens: 
+      show_tokens:
         lights: f143
         color: FFFFFF
+
   s_upper_pf_entrance_active:
     upper_pf_entrance:
       key: key_upper_pf_entrance_show
       loops: 0
 
-
-slide_player: 
-  mode_base_started: 
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# Plays the base slide during normal play.
+#
+# IMPORTANT FIX:
+#   Remove base slide when a villain starts so the base video/audio
+#   cannot continue behind KarlEscaped / villain result slides.
+#
+#   Replay base slide on resume_base_music after villain/multiball/
+#   ambush modes finish.
+# ------------------------------------------------------------
+slide_player:
+  mode_base_started:
     base:
       action: play
       expire: 0s
-  ball_save_saving_ball: 
+
+  villain_mode_started:
+    base:
+      action: remove
+
+  resume_base_music:
+    base:
+      action: play
+      expire: 0s
+
+  ball_save_saving_ball:
     ball_save:
       action: play
       expire: 0s
+
   multiball_central_park_ended{current_player.central_park_played==1 and current_player.score_park_super_jackpot_hit==0}:
     central_park_failed:
       action: play
       expire: 0s
+
   multiball_nakatomi_ended{current_player.played_nakatomi_multiball==1 and current_player.nakatomi_super_jackpot_collected==0}:
     nakatomi_mb_failed:
       action: play
       expire: 0s
+
   multiball_airplane_ended{current_player.airplane_mb_played==1 and current_player.score_airplane_super_jackpot_hit==0}:
     airplane_mb_failed:
       action: play
       expire: 0s
 
-sound_player: 
-  gameplay_music_1: 
-    gameplay_music_beethoven: 
+# ------------------------------------------------------------
+# SOUND PLAYER
+# Base music, base sound effects, and stop base music event.
+# ------------------------------------------------------------
+sound_player:
+  gameplay_music_1:
+    gameplay_music_beethoven:
       key: main_snd_music
       action: play
-  gameplay_music_2: 
-    gameplay_music_assault: 
+
+  gameplay_music_2:
+    gameplay_music_assault:
       key: main_snd_music
       action: play
-  gameplay_music_3: 
-    gameplay_music_finlandia: 
+
+  gameplay_music_3:
+    gameplay_music_finlandia:
       key: main_snd_music
       action: play
-  gameplay_music_4: 
-    gameplay_music_battle: 
+
+  gameplay_music_4:
+    gameplay_music_battle:
       key: main_snd_music
       action: play
+
   stop_base_music:
     gameplay_music_beethoven:
       key: main_snd_music
@@ -552,101 +659,123 @@ sound_player:
       key: main_snd_music
       action: stop
 
-  s_left_sling_active: 
-    sling_1: 
-      action: play
-  flash_left_sling_blue: 
-    sling_2: 
-      action: play
-  s_right_sling_active: 
-    sling_2: 
-      action: play
-  flash_right_sling_blue: 
-    sling_1: 
-      action: play
-  spinner_fx1: 
-    spinner_fx1: 
-      action: play
-  spinner_fx2: 
-    spinner_fx2: 
-      action: play
-  spinner_fx3: 
-    spinner_fx3: 
-      action: play
-  spinner_fx4: 
-    spinner_fx4: 
-      action: play
-  spinner_fx5: 
-    spinner_fx5: 
-      action: play
-  spinner_fx6: 
-    spinner_fx6: 
-      action: play
-  spinner_fx7: 
-    spinner_fx7: 
-      action: play
-  spinner_fx8: 
-    spinner_fx8: 
-      action: play
-  popbumper_fx1: 
-    popbumper_fx1: 
-      action: play
-  popbumper_fx2: 
-    popbumper_fx2: 
-      action: play
-  popbumper_fx3: 
-    popbumper_fx3: 
-      action: play
-  orbit_fx1: 
-    orbit_fx1: 
-      action: play
-  orbit_fx2: 
-    orbit_fx2: 
-      action: play
-  inlanerollover1_fx: 
-    inlanerollover1_fx: 
-      action: play
-  inlanerollover2_fx: 
-    inlanerollover2_fx: 
-      action: play
-  inlanerollover3_fx: 
-    inlanerollover3_fx: 
+  s_left_sling_active:
+    sling_1:
       action: play
 
+  flash_left_sling_blue:
+    sling_2:
+      action: play
 
+  s_right_sling_active:
+    sling_2:
+      action: play
 
-variable_player: 
-  s_TrPF1_active: 
-    magnets_enabled: 
+  flash_right_sling_blue:
+    sling_1:
+      action: play
+
+  spinner_fx1:
+    spinner_fx1:
+      action: play
+
+  spinner_fx2:
+    spinner_fx2:
+      action: play
+
+  spinner_fx3:
+    spinner_fx3:
+      action: play
+
+  spinner_fx4:
+    spinner_fx4:
+      action: play
+
+  spinner_fx5:
+    spinner_fx5:
+      action: play
+
+  spinner_fx6:
+    spinner_fx6:
+      action: play
+
+  spinner_fx7:
+    spinner_fx7:
+      action: play
+
+  spinner_fx8:
+    spinner_fx8:
+      action: play
+
+  popbumper_fx1:
+    popbumper_fx1:
+      action: play
+
+  popbumper_fx2:
+    popbumper_fx2:
+      action: play
+
+  popbumper_fx3:
+    popbumper_fx3:
+      action: play
+
+  orbit_fx1:
+    orbit_fx1:
+      action: play
+
+  orbit_fx2:
+    orbit_fx2:
+      action: play
+
+  inlanerollover1_fx:
+    inlanerollover1_fx:
+      action: play
+
+  inlanerollover2_fx:
+    inlanerollover2_fx:
+      action: play
+
+  inlanerollover3_fx:
+    inlanerollover3_fx:
+      action: play
+
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# Magnet enable/disable state, ball save state, and EOB bonus
+# reset values when base starts.
+# ------------------------------------------------------------
+variable_player:
+  s_TrPF1_active:
+    magnets_enabled:
       action: set_machine
       int: 0
 
-  s_TrPF2_active: 
-    magnets_enabled: 
+  s_TrPF2_active:
+    magnets_enabled:
       action: set_machine
       int: 0
 
-  s_TrPF3_active: 
-    magnets_enabled: 
+  s_TrPF3_active:
+    magnets_enabled:
       action: set_machine
       int: 0
 
-  s_upper_pf_entrance_active: 
-    magnets_enabled: 
+  s_upper_pf_entrance_active:
+    magnets_enabled:
       action: set_machine
       int: 1
 
-  ball_save_saving_ball: 
-    saving_ball: 
+  ball_save_saving_ball:
+    saving_ball:
       action: set
       int: 1
 
-  balldevice_bd_plunger_ejecting_ball{current_player.saving_ball==1}: 
-    saving_ball: 
+  balldevice_bd_plunger_ejecting_ball{current_player.saving_ball==1}:
+    saving_ball:
       action: set
       int: 0
 
-  mode_base_started: 
+  mode_base_started:
     eob_bonus_bullet:
       action: set
       int: 0

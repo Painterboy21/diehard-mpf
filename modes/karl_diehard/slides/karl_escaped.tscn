@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://n1f68a0np1u2"]
+
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_25oax"]
+[ext_resource type="VideoStream" uid="uid://5ydpfveue5q6" path="res://modes/karl_diehard/slides/KarlEscaped.ogv" id="2_21f2n"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_i3sgc"]
+
+[node name="karl_escaped" type="Control" unique_id=79246256]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_25oax")
+metadata/_custom_type_script = "uid://dru3usokwlhd3"
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=1215460061]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+stream = ExtResource("2_21f2n")
+volume_db = 8.27
+autoplay = true
+script = ExtResource("3_i3sgc")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"

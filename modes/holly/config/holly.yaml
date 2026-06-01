@@ -1,26 +1,52 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# MODE
+# Starts Holly targets during normal play and restarts them
+# after villain modes finish.
+#
+# Stops when ball ends or when a villain mode starts.
+# ------------------------------------------------------------
 mode:
   start_events: 
     - ball_started
+
+    # Hans finished
     - hans_diehard_won_complete
     - hans_diehard_failed_complete
     - hans_dieharder_won_complete
     - hans_dieharder_failed_complete
-    - katya_completed
-    - katya_failed
+
+    # Karl finished
+    - karl_diehard_completed
+    - karl_diehard_failed
+
+    # Katya finished
     - katya_completed
     - katya_failed
     - katya_dieharder_completed
     - katya_dieharder_failed
+
   stop_events: 
     - ball_ended
+
+    # Hans started
     - start_hans_diehard
     - start_hans_dieharder
+
+    # Karl started
+    - start_karl_diehard
+
+    # Katya started
     - start_katya_diehard
     - start_katya_dieharder
+
   priority: 120
 
+# ------------------------------------------------------------
+# BALL SAVES
+# Holly completion starts the Holly ball save.
+# ------------------------------------------------------------
 ball_saves: 
   holly:
     active_time: 12000ms
@@ -30,48 +56,72 @@ ball_saves:
     auto_launch: true
     balls_to_save: -1
 
+# ------------------------------------------------------------
+# SHOT GROUPS
+# HOLLY target bank.
+# Completes when all H-O-L-L-Y targets are hit.
+# Restarts after ball save grace or when the mode stops while
+# all targets are complete.
+# ------------------------------------------------------------
 shot_groups: 
   holly_targets:
-    shots: holly_h,holly_o,holly_l,holly_l1,holly_y
-    restart_events: ball_save_holly_grace_period, mode_holly_stopping{device.shot_groups.holly_targets.common_state == 1}
+    shots: holly_h, holly_o, holly_l, holly_l1, holly_y
+    restart_events:
+      - ball_save_holly_grace_period
+      - mode_holly_stopping{device.shot_groups.holly_targets.common_state == 1}
 
+# ------------------------------------------------------------
+# SHOTS
+# Individual HOLLY target shots.
+# Each target uses the profile_holly profile and lights its
+# matching insert orange.
+# ------------------------------------------------------------
 shots: 
   holly_h:
     switch: s_holly_h
     profile: profile_holly
-    start_enabled: True
+    start_enabled: true
     show_tokens: 
       lights: l30
       color: de780b
+
   holly_o:
     switch: s_holly_o
     profile: profile_holly
-    start_enabled: True
+    start_enabled: true
     show_tokens: 
       lights: l31
       color: de780b
+
   holly_l:
     switch: s_holly_l
     profile: profile_holly
-    start_enabled: True
+    start_enabled: true
     show_tokens: 
       lights: l32
       color: de780b
+
   holly_l1:
     switch: s_holly_l1
     profile: profile_holly
-    start_enabled: True
+    start_enabled: true
     show_tokens: 
       lights: l33
       color: de780b
+
   holly_y:
     switch: s_holly_y
     profile: profile_holly
-    start_enabled: True
+    start_enabled: true
     show_tokens: 
       lights: l34
       color: de780b
 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# Flashes individual target inserts when hit.
+# Lights the whole HOLLY group blue when complete.
+# ------------------------------------------------------------
 show_player: 
   holly_h_hit: 
     flicker_color: 
@@ -82,6 +132,7 @@ show_player:
       show_tokens: 
         lights: l30
         color: de780b
+
   holly_o_hit: 
     flicker_color: 
       key: key_holly_o_hit
@@ -91,6 +142,7 @@ show_player:
       show_tokens: 
         lights: l31
         color: de780b
+
   holly_l_hit: 
     flicker_color: 
       key: key_holly_l_hit
@@ -100,6 +152,7 @@ show_player:
       show_tokens: 
         lights: l32
         color: de780b
+
   holly_l1_hit: 
     flicker_color: 
       key: key_holly_l1_hit
@@ -109,6 +162,7 @@ show_player:
       show_tokens: 
         lights: l33
         color: de780b
+
   holly_y_hit: 
     flicker_color: 
       key: key_holly_y_hit
@@ -118,6 +172,7 @@ show_player:
       show_tokens: 
         lights: l34
         color: de780b
+
   holly_targets_on_complete: 
     led_color: 
       key: key_holly_targets_on_complete
@@ -125,6 +180,7 @@ show_player:
       show_tokens: 
         lights: HOLLY
         color: 0000ff
+
   holly_targets_off_complete: 
     off: 
       key: key_holly_targets_off_complete
@@ -132,26 +188,38 @@ show_player:
       show_tokens: 
         lights: HOLLY
 
-
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# Shows the Holly complete slide when the target bank completes.
+# ------------------------------------------------------------
 slide_player: 
   holly_targets_on_complete: 
     holly_complete:
       action: play
       expire: 0s
 
-
+# ------------------------------------------------------------
+# SOUND PLAYER
+# Plays Holly target hit sound.
+# ------------------------------------------------------------
 sound_player: 
   holly_targets_hit: 
     hollytarget1: 
       key: key_holly_targets_hit
       action: play
 
-
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# Awards points and EOB bonus for Holly target hits and
+# completed HOLLY bank.
+#
+# Scores respect playfield_multiplier.
+# ------------------------------------------------------------
 variable_player:
   holly_targets_hit:
     score:
       action: add
-      int: "5000 * current_player.playfield_multiplier"
+      int: "(5000 * current_player.playfield_multiplier)"
 
     eob_bonus_holly:
       action: add
@@ -160,12 +228,8 @@ variable_player:
   holly_targets_on_complete:
     score:
       action: add
-      int: "50000 * current_player.playfield_multiplier"
+      int: "(50000 * current_player.playfield_multiplier)"
 
     eob_bonus_holly:
       action: add
       int: 200000
-
-
-
-

@@ -1,5 +1,11 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# MODE
+# Villain select carousel.
+# Starts from start_villain_select and stops when a difficulty
+# select begins, selection completes, or the ball ends.
+# ------------------------------------------------------------
 mode:
   start_events:
     - start_villain_select
@@ -14,6 +20,10 @@ mode:
   priority: 300
   code: mpf.modes.carousel.code.carousel.Carousel
 
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# Turns off GI and spots while villain select is active.
+# ------------------------------------------------------------
 light_player:
   mode_villain_select_started:
     GI:
@@ -21,6 +31,17 @@ light_player:
     SPOTS:
       color: 000000
 
+# ------------------------------------------------------------
+# MODE SETTINGS
+# Carousel items and controls.
+#
+# Karl uses karl_complete:
+#   karl_complete = 0 means Karl can still be selected
+#   karl_complete = 1 means Karl was defeated and removed
+#
+# Failed / escaped Karl does not set karl_complete, so Karl
+# can be selected again after a fail.
+# ------------------------------------------------------------
 mode_settings:
   selectable_items:
     - villain_instructions
@@ -28,7 +49,7 @@ mode_settings:
     - Col_Stuart_Villain_Select
     - Hans_Gruber_Villain_Select{current_player.hans_complete==0}
     - Simon_Gruber_Villain_Select
-    - Karl_Vreski_Villain_Select
+    - Karl_Vreski_Villain_Select{current_player.karl_complete==0}
 
   next_item_events:
     - s_right_flipper_active
@@ -40,6 +61,10 @@ mode_settings:
     - s_fire_active
     - s_actionbtn_active
 
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# Shows/removes the villain select slide.
+# ------------------------------------------------------------
 slide_player:
   mode_villain_select_started:
     villain_select:
@@ -50,6 +75,13 @@ slide_player:
     villain_select:
       action: remove
 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# Handles carousel selection and highlighted-item light events.
+#
+# Karl uses karl_complete here too, so Karl can be chosen again
+# after an escaped/failed attempt, but not after defeat.
+# ------------------------------------------------------------
 event_player:
   carousel_item_selected{carousel=="villain_select" and item=="villain_instructions"}:
     - villain_select_no_pick
@@ -62,7 +94,7 @@ event_player:
     - set_villain_hans
     - start_hans_difficulty_select|250ms
 
-  carousel_item_selected{carousel=="villain_select" and item=="Karl_Vreski_Villain_Select"}:
+  carousel_item_selected{carousel=="villain_select" and item=="Karl_Vreski_Villain_Select" and current_player.karl_complete==0}:
     - set_villain_karl
     - start_karl_difficulty_select|250ms
 
@@ -80,7 +112,7 @@ event_player:
   carousel_item_highlighted{carousel=="villain_select" and item=="Hans_Gruber_Villain_Select" and current_player.hans_complete==0}:
     - flash_hans_light
 
-  carousel_item_highlighted{carousel=="villain_select" and item=="Karl_Vreski_Villain_Select"}:
+  carousel_item_highlighted{carousel=="villain_select" and item=="Karl_Vreski_Villain_Select" and current_player.karl_complete==0}:
     - flash_karl_light
 
   carousel_item_highlighted{carousel=="villain_select" and item=="Katya_Villain_Select" and current_player.katya_complete==0}:
@@ -92,6 +124,10 @@ event_player:
   carousel_item_highlighted{carousel=="villain_select" and item=="villain_instructions"}:
     - stop_villain_flash
 
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# Stores selected villain name.
+# ------------------------------------------------------------
 variable_player:
   set_villain_col:
     selected_villain:
@@ -118,6 +154,13 @@ variable_player:
       string: simon
       action: set
 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# Runs villain select insert flash, orange spin show, and
+# highlighted villain colour flashes.
+#
+# Do not use l80, l81, l82, or l83.
+# ------------------------------------------------------------
 show_player:
   mode_villain_select_started:
     flash_color:
@@ -128,10 +171,11 @@ show_player:
       show_tokens:
         lights: l10
         color: ffff00
+
     InsertsVillainSpinOrange:
       loops: -1
-      speed: 50 
-      
+      speed: 50
+
   start_col_difficulty_select:
     villain_select_insert_flash:
       action: stop
