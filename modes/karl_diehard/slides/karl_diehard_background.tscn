@@ -55,6 +55,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("17_bycmc")
+volume_db = 8.27
 
 [node name="Control2" type="Control" parent="." unique_id=967988825]
 layout_mode = 1
