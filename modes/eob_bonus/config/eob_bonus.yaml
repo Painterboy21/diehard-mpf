@@ -5,7 +5,7 @@
 # EOB bonus starts from MPF's ball_ending queue.
 #
 # Keep this original start event.
-# The Karl delay is handled by the show/timer gates below,
+# Karl/Hans delay is handled by show/timer gates below,
 # not by changing the mode start event.
 # ------------------------------------------------------------
 mode:
@@ -55,17 +55,25 @@ event_player:
 #   Start EOB show on mode_eob_bonus_started.
 #
 # Karl escaped drain:
-#   If karl_result_started == 1, do not start the EOB show yet.
-#   Start it after karl_diehard_failed, which fires after the
-#   KarlEscaped slide has played and removed.
+#   If karl_result_started == 1, do not start EOB yet.
+#   Start it after karl_diehard_failed.
+#
+# Hans Die Hard escaped drain:
+#   If hans_result_started == 1, do not start EOB yet.
+#   Start it after hans_diehard_failed_complete.
 # ------------------------------------------------------------
 show_player:
-  mode_eob_bonus_started{current_player.karl_result_started != 1}:
+  mode_eob_bonus_started{current_player.karl_result_started != 1 and current_player.hans_result_started != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
 
   karl_diehard_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  hans_diehard_failed_complete:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
@@ -115,11 +123,11 @@ sound_player:
 # eob_bonus:
 #   Runs the main EOB count/video timing.
 #
-# Important Karl fix:
-#   start_running is false now.
+# Important delayed villain result fix:
+#   start_running is false.
 #   Normal drain starts it on mode_eob_bonus_started.
-#   Karl escaped drain starts it on karl_diehard_failed, after
-#   KarlEscaped has finished.
+#   Karl escaped drain starts it on karl_diehard_failed.
+#   Hans escaped drain starts it on hans_diehard_failed_complete.
 #
 # eob_bonus_summary:
 #   Runs the final summary slide timing.
@@ -133,9 +141,11 @@ timers:
     start_running: false
     restart_on_complete: false
     control_events:
-      - event: mode_eob_bonus_started{current_player.karl_result_started != 1}
+      - event: mode_eob_bonus_started{current_player.karl_result_started != 1 and current_player.hans_result_started != 1}
         action: restart
       - event: karl_diehard_failed
+        action: restart
+      - event: hans_diehard_failed_complete
         action: restart
       - event: show_bonus_summary
         action: stop

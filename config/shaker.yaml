@@ -1,84 +1,163 @@
 #config_version=6
 
-shakers: 
+# ------------------------------------------------------------
+# SHAKERS
+# Global shaker motor feedback.
+#
+# Keep all shaker events inside this one main_shaker block.
+# ------------------------------------------------------------
+shakers:
   main_shaker:
     number: shakerboard-1
     debug: true
     default_power: 0.5
     control_events:
+
+      # ------------------------------------------------------------
+      # GENERAL PLAYFIELD
+      # ------------------------------------------------------------
       skillshot_hit:
         power: 0.250
         duration: 500ms
+
       s_popbumper_left_active:
         power: 0.250
         duration: 100ms
+
       s_popbumper_right_active:
         power: 0.250
         duration: 100ms
+
       s_left_sling_active:
         power: 0.250
         duration: 60ms
+
       s_right_sling_active:
         power: 0.250
         duration: 60ms
+
       SpinnerLeft_active:
         power: 0.250
         duration: 40ms
+
       SpinnerRight_active:
         power: 0.250
         duration: 40ms
+
       s_captiveball_active:
         power: 0.250
         duration: 280ms
-# super jets
+
+      # ------------------------------------------------------------
+      # SUPER JETS
+      # ------------------------------------------------------------
       super_jets_left_shaker:
         power: 0.600
         duration: 70ms
+
       super_jets_right_shaker:
         power: 0.600
         duration: 70ms
-# ambush
+
+      # ------------------------------------------------------------
+      # AMBUSH
+      # ------------------------------------------------------------
       ambush_started_shaker:
         power: 0.450
         duration: 350ms
+
       ambush_shot_shaker:
         power: 0.350
         duration: 120ms
+
       ambush_collected_shaker:
         power: 0.650
         duration: 500ms
+
       ambush_failed_shaker:
         power: 0.250
         duration: 250ms
-# nakatomi
+
+      # ------------------------------------------------------------
+      # NAKATOMI
+      # ------------------------------------------------------------
       nakatomi_jackpots_hit:
         power: 0.300
         duration: 350ms
-# central park  
+
+      # ------------------------------------------------------------
+      # CENTRAL PARK
+      # ------------------------------------------------------------
       central_park_lock_left_hit:
         power: 0.200
         duration: 100ms
+
       central_park_lock_middle_hit:
         power: 0.200
         duration: 100ms
+
       central_park_lock_right_hit:
         power: 0.200
         duration: 100ms
+
       slide_centralparkball_1_locked_active:
         power: 0.300
         duration: 250ms
+
       slide_centralparkball_2_locked_active:
         power: 0.300
         duration: 250ms
+
       slide_centralpark_mb_active:
         power: 0.300
         duration: 250ms
+
       multiball_central_park_started:
         power: 0.400
         duration: 450ms
+
       score_park_jackpot:
         power: 0.400
         duration: 450ms
+
       score_park_super_jackpot_hit:
         power: 0.650
-        duration: 550ms  
+        duration: 550ms
+
+      # ------------------------------------------------------------
+      # HANS DIE HARD
+      # Short punch on target hits, bigger hit on completed,
+      # smaller pulse when Hans escapes.
+      # ------------------------------------------------------------
+      hans_diehard_target_hit:
+        power: 0.350
+        duration: 160ms
+
+      hans_diehard_complete:
+        power: 0.650
+        duration: 600ms
+
+      hans_lost_slide:
+        power: 0.300
+        duration: 300ms
+
+      # ------------------------------------------------------------
+      # KARL DIE HARD
+      # Spinner shake is deliberately light because it can fire fast.
+      # Pop hit is stronger because it gives +5 Karl damage.
+      # ------------------------------------------------------------
+      karl_spinner_hit:
+        power: 0.180
+        duration: 45ms
+
+      karl_pop_hit:
+        power: 0.400
+        duration: 120ms
+
+      karl_diehard_completed_start:
+        power: 0.700
+        duration: 650ms
+
+      karl_diehard_failed_start:
+        power: 0.300
+        duration: 300ms

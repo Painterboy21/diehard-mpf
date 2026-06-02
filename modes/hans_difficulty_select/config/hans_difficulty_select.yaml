@@ -64,7 +64,7 @@ slide_player:
   play_hans_intro:
     hans_intro:
       action: play
-      expire: 3s
+      expire: 5s
 
   hide_hans_difficulty_select:
     hans_difficulty_select:
