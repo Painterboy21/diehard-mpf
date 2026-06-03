@@ -4,15 +4,17 @@
 # MODE
 # Karl Die Hard starts from Karl difficulty select.
 #
-# Uses karl_complete as the gate:
-#   Failed / escaped = can replay
-#   Completed / defeated = blocked
+# karl_played:
+#   Shared gate for Karl Die Hard and Karl Die Harder.
+#   Once either version starts, Karl cannot be selected again
+#   during that game.
 #
-# Do not use karl_played here if failed attempts are replayable.
+# karl_complete:
+#   Only set when Karl is defeated.
 # ------------------------------------------------------------
 mode:
   start_events:
-    - start_karl_diehard{current_player.karl_complete != 1}
+    - start_karl_diehard{current_player.karl_played==0}
   stop_events:
     - karl_diehard_completed
     - karl_diehard_failed
@@ -20,8 +22,14 @@ mode:
 
 # ------------------------------------------------------------
 # TIMER
-# VPW Karl = 90 seconds.
-# Mystery "Add More Time" adds +20 seconds.
+# VPW Karl = 90 seconds normally.
+# If Hans Bonus is active, VPW gives Karl 120 seconds.
+#
+# MPF-safe approach:
+#   - restart timer at 90
+#   - if hans_bonus == 1, add +30 seconds immediately
+#
+# Mystery "Add More Time" still adds +20 seconds.
 # Result events stop the timer while the result slide plays.
 # ------------------------------------------------------------
 timers:
@@ -34,6 +42,9 @@ timers:
     control_events:
       - event: mode_karl_diehard_started
         action: restart
+      - event: karl_apply_hans_bonus_time
+        action: add
+        value: 30
       - event: karl_defeated_slide
         action: stop
       - event: karl_escaped_slide
@@ -70,15 +81,15 @@ ball_saves:
 
 # ------------------------------------------------------------
 # EVENT PLAYER
-# Handles Karl mode start, damage shots, heartbeat changes,
-# result slide events, and final complete/fail cleanup.
+# Handles Karl mode start, Hans Bonus timer add, damage shots,
+# heartbeat changes, result slide events, and final cleanup.
 #
-# Same style as Hans:
-#   win:
-#     karl_defeated_slide -> karl_diehard_completed|4s
+# Result flow:
+#   win  -> karl_defeated_slide -> 4s -> karl_diehard_completed
+#   lose -> karl_escaped_slide  -> 5s -> karl_diehard_failed
 #
-#   lose / drain / timer:
-#     karl_escaped_slide -> karl_diehard_failed|5s
+# ball_drain is used like Hans so KarlEscaped can play before
+# the ball end / EOB screen takes over.
 # ------------------------------------------------------------
 event_player:
   mode_karl_diehard_started:
@@ -90,10 +101,10 @@ event_player:
     - karl_reset_damage
     - karl_enable_ball_save
     - karl_heartbeat_slow
+    - karl_apply_hans_bonus_time{current_player.hans_bonus == 1}|10ms
 
   # ------------------------------------------------------------
   # RESULT STARTS
-  # Same style as Hans lost slide.
   # ------------------------------------------------------------
   timer_karl_diehard_timer_complete{current_player.karl_result_started==0}:
     - karl_escaped_slide
@@ -185,15 +196,24 @@ event_player:
 # VARIABLE PLAYER
 # Stores Karl progress and result state.
 #
+# karl_played:
+#   Shared gate for Karl Die Hard and Karl Die Harder.
+#   Set as soon as either Karl mode starts.
+#
 # karl_complete:
 #   Only set when Karl is defeated.
-#   Used to remove/block Karl after completion.
 #
 # karl_health_display:
 #   Sends Karl damage value to Godot for the Karl health bar.
 #
+# karl_hans_bonus_active:
+#   Sends Hans Bonus state to Godot.
+#   0 = normal Karl / 90 second John health scale
+#   1 = Hans Bonus Karl / 120 second John health scale
+#
 # karl_result_started:
-#   Prevents double-starting win/lose result events.
+#   Prevents double-starting win/lose result events and lets EOB
+#   wait until the result video finishes.
 # ------------------------------------------------------------
 variable_player:
   mode_karl_diehard_started:
@@ -222,6 +242,16 @@ variable_player:
       action: set
       int: 500000
 
+  mode_karl_diehard_started{current_player.hans_bonus == 1}:
+    karl_hans_bonus_active:
+      action: set
+      int: 1
+
+  mode_karl_diehard_started{current_player.hans_bonus != 1}:
+    karl_hans_bonus_active:
+      action: set
+      int: 0
+
   mode_karl_diehard_started{current_player.playfield_multiplier == None}:
     playfield_multiplier:
       action: set
@@ -240,7 +270,7 @@ variable_player:
 
   # ------------------------------------------------------------
   # RESULT SLIDE VARIABLES
-  # These set the result state while the result slide/video plays.
+  # These trigger Godot/result state and tell EOB to wait.
   # ------------------------------------------------------------
   karl_defeated_slide:
     karl_result_started:
@@ -328,7 +358,9 @@ variable_player:
   # Failed/Escaped:
   #   - only sets karl_diehard_lost
   #   - does not set karl_complete
-  #   - Karl can be selected again after fail/escape
+  #
+  # Karl still cannot be selected again because karl_played is
+  # set when the mode starts.
   # ------------------------------------------------------------
   karl_diehard_completed:
     karl_diehard_won:
@@ -340,11 +372,22 @@ variable_player:
     karl_health_display:
       action: set
       int: 100
+    karl_result_started:
+      action: set
+      int: 0
 
   karl_diehard_failed:
     karl_diehard_lost:
       action: set
       int: 1
+    karl_result_started:
+      action: set
+      int: 0
+
+  mode_karl_diehard_stopping:
+    karl_result_started:
+      action: set
+      int: 0
 
 # ------------------------------------------------------------
 # SOUND PLAYER
@@ -385,8 +428,6 @@ sound_player:
 #   - damage flashes
 #   - complete/fail shows
 #   - cleanup
-#
-# Uses downloaded show files.
 # ------------------------------------------------------------
 show_player:
   mode_karl_diehard_started:
@@ -536,9 +577,6 @@ show_player:
 #
 # Failed/Escaped:
 #   Karl insert turns off.
-#
-# If base mode handles completed villain inserts, this mode
-# still leaves Karl in his normal colour instead of green.
 #
 # Do not use l80, l81, l82, or l83.
 # ------------------------------------------------------------

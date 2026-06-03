@@ -2,7 +2,9 @@
 
 # ------------------------------------------------------------
 # BALL DEVICES
+# ------------------------------------------------------------
 # Defines every physical ball device in the machine:
+#
 #   - trough
 #   - plunger lane
 #   - vault kicker
@@ -11,14 +13,13 @@
 #   - right VUK
 #   - tower VUK
 #   - captive ball / airplane device
-#
-# Clean-up only:
-#   No device names, switches, coils, timeouts, tags, targets,
-#   or events have been changed.
 # ------------------------------------------------------------
+
 ball_devices:
+
   # ------------------------------------------------------------
   # TROUGH
+  # ------------------------------------------------------------
   # Main ball trough with jam switch and eject to plunger lane.
   # Tags include trough, home, and drain.
   # ------------------------------------------------------------
@@ -32,6 +33,7 @@ ball_devices:
 
   # ------------------------------------------------------------
   # PLUNGER LANE
+  # ------------------------------------------------------------
   # Holds the ball in the plunger lane.
   # Player controlled eject uses the fire/action button switch.
   # ------------------------------------------------------------
@@ -42,7 +44,8 @@ ball_devices:
 
   # ------------------------------------------------------------
   # VAULT KICKER
-  # Used by vault/mystery/ambush style ball holds and releases.
+  # ------------------------------------------------------------
+  # Used by vault, mystery, and ambush style ball holds/releases.
   # ------------------------------------------------------------
   kickervault1_eject:
     ball_switches: s_kickervault1
@@ -50,6 +53,7 @@ ball_devices:
 
   # ------------------------------------------------------------
   # RIGHT KICKER
+  # ------------------------------------------------------------
   # Standard right kicker device.
   # ------------------------------------------------------------
   rightkicker:
@@ -59,6 +63,7 @@ ball_devices:
 
   # ------------------------------------------------------------
   # UPPER RAMP DEVICE
+  # ------------------------------------------------------------
   # Upper ramp ball device.
   # ------------------------------------------------------------
   UrampUp001:
@@ -68,6 +73,7 @@ ball_devices:
 
   # ------------------------------------------------------------
   # RIGHT VUK
+  # ------------------------------------------------------------
   # Right VUK device.
   # Also used elsewhere for right VUK collections.
   # ------------------------------------------------------------
@@ -78,6 +84,7 @@ ball_devices:
 
   # ------------------------------------------------------------
   # TOWER VUK
+  # ------------------------------------------------------------
   # Nakatomi tower VUK.
   # Mechanical eject device with 3-ball capacity.
   # Ejects all balls when Nakatomi multiball starts.
@@ -93,6 +100,7 @@ ball_devices:
 
   # ------------------------------------------------------------
   # AIRPLANE / CAPTIVE BALL
+  # ------------------------------------------------------------
   # Captive ball / airplane device.
   # ------------------------------------------------------------
   airplane:

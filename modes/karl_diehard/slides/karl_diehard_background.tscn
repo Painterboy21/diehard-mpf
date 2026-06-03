@@ -227,12 +227,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 2116.0
-offset_top = 171.0
-offset_right = 346.0
-offset_bottom = -444.0
+offset_left = 1641.0
+offset_top = 81.0
+offset_right = -129.0
+offset_bottom = -534.0
 grow_horizontal = 2
 grow_vertical = 2
+text = "00"
 script = ExtResource("4_hu8xq")
 variable_name = "karl_diehard_karl_diehard_timer_tick"
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
@@ -242,14 +243,25 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1974.0
-offset_top = 391.0
-offset_right = 425.0
-offset_bottom = -15.0
+offset_left = 1986.0
+offset_top = 738.0
+offset_right = 437.0
+offset_bottom = 332.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("8_6gdef")
 variable_name = "karl_health_display"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="KarlHansBonusVariable" type="Label" parent="Control1" unique_id=2070309448]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_hu8xq")
+variable_name = "karl_hans_bonus_active"
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [node name="karl_progress_widget" parent="." unique_id=1421029567 instance=ExtResource("20_2v516")]

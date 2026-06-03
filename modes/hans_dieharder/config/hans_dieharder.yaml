@@ -279,6 +279,10 @@ variable_player:
       int: 1
       action: set
 
+    hans_bonus:
+      int: 1
+      action: set
+
     eob_bonus_villains:
       int: 1000000
       action: add
@@ -522,6 +526,19 @@ coil_player:
     c_left_flipper_main: enable
     c_right_flipper_main: enable
 
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# Plays Hans Die Harder background slide, completed slide,
+# and fail/lost slide.
+#
+# Detonator hit videos are no longer played as separate slides.
+# They are now handled inside hans_dieharder_background by
+# HansDieHarderVideoControl.gd using:
+#   Hans1.ogv to Hans8.ogv
+#
+# This keeps the timer/progress widgets on screen while the
+# hit video replaces only the background video.
+# ------------------------------------------------------------
 slide_player:
   mode_hans_dieharder_started:
     hans_dieharder_background:
@@ -533,60 +550,15 @@ slide_player:
     hans_dieharder_background:
       action: remove
 
-  logicblock_hans_dieharder_detonators_hit{count==1}:
-    detonator_1:
-      action: play
-      expire: 4s
-      priority: 600
-
-  logicblock_hans_dieharder_detonators_hit{count==2}:
-    detonator_2:
-      action: play
-      expire: 4s
-      priority: 600
-
-  logicblock_hans_dieharder_detonators_hit{count==3}:
-    detonator_3:
-      action: play
-      expire: 4s
-      priority: 600
-
-  logicblock_hans_dieharder_detonators_hit{count==4}:
-    detonator_4:
-      action: play
-      expire: 4s
-      priority: 600
-
-  logicblock_hans_dieharder_detonators_hit{count==5}:
-    detonator_5:
-      action: play
-      expire: 4s
-      priority: 600
-
-  logicblock_hans_dieharder_detonators_hit{count==6}:
-    detonator_6:
-      action: play
-      expire: 4s
-      priority: 600
-
-  logicblock_hans_dieharder_detonators_hit{count==7}:
-    detonator_7:
-      action: play
-      expire: 4s
-      priority: 600
-
-  logicblock_hans_dieharder_detonators_hit{count==8}:
-    detonator_8:
-      action: play
-      expire: 4s
-      priority: 600
-
+  # ------------------------------------------------------------
+  # RESULT SLIDES
+  # ------------------------------------------------------------
   hans_dieharder_completed_slide:
     hans_dieharder_background:
       action: remove
     detonators_completed:
       action: play
-      expire: 4s
+      expire: 5s
       priority: 10000
 
   hans_dieharder_fail_mode:
@@ -594,7 +566,7 @@ slide_player:
       action: remove
     hans_ball_lost:
       action: play
-      expire: 4s
+      expire: 5s
       priority: 10000
 
 widget_player:

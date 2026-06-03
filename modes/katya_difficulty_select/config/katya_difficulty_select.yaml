@@ -67,7 +67,7 @@ slide_player:
   play_katya_intro:
     katya_intro:
       action: play
-      expire: 3s
+      expire: 5s
 
   hide_katya_difficulty_select:
     katya_difficulty_select:

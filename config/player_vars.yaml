@@ -4,12 +4,22 @@
 # PLAYER VARS
 # Player-specific variables used across modes.
 # ------------------------------------------------------------
+
 player_vars:
 
   # ------------------------------------------------------------
   # GENERAL / GLOBAL
   # ------------------------------------------------------------
+
   mystery_hits_count:
+    initial_value: 0
+    value_type: int
+
+  villain_select_running:
+    initial_value: 0
+    value_type: int
+
+  villain_difficulty_select_running:
     initial_value: 0
     value_type: int
 
@@ -61,9 +71,11 @@ player_vars:
     initial_value: 0
     value_type: int
 
+
   # ------------------------------------------------------------
   # SUPER JETS / SUPER SPINNERS
   # ------------------------------------------------------------
+
   super_jets:
     initial_value: 0
     value_type: int
@@ -76,9 +88,11 @@ player_vars:
     initial_value: 0
     value_type: int
 
+
   # ------------------------------------------------------------
   # BULLETS
   # ------------------------------------------------------------
+
   bullet_hits:
     initial_value: 0
     value_type: int
@@ -107,9 +121,11 @@ player_vars:
     initial_value: 0
     value_type: int
 
+
   # ------------------------------------------------------------
   # EOB BONUS VALUES
   # ------------------------------------------------------------
+
   eob_bonus_bullet:
     initial_value: 0
     value_type: int
@@ -134,9 +150,11 @@ player_vars:
     initial_value: 0
     value_type: int
 
+
   # ------------------------------------------------------------
   # NAKATOMI MULTIBALL
   # ------------------------------------------------------------
+
   ball_locking_nakatomi:
     initial_value: 0
     value_type: int
@@ -155,6 +173,7 @@ player_vars:
 
   nakatomi_super_collected:
     initial_value: 0
+    value_type: int
 
   played_nakatomi_multiball:
     initial_value: 0
@@ -168,9 +187,11 @@ player_vars:
     initial_value: 0
     value_type: int
 
+
   # ------------------------------------------------------------
   # CENTRAL PARK MULTIBALL
   # ------------------------------------------------------------
+
   central_park_played:
     initial_value: 0
     value_type: int
@@ -183,9 +204,11 @@ player_vars:
     initial_value: 0
     value_type: int
 
+
   # ------------------------------------------------------------
   # AIRPLANE MULTIBALL
   # ------------------------------------------------------------
+
   airplane_virtual_locks:
     initial_value: 0
     value_type: int
@@ -214,9 +237,11 @@ player_vars:
     initial_value: 0
     value_type: int
 
+
   # ------------------------------------------------------------
   # MYSTERY
   # ------------------------------------------------------------
+
   mystery_add_a_ball_airplane_awarded:
     initial_value: 0
     value_type: int
@@ -229,9 +254,11 @@ player_vars:
     initial_value: 0
     value_type: int
 
+
   # ------------------------------------------------------------
   # HANS
   # ------------------------------------------------------------
+
   hans_complete:
     initial_value: 0
     value_type: int
@@ -264,9 +291,11 @@ player_vars:
     initial_value: 0
     value_type: int
 
+
   # ------------------------------------------------------------
   # KATYA
   # ------------------------------------------------------------
+
   katya_complete:
     initial_value: 0
     value_type: int
@@ -299,18 +328,13 @@ player_vars:
     initial_value: 0
     value_type: int
 
+
   # ------------------------------------------------------------
   # KARL
   # Karl can be replayed after fail/escape.
   # Karl is only blocked once karl_complete = 1.
-  #
-  # karl_complete:
-  #   Used as the real gate for villain select and mode start.
-  #
-  # karl_played:
-  #   Can stay as a tracking var, but do not use it as a gate
-  #   if failed attempts are replayable.
   # ------------------------------------------------------------
+
   karl_complete:
     initial_value: 0
     value_type: int
@@ -347,9 +371,35 @@ player_vars:
     initial_value: 0
     value_type: int
 
+  karl_dieharder_complete:
+    initial_value: 0
+    value_type: int
+
+  karl_dieharder_failed:
+    initial_value: 0
+    value_type: int
+
+  karl_dieharder_completion_active:
+    initial_value: 0
+    value_type: int
+
+  karl_dieharder_failed_active:
+    initial_value: 0
+    value_type: int
+
+  karl_dieharder_time:
+    initial_value: 90
+    value_type: int
+
+  karl_hans_bonus_active:
+    initial_value: 0
+    value_type: int
+
+
   # ------------------------------------------------------------
   # BONUS MULTIPLIERS
   # ------------------------------------------------------------
+
   bonus_multiplier:
     initial_value: 1
     value_type: int

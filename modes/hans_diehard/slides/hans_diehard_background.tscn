@@ -54,6 +54,7 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 scale = Vector2(1, 0.9)
 stream = ExtResource("4_iqljn")
+volume_db = 7.9999986
 
 [node name="HansVideoControl" type="Control" parent="." unique_id=959045619]
 layout_mode = 1
@@ -65,9 +66,13 @@ grow_vertical = 2
 script = ExtResource("5_hk5xl")
 
 [node name="HansRemainingVariable" type="Label" parent="HansVideoControl" unique_id=1659313648]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("7_kferj")
 variable_name = "hans_diehard_remaining"
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"

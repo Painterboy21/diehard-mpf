@@ -3,10 +3,6 @@
 # ------------------------------------------------------------
 # LIGHTS
 # Playfield and cabinet light definitions.
-#
-# Clean-up only:
-#   No light names, numbers, subtypes, types, or tags have
-#   been intentionally changed.
 # ------------------------------------------------------------
 lights:
 
