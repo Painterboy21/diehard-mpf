@@ -1,123 +1,178 @@
 #config_version=6
 
 mode:
-  start_events: start_nakatomi_multiball
-  stop_events: ball_ended, multiball_nakatomi_ended
+  start_events:
+    - start_nakatomi_multiball
+  stop_events:
+    - ball_ended
+    - multiball_nakatomi_ended
   priority: 120
 
-light_player: 
-  mode_nakatomi_multiball_started: 
-    GI: 
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# Sets the Nakatomi Multiball GI, spotlights, and bumper spots
+# when the mode starts.
+# ------------------------------------------------------------
+light_player:
+  mode_nakatomi_multiball_started:
+    GI:
       color: ffb700
     SPOTS:
       color: 505050
     SPOTS_BUMPER:
       color: 969650
 
-ball_holds: 
+# ------------------------------------------------------------
+# BALL HOLDS
+# Holds balls in the tower VUK during the Super Jackpot stage.
+# Releases on tilt or when the Super Jackpot is disabled.
+# ------------------------------------------------------------
+ball_holds:
   nakatomi_super_hold:
-    enable_events: nakatomi_enable_super_jackpot
-    hold_devices: tower_vuk
+    enable_events:
+      - nakatomi_enable_super_jackpot
+    hold_devices:
+      - tower_vuk
     balls_to_hold: 2
-    release_all_events: tilt, nakatomi_disable_super_jackpot
+    release_all_events:
+      - tilt
+      - nakatomi_disable_super_jackpot
 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# Handles jackpot awards, Super Jackpot enable/disable flow,
+# lock opening/closing, and Extra Ball bridge count.
+# ------------------------------------------------------------
 event_player:
   nakatomi_jackpots_on_hit.1:
     - jackpot_2mil
     - nakatomi_jackpot_collected
-
   nakatomi_jackpots_off_complete:
     - nakatomi_enable_super_jackpot
     - nakatomi_lock_open
     - nakatomi_entrance_lock_open
-
+  s_towervuk_active{current_player.nakatomi_super_jackpot_ready == 1}:
+    - nakatomi_entrance_lock_close
   ball_hold_nakatomi_super_hold_held_ball:
+    - nakatomi_entrance_lock_close
     - jackpot_20mil
     - nakatomi_super_jackpot_collected
-    - nakatomi_entrance_lock_close
-
   slide_nakatomi_super_jackpot_removed{device.ball_holds.nakatomi_super_hold.balls_held==2}:
     - nakatomi_disable_super_jackpot
     - nakatomi_lock_close
-
   multiball_nakatomi_ended.1:
     - nakatomi_lock_close
     - nakatomi_entrance_lock_close
     - count_nakatomi_for_extra_ball
+  nakatomi_super_jackpot_collected:
+    - stop_nakatomi_super_jackpot_show|4s
 
+
+# ------------------------------------------------------------
+# MULTIBALLS
+# Starts 3-ball Nakatomi Multiball.
+# Uses tower_vuk as the locked ball source.
+# Safe / Mystery Add-a-Ball posts add_a_ball_in_multiball.
+# Ball save timings are shortened so they do not run too long.
+# ------------------------------------------------------------
 multiballs:
   nakatomi:
-    start_events: mode_nakatomi_multiball_started
+    start_events:
+      - mode_nakatomi_multiball_started
     ball_count: 3
     ball_count_type: total
-    shoot_again: 20000
-    hurry_up_time: 3000
-    grace_period: 2000
-    ball_locks: tower_vuk
-
+    shoot_again: 10s
+    hurry_up_time: 3s
+    grace_period: 2s
+    ball_locks:
+      - tower_vuk
     add_a_ball_events:
       - add_a_ball_in_multiball
+    add_a_ball_shoot_again: 5s
 
-    add_a_ball_shoot_again: 10s
-
-    
-shot_groups: 
+# ------------------------------------------------------------
+# SHOT GROUPS
+# Tracks all Nakatomi Jackpot shots.
+# Completing all jackpot shots enables Super Jackpot.
+# ------------------------------------------------------------
+shot_groups:
   nakatomi_jackpots:
-    shots: bullet_left_orbit_nakatomi,bullet_upper_pf_nakatomi,bullet_right_orbit_nakatomi,bullet_mid_orbit_nakatomi,bullet_air_duct_nakatomi
-    restart_events: nakatomi_disable_super_jackpot
+    shots:
+      - bullet_left_orbit_nakatomi
+      - bullet_upper_pf_nakatomi
+      - bullet_right_orbit_nakatomi
+      - bullet_mid_orbit_nakatomi
+      - bullet_air_duct_nakatomi
+    restart_events:
+      - nakatomi_disable_super_jackpot
 
-shots: 
+# ------------------------------------------------------------
+# SHOTS
+# Main jackpot shots and the Super Jackpot insert shot.
+# Air duct is your real-machine right ramp shot.
+# ------------------------------------------------------------
+shots:
   bullet_left_orbit_nakatomi:
     profile: profile_nakatomi
-    start_enabled: True
-    show_tokens: 
+    start_enabled: true
+    show_tokens:
       lights: l20
-    hit_events: left_orbit_hit
+    hit_events:
+      - left_orbit_hit
   bullet_upper_pf_nakatomi:
     switch: s_upper_pf_entrance
     profile: profile_nakatomi
-    start_enabled: True
-    show_tokens: 
+    start_enabled: true
+    show_tokens:
       lights: l21
-  bullet_right_orbit_nakatomi: 
+  bullet_right_orbit_nakatomi:
     profile: profile_nakatomi
-    start_enabled: True
-    show_tokens: 
+    start_enabled: true
+    show_tokens:
       lights: l22
-    hit_events: right_orbit_hit
+    hit_events:
+      - right_orbit_hit
   bullet_mid_orbit_nakatomi:
     switch: s_mid_orbit
     profile: profile_nakatomi
-    start_enabled: True
-    show_tokens: 
+    start_enabled: true
+    show_tokens:
       lights: l23
   bullet_air_duct_nakatomi:
     switch: s_air_duct
     profile: profile_nakatomi
-    start_enabled: True
-    show_tokens: 
+    start_enabled: true
+    show_tokens:
       lights: l24
   nakatomi_super_jackpot:
     profile: profile_off_then_flash
-    show_tokens: 
+    show_tokens:
       lights: l7
       color: 00ff00
-    control_events: 
+    control_events:
       - events: nakatomi_enable_super_jackpot
         state: 1
       - events: nakatomi_disable_super_jackpot
         state: 0
 
-slide_player: 
-  nakatomi_jackpot_collected: 
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# Plays the jackpot and Super Jackpot slides.
+# ------------------------------------------------------------
+slide_player:
+  nakatomi_jackpot_collected:
     jackpot:
       action: play
       expire: 0s
-  nakatomi_super_jackpot_collected: 
+  nakatomi_super_jackpot_collected:
     nakatomi_super_jackpot:
       action: play
       expire: 0s
 
+# ------------------------------------------------------------
+# WIDGET PLAYER
+# Shows/removes Super Jackpot lit and collected widgets.
+# ------------------------------------------------------------
 widget_player:
   nakatomi_enable_super_jackpot:
     nakatomi_super_jackpot_lit:
@@ -130,106 +185,113 @@ widget_player:
       action: play
       expire: 0s
 
-show_player: 
-  nakatomi_super_jackpot_collected: 
-    nakatomi_super_jackpot: 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# Plays the jackpot shot shows and Super Jackpot show.
+# ------------------------------------------------------------
+show_player:
+  nakatomi_super_jackpot_collected:
+    nakatomi_super_jackpot:
       key: nakatomi_super_jackpot_collected
-      loops: 0
-      speed: 2
-  bullet_left_orbit_nakatomi_on_hit: 
-    nakatomi_jackpot_left_orbit: 
+      loops: -1
+      speed: 3
+  bullet_left_orbit_nakatomi_on_hit:
+    nakatomi_jackpot_left_orbit:
       key: bullet_left_orbit_nakatomi_hit
       loops: 0
       speed: 2
-  bullet_upper_pf_nakatomi_on_hit: 
-    nakatomi_jackpot_park: 
+  bullet_upper_pf_nakatomi_on_hit:
+    nakatomi_jackpot_park:
       key: bullet_upper_pf_nakatomi_on_hit
       loops: 0
       speed: 2
-  bullet_air_duct_nakatomi_on_hit: 
-    nakatomi_jackpot_vent: 
+  bullet_air_duct_nakatomi_on_hit:
+    nakatomi_jackpot_vent:
       key: bullet_air_duct_nakatomi_on_hit
       loops: 0
       speed: 2
   bullet_mid_orbit_nakatomi_on_hit:
-    nakatomi_jackpot_mid_orbit: 
+    nakatomi_jackpot_mid_orbit:
       key: bullet_mid_orbit_nakatomi_on_hit
       loops: 0
       speed: 2
   bullet_right_orbit_nakatomi_on_hit:
-    nakatomi_jackpot_right_orbit: 
+    nakatomi_jackpot_right_orbit:
       key: bullet_right_orbit_nakatomi_on_hit
       loops: 0
       speed: 2
-  
+  stop_nakatomi_super_jackpot_show:
+    nakatomi_super_jackpot:
+      key: nakatomi_super_jackpot_collected
+      action: stop
 
-coil_player: 
-  ball_hold_nakatomi_super_hold_held_ball: c_towervuk_eject
+# ------------------------------------------------------------
+# COIL PLAYER
+# Pulses the tower VUK eject coil when the Super Jackpot hold
+# collects a ball.
+# ------------------------------------------------------------
+coil_player:
+  ball_hold_nakatomi_super_hold_held_ball:
+    c_towervuk_eject:
+      action: pulse
 
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# Sets Nakatomi played state, resets Super Jackpot lock count,
+# awards EOB multiball bonus, and scores jackpots.
+# ------------------------------------------------------------
 variable_player:
   mode_nakatomi_multiball_started:
     played_nakatomi_multiball:
       action: set
       int: 1
-
     nakatomi_multiball_supers_locked:
       action: set
       int: 0
-
     eob_bonus_multiball:
       action: add
       int: 300000
-
   nakatomi_super_jackpot_collected:
     nakatomi_multiball_supers_locked:
       action: add
       int: 1
-
   nakatomi_disable_super_jackpot:
     nakatomi_multiball_supers_locked:
       action: set
       int: 0
-
   jackpot_2mil:
     score:
       action: add
       int: "2000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "2000000 * current_player.playfield_multiplier"
-
   jackpot_20mil:
     score:
       action: add
       int: "20000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "20000000 * current_player.playfield_multiplier"
-
     nakatomi_super_jackpot_collected:
       action: set
       int: 1
 
-sounds:
-  nakatomi_mb_music:
-    file: Johns Escape-You Want Money.mp3
-
+# ------------------------------------------------------------
+# SOUND PLAYER
+# Uses the same style as your other working modes.
+# Asset is the MP3 filename without the .mp3 extension.
+# File:
+# sounds/src/Johns Escape-You Want Money.mp3
+# ------------------------------------------------------------
 sound_player:
-  multiball_nakatomi_started:
-    nakatomi_mb_music:
+  mode_nakatomi_multiball_started:
+    Johns Escape-You Want Money:
       key: main_music
       action: play
       loops: -1
       volume: 0.8
-
-  multiball_nakatomi_ended:
-    nakatomi_mb_music:
-      key: main_music
-      action: stop
-
-  ball_ended:
-    nakatomi_mb_music:
+  mode_nakatomi_multiball_stopping:
+    Johns Escape-You Want Money:
       key: main_music
       action: stop

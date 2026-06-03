@@ -220,9 +220,9 @@ event_player:
   # ------------------------------------------------------------
 
   mystery_award_add_a_ball:
-    - add_a_ball_in_multiball
-    - mystery_clear_add_a_ball_available
     - mystery_awarded
+    - mystery_clear_add_a_ball_available
+    - add_a_ball_in_multiball|750ms
 
   mystery_award_points:
     - mystery_awarded
