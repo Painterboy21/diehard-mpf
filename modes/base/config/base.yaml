@@ -179,13 +179,13 @@ event_player:
     - resume_base_music|500ms
 
   multiball_airplane_ended:
-    - resume_base_music|500ms
+    - resume_base_music|5s
 
   multiball_nakatomi_ended:
-    - resume_base_music|500ms
+    - resume_base_music|5s
 
   multiball_central_park_ended:
-    - resume_base_music|500ms
+    - resume_base_music|5s
 
 # ------------------------------------------------------------
 # LIGHT PLAYER

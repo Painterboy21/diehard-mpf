@@ -1,12 +1,18 @@
 #config_version=6
 
 mode:
-  start_events: start_airplane_multiball{current_player.airplane_mb_played==0}
+  start_events:
+    - start_airplane_multiball{current_player.airplane_mb_played==0}
   stop_events:
     - ball_ended
     - multiball_airplane_ended
   priority: 150
 
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# Sets GI / spot colours for Airplane Multiball and clears
+# the super jackpot light when disabled.
+# ------------------------------------------------------------
 light_player:
   mode_airplane_multiball_started:
     GI:
@@ -19,6 +25,10 @@ light_player:
   airplane_disable_super_jackpot:
     l52: off
 
+# ------------------------------------------------------------
+# SHOWS
+# Super jackpot flasher and captive ball coil hit effect.
+# ------------------------------------------------------------
 shows:
   airplane_super_red_flash:
     - duration: 100ms
@@ -33,54 +43,54 @@ shows:
       coils:
         c_captivetarget:
           pulse_ms: 50
-
     - duration: 30ms
-
     - duration: 30ms
       coils:
         c_captivetarget:
           pulse_ms: 50
-
     - duration: 30ms
-
     - duration: 30ms
       coils:
         c_captivetarget:
           pulse_ms: 50
-
     - duration: 70ms
 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# Plays jackpot shows, super jackpot flash, and captive ball
+# kick effect.
+# ------------------------------------------------------------
 show_player:
   airplane_super_jackpot_hit:
     airplane_captive_insane:
       loops: 35
- 
-  airplane_left_orbit_jackpot_hit: 
-    plane_jackpot: 
+
+  airplane_left_orbit_jackpot_hit:
+    plane_jackpot:
       key: plane_mb_jackpot
       loops: 0
       speed: 1
 
-  airplane_right_orbit_jackpot_hit: 
-    plane_jackpot: 
-      key: plane_mb_jackpot
-      loops: 0
-      speed: 1
-  
-  airplane_mid_orbit_jackpot_hit: 
-    plane_jackpot: 
+  airplane_right_orbit_jackpot_hit:
+    plane_jackpot:
       key: plane_mb_jackpot
       loops: 0
       speed: 1
 
-  airplane_air_duct_jackpot_hit: 
-    plane_jackpot: 
+  airplane_mid_orbit_jackpot_hit:
+    plane_jackpot:
       key: plane_mb_jackpot
       loops: 0
       speed: 1
 
-  airplane_upper_pf_jackpot_hit: 
-    plane_jackpot: 
+  airplane_air_duct_jackpot_hit:
+    plane_jackpot:
+      key: plane_mb_jackpot
+      loops: 0
+      speed: 1
+
+  airplane_upper_pf_jackpot_hit:
+    plane_jackpot:
       key: plane_mb_jackpot
       loops: 0
       speed: 1
@@ -94,24 +104,40 @@ show_player:
     airplane_super_red_flash:
       action: stop
 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# Starts MPF multiball after a short delay, enables captive
+# jackpot selection, manages jackpot progression, and posts
+# the Extra Ball bridge when Airplane Multiball ends.
+# ------------------------------------------------------------
 event_player:
   mode_airplane_multiball_started:
-    - airplane_start_multiball
+    - airplane_start_multiball|1s
 
   multiball_airplane_started:
     - airplane_enable_captive_for_jackpot
 
-  airplane_left_orbit_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}: airplane_enable_captive_for_jackpot
-  airplane_right_orbit_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}: airplane_enable_captive_for_jackpot
-  airplane_mid_orbit_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}: airplane_enable_captive_for_jackpot
-  airplane_air_duct_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}: airplane_enable_captive_for_jackpot
-  airplane_upper_pf_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}: airplane_enable_captive_for_jackpot
+  airplane_left_orbit_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
+    - airplane_enable_captive_for_jackpot
+  airplane_right_orbit_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
+    - airplane_enable_captive_for_jackpot
+  airplane_mid_orbit_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
+    - airplane_enable_captive_for_jackpot
+  airplane_air_duct_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
+    - airplane_enable_captive_for_jackpot
+  airplane_upper_pf_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
+    - airplane_enable_captive_for_jackpot
 
-  airplane_left_orbit_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}: airplane_enable_captive_for_jackpot
-  airplane_right_orbit_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}: airplane_enable_captive_for_jackpot
-  airplane_mid_orbit_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}: airplane_enable_captive_for_jackpot
-  airplane_air_duct_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}: airplane_enable_captive_for_jackpot
-  airplane_upper_pf_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}: airplane_enable_captive_for_jackpot
+  airplane_left_orbit_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
+    - airplane_enable_captive_for_jackpot
+  airplane_right_orbit_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
+    - airplane_enable_captive_for_jackpot
+  airplane_mid_orbit_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
+    - airplane_enable_captive_for_jackpot
+  airplane_air_duct_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
+    - airplane_enable_captive_for_jackpot
+  airplane_upper_pf_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
+    - airplane_enable_captive_for_jackpot
 
   airplane_super_jackpot_ready:
     - airplane_disable_jackpots
@@ -132,7 +158,11 @@ event_player:
 
   multiball_airplane_ended:
     - count_airplane_for_extra_ball
-    
+
+# ------------------------------------------------------------
+# RANDOM EVENT PLAYER
+# Randomly lights one jackpot after the captive ball is hit.
+# ------------------------------------------------------------
 random_event_player:
   airplane_captive_jackpot_select_hit:
     force_different: true
@@ -144,6 +174,11 @@ random_event_player:
       - airplane_light_air_duct_jackpot
       - airplane_light_upper_pf_jackpot
 
+# ------------------------------------------------------------
+# SHOTS
+# Captive ball selects jackpot. Lit jackpot shots score and
+# then disable until another jackpot is selected.
+# ------------------------------------------------------------
 shots:
   airplane_captive_jackpot_select:
     switch: s_captiveball
@@ -157,7 +192,8 @@ shots:
       lights: l52
 
   airplane_left_orbit_jackpot:
-    hit_events: left_orbit_hit
+    hit_events:
+      - left_orbit_hit
     profile: airplane_jackpot_profile
     enable_events:
       - airplane_light_left_orbit_jackpot
@@ -168,7 +204,8 @@ shots:
       lights: l20
 
   airplane_right_orbit_jackpot:
-    hit_events: right_orbit_hit
+    hit_events:
+      - right_orbit_hit
     profile: airplane_jackpot_profile
     enable_events:
       - airplane_light_right_orbit_jackpot
@@ -222,6 +259,11 @@ shots:
     show_tokens:
       lights: l52
 
+# ------------------------------------------------------------
+# COUNTERS
+# Stage 1 lights super after 5 jackpots.
+# Stage 2+ lights super after 8 jackpots.
+# ------------------------------------------------------------
 counters:
   airplane_stage_1_jackpot_counter:
     count_events:
@@ -232,7 +274,8 @@ counters:
       - airplane_upper_pf_jackpot_hit{current_player.airplane_mb_stage==1}
     starting_count: 0
     count_complete_value: 5
-    events_when_complete: airplane_super_jackpot_ready
+    events_when_complete:
+      - airplane_super_jackpot_ready
     reset_events:
       - multiball_airplane_started
       - reset_airplane_stage_1_jackpot_counter
@@ -246,25 +289,33 @@ counters:
       - airplane_upper_pf_jackpot_hit{current_player.airplane_mb_stage>=2}
     starting_count: 0
     count_complete_value: 8
-    events_when_complete: airplane_super_jackpot_ready
+    events_when_complete:
+      - airplane_super_jackpot_ready
     reset_events:
       - multiball_airplane_started
       - reset_airplane_stage_2_jackpot_counter
 
+# ------------------------------------------------------------
+# MULTIBALLS
+# Starts 3-ball Airplane Multiball.
+# Safe / Mystery Add-a-Ball posts add_a_ball_in_multiball.
+# Ball save has been shortened so it does not run too long.
+# ------------------------------------------------------------
 multiballs:
   airplane:
-    start_events: airplane_start_multiball
+    start_events:
+      - airplane_start_multiball
     ball_count: 3
     ball_count_type: total
-    shoot_again: 20s
-
+    shoot_again: 10s
     add_a_ball_events:
       - add_a_ball_in_multiball
+    add_a_ball_shoot_again: 5s
 
-    add_a_ball_shoot_again: 10s
-
-
-    
+# ------------------------------------------------------------
+# WIDGET PLAYER
+# Handles captive ball and super jackpot widgets.
+# ------------------------------------------------------------
 widget_player:
   airplane_start_multiball:
     airplane_captive_ball:
@@ -285,10 +336,10 @@ widget_player:
       action: play
       expire: 3s
 
-
-
-
-
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# Shows jackpot and super jackpot slides.
+# ------------------------------------------------------------
 slide_player:
   airplane_left_orbit_jackpot_hit:
     jackpot:
@@ -320,16 +371,19 @@ slide_player:
       action: play
       expire: 0s
 
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# Sets played state, stage state, EOB bonus, jackpot scoring,
+# super jackpot scoring, and last jackpot value.
+# ------------------------------------------------------------
 variable_player:
   airplane_start_multiball:
     airplane_mb_played:
       int: 1
       action: set
-
     airplane_mb_stage:
       int: 1
       action: set
-
     eob_bonus_multiball:
       action: add
       int: 300000
@@ -353,11 +407,9 @@ variable_player:
     score:
       action: add
       int: "10000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "10000000 * current_player.playfield_multiplier"
-
     airplane_mb_stage:
       int: 2
       action: set
@@ -366,7 +418,6 @@ variable_player:
     score:
       action: add
       int: "20000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "20000000 * current_player.playfield_multiplier"
@@ -375,7 +426,6 @@ variable_player:
     score:
       action: add
       int: "2000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "2000000 * current_player.playfield_multiplier"
@@ -384,7 +434,6 @@ variable_player:
     score:
       action: add
       int: "2000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "2000000 * current_player.playfield_multiplier"
@@ -393,7 +442,6 @@ variable_player:
     score:
       action: add
       int: "2000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "2000000 * current_player.playfield_multiplier"
@@ -402,7 +450,6 @@ variable_player:
     score:
       action: add
       int: "2000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "2000000 * current_player.playfield_multiplier"
@@ -411,7 +458,6 @@ variable_player:
     score:
       action: add
       int: "2000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "2000000 * current_player.playfield_multiplier"
@@ -420,7 +466,6 @@ variable_player:
     score:
       action: add
       int: "4000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "4000000 * current_player.playfield_multiplier"
@@ -429,7 +474,6 @@ variable_player:
     score:
       action: add
       int: "4000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "4000000 * current_player.playfield_multiplier"
@@ -438,7 +482,6 @@ variable_player:
     score:
       action: add
       int: "4000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "4000000 * current_player.playfield_multiplier"
@@ -447,7 +490,6 @@ variable_player:
     score:
       action: add
       int: "4000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "4000000 * current_player.playfield_multiplier"
@@ -456,7 +498,26 @@ variable_player:
     score:
       action: add
       int: "4000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "4000000 * current_player.playfield_multiplier"
+
+# ------------------------------------------------------------
+# SOUND PLAYER
+# Starts/stops Airplane Multiball music.
+# VPW reference: AirplaneMBMusic / PuPEvent 331.
+# Actual MPF sound file:
+# sounds/src/runway.mp3
+# ------------------------------------------------------------
+sound_player:
+  mode_airplane_multiball_started:
+    runway:
+      key: main_music
+      action: play
+      loops: -1
+      volume: 0.8
+
+  mode_airplane_multiball_stopping:
+    runway:
+      key: main_music
+      action: stop

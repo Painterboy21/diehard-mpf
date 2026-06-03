@@ -7,6 +7,12 @@ mode:
     - multiball_central_park_ended
   priority: 120
 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# Handles Central Park Multiball shot flow, jackpot scoring,
+# Super Jackpot qualification, widget cleanup, and end-of-mode
+# Extra Ball bridge count.
+# ------------------------------------------------------------
 event_player:
   mode_qualify_central_park_stopped:
     - wire_ramp_exit_open
@@ -47,19 +53,41 @@ event_player:
     - enable_park_super_jackpot
     - cp_bullets_advance_super_red|100ms
 
+  # ------------------------------------------------------------
+  # SUPER JACKPOT ENABLE
+  # Remove normal Park Jackpot widgets first, then show the
+  # Super Jackpot Lit widget after a tiny delay.
+  # This stops Park Jackpot Lit stacking over Super Jackpot.
+  # ------------------------------------------------------------
+  enable_park_super_jackpot:
+    - remove_widget_park_jackpot_lit
+    - remove_widget_park_jackpot_unlit
+    - remove_widget_park_jackpot_lit|100ms
+    - remove_widget_park_jackpot_unlit|100ms
+    - show_cp_super_jackpot_lit|200ms
+
   cp_jackpot_1_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_super_advance == 2}:
+    - remove_widget_park_jackpot_lit
+    - remove_widget_park_jackpot_unlit
+    - remove_cp_super_jackpot_lit
     - score_park_super_jackpot
     - score_park_super_jackpot_hit
     - score_park_super_jackpot_1
     - check_restart_cp_jackpots
 
   cp_jackpot_2_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_super_advance == 2}:
+    - remove_widget_park_jackpot_lit
+    - remove_widget_park_jackpot_unlit
+    - remove_cp_super_jackpot_lit
     - score_park_super_jackpot
     - score_park_super_jackpot_hit
     - score_park_super_jackpot_2
     - check_restart_cp_jackpots
 
   cp_jackpot_3_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_super_advance == 2}:
+    - remove_widget_park_jackpot_lit
+    - remove_widget_park_jackpot_unlit
+    - remove_cp_super_jackpot_lit
     - score_park_super_jackpot
     - score_park_super_jackpot_hit
     - score_park_super_jackpot_3
@@ -71,35 +99,50 @@ event_player:
   restart_cp_jackpots:
     - remove_cp_super_jackpot_lit|100ms
 
-  player_shot_cp_bullets_advance{value==0}:
+  # ------------------------------------------------------------
+  # NORMAL JACKPOT WIDGET CONTROL
+  # Only show normal Park Jackpot widgets while Super Jackpot is
+  # NOT active. This stops Park Jackpot Lit coming back over the
+  # Super Jackpot Lit / Super Jackpot collected widgets.
+  # ------------------------------------------------------------
+  player_shot_cp_bullets_advance{value==0 and current_player.park_super_jackpot_available == 0}:
     - show_widget_park_jackpot_unlit
 
   player_shot_cp_bullets_advance{value!=0}:
     - remove_widget_park_jackpot_unlit
 
-  player_shot_cp_bullets_advance{value==1}:
+  player_shot_cp_bullets_advance{value==1 and current_player.park_super_jackpot_available == 0}:
     - show_widget_park_jackpot_lit
 
   player_shot_cp_bullets_advance{value!=1}:
     - remove_widget_park_jackpot_lit
 
+  player_shot_cp_bullets_advance{current_player.park_super_jackpot_available == 1}:
+    - remove_widget_park_jackpot_lit
+    - remove_widget_park_jackpot_unlit
+
   multiball_central_park_ended:
     - count_park_for_extra_ball
 
+# ------------------------------------------------------------
+# MULTIBALLS
+# Starts Central Park as a 3-ball multiball with shoot again
+# and add-a-ball support.
+# ------------------------------------------------------------
 multiballs:
   central_park:
     start_events: mode_central_park_multiball_started
     ball_count: 3
     ball_count_type: total
-    shoot_again: 20s
-
+    shoot_again: 10s
     add_a_ball_events:
       - add_a_ball_in_multiball
+    add_a_ball_shoot_again: 8s
 
-    add_a_ball_shoot_again: 10s
-
-
-
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# Sets Central Park Multiball GI, spots, and bumper spots.
+# ------------------------------------------------------------
 light_player:
   mode_central_park_multiball_started:
     GI:
@@ -109,18 +152,29 @@ light_player:
     SPOTS_BUMPER:
       color: 969650
 
-show_player: 
-  score_park_jackpot: 
-    park_jackpot: 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# Plays Central Park Jackpot and Super Jackpot shows.
+# ------------------------------------------------------------
+show_player:
+  score_park_jackpot:
+    park_jackpot:
       key: park_mb_jackpot
       loops: 0
       speed: 2
-  score_park_super_jackpot: 
-    park_super_jackpot: 
+
+  score_park_super_jackpot:
+    park_super_jackpot:
       key: park_super_mb_jackpot
-      loops: 0
+      loops: 1
       speed: 1
 
+# ------------------------------------------------------------
+# SHOTS
+# Tracks the bullet advance lane, single bullet advance shot,
+# Super Jackpot advance shot, and the three Central Park jackpot
+# shots.
+# ------------------------------------------------------------
 shots:
   cp_bullets_advance:
     profile: profile_cp_bullets_advance
@@ -174,7 +228,6 @@ shots:
       - events: restart_cp_jackpots
         state: 0
 
-
   cp_jackpot_1:
     switch: s_TrPF1
     profile: profile_cp_jackpot
@@ -226,7 +279,10 @@ shots:
       - events: score_park_super_jackpot_3
         state: 3
 
-
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# Plays normal Jackpot and Super Jackpot slides.
+# ------------------------------------------------------------
 slide_player:
   score_park_jackpot:
     jackpot:
@@ -238,36 +294,45 @@ slide_player:
       action: play
       expire: 0s
 
-
+# ------------------------------------------------------------
+# WIDGET PLAYER
+# Shows/removes Jackpot Lit, Jackpot Unlit, Super Jackpot Lit,
+# and the Super Jackpot collected widget.
+# ------------------------------------------------------------
 widget_player:
-  enable_park_super_jackpot:
+  show_cp_super_jackpot_lit:
     super_jackpot_lit:
       action: play
       slide: base
       key: cp_super_jackpot_lit
       expire: 0s
+
   remove_cp_super_jackpot_lit:
     super_jackpot_lit:
-        action: remove
-        slide: base
-        key: cp_super_jackpot_lit
+      action: remove
+      slide: base
+      key: cp_super_jackpot_lit
+
   show_widget_park_jackpot_unlit:
     park_jackpot_unlit:
       action: play
       slide: base
       key: widget_park_jackpot_unlit
       expire: 0s
+
   remove_widget_park_jackpot_unlit:
     park_jackpot_unlit:
       action: remove
       slide: base
       key: widget_park_jackpot_unlit
+
   show_widget_park_jackpot_lit:
     park_jackpot_lit:
       action: play
       slide: base
       key: widget_park_jackpot_lit
       expire: 0s
+
   remove_widget_park_jackpot_lit:
     park_jackpot_lit:
       action: remove
@@ -279,17 +344,19 @@ widget_player:
       action: play
       expire: 0s
 
-
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# Tracks Central Park played state, Super Jackpot availability,
+# Super Jackpot collection count, and jackpot scoring.
+# ------------------------------------------------------------
 variable_player:
   mode_central_park_multiball_started:
     park_super_jackpot_available:
       action: set
       int: 0
-
     cp_super_jackpots_collected:
       action: set
       int: 0
-
     eob_bonus_multiball:
       action: add
       int: 300000
@@ -303,7 +370,6 @@ variable_player:
     park_super_jackpot_available:
       action: set
       int: 1
-
     cp_super_jackpots_collected:
       action: set
       int: 0
@@ -312,7 +378,6 @@ variable_player:
     cp_super_jackpots_collected:
       action: add
       int: 1
-
     score_park_super_jackpot_hit:
       action: set
       int: 1
@@ -321,7 +386,6 @@ variable_player:
     park_super_jackpot_available:
       action: set
       int: 0
-
     cp_super_jackpots_collected:
       action: set
       int: 0
@@ -330,7 +394,6 @@ variable_player:
     score:
       action: add
       int: "2000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "2000000 * current_player.playfield_multiplier"
@@ -339,7 +402,6 @@ variable_player:
     score:
       action: add
       int: "10000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "10000000 * current_player.playfield_multiplier"
@@ -348,7 +410,6 @@ variable_player:
     score:
       action: add
       int: "15000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "15000000 * current_player.playfield_multiplier"
@@ -357,8 +418,25 @@ variable_player:
     score:
       action: add
       int: "20000000 * current_player.playfield_multiplier"
-
     last_jackpot_value:
       action: set
       int: "20000000 * current_player.playfield_multiplier"
-  
+
+# ------------------------------------------------------------
+# SOUND PLAYER
+# Starts/stops Central Park Multiball music.
+# Uses key: main_music so it replaces the normal game music
+# cleanly while Central Park Multiball is running.
+# ------------------------------------------------------------
+sound_player:
+  mode_central_park_multiball_started:
+    central_park_multiball_music:
+      key: main_music
+      action: play
+      loops: -1
+      volume: 0.8
+
+  mode_central_park_multiball_stopping:
+    central_park_multiball_music:
+      key: main_music
+      action: stop
