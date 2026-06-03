@@ -128,7 +128,8 @@ event_player:
 # VARIABLE PLAYER
 # Stores selected villain name.
 # ------------------------------------------------------------
-variable_player:
+
+# --variable_player:
   set_villain_col:
     selected_villain:
       string: col
@@ -154,7 +155,19 @@ variable_player:
       string: simon
       action: set
 
-# ------------------------------------------------------------
+  # ------------------------------------------------------------
+  # AMBUSH BLOCKING WHILE PICKING A VILLAIN
+  # ------------------------------------------------------------
+
+  mode_villain_select_started:
+    villain_select_running:
+      int: 1
+      action: set
+
+  mode_villain_select_stopping:
+    villain_select_running:
+      int: 0
+      action: set----------------------------------------------------------
 # SHOW PLAYER
 # Runs villain select insert flash, orange spin show, and
 # highlighted villain colour flashes.

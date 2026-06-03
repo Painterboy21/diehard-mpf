@@ -6,9 +6,15 @@ mode:
   stop_events:
     - katya_dieharder_completed
     - katya_dieharder_failed
-    - wire_ramp_exit_closed
   priority: 170
 
+# ------------------------------------------------------------
+# TIMERS
+# Normal = 93s.
+# Hans Bonus = 123s.
+# Mystery Add More Time = +20s.
+# Hans Bonus is NOT cleared here.
+# ------------------------------------------------------------
 timers:
   katya_dieharder_timer:
     start_value: 93
@@ -31,6 +37,11 @@ timers:
         action: add
         value: 20
 
+# ------------------------------------------------------------
+# BALL SAVES
+# Start save = 2s.
+# Complete save = 8s on victory sequence.
+# ------------------------------------------------------------
 ball_saves:
   katya_dieharder_start_save:
     active_time: 2s
@@ -54,6 +65,11 @@ ball_saves:
     disable_events:
       - mode_katya_dieharder_stopping
 
+# ------------------------------------------------------------
+# COUNTERS
+# Counts Katya loop hits.
+# 5 loop hits lights/enables captive ball final shot.
+# ------------------------------------------------------------
 counters:
   katya_dieharder_loop_counter:
     count_events:
@@ -70,6 +86,11 @@ counters:
     events_when_complete:
       - katya_dieharder_loops_complete
 
+# ------------------------------------------------------------
+# SHOTS
+# Loop shots disable when hit and relight after 3s.
+# Captive ball enables after 5 loop hits.
+# ------------------------------------------------------------
 shots:
   katya_dieharder_left_loop:
     hit_events: left_orbit_hit
@@ -116,6 +137,11 @@ shots:
       - katya_dieharder_failed
       - katya_dieharder_fail_mode
 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# Handles start, Hans Bonus timer choice, loop scoring,
+# victory/fail flow, ball drain escape flow, and cleanup.
+# ------------------------------------------------------------
 event_player:
   mode_katya_dieharder_started:
     - villain_mode_started
@@ -128,7 +154,6 @@ event_player:
 
   mode_katya_dieharder_started{current_player.hans_bonus==1}:
     - katya_dieharder_start_bonus_timer
-    - clear_hans_bonus
 
   mode_katya_dieharder_started{current_player.hans_bonus!=1}:
     - katya_dieharder_start_normal_timer
@@ -137,6 +162,9 @@ event_player:
     - villain_mode_stopped
     - enable_katya_dieharder_flippers
 
+  # ------------------------------------------------------------
+  # FAIL / ESCAPE FLOW
+  # ------------------------------------------------------------
   timer_katya_dieharder_timer_complete:
     - katya_dieharder_fail_mode
 
@@ -174,6 +202,15 @@ event_player:
     - reset_bullets
     - wire_ramp_exit_closed
 
+  # ------------------------------------------------------------
+  # COMPLETE FLOW
+  # ------------------------------------------------------------
+  katya_dieharder_captive_final_hit:
+    - katya_dieharder_victory_sequence
+
+  katya_dieharder_victory_sequence:
+    - katya_dieharder_completed_show
+    - katya_dieharder_completed|4s
 
   katya_dieharder_completed:
     - reset_bullet_total
@@ -181,7 +218,10 @@ event_player:
     - count_katya_for_extra_ball
     - wire_ramp_exit_closed
 
-
+  # ------------------------------------------------------------
+  # LOOP HIT FLOW
+  # Godot hit videos use current_player.katya_dieharder_shots.
+  # ------------------------------------------------------------
   katya_dieharder_left_loop_hit{device.counters.katya_dieharder_loop_counter.value<5}:
     - katya_dieharder_loop_hit_scored
     - katya_dieharder_left_loop_relight|3s
@@ -194,13 +234,17 @@ event_player:
     - katya_dieharder_loop_hit_scored
     - katya_dieharder_upper_loop_relight|3s
 
-  katya_dieharder_captive_final_hit:
-    - katya_dieharder_victory_sequence
-
-  katya_dieharder_victory_sequence:
-    - katya_dieharder_completed_show
-    - katya_dieharder_completed|4s
-
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# Stores Katya Die Harder state, timer, shots, Hans Bonus state,
+# scoring, completion flags, and result state.
+#
+# katya_dieharder_shots:
+#   Drives Godot background hit videos.
+#
+# katya_bonus:
+#   Set on Die Harder completion.
+# ------------------------------------------------------------
 variable_player:
   katya_dieharder_start:
     villain_mode_running:
@@ -212,19 +256,34 @@ variable_player:
     katya_dieharder_completion_active:
       int: 0
       action: set
+    katya_dieharder_result_started:
+      int: 0
+      action: set
     katya_dieharder_shots:
       int: 0
       action: set
     katya_dieharder_time:
       int: 93
       action: set
+    katya_dieharder_remaining:
+      int: 93
+      action: set
+    katya_dieharder_hans_bonus_active:
+      int: 0
+      action: set
     villain_bonus:
       int: 500000
       action: add
 
-  clear_hans_bonus:
-    hans_bonus:
-      int: 0
+  katya_dieharder_start{current_player.hans_bonus==1}:
+    katya_dieharder_hans_bonus_active:
+      int: 1
+      action: set
+    katya_dieharder_time:
+      int: 123
+      action: set
+    katya_dieharder_remaining:
+      int: 123
       action: set
 
   timer_katya_dieharder_timer_tick:
@@ -234,7 +293,7 @@ variable_player:
 
   katya_dieharder_loop_hit_scored:
     score:
-      int: 1500000
+      int: "1500000 * current_player.playfield_multiplier"
       action: add
     villain_bonus:
       int: 1500000
@@ -247,15 +306,31 @@ variable_player:
     katya_dieharder_completion_active:
       int: 1
       action: set
+    katya_dieharder_result_started:
+      int: 1
+      action: set
 
   katya_dieharder_fail_mode:
     katya_dieharder_failed_active:
       int: 1
       action: set
+    katya_dieharder_result_started:
+      int: 1
+      action: set
+
+  katya_dieharder_ball_drain_escape:
+    katya_dieharder_result_started:
+      int: 1
+      action: set
+
+  katya_dieharder_escape_sequence:
+    katya_dieharder_result_started:
+      int: 1
+      action: set
 
   katya_dieharder_captive_final_hit:
     score:
-      int: 3000000
+      int: "3000000 * current_player.playfield_multiplier"
       action: add
     villain_bonus:
       int: 3000000
@@ -274,6 +349,17 @@ variable_player:
     modes_complete:
       int: 1
       action: add
+    villains_completed:
+      int: 1
+      action: add
+    katya_dieharder_result_started:
+      int: 0
+      action: set
+
+  katya_dieharder_failed:
+    katya_dieharder_result_started:
+      int: 0
+      action: set
 
   mode_katya_dieharder_stopping:
     villain_mode_running:
@@ -285,7 +371,14 @@ variable_player:
     katya_dieharder_completion_active:
       int: 0
       action: set
+    katya_dieharder_result_started:
+      int: 0
+      action: set
 
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# Sets Katya Die Harder lighting.
+# ------------------------------------------------------------
 light_player:
   mode_katya_dieharder_started:
     GI:
@@ -321,6 +414,10 @@ light_player:
     l1000: off
     l1001: off
 
+# ------------------------------------------------------------
+# SHOWS
+# Inline Katya Die Harder light shows.
+# ------------------------------------------------------------
 shows:
   katya_dieharder_left_loop_flash:
     - duration: 200ms
@@ -380,6 +477,11 @@ shows:
       lights:
         l42: off
 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# Handles ball-save flashes, loop/captive flashes, hit flashers,
+# insert flashing, fail blackout, and cleanup.
+# ------------------------------------------------------------
 show_player:
   ball_save_katya_dieharder_start_save_enabled:
     flash_color:
@@ -543,6 +645,11 @@ show_player:
     katya_dieharder_insert_flash:
       action: stop
 
+# ------------------------------------------------------------
+# COIL PLAYER
+# Disables flippers during Die Harder fail mode,
+# then re-enables them when the mode stops.
+# ------------------------------------------------------------
 coil_player:
   katya_dieharder_fail_mode:
     c_right_flipper_main: disable
@@ -552,6 +659,16 @@ coil_player:
     c_left_flipper_main: enable
     c_right_flipper_main: enable
 
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# Plays Katya Die Harder background and result slides.
+#
+# Hit videos are no longer called as slides:
+#   katya_hit_1 to katya_hit_5 removed.
+#
+# They should be handled inside katya_dieharder_background by
+# Godot using current_player.katya_dieharder_shots.
+# ------------------------------------------------------------
 slide_player:
   mode_katya_dieharder_started:
     katya_dieharder_background:
@@ -562,36 +679,6 @@ slide_player:
   mode_katya_dieharder_stopping:
     katya_dieharder_background:
       action: remove
-
-  katya_dieharder_loop_hit_scored{current_player.katya_dieharder_shots==1}:
-    katya_hit_1:
-      action: play
-      expire: 4s
-      priority: 700
-
-  katya_dieharder_loop_hit_scored{current_player.katya_dieharder_shots==2}:
-    katya_hit_2:
-      action: play
-      expire: 4s
-      priority: 700
-
-  katya_dieharder_loop_hit_scored{current_player.katya_dieharder_shots==3}:
-    katya_hit_3:
-      action: play
-      expire: 4s
-      priority: 700
-
-  katya_dieharder_loop_hit_scored{current_player.katya_dieharder_shots==4}:
-    katya_hit_4:
-      action: play
-      expire: 4s
-      priority: 700
-
-  katya_dieharder_loop_hit_scored{current_player.katya_dieharder_shots==5}:
-    katya_hit_5:
-      action: play
-      expire: 4s
-      priority: 700
 
   katya_dieharder_completed_show:
     katya_dieharder_background:
@@ -617,6 +704,10 @@ slide_player:
       expire: 4s
       priority: 10000
 
+# ------------------------------------------------------------
+# WIDGET PLAYER
+# Shows Katya Die Harder timer and progress widgets.
+# ------------------------------------------------------------
 widget_player:
   mode_katya_dieharder_started:
     katya_dieharder_timer_widget:
@@ -644,6 +735,10 @@ widget_player:
     katya_dieharder_progress_widget:
       action: remove
 
+# ------------------------------------------------------------
+# SOUND PLAYER
+# Starts Katya music and stops it when the mode stops.
+# ------------------------------------------------------------
 sound_player:
   katya_dieharder_music_start:
     katyatheme:

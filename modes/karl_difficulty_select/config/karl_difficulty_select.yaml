@@ -105,7 +105,7 @@ slide_player:
   play_karl_intro:
     karl_intro:
       action: play
-      expire: 3s
+      expire: 5s
 
 # ------------------------------------------------------------
 # EVENT PLAYER

@@ -1,0 +1,276 @@
+[gd_scene format=3 uid="uid://t8dyi3vo62sd"]
+
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_mhfec"]
+[ext_resource type="VideoStream" uid="uid://d11wn3dk276s4" path="res://videos/DieHard1Background.ogv" id="2_a4p5u"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_eqfi6"]
+[ext_resource type="VideoStream" uid="uid://bnbtcp1vspiiy" path="res://modes/karl_diehard/slides/KarlFight1.ogv" id="4_2y7at"]
+[ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="5_4chmj"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="6_lef5r"]
+[ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="7_indb7"]
+[ext_resource type="Texture2D" uid="uid://ytwrcjpchkp8" path="res://godot-media/images/player 1 overlay.png" id="8_q5inp"]
+[ext_resource type="Texture2D" uid="uid://cgdg61xeojmu8" path="res://godot-media/images/hollywhite.png" id="9_dumgj"]
+[ext_resource type="Script" uid="uid://bh8uniugrpk3c" path="res://slides/holly_letters.gd" id="10_naloe"]
+[ext_resource type="Texture2D" uid="uid://binlmwaj3sxtd" path="res://godot-media/images/O.png" id="11_5oaxf"]
+[ext_resource type="Texture2D" uid="uid://c0tj7020wfqu7" path="res://godot-media/images/H.png" id="12_qliqe"]
+[ext_resource type="Texture2D" uid="uid://bo1y2txk5qfxf" path="res://godot-media/images/L.png" id="13_4oj6n"]
+[ext_resource type="Texture2D" uid="uid://bs0sdjldfa8j4" path="res://godot-media/images/Y.png" id="14_cwvcv"]
+[ext_resource type="Script" uid="uid://duhc88ytcx2yh" path="res://modes/karl_dieharder/slides/control_1.gd" id="15_mhfec"]
+[ext_resource type="Script" uid="uid://1df78yxvesx5" path="res://modes/karl_dieharder/slides/john_die_harderhealth.gd" id="16_mhfec"]
+[ext_resource type="Script" uid="uid://cykytia4abufx" path="res://modes/karl_dieharder/slides/karl_die_harderhealth.gd" id="17_mhfec"]
+[ext_resource type="Script" uid="uid://bhv2mbhotu0r8" path="res://modes/karl_dieharder/slides/karl_die_harder_timer_variable.gd" id="18_mhfec"]
+[ext_resource type="Script" uid="uid://dtx45femicwca" path="res://modes/karl_dieharder/slides/karl_die_harder_damage_variable.gd" id="19_mhfec"]
+[ext_resource type="PackedScene" uid="uid://bhnxkhkhv65rt" path="res://modes/karl_dieharder/widgets/karl_progress_widget.tscn" id="20_c4jwb"]
+
+[node name="karl_dieharder_background" type="Control" unique_id=1617573641]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mhfec")
+metadata/_custom_type_script = "uid://dru3usokwlhd3"
+
+[node name="KarlBackgroundVideo" type="VideoStreamPlayer" parent="." unique_id=2017886156]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_a4p5u")
+autoplay = true
+loop = true
+script = ExtResource("3_eqfi6")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
+
+[node name="KarlDieHarderFight" type="VideoStreamPlayer" parent="." unique_id=209808585]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("4_2y7at")
+volume_db = 7.9999986
+
+[node name="Control2" type="Control" parent="." unique_id=967988825]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="main_score" type="Label" parent="Control2" unique_id=1048838247]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+theme = ExtResource("5_4chmj")
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("6_lef5r")
+variable_name = "score"
+comma_separate = true
+
+[node name="current_ball" type="Label" parent="Control2" unique_id=1769272716]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -292.66998
+offset_bottom = -212.66998
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("7_indb7")
+text = "Ball 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("6_lef5r")
+variable_name = "ball"
+comma_separate = true
+template_string = "Ball %s"
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=1589179317]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.777
+
+[node name="score_overlay" type="TextureRect" parent="AspectRatioContainer" unique_id=1107110937]
+layout_mode = 2
+texture = ExtResource("8_q5inp")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="AspectRatioContainer" unique_id=1695330213]
+layout_mode = 2
+
+[node name="player_1_score" type="Label" parent="AspectRatioContainer/Control" unique_id=88526952]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -112.0
+offset_right = 554.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("5_4chmj")
+theme_override_font_sizes/font_size = 60
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("6_lef5r")
+variable_type = 4
+variable_name = "score"
+comma_separate = true
+
+[node name="Hollywhite" type="Sprite2D" parent="." unique_id=1237423753]
+position = Vector2(160, 823)
+texture = ExtResource("9_dumgj")
+
+[node name="HollyLetters" type="Control" parent="." unique_id=126271155]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_naloe")
+
+[node name="O" type="Sprite2D" parent="HollyLetters" unique_id=478243289]
+visible = false
+position = Vector2(175, 823)
+scale = Vector2(0.147368, 0.107018)
+texture = ExtResource("11_5oaxf")
+
+[node name="H" type="Sprite2D" parent="HollyLetters" unique_id=24461905]
+visible = false
+position = Vector2(130.5, 822.763)
+scale = Vector2(0.140065, 0.109528)
+texture = ExtResource("12_qliqe")
+
+[node name="L" type="Sprite2D" parent="HollyLetters" unique_id=108471217]
+visible = false
+position = Vector2(211.919, 821.967)
+scale = Vector2(0.138727, 0.103263)
+texture = ExtResource("13_4oj6n")
+
+[node name="L1" type="Sprite2D" parent="HollyLetters" unique_id=1562401939]
+visible = false
+position = Vector2(242.094, 822)
+scale = Vector2(0.137007, 0.103201)
+texture = ExtResource("13_4oj6n")
+
+[node name="Y" type="Sprite2D" parent="HollyLetters" unique_id=1523090683]
+visible = false
+position = Vector2(266.5, 822)
+scale = Vector2(0.134868, 0.103093)
+texture = ExtResource("14_cwvcv")
+
+[node name="Control1" type="Control" parent="." unique_id=783692697]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("15_mhfec")
+
+[node name="johnDieHarderhealth" type="TextureRect" parent="Control1" unique_id=507541958]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 51.0
+offset_top = 60.0
+offset_right = -1657.0
+offset_bottom = -394.065
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+script = ExtResource("16_mhfec")
+
+[node name="karlDieHarderhealth" type="TextureRect" parent="Control1" unique_id=1857986212]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1654.0
+offset_top = 60.0
+offset_right = -54.0
+offset_bottom = -394.065
+expand_mode = 1
+script = ExtResource("17_mhfec")
+
+[node name="KarlDieHarderTimerVariable" type="Label" parent="Control1" unique_id=579931428]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1641.0
+offset_top = 81.0
+offset_right = -129.0
+offset_bottom = -534.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "00"
+script = ExtResource("18_mhfec")
+variable_name = "karl_dieharder_karl_dieharder_timer_tick"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="KarlDieHarderDamageVariable" type="Label" parent="Control1" unique_id=228032927]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1986.0
+offset_top = 738.0
+offset_right = 437.0
+offset_bottom = 332.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("19_mhfec")
+variable_name = "karl_health_display"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="DieHarder" type="Label" parent="Control1" unique_id=2070309448]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_lef5r")
+variable_name = "karl_hans_bonus_active"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="KarlDieHarderResultVariable" type="Label" parent="Control1" unique_id=1129452065]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("6_lef5r")
+variable_name = "karl_result_display"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="karl_progress_widget" parent="." unique_id=1421029567 instance=ExtResource("20_c4jwb")]
+layout_mode = 1

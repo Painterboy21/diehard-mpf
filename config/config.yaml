@@ -10,10 +10,6 @@ hardware:
 # ------------------------------------------------------------
 # FAST CONFIG
 # FAST controller, I/O boards, expansion boards, and audio.
-#
-# Clean-up only:
-#   No controller, boards, ports, volume values, or audio
-#   settings have been changed.
 # ------------------------------------------------------------
 fast:
   net:
@@ -308,6 +304,7 @@ modes:
   - katya_diehard
   - katya_dieharder
   - karl_diehard
+  - karl_dieharder
   - bonus_x
   - playfield_x
   - iscored_sync

@@ -78,6 +78,11 @@ show_player:
       key: key_eob_bonus
       loops: 0
 
+  katya_diehard_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
   show_bonus_summary:
     eob_bonus:
       action: stop
