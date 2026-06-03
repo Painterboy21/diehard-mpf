@@ -792,6 +792,31 @@ show_player:
         lights: l1,l2,l3
         color: yellow
 
+# ------------------------------------------------------------
+# SOUND PLAYER
+# Plays the VPW Mystery scroll sound while the vault award scrolls.
+# VPW sound name: dh_mysterscroll1
+# ------------------------------------------------------------
+sound_player:
+
+  mystery_scroll_start:
+    dh_mysterscroll1:
+      action: play
+      loops: -1
+      volume: 1.0
+
+  timer_mystery_scroll_complete:
+    dh_mysterscroll1:
+      action: stop
+
+  mystery_awarded:
+    dh_mysterscroll1:
+      action: stop
+
+  ball_ended:
+    dh_mysterscroll1:
+      action: stop
+
 
 slide_player:
   ball_hold_mystery_hold_full:

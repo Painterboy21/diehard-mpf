@@ -154,6 +154,16 @@ variable_player:
       string: die_harder
       action: set
 
+  mode_karl_difficulty_select_started:
+    villain_difficulty_select_running:
+      action: set
+      int: 1
+
+  mode_karl_difficulty_select_stopping:
+    villain_difficulty_select_running:
+      action: set
+      int: 0
+
   reset_karl_result_state:
     karl_result_started:
       action: set
