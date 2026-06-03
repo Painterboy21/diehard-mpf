@@ -105,6 +105,16 @@ variable_player:
       string: die_harder
       action: set
 
+  mode_katya_difficulty_select_started:
+    villain_difficulty_select_running:
+      action: set
+      int: 1
+
+  mode_katya_difficulty_select_stopping:
+    villain_difficulty_select_running:
+      action: set
+      int: 0
+
 light_player:
   katya_mode_start_warning:
     f142:

@@ -291,6 +291,10 @@ player_vars:
     initial_value: 0
     value_type: int
 
+  hans_dieharder_completion_active:
+    initial_value: 0
+    value_type: int
+
 
   # ------------------------------------------------------------
   # KATYA

@@ -96,3 +96,13 @@ variable_player:
     selected_diehard_mode:
       string: die_harder
       action: set
+
+  mode_simon_difficulty_select_started:
+    villain_difficulty_select_running:
+      action: set
+      int: 1
+
+  mode_simon_difficulty_select_stopping:
+    villain_difficulty_select_running:
+      action: set
+      int: 0
