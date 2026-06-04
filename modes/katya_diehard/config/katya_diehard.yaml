@@ -1,21 +1,48 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# MODE
+# Katya Die Hard.
+#
+# Uses shared completion gate:
+#   katya_complete
+#
+# Once Katya is completed in either Die Hard or Die Harder,
+# both versions are blocked for the rest of the game.
+#
+# Failed / escaped Katya can be replayed.
+# ------------------------------------------------------------
 mode:
   start_events:
-    - start_katya_diehard{current_player.katya_complete!=1}
+    - start_katya_diehard{current_player.katya_complete==0}
   stop_events:
     - katya_completed
     - katya_failed
   priority: 250
 
+
+# ------------------------------------------------------------
+# TIMERS
+# Normal timer = 93s.
+# Hans Bonus timer = 123s if current_player.hans_bonus == 1.
+# Mystery Add More Time = +20s.
+#
+# Hans Bonus is NOT cleared here.
+# ------------------------------------------------------------
 timers:
   katya_timer:
     start_value: 93
     end_value: 0
     direction: down
     tick_interval: 1s
-    start_running: true
+    start_running: false
     control_events:
+      - event: katya_start_normal_timer
+        action: restart
+        value: 93
+      - event: katya_start_bonus_timer
+        action: restart
+        value: 123
       - event: katya_completed
         action: stop
       - event: katya_failed
@@ -24,6 +51,21 @@ timers:
         action: add
         value: 20
 
+
+# ------------------------------------------------------------
+# BALL SAVES
+# Same style as Katya Die Harder.
+#
+# Start save:
+#   2 seconds.
+#
+# Complete save:
+#   8 seconds active.
+#   3 seconds hurry-up.
+#   5 seconds grace.
+#
+# Ball-save light stays Katya colour.
+# ------------------------------------------------------------
 ball_saves:
   katya_diehard_start_save:
     active_time: 2s
@@ -38,8 +80,8 @@ ball_saves:
 
   katya_diehard_complete_save:
     active_time: 8s
-    hurry_up_time: 3s
-    grace_period: 5s
+    hurry_up_time: 1s
+    grace_period: 1s
     auto_launch: true
     balls_to_save: 1
     enable_events:
@@ -47,6 +89,12 @@ ball_saves:
     disable_events:
       - mode_katya_diehard_stopping
 
+
+# ------------------------------------------------------------
+# COUNTERS
+# Counts Katya loop hits.
+# Five loop hits lights/enables captive ball final shot.
+# ------------------------------------------------------------
 counters:
   katya_loop_counter:
     count_events:
@@ -58,14 +106,21 @@ counters:
     direction: up
     persist_state: false
     reset_on_complete: false
-    events_when_complete:
-      - katya_loops_complete
     reset_events:
       - mode_katya_diehard_started
+    events_when_complete:
+      - katya_loops_complete
 
+
+# ------------------------------------------------------------
+# SHOTS
+# Loop shots disable when hit and relight after 3s.
+# Captive ball enables after 5 loop hits.
+# ------------------------------------------------------------
 shots:
   katya_left_loop:
-    hit_events: left_orbit_hit
+    hit_events:
+      - left_orbit_hit
     enable_events:
       - mode_katya_diehard_started
       - katya_left_loop_relight
@@ -76,7 +131,8 @@ shots:
       - katya_failed
 
   katya_right_loop:
-    hit_events: right_orbit_hit
+    hit_events:
+      - right_orbit_hit
     enable_events:
       - mode_katya_diehard_started
       - katya_right_loop_relight
@@ -105,6 +161,19 @@ shots:
       - katya_completed
       - katya_failed
 
+
+# ------------------------------------------------------------
+# EVENT PLAYER
+# Handles start, Hans Bonus timer choice, loop scoring,
+# victory flow, escape flow, ball drain handling, and cleanup.
+#
+# Die Hard ending:
+#   Timer fail / drain = Katya escaped.
+#
+# This does NOT use Die Harder fail mode.
+# No flipper disable.
+# No katya_ball_lost.
+# ------------------------------------------------------------
 event_player:
   mode_katya_diehard_started:
     - villain_mode_started
@@ -115,23 +184,32 @@ event_player:
     - nakatomi_entrance_lock_close
     - wire_ramp_exit_open
 
+  mode_katya_diehard_started{current_player.hans_bonus==1}:
+    - katya_start_bonus_timer
+
+  mode_katya_diehard_started{current_player.hans_bonus!=1}:
+    - katya_start_normal_timer
+
   mode_katya_diehard_stopping:
     - villain_mode_stopped
 
+  # ------------------------------------------------------------
+  # FAIL / ESCAPE FLOW
+  # ------------------------------------------------------------
   timer_katya_timer_complete:
     - katya_escape_sequence
 
-  ball_ended{current_player.katya_diehard_completion_active==0}:
-    - katya_escape_sequence
-
-  ball_ended{current_player.katya_diehard_completion_active==1}:
-    - reset_bullet_total
-    - reset_bullets
-
-  ball_drain{current_player.katya_diehard_completion_active==0}:
+  ball_drain{current_player.katya_diehard_completion_active==0 and current_player.katya_diehard_result_started==0}:
     - katya_ball_drain_escape
 
   ball_drain{current_player.katya_diehard_completion_active==1}:
+    - reset_bullet_total
+    - reset_bullets
+
+  ball_ended{current_player.katya_diehard_completion_active==0 and current_player.katya_diehard_result_started==0}:
+    - katya_escape_sequence
+
+  ball_ended{current_player.katya_diehard_completion_active==1}:
     - reset_bullet_total
     - reset_bullets
 
@@ -149,13 +227,27 @@ event_player:
     - reset_bullets
     - wire_ramp_exit_closed
 
+  # ------------------------------------------------------------
+  # COMPLETE FLOW
+  # ------------------------------------------------------------
+  katya_captive_final_hit:
+    - katya_victory_sequence
+
+  katya_victory_sequence:
+    - katya_completed_show
+    - katya_completed|4s
 
   katya_completed:
     - reset_bullet_total
     - reset_bullets
     - count_katya_for_extra_ball
     - wire_ramp_exit_closed
-    
+
+  # ------------------------------------------------------------
+  # LOOP HIT FLOW
+  # Godot hit videos use current_player.katya_shots.
+  # Old MPF hit slides are not called here.
+  # ------------------------------------------------------------
   katya_left_loop_hit{device.counters.katya_loop_counter.value<5}:
     - katya_loop_hit_scored
     - katya_left_loop_relight|3s
@@ -168,34 +260,55 @@ event_player:
     - katya_loop_hit_scored
     - katya_upper_loop_relight|3s
 
-  katya_captive_final_hit:
-    - katya_victory_sequence
 
-  katya_victory_sequence:
-    - katya_completed_show
-    - katya_completed|4s
-
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# Stores Katya Die Hard state, timer, shots, Hans Bonus state,
+# scoring, completion flags, and result state.
+#
+# katya_shots:
+#   Drives Godot background hit videos.
+#
+# katya_complete:
+#   Shared completion gate for both Die Hard and Die Harder.
+# ------------------------------------------------------------
 variable_player:
   katya_start:
     villain_mode_running:
       int: 1
       action: set
-
     katya_diehard_completion_active:
       int: 0
       action: set
-
+    katya_diehard_result_started:
+      int: 0
+      action: set
     katya_shots:
       int: 0
       action: set
-
+    katya_diehard_time:
+      int: 93
+      action: set
     katya_diehard_remaining:
       int: 93
       action: set
-
+    katya_diehard_hans_bonus_active:
+      int: 0
+      action: set
     villain_bonus:
       int: 500000
       action: add
+
+  katya_start{current_player.hans_bonus==1}:
+    katya_diehard_hans_bonus_active:
+      int: 1
+      action: set
+    katya_diehard_time:
+      int: 123
+      action: set
+    katya_diehard_remaining:
+      int: 123
+      action: set
 
   timer_katya_timer_tick:
     katya_diehard_remaining:
@@ -204,57 +317,85 @@ variable_player:
 
   katya_loop_hit_scored:
     score:
-      action: add
       int: "1500000 * current_player.playfield_multiplier"
-
+      action: add
     villain_bonus:
-      action: add
       int: 1500000
-
-    katya_shots:
       action: add
+    katya_shots:
       int: 1
+      action: add
 
   katya_victory_sequence:
-    katya_completion_active:
+    katya_diehard_completion_active:
       int: 1
       action: set
-
+    katya_diehard_result_started:
+      int: 1
+      action: set
     eob_bonus_villains:
       int: 1000000
       action: add
 
+  katya_ball_drain_escape:
+    katya_diehard_result_started:
+      int: 1
+      action: set
+
+  katya_escape_sequence:
+    katya_diehard_result_started:
+      int: 1
+      action: set
+
   katya_captive_final_hit:
     score:
-      action: add
       int: "3000000 * current_player.playfield_multiplier"
-
-    villain_bonus:
       action: add
+    villain_bonus:
       int: 3000000
+      action: add
 
   katya_completed:
     katya_complete:
       int: 1
       action: set
-
-    modes_complete:
-      action: add
+    katya_diehard_complete:
       int: 1
+      action: set
+    modes_complete:
+      int: 1
+      action: add
+    villains_completed:
+      int: 1
+      action: add
+    katya_diehard_result_started:
+      int: 0
+      action: set
+
+  katya_failed:
+    katya_diehard_result_started:
+      int: 0
+      action: set
 
   mode_katya_diehard_stopping:
     villain_mode_running:
       int: 0
       action: set
-
     katya_diehard_completion_active:
       int: 0
       action: set
+    katya_diehard_result_started:
+      int: 0
+      action: set
+    katya_diehard_hans_bonus_active:
+      int: 0
+      action: set
 
-    villains_completed:
-      action: add
-      int: 1
 
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# Sets Katya Die Hard lighting.
+# ------------------------------------------------------------
 light_player:
   mode_katya_diehard_started:
     GI:
@@ -278,6 +419,11 @@ light_player:
     l1000: off
     l1001: off
 
+
+# ------------------------------------------------------------
+# SHOWS
+# Inline Katya Die Hard light shows.
+# ------------------------------------------------------------
 shows:
   katya_left_loop_flash:
     - duration: 200ms
@@ -314,12 +460,12 @@ shows:
   katya_hit_flashers:
     - duration: 80ms
       lights:
-        f142: ff0000
-        f143: ff0000
-        f144: ff0000
-        f145: ff0000
-        f146: ff0000
-        f147: ff0000
+        f142: ff00ff
+        f143: ff00ff
+        f144: ff00ff
+        f145: ff00ff
+        f146: ff00ff
+        f147: ff00ff
     - duration: 80ms
       lights:
         f142: off
@@ -337,6 +483,12 @@ shows:
       lights:
         l42: off
 
+
+# ------------------------------------------------------------
+# SHOW PLAYER
+# Handles Katya-colour ball-save flashes, loop/captive flashes,
+# hit flashers, insert flashing, and cleanup.
+# ------------------------------------------------------------
 show_player:
   ball_save_katya_diehard_start_save_enabled:
     flash_color:
@@ -429,8 +581,12 @@ show_player:
   katya_completed:
     katya_diehard_start_save_flash:
       action: stop
-    katya_diehard_ball_save_flash:
+    flash_color_with_fade:
       action: stop
+      key: katya_diehard_ball_save_flash
+    flash_color:
+      action: stop
+      key: katya_diehard_ball_save_flash
     katya_captive_flash:
       action: stop
     katya_insert_flash:
@@ -439,8 +595,12 @@ show_player:
   katya_failed:
     katya_diehard_start_save_flash:
       action: stop
-    katya_diehard_ball_save_flash:
+    flash_color_with_fade:
       action: stop
+      key: katya_diehard_ball_save_flash
+    flash_color:
+      action: stop
+      key: katya_diehard_ball_save_flash
     katya_left_loop_flash:
       action: stop
     katya_right_loop_flash:
@@ -455,8 +615,12 @@ show_player:
   mode_katya_diehard_stopping:
     katya_diehard_start_save_flash:
       action: stop
-    katya_diehard_ball_save_flash:
+    flash_color_with_fade:
       action: stop
+      key: katya_diehard_ball_save_flash
+    flash_color:
+      action: stop
+      key: katya_diehard_ball_save_flash
     katya_left_loop_flash:
       action: stop
     katya_right_loop_flash:
@@ -468,51 +632,31 @@ show_player:
     katya_insert_flash:
       action: stop
 
+
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# Plays Katya Die Hard background and result slides.
+#
+# Hit videos are NOT MPF slides anymore:
+#   katya_hit_1 to katya_hit_5 are removed.
+#
+# Hit videos are handled inside katya_diehard_background
+# by Godot using current_player.katya_shots.
+# ------------------------------------------------------------
 slide_player:
   mode_katya_diehard_started:
     katya_diehard_background:
       action: play
       expire: 0s
-      priority: 500
+      priority: 600
 
   mode_katya_diehard_stopping:
     katya_diehard_background:
       action: remove
 
-  katya_loop_hit_scored{current_player.katya_shots==1}:
-    katya_hit_1:
-      action: play
-      expire: 4s
-      priority: 600
-
-  katya_loop_hit_scored{current_player.katya_shots==2}:
-    katya_hit_2:
-      action: play
-      expire: 4s
-      priority: 600
-
-  katya_loop_hit_scored{current_player.katya_shots==3}:
-    katya_hit_3:
-      action: play
-      expire: 4s
-      priority: 600
-
-  katya_loop_hit_scored{current_player.katya_shots==4}:
-    katya_hit_4:
-      action: play
-      expire: 4s
-      priority: 600
-
-  katya_loop_hit_scored{current_player.katya_shots==5}:
-    katya_hit_5:
-      action: play
-      expire: 4s
-      priority: 600
-
   katya_completed_show:
     katya_diehard_background:
       action: remove
-
     katya_defeated:
       action: play
       expire: 4s
@@ -521,21 +665,25 @@ slide_player:
   katya_ball_drain_escape:
     katya_diehard_background:
       action: remove
-
     katya_escaped:
       action: play
       expire: 4s
       priority: 10000
 
-  katya_failed:
+  katya_escape_sequence:
     katya_diehard_background:
       action: remove
-
     katya_escaped:
       action: play
       expire: 4s
       priority: 10000
 
+
+# ------------------------------------------------------------
+# WIDGET PLAYER
+# Shows Katya Die Hard timer and progress widgets.
+# These are the registered normal Die Hard widget names.
+# ------------------------------------------------------------
 widget_player:
   mode_katya_diehard_started:
     katya_timer_widget:
@@ -563,6 +711,11 @@ widget_player:
     katya_diehard_progress_widget:
       action: remove
 
+
+# ------------------------------------------------------------
+# SOUND PLAYER
+# Starts Katya music and stops it when the mode stops.
+# ------------------------------------------------------------
 sound_player:
   katya_diehard_music_start:
     katyatheme:

@@ -1,28 +1,36 @@
 extends Control
 
 @onready var background_video = $"../MPFVideoPlayer"
-@onready var katya_hit_video: VideoStreamPlayer = $"../KatyaHitVideo"
-@onready var katya_variable: Label = $KatyaShotsVariable
+@onready var katya_hit_video: VideoStreamPlayer = $"../KatyaDieHarderHitVideo"
+@onready var katya_variable: Label = $KatyaDieHarderShotsVariable
 
 var last_shots: int = -1
 
+# Reuses the normal Katya hit videos:
+# res://modes/katya_diehard/slides/Katya1.ogv
+# res://modes/katya_diehard/slides/Katya2.ogv
+# ...
+# res://modes/katya_diehard/slides/Katya8.ogv
 const HIT_VIDEO_PATH: String = "res://modes/katya_diehard/slides/Katya%d.ogv"
 
 
 func _ready() -> void:
+	print("KATYA DIE HARDER VIDEO CONTROL READY")
+
 	if background_video == null:
-		push_warning("Katya Die Hard: MPFVideoPlayer node not found")
+		push_warning("Katya Die Harder: MPFVideoPlayer node not found")
 
 	if katya_hit_video == null:
-		push_warning("Katya Die Hard: KatyaHitVideo node not found")
+		push_warning("Katya Die Harder: KatyaDieHarderHitVideo node not found")
 		return
 
 	if katya_variable == null:
-		push_warning("Katya Die Hard: KatyaShotsVariable label not found")
+		push_warning("Katya Die Harder: KatyaDieHarderShotsVariable node not found")
+		return
 
 	katya_hit_video.visible = false
-	katya_hit_video.loop = false
 	katya_hit_video.autoplay = false
+	katya_hit_video.loop = false
 
 	if not katya_hit_video.finished.is_connected(_on_katya_hit_video_finished):
 		katya_hit_video.finished.connect(_on_katya_hit_video_finished)
@@ -47,7 +55,7 @@ func _process(_delta: float) -> void:
 
 	last_shots = shots
 
-	if shots >= 1:
+	if shots >= 1 and shots <= 8:
 		play_katya_hit_video(shots)
 
 
@@ -57,7 +65,7 @@ func play_katya_hit_video(shots: int) -> void:
 	var video_file: VideoStream = load(path) as VideoStream
 
 	if video_file == null:
-		push_warning("Missing Katya Die Hard hit video: %s" % path)
+		push_warning("Katya Die Harder: Missing hit video: %s" % path)
 		return
 
 	if background_video != null:
@@ -65,11 +73,10 @@ func play_katya_hit_video(shots: int) -> void:
 			background_video.stop()
 		background_video.visible = false
 
-	if katya_hit_video != null:
-		katya_hit_video.stop()
-		katya_hit_video.stream = video_file
-		katya_hit_video.visible = true
-		katya_hit_video.play()
+	katya_hit_video.stop()
+	katya_hit_video.stream = video_file
+	katya_hit_video.visible = true
+	katya_hit_video.play()
 
 
 func _on_katya_hit_video_finished() -> void:

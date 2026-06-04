@@ -5,7 +5,7 @@
 # EOB bonus starts from MPF's ball_ending queue.
 #
 # Keep this original start event.
-# Karl/Hans delay is handled by show/timer gates below,
+# Villain result delays are handled by show/timer gates below,
 # not by changing the mode start event.
 # ------------------------------------------------------------
 mode:
@@ -52,23 +52,46 @@ event_player:
 # Runs the EOB bonus video/show.
 #
 # Normal ball drain:
-#   Start EOB show on mode_eob_bonus_started.
+#   Start EOB show on mode_eob_bonus_started only if no villain
+#   result slide/video is currently active.
 #
-# Karl escaped drain:
-#   If karl_result_started == 1, do not start EOB yet.
-#   Start it after karl_diehard_failed.
-#
-# Hans Die Hard escaped drain:
-#   If hans_result_started == 1, do not start EOB yet.
-#   Start it after hans_diehard_failed_complete.
+# Villain escaped / failed drain:
+#   If a villain result variable is active, do not start EOB yet.
+#   Start it after that villain's fail/result event fires.
 # ------------------------------------------------------------
 show_player:
-  mode_eob_bonus_started{current_player.karl_result_started != 1 and current_player.hans_result_started != 1}:
+  mode_eob_bonus_started{current_player.karl_result_started != 1 and current_player.karl_dieharder_result_started != 1 and current_player.hans_result_started != 1 and current_player.hans_dieharder_result_started != 1 and current_player.katya_diehard_result_started != 1 and current_player.katya_dieharder_result_started != 1 and current_player.simon_result_started != 1 and current_player.simon_dieharder_result_started != 1 and current_player.col_stuart_result_started != 1 and current_player.col_stuart_dieharder_result_started != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
 
+  # ------------------------------------------------------------
+  # KARL RESULT FINISHED
+  # ------------------------------------------------------------
   karl_diehard_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  karl_diehard_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  karl_dieharder_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  karl_dieharder_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  # ------------------------------------------------------------
+  # HANS RESULT FINISHED
+  # ------------------------------------------------------------
+  hans_diehard_failed:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
@@ -78,11 +101,98 @@ show_player:
       key: key_eob_bonus
       loops: 0
 
+  hans_dieharder_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  hans_dieharder_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  # ------------------------------------------------------------
+  # KATYA RESULT FINISHED
+  # ------------------------------------------------------------
+  katya_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
   katya_diehard_failed_complete:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
 
+  katya_dieharder_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  katya_dieharder_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  # ------------------------------------------------------------
+  # SIMON RESULT FINISHED
+  # ------------------------------------------------------------
+  simon_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  simon_diehard_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  simon_diehard_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  simon_dieharder_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  simon_dieharder_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  # ------------------------------------------------------------
+  # COL / STUART RESULT FINISHED
+  # ------------------------------------------------------------
+  col_stuart_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  col_stuart_diehard_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  col_stuart_diehard_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  col_stuart_dieharder_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  col_stuart_dieharder_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+
+  # ------------------------------------------------------------
+  # STOP EOB SHOW WHEN SUMMARY STARTS
+  # ------------------------------------------------------------
   show_bonus_summary:
     eob_bonus:
       action: stop
@@ -130,9 +240,10 @@ sound_player:
 #
 # Important delayed villain result fix:
 #   start_running is false.
-#   Normal drain starts it on mode_eob_bonus_started.
-#   Karl escaped drain starts it on karl_diehard_failed.
-#   Hans escaped drain starts it on hans_diehard_failed_complete.
+#   Normal drain starts it on mode_eob_bonus_started only if no
+#   villain result is active.
+#   Villain escaped drain starts it after that villain's
+#   fail/result event fires.
 #
 # eob_bonus_summary:
 #   Runs the final summary slide timing.
@@ -146,12 +257,64 @@ timers:
     start_running: false
     restart_on_complete: false
     control_events:
-      - event: mode_eob_bonus_started{current_player.karl_result_started != 1 and current_player.hans_result_started != 1}
+      - event: mode_eob_bonus_started{current_player.karl_result_started != 1 and current_player.karl_dieharder_result_started != 1 and current_player.hans_result_started != 1 and current_player.hans_dieharder_result_started != 1 and current_player.katya_diehard_result_started != 1 and current_player.katya_dieharder_result_started != 1 and current_player.simon_result_started != 1 and current_player.simon_dieharder_result_started != 1 and current_player.col_stuart_result_started != 1 and current_player.col_stuart_dieharder_result_started != 1}
         action: restart
+
+      # Karl
       - event: karl_diehard_failed
+        action: restart
+      - event: karl_diehard_failed_complete
+        action: restart
+      - event: karl_dieharder_failed
+        action: restart
+      - event: karl_dieharder_failed_complete
+        action: restart
+
+      # Hans
+      - event: hans_diehard_failed
         action: restart
       - event: hans_diehard_failed_complete
         action: restart
+      - event: hans_dieharder_failed
+        action: restart
+      - event: hans_dieharder_failed_complete
+        action: restart
+
+      # Katya
+      - event: katya_failed
+        action: restart
+      - event: katya_diehard_failed_complete
+        action: restart
+      - event: katya_dieharder_failed
+        action: restart
+      - event: katya_dieharder_failed_complete
+        action: restart
+
+      # Simon
+      - event: simon_failed
+        action: restart
+      - event: simon_diehard_failed
+        action: restart
+      - event: simon_diehard_failed_complete
+        action: restart
+      - event: simon_dieharder_failed
+        action: restart
+      - event: simon_dieharder_failed_complete
+        action: restart
+
+      # Col / Stuart
+      - event: col_stuart_failed
+        action: restart
+      - event: col_stuart_diehard_failed
+        action: restart
+      - event: col_stuart_diehard_failed_complete
+        action: restart
+      - event: col_stuart_dieharder_failed
+        action: restart
+      - event: col_stuart_dieharder_failed_complete
+        action: restart
+
+      # Skip / summary
       - event: show_bonus_summary
         action: stop
 

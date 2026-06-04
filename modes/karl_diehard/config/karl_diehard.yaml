@@ -1,17 +1,31 @@
 #config_version=6
 
-# ------------------------------------------------------------
+# =====================================================================
+# KARL DIE HARD
+# =====================================================================
+# VPW-style Karl:
+#   Spinner = +1 damage
+#   Pop bumper = +5 damage
+#   Complete at 100 damage
+#   Normal timer = 90 seconds
+#   Hans Bonus adds +30 seconds
+#
+# Project rules:
+#   Karl is only blocked after completion, not fail.
+#   Shared cap/gate is karl_complete.
+#   Ball lost / timer fail plays Karl Escaped.
+#   Defeated plays Karl defeated slide/video.
+#   Completion posts count_karl_for_extra_ball.
+#   Mystery Add More Time adds +20 seconds.
+#   2 second ball save on mode start.
+#   No l80/l81/l82/l83.
+# =====================================================================
+
+# ---------------------------------------------------------------------
 # MODE
-# Karl Die Hard starts from Karl difficulty select.
-#
-# karl_played:
-#   Shared gate for Karl Die Hard and Karl Die Harder.
-#   Once either version starts, Karl cannot be selected again
-#   during that game.
-#
-# karl_complete:
-#   Only set when Karl is defeated.
-# ------------------------------------------------------------
+# Starts Karl Die Hard if Karl has not already been completed.
+# Stops after the delayed win/fail completion events.
+# ---------------------------------------------------------------------
 mode:
   start_events:
     - start_karl_diehard{current_player.karl_played==0}
@@ -23,14 +37,8 @@ mode:
 # ------------------------------------------------------------
 # TIMER
 # VPW Karl = 90 seconds normally.
-# If Hans Bonus is active, VPW gives Karl 120 seconds.
-#
-# MPF-safe approach:
-#   - restart timer at 90
-#   - if hans_bonus == 1, add +30 seconds immediately
-#
-# Mystery "Add More Time" still adds +20 seconds.
-# Result events stop the timer while the result slide plays.
+# Hans Bonus adds +30 seconds.
+# Mystery Add More Time adds +20 seconds.
 # ------------------------------------------------------------
 timers:
   karl_diehard_timer:
@@ -60,8 +68,6 @@ timers:
 # ------------------------------------------------------------
 # BALL SAVES
 # Karl gets a 2 second ball save at mode start.
-# The ball save insert flash is handled by the normal global
-# ball save event, not by a custom Karl show.
 # ------------------------------------------------------------
 ball_saves:
   karl_ball_save:
@@ -81,15 +87,8 @@ ball_saves:
 
 # ------------------------------------------------------------
 # EVENT PLAYER
-# Handles Karl mode start, Hans Bonus timer add, damage shots,
-# heartbeat changes, result slide events, and final cleanup.
-#
-# Result flow:
-#   win  -> karl_defeated_slide -> 4s -> karl_diehard_completed
-#   lose -> karl_escaped_slide  -> 5s -> karl_diehard_failed
-#
-# ball_drain is used like Hans so KarlEscaped can play before
-# the ball end / EOB screen takes over.
+# Handles Karl mode start, damage shots, heartbeat changes,
+# result flow, final cleanup, and bullet resets.
 # ------------------------------------------------------------
 event_player:
   mode_karl_diehard_started:
@@ -103,9 +102,6 @@ event_player:
     - karl_heartbeat_slow
     - karl_apply_hans_bonus_time{current_player.hans_bonus == 1}|10ms
 
-  # ------------------------------------------------------------
-  # RESULT STARTS
-  # ------------------------------------------------------------
   timer_karl_diehard_timer_complete{current_player.karl_result_started==0}:
     - karl_escaped_slide
     - karl_diehard_failed|5s
@@ -118,20 +114,9 @@ event_player:
     - karl_defeated_slide
     - karl_diehard_completed|4s
 
-  # ------------------------------------------------------------
-  # MODE STOP CLEANUP
-  # ------------------------------------------------------------
   mode_karl_diehard_stopping:
     - villain_mode_stopped
 
-  # ------------------------------------------------------------
-  # KARL DAMAGE SHOTS
-  # VPW:
-  # Spinner = +1 KarlHits
-  # Bumper = +5 KarlHits
-  #
-  # Real machine: only TWO pop bumpers.
-  # ------------------------------------------------------------
   SpinnerLeft_active{current_player.karl_damage < 100 and current_player.karl_result_started==0}:
     - karl_spinner_hit
     - karl_score_spinner
@@ -152,10 +137,6 @@ event_player:
     - karl_score_pop
     - karl_check_complete|20ms
 
-  # ------------------------------------------------------------
-  # HEARTBEAT SPEED
-  # VPW-style heartbeat gets faster as Karl damage rises.
-  # ------------------------------------------------------------
   karl_spinner_hit:
     - karl_update_heartbeat|50ms
 
@@ -171,10 +152,6 @@ event_player:
   karl_update_heartbeat{current_player.karl_damage >= 70 and current_player.karl_result_started==0}:
     - karl_heartbeat_fast
 
-  # ------------------------------------------------------------
-  # FINAL COMPLETE / FAIL EVENTS
-  # These happen after the result slide delay.
-  # ------------------------------------------------------------
   karl_diehard_completed:
     - karl_score_complete
     - count_karl_for_extra_ball
@@ -185,35 +162,12 @@ event_player:
     - reset_bullets
     - reset_bullet_total
 
-  # ------------------------------------------------------------
-  # KARL BALL SAVE FEEDBACK
-  # Use the normal global ball save event.
-  # ------------------------------------------------------------
   ball_save_karl_ball_save_saving_ball:
     - ball_save_saving_ball
 
 # ------------------------------------------------------------
 # VARIABLE PLAYER
-# Stores Karl progress and result state.
-#
-# karl_played:
-#   Shared gate for Karl Die Hard and Karl Die Harder.
-#   Set as soon as either Karl mode starts.
-#
-# karl_complete:
-#   Only set when Karl is defeated.
-#
-# karl_health_display:
-#   Sends Karl damage value to Godot for the Karl health bar.
-#
-# karl_hans_bonus_active:
-#   Sends Hans Bonus state to Godot.
-#   0 = normal Karl / 90 second John health scale
-#   1 = Hans Bonus Karl / 120 second John health scale
-#
-# karl_result_started:
-#   Prevents double-starting win/lose result events and lets EOB
-#   wait until the result video finishes.
+# Stores Karl progress, scoring, result state, and display vars.
 # ------------------------------------------------------------
 variable_player:
   mode_karl_diehard_started:
@@ -257,9 +211,6 @@ variable_player:
       action: set
       int: 1
 
-  # ------------------------------------------------------------
-  # RESET DAMAGE
-  # ------------------------------------------------------------
   karl_reset_damage:
     karl_damage:
       action: set
@@ -268,10 +219,6 @@ variable_player:
       action: set
       int: 0
 
-  # ------------------------------------------------------------
-  # RESULT SLIDE VARIABLES
-  # These trigger Godot/result state and tell EOB to wait.
-  # ------------------------------------------------------------
   karl_defeated_slide:
     karl_result_started:
       action: set
@@ -291,16 +238,6 @@ variable_player:
       action: set
       int: 2
 
-  # ------------------------------------------------------------
-  # DAMAGE
-  # VPW:
-  # Spinner = +1
-  # Pop bumper = +5
-  #
-  # karl_health_display mirrors the updated Karl damage for Godot.
-  # We add the hit value here because MPF evaluates the display
-  # value before the add has visually propagated.
-  # ------------------------------------------------------------
   karl_spinner_hit:
     karl_damage:
       action: add
@@ -317,14 +254,6 @@ variable_player:
       action: set
       int: "(current_player.karl_damage + 5)"
 
-  # ------------------------------------------------------------
-  # VPW KARL SCORING
-  # Spinner = 90,000
-  # Bumper = 450,000
-  # Complete = 3,000,000
-  #
-  # All Karl scoring respects playfield_multiplier.
-  # ------------------------------------------------------------
   karl_score_spinner:
     score:
       action: add
@@ -349,19 +278,6 @@ variable_player:
       action: add
       int: "(3000000 * current_player.playfield_multiplier)"
 
-  # ------------------------------------------------------------
-  # RESULT FLAGS
-  # Completed = Karl defeated:
-  #   - sets karl_complete
-  #   - posts Extra Ball bridge via event_player
-  #
-  # Failed/Escaped:
-  #   - only sets karl_diehard_lost
-  #   - does not set karl_complete
-  #
-  # Karl still cannot be selected again because karl_played is
-  # set when the mode starts.
-  # ------------------------------------------------------------
   karl_diehard_completed:
     karl_diehard_won:
       action: set
@@ -391,11 +307,7 @@ variable_player:
 
 # ------------------------------------------------------------
 # SOUND PLAYER
-# Starts Karl mode music and stops it when the result slide
-# begins or when the mode stops.
-#
-# Karl mode music asset:
-#   karltheme
+# Starts/stops Karl theme music.
 # ------------------------------------------------------------
 sound_player:
   karl_music_start:
@@ -422,12 +334,8 @@ sound_player:
 
 # ------------------------------------------------------------
 # SHOW PLAYER
-# Runs VPW-style Karl lighting shows:
-#   - running pulse
-#   - heartbeat slow/medium/fast
-#   - damage flashes
-#   - complete/fail shows
-#   - cleanup
+# VPW running/heartbeat shows, damage feedback, result shows,
+# and cleanup.
 # ------------------------------------------------------------
 show_player:
   mode_karl_diehard_started:
@@ -442,9 +350,6 @@ show_player:
       speed: 1
       priority: 650
 
-  # ------------------------------------------------------------
-  # HEARTBEAT SPEED CHANGES
-  # ------------------------------------------------------------
   karl_heartbeat_slow:
     karl_vpw_heartbeat_medium:
       action: stop
@@ -484,9 +389,6 @@ show_player:
       speed: 1
       priority: 650
 
-  # ------------------------------------------------------------
-  # DAMAGE SHOWS
-  # ------------------------------------------------------------
   karl_spinner_hit:
     karl_vpw_damage_pulse:
       key: key_karl_spinner_damage_pulse
@@ -500,11 +402,24 @@ show_player:
       loops: 2
       speed: 1
       priority: 920
+    flash_color:
+      key: key_karl_pop_bumper_flash
+      loops: 3
+      speed: 10
+      priority: 950
+      show_tokens:
+        lights: SPOTS_BUMPER
+        color: 969650
+    flash_color_with_fade:
+      key: key_karl_pop_gi_flash
+      loops: 1
+      speed: 8
+      priority: 940
+      show_tokens:
+        lights: GI
+        color: ffffff
+        fade: 150
 
-  # ------------------------------------------------------------
-  # RESULT SLIDES
-  # Stop running/heartbeat while result slide plays.
-  # ------------------------------------------------------------
   karl_defeated_slide:
     karl_vpw_running_pulse:
       action: stop
@@ -518,6 +433,10 @@ show_player:
     karl_vpw_heartbeat_fast:
       action: stop
       key: key_karl_vpw_heartbeat
+    key_karl_pop_bumper_flash:
+      action: stop
+    key_karl_pop_gi_flash:
+      action: stop
 
   karl_escaped_slide:
     karl_vpw_running_pulse:
@@ -532,11 +451,11 @@ show_player:
     karl_vpw_heartbeat_fast:
       action: stop
       key: key_karl_vpw_heartbeat
+    key_karl_pop_bumper_flash:
+      action: stop
+    key_karl_pop_gi_flash:
+      action: stop
 
-  # ------------------------------------------------------------
-  # COMPLETE / FAIL SHOWS
-  # Final events happen after result slide delay.
-  # ------------------------------------------------------------
   karl_diehard_completed:
     karl_vpw_complete_show:
       key: key_karl_vpw_complete_show
@@ -551,9 +470,6 @@ show_player:
       speed: 1
       priority: 1000
 
-  # ------------------------------------------------------------
-  # CLEANUP
-  # ------------------------------------------------------------
   mode_karl_diehard_stopping:
     karl_vpw_running_pulse:
       action: stop
@@ -567,42 +483,33 @@ show_player:
     karl_vpw_heartbeat_fast:
       action: stop
       key: key_karl_vpw_heartbeat
+    key_karl_pop_bumper_flash:
+      action: stop
+    key_karl_pop_gi_flash:
+      action: stop
 
 # ------------------------------------------------------------
 # LIGHT PLAYER
-# Keeps Karl insert and action button orange during the mode.
-#
-# Completed:
-#   Karl insert stays Karl orange.
-#
-# Failed/Escaped:
-#   Karl insert turns off.
-#
-# Do not use l80, l81, l82, or l83.
+# Sets Karl Die Hard lighting and result insert states.
 # ------------------------------------------------------------
 light_player:
   mode_karl_diehard_started:
     GI:
-      color: ffb700
-      priority: 500
+      color: ff8800
+      priority: 1000
     SPOTS:
       color: 505050
-      priority: 500
+      priority: 1000
     l40:
       color: ff8800
-      priority: 1000
+      priority: 1100
     l1000:
       color: ff8800
-      priority: 1000
+      priority: 1100
     l1001:
       color: ff8800
-      priority: 1000
+      priority: 1100
 
-  # ------------------------------------------------------------
-  # KARL BALL SAVE COLOUR
-  # Keep Karl/action button orange during the 2s ball save.
-  # Normal ball save insert still flashes via ball_save_saving_ball.
-  # ------------------------------------------------------------
   ball_save_karl_ball_save_enabled:
     l40:
       color: ff8800
@@ -636,11 +543,6 @@ light_player:
       color: ff8800
       priority: 1000
 
-  # ------------------------------------------------------------
-  # RESULT STATE
-  # Completed = Karl insert stays orange.
-  # Failed/Escaped = Karl insert turns off.
-  # ------------------------------------------------------------
   karl_diehard_completed:
     l40:
       color: ff8800
@@ -673,10 +575,8 @@ light_player:
 
 # ------------------------------------------------------------
 # SLIDE PLAYER
-# Same style as Hans:
-#   result event removes the mode background
-#   result slide plays high priority
-#   final completed/failed event stops the mode after delay
+# Result event removes background and plays high-priority result.
+# Final completed/failed event removes the result slide.
 # ------------------------------------------------------------
 slide_player:
   mode_karl_diehard_started:

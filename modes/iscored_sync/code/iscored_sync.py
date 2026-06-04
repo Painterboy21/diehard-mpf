@@ -8,20 +8,34 @@ import urllib.parse
 import urllib.request
 
 
+# ------------------------------------------------------------
+# iSCORED SETTINGS
+# ------------------------------------------------------------
 # Your iScored gameroom/game:
-# User: FT1
+# Gameroom: FT1
 # Game: DIE HARD TRILOGY
-# GameID: 48177
-ISCORED_GAME_URL = "https://www.iscored.info/api/FT1/48177"
-ISCORED_SUBMIT_URL = "https://www.iscored.info/api/FT1/48177/submitScore"
+#
+# Using the documented game-name endpoint rather than GameID.
+# ------------------------------------------------------------
+ISCORED_GAME_URL = "https://www.iscored.info/api/FT1/DIE%20HARD%20TRILOGY"
+ISCORED_SUBMIT_URL = "https://www.iscored.info/api/FT1/DIE%20HARD%20TRILOGY/submitScore"
 
 DEFAULT_PLAYER_NAME = "JohnMcClane"
 QUEUE_FILE_NAME = "iscored_queue.json"
 TOP_N = 10
+HTTP_TIMEOUT = 2
 
 
 class IscoredSync(Mode):
 
+    # ------------------------------------------------------------
+    # MODE START
+    # Registers events only.
+    #
+    # IMPORTANT:
+    # Do not flush queued scores during boot.
+    # Keeps MPF startup safe even with no internet.
+    # ------------------------------------------------------------
     def mode_start(self, **kwargs):
 
         self.info_log("iScored integration loaded")
@@ -49,11 +63,11 @@ class IscoredSync(Mode):
             self.refresh_scores
         )
 
-        threading.Thread(
-            target=self._flush_queue_thread,
-            daemon=True
-        ).start()
-
+    # ------------------------------------------------------------
+    # SUBMIT SCORE
+    # Called by event:
+    #   iscored_submit_score
+    # ------------------------------------------------------------
     def submit_score(self, **kwargs):
 
         player = self.machine.game.player if self.machine.game else None
@@ -71,6 +85,11 @@ class IscoredSync(Mode):
             daemon=True
         ).start()
 
+    # ------------------------------------------------------------
+    # FLUSH QUEUE
+    # Called manually by event:
+    #   iscored_flush_queue
+    # ------------------------------------------------------------
     def flush_queue(self, **kwargs):
 
         threading.Thread(
@@ -78,6 +97,12 @@ class IscoredSync(Mode):
             daemon=True
         ).start()
 
+    # ------------------------------------------------------------
+    # REFRESH SCORES
+    # Called by:
+    #   iscored_refresh_scores
+    #   mode_attract_started
+    # ------------------------------------------------------------
     def refresh_scores(self, **kwargs):
 
         threading.Thread(
@@ -85,6 +110,10 @@ class IscoredSync(Mode):
             daemon=True
         ).start()
 
+    # ------------------------------------------------------------
+    # GET PLAYER NAME
+    # Tries common MPF player fields, then falls back.
+    # ------------------------------------------------------------
     def _get_player_name(self, player):
 
         player_name = None
@@ -122,6 +151,14 @@ class IscoredSync(Mode):
 
         return player_name[:20]
 
+    # ------------------------------------------------------------
+    # CHECK THEN SUBMIT OR QUEUE
+    # Checks top 10 before posting.
+    #
+    # Important:
+    # iScored may return accepted but not actually show the score
+    # in the following leaderboard GET, so we verify it.
+    # ------------------------------------------------------------
     def _check_then_submit_or_queue(self, player_name, score):
 
         qualifies = self._score_qualifies_for_top_ten(score)
@@ -142,8 +179,30 @@ class IscoredSync(Mode):
             )
 
             if ok:
-                self._flush_queue_thread()
-                self._refresh_scores_thread()
+
+                # Give iScored a moment before checking the leaderboard.
+                time.sleep(1.0)
+
+                if self._submitted_score_is_visible(player_name, score):
+
+                    self.info_log(
+                        "iScored submit verified on leaderboard -> player: %s score: %s",
+                        player_name,
+                        score
+                    )
+
+                    self._refresh_scores_thread()
+
+                else:
+
+                    self.warning_log(
+                        "iScored submit said accepted but score is NOT visible, queued -> player: %s score: %s",
+                        player_name,
+                        score
+                    )
+
+                    self._queue_score(player_name, score)
+                    self._refresh_scores_thread()
 
             return
 
@@ -166,16 +225,51 @@ class IscoredSync(Mode):
 
         self._queue_score(player_name, score)
 
+    # ------------------------------------------------------------
+    # VERIFY SUBMITTED SCORE IS REALLY VISIBLE
+    # ------------------------------------------------------------
+    def _submitted_score_is_visible(self, player_name, score):
+
+        try:
+            entries = self._get_leaderboard_entries(TOP_N)
+
+            target_name = str(player_name).strip().lower()
+            target_score = int(score)
+
+            for entry in entries:
+
+                entry_name = str(entry.get("name", "")).strip().lower()
+                entry_score = int(entry.get("score", 0))
+
+                if entry_name == target_name and entry_score == target_score:
+                    return True
+
+            return False
+
+        except Exception as e:
+
+            self.warning_log(
+                "iScored submit verify failed: %s",
+                e
+            )
+
+            return False
+
+    # ------------------------------------------------------------
+    # SCORE QUALIFIES CHECK
+    # ------------------------------------------------------------
     def _score_qualifies_for_top_ten(self, score):
 
         try:
             scores = self._get_top_scores()
 
             if len(scores) < TOP_N:
+
                 self.info_log(
                     "iScored leaderboard has fewer than %s scores, score qualifies",
                     TOP_N
                 )
+
                 return True
 
             tenth_score = scores[TOP_N - 1]
@@ -190,9 +284,13 @@ class IscoredSync(Mode):
             return int(score) > int(tenth_score)
 
         except Exception as e:
+
             self.warning_log("iScored leaderboard check failed: %s", e)
             return None
 
+    # ------------------------------------------------------------
+    # GET TOP SCORES
+    # ------------------------------------------------------------
     def _get_top_scores(self):
 
         entries = self._get_leaderboard_entries(TOP_N)
@@ -209,6 +307,9 @@ class IscoredSync(Mode):
 
         return scores
 
+    # ------------------------------------------------------------
+    # GET LEADERBOARD ENTRIES
+    # ------------------------------------------------------------
     def _get_leaderboard_entries(self, max_scores):
 
         params = urllib.parse.urlencode({
@@ -225,7 +326,7 @@ class IscoredSync(Mode):
             }
         )
 
-        with urllib.request.urlopen(request, timeout=3) as response:
+        with urllib.request.urlopen(request, timeout=HTTP_TIMEOUT) as response:
             body = response.read().decode("utf-8", errors="ignore")
 
         result = json.loads(body)
@@ -253,13 +354,19 @@ class IscoredSync(Mode):
 
         return entries
 
+    # ------------------------------------------------------------
+    # REFRESH SCORES THREAD
+    # Prevents overlapping leaderboard refreshes.
+    # ------------------------------------------------------------
     def _refresh_scores_thread(self):
 
         if not self._refresh_lock.acquire(blocking=False):
+
             self.info_log("iScored leaderboard refresh already running, skipped")
             return
 
         try:
+
             entries = self._get_leaderboard_entries(TOP_N)
 
             self._run_on_mpf_thread(
@@ -278,8 +385,44 @@ class IscoredSync(Mode):
 
             self._refresh_lock.release()
 
+    # ------------------------------------------------------------
+    # APPLY LEADERBOARD MACHINE VARS
+    #
+    # Important:
+    # GMC/Godot only receives machine_var events when values change.
+    # If the same scores already exist before the attract slide
+    # registers its handlers, Godot may only receive iscored_last_update.
+    #
+    # So we clear display vars first, then apply real values.
+    # ------------------------------------------------------------
     def _apply_leaderboard_machine_vars(self, entries):
 
+        # Force change events first.
+        for index in range(TOP_N):
+
+            slot = index + 1
+
+            self._set_machine_var(
+                "iscored_{}_rank".format(slot),
+                ""
+            )
+
+            self._set_machine_var(
+                "iscored_{}_name".format(slot),
+                ""
+            )
+
+            self._set_machine_var(
+                "iscored_{}_score".format(slot),
+                -1
+            )
+
+            self._set_machine_var(
+                "iscored_{}_score_text".format(slot),
+                ""
+            )
+
+        # Apply real values.
         for index in range(TOP_N):
 
             slot = index + 1
@@ -340,18 +483,30 @@ class IscoredSync(Mode):
             len(entries)
         )
 
+    # ------------------------------------------------------------
+    # RUN CALLBACK ON MPF THREAD
+    # ------------------------------------------------------------
     def _run_on_mpf_thread(self, callback, *args):
 
         try:
+
             loop = self.machine.clock.loop
             loop.call_soon_threadsafe(callback, *args)
+
         except Exception:
+
             callback(*args)
 
+    # ------------------------------------------------------------
+    # SET MACHINE VAR
+    # ------------------------------------------------------------
     def _set_machine_var(self, name, value):
 
         self.machine.variables.set_machine_var(name, value)
 
+    # ------------------------------------------------------------
+    # FORMAT SCORE
+    # ------------------------------------------------------------
     def _format_score(self, score):
 
         try:
@@ -359,6 +514,9 @@ class IscoredSync(Mode):
         except Exception:
             return str(score)
 
+    # ------------------------------------------------------------
+    # POST SCORE TO iSCORED
+    # ------------------------------------------------------------
     def _post_to_iscored(self, player_name, score, queue_on_fail):
 
         params = urllib.parse.urlencode({
@@ -369,6 +527,7 @@ class IscoredSync(Mode):
         url = ISCORED_SUBMIT_URL + "?" + params
 
         try:
+
             request = urllib.request.Request(
                 url,
                 data=b"",
@@ -378,7 +537,7 @@ class IscoredSync(Mode):
                 }
             )
 
-            with urllib.request.urlopen(request, timeout=3) as response:
+            with urllib.request.urlopen(request, timeout=HTTP_TIMEOUT) as response:
                 body = response.read().decode("utf-8", errors="ignore")
 
             status = "unknown"
@@ -433,6 +592,10 @@ class IscoredSync(Mode):
 
             return False
 
+    # ------------------------------------------------------------
+    # QUEUE SCORE
+    # Avoids duplicate same-player/same-score queue entries.
+    # ------------------------------------------------------------
     def _queue_score(self, player_name, score):
 
         queued_score = {
@@ -444,6 +607,27 @@ class IscoredSync(Mode):
         with self._queue_lock:
 
             queue = self._load_queue()
+
+            for existing in queue:
+
+                try:
+
+                    same_name = existing.get("playerName") == player_name
+                    same_score = int(existing.get("score", 0)) == int(score)
+
+                    if same_name and same_score:
+
+                        self.info_log(
+                            "iScored score already queued -> player: %s score: %s",
+                            player_name,
+                            score
+                        )
+
+                        return
+
+                except Exception:
+                    pass
+
             queue.append(queued_score)
             self._save_queue(queue)
 
@@ -453,6 +637,10 @@ class IscoredSync(Mode):
             score
         )
 
+    # ------------------------------------------------------------
+    # FLUSH QUEUE THREAD
+    # Only runs when event iscored_flush_queue is posted.
+    # ------------------------------------------------------------
     def _flush_queue_thread(self):
 
         with self._queue_lock:
@@ -488,7 +676,30 @@ class IscoredSync(Mode):
                         queue_on_fail=False
                     )
 
-                    if not ok:
+                    if ok:
+
+                        time.sleep(1.0)
+
+                        if self._submitted_score_is_visible(player_name, score):
+
+                            self.info_log(
+                                "iScored queued submit verified -> player: %s score: %s",
+                                player_name,
+                                score
+                            )
+
+                        else:
+
+                            self.warning_log(
+                                "iScored queued submit said accepted but score is NOT visible -> player: %s score: %s",
+                                player_name,
+                                score
+                            )
+
+                            remaining.append(queued_score)
+
+                    else:
+
                         remaining.append(queued_score)
 
                 elif qualifies is False:
@@ -507,13 +718,21 @@ class IscoredSync(Mode):
             self._save_queue(remaining)
 
             if remaining:
+
                 self.warning_log(
                     "iScored queue flush incomplete -> %s score(s) still queued",
                     len(remaining)
                 )
+
             else:
+
                 self.info_log("iScored queue flush complete")
 
+            self._refresh_scores_thread()
+
+    # ------------------------------------------------------------
+    # QUEUE FILE PATH
+    # ------------------------------------------------------------
     def _queue_path(self):
 
         return os.path.join(
@@ -521,6 +740,9 @@ class IscoredSync(Mode):
             QUEUE_FILE_NAME
         )
 
+    # ------------------------------------------------------------
+    # LOAD QUEUE
+    # ------------------------------------------------------------
     def _load_queue(self):
 
         path = self._queue_path()
@@ -529,11 +751,16 @@ class IscoredSync(Mode):
             return []
 
         try:
+
             with open(path, "r", encoding="utf-8") as f:
                 return json.load(f)
+
         except Exception:
             return []
 
+    # ------------------------------------------------------------
+    # SAVE QUEUE
+    # ------------------------------------------------------------
     def _save_queue(self, queue):
 
         path = self._queue_path()

@@ -351,6 +351,7 @@ variable_player:
       int: 0
 
 
+
 # =====================================================================
 # SHOW PLAYER
 # =====================================================================
@@ -396,25 +397,44 @@ show_player:
       action: stop
       key: karl_dieharder_ball_save_flash
 
+  # ------------------------------------------------------------
+  # KARL DIE HARDER HIT FEEDBACK
+  # Matches Karl Die Hard VPW-style damage pulse.
+  # Pop hits also flash bumper spots in their normal colour and
+  # give GI a quick white flash/fade.
+  # ------------------------------------------------------------
   karl_dieharder_spinner_hit:
-    flash_color:
-      key: karl_dieharder_spinner_hit_flash
-      priority: 300
+    karl_vpw_damage_pulse:
+      key: key_karl_dieharder_spinner_damage_pulse
       loops: 1
-      speed: 10
-      show_tokens:
-        lights: GI
-        color: ff8800
+      speed: 1
+      priority: 900
 
   karl_dieharder_pop_hit:
+    karl_vpw_damage_pulse:
+      key: key_karl_dieharder_pop_damage_pulse
+      loops: 2
+      speed: 1
+      priority: 920
+
     flash_color:
-      key: karl_dieharder_pop_hit_flash
-      priority: 300
+      key: key_karl_dieharder_pop_bumper_flash
       loops: 3
       speed: 10
+      priority: 950
+      show_tokens:
+        lights: SPOTS_BUMPER
+        color: 969650
+
+    flash_color_with_fade:
+      key: key_karl_dieharder_pop_gi_flash
+      loops: 1
+      speed: 8
+      priority: 940
       show_tokens:
         lights: GI
-        color: ff0000
+        color: ffffff
+        fade: 150
 
   mode_karl_dieharder_started:
     flash_color:
@@ -435,9 +455,13 @@ show_player:
     flash_color:
       action: stop
       key: karl_dieharder_ball_save_flash
-    karl_dieharder_spinner_hit_flash:
+    key_karl_dieharder_spinner_damage_pulse:
       action: stop
-    karl_dieharder_pop_hit_flash:
+    key_karl_dieharder_pop_damage_pulse:
+      action: stop
+    key_karl_dieharder_pop_bumper_flash:
+      action: stop
+    key_karl_dieharder_pop_gi_flash:
       action: stop
     karl_dieharder_gruber_flash:
       action: stop
@@ -445,9 +469,13 @@ show_player:
   karl_dieharder_complete:
     karl_dieharder_start_save_flash:
       action: stop
-    karl_dieharder_spinner_hit_flash:
+    key_karl_dieharder_spinner_damage_pulse:
       action: stop
-    karl_dieharder_pop_hit_flash:
+    key_karl_dieharder_pop_damage_pulse:
+      action: stop
+    key_karl_dieharder_pop_bumper_flash:
+      action: stop
+    key_karl_dieharder_pop_gi_flash:
       action: stop
     karl_dieharder_gruber_flash:
       action: stop
@@ -461,13 +489,16 @@ show_player:
     flash_color:
       action: stop
       key: karl_dieharder_ball_save_flash
-    karl_dieharder_spinner_hit_flash:
+    key_karl_dieharder_spinner_damage_pulse:
       action: stop
-    karl_dieharder_pop_hit_flash:
+    key_karl_dieharder_pop_damage_pulse:
+      action: stop
+    key_karl_dieharder_pop_bumper_flash:
+      action: stop
+    key_karl_dieharder_pop_gi_flash:
       action: stop
     karl_dieharder_gruber_flash:
       action: stop
-
 
 # =====================================================================
 # LIGHT PLAYER
