@@ -395,6 +395,15 @@ show_player:
       loops: 1
       speed: 1
       priority: 900
+    flash_color_with_fade:
+      key: key_karl_spinner_gi_flash
+      loops: 1
+      speed: 8
+      priority: 940
+      show_tokens:
+        lights: GI
+        color: ffffff
+        fade: 150
 
   karl_pop_hit:
     karl_vpw_damage_pulse:
@@ -433,6 +442,8 @@ show_player:
     karl_vpw_heartbeat_fast:
       action: stop
       key: key_karl_vpw_heartbeat
+    key_karl_spinner_gi_flash:
+      action: stop
     key_karl_pop_bumper_flash:
       action: stop
     key_karl_pop_gi_flash:
@@ -451,6 +462,8 @@ show_player:
     karl_vpw_heartbeat_fast:
       action: stop
       key: key_karl_vpw_heartbeat
+    key_karl_spinner_gi_flash:
+      action: stop
     key_karl_pop_bumper_flash:
       action: stop
     key_karl_pop_gi_flash:
@@ -483,11 +496,12 @@ show_player:
     karl_vpw_heartbeat_fast:
       action: stop
       key: key_karl_vpw_heartbeat
+    key_karl_spinner_gi_flash:
+      action: stop
     key_karl_pop_bumper_flash:
       action: stop
     key_karl_pop_gi_flash:
       action: stop
-
 # ------------------------------------------------------------
 # LIGHT PLAYER
 # Sets Karl Die Hard lighting and result insert states.
