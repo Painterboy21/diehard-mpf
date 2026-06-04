@@ -3,7 +3,6 @@
 # =====================================================================
 # KARL DIE HARDER
 # =====================================================================
-#
 # VPW-style Karl:
 #   Spinner = +1 damage
 #   Pop bumper = +5 damage
@@ -22,11 +21,11 @@
 #   No l80/l81/l82/l83.
 # =====================================================================
 
-
-# =====================================================================
+# ---------------------------------------------------------------------
 # MODE
-# =====================================================================
-
+# Starts Karl Die Harder if Karl has not already been completed.
+# Stops after the delayed win/fail completion events.
+# ---------------------------------------------------------------------
 mode:
   start_events:
     - start_karl_dieharder{current_player.karl_complete==0}
@@ -35,11 +34,12 @@ mode:
     - karl_dieharder_failed_complete
   priority: 170
 
-
-# =====================================================================
+# ---------------------------------------------------------------------
 # TIMERS
-# =====================================================================
-
+# Normal timer is 90s.
+# Hans bonus timer is 120s.
+# Mystery Add More Time adds 20s.
+# ---------------------------------------------------------------------
 timers:
   karl_dieharder_timer:
     start_value: 90
@@ -62,11 +62,11 @@ timers:
         action: add
         value: 20
 
-
-# =====================================================================
+# ---------------------------------------------------------------------
 # BALL SAVES
-# =====================================================================
-
+# 2s save on mode start.
+# 5s save after completion.
+# ---------------------------------------------------------------------
 ball_saves:
   karl_dieharder_start_save:
     active_time: 2s
@@ -92,11 +92,11 @@ ball_saves:
     disable_events:
       - mode_karl_dieharder_stopping
 
-
-# =====================================================================
+# ---------------------------------------------------------------------
 # EVENT PLAYER
-# =====================================================================
-
+# Starts mode state, handles spinner/pop damage, win/fail result flow,
+# bullet resets, flipper recovery, and Extra Ball bridge count.
+# ---------------------------------------------------------------------
 event_player:
   mode_karl_dieharder_started:
     - villain_mode_started
@@ -138,8 +138,8 @@ event_player:
     - karl_dieharder_complete
 
   karl_dieharder_complete:
-    - karl_dieharder_completed_slide|4s
-    - karl_dieharder_won_complete|8s
+    - karl_dieharder_completed_slide
+    - karl_dieharder_won_complete|7s
     - reset_bullet_total
     - reset_bullets
 
@@ -171,11 +171,11 @@ event_player:
     - reset_bullet_total
     - reset_bullets
 
-
-# =====================================================================
+# ---------------------------------------------------------------------
 # VARIABLE PLAYER
-# =====================================================================
-
+# Tracks mode state, damage, timer display, Hans bonus display,
+# scoring, completion/fail flags, and end-of-ball villain bonus.
+# ---------------------------------------------------------------------
 variable_player:
   mode_karl_dieharder_started:
     villain_mode_running:
@@ -350,12 +350,11 @@ variable_player:
       action: set
       int: 0
 
-
-
-# =====================================================================
+# ---------------------------------------------------------------------
 # SHOW PLAYER
-# =====================================================================
-
+# Start save / complete save shows, hit feedback, Karl insert flash,
+# result cleanup, and mode cleanup.
+# ---------------------------------------------------------------------
 show_player:
   ball_save_karl_dieharder_start_save_enabled:
     flash_color:
@@ -397,18 +396,21 @@ show_player:
       action: stop
       key: karl_dieharder_ball_save_flash
 
-  # ------------------------------------------------------------
-  # KARL DIE HARDER HIT FEEDBACK
-  # Matches Karl Die Hard VPW-style damage pulse.
-  # Pop hits also flash bumper spots in their normal colour and
-  # give GI a quick white flash/fade.
-  # ------------------------------------------------------------
   karl_dieharder_spinner_hit:
     karl_vpw_damage_pulse:
       key: key_karl_dieharder_spinner_damage_pulse
       loops: 1
       speed: 1
       priority: 900
+    flash_color_with_fade:
+      key: key_karl_dieharder_spinner_gi_flash
+      loops: 1
+      speed: 8
+      priority: 940
+      show_tokens:
+        lights: GI
+        color: ffffff
+        fade: 150
 
   karl_dieharder_pop_hit:
     karl_vpw_damage_pulse:
@@ -416,7 +418,6 @@ show_player:
       loops: 2
       speed: 1
       priority: 920
-
     flash_color:
       key: key_karl_dieharder_pop_bumper_flash
       loops: 3
@@ -425,7 +426,6 @@ show_player:
       show_tokens:
         lights: SPOTS_BUMPER
         color: 969650
-
     flash_color_with_fade:
       key: key_karl_dieharder_pop_gi_flash
       loops: 1
@@ -457,6 +457,8 @@ show_player:
       key: karl_dieharder_ball_save_flash
     key_karl_dieharder_spinner_damage_pulse:
       action: stop
+    key_karl_dieharder_spinner_gi_flash:
+      action: stop
     key_karl_dieharder_pop_damage_pulse:
       action: stop
     key_karl_dieharder_pop_bumper_flash:
@@ -470,6 +472,8 @@ show_player:
     karl_dieharder_start_save_flash:
       action: stop
     key_karl_dieharder_spinner_damage_pulse:
+      action: stop
+    key_karl_dieharder_spinner_gi_flash:
       action: stop
     key_karl_dieharder_pop_damage_pulse:
       action: stop
@@ -491,6 +495,8 @@ show_player:
       key: karl_dieharder_ball_save_flash
     key_karl_dieharder_spinner_damage_pulse:
       action: stop
+    key_karl_dieharder_spinner_gi_flash:
+      action: stop
     key_karl_dieharder_pop_damage_pulse:
       action: stop
     key_karl_dieharder_pop_bumper_flash:
@@ -500,10 +506,10 @@ show_player:
     karl_dieharder_gruber_flash:
       action: stop
 
-# =====================================================================
+# ---------------------------------------------------------------------
 # LIGHT PLAYER
-# =====================================================================
-
+# Sets Karl Die Harder lighting on start and cleans inserts on result.
+# ---------------------------------------------------------------------
 light_player:
   mode_karl_dieharder_started:
     GI:
@@ -539,11 +545,10 @@ light_player:
     l1000: off
     l1001: off
 
-
-# =====================================================================
+# ---------------------------------------------------------------------
 # COIL PLAYER
-# =====================================================================
-
+# Disables flippers on fail and re-enables them on cleanup.
+# ---------------------------------------------------------------------
 coil_player:
   karl_dieharder_fail_mode:
     c_right_flipper_main: disable
@@ -553,11 +558,11 @@ coil_player:
     c_left_flipper_main: enable
     c_right_flipper_main: enable
 
-
-# =====================================================================
+# ---------------------------------------------------------------------
 # SLIDE PLAYER
-# =====================================================================
-
+# Plays Karl Die Harder background, removes it for win/fail videos,
+# and gives result videos time before final mode stop.
+# ---------------------------------------------------------------------
 slide_player:
   mode_karl_dieharder_started:
     karl_dieharder_background:
@@ -585,11 +590,10 @@ slide_player:
       expire: 5s
       priority: 10000
 
-
-# =====================================================================
+# ---------------------------------------------------------------------
 # WIDGET PLAYER
-# =====================================================================
-
+# Shows/removes Karl health/timer/result widget.
+# ---------------------------------------------------------------------
 widget_player:
   mode_karl_dieharder_started:
     karl_progress_widget:
@@ -608,11 +612,10 @@ widget_player:
     karl_progress_widget:
       action: remove
 
-
-# =====================================================================
+# ---------------------------------------------------------------------
 # SOUND PLAYER
-# =====================================================================
-
+# Starts/stops Karl theme music.
+# ---------------------------------------------------------------------
 sound_player:
   karl_dieharder_music_start:
     karltheme:
