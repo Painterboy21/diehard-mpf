@@ -6,7 +6,6 @@
 [ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="4_a7o34"]
 [ext_resource type="Script" uid="uid://b4nag4d1xrtsq" path="res://modes/karl_diehard/slides/karltimervariable.gd" id="4_hu8xq"]
 [ext_resource type="Script" uid="uid://bfn5c61jgc8ds" path="res://modes/karl_diehard/slides/johnhealth.gd" id="4_vfsqa"]
-[ext_resource type="Script" uid="uid://ccbwq3p1elu76" path="res://modes/karl_diehard/slides/control_1.gd" id="4_xwulq"]
 [ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="5_hu8xq"]
 [ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="6_6gdef"]
 [ext_resource type="Script" uid="uid://ceofmd2h30j6i" path="res://modes/karl_diehard/slides/karlhealth.gd" id="6_hu8xq"]
@@ -18,8 +17,9 @@
 [ext_resource type="Texture2D" uid="uid://binlmwaj3sxtd" path="res://godot-media/images/O.png" id="11_71kb3"]
 [ext_resource type="Texture2D" uid="uid://bo1y2txk5qfxf" path="res://godot-media/images/L.png" id="12_kwlll"]
 [ext_resource type="Texture2D" uid="uid://bs0sdjldfa8j4" path="res://godot-media/images/Y.png" id="13_kbrnf"]
+[ext_resource type="Script" uid="uid://d22ynfep7jwh7" path="res://modes/karl_diehard/slides/karl_video_control.gd" id="15_2v516"]
 [ext_resource type="VideoStream" uid="uid://bnbtcp1vspiiy" path="res://modes/karl_diehard/slides/KarlFight1.ogv" id="17_bycmc"]
-[ext_resource type="PackedScene" uid="uid://bhnxkhkhv65rt" path="res://modes/karl_diehard/widgets/karl_progress_widget.tscn" id="20_2v516"]
+[ext_resource type="PackedScene" uid="uid://bhnxkhkhv65rt" path="res://modes/karl_dieharder/widgets/karl_progress_widget.tscn" id="20_2v516"]
 
 [node name="karl_diehard_background" type="Control" unique_id=1617573641]
 layout_mode = 3
@@ -194,7 +194,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_xwulq")
+script = ExtResource("15_2v516")
 
 [node name="johnhealth" type="TextureRect" parent="Control1" unique_id=1800826120]
 layout_mode = 1
@@ -223,6 +223,7 @@ expand_mode = 1
 script = ExtResource("6_hu8xq")
 
 [node name="KarlTimerVariable" type="Label" parent="Control1" unique_id=579931428]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -239,6 +240,7 @@ variable_name = "karl_diehard_karl_diehard_timer_tick"
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [node name="KarlDamageVariable" type="Label" parent="Control1" unique_id=228032927]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

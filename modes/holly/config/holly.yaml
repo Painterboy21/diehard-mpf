@@ -5,10 +5,10 @@
 # Starts Holly targets during normal play and restarts them
 # after villain modes finish.
 #
-# Stops when ball ends or when a villain mode starts.
+# Stops when ball ends or when any villain mode starts.
 # ------------------------------------------------------------
 mode:
-  start_events: 
+  start_events:
     - ball_started
 
     # Hans finished
@@ -20,6 +20,8 @@ mode:
     # Karl finished
     - karl_diehard_completed
     - karl_diehard_failed
+    - karl_dieharder_completed
+    - karl_dieharder_failed
 
     # Katya finished
     - katya_completed
@@ -27,7 +29,19 @@ mode:
     - katya_dieharder_completed
     - katya_dieharder_failed
 
-  stop_events: 
+    # Simon finished
+    - simon_completed
+    - simon_failed
+    - simon_dieharder_completed
+    - simon_dieharder_failed
+
+    # Col / Stuart finished
+    - col_stuart_completed
+    - col_stuart_failed
+    - col_stuart_dieharder_completed
+    - col_stuart_dieharder_failed
+
+  stop_events:
     - ball_ended
 
     # Hans started
@@ -36,10 +50,19 @@ mode:
 
     # Karl started
     - start_karl_diehard
+    - start_karl_dieharder
 
     # Katya started
     - start_katya_diehard
     - start_katya_dieharder
+
+    # Simon started
+    - start_simon_diehard
+    - start_simon_dieharder
+
+    # Col / Stuart started
+    - start_col_stuart_diehard
+    - start_col_stuart_dieharder
 
   priority: 120
 

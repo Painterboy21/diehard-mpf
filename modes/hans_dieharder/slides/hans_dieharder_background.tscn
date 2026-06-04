@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_d6q3j"]
 [ext_resource type="PackedScene" uid="uid://cocgao1q71trh" path="res://modes/hans_dieharder/widgets/hans_dieharder_timer_widget.tscn" id="4_3055c"]
 [ext_resource type="VideoStream" uid="uid://b3u8pr02538pc" path="res://modes/hans_diehard/slides/Hans1.ogv" id="4_xr35f"]
-[ext_resource type="Script" uid="uid://cq64khg3bdndv" path="res://modes/hans_diehard/slides/hans_video_control.gd" id="5_4oip1"]
+[ext_resource type="Script" uid="uid://dn8kd4bkicwek" path="res://modes/hans_dieharder/slides/hans_dieharder_video_control.gd" id="5_4oip1"]
 [ext_resource type="PackedScene" uid="uid://d3sjdnflo7xki" path="res://modes/hans_dieharder/widgets/hans_dieharder_progress_widget.tscn" id="5_xr35f"]
 [ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="6_pf4d5"]
 [ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="7_30ijy"]
