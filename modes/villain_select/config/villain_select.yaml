@@ -51,7 +51,7 @@ mode_settings:
     - Katya_Villain_Select{current_player.katya_complete==0}
     - Col_Stuart_Villain_Select{current_player.col_stuart_complete==0}
     - Hans_Gruber_Villain_Select{current_player.hans_complete==0}
-    - Simon_Gruber_Villain_Select
+    - Simon_Gruber_Villain_Select{current_player.simon_complete==0}
     - Karl_Vreski_Villain_Select{current_player.karl_complete==0}
 
   next_item_events:
@@ -105,7 +105,7 @@ event_player:
     - set_villain_katya
     - start_katya_difficulty_select|250ms
 
-  carousel_item_selected{carousel=="villain_select" and item=="Simon_Gruber_Villain_Select"}:
+  carousel_item_selected{carousel=="villain_select" and item=="Simon_Gruber_Villain_Select" and current_player.simon_complete==0}:
     - set_villain_simon
     - start_simon_difficulty_select|250ms
 
@@ -121,7 +121,7 @@ event_player:
   carousel_item_highlighted{carousel=="villain_select" and item=="Katya_Villain_Select" and current_player.katya_complete==0}:
     - flash_katya_light
 
-  carousel_item_highlighted{carousel=="villain_select" and item=="Simon_Gruber_Villain_Select"}:
+  carousel_item_highlighted{carousel=="villain_select" and item=="Simon_Gruber_Villain_Select" and current_player.simon_complete==0}:
     - flash_simon_light
 
   carousel_item_highlighted{carousel=="villain_select" and item=="villain_instructions"}:

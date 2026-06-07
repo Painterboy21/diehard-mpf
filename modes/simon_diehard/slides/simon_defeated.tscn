@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://ddxejtl534g6e"]
+
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_7w2a7"]
+[ext_resource type="VideoStream" uid="uid://b16fxvifvyify" path="res://videos/VillainSelect/SimonDefeated.ogv" id="2_p4scb"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_ornx1"]
+
+[node name="simon_defeated" type="Control" unique_id=79246256]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7w2a7")
+metadata/_custom_type_script = "uid://dru3usokwlhd3"
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=1215460061]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+stream = ExtResource("2_p4scb")
+volume_db = 8.27
+autoplay = true
+script = ExtResource("3_ornx1")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"

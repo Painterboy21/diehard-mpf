@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://fr0vpwlssx6g"]
+[gd_scene format=3 uid="uid://cxp4fuerkrdyg"]
 
 [ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_c6l6u"]
 [ext_resource type="VideoStream" uid="uid://dwbdwhao58sd4" path="res://videos/DieHard2Background.ogv" id="2_0nsv8"]
