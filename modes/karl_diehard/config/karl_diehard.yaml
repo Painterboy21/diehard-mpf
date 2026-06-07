@@ -23,12 +23,13 @@
 
 # ---------------------------------------------------------------------
 # MODE
-# Starts Karl Die Hard if Karl has not already been completed.
+# ---------------------------------------------------------------------
+# Starts Karl Die Hard.
 # Stops after the delayed win/fail completion events.
 # ---------------------------------------------------------------------
 mode:
   start_events:
-    - start_karl_diehard{current_player.karl_played==0}
+    - start_karl_diehard{current_player.karl_complete != 1}
   stop_events:
     - karl_diehard_completed
     - karl_diehard_failed
@@ -36,6 +37,7 @@ mode:
 
 # ------------------------------------------------------------
 # TIMER
+# ------------------------------------------------------------
 # VPW Karl = 90 seconds normally.
 # Hans Bonus adds +30 seconds.
 # Mystery Add More Time adds +20 seconds.
@@ -67,6 +69,7 @@ timers:
 
 # ------------------------------------------------------------
 # BALL SAVES
+# ------------------------------------------------------------
 # Karl gets a 2 second ball save at mode start.
 # ------------------------------------------------------------
 ball_saves:
@@ -87,6 +90,7 @@ ball_saves:
 
 # ------------------------------------------------------------
 # EVENT PLAYER
+# ------------------------------------------------------------
 # Handles Karl mode start, damage shots, heartbeat changes,
 # result flow, final cleanup, and bullet resets.
 # ------------------------------------------------------------
@@ -167,6 +171,7 @@ event_player:
 
 # ------------------------------------------------------------
 # VARIABLE PLAYER
+# ------------------------------------------------------------
 # Stores Karl progress, scoring, result state, and display vars.
 # ------------------------------------------------------------
 variable_player:
@@ -307,6 +312,7 @@ variable_player:
 
 # ------------------------------------------------------------
 # SOUND PLAYER
+# ------------------------------------------------------------
 # Starts/stops Karl theme music.
 # ------------------------------------------------------------
 sound_player:
@@ -334,8 +340,9 @@ sound_player:
 
 # ------------------------------------------------------------
 # SHOW PLAYER
-# VPW running/heartbeat shows, damage feedback, result shows,
-# and cleanup.
+# ------------------------------------------------------------
+# VPW running/heartbeat shows, Karl insert flash, damage feedback,
+# result shows, and cleanup.
 # ------------------------------------------------------------
 show_player:
   mode_karl_diehard_started:
@@ -349,6 +356,14 @@ show_player:
       loops: 0
       speed: 1
       priority: 650
+    flash_color:
+      key: key_karl_mode_insert_flash
+      loops: -1
+      speed: 6
+      priority: 1200
+      show_tokens:
+        lights: l40
+        color: ff8800
 
   karl_heartbeat_slow:
     karl_vpw_heartbeat_medium:
@@ -448,6 +463,8 @@ show_player:
       action: stop
     key_karl_pop_gi_flash:
       action: stop
+    key_karl_mode_insert_flash:
+      action: stop
 
   karl_escaped_slide:
     karl_vpw_running_pulse:
@@ -467,6 +484,8 @@ show_player:
     key_karl_pop_bumper_flash:
       action: stop
     key_karl_pop_gi_flash:
+      action: stop
+    key_karl_mode_insert_flash:
       action: stop
 
   karl_diehard_completed:
@@ -502,9 +521,15 @@ show_player:
       action: stop
     key_karl_pop_gi_flash:
       action: stop
+    key_karl_mode_insert_flash:
+      action: stop
+
 # ------------------------------------------------------------
 # LIGHT PLAYER
+# ------------------------------------------------------------
 # Sets Karl Die Hard lighting and result insert states.
+# l40 is solid at start as a fallback, but the show_player flash
+# runs at higher priority during the mode.
 # ------------------------------------------------------------
 light_player:
   mode_karl_diehard_started:
@@ -514,6 +539,8 @@ light_player:
     SPOTS:
       color: 505050
       priority: 1000
+    SPOTS_BUMPER:
+      color: 757575
     l40:
       color: ff8800
       priority: 1100
@@ -589,6 +616,7 @@ light_player:
 
 # ------------------------------------------------------------
 # SLIDE PLAYER
+# ------------------------------------------------------------
 # Result event removes background and plays high-priority result.
 # Final completed/failed event removes the result slide.
 # ------------------------------------------------------------

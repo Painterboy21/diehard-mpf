@@ -20,7 +20,6 @@ mode:
     - katya_failed
   priority: 250
 
-
 # ------------------------------------------------------------
 # TIMERS
 # Normal timer = 93s.
@@ -50,7 +49,6 @@ timers:
       - event: add_villain_time_from_mystery
         action: add
         value: 20
-
 
 # ------------------------------------------------------------
 # BALL SAVES
@@ -89,7 +87,6 @@ ball_saves:
     disable_events:
       - mode_katya_diehard_stopping
 
-
 # ------------------------------------------------------------
 # COUNTERS
 # Counts Katya loop hits.
@@ -110,7 +107,6 @@ counters:
       - mode_katya_diehard_started
     events_when_complete:
       - katya_loops_complete
-
 
 # ------------------------------------------------------------
 # SHOTS
@@ -160,7 +156,6 @@ shots:
     disable_events:
       - katya_completed
       - katya_failed
-
 
 # ------------------------------------------------------------
 # EVENT PLAYER
@@ -259,7 +254,6 @@ event_player:
   katya_upper_loop_hit{device.counters.katya_loop_counter.value<5}:
     - katya_loop_hit_scored
     - katya_upper_loop_relight|3s
-
 
 # ------------------------------------------------------------
 # VARIABLE PLAYER
@@ -391,7 +385,6 @@ variable_player:
       int: 0
       action: set
 
-
 # ------------------------------------------------------------
 # LIGHT PLAYER
 # Sets Katya Die Hard lighting.
@@ -403,7 +396,7 @@ light_player:
     SPOTS:
       color: 505050
     SPOTS_BUMPER:
-      color: 700070
+      color: 757575
     l1000:
       color: ff00ff
     l1001:
@@ -418,7 +411,6 @@ light_player:
   katya_failed:
     l1000: off
     l1001: off
-
 
 # ------------------------------------------------------------
 # SHOWS
@@ -475,6 +467,18 @@ shows:
         f146: off
         f147: off
 
+  katya_gi_spots_hit_flash:
+    - duration: 80ms
+      lights:
+        GI: ffffff
+        SPOTS: ffffff
+        SPOTS_BUMPER: ffffff
+    - duration: 120ms
+      lights:
+        GI: ff00ff
+        SPOTS: 505050
+        SPOTS_BUMPER: 757575
+
   katya_insert_flash:
     - duration: 200ms
       lights:
@@ -483,11 +487,10 @@ shows:
       lights:
         l42: off
 
-
 # ------------------------------------------------------------
 # SHOW PLAYER
 # Handles Katya-colour ball-save flashes, loop/captive flashes,
-# hit flashers, insert flashing, and cleanup.
+# hit flashers, GI/SPOTS hit flash, insert flashing, and cleanup.
 # ------------------------------------------------------------
 show_player:
   ball_save_katya_diehard_start_save_enabled:
@@ -543,6 +546,9 @@ show_player:
   katya_loop_hit_scored:
     katya_hit_flashers:
       loops: 2
+    katya_gi_spots_hit_flash:
+      loops: 1
+      priority: 850
 
   katya_left_loop_hit:
     katya_left_loop_flash:
@@ -587,6 +593,8 @@ show_player:
     flash_color:
       action: stop
       key: katya_diehard_ball_save_flash
+    katya_gi_spots_hit_flash:
+      action: stop
     katya_captive_flash:
       action: stop
     katya_insert_flash:
@@ -601,6 +609,8 @@ show_player:
     flash_color:
       action: stop
       key: katya_diehard_ball_save_flash
+    katya_gi_spots_hit_flash:
+      action: stop
     katya_left_loop_flash:
       action: stop
     katya_right_loop_flash:
@@ -621,6 +631,8 @@ show_player:
     flash_color:
       action: stop
       key: katya_diehard_ball_save_flash
+    katya_gi_spots_hit_flash:
+      action: stop
     katya_left_loop_flash:
       action: stop
     katya_right_loop_flash:
@@ -631,7 +643,6 @@ show_player:
       action: stop
     katya_insert_flash:
       action: stop
-
 
 # ------------------------------------------------------------
 # SLIDE PLAYER
@@ -678,7 +689,6 @@ slide_player:
       expire: 4s
       priority: 10000
 
-
 # ------------------------------------------------------------
 # WIDGET PLAYER
 # Shows Katya Die Hard timer and progress widgets.
@@ -710,7 +720,6 @@ widget_player:
       action: remove
     katya_diehard_progress_widget:
       action: remove
-
 
 # ------------------------------------------------------------
 # SOUND PLAYER

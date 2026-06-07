@@ -75,7 +75,6 @@ mode:
     - start_col_dieharder
 
   priority: 120
-
 ball_holds:
   ambush_hold:
     enable_events:
