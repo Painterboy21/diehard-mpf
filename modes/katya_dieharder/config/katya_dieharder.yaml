@@ -1,5 +1,34 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# KATYA DIE HARDER
+# ------------------------------------------------------------
+# What this mode does:
+#   - Starts when start_katya_dieharder is posted, only if Katya
+#     has not already been completed.
+#   - Player must hit 5 loop shots: left loop, right loop, or upper loop.
+#   - After 5 loop hits, the captive ball final shot lights.
+#   - Hitting the captive ball defeats Katya.
+#   - Normal timer = 93 seconds.
+#   - Hans Bonus timer = 123 seconds.
+#   - Mystery Add More Time adds +20 seconds.
+#   - On completion:
+#       * Plays katya_defeated.
+#       * Counts Katya toward Extra Ball.
+#       * Sets katya_complete and katya_bonus.
+#   - On timer fail:
+#       * Turns flippers off using flipper_off.
+#       * Plays katya_ball_lost.
+#   - On ball drain escape:
+#       * Plays katya_escaped.
+#   - On mode stop:
+#       * Turns flippers back on using flipper_on.
+#
+# Flipper note:
+#   Your real machine flippers listen to flipper_on / flipper_off.
+#   So this file does not use direct coil_player flipper control.
+# ------------------------------------------------------------
+
 mode:
   start_events:
     - start_katya_dieharder{current_player.katya_complete==0}
@@ -160,7 +189,7 @@ event_player:
 
   mode_katya_dieharder_stopping:
     - villain_mode_stopped
-    - enable_katya_dieharder_flippers
+    - flipper_on
 
   # ------------------------------------------------------------
   # FAIL / ESCAPE FLOW
@@ -187,6 +216,9 @@ event_player:
 
   ball_ended{current_player.katya_dieharder_failed_active==1}:
     - katya_dieharder_failed|4s
+
+  katya_dieharder_fail_mode:
+    - flipper_off
 
   katya_dieharder_ball_drain_escape:
     - katya_dieharder_failed|4s
@@ -238,12 +270,6 @@ event_player:
 # VARIABLE PLAYER
 # Stores Katya Die Harder state, timer, shots, Hans Bonus state,
 # scoring, completion flags, and result state.
-#
-# katya_dieharder_shots:
-#   Drives Godot background hit videos.
-#
-# katya_bonus:
-#   Set on Die Harder completion.
 # ------------------------------------------------------------
 variable_player:
   katya_dieharder_start:
@@ -386,7 +412,7 @@ light_player:
     SPOTS:
       color: 505050
     SPOTS_BUMPER:
-      color: 700070
+      color: 757575
     l1000:
       color: ff00ff
     l1001:
@@ -469,6 +495,18 @@ shows:
         f146: off
         f147: off
 
+  katya_dieharder_gi_spots_hit_flash:
+    - duration: 80ms
+      lights:
+        GI: ffffff
+        SPOTS: ffffff
+        SPOTS_BUMPER: ffffff
+    - duration: 120ms
+      lights:
+        GI: ff00ff
+        SPOTS: 505050
+        SPOTS_BUMPER: 757575
+
   katya_dieharder_insert_flash:
     - duration: 200ms
       lights:
@@ -480,7 +518,7 @@ shows:
 # ------------------------------------------------------------
 # SHOW PLAYER
 # Handles ball-save flashes, loop/captive flashes, hit flashers,
-# insert flashing, fail blackout, and cleanup.
+# GI/SPOTS hit flash, insert flashing, fail blackout, and cleanup.
 # ------------------------------------------------------------
 show_player:
   ball_save_katya_dieharder_start_save_enabled:
@@ -536,6 +574,9 @@ show_player:
   katya_dieharder_loop_hit_scored:
     katya_dieharder_hit_flashers:
       loops: 2
+    katya_dieharder_gi_spots_hit_flash:
+      loops: 1
+      priority: 850
 
   katya_dieharder_left_loop_hit:
     katya_dieharder_left_loop_flash:
@@ -580,6 +621,8 @@ show_player:
     flash_color:
       action: stop
       key: katya_dieharder_ball_save_flash
+    katya_dieharder_gi_spots_hit_flash:
+      action: stop
     katya_dieharder_captive_flash:
       action: stop
     katya_dieharder_insert_flash:
@@ -594,6 +637,8 @@ show_player:
     flash_color:
       action: stop
       key: katya_dieharder_ball_save_flash
+    katya_dieharder_gi_spots_hit_flash:
+      action: stop
     katya_dieharder_left_loop_flash:
       action: stop
     katya_dieharder_right_loop_flash:
@@ -614,6 +659,8 @@ show_player:
     flash_color:
       action: stop
       key: katya_dieharder_ball_save_flash
+    katya_dieharder_gi_spots_hit_flash:
+      action: stop
     katya_dieharder_left_loop_flash:
       action: stop
     katya_dieharder_right_loop_flash:
@@ -634,6 +681,8 @@ show_player:
     flash_color:
       action: stop
       key: katya_dieharder_ball_save_flash
+    katya_dieharder_gi_spots_hit_flash:
+      action: stop
     katya_dieharder_left_loop_flash:
       action: stop
     katya_dieharder_right_loop_flash:
@@ -646,28 +695,8 @@ show_player:
       action: stop
 
 # ------------------------------------------------------------
-# COIL PLAYER
-# Disables flippers during Die Harder fail mode,
-# then re-enables them when the mode stops.
-# ------------------------------------------------------------
-coil_player:
-  katya_dieharder_fail_mode:
-    c_right_flipper_main: disable
-    c_left_flipper_main: disable
-
-  enable_katya_dieharder_flippers:
-    c_left_flipper_main: enable
-    c_right_flipper_main: enable
-
-# ------------------------------------------------------------
 # SLIDE PLAYER
 # Plays Katya Die Harder background and result slides.
-#
-# Hit videos are no longer called as slides:
-#   katya_hit_1 to katya_hit_5 removed.
-#
-# They should be handled inside katya_dieharder_background by
-# Godot using current_player.katya_dieharder_shots.
 # ------------------------------------------------------------
 slide_player:
   mode_katya_dieharder_started:

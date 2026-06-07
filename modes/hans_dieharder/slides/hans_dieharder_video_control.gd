@@ -1,43 +1,34 @@
 extends Control
 
 @onready var background_video = $"../MPFVideoPlayer"
-@onready var hit_video: VideoStreamPlayer = $"../HansHitVideo"
-@onready var remaining_variable: Label = $HansRemainingVariable
+@onready var hit_video: VideoStreamPlayer = $"../HansDieHarderHitVideo"
+@onready var remaining_variable: Label = $HansDieHarderRemainingVariable
 
 var last_remaining: int = -999
 
+# Reuses the normal Hans hit videos:
+# res://modes/hans_diehard/slides/Hans1.ogv
+# res://modes/hans_diehard/slides/Hans2.ogv
+# ...
+# res://modes/hans_diehard/slides/Hans8.ogv
 const HIT_VIDEO_PATH: String = "res://modes/hans_diehard/slides/Hans%d.ogv"
 
 
 func _ready() -> void:
-	print("====================================")
-	print("HANS DIE HARD VIDEO CONTROL READY")
-	print("background_video: ", background_video)
-	print("hit_video: ", hit_video)
-	print("remaining_variable: ", remaining_variable)
-	print("====================================")
-
 	if hit_video == null:
-		push_warning("Hans Die Hard: HansHitVideo node not found")
+		push_warning("Hans Die Harder: HansDieHarderHitVideo node not found")
 		return
 
 	if remaining_variable == null:
-		push_warning("Hans Die Hard: HansRemainingVariable node not found")
+		push_warning("Hans Die Harder: HansDieHarderRemainingVariable node not found")
 		return
 
 	hit_video.visible = false
 	hit_video.autoplay = false
+	hit_video.loop = false
 
 	if not hit_video.finished.is_connected(_on_hit_video_finished):
 		hit_video.finished.connect(_on_hit_video_finished)
-
-	var test_path: String = HIT_VIDEO_PATH % 1
-	var test_video: VideoStream = load(test_path) as VideoStream
-
-	if test_video == null:
-		push_warning("Hans Die Hard: TEST LOAD FAILED: %s" % test_path)
-	else:
-		print("Hans Die Hard: TEST LOAD OK: ", test_path)
 
 
 func _process(_delta: float) -> void:
@@ -57,24 +48,29 @@ func _process(_delta: float) -> void:
 	if remaining == last_remaining:
 		return
 
-	print("Hans Die Hard: remaining changed from ", last_remaining, " to ", remaining)
-
 	last_remaining = remaining
 
+	# hans_dieharder_remaining starts at 8 and counts down:
+	# 8 = no video
+	# 7 = Hans1.ogv
+	# 6 = Hans2.ogv
+	# 5 = Hans3.ogv
+	# 4 = Hans4.ogv
+	# 3 = Hans5.ogv
+	# 2 = Hans6.ogv
+	# 1 = Hans7.ogv
+	# 0 = Hans8.ogv
 	if remaining >= 0 and remaining <= 7:
 		var hit_number: int = 8 - remaining
-		print("Hans Die Hard: hit_number = ", hit_number)
 		play_hit_video(hit_number)
 
 
 func play_hit_video(hit_number: int) -> void:
 	var path: String = HIT_VIDEO_PATH % hit_number
-	print("Hans Die Hard: trying video path: ", path)
-
 	var video_file: VideoStream = load(path) as VideoStream
 
 	if video_file == null:
-		push_warning("Hans Die Hard: Missing video: %s" % path)
+		push_warning("Hans Die Harder: Missing video: %s" % path)
 		return
 
 	if background_video != null:
@@ -87,12 +83,8 @@ func play_hit_video(hit_number: int) -> void:
 	hit_video.visible = true
 	hit_video.play()
 
-	print("Hans Die Hard: video play called")
-
 
 func _on_hit_video_finished() -> void:
-	print("Hans Die Hard: hit video finished")
-
 	if hit_video != null:
 		hit_video.stop()
 		hit_video.visible = false

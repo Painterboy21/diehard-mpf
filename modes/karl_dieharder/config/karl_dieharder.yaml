@@ -18,6 +18,7 @@
 #   Completion posts count_karl_for_extra_ball.
 #   Completion sets karl_bonus and bonus_multiplier = 6.
 #   Completion ball save = 5 seconds.
+#   Karl villain insert l40 flashes during mode.
 #   No l80/l81/l82/l83.
 # =====================================================================
 
@@ -114,7 +115,7 @@ event_player:
 
   mode_karl_dieharder_stopping:
     - villain_mode_stopped
-    - enable_karl_dieharder_flippers
+    - flipper_on
     - wire_ramp_exit_closed
     - karl_dieharder_cleanup
 
@@ -161,6 +162,9 @@ event_player:
 
   ball_drain{current_player.karl_dieharder_failed_active==1}:
     - karl_dieharder_failed_complete|4s
+
+  karl_dieharder_fail_mode:
+    - flipper_off
 
   karl_dieharder_won_complete:
     - reset_bullet_total
@@ -396,6 +400,16 @@ show_player:
       action: stop
       key: karl_dieharder_ball_save_flash
 
+  mode_karl_dieharder_started:
+    flash_color:
+      key: key_karl_dieharder_mode_insert_flash
+      priority: 1200
+      loops: -1
+      speed: 6
+      show_tokens:
+        lights: l40
+        color: ff8800
+
   karl_dieharder_spinner_hit:
     karl_vpw_damage_pulse:
       key: key_karl_dieharder_spinner_damage_pulse
@@ -436,18 +450,10 @@ show_player:
         color: ffffff
         fade: 150
 
-  mode_karl_dieharder_started:
-    flash_color:
-      key: karl_dieharder_gruber_flash
-      priority: 160
-      loops: -1
-      speed: 6
-      show_tokens:
-        lights: l40
-        color: ff8800
-
   karl_dieharder_fail_mode:
     karl_dieharder_start_save_flash:
+      action: stop
+    key_karl_dieharder_mode_insert_flash:
       action: stop
     flash_color_with_fade:
       action: stop
@@ -464,13 +470,13 @@ show_player:
     key_karl_dieharder_pop_bumper_flash:
       action: stop
     key_karl_dieharder_pop_gi_flash:
-      action: stop
-    karl_dieharder_gruber_flash:
       action: stop
 
   karl_dieharder_complete:
     karl_dieharder_start_save_flash:
       action: stop
+    key_karl_dieharder_mode_insert_flash:
+      action: stop
     key_karl_dieharder_spinner_damage_pulse:
       action: stop
     key_karl_dieharder_spinner_gi_flash:
@@ -481,11 +487,11 @@ show_player:
       action: stop
     key_karl_dieharder_pop_gi_flash:
       action: stop
-    karl_dieharder_gruber_flash:
-      action: stop
 
   mode_karl_dieharder_stopping:
     karl_dieharder_start_save_flash:
+      action: stop
+    key_karl_dieharder_mode_insert_flash:
       action: stop
     flash_color_with_fade:
       action: stop
@@ -503,25 +509,32 @@ show_player:
       action: stop
     key_karl_dieharder_pop_gi_flash:
       action: stop
-    karl_dieharder_gruber_flash:
-      action: stop
 
 # ---------------------------------------------------------------------
 # LIGHT PLAYER
 # Sets Karl Die Harder lighting on start and cleans inserts on result.
+# l40 is solid as a fallback at lower priority; the show_player flash
+# runs higher during the mode.
 # ---------------------------------------------------------------------
 light_player:
   mode_karl_dieharder_started:
     GI:
       color: ff8800
+      priority: 1000
     SPOTS:
       color: 505050
+      priority: 1000
+    SPOTS_BUMPER:
+      color: 757575
     l40:
       color: ff8800
+      priority: 1000
     l1000:
       color: ff8800
+      priority: 1000
     l1001:
       color: ff8800
+      priority: 1000
 
   karl_dieharder_fail_mode:
     GI: off
@@ -535,6 +548,7 @@ light_player:
     l1001: off
     l40:
       color: ff8800
+      priority: 1100
 
   karl_dieharder_failed_complete:
     l1000: off
@@ -544,19 +558,6 @@ light_player:
     l40: off
     l1000: off
     l1001: off
-
-# ---------------------------------------------------------------------
-# COIL PLAYER
-# Disables flippers on fail and re-enables them on cleanup.
-# ---------------------------------------------------------------------
-coil_player:
-  karl_dieharder_fail_mode:
-    c_right_flipper_main: disable
-    c_left_flipper_main: disable
-
-  enable_karl_dieharder_flippers:
-    c_left_flipper_main: enable
-    c_right_flipper_main: enable
 
 # ---------------------------------------------------------------------
 # SLIDE PLAYER

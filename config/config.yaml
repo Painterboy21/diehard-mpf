@@ -88,7 +88,7 @@ config:
   - shot_profiles.yaml
   - switches.yaml
   - player_vars.yaml
-  - shaker.yaml
+  #- shaker.yaml
 
 # ------------------------------------------------------------
 # EXTRA BALL GROUPS
@@ -299,6 +299,8 @@ modes:
   - karl_difficulty_select
   - katya_difficulty_select
   - simon_difficulty_select
+  - col_stuart_diehard
+  - col_stuart_dieharder
   - hans_diehard
   - hans_dieharder
   - katya_diehard

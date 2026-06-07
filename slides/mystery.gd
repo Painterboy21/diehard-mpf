@@ -1,3 +1,4 @@
+
 extends VideoStreamPlayer
 
 
@@ -47,28 +48,26 @@ var available_videos: Array[String] = [
 
 
 var award_names: Array[String] = [
-	"Award Points",        # 0
-	"Advance Nakatomi",    # 1
-	"Advance Airplane",    # 2
-	"Advance Park",        # 3
-	"Bullets",             # 4
-	"Ball Save",           # 5
-	"Bonus X",             # 6
-	"Hold Bonus X",        # 7
-	"Super Jets",          # 8
-	"Super Spinners",      # 9
-	"Playfield X",         # 10
-	"Ambush",              # 11
-	"Light Extra Ball",    # 12
-	"Add a Ball",          # 13
-	"Add More Time",       # 14
+	"Award Points",
+	"Advance Nakatomi",
+	"Advance Airplane",
+	"Advance Park",
+	"Bullets",
+	"Ball Save",
+	"Bonus X",
+	"Hold Bonus X",
+	"Super Jets",
+	"Super Spinners",
+	"Playfield X",
+	"Ambush",
+	"Light Extra Ball",
+	"Add a Ball",
+	"Add More Time",
 ]
 
 
 @onready var flash_timer: Timer = $Timer
 @onready var award_label: Label = $"../VBoxContainer/VaultAward"
-
-# Change this path if your Godot widget node is somewhere else.
 @onready var bonus_x_held_widget: CanvasItem = $"../VBoxContainer/BonusXHeldWidget"
 
 
@@ -109,6 +108,7 @@ func start_award_flash() -> void:
 	_build_scroll_award_indexes()
 
 	if award_label and scroll_award_indexes.size() > 0:
+		award_label.visible = true
 		award_label.text = award_names[scroll_award_indexes[0]]
 
 	flash_timer.start()
@@ -129,28 +129,18 @@ func _build_scroll_award_indexes() -> void:
 	var add_a_ball_available := int(_get_player_var("mystery_add_a_ball_available", 0)) == 1
 
 	for i in range(award_names.size()):
-		# Index 4 = Bullets.
-		# Skip from roulette if bullets are already full.
 		if bullets_full and i == 4:
 			continue
 
-		# Index 9 = Super Spinners.
-		# Skip from roulette if Super Spinners already awarded.
 		if super_spinners_awarded and i == 9:
 			continue
 
-		# Index 11 = Ambush.
-		# Skip from roulette if Ambush is blocked.
 		if i == 11 and (villain_active or multiball_active or ambush_active or pending_ambush):
 			continue
 
-		# Index 13 = Add a Ball.
-		# Only show Add a Ball for the first Mystery during multiball.
 		if i == 13 and not (multiball_active and add_a_ball_available):
 			continue
 
-		# Index 14 = Add More Time.
-		# Only show this during the first Mystery in a villain mode.
 		if i == 14 and not (villain_active and add_time_available):
 			continue
 
@@ -174,6 +164,10 @@ func _on_player_update(var_name: String, value: Variant) -> void:
 	if var_name == "mystery_awarded_index":
 		last_award_index = int(value)
 
+		if last_award_index < 0:
+			_clear_award_label_only()
+			return
+
 		if not flashing:
 			_show_award_by_index(last_award_index)
 
@@ -191,12 +185,36 @@ func _mystery_awarded(payload: Dictionary) -> void:
 
 
 func _show_award_by_index(index: int) -> void:
-	if index < 0 or index >= award_names.size():
+	if index < 0:
+		_clear_award_label_only()
+		return
+
+	if index >= award_names.size():
 		print("Mystery award index out of range: ", index)
 		return
 
-	award_label.text = award_names[index]
+	if award_label:
+		award_label.visible = true
+		award_label.text = award_names[index]
+
 	print("Mystery final award: ", award_names[index])
+
+
+func _clear_award_label_only() -> void:
+	flashing = false
+	last_award_index = -1
+
+	if flash_timer:
+		flash_timer.stop()
+
+	if award_label:
+		award_label.text = ""
+		award_label.visible = false
+
+	if bonus_x_held_widget:
+		bonus_x_held_widget.visible = false
+
+	print("Mystery award label cleared")
 
 
 func _show_bonus_x_held_widget(payload: Dictionary = {}) -> void:

@@ -2,6 +2,7 @@
 
 # ------------------------------------------------------------
 # MODE
+# ------------------------------------------------------------
 # Villain select carousel.
 # Starts from start_villain_select and stops when a difficulty
 # select begins, selection completes, or the ball ends.
@@ -22,6 +23,7 @@ mode:
 
 # ------------------------------------------------------------
 # LIGHT PLAYER
+# ------------------------------------------------------------
 # Turns off GI and spots while villain select is active.
 # ------------------------------------------------------------
 light_player:
@@ -33,20 +35,21 @@ light_player:
 
 # ------------------------------------------------------------
 # MODE SETTINGS
+# ------------------------------------------------------------
 # Carousel items and controls.
 #
-# Karl uses karl_complete:
-#   karl_complete = 0 means Karl can still be selected
-#   karl_complete = 1 means Karl was defeated and removed
+# Villains use their shared complete variables:
+#   complete = 0 means the villain can still be selected.
+#   complete = 1 means the villain was defeated and removed.
 #
-# Failed / escaped Karl does not set karl_complete, so Karl
-# can be selected again after a fail.
+# Failed / escaped villains do not set complete, so they can
+# be selected again after a fail.
 # ------------------------------------------------------------
 mode_settings:
   selectable_items:
     - villain_instructions
     - Katya_Villain_Select{current_player.katya_complete==0}
-    - Col_Stuart_Villain_Select
+    - Col_Stuart_Villain_Select{current_player.col_stuart_complete==0}
     - Hans_Gruber_Villain_Select{current_player.hans_complete==0}
     - Simon_Gruber_Villain_Select
     - Karl_Vreski_Villain_Select{current_player.karl_complete==0}
@@ -63,6 +66,7 @@ mode_settings:
 
 # ------------------------------------------------------------
 # SLIDE PLAYER
+# ------------------------------------------------------------
 # Shows/removes the villain select slide.
 # ------------------------------------------------------------
 slide_player:
@@ -77,16 +81,15 @@ slide_player:
 
 # ------------------------------------------------------------
 # EVENT PLAYER
+# ------------------------------------------------------------
 # Handles carousel selection and highlighted-item light events.
-#
-# Karl uses karl_complete here too, so Karl can be chosen again
-# after an escaped/failed attempt, but not after defeat.
+# Villains can be chosen again after fail/escape, but not after defeat.
 # ------------------------------------------------------------
 event_player:
   carousel_item_selected{carousel=="villain_select" and item=="villain_instructions"}:
     - villain_select_no_pick
 
-  carousel_item_selected{carousel=="villain_select" and item=="Col_Stuart_Villain_Select"}:
+  carousel_item_selected{carousel=="villain_select" and item=="Col_Stuart_Villain_Select" and current_player.col_stuart_complete==0}:
     - set_villain_col
     - start_col_difficulty_select|250ms
 
@@ -106,7 +109,7 @@ event_player:
     - set_villain_simon
     - start_simon_difficulty_select|250ms
 
-  carousel_item_highlighted{carousel=="villain_select" and item=="Col_Stuart_Villain_Select"}:
+  carousel_item_highlighted{carousel=="villain_select" and item=="Col_Stuart_Villain_Select" and current_player.col_stuart_complete==0}:
     - flash_col_light
 
   carousel_item_highlighted{carousel=="villain_select" and item=="Hans_Gruber_Villain_Select" and current_player.hans_complete==0}:
@@ -126,9 +129,9 @@ event_player:
 
 # ------------------------------------------------------------
 # VARIABLE PLAYER
+# ------------------------------------------------------------
 # Stores selected villain name.
 # ------------------------------------------------------------
-
 variable_player:
   set_villain_col:
     selected_villain:
@@ -158,7 +161,6 @@ variable_player:
   # ------------------------------------------------------------
   # AMBUSH BLOCKING WHILE PICKING A VILLAIN
   # ------------------------------------------------------------
-
   mode_villain_select_started:
     villain_select_running:
       int: 1
@@ -169,8 +171,9 @@ variable_player:
       int: 0
       action: set
 
-#----------------------------------------------------------
+# ------------------------------------------------------------
 # SHOW PLAYER
+# ------------------------------------------------------------
 # Runs villain select insert flash, orange spin show, and
 # highlighted villain colour flashes.
 #

@@ -1,5 +1,17 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# HANS DIE HARD
+# ------------------------------------------------------------
+# What this mode does:
+#   - Starts from start_hans_diehard.
+#   - Player must hit 8 HOLLY / detonator targets.
+#   - H, O, L, L, Y targets relight after 3 seconds when hit.
+#   - Valid target hits score points and update progress.
+#   - Completing the mode plays the completed result.
+#   - Failing from timer or ball drain plays the lost result.
+#   - Completing Hans counts toward Extra Ball.
+# ------------------------------------------------------------
 mode:
   start_events:
     - start_hans_diehard{current_player.hans_complete==0}
@@ -9,9 +21,10 @@ mode:
   priority: 170
 
 # ------------------------------------------------------------
-# TIMER
+# TIMERS
+# ------------------------------------------------------------
 # Hans Die Hard timer.
-# Mystery "Add More Time" adds +20 seconds.
+# Mystery Add More Time adds +20 seconds.
 # ------------------------------------------------------------
 timers:
   hans_diehard_timer:
@@ -33,8 +46,9 @@ timers:
 
 # ------------------------------------------------------------
 # BALL SAVES
-# Start save = 2 seconds.
-# Complete save = 8 seconds when all detonators are collected.
+# ------------------------------------------------------------
+# Start save is active briefly when the mode begins.
+# Complete save is active after all 8 detonators are collected.
 # ------------------------------------------------------------
 ball_saves:
   hans_diehard_start_save:
@@ -47,7 +61,6 @@ ball_saves:
       - mode_hans_diehard_started
     disable_events:
       - mode_hans_diehard_stopping
-
   hans_diehard_complete_save:
     active_time: 8s
     hurry_up_time: 1s
@@ -61,6 +74,7 @@ ball_saves:
 
 # ------------------------------------------------------------
 # COUNTERS
+# ------------------------------------------------------------
 # Tracks Hans detonator progress.
 # 8 valid target hits completes the mode.
 # ------------------------------------------------------------
@@ -84,6 +98,7 @@ counters:
 
 # ------------------------------------------------------------
 # SHOTS
+# ------------------------------------------------------------
 # H/O/L/L/Y target shots.
 # Each shot disables itself when hit, then re-enables after 3s.
 # ------------------------------------------------------------
@@ -98,7 +113,6 @@ shots:
       - hans_diehard_complete
       - hans_diehard_won_complete
       - hans_diehard_failed_complete
-
   hans_diehard_o:
     switch: s_holly_o
     enable_events:
@@ -109,7 +123,6 @@ shots:
       - hans_diehard_complete
       - hans_diehard_won_complete
       - hans_diehard_failed_complete
-
   hans_diehard_l1:
     switch: s_holly_l
     enable_events:
@@ -120,7 +133,6 @@ shots:
       - hans_diehard_complete
       - hans_diehard_won_complete
       - hans_diehard_failed_complete
-
   hans_diehard_l2:
     switch: s_holly_l1
     enable_events:
@@ -131,7 +143,6 @@ shots:
       - hans_diehard_complete
       - hans_diehard_won_complete
       - hans_diehard_failed_complete
-
   hans_diehard_y:
     switch: s_holly_y
     enable_events:
@@ -145,15 +156,9 @@ shots:
 
 # ------------------------------------------------------------
 # EVENT PLAYER
-# Handles Hans mode start, target validation, detonator progress,
+# ------------------------------------------------------------
+# Handles mode start, target validation, detonator progress,
 # result slides, ball drain fail flow, and final cleanup.
-#
-# Result flow:
-#   win  -> hans_diehard_completed_slide after 4s
-#        -> hans_diehard_won_complete after 8s
-#
-#   lose -> hans_lost_slide immediately
-#        -> hans_diehard_failed_complete after 5s
 # ------------------------------------------------------------
 event_player:
   mode_hans_diehard_started:
@@ -171,107 +176,70 @@ event_player:
     - wire_ramp_exit_open
     - reset_bullet_total
     - reset_bullets
-
   mode_hans_diehard_stopping:
     - villain_mode_stopped
     - wire_ramp_exit_closed
-
-  # ------------------------------------------------------------
-  # SHOT HIT BRIDGES
-  # ------------------------------------------------------------
   hans_diehard_h_hit:
     - hans_diehard_valid_h
-
   hans_diehard_o_hit:
     - hans_diehard_valid_o
-
   hans_diehard_l1_hit:
     - hans_diehard_valid_l1
-
   hans_diehard_l2_hit:
     - hans_diehard_valid_l2
-
   hans_diehard_y_hit:
     - hans_diehard_valid_y
-
-  # ------------------------------------------------------------
-  # VALID TARGET HIT FLOW
-  # Each valid target:
-  #   - re-enables after 3s
-  #   - updates display/widgets
-  #   - counts as a Hans target hit
-  # ------------------------------------------------------------
   hans_diehard_valid_h:
     - hans_diehard_h_ready|3s
     - hans_diehard_update_display
     - hans_diehard_target_hit
-
   hans_diehard_valid_o:
     - hans_diehard_o_ready|3s
     - hans_diehard_update_display
     - hans_diehard_target_hit
-
   hans_diehard_valid_l1:
     - hans_diehard_l1_ready|3s
     - hans_diehard_update_display
     - hans_diehard_target_hit
-
   hans_diehard_valid_l2:
     - hans_diehard_l2_ready|3s
     - hans_diehard_update_display
     - hans_diehard_target_hit
-
   hans_diehard_valid_y:
     - hans_diehard_y_ready|3s
     - hans_diehard_update_display
     - hans_diehard_target_hit
-
-  # ------------------------------------------------------------
-  # MODE COMPLETE / FAIL FLOW
-  # Hans lost slide now plays for 5s before EOB continues.
-  # ------------------------------------------------------------
   hans_diehard_complete:
     - hans_diehard_completed_slide|4s
     - hans_diehard_won_complete|8s
     - reset_bullet_total
     - reset_bullets
-
   timer_hans_diehard_timer_complete:
     - hans_lost_slide
     - hans_diehard_failed_complete|5s
     - reset_bullet_total
     - reset_bullets
-
   ball_drain{current_player.hans_diehard_completion_active==0}:
     - hans_lost_slide
     - hans_diehard_failed_complete|5s
     - reset_bullet_total
     - reset_bullets
-
   ball_drain{current_player.hans_diehard_completion_active==1}:
     - reset_bullet_total
     - reset_bullets
-
-  # ------------------------------------------------------------
-  # FINAL RESULT EVENTS
-  # ------------------------------------------------------------
   hans_diehard_won_complete:
     - reset_bullet_total
     - reset_bullets
     - count_hans_for_extra_ball
-
   hans_diehard_failed_complete:
     - reset_bullet_total
     - reset_bullets
 
 # ------------------------------------------------------------
 # VARIABLE PLAYER
+# ------------------------------------------------------------
 # Stores Hans mode state, timer display, detonator remaining
-# value, progress, score, EOB-delay flag, and completion flags.
-#
-# hans_result_started:
-#   0 = normal / no Hans result video active
-#   1 = Hans lost slide is active, so EOB must wait
+# value, progress, score, result state, and completion flags.
 # ------------------------------------------------------------
 variable_player:
   mode_hans_diehard_started:
@@ -293,33 +261,27 @@ variable_player:
     hans_diehard_remaining:
       int: 8
       action: set
-
   timer_hans_diehard_timer_tick:
     hans_diehard_time:
       int: ticks
       action: set
-
   logicblock_hans_diehard_detonators_hit:
     hans_diehard_remaining:
       int: 8 - device.counters.hans_diehard_detonators.value
       action: set
-
   hans_diehard_target_hit{device.counters.hans_diehard_detonators.value<8}:
     score: "1000000 * current_player.playfield_multiplier"
     hans_diehard_progress:
       int: 1
       action: add
-
   hans_diehard_complete:
     hans_diehard_completion_active:
       int: 1
       action: set
-
   hans_lost_slide:
     hans_result_started:
       int: 1
       action: set
-
   hans_diehard_won_complete:
     score: 3000000
     hans_complete:
@@ -331,12 +293,10 @@ variable_player:
     hans_result_started:
       int: 0
       action: set
-
   hans_diehard_failed_complete:
     hans_result_started:
       int: 0
       action: set
-
   mode_hans_diehard_stopping:
     villain_mode_running:
       int: 0
@@ -349,9 +309,39 @@ variable_player:
       action: set
 
 # ------------------------------------------------------------
+# SHOWS
+# ------------------------------------------------------------
+# Inline quick white flasher hit effect.
+# GI red flash stays separate in show_player.
+# ------------------------------------------------------------
+shows:
+  hans_white_flasher_hit:
+    - duration: 50ms
+      lights:
+        f140: ffffff
+        f141: ffffff
+        f142: ffffff
+        f143: ffffff
+        f144: ffffff
+        f145: ffffff
+        f146: ffffff
+        f147: ffffff
+    - duration: 80ms
+      lights:
+        f140: off
+        f141: off
+        f142: off
+        f143: off
+        f144: off
+        f145: off
+        f146: off
+        f147: off
+
+# ------------------------------------------------------------
 # SHOW PLAYER
-# Handles Hans ball-save flashes, GI hit flash, Hans insert
-# flashing, H/O/L/L/Y target ready flashes, and cleanup.
+# ------------------------------------------------------------
+# Handles ball-save flashes, GI hit flash, white flashers,
+# Hans insert flashing, target flashes, and cleanup.
 # ------------------------------------------------------------
 show_player:
   ball_save_hans_diehard_start_save_enabled:
@@ -362,11 +352,9 @@ show_player:
       show_tokens:
         lights: BALL_SAVE
         color: 00ff00
-
   ball_save_hans_diehard_start_save_disabled:
     hans_diehard_start_save_flash:
       action: stop
-
   ball_save_hans_diehard_complete_save_enabled:
     flash_color_with_fade:
       key: hans_diehard_ball_save_flash
@@ -376,7 +364,6 @@ show_player:
         lights: BALL_SAVE
         color: ffff00
         fade: 500
-
   ball_save_hans_diehard_complete_save_hurry_up:
     flash_color:
       key: hans_diehard_ball_save_flash
@@ -385,11 +372,9 @@ show_player:
       show_tokens:
         lights: BALL_SAVE
         color: ffff00
-
   ball_save_hans_diehard_complete_save_disabled:
     hans_diehard_ball_save_flash:
       action: stop
-
   hans_diehard_target_hit:
     flash_color:
       key: hans_gi_red_hit_flash
@@ -399,7 +384,11 @@ show_player:
       show_tokens:
         lights: GI
         color: ff0000
-
+    hans_white_flasher_hit:
+      key: key_hans_white_flasher_hit
+      priority: 950
+      loops: 1
+      speed: 1
   mode_hans_diehard_started:
     flash_color:
       key: hans_gruber_flash
@@ -409,10 +398,6 @@ show_player:
       show_tokens:
         lights: l43
         color: 00ff00
-
-  # ------------------------------------------------------------
-  # TARGET READY FLASHES
-  # ------------------------------------------------------------
   hans_diehard_h_ready:
     hans_bullet_flash:
       key: hans_h_flash
@@ -420,7 +405,6 @@ show_player:
       loops: -1
       show_tokens:
         light: l30
-
   hans_diehard_o_ready:
     hans_bullet_flash:
       key: hans_o_flash
@@ -428,7 +412,6 @@ show_player:
       loops: -1
       show_tokens:
         light: l31
-
   hans_diehard_l1_ready:
     hans_bullet_flash:
       key: hans_l1_flash
@@ -436,7 +419,6 @@ show_player:
       loops: -1
       show_tokens:
         light: l32
-
   hans_diehard_l2_ready:
     hans_bullet_flash:
       key: hans_l2_flash
@@ -444,7 +426,6 @@ show_player:
       loops: -1
       show_tokens:
         light: l33
-
   hans_diehard_y_ready:
     hans_bullet_flash:
       key: hans_y_flash
@@ -452,39 +433,29 @@ show_player:
       loops: -1
       show_tokens:
         light: l34
-
-  # ------------------------------------------------------------
-  # TARGET VALID HIT STOPS
-  # ------------------------------------------------------------
   hans_diehard_valid_h:
     hans_h_flash:
       action: stop
-
   hans_diehard_valid_o:
     hans_o_flash:
       action: stop
-
   hans_diehard_valid_l1:
     hans_l1_flash:
       action: stop
-
   hans_diehard_valid_l2:
     hans_l2_flash:
       action: stop
-
   hans_diehard_valid_y:
     hans_y_flash:
       action: stop
-
-  # ------------------------------------------------------------
-  # SHOW CLEANUP
-  # ------------------------------------------------------------
   mode_hans_diehard_stopping:
     hans_diehard_start_save_flash:
       action: stop
     hans_diehard_ball_save_flash:
       action: stop
     hans_gi_red_hit_flash:
+      action: stop
+    key_hans_white_flasher_hit:
       action: stop
     hans_gruber_flash:
       action: stop
@@ -501,8 +472,9 @@ show_player:
 
 # ------------------------------------------------------------
 # LIGHT PLAYER
-# Sets Hans mode lighting, turns off hit target lamps, and
-# leaves Hans insert lit green when defeated.
+# ------------------------------------------------------------
+# Sets Hans mode lighting, turns off hit target lamps,
+# and leaves Hans insert lit green when defeated.
 # ------------------------------------------------------------
 light_player:
   mode_hans_diehard_started:
@@ -510,47 +482,35 @@ light_player:
       color: 00ff00
     SPOTS:
       color: 505050
+    SPOTS_BUMPER:
+      color: 757575
     l1000:
       color: 00ff00
     l1001:
       color: 00ff00
-
   hans_diehard_valid_h:
     l30: off
-
   hans_diehard_valid_o:
     l31: off
-
   hans_diehard_valid_l1:
     l32: off
-
   hans_diehard_valid_l2:
     l33: off
-
   hans_diehard_valid_y:
     l34: off
-
   hans_diehard_won_complete:
     l1000: off
     l1001: off
     l43:
       color: 00ff00
-
   hans_diehard_failed_complete:
     l1000: off
     l1001: off
 
 # ------------------------------------------------------------
 # SLIDE PLAYER
-# Plays Hans background slide, completed slide, and lost slide.
-#
-# Detonator hit videos are no longer played as separate slides.
-# They are now handled inside hans_diehard_background by
-# HansVideoControl.gd using:
-#   Hans1.ogv to Hans8.ogv
-#
-# This keeps the timer/progress widgets on screen while the
-# hit video replaces only the background video.
+# ------------------------------------------------------------
+# Plays Hans background, completed slide, and lost slide.
 # ------------------------------------------------------------
 slide_player:
   mode_hans_diehard_started:
@@ -558,15 +518,9 @@ slide_player:
       action: play
       expire: 0s
       priority: 500
-
   mode_hans_diehard_stopping:
     hans_diehard_background:
       action: remove
-
-  # ------------------------------------------------------------
-  # RESULT SLIDES
-  # Hans lost now plays for 5s before final failed complete.
-  # ------------------------------------------------------------
   hans_diehard_completed_slide:
     hans_diehard_background:
       action: remove
@@ -574,7 +528,6 @@ slide_player:
       action: play
       expire: 5s
       priority: 10000
-
   hans_lost_slide:
     hans_diehard_background:
       action: remove
@@ -585,6 +538,7 @@ slide_player:
 
 # ------------------------------------------------------------
 # WIDGET PLAYER
+# ------------------------------------------------------------
 # Shows Hans timer and progress widgets during the mode.
 # Removes them on stop, win, or fail.
 # ------------------------------------------------------------
@@ -596,19 +550,16 @@ widget_player:
     hans_progress_widget:
       slide: hans_diehard_background
       action: play
-
   mode_hans_diehard_stopping:
     hans_timer_widget:
       action: remove
     hans_progress_widget:
       action: remove
-
   hans_diehard_won_complete:
     hans_timer_widget:
       action: remove
     hans_progress_widget:
       action: remove
-
   hans_diehard_failed_complete:
     hans_timer_widget:
       action: remove
@@ -617,6 +568,7 @@ widget_player:
 
 # ------------------------------------------------------------
 # SOUND PLAYER
+# ------------------------------------------------------------
 # Starts Hans mode music and stops it when the mode stops.
 # ------------------------------------------------------------
 sound_player:
@@ -626,7 +578,6 @@ sound_player:
       action: play
       loops: -1
       volume: 0.8
-
   mode_hans_diehard_stopping:
     holly_meets_hans:
       key: main_music

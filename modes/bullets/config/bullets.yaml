@@ -1,4 +1,17 @@
 #config_version=6
+
+# ------------------------------------------------------------
+# BULLETS
+# ------------------------------------------------------------
+# What this mode does:
+#   - Runs during normal single-ball play.
+#   - Stops during multiballs, Ambush, and villain modes.
+#   - Tracks unique bullet shots during a short combo window.
+#   - Five unique bullet shots lights the villain start.
+#   - Fifteen total bullet hits also lights the villain start.
+#   - VUK hold full starts villain select and resets bullet totals.
+#   - VPW-style minimum bullet count is restored based on modes complete.
+# ------------------------------------------------------------
 mode:
   start_events:
     - ball_started
@@ -6,130 +19,100 @@ mode:
     - multiball_central_park_ended
     - multiball_airplane_ended
     - mode_ambush_stopped
-
-    # Hans finished
     - hans_diehard_won_complete
     - hans_diehard_failed_complete
     - hans_dieharder_won_complete
     - hans_dieharder_failed_complete
-
-    # Katya finished
     - katya_completed
     - katya_failed
     - katya_dieharder_completed
     - katya_dieharder_failed
-
-    # Karl finished
     - karl_diehard_completed
     - karl_diehard_failed
     - karl_dieharder_completed
     - karl_dieharder_failed
-
-    # Simon finished
     - simon_completed
     - simon_failed
     - simon_dieharder_completed
     - simon_dieharder_failed
-
-    # Stuart / Col finished
-    - stuart_completed
-    - stuart_failed
-    - stuart_dieharder_completed
-    - stuart_dieharder_failed
-    - col_completed
-    - col_failed
-    - col_dieharder_completed
-    - col_dieharder_failed
-
+    - col_stuart_diehard_completed
+    - col_stuart_diehard_failed
+    - col_stuart_dieharder_completed
+    - col_stuart_dieharder_failed
   stop_events:
     - ball_ended
     - multiball_nakatomi_started
     - multiball_central_park_started
     - multiball_airplane_started
     - start_ambush
-
-    # Hans started
     - start_hans_diehard
     - start_hans_dieharder
-
-    # Katya started
     - start_katya_diehard
     - start_katya_dieharder
-
-    # Karl started
     - start_karl_diehard
     - start_karl_dieharder
-
-    # Simon started
     - start_simon_diehard
     - start_simon_dieharder
-
-    # Stuart / Col started
-    - start_stuart_diehard
-    - start_stuart_dieharder
-    - start_col_diehard
-    - start_col_dieharder
-
+    - start_col_stuart_diehard
+    - start_col_stuart_dieharder
   priority: 110
 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Checks VPW minimum bullet count, locks unique bullet shots,
+# handles combo max, lights villain start, and starts villain select.
+# ------------------------------------------------------------
 event_player:
   mode_bullets_started:
     - bullets_check_vpw_minimum
-
   bullets_check_vpw_minimum{current_player.bullet_hits < 9 and current_player.modes_complete==0}:
     - bullets_set_minimum_9
-
   bullets_check_vpw_minimum{current_player.bullet_hits < 7 and current_player.modes_complete==1}:
     - bullets_set_minimum_7
-
   bullets_check_vpw_minimum{current_player.bullet_hits < 5 and current_player.modes_complete==2}:
     - bullets_set_minimum_5
-
   bullets_check_vpw_minimum{current_player.bullet_hits < 3 and current_player.modes_complete==3}:
     - bullets_set_minimum_3
-
   bullets_check_vpw_minimum{current_player.bullet_hits < 1 and current_player.modes_complete>=4}:
     - bullets_set_minimum_1
-
   left_orbit_hit{current_player.shot_bullet_left_orbit == 0}:
     - bullet_new_unique_shot
     - bullet_lock_left_orbit
-
   right_orbit_hit{current_player.shot_bullet_right_orbit == 0}:
     - bullet_new_unique_shot
     - bullet_lock_right_orbit
-
   bullet_mid_orbit_hit{current_player.shot_bullet_mid_orbit == 0}:
     - bullet_new_unique_shot
     - bullet_lock_mid_orbit
-
   bullet_air_duct_hit{current_player.shot_bullet_air_duct == 0}:
     - bullet_new_unique_shot
     - bullet_lock_air_duct
-
   bullet_upper_pf_hit{current_player.shot_bullet_upper_pf == 0}:
     - bullet_new_unique_shot
     - bullet_lock_upper_pf
-
   timer_bullets_combo_complete:
     - reset_bullets
-
   mode_bullets_stopping:
     - reset_bullets
-
   player_bullet_combo_hits{value==5}:
     - bullets_combo_max
     - villain_start_lit
     - reset_bullets|100ms
-
   player_bullet_hits{value>=15}:
     - villain_start_lit
-
   ball_hold_villain_hold_full:
     - start_villain_select
     - reset_bullet_total
     - reset_bullets
 
+# ------------------------------------------------------------
+# SHOTS
+# ------------------------------------------------------------
+# Five unique bullet shots.
+# Reset returns them to unlit/unlocked.
+# Lock events mark each shot as collected in the bullet combo.
+# ------------------------------------------------------------
 shots:
   bullet_left_orbit:
     profile: profile_bullets
@@ -141,7 +124,6 @@ shots:
         state: 0
       - events: bullet_lock_left_orbit
         state: 1
-
   bullet_upper_pf:
     switch: s_upper_pf_entrance
     profile: profile_bullets
@@ -153,7 +135,6 @@ shots:
         state: 0
       - events: bullet_lock_upper_pf
         state: 1
-
   bullet_right_orbit:
     profile: profile_bullets
     start_enabled: true
@@ -164,7 +145,6 @@ shots:
         state: 0
       - events: bullet_lock_right_orbit
         state: 1
-
   bullet_mid_orbit:
     switch: s_mid_orbit
     profile: profile_bullets
@@ -176,7 +156,6 @@ shots:
         state: 0
       - events: bullet_lock_mid_orbit
         state: 1
-
   bullet_air_duct:
     switch: s_air_duct
     profile: profile_bullets
@@ -189,6 +168,12 @@ shots:
       - events: bullet_lock_air_duct
         state: 1
 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# ------------------------------------------------------------
+# Plays bullet lock feedback, combo max feedback,
+# and villain start light flashing.
+# ------------------------------------------------------------
 show_player:
   bullets_combo_max:
     flicker_color:
@@ -199,7 +184,6 @@ show_player:
       show_tokens:
         lights: bullets
         color: 00ff00
-
   bullet_lock_left_orbit:
     flicker_color:
       key: key_bullet_lock_left_orbit
@@ -209,7 +193,6 @@ show_player:
       show_tokens:
         lights: BLO
         color: ff0000
-
   bullet_lock_right_orbit:
     flicker_color:
       key: key_bullet_lock_right_orbit
@@ -219,7 +202,6 @@ show_player:
       show_tokens:
         lights: BRO
         color: ff0000
-
   bullet_lock_mid_orbit:
     flicker_color:
       key: key_bullet_lock_mid_orbit
@@ -229,7 +211,6 @@ show_player:
       show_tokens:
         lights: BMO
         color: ff0000
-
   bullet_lock_air_duct:
     flicker_color:
       key: key_bullet_lock_air_duct
@@ -239,7 +220,6 @@ show_player:
       show_tokens:
         lights: BAD
         color: ff0000
-
   bullet_lock_upper_pf:
     flicker_color:
       key: key_bullet_lock_upper_pf
@@ -249,7 +229,6 @@ show_player:
       show_tokens:
         lights: BUP
         color: ff0000
-
   villain_start_lit:
     flash_color:
       key: key_villain_start_lit
@@ -259,20 +238,30 @@ show_player:
       show_tokens:
         lights: l10
         color: ffffff
-
   start_villain_select:
     key_villain_start_lit:
       action: stop
 
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# ------------------------------------------------------------
+# Makes the villain start insert solid yellow when select begins.
+# Clears it when bullet totals reset.
+# ------------------------------------------------------------
 light_player:
   start_villain_select:
     l10:
       color: ffff00
-
   reset_bullet_total:
     l10:
       color: off
 
+# ------------------------------------------------------------
+# TIMERS
+# ------------------------------------------------------------
+# Bullet combo timer restarts on each new unique shot.
+# When it completes, the current bullet combo resets.
+# ------------------------------------------------------------
 timers:
   bullets_combo:
     start_value: 65
@@ -287,54 +276,50 @@ timers:
     start_running: false
     tick_interval: 100ms
 
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+# Tracks total bullet hits, combo hits, EOB bonus, and VPW
+# minimum bullet values based on completed modes.
+# ------------------------------------------------------------
 variable_player:
   bullet_new_unique_shot:
     bullet_hits:
       action: add
       int: "1 + current_player.bullet_combo_hits"
-
     eob_bonus_bullets:
       action: add
       int: "35000 * (1 + current_player.bullet_combo_hits)"
-
     bullet_combo_hits:
       action: add
       int: 1
-
   reset_bullets:
     bullet_combo_hits:
       action: set
       int: 0
-
   reset_bullet_total:
     bullet_hits:
       action: set
       int: 0
-
     bullet_combo_hits:
       action: set
       int: 0
-
   bullets_set_minimum_9:
     bullet_hits:
       action: set
       int: 9
-
   bullets_set_minimum_7:
     bullet_hits:
       action: set
       int: 7
-
   bullets_set_minimum_5:
     bullet_hits:
       action: set
       int: 5
-
   bullets_set_minimum_3:
     bullet_hits:
       action: set
       int: 3
-
   bullets_set_minimum_1:
     bullet_hits:
       action: set

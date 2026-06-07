@@ -1,24 +1,18 @@
 #config_version=6
 
-# =====================================================================
+# ------------------------------------------------------------
 # AMBUSH
-# =====================================================================
-#
-# Fix:
-#   Ambush will not start while villain select, difficulty select,
-#   or a villain mode is running.
-#
-# Important:
-#   This full file replaces modes/ambush/config/ambush.yaml only.
-#   Do not paste these timers anywhere else or MPF will throw:
-#   Device <timer.ambush_display_timer> cannot be overloaded.
-# =====================================================================
-
-
-# =====================================================================
-# MODE
-# =====================================================================
-
+# ------------------------------------------------------------
+# What this mode does:
+#   - Starts from start_ambush when no villain/select mode is running.
+#   - Opens the wire ramp and lights Ambush shots.
+#   - Timer starts at 15 seconds.
+#   - White shots extend time and increase the Ambush value.
+#   - Right ramp / air duct collects the Ambush value.
+#   - Value decays after the grace timer starts decay.
+#   - Ambush stops safely if villain select, difficulty select,
+#     villain mode, or ball end starts.
+# ------------------------------------------------------------
 mode:
   start_events:
     - start_ambush{current_player.villain_mode_running!=1 and current_player.villain_select_running!=1 and current_player.villain_difficulty_select_running!=1}
@@ -35,73 +29,65 @@ mode:
     - villain_mode_started
   priority: 160
 
-
-# =====================================================================
+# ------------------------------------------------------------
 # WIDGET PLAYER
-# =====================================================================
-
+# ------------------------------------------------------------
+# Shows the Ambush value widget while Ambush is active.
+# Removes it when Ambush ends or another major mode/select starts.
+# ------------------------------------------------------------
 widget_player:
   ambush_start_timers:
     ambush_value_widget:
       action: play
       priority: 500
-
   ambush_collected:
     ambush_value_widget:
       action: remove
-
   ambush_failed:
     ambush_value_widget:
       action: remove
-
   ball_ended:
     ambush_value_widget:
       action: remove
-
   start_villain_select:
     ambush_value_widget:
       action: remove
-
   start_karl_difficulty_select:
     ambush_value_widget:
       action: remove
-
   start_hans_difficulty_select:
     ambush_value_widget:
       action: remove
-
   start_katya_difficulty_select:
     ambush_value_widget:
       action: remove
-
   start_simon_difficulty_select:
     ambush_value_widget:
       action: remove
-
   start_col_difficulty_select:
     ambush_value_widget:
       action: remove
-
   villain_mode_started:
     ambush_value_widget:
       action: remove
 
-
-# =====================================================================
+# ------------------------------------------------------------
 # SLIDE PLAYER
-# =====================================================================
-
+# ------------------------------------------------------------
+# Plays the Ambush collected slide when Ambush is collected.
+# ------------------------------------------------------------
 slide_player:
   ambush_collected:
     ambush_collected_slide:
       priority: 9999
       expire: 2s
 
-
-# =====================================================================
+# ------------------------------------------------------------
 # EVENT PLAYER
-# =====================================================================
-
+# ------------------------------------------------------------
+# Starts Ambush, runs timer ticks, extends/collects value,
+# handles finish delay, and stops Ambush when other modes start.
+# ------------------------------------------------------------
 event_player:
   mode_ambush_started:
     - nakatomi_entrance_lock_close
@@ -109,87 +95,65 @@ event_player:
     - ambush_enable_shots
     - ambush_reset_values
     - ambush_start_timers
-
   timer_ambush_display_timer_tick:
     - ambush_display_tick
-
   timer_ambush_decay_timer_tick:
     - ambush_tick
-
   timer_ambush_grace_complete:
     - ambush_enable_decay
-
   timer_ambush_display_timer_complete:
     - ambush_failed
-
   ambush_left_loop_hit:
     - ambush_extend
-
   ambush_left_ramp_wire_hit:
     - ambush_extend
-
   ambush_right_loop_hit:
     - ambush_extend
-
   ambush_upper_loop_hit:
     - ambush_extend
-
   ambush_captive_hit:
     - ambush_extend
-
   ambush_right_ramp_collect_hit:
     - ambush_collected
-
   ambush_collected:
     - wire_ramp_exit_closed
     - ambush_finish_delay_start
-
   timer_ambush_finish_delay_complete:
     - ambush_finished
-
   ambush_failed:
     - wire_ramp_exit_closed
-
   ball_ended:
     - wire_ramp_exit_closed
-
   start_villain_select:
     - ambush_failed
-
   start_karl_difficulty_select:
     - ambush_failed
-
   start_hans_difficulty_select:
     - ambush_failed
-
   start_katya_difficulty_select:
     - ambush_failed
-
   start_simon_difficulty_select:
     - ambush_failed
-
   start_col_difficulty_select:
     - ambush_failed
-
   villain_mode_started:
     - ambush_failed
 
-
-# =====================================================================
+# ------------------------------------------------------------
 # VARIABLE PLAYER
-# =====================================================================
-
+# ------------------------------------------------------------
+# Stores Ambush running state, level, value, timer display,
+# decay state, scoring, and cleanup values.
+# ------------------------------------------------------------
 variable_player:
   mode_ambush_started:
     ambush_running:
       action: set
       int: 1
-
   mode_ambush_started{current_player.ambush_level <= 0}:
     ambush_level:
       action: set
       int: 1
-
   ambush_reset_values{current_player.ambush_level == 1}:
     ambush_value:
       action: set
@@ -203,7 +167,6 @@ variable_player:
     ambush_ignore_first_display_tick:
       action: set
       int: 1
-
   ambush_reset_values{current_player.ambush_level == 2}:
     ambush_value:
       action: set
@@ -217,7 +180,6 @@ variable_player:
     ambush_ignore_first_display_tick:
       action: set
       int: 1
-
   ambush_reset_values{current_player.ambush_level == 3}:
     ambush_value:
       action: set
@@ -231,7 +193,6 @@ variable_player:
     ambush_ignore_first_display_tick:
       action: set
       int: 1
-
   ambush_reset_values{current_player.ambush_level >= 4}:
     ambush_level:
       action: set
@@ -248,22 +209,18 @@ variable_player:
     ambush_ignore_first_display_tick:
       action: set
       int: 1
-
   ambush_display_tick{current_player.ambush_ignore_first_display_tick == 1}:
     ambush_ignore_first_display_tick:
       action: set
       int: 0
-
   ambush_display_tick{current_player.ambush_ignore_first_display_tick == 0 and current_player.ambush_time > 0}:
     ambush_time:
       action: add
       int: -1
-
   ambush_enable_decay:
     ambush_decay_active:
       action: set
       int: 1
-
   ambush_extend{current_player.ambush_level == 1}:
     ambush_value:
       action: add
@@ -271,7 +228,6 @@ variable_player:
     ambush_time:
       action: add
       int: 6
-
   ambush_extend{current_player.ambush_level == 2}:
     ambush_value:
       action: add
@@ -279,7 +235,6 @@ variable_player:
     ambush_time:
       action: add
       int: 6
-
   ambush_extend{current_player.ambush_level == 3}:
     ambush_value:
       action: add
@@ -287,7 +242,6 @@ variable_player:
     ambush_time:
       action: add
       int: 6
-
   ambush_extend{current_player.ambush_level >= 4}:
     ambush_value:
       action: add
@@ -295,36 +249,29 @@ variable_player:
     ambush_time:
       action: add
       int: 6
-
   ambush_tick{current_player.ambush_decay_active == 1 and current_player.ambush_level == 1 and current_player.ambush_value > 200000}:
     ambush_value:
       action: add
       int: -20000
-
   ambush_tick{current_player.ambush_decay_active == 1 and current_player.ambush_level == 2 and current_player.ambush_value > 400000}:
     ambush_value:
       action: add
       int: -40000
-
   ambush_tick{current_player.ambush_decay_active == 1 and current_player.ambush_level == 3 and current_player.ambush_value > 600000}:
     ambush_value:
       action: add
       int: -60000
-
   ambush_tick{current_player.ambush_decay_active == 1 and current_player.ambush_level >= 4 and current_player.ambush_value > 800000}:
     ambush_value:
       action: add
       int: -80000
-
   ambush_collected:
     score:
       action: add
       int: "current_player.ambush_value * current_player.playfield_multiplier"
-
   eob_bonus_ambush:
     action: add
     int: "200000 * current_player.ambush_level"
-
   ambush_finished:
     ambush_running:
       action: set
@@ -338,7 +285,6 @@ variable_player:
     ambush_level:
       action: set
       int: 0
-
   ambush_failed:
     ambush_running:
       action: set
@@ -352,7 +298,6 @@ variable_player:
     ambush_level:
       action: set
       int: 0
-
   ball_ended:
     ambush_running:
       action: set
@@ -364,11 +309,14 @@ variable_player:
       action: set
       int: 0
 
-
-# =====================================================================
+# ------------------------------------------------------------
 # TIMERS
-# =====================================================================
-
+# ------------------------------------------------------------
+# Display timer runs the visible Ambush countdown.
+# Decay timer lowers the value after grace.
+# Grace timer delays the value decay.
+# Finish delay gives the collected slide time before the mode stops.
+# ------------------------------------------------------------
 timers:
   ambush_display_timer:
     start_value: 15
@@ -400,7 +348,6 @@ timers:
         action: stop
       - event: villain_mode_started
         action: stop
-
   ambush_decay_timer:
     start_value: 0
     end_value: 9999
@@ -428,7 +375,6 @@ timers:
         action: stop
       - event: villain_mode_started
         action: stop
-
   ambush_grace:
     start_value: 3
     end_value: 0
@@ -456,7 +402,6 @@ timers:
         action: stop
       - event: villain_mode_started
         action: stop
-
   ambush_finish_delay:
     start_value: 2
     end_value: 0
@@ -483,11 +428,13 @@ timers:
       - event: villain_mode_started
         action: stop
 
-
-# =====================================================================
+# ------------------------------------------------------------
 # SHOTS
-# =====================================================================
-
+# ------------------------------------------------------------
+# White Ambush shots extend time/value.
+# Right ramp / air duct collects the current Ambush value.
+# All shots disable on collect, fail, ball end, or villain/select start.
+# ------------------------------------------------------------
 shots:
   ambush_left_loop:
     hit_events: left_orbit_hit
@@ -505,7 +452,6 @@ shots:
       - start_simon_difficulty_select
       - start_col_difficulty_select
       - villain_mode_started
-
   ambush_right_loop:
     hit_events: right_orbit_hit
     enable_events:
@@ -522,7 +468,6 @@ shots:
       - start_simon_difficulty_select
       - start_col_difficulty_select
       - villain_mode_started
-
   ambush_left_ramp_wire:
     switch: s_swleftinlane
     enable_events:
@@ -539,7 +484,6 @@ shots:
       - start_simon_difficulty_select
       - start_col_difficulty_select
       - villain_mode_started
-
   ambush_upper_loop:
     switch: s_mid_orbit
     enable_events:
@@ -556,7 +500,6 @@ shots:
       - start_simon_difficulty_select
       - start_col_difficulty_select
       - villain_mode_started
-
   ambush_captive:
     switch: s_captiveball
     enable_events:
@@ -573,7 +516,6 @@ shots:
       - start_simon_difficulty_select
       - start_col_difficulty_select
       - villain_mode_started
-
   ambush_right_ramp_collect:
     switch: s_air_duct
     enable_events:
@@ -590,11 +532,12 @@ shots:
       - start_col_difficulty_select
       - villain_mode_started
 
-
-# =====================================================================
+# ------------------------------------------------------------
 # SHOW PLAYER
-# =====================================================================
-
+# ------------------------------------------------------------
+# Flashes Ambush shot inserts, stops shot flashes after hits,
+# plays collect feedback, and cleans up shows when Ambush ends.
+# ------------------------------------------------------------
 show_player:
   ambush_enable_shots:
     ambush_l20_flash:
@@ -605,7 +548,6 @@ show_player:
       show_tokens:
         led: l20
         color: white
-
     ambush_l21_flash:
       show: ambush_flash_color
       loops: -1
@@ -614,7 +556,6 @@ show_player:
       show_tokens:
         led: l21
         color: white
-
     ambush_l22_flash:
       show: ambush_flash_color
       loops: -1
@@ -623,7 +564,6 @@ show_player:
       show_tokens:
         led: l22
         color: white
-
     ambush_l23_flash:
       show: ambush_flash_color
       loops: -1
@@ -632,7 +572,6 @@ show_player:
       show_tokens:
         led: l23
         color: white
-
     ambush_l52_flash:
       show: ambush_flash_color
       loops: -1
@@ -641,7 +580,6 @@ show_player:
       show_tokens:
         led: l52
         color: yellow
-
     ambush_l24_flash:
       show: ambush_flash_color
       loops: -1
@@ -650,51 +588,38 @@ show_player:
       show_tokens:
         led: l24
         color: purple
-
   ambush_left_loop_hit:
     ambush_l20_flash:
       action: stop
-
   ambush_left_ramp_wire_hit:
     ambush_l21_flash:
       action: stop
-
   ambush_right_loop_hit:
     ambush_l22_flash:
       action: stop
-
   ambush_upper_loop_hit:
     ambush_l23_flash:
       action: stop
-
   ambush_captive_hit:
     ambush_l52_flash:
       action: stop
-
   ambush_collected:
     ambush_l20_flash:
       action: stop
-
     ambush_l21_flash:
       action: stop
-
     ambush_l22_flash:
       action: stop
-
     ambush_l23_flash:
       action: stop
-
     ambush_l52_flash:
       action: stop
-
     ambush_l24_flash:
       action: stop
-
     ambush_collected_show:
       key: key_ambush_collected_show
       loops: 0
       speed: 1
-
     ambush_collect_flash:
       show: ambush_flash_color
       loops: 3
@@ -703,172 +628,123 @@ show_player:
       show_tokens:
         led: l24
         color: red
-
   ambush_failed:
     ambush_l20_flash:
       action: stop
-
     ambush_l21_flash:
       action: stop
-
     ambush_l22_flash:
       action: stop
-
     ambush_l23_flash:
       action: stop
-
     ambush_l52_flash:
       action: stop
-
     ambush_l24_flash:
       action: stop
-
   start_villain_select:
     ambush_l20_flash:
       action: stop
-
     ambush_l21_flash:
       action: stop
-
     ambush_l22_flash:
       action: stop
-
     ambush_l23_flash:
       action: stop
-
     ambush_l52_flash:
       action: stop
-
     ambush_l24_flash:
       action: stop
-
   start_karl_difficulty_select:
     ambush_l20_flash:
       action: stop
-
     ambush_l21_flash:
       action: stop
-
     ambush_l22_flash:
       action: stop
-
     ambush_l23_flash:
       action: stop
-
     ambush_l52_flash:
       action: stop
-
     ambush_l24_flash:
       action: stop
-
   start_hans_difficulty_select:
     ambush_l20_flash:
       action: stop
-
     ambush_l21_flash:
       action: stop
-
     ambush_l22_flash:
       action: stop
-
     ambush_l23_flash:
       action: stop
-
     ambush_l52_flash:
       action: stop
-
     ambush_l24_flash:
       action: stop
-
   start_katya_difficulty_select:
     ambush_l20_flash:
       action: stop
-
     ambush_l21_flash:
       action: stop
-
     ambush_l22_flash:
       action: stop
-
     ambush_l23_flash:
       action: stop
-
     ambush_l52_flash:
       action: stop
-
     ambush_l24_flash:
       action: stop
-
   start_simon_difficulty_select:
     ambush_l20_flash:
       action: stop
-
     ambush_l21_flash:
       action: stop
-
     ambush_l22_flash:
       action: stop
-
     ambush_l23_flash:
       action: stop
-
     ambush_l52_flash:
       action: stop
-
     ambush_l24_flash:
       action: stop
-
   start_col_difficulty_select:
     ambush_l20_flash:
       action: stop
-
     ambush_l21_flash:
       action: stop
-
     ambush_l22_flash:
       action: stop
-
     ambush_l23_flash:
       action: stop
-
     ambush_l52_flash:
       action: stop
-
     ambush_l24_flash:
       action: stop
-
   villain_mode_started:
     ambush_l20_flash:
       action: stop
-
     ambush_l21_flash:
       action: stop
-
     ambush_l22_flash:
       action: stop
-
     ambush_l23_flash:
       action: stop
-
     ambush_l52_flash:
       action: stop
-
     ambush_l24_flash:
       action: stop
 
-
-# =====================================================================
+# ------------------------------------------------------------
 # LIGHT PLAYER
-# =====================================================================
-
+# ------------------------------------------------------------
+# Sets Ambush colour and clears shot lights when Ambush ends
+# or another mode/select flow takes over.
+# ------------------------------------------------------------
 light_player:
   mode_ambush_started:
     GI:
       color: ff9900
-
     SPOTS:
       color: 332200
-
   ambush_collected:
     l20: off
     l21: off
@@ -876,7 +752,6 @@ light_player:
     l23: off
     l24: off
     l52: off
-
   ambush_failed:
     l20: off
     l21: off
@@ -884,7 +759,6 @@ light_player:
     l23: off
     l24: off
     l52: off
-
   start_villain_select:
     l20: off
     l21: off
@@ -892,7 +766,6 @@ light_player:
     l23: off
     l24: off
     l52: off
-
   start_karl_difficulty_select:
     l20: off
     l21: off
@@ -900,7 +773,6 @@ light_player:
     l23: off
     l24: off
     l52: off
-
   start_hans_difficulty_select:
     l20: off
     l21: off
@@ -908,7 +780,6 @@ light_player:
     l23: off
     l24: off
     l52: off
-
   start_katya_difficulty_select:
     l20: off
     l21: off
@@ -916,7 +787,6 @@ light_player:
     l23: off
     l24: off
     l52: off
-
   start_simon_difficulty_select:
     l20: off
     l21: off
@@ -924,7 +794,6 @@ light_player:
     l23: off
     l24: off
     l52: off
-
   start_col_difficulty_select:
     l20: off
     l21: off
@@ -932,7 +801,6 @@ light_player:
     l23: off
     l24: off
     l52: off
-
   villain_mode_started:
     l20: off
     l21: off

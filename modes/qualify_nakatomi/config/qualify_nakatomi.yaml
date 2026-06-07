@@ -31,15 +31,11 @@ mode:
     - simon_dieharder_completed
     - simon_dieharder_failed
 
-    # Stuart / Col finished
-    - stuart_completed
-    - stuart_failed
-    - stuart_dieharder_completed
-    - stuart_dieharder_failed
-    - col_completed
-    - col_failed
-    - col_dieharder_completed
-    - col_dieharder_failed
+    # Col / Stuart finished
+    - col_stuart_diehard_completed
+    - col_stuart_diehard_failed
+    - col_stuart_dieharder_completed
+    - col_stuart_dieharder_failed
 
   stop_events:
     - ball_ended
@@ -72,11 +68,9 @@ mode:
     - start_simon_diehard
     - start_simon_dieharder
 
-    # Stuart / Col started
-    - start_stuart_diehard
-    - start_stuart_dieharder
-    - start_col_diehard
-    - start_col_dieharder
+    # Col / Stuart started
+    - start_col_stuart_diehard
+    - start_col_stuart_dieharder
 
   priority: 120
   

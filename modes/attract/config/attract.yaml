@@ -1,5 +1,17 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# ATTRACT
+# ------------------------------------------------------------
+# What this mode does:
+#   - Starts when the game ends or reset completes.
+#   - Stops when a game starts or service mode opens.
+#   - Plays the main attract slide.
+#   - Runs the attract light show and start button flash.
+#   - Refreshes iScored scores when attract begins and on idle.
+#   - Flippers rotate the attract display and reset the idle timer.
+#   - Action button shows the instructions slide while held.
+# ------------------------------------------------------------
 mode:
   start_events:
     - game_ended
@@ -11,78 +23,76 @@ mode:
 
 # ------------------------------------------------------------
 # EVENT PLAYER
-# Starts the attract light shows, start button flash,
-# and iScored refresh when attract begins.
+# ------------------------------------------------------------
+# Starts attract shows and iScored refresh.
 # Flippers rotate the attract display and reset the idle timer.
+# Idle completion restarts the show and refreshes scores.
 # ------------------------------------------------------------
 event_player:
   mode_attract_started:
     - play_show_xmas
     - play_show_start_button_flash
     - iscored_refresh_scores
-
   s_left_flipper_active:
     - rotate_attract_left
     - reset_idle_timer
-
   s_right_flipper_active:
     - rotate_attract_right
     - reset_idle_timer
-
   timer_attract_idle_complete:
     - play_show_xmas
     - iscored_refresh_scores
 
 # ------------------------------------------------------------
 # LIGHT PLAYER
-# Turns GI off during attract, then clears it when attract stops.
+# ------------------------------------------------------------
+# Turns GI off during attract and clears it when attract stops.
 # ------------------------------------------------------------
 light_player:
   mode_attract_started:
     GI:
       color: 000000
-
   mode_attract_stopping:
     GI:
       color: off
 
 # ------------------------------------------------------------
 # SHOW PLAYER
-# Runs the main attract show and flashing start button show.
+# ------------------------------------------------------------
+# Runs the main attract light show and flashing start button show.
 # ------------------------------------------------------------
 show_player:
   play_show_xmas:
     attract_show_runner:
       key: key_attract_christmas
       loops: 0
-
   play_show_start_button_flash:
     flash_start_button:
       key: key_attract_start_button_flash
 
 # ------------------------------------------------------------
 # SLIDE PLAYER
+# ------------------------------------------------------------
 # Shows the main attract slide.
-# Action button temporarily shows the instructions slide.
+# Action button shows instructions while held, then removes them.
 # ------------------------------------------------------------
 slide_player:
   mode_attract_started:
     attract:
       action: play
       expire: 0s
-
   s_actionbtn_active:
     attract_instructions:
       action: play
       expire: 0s
       priority: 100
-
   s_actionbtn_inactive:
     attract_instructions:
       action: remove
 
 # ------------------------------------------------------------
 # TIMERS
+# ------------------------------------------------------------
 # Idle timer restarts the attract show and refreshes iScored
 # after a period with no flipper activity.
 # ------------------------------------------------------------
