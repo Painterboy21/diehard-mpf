@@ -9,11 +9,12 @@
 #   - Player must hit 5 loop shots: left loop, right loop, or upper loop.
 #   - After 5 loop hits, the captive ball final shot lights.
 #   - Hitting the captive ball defeats Katya.
-#   - Normal timer = 93 seconds.
-#   - Hans Bonus timer = 123 seconds.
+#   - Normal timer = 83 seconds.
+#   - Hans Bonus timer = 113 seconds.
 #   - Mystery Add More Time adds +20 seconds.
 #   - On completion:
 #       * Plays katya_defeated.
+#       * Doubles the player's current score.
 #       * Counts Katya toward Extra Ball.
 #       * Sets katya_complete and katya_bonus.
 #   - On timer fail:
@@ -39,14 +40,14 @@ mode:
 
 # ------------------------------------------------------------
 # TIMERS
-# Normal = 93s.
-# Hans Bonus = 123s.
+# Normal = 83s.
+# Hans Bonus = 113s.
 # Mystery Add More Time = +20s.
 # Hans Bonus is NOT cleared here.
 # ------------------------------------------------------------
 timers:
   katya_dieharder_timer:
-    start_value: 93
+    start_value: 83
     end_value: 0
     direction: down
     tick_interval: 1s
@@ -54,10 +55,10 @@ timers:
     control_events:
       - event: katya_dieharder_start_normal_timer
         action: restart
-        value: 93
+        value: 83
       - event: katya_dieharder_start_bonus_timer
         action: restart
-        value: 123
+        value: 113
       - event: katya_dieharder_completed
         action: stop
       - event: katya_dieharder_failed
@@ -82,7 +83,6 @@ ball_saves:
       - mode_katya_dieharder_started
     disable_events:
       - mode_katya_dieharder_stopping
-
   katya_dieharder_complete_save:
     active_time: 8s
     hurry_up_time: 1s
@@ -132,7 +132,6 @@ shots:
       - katya_dieharder_completed
       - katya_dieharder_failed
       - katya_dieharder_fail_mode
-
   katya_dieharder_right_loop:
     hit_events: right_orbit_hit
     enable_events:
@@ -144,7 +143,6 @@ shots:
       - katya_dieharder_completed
       - katya_dieharder_failed
       - katya_dieharder_fail_mode
-
   katya_dieharder_upper_loop:
     switch: s_mid_orbit
     enable_events:
@@ -156,7 +154,6 @@ shots:
       - katya_dieharder_completed
       - katya_dieharder_failed
       - katya_dieharder_fail_mode
-
   katya_dieharder_captive_final:
     switch: s_captiveball
     enable_events:
@@ -180,13 +177,10 @@ event_player:
     - reset_bullets
     - nakatomi_entrance_lock_close
     - wire_ramp_exit_open
-
   mode_katya_dieharder_started{current_player.hans_bonus==1}:
     - katya_dieharder_start_bonus_timer
-
   mode_katya_dieharder_started{current_player.hans_bonus!=1}:
     - katya_dieharder_start_normal_timer
-
   mode_katya_dieharder_stopping:
     - villain_mode_stopped
     - flipper_on
@@ -196,39 +190,28 @@ event_player:
   # ------------------------------------------------------------
   timer_katya_dieharder_timer_complete:
     - katya_dieharder_fail_mode
-
   ball_drain{current_player.katya_dieharder_completion_active==0 and current_player.katya_dieharder_failed_active==0}:
     - katya_dieharder_ball_drain_escape
-
   ball_drain{current_player.katya_dieharder_completion_active==1}:
     - reset_bullet_total
     - reset_bullets
-
   ball_drain{current_player.katya_dieharder_failed_active==1}:
     - katya_dieharder_failed|4s
-
   ball_ended{current_player.katya_dieharder_completion_active==0 and current_player.katya_dieharder_failed_active==0}:
     - katya_dieharder_escape_sequence
-
   ball_ended{current_player.katya_dieharder_completion_active==1}:
     - reset_bullet_total
     - reset_bullets
-
   ball_ended{current_player.katya_dieharder_failed_active==1}:
     - katya_dieharder_failed|4s
-
   katya_dieharder_fail_mode:
     - flipper_off
-
   katya_dieharder_ball_drain_escape:
     - katya_dieharder_failed|4s
-
   katya_dieharder_escape_sequence:
     - katya_dieharder_failed_delay
-
   katya_dieharder_failed_delay:
     - katya_dieharder_failed|4s
-
   katya_dieharder_failed:
     - reset_bullet_total
     - reset_bullets
@@ -239,11 +222,9 @@ event_player:
   # ------------------------------------------------------------
   katya_dieharder_captive_final_hit:
     - katya_dieharder_victory_sequence
-
   katya_dieharder_victory_sequence:
     - katya_dieharder_completed_show
     - katya_dieharder_completed|4s
-
   katya_dieharder_completed:
     - reset_bullet_total
     - reset_bullets
@@ -257,11 +238,9 @@ event_player:
   katya_dieharder_left_loop_hit{device.counters.katya_dieharder_loop_counter.value<5}:
     - katya_dieharder_loop_hit_scored
     - katya_dieharder_left_loop_relight|3s
-
   katya_dieharder_right_loop_hit{device.counters.katya_dieharder_loop_counter.value<5}:
     - katya_dieharder_loop_hit_scored
     - katya_dieharder_right_loop_relight|3s
-
   katya_dieharder_upper_loop_hit{device.counters.katya_dieharder_loop_counter.value<5}:
     - katya_dieharder_loop_hit_scored
     - katya_dieharder_upper_loop_relight|3s
@@ -289,10 +268,10 @@ variable_player:
       int: 0
       action: set
     katya_dieharder_time:
-      int: 93
+      int: 83
       action: set
     katya_dieharder_remaining:
-      int: 93
+      int: 83
       action: set
     katya_dieharder_hans_bonus_active:
       int: 0
@@ -300,23 +279,20 @@ variable_player:
     villain_bonus:
       int: 500000
       action: add
-
   katya_dieharder_start{current_player.hans_bonus==1}:
     katya_dieharder_hans_bonus_active:
       int: 1
       action: set
     katya_dieharder_time:
-      int: 123
+      int: 113
       action: set
     katya_dieharder_remaining:
-      int: 123
+      int: 113
       action: set
-
   timer_katya_dieharder_timer_tick:
     katya_dieharder_remaining:
       int: ticks
       action: set
-
   katya_dieharder_loop_hit_scored:
     score:
       int: "1500000 * current_player.playfield_multiplier"
@@ -327,7 +303,6 @@ variable_player:
     katya_dieharder_shots:
       int: 1
       action: add
-
   katya_dieharder_victory_sequence:
     katya_dieharder_completion_active:
       int: 1
@@ -335,7 +310,6 @@ variable_player:
     katya_dieharder_result_started:
       int: 1
       action: set
-
   katya_dieharder_fail_mode:
     katya_dieharder_failed_active:
       int: 1
@@ -343,17 +317,14 @@ variable_player:
     katya_dieharder_result_started:
       int: 1
       action: set
-
   katya_dieharder_ball_drain_escape:
     katya_dieharder_result_started:
       int: 1
       action: set
-
   katya_dieharder_escape_sequence:
     katya_dieharder_result_started:
       int: 1
       action: set
-
   katya_dieharder_captive_final_hit:
     score:
       int: "3000000 * current_player.playfield_multiplier"
@@ -361,8 +332,10 @@ variable_player:
     villain_bonus:
       int: 3000000
       action: add
-
   katya_dieharder_completed:
+    score:
+      int: current_player.score
+      action: add
     katya_complete:
       int: 1
       action: set
@@ -381,12 +354,10 @@ variable_player:
     katya_dieharder_result_started:
       int: 0
       action: set
-
   katya_dieharder_failed:
     katya_dieharder_result_started:
       int: 0
       action: set
-
   mode_katya_dieharder_stopping:
     villain_mode_running:
       int: 0
@@ -417,17 +388,14 @@ light_player:
       color: ff00ff
     l1001:
       color: ff00ff
-
   katya_dieharder_completed:
     l1000: off
     l1001: off
     l42:
       color: ff00ff
-
   katya_dieharder_failed:
     l1000: off
     l1001: off
-
   katya_dieharder_fail_mode:
     GI: off
     SPOTS: off
@@ -452,7 +420,6 @@ shows:
     - duration: 200ms
       lights:
         l20: off
-
   katya_dieharder_right_loop_flash:
     - duration: 200ms
       lights:
@@ -460,7 +427,6 @@ shows:
     - duration: 200ms
       lights:
         l22: off
-
   katya_dieharder_upper_loop_flash:
     - duration: 200ms
       lights:
@@ -468,7 +434,6 @@ shows:
     - duration: 200ms
       lights:
         l23: off
-
   katya_dieharder_captive_flash:
     - duration: 120ms
       lights:
@@ -476,7 +441,6 @@ shows:
     - duration: 120ms
       lights:
         l52: off
-
   katya_dieharder_hit_flashers:
     - duration: 80ms
       lights:
@@ -494,7 +458,6 @@ shows:
         f145: off
         f146: off
         f147: off
-
   katya_dieharder_gi_spots_hit_flash:
     - duration: 80ms
       lights:
@@ -506,7 +469,6 @@ shows:
         GI: ff00ff
         SPOTS: 505050
         SPOTS_BUMPER: 757575
-
   katya_dieharder_insert_flash:
     - duration: 200ms
       lights:
@@ -529,11 +491,9 @@ show_player:
       show_tokens:
         lights: BALL_SAVE
         color: ff00ff
-
   ball_save_katya_dieharder_start_save_disabled:
     katya_dieharder_start_save_flash:
       action: stop
-
   ball_save_katya_dieharder_complete_save_enabled:
     flash_color_with_fade:
       key: katya_dieharder_ball_save_flash
@@ -543,7 +503,6 @@ show_player:
         lights: BALL_SAVE
         color: ff00ff
         fade: 500
-
   ball_save_katya_dieharder_complete_save_hurry_up:
     flash_color:
       key: katya_dieharder_ball_save_flash
@@ -552,7 +511,6 @@ show_player:
       show_tokens:
         lights: BALL_SAVE
         color: ff00ff
-
   ball_save_katya_dieharder_complete_save_disabled:
     flash_color_with_fade:
       action: stop
@@ -560,7 +518,6 @@ show_player:
     flash_color:
       action: stop
       key: katya_dieharder_ball_save_flash
-
   mode_katya_dieharder_started:
     katya_dieharder_left_loop_flash:
       loops: -1
@@ -570,38 +527,30 @@ show_player:
       loops: -1
     katya_dieharder_insert_flash:
       loops: -1
-
   katya_dieharder_loop_hit_scored:
     katya_dieharder_hit_flashers:
       loops: 2
     katya_dieharder_gi_spots_hit_flash:
       loops: 1
       priority: 850
-
   katya_dieharder_left_loop_hit:
     katya_dieharder_left_loop_flash:
       action: stop
-
   katya_dieharder_left_loop_relight:
     katya_dieharder_left_loop_flash:
       loops: -1
-
   katya_dieharder_right_loop_hit:
     katya_dieharder_right_loop_flash:
       action: stop
-
   katya_dieharder_right_loop_relight:
     katya_dieharder_right_loop_flash:
       loops: -1
-
   katya_dieharder_upper_loop_hit:
     katya_dieharder_upper_loop_flash:
       action: stop
-
   katya_dieharder_upper_loop_relight:
     katya_dieharder_upper_loop_flash:
       loops: -1
-
   katya_dieharder_loops_complete:
     katya_dieharder_left_loop_flash:
       action: stop
@@ -611,7 +560,6 @@ show_player:
       action: stop
     katya_dieharder_captive_flash:
       loops: -1
-
   katya_dieharder_completed:
     katya_dieharder_start_save_flash:
       action: stop
@@ -627,7 +575,6 @@ show_player:
       action: stop
     katya_dieharder_insert_flash:
       action: stop
-
   katya_dieharder_failed:
     katya_dieharder_start_save_flash:
       action: stop
@@ -649,7 +596,6 @@ show_player:
       action: stop
     katya_dieharder_insert_flash:
       action: stop
-
   katya_dieharder_fail_mode:
     katya_dieharder_start_save_flash:
       action: stop
@@ -671,7 +617,6 @@ show_player:
       action: stop
     katya_dieharder_insert_flash:
       action: stop
-
   mode_katya_dieharder_stopping:
     katya_dieharder_start_save_flash:
       action: stop
@@ -704,11 +649,9 @@ slide_player:
       action: play
       expire: 0s
       priority: 600
-
   mode_katya_dieharder_stopping:
     katya_dieharder_background:
       action: remove
-
   katya_dieharder_completed_show:
     katya_dieharder_background:
       action: remove
@@ -716,7 +659,6 @@ slide_player:
       action: play
       expire: 4s
       priority: 10000
-
   katya_dieharder_ball_drain_escape:
     katya_dieharder_background:
       action: remove
@@ -724,7 +666,6 @@ slide_player:
       action: play
       expire: 4s
       priority: 10000
-
   katya_dieharder_fail_mode:
     katya_dieharder_background:
       action: remove
@@ -735,7 +676,10 @@ slide_player:
 
 # ------------------------------------------------------------
 # WIDGET PLAYER
-# Shows Katya Die Harder timer and progress widgets.
+# Shows Katya Die Harder timer/progress widgets during the mode.
+# Shows the Katya Die Harder villain bonus widget on the defeated slide.
+# The bonus widget is only posted by the completed-show event, so it
+# will not show on Katya escaped, ball lost, or failed flows.
 # ------------------------------------------------------------
 widget_player:
   mode_katya_dieharder_started:
@@ -745,23 +689,35 @@ widget_player:
     katya_dieharder_progress_widget:
       slide: katya_dieharder_background
       action: play
-
+  katya_dieharder_completed_show:
+    katya_dieharder_timer_widget:
+      action: remove
+    katya_dieharder_progress_widget:
+      action: remove
+    katya_dieharder_villian_bonus_widget:
+      slide: katya_defeated
+      action: play
+      expire: 4s
   mode_katya_dieharder_stopping:
     katya_dieharder_timer_widget:
       action: remove
     katya_dieharder_progress_widget:
       action: remove
-
+    katya_dieharder_villian_bonus_widget:
+      action: remove
   katya_dieharder_completed:
     katya_dieharder_timer_widget:
       action: remove
     katya_dieharder_progress_widget:
       action: remove
-
+    katya_dieharder_villian_bonus_widget:
+      action: remove
   katya_dieharder_failed:
     katya_dieharder_timer_widget:
       action: remove
     katya_dieharder_progress_widget:
+      action: remove
+    katya_dieharder_villian_bonus_widget:
       action: remove
 
 # ------------------------------------------------------------
@@ -775,7 +731,6 @@ sound_player:
       action: play
       loops: -1
       volume: 0.7
-
   mode_katya_dieharder_stopping:
     katyatheme:
       key: main_music
