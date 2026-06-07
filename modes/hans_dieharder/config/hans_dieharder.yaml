@@ -30,7 +30,7 @@ mode:
 # ------------------------------------------------------------
 timers:
   hans_dieharder_timer:
-    start_value: 93
+    start_value: 60
     end_value: 0
     direction: down
     tick_interval: 1s
@@ -276,7 +276,7 @@ variable_player:
       int: 0
       action: set
     hans_dieharder_time:
-      int: 123
+      int: 60
       action: set
     hans_dieharder_remaining:
       int: 8

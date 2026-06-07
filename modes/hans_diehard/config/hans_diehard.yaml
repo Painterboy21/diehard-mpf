@@ -28,7 +28,7 @@ mode:
 # ------------------------------------------------------------
 timers:
   hans_diehard_timer:
-    start_value: 93
+    start_value: 70
     end_value: 0
     direction: down
     tick_interval: 1s
@@ -256,7 +256,7 @@ variable_player:
       int: 0
       action: set
     hans_diehard_time:
-      int: 93
+      int: 70
       action: set
     hans_diehard_remaining:
       int: 8
