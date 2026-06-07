@@ -53,6 +53,9 @@ mode:
     - start_ambush
     - mode_ambush_started
 
+    # Stop during any villain mode
+    - villain_mode_started
+
     # Hans started
     - start_hans_diehard
     - start_hans_dieharder
@@ -75,6 +78,11 @@ mode:
     - start_col_diehard
     - start_col_dieharder
 
+    # Col mode actually started
+    - mode_col_diehard_started
+    - mode_col_dieharder_started
+    - mode_col_stuart_diehard_started
+    - mode_col_stuart_dieharder_started
   priority: 150
 
 ball_saves:

@@ -7,8 +7,8 @@
 #   Spinner = +1 damage
 #   Pop bumper = +5 damage
 #   Complete at 100 damage
-#   Normal timer = 90 seconds
-#   Hans Bonus timer = 120 seconds
+#   Normal timer = 80 seconds
+#   Hans Bonus timer = 110 seconds
 #
 # Project rules:
 #   Karl is only blocked after completion, not fail.
@@ -19,6 +19,7 @@
 #   Completion sets karl_bonus and bonus_multiplier = 6.
 #   Completion ball save = 5 seconds.
 #   Karl villain insert l40 flashes during mode.
+#   White flashers quickly flash on spinner/pop hits.
 #   No l80/l81/l82/l83.
 # =====================================================================
 
@@ -37,13 +38,13 @@ mode:
 
 # ---------------------------------------------------------------------
 # TIMERS
-# Normal timer is 90s.
-# Hans bonus timer is 120s.
+# Normal timer is 80s.
+# Hans bonus timer is 110s.
 # Mystery Add More Time adds 20s.
 # ---------------------------------------------------------------------
 timers:
   karl_dieharder_timer:
-    start_value: 90
+    start_value: 80
     end_value: 0
     direction: down
     tick_interval: 1s
@@ -51,10 +52,10 @@ timers:
     control_events:
       - event: karl_dieharder_start_normal_timer
         action: restart
-        value: 90
+        value: 80
       - event: karl_dieharder_start_hans_bonus_timer
         action: restart
-        value: 120
+        value: 110
       - event: karl_dieharder_won_complete
         action: stop
       - event: karl_dieharder_failed_complete
@@ -205,7 +206,7 @@ variable_player:
       int: 0
     karl_dieharder_time:
       action: set
-      int: 90
+      int: 80
     karl_hans_bonus_active:
       action: set
       int: 0
@@ -219,7 +220,7 @@ variable_player:
       int: 1
     karl_dieharder_time:
       action: set
-      int: 120
+      int: 110
 
   mode_karl_dieharder_started{current_player.hans_bonus!=1}:
     karl_hans_bonus_active:
@@ -227,7 +228,7 @@ variable_player:
       int: 0
     karl_dieharder_time:
       action: set
-      int: 90
+      int: 80
 
   mode_karl_dieharder_started{current_player.playfield_multiplier == None}:
     playfield_multiplier:
@@ -355,9 +356,45 @@ variable_player:
       int: 0
 
 # ---------------------------------------------------------------------
+# SHOWS
+# Local shows for Karl insert flashing and quick hit flashers.
+# The insert show is explicit on/off so l40 really flashes.
+# ---------------------------------------------------------------------
+shows:
+  karl_dieharder_mode_insert_flash:
+    - duration: 120ms
+      lights:
+        l40: ff8800
+    - duration: 120ms
+      lights:
+        l40: off
+
+  karl_dieharder_white_flasher_hit:
+    - duration: 50ms
+      lights:
+        f140: ffffff
+        f141: ffffff
+        f142: ffffff
+        f143: ffffff
+        f144: ffffff
+        f145: ffffff
+        f146: ffffff
+        f147: ffffff
+    - duration: 80ms
+      lights:
+        f140: off
+        f141: off
+        f142: off
+        f143: off
+        f144: off
+        f145: off
+        f146: off
+        f147: off
+
+# ---------------------------------------------------------------------
 # SHOW PLAYER
 # Start save / complete save shows, hit feedback, Karl insert flash,
-# result cleanup, and mode cleanup.
+# quick white flasher burst, result cleanup, and mode cleanup.
 # ---------------------------------------------------------------------
 show_player:
   ball_save_karl_dieharder_start_save_enabled:
@@ -401,14 +438,11 @@ show_player:
       key: karl_dieharder_ball_save_flash
 
   mode_karl_dieharder_started:
-    flash_color:
+    karl_dieharder_mode_insert_flash:
       key: key_karl_dieharder_mode_insert_flash
-      priority: 1200
+      priority: 1300
       loops: -1
-      speed: 6
-      show_tokens:
-        lights: l40
-        color: ff8800
+      speed: 1
 
   karl_dieharder_spinner_hit:
     karl_vpw_damage_pulse:
@@ -425,6 +459,11 @@ show_player:
         lights: GI
         color: ffffff
         fade: 150
+    karl_dieharder_white_flasher_hit:
+      key: key_karl_dieharder_white_flasher_hit
+      loops: 1
+      speed: 1
+      priority: 950
 
   karl_dieharder_pop_hit:
     karl_vpw_damage_pulse:
@@ -449,6 +488,11 @@ show_player:
         lights: GI
         color: ffffff
         fade: 150
+    karl_dieharder_white_flasher_hit:
+      key: key_karl_dieharder_white_flasher_hit
+      loops: 1
+      speed: 1
+      priority: 950
 
   karl_dieharder_fail_mode:
     karl_dieharder_start_save_flash:
@@ -471,6 +515,8 @@ show_player:
       action: stop
     key_karl_dieharder_pop_gi_flash:
       action: stop
+    key_karl_dieharder_white_flasher_hit:
+      action: stop
 
   karl_dieharder_complete:
     karl_dieharder_start_save_flash:
@@ -486,6 +532,8 @@ show_player:
     key_karl_dieharder_pop_bumper_flash:
       action: stop
     key_karl_dieharder_pop_gi_flash:
+      action: stop
+    key_karl_dieharder_white_flasher_hit:
       action: stop
 
   mode_karl_dieharder_stopping:
@@ -509,12 +557,14 @@ show_player:
       action: stop
     key_karl_dieharder_pop_gi_flash:
       action: stop
+    key_karl_dieharder_white_flasher_hit:
+      action: stop
 
 # ---------------------------------------------------------------------
 # LIGHT PLAYER
 # Sets Karl Die Harder lighting on start and cleans inserts on result.
-# l40 is solid as a fallback at lower priority; the show_player flash
-# runs higher during the mode.
+# l40 is not held solid during mode.
+# The karl_dieharder_mode_insert_flash show owns l40 while Karl runs.
 # ---------------------------------------------------------------------
 light_player:
   mode_karl_dieharder_started:
@@ -526,9 +576,6 @@ light_player:
       priority: 1000
     SPOTS_BUMPER:
       color: 757575
-    l40:
-      color: ff8800
-      priority: 1000
     l1000:
       color: ff8800
       priority: 1000
@@ -594,6 +641,7 @@ slide_player:
 # ---------------------------------------------------------------------
 # WIDGET PLAYER
 # Shows/removes Karl health/timer/result widget.
+# Shows Karl Die Harder bonus widget only during the completed flow.
 # ---------------------------------------------------------------------
 widget_player:
   mode_karl_dieharder_started:
@@ -601,16 +649,32 @@ widget_player:
       slide: karl_dieharder_background
       action: play
 
+  karl_dieharder_completed_slide{current_player.karl_dieharder_completion_active==1}:
+    karl_dieharder_villian_bonus_widget:
+      slide: karl_defeated
+      action: play
+      expire: 5s
+
+  karl_dieharder_fail_mode:
+    karl_dieharder_villian_bonus_widget:
+      action: remove
+
   mode_karl_dieharder_stopping:
     karl_progress_widget:
+      action: remove
+    karl_dieharder_villian_bonus_widget:
       action: remove
 
   karl_dieharder_won_complete:
     karl_progress_widget:
       action: remove
+    karl_dieharder_villian_bonus_widget:
+      action: remove
 
   karl_dieharder_failed_complete:
     karl_progress_widget:
+      action: remove
+    karl_dieharder_villian_bonus_widget:
       action: remove
 
 # ---------------------------------------------------------------------
