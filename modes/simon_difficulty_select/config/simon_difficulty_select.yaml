@@ -1,24 +1,49 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# SIMON DIFFICULTY SELECT
+# ------------------------------------------------------------
+# What this mode does:
+#   - Starts from start_simon_difficulty_select if Simon is not complete.
+#   - Lets player choose Simon Die Hard or Die Harder.
+#   - Both choices are blocked once simon_complete is set.
+#   - Plays the Simon intro video.
+#   - Holds the intro until Simon mode starts, avoiding a blank gap.
+#   - Releases the villain select VUK after the intro delay.
+#   - Starts the correct Simon mode.
+# ------------------------------------------------------------
 mode:
-  start_events: start_simon_difficulty_select
+  start_events:
+    - start_simon_difficulty_select{current_player.simon_complete==0}
   stop_events:
     - villain_selection_complete
     - ball_ended
   priority: 310
   code: mpf.modes.carousel.code.carousel.Carousel
 
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# ------------------------------------------------------------
+# Turns off GI/SPOTS during Simon difficulty select.
+# ------------------------------------------------------------
 light_player:
-  mode_villain_select_started:
+  mode_simon_difficulty_select_started:
     GI:
       color: 000000
     SPOTS:
       color: 000000
-      
+
+# ------------------------------------------------------------
+# MODE SETTINGS
+# ------------------------------------------------------------
+# Carousel items for Simon difficulty selection.
+# Uses shared simon_complete so completing either Simon version
+# blocks both Die Hard and Die Harder from being selected again.
+# ------------------------------------------------------------
 mode_settings:
   selectable_items:
-    - simon_die_hard
-    - simon_die_harder
+    - simon_die_hard{current_player.simon_complete==0}
+    - simon_die_harder{current_player.simon_complete==0}
   next_item_events:
     - s_right_flipper_active
   previous_item_events:
@@ -27,6 +52,12 @@ mode_settings:
     - s_fire_active
     - s_actionbtn_active
 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# ------------------------------------------------------------
+# Flashes Simon insert and runs the orange villain spin show.
+# Stops shows when a difficulty is selected or mode stops.
+# ------------------------------------------------------------
 show_player:
   mode_simon_difficulty_select_started:
     flash_color:
@@ -59,38 +90,85 @@ show_player:
     InsertsVillainSpinOrange:
       action: stop
 
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# ------------------------------------------------------------
+# Shows Simon difficulty select and Simon intro.
+# Difficulty select is removed as soon as intro starts so it
+# cannot flash back on screen before Simon mode begins.
+# Intro stays until the selected Simon mode starts.
+# ------------------------------------------------------------
 slide_player:
   mode_simon_difficulty_select_started:
     simon_difficulty_select:
       action: play
       expire: 0s
+
   play_simon_intro:
+    simon_difficulty_select:
+      action: remove
     simon_intro:
       action: play
-      expire: 5s
+      expire: 0s
+      priority: 1000
 
+  start_simon_diehard:
+    simon_intro:
+      action: remove
 
+  start_simon_dieharder:
+    simon_intro:
+      action: remove
+
+  mode_simon_difficulty_select_stopping:
+    simon_difficulty_select:
+      action: remove
+    simon_intro:
+      action: remove
+
+  ball_ended:
+    simon_difficulty_select:
+      action: remove
+    simon_intro:
+      action: remove
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Selects difficulty, plays intro, releases VUK, and starts
+# the correct Simon mode after the intro delay.
+# Selection is blocked once simon_complete is 1.
+# ------------------------------------------------------------
 event_player:
-  carousel_item_selected{carousel=="simon_difficulty_select" and item=="simon_die_hard"}:
+  carousel_item_selected{carousel=="simon_difficulty_select" and item=="simon_die_hard" and current_player.simon_complete==0}:
     - set_difficulty_die_hard
     - play_simon_intro
-    - villain_intro_finished|3s
-  carousel_item_selected{carousel=="simon_difficulty_select" and item=="simon_die_harder"}:
+    - villain_intro_finished_die_hard|3.9s
+
+  carousel_item_selected{carousel=="simon_difficulty_select" and item=="simon_die_harder" and current_player.simon_complete==0}:
     - set_difficulty_die_harder
     - play_simon_intro
-    - villain_intro_finished|3s
-  villain_intro_finished:
+    - villain_intro_finished_die_harder|3.9s
+
+  villain_intro_finished_die_hard{current_player.selected_villain=="simon" and current_player.simon_complete==0}:
     - release_villain_select_vuk
-    - start_simon_gruber
+    - start_simon_diehard
     - villain_selection_complete|100ms
 
+  villain_intro_finished_die_harder{current_player.selected_villain=="simon" and current_player.simon_complete==0}:
+    - release_villain_select_vuk
+    - start_simon_dieharder
+    - villain_selection_complete|100ms
 
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+# Stores chosen difficulty and difficulty-select running state.
+# ------------------------------------------------------------
 variable_player:
   set_difficulty_die_hard:
     selected_diehard_mode:
       string: die_hard
       action: set
-
 
   set_difficulty_die_harder:
     selected_diehard_mode:

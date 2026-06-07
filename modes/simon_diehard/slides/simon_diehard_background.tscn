@@ -1,0 +1,187 @@
+[gd_scene format=3 uid="uid://p8nbwwvvmhyq"]
+
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_jr6i2"]
+[ext_resource type="VideoStream" uid="uid://grg0ho4bpkex" path="res://videos/DieHard3Background.ogv" id="2_upjj2"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_cc736"]
+[ext_resource type="VideoStream" uid="uid://27mc5h70738n" path="res://modes/simon_diehard/slides/Simon1.ogv" id="4_mqg44"]
+[ext_resource type="Texture2D" uid="uid://cfxyj8151nfrt" path="res://godot-media/images/PoliceBadge.png" id="5_pefio"]
+[ext_resource type="Script" uid="uid://b66wdvbyomw4u" path="res://modes/simon_diehard/slides/simon_diehard_background.gd" id="5_upjj2"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="6_3wjjv"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="7_2yvq0"]
+[ext_resource type="Script" uid="uid://bgfhdcsfeeqd3" path="res://addons/mpf-gmc/classes/mpf_event_handler.gd" id="8_cc736"]
+[ext_resource type="Texture2D" uid="uid://ytwrcjpchkp8" path="res://godot-media/images/player 1 overlay.png" id="8_e7kdx"]
+[ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="9_3otx1"]
+[ext_resource type="Texture2D" uid="uid://cgdg61xeojmu8" path="res://godot-media/images/hollywhite.png" id="10_fq8tt"]
+
+[node name="simon_diehard_background" type="Control" unique_id=1876849087]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jr6i2")
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=2017886156]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_upjj2")
+autoplay = true
+loop = true
+script = ExtResource("3_cc736")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
+
+[node name="Control1" type="Control" parent="." unique_id=848953707]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_upjj2")
+
+[node name="PoliceBadge" type="Sprite2D" parent="Control1" unique_id=1908598245]
+position = Vector2(154, 522)
+scale = Vector2(0.7561838, 0.738764)
+texture = ExtResource("5_pefio")
+
+[node name="SimonTimerVariable" type="Label" parent="Control1" unique_id=1293281739]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 134.0
+offset_top = 431.0
+offset_right = -1741.0
+offset_bottom = -526.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.00999999, 0.00999999, 1)
+theme_override_colors/font_outline_color = Color(0.99, 0.99, 0.99, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 9
+theme_override_fonts/font = ExtResource("6_3wjjv")
+theme_override_font_sizes/font_size = 80
+vertical_alignment = 1
+script = ExtResource("7_2yvq0")
+variable_name = "simon_diehard_time"
+initialize_empty = false
+
+[node name="SimonHitVideoEventHandler" type="Control" parent="Control1" unique_id=1700482128]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_cc736")
+event_name = "simon_diehard_play_random_hit_video"
+call_method = "play_random_simon_hit_video"
+metadata/_custom_type_script = "uid://bgfhdcsfeeqd3"
+
+[node name="SimonHitVideoTriggerVariable" type="Label" parent="Control1" unique_id=448612802]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 100
+text = "00"
+script = ExtResource("7_2yvq0")
+variable_name = "simon_diehard_hit_video_trigger"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="SimonProgressVariable" type="Label" parent="Control1" unique_id=1577148536]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 1503.0
+offset_top = 5.0
+offset_right = -304.0
+offset_bottom = 128.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.019607844, 0.019607844, 1)
+theme_override_colors/font_shadow_color = Color(0.98, 0.98, 0.98, 0.9843137)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/font = ExtResource("6_3wjjv")
+theme_override_font_sizes/font_size = 90
+text = "00"
+script = ExtResource("7_2yvq0")
+variable_name = "simon_diehard_progress_text"
+
+[node name="SimonInstructionVariable" type="Label" parent="Control1" unique_id=569331180]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 110.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.019607844, 0.019607844, 1)
+theme_override_colors/font_shadow_color = Color(0.98, 0.98, 0.98, 0.9843137)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/font = ExtResource("6_3wjjv")
+theme_override_font_sizes/font_size = 90
+text = "simon_diehard_instruction"
+horizontal_alignment = 1
+script = ExtResource("7_2yvq0")
+variable_name = "simon_diehard_instruction"
+
+[node name="SimonHitVideo" type="VideoStreamPlayer" parent="Control1" unique_id=1811194763]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("4_mqg44")
+volume_db = 7.999997
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=1589179317]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.777
+
+[node name="score_overlay" type="TextureRect" parent="AspectRatioContainer" unique_id=1107110937]
+layout_mode = 2
+texture = ExtResource("8_e7kdx")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="AspectRatioContainer" unique_id=1695330213]
+layout_mode = 2
+
+[node name="player_1_score" type="Label" parent="AspectRatioContainer/Control" unique_id=88526952]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -112.0
+offset_right = 554.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("9_3otx1")
+theme_override_font_sizes/font_size = 60
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_2yvq0")
+variable_type = 4
+variable_name = "score"
+comma_separate = true
+
+[node name="Hollywhite" type="Sprite2D" parent="." unique_id=1237423753]
+position = Vector2(160, 823)
+texture = ExtResource("10_fq8tt")

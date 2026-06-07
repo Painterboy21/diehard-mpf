@@ -232,6 +232,18 @@ light_player:
     l40:
       color: ff8800
       priority: 1000
+  mode_base_started{current_player.simon_complete==1}:
+    l41:
+      color: ffffff
+      priority: 1000
+  player_simon_complete{value==1}:
+    l41:
+      color: ffffff
+      priority: 1000
+  restore_simon_complete_insert:
+    l41:
+      color: ffffff
+      priority: 1000
   mode_base_started{current_player.col_stuart_complete==1}:
     l44:
       color: 0044ff
