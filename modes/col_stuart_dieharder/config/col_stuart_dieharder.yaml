@@ -185,7 +185,7 @@ event_player:
     - show_col_dieharder_villian_bonus_widget|250ms
   col_stuart_dieharder_completed:
     - col_stuart_score_complete
-    - count_col_stuart_for_extra_ball
+    - count_stuart_for_extra_ball
     - unlock_5x_playfield
     - reset_bullets
     - reset_bullet_total
