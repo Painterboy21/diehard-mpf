@@ -1,0 +1,264 @@
+#show_version=6
+
+# ---------------------------------------------------------------------
+# SUPER SKILLSHOT COLLECTED CRAZY
+# Red edge-to-centre-to-edge wave.
+# Uses known real playfield lights from the Die Hard layout.
+# l80, l81, l82, and l83 are intentionally NOT used.
+# ---------------------------------------------------------------------
+
+- duration: 100ms
+  lights:
+    l4: red
+    l5: red
+    l6: red
+    l72: red
+    l73: red
+    l84: red
+    l100: red
+    l103: red
+    l104: red
+    l105: red
+    l106: red
+    l107: red
+    l108: red
+    l109: red
+    l110: red
+    l111: red
+    f140: red
+    f141: red
+
+- duration: 100ms
+  lights:
+    l4: off
+    l5: off
+    l6: off
+    l72: off
+    l73: off
+    l84: off
+    l100: off
+    l103: off
+    l104: off
+    l105: off
+    l106: off
+    l107: off
+    l108: off
+    l109: off
+    l110: off
+    l111: off
+    f140: off
+    f141: off
+    l8: red
+    l9: red
+    l12: red
+    l13: red
+    l14: red
+    l15: red
+    l57: red
+    l58: red
+    l59: red
+    l128: red
+
+- duration: 100ms
+  lights:
+    l8: off
+    l9: off
+    l12: off
+    l13: off
+    l14: off
+    l15: off
+    l57: off
+    l58: off
+    l59: off
+    l128: off
+    l20: red
+    l21: red
+    l22: red
+    l29: red
+    l30: red
+    l31: red
+    l32: red
+    l33: red
+    l34: red
+
+- duration: 100ms
+  lights:
+    l20: off
+    l21: off
+    l22: off
+    l29: off
+    l30: off
+    l31: off
+    l32: off
+    l33: off
+    l34: off
+    l40: red
+    l41: red
+    l42: red
+    l43: red
+    l44: red
+    l50: red
+    l51: red
+    l52: red
+    l53: red
+    l60: red
+    l63: red
+
+- duration: 100ms
+  lights:
+    l40: red
+    l41: red
+    l42: red
+    l43: red
+    l44: red
+    l50: red
+    l51: red
+    l52: red
+    l53: red
+    l60: red
+    l63: red
+    f142: red
+    f143: red
+    f144: red
+    f145: red
+    f146: red
+    f147: red
+
+- duration: 100ms
+  lights:
+    l40: off
+    l41: off
+    l42: off
+    l43: off
+    l44: off
+    l50: off
+    l51: off
+    l52: off
+    l53: off
+    l60: off
+    l63: off
+    f142: off
+    f143: off
+    f144: off
+    f145: off
+    f146: off
+    f147: off
+    l20: red
+    l21: red
+    l22: red
+    l29: red
+    l30: red
+    l31: red
+    l32: red
+    l33: red
+    l34: red
+
+- duration: 100ms
+  lights:
+    l20: off
+    l21: off
+    l22: off
+    l29: off
+    l30: off
+    l31: off
+    l32: off
+    l33: off
+    l34: off
+    l8: red
+    l9: red
+    l12: red
+    l13: red
+    l14: red
+    l15: red
+    l57: red
+    l58: red
+    l59: red
+    l128: red
+
+- duration: 100ms
+  lights:
+    l8: off
+    l9: off
+    l12: off
+    l13: off
+    l14: off
+    l15: off
+    l57: off
+    l58: off
+    l59: off
+    l128: off
+    l4: red
+    l5: red
+    l6: red
+    l72: red
+    l73: red
+    l84: red
+    l100: red
+    l103: red
+    l104: red
+    l105: red
+    l106: red
+    l107: red
+    l108: red
+    l109: red
+    l110: red
+    l111: red
+    f140: red
+    f141: red
+
+- duration: 100ms
+  lights:
+    l4: off
+    l5: off
+    l6: off
+    l8: off
+    l9: off
+    l12: off
+    l13: off
+    l14: off
+    l15: off
+    l20: off
+    l21: off
+    l22: off
+    l29: off
+    l30: off
+    l31: off
+    l32: off
+    l33: off
+    l34: off
+    l40: off
+    l41: off
+    l42: off
+    l43: off
+    l44: off
+    l50: off
+    l51: off
+    l52: off
+    l53: off
+    l57: off
+    l58: off
+    l59: off
+    l60: off
+    l63: off
+    l72: off
+    l73: off
+    l84: off
+    l100: off
+    l103: off
+    l104: off
+    l105: off
+    l106: off
+    l107: off
+    l108: off
+    l109: off
+    l110: off
+    l111: off
+    l128: off
+    f140: off
+    f141: off
+    f142: off
+    f143: off
+    f144: off
+    f145: off
+    f146: off
+    f147: off

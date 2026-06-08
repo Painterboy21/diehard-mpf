@@ -87,6 +87,7 @@ call_method = "play_random_simon_hit_video"
 metadata/_custom_type_script = "uid://bgfhdcsfeeqd3"
 
 [node name="SimonHitVideoTriggerVariable" type="Label" parent="Control1" unique_id=448612802]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0

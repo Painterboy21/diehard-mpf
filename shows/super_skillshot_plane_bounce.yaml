@@ -1,0 +1,39 @@
+#show_version=6
+
+# ---------------------------------------------------------------------
+# SUPER SKILLSHOT PLANE BOUNCE
+# Posts coil pulse events for about 2 seconds.
+# c_captivetarget is fired by coil_player in skillshot.yaml.
+# ---------------------------------------------------------------------
+
+- duration: 250ms
+  events:
+    - super_skillshot_plane_pulse
+
+- duration: 250ms
+  events:
+    - super_skillshot_plane_pulse
+
+- duration: 250ms
+  events:
+    - super_skillshot_plane_pulse
+
+- duration: 250ms
+  events:
+    - super_skillshot_plane_pulse
+
+- duration: 250ms
+  events:
+    - super_skillshot_plane_pulse
+
+- duration: 250ms
+  events:
+    - super_skillshot_plane_pulse
+
+- duration: 250ms
+  events:
+    - super_skillshot_plane_pulse
+
+- duration: 250ms
+  events:
+    - super_skillshot_plane_pulse
