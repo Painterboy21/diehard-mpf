@@ -1,145 +1,154 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# WIDGET DEFINITIONS
+# These connect MPF widget names to your unique Super Jets Godot/GMC scenes.
+#
+# VPW:
+#   Normal pop bumper hit = 5,000
+#   Super Jets pop bumper hit = 25,000
+#
+# These unique names stop GMC from loading the old duplicate widgets
+# from another mode such as super_spinners.
+# ------------------------------------------------------------
 widgets:
+  super_jets_pop_bumper_5000_widget:
+    widget: super_jets_pop_bumper_5000_widget
+  super_jets_pop_bumper_25000_widget:
+    widget: super_jets_pop_bumper_25000_widget
 
-  pop_bumper_5000_widget:
-    widget: pop_bumper_5000_widget
-
-  pop_bumper_25000_widget:
-    widget: pop_bumper_25000_widget
-
-  pop_bumper_200000_widget:
-    widget: pop_bumper_200000_widget
-
+# ------------------------------------------------------------
+# MODE SETTINGS
+# Starts every ball and handles VPW-style pop bumper scoring.
+# ------------------------------------------------------------
 mode:
   start_events: ball_started
   stop_events: ball_ended
   priority: 95
 
-counters:
-  super_jets_counter:
-    count_events:
-      - s_popbumper_left_active
-      - s_popbumper_right_active
-    starting_count: 0
-    count_complete_value: 25
-    reset_on_complete: true
-    events_when_complete:
-      - super_jets_started
-
-timers:
-  super_jets_timer:
-    start_value: 20
-    end_value: 0
-    direction: down
-    tick_interval: 1s
-    start_running: false
-    control_events:
-      - event: super_jets_started
-        action: restart
-      - event: super_jets_ended
-        action: stop
-      - event: ball_ended
-        action: stop
-
+# ------------------------------------------------------------
+# EVENT PLAYER
+# Both real pop bumpers use the same VPW Super Jets count.
+#
+# VPW behaviour:
+#   Hits 1-19 = 5,000
+#   Hit 20 and onwards = 25,000
+#
+# Widget replay:
+#   Each score event removes the old widget first, then plays it again
+#   50ms later. This lets rapid jet hits show the widget again instead
+#   of only showing once or twice.
+# ------------------------------------------------------------
 event_player:
-  timer_super_jets_timer_complete:
-    - super_jets_ended
-
-  s_popbumper_left_active{current_player.super_jets==1}:
+  s_popbumper_left_active{current_player.super_jets_active==0 and current_player.super_jets_hits < 19}:
+    - pop_bumper_score_5000
+  s_popbumper_right_active{current_player.super_jets_active==0 and current_player.super_jets_hits < 19}:
+    - pop_bumper_score_5000
+  s_popbumper_left_active{current_player.super_jets_active==0 and current_player.super_jets_hits >= 19}:
+    - super_jets_started
+    - pop_bumper_score_25000
+  s_popbumper_right_active{current_player.super_jets_active==0 and current_player.super_jets_hits >= 19}:
+    - super_jets_started
+    - pop_bumper_score_25000
+  s_popbumper_left_active{current_player.super_jets_active==1}:
+    - pop_bumper_score_25000
     - super_jets_left_shaker
-
-  s_popbumper_right_active{current_player.super_jets==1}:
+  s_popbumper_right_active{current_player.super_jets_active==1}:
+    - pop_bumper_score_25000
     - super_jets_right_shaker
 
+  pop_bumper_score_5000:
+    - remove_super_jets_5000_widget
+    - play_super_jets_5000_widget|50ms
+  pop_bumper_score_25000:
+    - remove_super_jets_25000_widget
+    - play_super_jets_25000_widget|50ms
+
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# Stores VPW Super Jets progress and awards points.
+#
+# super_jets_hits:
+#   Counts pop bumper hits toward the VPW Super Jets goal of 20.
+#
+# super_jets_active:
+#   0 = normal 5,000 bumper scoring
+#   1 = Super Jets 25,000 bumper scoring
+#
+# The 20th hit scores 25,000 because the switch event checks the
+# current count before this score event adds the next hit.
+# ------------------------------------------------------------
 variable_player:
   mode_super_jets_started:
-    super_jets:
+    super_jets_hits:
       int: 0
       action: set
-
+    super_jets_active:
+      int: 0
+      action: set
+  pop_bumper_score_5000:
+    score:
+      int: "5000 * current_player.playfield_multiplier"
+      action: add
+    super_jets_hits:
+      int: 1
+      action: add
+  pop_bumper_score_25000:
+    score:
+      int: "25000 * current_player.playfield_multiplier"
+      action: add
+    super_jets_hits:
+      int: 1
+      action: add
   super_jets_started:
-    super_jets:
+    super_jets_active:
       int: 1
       action: set
 
-  super_jets_ended:
-    super_jets:
-      int: 0
-      action: set
-
-  s_popbumper_left_active{current_player.super_jets==0}:
-    score:
-      int: "5000 * current_player.playfield_multiplier"
-      action: add
-
-  s_popbumper_right_active{current_player.super_jets==0}:
-    score:
-      int: "5000 * current_player.playfield_multiplier"
-      action: add
-
-  s_popbumper_left_active{current_player.super_jets==1}:
-    score:
-      int: "200000 * current_player.playfield_multiplier"
-      action: add
-
-  s_popbumper_right_active{current_player.super_jets==1}:
-    score:
-      int: "200000 * current_player.playfield_multiplier"
-      action: add
-
+# ------------------------------------------------------------
+# WIDGET PLAYER
+# Shows one score widget per pop bumper hit.
+#
+# Normal VPW pop bumper hit:
+#   5,000 widget
+#
+# Super Jets VPW pop bumper hit:
+#   25,000 widget
+#
+# MPF 0.80 widget_player does not support action: add, so this uses
+# remove then play. The 50ms delayed play events are posted above.
+# ------------------------------------------------------------
 widget_player:
+  remove_super_jets_5000_widget:
+    super_jets_pop_bumper_5000_widget:
+      action: remove
+  play_super_jets_5000_widget:
+    super_jets_pop_bumper_5000_widget:
+      action: play
+      priority: 9999
+      expire: 1s
+
+  remove_super_jets_25000_widget:
+    super_jets_pop_bumper_25000_widget:
+      action: remove
+  play_super_jets_25000_widget:
+    super_jets_pop_bumper_25000_widget:
+      action: play
+      priority: 9999
+      expire: 1s
+
   super_jets_started:
     super_jets:
       action: play
       priority: 9999
       expire: 4s
 
-
-  s_popbumper_left_active{current_player.super_jets==0}:
-    pop_bumper_5000_widget:
-      action: play
-      priority: 9999
-      expire: 3s
-
-    pop_bumper_25000_widget:
-      action: play
-      priority: 9999
-      expire: 3s
-    
-
-  s_popbumper_right_active{current_player.super_jets==0}:
-    pop_bumper_5000_widget:
-      action: play
-      priority: 9999
-      expire: 3s
-
-    pop_bumper_25000_widget:
-      action: play
-      expire: 3s
-
-  s_popbumper_left_active{current_player.super_jets==1}:
-    pop_bumper_200000_widget:
-      action: play
-      expire: 3s
-
-  s_popbumper_right_active{current_player.super_jets==1}:
-    pop_bumper_200000_widget:
-      action: play
-      expire: 3s
-
+# ------------------------------------------------------------
+# SHOW PLAYER
+# Flashes l75 red on Super Jets bumper hits.
+# ------------------------------------------------------------
 show_player:
-  s_popbumper_left_active{current_player.super_jets==1}:
-    flash_color:
-      key: super_jets_l75_red_flash
-      speed: 20
-      loops: 0
-      priority: 200
-      show_tokens:
-        lights: l75
-        color: red
-
-  s_popbumper_right_active{current_player.super_jets==1}:
+  pop_bumper_score_25000:
     flash_color:
       key: super_jets_l75_red_flash
       speed: 20

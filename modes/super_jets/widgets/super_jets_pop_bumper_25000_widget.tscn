@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://b01lfb8eysm3d"]
+
+[ext_resource type="Script" uid="uid://c2tldojvbtgs8" path="res://modes/super_jets/widgets/super_jets_pop_bumper_25000_widget.tscn.gd" id="1_v7klo"]
+[ext_resource type="Texture2D" uid="uid://b3ookejf4yyam" path="res://godot-media/images/bullet25000.png" id="2_v7klo"]
+
+[node name="super_jets_pop_bumper_25000_widget" type="Control" unique_id=1486392748]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v7klo")
+metadata/_custom_type_script = "uid://d4ky3s4bg1ouq"
+
+[node name="RandomHolder" type="Node2D" parent="." unique_id=17928242]
+
+[node name="Sprite2D" type="Sprite2D" parent="RandomHolder" unique_id=1072078797]
+scale = Vector2(3, 3)
+texture = ExtResource("2_v7klo")
+centered = false

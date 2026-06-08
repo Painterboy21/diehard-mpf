@@ -419,6 +419,7 @@ shots:
 # SHOW PLAYER
 # ------------------------------------------------------------
 # Base playfield light shows and playfield feedback effects.
+# Captive ball hit now flashes f143 and pulses the airplane coil twice.
 # ------------------------------------------------------------
 show_player:
   s_left_sling_active:
@@ -537,6 +538,11 @@ show_player:
       show_tokens:
         lights: f143
         color: FFFFFF
+    airplane_normal_bounce:
+      key: key_airplane_normal_bounce
+      priority: 1
+      loops: 0
+      speed: 1
   s_upper_pf_entrance_active:
     upper_pf_entrance:
       key: key_upper_pf_entrance_show
