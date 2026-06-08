@@ -40,11 +40,11 @@ event_player:
 
 # ---------------------------------------------------------------------
 # TIMERS
-# Super Skill Shot is available for 5 seconds from skillshot_hit_fast.
+# Super Skill Shot is available for 4 seconds from skillshot_hit_fast.
 # ---------------------------------------------------------------------
 timers:
   super_skillshot_timer:
-    start_value: 5
+    start_value: 4
     end_value: 0
     direction: down
     tick_interval: 1s

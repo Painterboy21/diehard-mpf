@@ -3,13 +3,16 @@ extends MPFWidget
 
 @onready var label: Label = $label
 
+
 func _ready():
 	call_deferred("play_intro")
+
 
 func set_font_colour(colour: Color):
 	label.add_theme_color_override("font_color", colour)
 	label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 1))
 	label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
+
 
 func play_intro():
 	visible = true
@@ -26,6 +29,10 @@ func play_intro():
 	label.add_theme_constant_override("outline_size", 10)
 	label.add_theme_constant_override("shadow_offset_x", 5)
 	label.add_theme_constant_override("shadow_offset_y", 5)
+
+	# Keep the label centred using its existing scene position/size.
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 
 	label.scale = Vector2(0.05, 0.05)
 	label.rotation_degrees = 0
@@ -63,12 +70,12 @@ func play_intro():
 	# Hold SUPER SKILL SHOT HIT.
 	tween.tween_interval(0.55)
 
-	# First flip: show 10000.
+	# First flip: show 1,000,000.
 	tween.tween_property(label, "scale:x", 0.0, 0.13).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 	tween.tween_callback(_flip_to_points)
 	tween.tween_property(label, "scale:x", 1.25, 0.13).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
-	# Hold 10000.
+	# Hold 1,000,000.
 	tween.tween_interval(0.75)
 
 	# Second flip: show FULL BULLETS.
@@ -82,10 +89,12 @@ func play_intro():
 	tween.tween_property(label, "rotation_degrees", 0, 0.01)
 	tween.tween_interval(1.0)
 
+
 func _flip_to_points():
-	label.text = "10000"
+	label.text = "1,000,000"
 	set_font_colour(Color(1, 1, 1, 1))
 	label.rotation_degrees = 0
+
 
 func _flip_to_full_bullets():
 	label.text = "FULL BULLETS"

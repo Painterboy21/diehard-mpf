@@ -111,6 +111,11 @@ func _hide_all_overlays() -> void:
 		iscoredLeaderboard.hide()
 
 
+func _close_nakatomi_lock_on_game_over() -> void:
+	print("Game Over: closing Nakatomi entrance lock")
+	MPF.server.send_event("nakatomi_entrance_lock_close")
+
+
 func _play_next(increment: bool) -> void:
 	var path: String
 
@@ -122,6 +127,7 @@ func _play_next(increment: bool) -> void:
 
 	elif current_index == -2:
 		path = gameover_video
+		_close_nakatomi_lock_on_game_over()
 
 		if player_scores_index >= 0:
 			current_index = player_scores_index - 1
