@@ -178,9 +178,6 @@ autofire_coils:
   right_sling:
     coil: c_right_sling
     switch: s_right_sling
-  airplane:
-    coil: c_captivetarget
-    switch: s_captiveball
   popbumper_left:
     coil: c_popbumper_left
     switch: s_popbumper_left

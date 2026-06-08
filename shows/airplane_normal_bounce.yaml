@@ -1,0 +1,21 @@
+#show_version=6
+
+# ------------------------------------------------------------
+# AIRPLANE NORMAL BOUNCE SHOW
+# Two quick coil pulses for a normal captive ball hit.
+# Put this file in your shows folder.
+# ------------------------------------------------------------
+
+- duration: 150ms
+  coils:
+    c_captivetarget:
+      action: pulse
+
+- duration: 180ms
+
+- duration: 150ms
+  coils:
+    c_captivetarget:
+      action: pulse
+
+- duration: 300ms

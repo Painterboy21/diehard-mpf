@@ -1,3 +1,4 @@
+
 extends MPFWidget
 
 @onready var label: Label = $label
@@ -28,9 +29,7 @@ func play_intro():
 
 	label.scale = Vector2(0.05, 0.05)
 	label.rotation_degrees = 0
-
-	await get_tree().process_frame
-	label.pivot_offset = label.size / 2
+	label.pivot_offset = label.get_rect().size / 2
 
 	var start_pos = label.position
 	var tween = create_tween()
