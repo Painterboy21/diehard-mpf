@@ -106,6 +106,9 @@ extra_ball_groups:
 # ------------------------------------------------------------
 # FLIPPERS
 # ------------------------------------------------------------
+# Flippers stay disabled during initial / attract.
+# They only enable when a real ball starts or when enable_flippers is posted.
+# ------------------------------------------------------------
 flippers:
   left_flipper:
     main_coil: c_left_flipper_main
@@ -114,8 +117,21 @@ flippers:
     use_eos: true
     repulse_on_eos_open: false
     activation_switch: s_left_flipper
-    enable_events: ball_started, enableAutofire, flipper_on
-    disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
+    enable_events:
+      - ball_started
+      - enable_flippers
+    disable_events:
+      - init_phase_1
+      - machine_reset_phase_3
+      - mode_attract_started
+      - ball_will_end
+      - ball_ending
+      - ball_ended
+      - game_ended
+      - service_mode_entered
+      - disable_flippers
+      - flipper_off
+
   right_flipper:
     main_coil: c_right_flipper_main
     hold_coil: c_right_flipper_hold
@@ -123,8 +139,21 @@ flippers:
     use_eos: true
     repulse_on_eos_open: false
     activation_switch: s_right_flipper
-    enable_events: ball_started, enableAutofire, flipper_on
-    disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
+    enable_events:
+      - ball_started
+      - enable_flippers
+    disable_events:
+      - init_phase_1
+      - machine_reset_phase_3
+      - mode_attract_started
+      - ball_will_end
+      - ball_ending
+      - ball_ended
+      - game_ended
+      - service_mode_entered
+      - disable_flippers
+      - flipper_off
+
   left_top_flipper:
     main_coil: c_left_top_flipper_main
     hold_coil: c_left_top_flipper_hold
@@ -132,9 +161,20 @@ flippers:
     use_eos: true
     repulse_on_eos_open: false
     activation_switch: s_left_flipper
-    enable_events: ball_started, enableAutofire, flipper_on
-    disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
-
+    enable_events:
+      - ball_started
+      - enable_flippers
+    disable_events:
+      - init_phase_1
+      - machine_reset_phase_3
+      - mode_attract_started
+      - ball_will_end
+      - ball_ending
+      - ball_ended
+      - game_ended
+      - service_mode_entered
+      - disable_flippers
+      - flipper_off
 # ------------------------------------------------------------
 # DROP TARGETS
 # ------------------------------------------------------------

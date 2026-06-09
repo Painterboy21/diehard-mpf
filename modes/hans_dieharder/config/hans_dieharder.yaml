@@ -631,7 +631,7 @@ slide_player:
       action: remove
     hans_ball_lost:
       action: play
-      expire: 9s
+      expire: 6s
       priority: 20000
 
 # ------------------------------------------------------------

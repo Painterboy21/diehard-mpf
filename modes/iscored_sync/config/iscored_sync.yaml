@@ -5,7 +5,3 @@ mode:
   game_mode: false
   priority: 10
   code: iscored_sync.IscoredSync
-
-event_player:
-  game_ended:
-    - iscored_submit_score

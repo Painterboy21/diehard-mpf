@@ -51,6 +51,25 @@ class IscoredSync(Mode):
         self._pending_records = self._default_pending_records()
         self._active_multiball_record = None
         self._active_villain_record = None
+        self._pending_iscored_score = None
+        self._pending_iscored_player_name = DEFAULT_PLAYER_NAME
+        self._iscored_submit_done = False
+
+        self.machine.events.add_handler(
+            "game_will_end",
+            self.capture_score_and_force_iscored_initials,
+            priority=1000
+        )
+
+        self.machine.events.add_handler(
+            "game_ending",
+            self.capture_score_for_later_iscored_submit
+        )
+
+        self.machine.events.add_handler(
+            "game_ended",
+            self.capture_score_for_later_iscored_submit
+        )
 
         self.machine.events.add_handler(
             "iscored_submit_score",
@@ -69,7 +88,14 @@ class IscoredSync(Mode):
 
         self.machine.events.add_handler(
             "mode_attract_started",
-            self.refresh_scores
+            self.submit_fallback_score_if_no_initials,
+            priority=100
+        )
+
+        self.machine.events.add_handler(
+            "mode_attract_started",
+            self.refresh_scores,
+            priority=0
         )
 
         # Manual/test record events.
@@ -156,6 +182,11 @@ class IscoredSync(Mode):
             self.record_apply_pending_records
         )
 
+        self.machine.events.add_handler(
+            "text_input_high_score_complete",
+            self.submit_score
+        )
+
         # Apply saved records on boot.
         records = self._load_records()
         self._apply_record_machine_vars(records)
@@ -167,20 +198,234 @@ class IscoredSync(Mode):
             self._apply_leaderboard_machine_vars(cached_entries)
 
     # ------------------------------------------------------------
-    # SUBMIT SCORE
-    # Called by event:
-    #   iscored_submit_score
+    # CAPTURE SCORE AND FORCE iSCORED INITIALS
     # ------------------------------------------------------------
-    def submit_score(self, **kwargs):
+    # game_will_end happens before MPF's high-score mode decides
+    # whether to show the initials screen.
+    #
+    # If the final score qualifies for the iScored top 10, we force
+    # the hidden machine_record_initials_score value. This makes the
+    # normal initials screen appear even after a local score reset,
+    # when Beat Cop / Detective / Yippie may not trigger it by itself.
+    # ------------------------------------------------------------
+    def capture_score_and_force_iscored_initials(self, **kwargs):
+
+        self._iscored_submit_done = False
+        self.capture_score_for_later_iscored_submit(**kwargs)
+
+        try:
+            pending_score = int(self._pending_iscored_score)
+        except Exception:
+            pending_score = 0
+
+        if pending_score <= 0:
+            return
+
+        qualifies = self._score_qualifies_for_top_ten(pending_score)
+
+        if qualifies is True:
+
+            self._force_iscored_initials_needed()
+
+            self.info_log(
+                "iScored initials forced -> score qualifies for top %s: %s",
+                TOP_N,
+                pending_score
+            )
+
+            return
+
+        if qualifies is False:
+
+            self.info_log(
+                "iScored initials not forced -> score not top %s: %s",
+                TOP_N,
+                pending_score
+            )
+
+            return
+
+        # If the leaderboard check failed, still force initials.
+        # Safer to ask for initials than to lose a valid score after reset/offline.
+        self._force_iscored_initials_needed()
+
+        self.warning_log(
+            "iScored initials forced because top %s check was unavailable -> score: %s",
+            TOP_N,
+            pending_score
+        )
+
+    # ------------------------------------------------------------
+    # CAPTURE SCORE FOR LATER iSCORED SUBMIT
+    # ------------------------------------------------------------
+    # game_ending/game_ended can happen before/after the initials
+    # screen, depending on MPF's queued high-score flow.
+    #
+    # This only updates the stored final score. It does not reset
+    # _iscored_submit_done, otherwise game_ended could allow a
+    # duplicate fallback submit after initials already completed.
+    # ------------------------------------------------------------
+    def capture_score_for_later_iscored_submit(self, **kwargs):
 
         player = self.machine.game.player if self.machine.game else None
 
         if not player:
-            self.warning_log("No player found for iScored submit")
+            self.info_log(
+                "iScored final score capture skipped -> no active player"
+            )
             return
 
-        score = int(player.score)
-        player_name = self._get_player_name(player)
+        try:
+            self._pending_iscored_score = int(player.score)
+        except Exception:
+            try:
+                self._pending_iscored_score = int(player["score"])
+            except Exception:
+                self._pending_iscored_score = 0
+
+        self._pending_iscored_player_name = self._get_player_name(player)
+
+        self.info_log(
+            "iScored final score captured -> player: %s score: %s",
+            self._pending_iscored_player_name,
+            self._pending_iscored_score
+        )
+
+    # ------------------------------------------------------------
+    # FALLBACK SUBMIT IF NO INITIALS SCREEN HAPPENED
+    # ------------------------------------------------------------
+    # If the score does not trigger MPF's initials screen, then
+    # text_input_high_score_complete never fires. When attract starts,
+    # we submit the captured final score with the fallback name instead
+    # of losing the iScored upload completely.
+    #
+    # If initials did happen, submit_score() has already run and this
+    # does nothing.
+    # ------------------------------------------------------------
+    def submit_fallback_score_if_no_initials(self, **kwargs):
+
+        if self._iscored_submit_done:
+            return
+
+        try:
+            pending_score = int(self._pending_iscored_score)
+        except Exception:
+            pending_score = 0
+
+        if pending_score <= 0:
+            return
+
+        fallback_name = self._pending_iscored_player_name
+
+        if not fallback_name:
+            fallback_name = DEFAULT_PLAYER_NAME
+
+        self.info_log(
+            "iScored initials did not complete before attract, using fallback submit -> player: %s score: %s",
+            fallback_name,
+            pending_score
+        )
+
+        self.submit_score(
+            name=fallback_name
+        )
+
+    # ------------------------------------------------------------
+    # SUBMIT SCORE
+    # ------------------------------------------------------------
+    # Called by:
+    #   text_input_high_score_complete
+    #   iscored_submit_score
+    #
+    # Important:
+    # When called from the initials screen, MPF may already have ended
+    # the game object. So we use the stored final score captured at
+    # game_ending/game_ended, then use kwargs["text"] for initials.
+    # ------------------------------------------------------------
+    def submit_score(self, **kwargs):
+
+        typed_name = kwargs.get("text", None)
+
+        if typed_name is None:
+            typed_name = kwargs.get("initials", None)
+
+        if typed_name is None:
+            typed_name = kwargs.get("name", None)
+
+        player = self.machine.game.player if self.machine.game else None
+
+        score = None
+
+        if player:
+            try:
+                score = int(player.score)
+            except Exception:
+                try:
+                    score = int(player["score"])
+                except Exception:
+                    score = None
+
+        if score is None:
+            score = self._pending_iscored_score
+
+        try:
+            score = int(score)
+        except Exception:
+            score = 0
+
+        if score <= 0:
+            self.warning_log(
+                "iScored submit skipped -> no valid captured score"
+            )
+            return
+
+        if self._iscored_submit_done:
+            self.info_log(
+                "iScored submit skipped -> already submitted for this game"
+            )
+            return
+
+        if typed_name is not None and str(typed_name).strip():
+
+            player_name = str(typed_name).strip().upper()[:20]
+
+            if player:
+                self._set_current_player_var(
+                    "initials",
+                    player_name
+                )
+
+                self._set_current_player_var(
+                    "player_initials",
+                    player_name
+                )
+
+        elif player:
+
+            player_name = self._get_player_name(player)
+
+        elif self._pending_iscored_player_name:
+
+            player_name = str(self._pending_iscored_player_name).strip()[:20]
+
+        else:
+
+            player_name = DEFAULT_PLAYER_NAME
+
+        if not player_name:
+            player_name = DEFAULT_PLAYER_NAME
+
+        self.info_log(
+            "iScored submit requested -> player: %s score: %s",
+            player_name,
+            score
+        )
+
+        # Prevent duplicate submits if text_input_high_score_complete
+        # fires more than once or attract fallback runs after initials.
+        self._iscored_submit_done = True
+        self._pending_iscored_score = None
+        self._pending_iscored_player_name = DEFAULT_PLAYER_NAME
 
         threading.Thread(
             target=self._check_then_submit_or_queue,
@@ -1028,6 +1273,18 @@ class IscoredSync(Mode):
                 name
             )
         else:
+            self._set_current_player_var(
+                "machine_record_initials_score",
+                0
+            )
+            self._set_machine_var(
+                "machine_record_pending_title",
+                ""
+            )
+            self._set_machine_var(
+                "machine_record_pending_subtitle",
+                ""
+            )
             self.info_log(
                 "No pending machine records to apply -> player: %s",
                 name
@@ -1120,7 +1377,6 @@ class IscoredSync(Mode):
 
         self.machine.events.post("reset_local_high_scores")
         self.machine.events.post("record_refresh_machine_records")
-        self.machine.events.post("iscored_refresh_scores")
 
         self.info_log(
             "ALL LOCAL SCORES AND MACHINE RECORDS RESET"
@@ -1200,6 +1456,46 @@ class IscoredSync(Mode):
             name,
             value,
             mode_name
+        )
+
+    # ------------------------------------------------------------
+    # FORCE iSCORED INITIALS TRIGGER
+    # ------------------------------------------------------------
+    # Uses the same hidden high-score trigger as machine records,
+    # but does not overwrite an existing machine-record title.
+    # ------------------------------------------------------------
+    def _force_iscored_initials_needed(self):
+
+        value = int(time.time())
+
+        existing_title = ""
+
+        try:
+            existing_title = self.machine.variables.get_machine_var(
+                "machine_record_pending_title"
+            )
+        except Exception:
+            existing_title = ""
+
+        if not existing_title:
+            self._set_machine_var(
+                "machine_record_pending_title",
+                "NEW iSCORED TOP 10"
+            )
+
+            self._set_machine_var(
+                "machine_record_pending_subtitle",
+                "ENTER INITIALS"
+            )
+
+        self._set_current_player_var(
+            "machine_record_initials_score",
+            value
+        )
+
+        self.info_log(
+            "iScored initials trigger set -> value: %s",
+            value
         )
 
     # ------------------------------------------------------------
