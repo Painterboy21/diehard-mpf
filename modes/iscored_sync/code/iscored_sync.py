@@ -749,7 +749,7 @@ class IscoredSync(Mode):
             return
 
         self._pending_records["loop_champion"] = value
-        self._mark_machine_record_initials_needed()
+        self._mark_machine_record_initials_needed("NEW LOOP CHAMPION")
 
         self.info_log(
             "Pending Loop Champion set -> loops: %s",
@@ -783,7 +783,7 @@ class IscoredSync(Mode):
             "value": value,
             "mode": mode_name
         }
-        self._mark_machine_record_initials_needed()
+        self._mark_machine_record_initials_needed("NEW MULTIBALL HERO")
 
         self.info_log(
             "Pending Multiball Hero set -> score: %s mode: %s",
@@ -818,7 +818,7 @@ class IscoredSync(Mode):
             "value": value,
             "mode": mode_name
         }
-        self._mark_machine_record_initials_needed()
+        self._mark_machine_record_initials_needed("NEW VILLAIN MVP")
 
         self.info_log(
             "Pending Villain MVP set -> score: %s mode: %s",
@@ -1010,6 +1010,14 @@ class IscoredSync(Mode):
                 "machine_record_initials_score",
                 0
             )
+            self._set_machine_var(
+                "machine_record_pending_title",
+                ""
+            )
+            self._set_machine_var(
+                "machine_record_pending_subtitle",
+                ""
+            )
             self.info_log(
                 "Pending machine records applied -> player: %s",
                 name
@@ -1029,6 +1037,14 @@ class IscoredSync(Mode):
         self._set_current_player_var(
             "machine_record_initials_score",
             0
+        )
+        self._set_machine_var(
+            "machine_record_pending_title",
+            ""
+        )
+        self._set_machine_var(
+            "machine_record_pending_subtitle",
+            ""
         )
         self.info_log("Pending machine records cleared")
 
@@ -1119,18 +1135,32 @@ class IscoredSync(Mode):
     # When any machine record is pending, this player var is set
     # to a fresh timestamp. That makes MPF's normal initials entry
     # appear at game end, even if the normal score top 3 was not beaten.
-    # It does not change the normal score category.
+    #
+    # Also sets machine vars for the Godot high-score initials screen
+    # so it can show the correct record title.
     # ------------------------------------------------------------
-    def _mark_machine_record_initials_needed(self):
+    def _mark_machine_record_initials_needed(self, title="NEW MACHINE RECORD"):
 
         value = int(time.time())
+
+        self._set_machine_var(
+            "machine_record_pending_title",
+            str(title)
+        )
+
+        self._set_machine_var(
+            "machine_record_pending_subtitle",
+            "ENTER INITIALS"
+        )
+
         self._set_current_player_var(
             "machine_record_initials_score",
             value
         )
 
         self.info_log(
-            "Machine record initials needed -> trigger value: %s",
+            "Machine record initials needed -> title: %s trigger value: %s",
+            title,
             value
         )
 

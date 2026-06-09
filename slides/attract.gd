@@ -1,3 +1,4 @@
+
 extends VideoStreamPlayer
 
 var intro_video: String = "res://videos/attractvideos/DieHardTrilogyOpener.ogv"
@@ -29,7 +30,6 @@ var gameover_video: String = "res://videos/attractvideos/GameOver.ogv"
 
 @onready var iscoredLeaderboard = get_node_or_null("../iscored_leaderboard")
 
-
 # ------------------------------------------------------------
 # PLAYLIST
 # ------------------------------------------------------------
@@ -56,16 +56,14 @@ const MULTIBALL_HERO_PAGE_INDEX := 4
 const VILLAIN_MVP_PAGE_INDEX := 5
 const ISCORED_PAGE_INDEX := 6
 
-var current_index: int = -1   # -1 = intro not played yet
+var current_index: int = -1
 var player_scores_index: int = -1
 var iscored_refresh_elapsed: float = 0.0
-
 
 func _ready() -> void:
 	MPF.server.add_event_handler("rotate_attract_left", self._on_rotate_attract_left)
 	MPF.server.add_event_handler("rotate_attract_right", self._on_rotate_attract_right)
 	MPF.server.add_event_handler("play_show_xmas", self._on_timer_attract_idle_complete)
-
 	self.finished.connect(_on_video_finished)
 
 	if iscoredLeaderboard:
@@ -96,10 +94,10 @@ func _ready() -> void:
 	else:
 		push_warning("VillainMVP node not found. Add it as a sibling of this VideoStreamPlayer.")
 
-	if MPF.game.machine_vars.has("last_game_players") and MPF.game.machine_vars["last_game_players"] > 0:
+	if MPF.game.machine_vars.has("last_game_players") and MPF.game.machine_vars["last_game_players"] != null and int(MPF.game.machine_vars["last_game_players"]) > 0:
 		current_index = -2
 
-		match MPF.game.machine_vars["last_game_players"]:
+		match int(MPF.game.machine_vars["last_game_players"]):
 			1:
 				loop_videos.append("res://videos/attractvideos/pl1gameover.ogv")
 			2:
@@ -113,12 +111,10 @@ func _ready() -> void:
 
 	_play_next(false)
 
-
 func _exit_tree() -> void:
 	MPF.server.remove_event_handler("rotate_attract_left", self._on_rotate_attract_left)
 	MPF.server.remove_event_handler("rotate_attract_right", self._on_rotate_attract_right)
 	MPF.server.remove_event_handler("play_show_xmas", self._on_timer_attract_idle_complete)
-
 
 func _process(delta: float) -> void:
 	if iscoredLeaderboard and iscoredLeaderboard.visible:
@@ -128,22 +124,18 @@ func _process(delta: float) -> void:
 			iscored_refresh_elapsed = 0.0
 			_update_iscored_leaderboard()
 
-
 func _on_rotate_attract_left(payload: Dictionary) -> void:
 	print(payload)
 	_play_next(false)
-
 
 func _on_rotate_attract_right(payload: Dictionary) -> void:
 	print(payload)
 	_play_next(true)
 
-
 func _on_timer_attract_idle_complete(payload: Dictionary) -> void:
 	print(payload)
 	current_index = -1
 	_play_next(false)
-
 
 func _hide_all_overlays() -> void:
 	lblP1Score.hide()
@@ -167,11 +159,9 @@ func _hide_all_overlays() -> void:
 	if iscoredLeaderboard:
 		iscoredLeaderboard.hide()
 
-
 func _close_nakatomi_lock_on_game_over() -> void:
 	print("Game Over: closing Nakatomi entrance lock")
 	MPF.server.send_event("nakatomi_entrance_lock_close")
-
 
 func _play_next(increment: bool) -> void:
 	var path: String
@@ -235,7 +225,6 @@ func _play_next(increment: bool) -> void:
 	self.stream = stream
 	self.play()
 
-
 func _show_loop_champion() -> void:
 	if not vboxLoopChampion:
 		push_warning("LoopChampion node not found")
@@ -267,7 +256,6 @@ func _show_loop_champion() -> void:
 	vboxLoopChampion.z_index = 100
 
 	print("Showing Loop Champion: ", champion_name, " ", champion_text)
-
 
 func _show_multiball_hero() -> void:
 	if not vboxMultiballHero:
@@ -310,7 +298,6 @@ func _show_multiball_hero() -> void:
 
 	print("Showing Multiball Hero: ", hero_name, " ", hero_text, " ", hero_mode)
 
-
 func _show_villain_mvp() -> void:
 	if not vboxVillainMVP:
 		push_warning("VillainMVP node not found")
@@ -352,7 +339,6 @@ func _show_villain_mvp() -> void:
 
 	print("Showing Villain MVP: ", villain_name, " ", villain_text, " ", villain_mode)
 
-
 func _show_iscored_leaderboard() -> void:
 	if not iscoredLeaderboard:
 		push_warning("iscored_leaderboard node not found")
@@ -365,7 +351,6 @@ func _show_iscored_leaderboard() -> void:
 	iscored_refresh_elapsed = 0.0
 
 	_update_iscored_leaderboard()
-
 
 func _update_iscored_leaderboard() -> void:
 	if not iscoredLeaderboard:
@@ -382,7 +367,6 @@ func _update_iscored_leaderboard() -> void:
 		_send_iscored_var("iscored_%s_name" % i)
 		_send_iscored_var("iscored_%s_score" % i)
 		_send_iscored_var("iscored_%s_score_text" % i)
-
 
 func _send_iscored_var(key: String) -> void:
 	var value = null
@@ -402,24 +386,31 @@ func _send_iscored_var(key: String) -> void:
 	else:
 		print("Missing iScored var: ", key)
 
-
 func _show_last_game_player_scores() -> void:
-	if MPF.game.machine_vars.has("player1_score"):
-		lblP1Score.text = MPF.util.comma_sep(MPF.game.machine_vars["player1_score"])
+	if MPF.game.machine_vars.has("player1_score") and MPF.game.machine_vars["player1_score"] != null:
+		lblP1Score.text = MPF.util.comma_sep(int(MPF.game.machine_vars["player1_score"]))
+	else:
+		lblP1Score.text = "0"
 
-	if MPF.game.machine_vars.has("player2_score"):
-		lblP2Score.text = MPF.util.comma_sep(MPF.game.machine_vars["player2_score"])
+	if MPF.game.machine_vars.has("player2_score") and MPF.game.machine_vars["player2_score"] != null:
+		lblP2Score.text = MPF.util.comma_sep(int(MPF.game.machine_vars["player2_score"]))
+	else:
+		lblP2Score.text = "0"
 
-	if MPF.game.machine_vars.has("player3_score"):
-		lblP3Score.text = MPF.util.comma_sep(MPF.game.machine_vars["player3_score"])
+	if MPF.game.machine_vars.has("player3_score") and MPF.game.machine_vars["player3_score"] != null:
+		lblP3Score.text = MPF.util.comma_sep(int(MPF.game.machine_vars["player3_score"]))
+	else:
+		lblP3Score.text = "0"
 
-	if MPF.game.machine_vars.has("player4_score"):
-		lblP4Score.text = MPF.util.comma_sep(MPF.game.machine_vars["player4_score"])
+	if MPF.game.machine_vars.has("player4_score") and MPF.game.machine_vars["player4_score"] != null:
+		lblP4Score.text = MPF.util.comma_sep(int(MPF.game.machine_vars["player4_score"]))
+	else:
+		lblP4Score.text = "0"
 
-	if MPF.game.machine_vars.has("last_game_players") and MPF.game.machine_vars["last_game_players"] > 0:
+	if MPF.game.machine_vars.has("last_game_players") and MPF.game.machine_vars["last_game_players"] != null and int(MPF.game.machine_vars["last_game_players"]) > 0:
 		print("showing last game player scores")
 
-		match MPF.game.machine_vars["last_game_players"]:
+		match int(MPF.game.machine_vars["last_game_players"]):
 			1:
 				lblP1Score.show()
 			2:
@@ -434,7 +425,6 @@ func _show_last_game_player_scores() -> void:
 				lblP2Score.show()
 				lblP3Score.show()
 				lblP4Score.show()
-
 
 func _on_video_finished() -> void:
 	_play_next(true)
