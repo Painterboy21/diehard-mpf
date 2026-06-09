@@ -1,0 +1,903 @@
+#config_version=6
+
+# ------------------------------------------------------------
+# SIMON DIE HARDER
+# ------------------------------------------------------------
+# VPW-style Simon Says:
+#   - 5 random Simon shots.
+#   - Each shot is only picked once.
+#   - Die Harder timer is 10s less than Simon Die Hard.
+#   - Normal timer = 20 seconds per shot.
+#   - Hans Bonus active = 30 seconds per shot.
+#   - Correct progress shots score 1,500,000 x PF multiplier.
+#   - Final shot scores 3,000,000 x PF multiplier.
+#   - Hits 1–4 update simon_dieharder_hit_video_trigger for Godot videos.
+#   - Hit 5 goes to Simon defeated result.
+#   - Fail / ball lost disables flippers and uses ball-lost flow.
+#   - Completion sets shared simon_complete so Simon cannot be selected again.
+#   - Completion sets simon_bonus for wizard/multiball bonus use.
+#   - Completion posts Extra Ball bridge and wizard check.
+#   - Simon insert l41 is white.
+# ------------------------------------------------------------
+mode:
+  start_events:
+    - start_simon_dieharder{current_player.simon_complete==0}
+  stop_events:
+    - simon_dieharder_completed
+    - simon_dieharder_failed
+  priority: 170
+
+# ------------------------------------------------------------
+# TIMERS
+# Simon Die Harder gets 20 seconds normally.
+# Hans Bonus gives 30 seconds.
+# Mystery Add More Time adds 20 seconds.
+# ------------------------------------------------------------
+timers:
+  simon_dieharder_timer:
+    start_value: 20
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - event: simon_dieharder_start_normal_shot_timer
+        action: restart
+        value: 20
+      - event: simon_dieharder_start_hans_bonus_shot_timer
+        action: restart
+        value: 30
+      - event: simon_dieharder_stop_shot_timer
+        action: stop
+      - event: simon_dieharder_complete
+        action: stop
+      - event: simon_dieharder_failed
+        action: stop
+      - event: add_villain_time_from_mystery
+        action: add
+        value: 20
+
+# ------------------------------------------------------------
+# BALL SAVES
+# 2 second ball save on mode start.
+# 5 second ball save on completion.
+# ------------------------------------------------------------
+ball_saves:
+  simon_dieharder_start_save:
+    active_time: 2s
+    hurry_up_time: 0s
+    grace_period: 0s
+    auto_launch: true
+    balls_to_save: 1
+    enable_events:
+      - mode_simon_dieharder_started
+    disable_events:
+      - simon_dieharder_complete
+      - simon_dieharder_failed
+      - mode_simon_dieharder_stopping
+  simon_dieharder_complete_save:
+    active_time: 5s
+    hurry_up_time: 0s
+    grace_period: 0s
+    auto_launch: true
+    balls_to_save: 1
+    enable_events:
+      - simon_dieharder_complete
+    disable_events:
+      - simon_dieharder_failed
+      - mode_simon_dieharder_stopping
+
+# ------------------------------------------------------------
+# COUNTERS
+# 5 correct Simon Says shots completes Simon.
+# ------------------------------------------------------------
+counters:
+  simon_dieharder_shots:
+    count_events:
+      - simon_dieharder_correct_progress_shot
+      - simon_dieharder_correct_final_shot
+    starting_count: 0
+    count_complete_value: 5
+    direction: up
+    persist_state: false
+    reset_on_complete: false
+    reset_events:
+      - mode_simon_dieharder_started
+
+# ------------------------------------------------------------
+# SHOTS
+# Orbit and captive shots use shot devices.
+# Air Duct and Left Ramp use real switch events in event_player.
+# ------------------------------------------------------------
+shots:
+  simon_dieharder_left_loop:
+    hit_events: left_orbit_hit
+    enable_events:
+      - mode_simon_dieharder_started
+    disable_events:
+      - simon_dieharder_complete
+      - simon_dieharder_failed
+  simon_dieharder_captive_ball:
+    switch: s_captiveball
+    enable_events:
+      - mode_simon_dieharder_started
+    disable_events:
+      - simon_dieharder_complete
+      - simon_dieharder_failed
+  simon_dieharder_right_loop:
+    hit_events: right_orbit_hit
+    enable_events:
+      - mode_simon_dieharder_started
+    disable_events:
+      - simon_dieharder_complete
+      - simon_dieharder_failed
+
+# ------------------------------------------------------------
+# RANDOM EVENT PLAYER
+# Chooses the next unused Simon Says shot.
+# ------------------------------------------------------------
+random_event_player:
+  simon_dieharder_choose_next_shot:
+    events:
+      - simon_dieharder_choose_left_loop{current_player.simon_dieharder_used_left_loop==0}
+      - simon_dieharder_choose_captive_ball{current_player.simon_dieharder_used_captive_ball==0}
+      - simon_dieharder_choose_right_loop{current_player.simon_dieharder_used_right_loop==0}
+      - simon_dieharder_choose_right_ramp{current_player.simon_dieharder_used_right_ramp==0}
+      - simon_dieharder_choose_left_ramp{current_player.simon_dieharder_used_left_ramp==0}
+
+# ------------------------------------------------------------
+# EVENT PLAYER
+# Handles start, shot choice, timer choice, correct hits,
+# fail flow, completion flow, and cleanup.
+# ------------------------------------------------------------
+event_player:
+  mode_simon_dieharder_started:
+    - villain_mode_started
+    - stop_base_music
+    - simon_dieharder_music_start
+    - simon_dieharder_reset_mode
+    - simon_dieharder_choose_next_shot|250ms
+    - nakatomi_entrance_lock_close
+    - release_villain_select_vuk
+    - reset_bullet_total
+    - reset_bullets
+  mode_simon_dieharder_stopping:
+    - villain_mode_stopped
+    - enable_flippers
+    - wire_ramp_exit_closed
+    - simon_dieharder_cleanup
+
+  simon_dieharder_choose_next_shot{device.counters.simon_dieharder_shots.value==0}:
+    - simon_dieharder_set_progress_1
+  simon_dieharder_choose_next_shot{device.counters.simon_dieharder_shots.value==1}:
+    - simon_dieharder_set_progress_2
+  simon_dieharder_choose_next_shot{device.counters.simon_dieharder_shots.value==2}:
+    - simon_dieharder_set_progress_3
+  simon_dieharder_choose_next_shot{device.counters.simon_dieharder_shots.value==3}:
+    - simon_dieharder_set_progress_4
+  simon_dieharder_choose_next_shot{device.counters.simon_dieharder_shots.value==4}:
+    - simon_dieharder_set_progress_5
+
+  simon_dieharder_choose_left_loop{current_player.hans_bonus==1}:
+    - simon_dieharder_start_hans_bonus_shot_timer
+  simon_dieharder_choose_left_loop{current_player.hans_bonus!=1}:
+    - simon_dieharder_start_normal_shot_timer
+  simon_dieharder_choose_captive_ball{current_player.hans_bonus==1}:
+    - simon_dieharder_start_hans_bonus_shot_timer
+  simon_dieharder_choose_captive_ball{current_player.hans_bonus!=1}:
+    - simon_dieharder_start_normal_shot_timer
+  simon_dieharder_choose_right_loop{current_player.hans_bonus==1}:
+    - simon_dieharder_start_hans_bonus_shot_timer
+  simon_dieharder_choose_right_loop{current_player.hans_bonus!=1}:
+    - simon_dieharder_start_normal_shot_timer
+  simon_dieharder_choose_right_ramp{current_player.hans_bonus==1}:
+    - simon_dieharder_start_hans_bonus_shot_timer
+  simon_dieharder_choose_right_ramp{current_player.hans_bonus!=1}:
+    - simon_dieharder_start_normal_shot_timer
+  simon_dieharder_choose_left_ramp{current_player.hans_bonus==1}:
+    - simon_dieharder_start_hans_bonus_shot_timer
+  simon_dieharder_choose_left_ramp{current_player.hans_bonus!=1}:
+    - simon_dieharder_start_normal_shot_timer
+
+  simon_dieharder_left_loop_hit{current_player.simon_dieharder_current_shot==1 and device.counters.simon_dieharder_shots.value<4}:
+    - simon_dieharder_correct_progress_shot
+  simon_dieharder_captive_ball_hit{current_player.simon_dieharder_current_shot==2 and device.counters.simon_dieharder_shots.value<4}:
+    - simon_dieharder_correct_progress_shot
+  simon_dieharder_right_loop_hit{current_player.simon_dieharder_current_shot==3 and device.counters.simon_dieharder_shots.value<4}:
+    - simon_dieharder_correct_progress_shot
+  s_air_duct_active{current_player.simon_dieharder_current_shot==4 and device.counters.simon_dieharder_shots.value<4}:
+    - simon_dieharder_correct_progress_shot
+  s_upper_pf_entrance_active{current_player.simon_dieharder_current_shot==5 and device.counters.simon_dieharder_shots.value<4}:
+    - simon_dieharder_correct_progress_shot
+
+  simon_dieharder_left_loop_hit{current_player.simon_dieharder_current_shot==1 and device.counters.simon_dieharder_shots.value>=4}:
+    - simon_dieharder_correct_final_shot
+  simon_dieharder_captive_ball_hit{current_player.simon_dieharder_current_shot==2 and device.counters.simon_dieharder_shots.value>=4}:
+    - simon_dieharder_correct_final_shot
+  simon_dieharder_right_loop_hit{current_player.simon_dieharder_current_shot==3 and device.counters.simon_dieharder_shots.value>=4}:
+    - simon_dieharder_correct_final_shot
+  s_air_duct_active{current_player.simon_dieharder_current_shot==4 and device.counters.simon_dieharder_shots.value>=4}:
+    - simon_dieharder_correct_final_shot
+  s_upper_pf_entrance_active{current_player.simon_dieharder_current_shot==5 and device.counters.simon_dieharder_shots.value>=4}:
+    - simon_dieharder_correct_final_shot
+
+  simon_dieharder_correct_progress_shot:
+    - simon_dieharder_stop_shot_timer
+    - simon_dieharder_clear_current_shot
+    - simon_dieharder_choose_next_shot|500ms
+  simon_dieharder_correct_final_shot:
+    - simon_dieharder_stop_shot_timer
+    - simon_dieharder_complete
+
+  timer_simon_dieharder_timer_complete{current_player.simon_dieharder_result_started==0}:
+    - simon_dieharder_fail_mode
+  ball_drain{current_player.simon_dieharder_result_started==0}:
+    - simon_dieharder_fail_mode
+
+  simon_dieharder_fail_mode:
+    - disable_flippers
+    - play_ball_lost
+    - simon_dieharder_lights_off
+    - simon_dieharder_failed|5s
+    - reset_bullet_total
+    - reset_bullets
+  simon_dieharder_complete:
+    - simon_dieharder_completed|4s
+    - reset_bullet_total
+    - reset_bullets
+  simon_dieharder_completed:
+    - simon_completed
+    - count_simon_for_extra_ball
+    - check_wizard_mode
+    - reset_bullet_total
+    - reset_bullets
+  simon_dieharder_failed:
+    - simon_failed
+    - resume_base_music|500ms
+    - reset_bullet_total
+    - reset_bullets
+
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# Stores Simon state, selected shot, Hans Bonus timer state,
+# display text, scoring, completion rewards, and result flags.
+# ------------------------------------------------------------
+variable_player:
+  simon_dieharder_reset_mode:
+    villain_mode_running:
+      action: set
+      int: 1
+    simon_dieharder_completion_active:
+      action: set
+      int: 0
+    simon_dieharder_failed_active:
+      action: set
+      int: 0
+    simon_dieharder_result_started:
+      action: set
+      int: 0
+    simon_dieharder_time:
+      action: set
+      int: 20
+    simon_dieharder_hans_bonus_active:
+      action: set
+      int: current_player.hans_bonus
+    simon_dieharder_progress:
+      action: set
+      int: 0
+    simon_dieharder_progress_text:
+      action: set
+      string: 1/5
+    simon_dieharder_hit_video_trigger:
+      action: set
+      int: 0
+    simon_dieharder_shot_number:
+      action: set
+      int: 1
+    simon_dieharder_total_shots:
+      action: set
+      int: 5
+    simon_dieharder_shot_name:
+      action: set
+      string: ""
+    simon_dieharder_instruction:
+      action: set
+      string: SIMON SAYS
+    simon_dieharder_current_shot:
+      action: set
+      int: 0
+    simon_dieharder_used_left_loop:
+      action: set
+      int: 0
+    simon_dieharder_used_captive_ball:
+      action: set
+      int: 0
+    simon_dieharder_used_right_loop:
+      action: set
+      int: 0
+    simon_dieharder_used_right_ramp:
+      action: set
+      int: 0
+    simon_dieharder_used_left_ramp:
+      action: set
+      int: 0
+    simon_dieharder_villain_score:
+      action: set
+      int: 500000
+
+  mode_simon_dieharder_started{current_player.playfield_multiplier == None}:
+    playfield_multiplier:
+      action: set
+      int: 1
+
+  simon_dieharder_start_normal_shot_timer:
+    simon_dieharder_time:
+      action: set
+      int: 20
+    simon_dieharder_hans_bonus_active:
+      action: set
+      int: 0
+  simon_dieharder_start_hans_bonus_shot_timer:
+    simon_dieharder_time:
+      action: set
+      int: 30
+    simon_dieharder_hans_bonus_active:
+      action: set
+      int: 1
+  timer_simon_dieharder_timer_tick:
+    simon_dieharder_time:
+      action: set
+      int: ticks
+
+  simon_dieharder_set_progress_1:
+    simon_dieharder_progress_text:
+      action: set
+      string: 1/5
+  simon_dieharder_set_progress_2:
+    simon_dieharder_progress_text:
+      action: set
+      string: 2/5
+  simon_dieharder_set_progress_3:
+    simon_dieharder_progress_text:
+      action: set
+      string: 3/5
+  simon_dieharder_set_progress_4:
+    simon_dieharder_progress_text:
+      action: set
+      string: 4/5
+  simon_dieharder_set_progress_5:
+    simon_dieharder_progress_text:
+      action: set
+      string: 5/5
+
+  simon_dieharder_choose_left_loop:
+    simon_dieharder_current_shot:
+      action: set
+      int: 1
+    simon_dieharder_used_left_loop:
+      action: set
+      int: 1
+    simon_dieharder_shot_name:
+      action: set
+      string: LEFT ORBIT
+    simon_dieharder_instruction:
+      action: set
+      string: SIMON SAYS HIT LEFT ORBIT
+    simon_dieharder_shot_number:
+      action: set
+      int: device.counters.simon_dieharder_shots.value + 1
+  simon_dieharder_choose_captive_ball:
+    simon_dieharder_current_shot:
+      action: set
+      int: 2
+    simon_dieharder_used_captive_ball:
+      action: set
+      int: 1
+    simon_dieharder_shot_name:
+      action: set
+      string: CAPTIVE BALL
+    simon_dieharder_instruction:
+      action: set
+      string: SIMON SAYS HIT CAPTIVE BALL
+    simon_dieharder_shot_number:
+      action: set
+      int: device.counters.simon_dieharder_shots.value + 1
+  simon_dieharder_choose_right_loop:
+    simon_dieharder_current_shot:
+      action: set
+      int: 3
+    simon_dieharder_used_right_loop:
+      action: set
+      int: 1
+    simon_dieharder_shot_name:
+      action: set
+      string: RIGHT ORBIT
+    simon_dieharder_instruction:
+      action: set
+      string: SIMON SAYS HIT RIGHT ORBIT
+    simon_dieharder_shot_number:
+      action: set
+      int: device.counters.simon_dieharder_shots.value + 1
+  simon_dieharder_choose_right_ramp:
+    simon_dieharder_current_shot:
+      action: set
+      int: 4
+    simon_dieharder_used_right_ramp:
+      action: set
+      int: 1
+    simon_dieharder_shot_name:
+      action: set
+      string: AIR DUCT
+    simon_dieharder_instruction:
+      action: set
+      string: SIMON SAYS HIT AIR DUCT
+    simon_dieharder_shot_number:
+      action: set
+      int: device.counters.simon_dieharder_shots.value + 1
+  simon_dieharder_choose_left_ramp:
+    simon_dieharder_current_shot:
+      action: set
+      int: 5
+    simon_dieharder_used_left_ramp:
+      action: set
+      int: 1
+    simon_dieharder_shot_name:
+      action: set
+      string: LEFT RAMP
+    simon_dieharder_instruction:
+      action: set
+      string: SIMON SAYS HIT LEFT RAMP
+    simon_dieharder_shot_number:
+      action: set
+      int: device.counters.simon_dieharder_shots.value + 1
+
+  simon_dieharder_clear_current_shot:
+    simon_dieharder_current_shot:
+      action: set
+      int: 0
+
+  simon_dieharder_correct_progress_shot:
+    score:
+      action: add
+      int: "1500000 * current_player.playfield_multiplier"
+    simon_dieharder_villain_score:
+      action: add
+      int: "1500000 * current_player.playfield_multiplier"
+    simon_dieharder_progress:
+      action: add
+      int: 1
+    simon_dieharder_hit_video_trigger:
+      action: add
+      int: 1
+  simon_dieharder_correct_final_shot:
+    score:
+      action: add
+      int: "3000000 * current_player.playfield_multiplier"
+    simon_dieharder_villain_score:
+      action: add
+      int: "3000000 * current_player.playfield_multiplier"
+    simon_dieharder_progress:
+      action: add
+      int: 1
+
+  simon_dieharder_complete:
+    simon_dieharder_completion_active:
+      action: set
+      int: 1
+    simon_dieharder_result_started:
+      action: set
+      int: 1
+    simon_dieharder_instruction:
+      action: set
+      string: SIMON DEFEATED
+  simon_dieharder_fail_mode:
+    simon_dieharder_failed_active:
+      action: set
+      int: 1
+    simon_dieharder_result_started:
+      action: set
+      int: 1
+    simon_dieharder_instruction:
+      action: set
+      string: SIMON PLAYER DIED
+
+  simon_dieharder_completed:
+    simon_complete:
+      action: set
+      int: 1
+    simon_dieharder_complete:
+      action: set
+      int: 1
+    simon_bonus:
+      action: set
+      int: 1
+    bonus_multiplier:
+      action: set
+      int: 6
+    modes_complete:
+      action: add
+      int: 1
+    villains_completed:
+      action: add
+      int: 1
+    simon_dieharder_result_started:
+      action: set
+      int: 0
+  simon_dieharder_failed:
+    simon_dieharder_result_started:
+      action: set
+      int: 0
+
+  mode_simon_dieharder_stopping:
+    villain_mode_running:
+      action: set
+      int: 0
+    simon_dieharder_completion_active:
+      action: set
+      int: 0
+    simon_dieharder_failed_active:
+      action: set
+      int: 0
+    simon_dieharder_result_started:
+      action: set
+      int: 0
+
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# Simon mode base lighting and cleanup.
+# ------------------------------------------------------------
+light_player:
+  mode_simon_dieharder_started:
+    GI:
+      color: ffffff
+    SPOTS:
+      color: 505050
+    SPOTS_BUMPER:
+      color: 757575
+    l1000:
+      color: ffffff
+    l1001:
+      color: ffffff
+  simon_dieharder_lights_off:
+    GI:
+      color: 000000
+    SPOTS:
+      color: 000000
+    SPOTS_BUMPER:
+      color: 000000
+    l41:
+      color: 000000
+    l1000:
+      color: 000000
+    l1001:
+      color: 000000
+  simon_dieharder_complete:
+    l41:
+      color: ffffff
+      priority: 1400
+  simon_dieharder_completed:
+    l41:
+      color: ffffff
+      priority: 1400
+    l1000: off
+    l1001: off
+  simon_dieharder_failed:
+    l41: off
+    l1000: off
+    l1001: off
+  mode_simon_dieharder_stopping:
+    l20: off
+    l21: off
+    l22: off
+    l24: off
+    l52: off
+    l41: off
+    l1000: off
+    l1001: off
+
+# ------------------------------------------------------------
+# SHOWS
+# Simon insert, shot lights, hit flashers, and GI hit flash.
+# ------------------------------------------------------------
+shows:
+  simon_dieharder_insert_flash:
+    - duration: 150ms
+      lights:
+        l41: c0c0c0
+    - duration: 150ms
+      lights:
+        l41: off
+  simon_dieharder_left_loop_flash:
+    - duration: 150ms
+      lights:
+        l20: ff0000
+    - duration: 150ms
+      lights:
+        l20: off
+  simon_dieharder_captive_ball_flash:
+    - duration: 150ms
+      lights:
+        l52: ff0000
+    - duration: 150ms
+      lights:
+        l52: off
+  simon_dieharder_right_loop_flash:
+    - duration: 150ms
+      lights:
+        l22: ff0000
+    - duration: 150ms
+      lights:
+        l22: off
+  simon_dieharder_right_ramp_flash:
+    - duration: 150ms
+      lights:
+        l24: ff0000
+    - duration: 150ms
+      lights:
+        l24: off
+  simon_dieharder_left_ramp_flash:
+    - duration: 150ms
+      lights:
+        l21: ff0000
+    - duration: 150ms
+      lights:
+        l21: off
+  simon_dieharder_white_flasher_hit:
+    - duration: 35ms
+      lights:
+        f140: ffffff
+        f141: ffffff
+        f142: ffffff
+        f143: ffffff
+        f144: ffffff
+        f145: ffffff
+        f146: ffffff
+        f147: ffffff
+    - duration: 35ms
+      lights:
+        f140: off
+        f141: off
+        f142: off
+        f143: off
+        f144: off
+        f145: off
+        f146: off
+        f147: off
+    - duration: 35ms
+      lights:
+        f140: ffffff
+        f141: ffffff
+        f142: ffffff
+        f143: ffffff
+        f144: ffffff
+        f145: ffffff
+        f146: ffffff
+        f147: ffffff
+    - duration: 55ms
+      lights:
+        f140: off
+        f141: off
+        f142: off
+        f143: off
+        f144: off
+        f145: off
+        f146: off
+        f147: off
+    - duration: 45ms
+      lights:
+        f140: ffffff
+        f141: ffffff
+        f142: ffffff
+        f143: ffffff
+        f144: ffffff
+        f145: ffffff
+        f146: ffffff
+        f147: ffffff
+    - duration: 80ms
+      lights:
+        f140: off
+        f141: off
+        f142: off
+        f143: off
+        f144: off
+        f145: off
+        f146: off
+        f147: off
+  simon_dieharder_gi_hit_flash:
+    - duration: 80ms
+      lights:
+        GI: ffffff
+    - duration: 120ms
+      lights:
+        GI: ffffff
+
+# ------------------------------------------------------------
+# SHOW PLAYER
+# Runs Simon insert flash, selected shot flash, hit flashers,
+# completion ball save flash, and cleanup.
+# ------------------------------------------------------------
+show_player:
+  ball_save_simon_dieharder_start_save_enabled:
+    flash_color:
+      key: simon_dieharder_start_save_flash
+      loops: -1
+      speed: 8
+      show_tokens:
+        lights: BALL_SAVE
+        color: ffffff
+  ball_save_simon_dieharder_start_save_disabled:
+    simon_dieharder_start_save_flash:
+      action: stop
+  ball_save_simon_dieharder_complete_save_enabled:
+    flash_color:
+      key: simon_dieharder_complete_save_flash
+      loops: -1
+      speed: 8
+      show_tokens:
+        lights: BALL_SAVE
+        color: ffffff
+  ball_save_simon_dieharder_complete_save_disabled:
+    simon_dieharder_complete_save_flash:
+      action: stop
+  mode_simon_dieharder_started:
+    simon_dieharder_insert_flash:
+      key: key_simon_dieharder_insert_flash
+      loops: -1
+      speed: 1
+      priority: 1300
+  simon_dieharder_choose_left_loop:
+    simon_dieharder_left_loop_flash:
+      key: key_simon_dieharder_current_shot
+      loops: -1
+      speed: 1
+      priority: 1200
+  simon_dieharder_choose_captive_ball:
+    simon_dieharder_captive_ball_flash:
+      key: key_simon_dieharder_current_shot
+      loops: -1
+      speed: 1
+      priority: 1200
+  simon_dieharder_choose_right_loop:
+    simon_dieharder_right_loop_flash:
+      key: key_simon_dieharder_current_shot
+      loops: -1
+      speed: 1
+      priority: 1200
+  simon_dieharder_choose_right_ramp:
+    simon_dieharder_right_ramp_flash:
+      key: key_simon_dieharder_current_shot
+      loops: -1
+      speed: 1
+      priority: 1200
+  simon_dieharder_choose_left_ramp:
+    simon_dieharder_left_ramp_flash:
+      key: key_simon_dieharder_current_shot
+      loops: -1
+      speed: 1
+      priority: 1200
+  simon_dieharder_correct_progress_shot:
+    key_simon_dieharder_current_shot:
+      action: stop
+    simon_dieharder_white_flasher_hit:
+      key: key_simon_dieharder_white_flasher_hit
+      loops: 1
+      speed: 1
+      priority: 950
+    simon_dieharder_gi_hit_flash:
+      key: key_simon_dieharder_gi_hit_flash
+      loops: 1
+      speed: 1
+      priority: 900
+  simon_dieharder_correct_final_shot:
+    key_simon_dieharder_current_shot:
+      action: stop
+    simon_dieharder_white_flasher_hit:
+      key: key_simon_dieharder_white_flasher_hit
+      loops: 1
+      speed: 1
+      priority: 950
+    simon_dieharder_gi_hit_flash:
+      key: key_simon_dieharder_gi_hit_flash
+      loops: 1
+      speed: 1
+      priority: 900
+  simon_dieharder_complete:
+    simon_dieharder_start_save_flash:
+      action: stop
+    key_simon_dieharder_insert_flash:
+      action: stop
+    key_simon_dieharder_current_shot:
+      action: stop
+    key_simon_dieharder_white_flasher_hit:
+      action: stop
+    key_simon_dieharder_gi_hit_flash:
+      action: stop
+  simon_dieharder_failed:
+    simon_dieharder_start_save_flash:
+      action: stop
+    simon_dieharder_complete_save_flash:
+      action: stop
+    key_simon_dieharder_insert_flash:
+      action: stop
+    key_simon_dieharder_current_shot:
+      action: stop
+    key_simon_dieharder_white_flasher_hit:
+      action: stop
+    key_simon_dieharder_gi_hit_flash:
+      action: stop
+  mode_simon_dieharder_stopping:
+    simon_dieharder_start_save_flash:
+      action: stop
+    simon_dieharder_complete_save_flash:
+      action: stop
+    key_simon_dieharder_insert_flash:
+      action: stop
+    key_simon_dieharder_current_shot:
+      action: stop
+    key_simon_dieharder_white_flasher_hit:
+      action: stop
+    key_simon_dieharder_gi_hit_flash:
+      action: stop
+
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# Background runs during Simon.
+# Fail uses Die Harder player-died / ball-lost style.
+# ------------------------------------------------------------
+slide_player:
+  mode_simon_dieharder_started:
+    simon_dieharder_background:
+      action: play
+      expire: 0s
+      priority: 500
+  simon_dieharder_complete:
+    simon_dieharder_background:
+      action: remove
+    simon_defeated:
+      action: play
+      expire: 0s
+      priority: 900
+  simon_dieharder_completed:
+    simon_defeated:
+      action: remove
+  simon_dieharder_fail_mode:
+    simon_dieharder_background:
+      action: remove
+    simon_player_died:
+      action: play
+      expire: 0s
+      priority: 900
+  simon_dieharder_failed:
+    simon_player_died:
+      action: remove
+  mode_simon_dieharder_stopping:
+    simon_dieharder_background:
+      action: remove
+    simon_defeated:
+      action: remove
+    simon_player_died:
+      action: remove
+
+# ------------------------------------------------------------
+# SOUND PLAYER
+# Starts Simon music and stops it when Simon ends.
+# ------------------------------------------------------------
+sound_player:
+  simon_dieharder_music_start:
+    SimonTheme:
+      key: main_music
+      action: play
+      loops: -1
+      volume: 0.8
+  simon_dieharder_complete:
+    SimonTheme:
+      key: main_music
+      action: stop
+  simon_dieharder_fail_mode:
+    SimonTheme:
+      key: main_music
+      action: stop
+  mode_simon_dieharder_stopping:
+    SimonTheme:
+      key: main_music
+      action: stop
