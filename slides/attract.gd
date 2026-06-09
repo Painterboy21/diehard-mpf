@@ -17,25 +17,44 @@ var gameover_video: String = "res://videos/attractvideos/GameOver.ogv"
 @onready var lblLoopChampionName = get_node_or_null("../LoopChampion/Name")
 @onready var lblLoopChampionValue = get_node_or_null("../LoopChampion/Value")
 
+@onready var vboxMultiballHero = get_node_or_null("../MultiballHero")
+@onready var lblMultiballHeroTitle = get_node_or_null("../MultiballHero/Title")
+@onready var lblMultiballHeroName = get_node_or_null("../MultiballHero/Name")
+@onready var lblMultiballHeroValue = get_node_or_null("../MultiballHero/Value")
+
+@onready var vboxVillainMVP = get_node_or_null("../VillainMVP")
+@onready var lblVillainMVPTitle = get_node_or_null("../VillainMVP/Title")
+@onready var lblVillainMVPName = get_node_or_null("../VillainMVP/Name")
+@onready var lblVillainMVPValue = get_node_or_null("../VillainMVP/Value")
+
 @onready var iscoredLeaderboard = get_node_or_null("../iscored_leaderboard")
 
 
-# Playlist of video files.
+# ------------------------------------------------------------
+# PLAYLIST
+# ------------------------------------------------------------
 # 0 = HighScore3
 # 1 = HighScore1
 # 2 = HighScore2
 # 3 = Loop Champion
-# 4 = iScored leaderboard
+# 4 = Multiball Hero
+# 5 = Villain MVP
+# 6 = iScored leaderboard
+# ------------------------------------------------------------
 var loop_videos: Array[String] = [
 	"res://videos/attractvideos/HSBackground3.ogv",
 	"res://videos/attractvideos/HSBackground1.ogv",
 	"res://videos/attractvideos/HSBackground2.ogv",
 	"res://videos/attractvideos/HSBackground3.ogv",
+	"res://videos/attractvideos/HSBackground1.ogv",
+	"res://videos/attractvideos/HSBackground2.ogv",
 	"res://videos/attractvideos/HSBackground3.ogv",
 ]
 
 const LOOP_CHAMPION_PAGE_INDEX := 3
-const ISCORED_PAGE_INDEX := 4
+const MULTIBALL_HERO_PAGE_INDEX := 4
+const VILLAIN_MVP_PAGE_INDEX := 5
+const ISCORED_PAGE_INDEX := 6
 
 var current_index: int = -1   # -1 = intro not played yet
 var player_scores_index: int = -1
@@ -62,6 +81,20 @@ func _ready() -> void:
 		print("LoopChampion node found")
 	else:
 		push_warning("LoopChampion node not found. Add it as a sibling of this VideoStreamPlayer.")
+
+	if vboxMultiballHero:
+		vboxMultiballHero.hide()
+		vboxMultiballHero.z_index = 100
+		print("MultiballHero node found")
+	else:
+		push_warning("MultiballHero node not found. Add it as a sibling of this VideoStreamPlayer.")
+
+	if vboxVillainMVP:
+		vboxVillainMVP.hide()
+		vboxVillainMVP.z_index = 100
+		print("VillainMVP node found")
+	else:
+		push_warning("VillainMVP node not found. Add it as a sibling of this VideoStreamPlayer.")
 
 	if MPF.game.machine_vars.has("last_game_players") and MPF.game.machine_vars["last_game_players"] > 0:
 		current_index = -2
@@ -125,6 +158,12 @@ func _hide_all_overlays() -> void:
 	if vboxLoopChampion:
 		vboxLoopChampion.hide()
 
+	if vboxMultiballHero:
+		vboxMultiballHero.hide()
+
+	if vboxVillainMVP:
+		vboxVillainMVP.hide()
+
 	if iscoredLeaderboard:
 		iscoredLeaderboard.hide()
 
@@ -175,6 +214,12 @@ func _play_next(increment: bool) -> void:
 		if current_index == LOOP_CHAMPION_PAGE_INDEX:
 			_show_loop_champion()
 
+		if current_index == MULTIBALL_HERO_PAGE_INDEX:
+			_show_multiball_hero()
+
+		if current_index == VILLAIN_MVP_PAGE_INDEX:
+			_show_villain_mvp()
+
 		if current_index == ISCORED_PAGE_INDEX:
 			_show_iscored_leaderboard()
 
@@ -199,12 +244,6 @@ func _show_loop_champion() -> void:
 	var champion_name := "---"
 	var champion_text := "---"
 
-	print("Checking Loop Champion machine vars...")
-
-	for key in MPF.game.machine_vars.keys():
-		if str(key).contains("loop") or str(key).contains("record"):
-			print("Machine var: ", key, " = ", MPF.game.machine_vars[key])
-
 	if MPF.game.machine_vars.has("record_loop_champion_name"):
 		champion_name = str(MPF.game.machine_vars["record_loop_champion_name"])
 	elif MPF.game.machine_vars.has("machine_var_record_loop_champion_name"):
@@ -228,6 +267,90 @@ func _show_loop_champion() -> void:
 	vboxLoopChampion.z_index = 100
 
 	print("Showing Loop Champion: ", champion_name, " ", champion_text)
+
+
+func _show_multiball_hero() -> void:
+	if not vboxMultiballHero:
+		push_warning("MultiballHero node not found")
+		return
+
+	var hero_name := "---"
+	var hero_text := "---"
+	var hero_mode := "---"
+
+	if MPF.game.machine_vars.has("record_multiball_hero_name"):
+		hero_name = str(MPF.game.machine_vars["record_multiball_hero_name"])
+	elif MPF.game.machine_vars.has("machine_var_record_multiball_hero_name"):
+		hero_name = str(MPF.game.machine_vars["machine_var_record_multiball_hero_name"])
+
+	if MPF.game.machine_vars.has("record_multiball_hero_text"):
+		hero_text = str(MPF.game.machine_vars["record_multiball_hero_text"])
+	elif MPF.game.machine_vars.has("machine_var_record_multiball_hero_text"):
+		hero_text = str(MPF.game.machine_vars["machine_var_record_multiball_hero_text"])
+
+	if MPF.game.machine_vars.has("record_multiball_hero_mode"):
+		hero_mode = str(MPF.game.machine_vars["record_multiball_hero_mode"])
+	elif MPF.game.machine_vars.has("machine_var_record_multiball_hero_mode"):
+		hero_mode = str(MPF.game.machine_vars["machine_var_record_multiball_hero_mode"])
+
+	if lblMultiballHeroTitle:
+		lblMultiballHeroTitle.text = "MULTIBALL HERO"
+
+	if lblMultiballHeroName:
+		lblMultiballHeroName.text = hero_name
+
+	if lblMultiballHeroValue:
+		if hero_mode != "---" and hero_text != "---":
+			lblMultiballHeroValue.text = hero_text + "\n" + hero_mode
+		else:
+			lblMultiballHeroValue.text = hero_text
+
+	vboxMultiballHero.show()
+	vboxMultiballHero.z_index = 100
+
+	print("Showing Multiball Hero: ", hero_name, " ", hero_text, " ", hero_mode)
+
+
+func _show_villain_mvp() -> void:
+	if not vboxVillainMVP:
+		push_warning("VillainMVP node not found")
+		return
+
+	var villain_name := "---"
+	var villain_text := "---"
+	var villain_mode := "---"
+
+	if MPF.game.machine_vars.has("record_villain_mvp_name"):
+		villain_name = str(MPF.game.machine_vars["record_villain_mvp_name"])
+	elif MPF.game.machine_vars.has("machine_var_record_villain_mvp_name"):
+		villain_name = str(MPF.game.machine_vars["machine_var_record_villain_mvp_name"])
+
+	if MPF.game.machine_vars.has("record_villain_mvp_text"):
+		villain_text = str(MPF.game.machine_vars["record_villain_mvp_text"])
+	elif MPF.game.machine_vars.has("machine_var_record_villain_mvp_text"):
+		villain_text = str(MPF.game.machine_vars["machine_var_record_villain_mvp_text"])
+
+	if MPF.game.machine_vars.has("record_villain_mvp_mode"):
+		villain_mode = str(MPF.game.machine_vars["record_villain_mvp_mode"])
+	elif MPF.game.machine_vars.has("machine_var_record_villain_mvp_mode"):
+		villain_mode = str(MPF.game.machine_vars["machine_var_record_villain_mvp_mode"])
+
+	if lblVillainMVPTitle:
+		lblVillainMVPTitle.text = "VILLAIN MVP"
+
+	if lblVillainMVPName:
+		lblVillainMVPName.text = villain_name
+
+	if lblVillainMVPValue:
+		if villain_mode != "---" and villain_text != "---":
+			lblVillainMVPValue.text = villain_text + "\n" + villain_mode
+		else:
+			lblVillainMVPValue.text = villain_text
+
+	vboxVillainMVP.show()
+	vboxVillainMVP.z_index = 100
+
+	print("Showing Villain MVP: ", villain_name, " ", villain_text, " ", villain_mode)
 
 
 func _show_iscored_leaderboard() -> void:
