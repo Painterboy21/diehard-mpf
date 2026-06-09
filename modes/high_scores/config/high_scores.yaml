@@ -1,51 +1,83 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# HIGH SCORE MODE
+# ------------------------------------------------------------
+# VPW-style high score entry.
+#
+# This mode gives us the initials-entry screen.
+# The main leaderboard will become the cached iScored top 10,
+# but this local table stays clean with 3 VPW-style entries only.
+# ------------------------------------------------------------
 mode:
   code: mpf.modes.high_score.code.high_score.HighScore
-  start_events: game_ending, start_high_score
-  stop_events: high_score_complete
+  start_events:
+    - game_ending
+    - start_high_score
+  stop_events:
+    - high_score_complete
   priority: 1500
-  game_mode: False
+  game_mode: false
   use_wait_queue: true
 
-event_player: 
-  s_left_flipper_active: 
-    text_input: {action: "left"}
-  s_right_flipper_active: 
-    text_input: {action: "right"}
-  s_start_active: 
-    text_input: {action: "select"}
-  s_fire_active: 
-    text_input: {action: "select"}
-  s_actionbtn_active: 
-    text_input: {action: "select"}
-  s_plunger_key_active: 
-    text_input: {action: "select"}
+# ------------------------------------------------------------
+# TEXT INPUT CONTROLS
+# ------------------------------------------------------------
+# Flippers move through the initials keyboard.
+# Start/fire/action/plunger select the current letter, END, or DEL.
+# ------------------------------------------------------------
+event_player:
+  s_left_flipper_active:
+    text_input:
+      action: left
+  s_right_flipper_active:
+    text_input:
+      action: right
+  s_start_active:
+    text_input:
+      action: select
+  s_fire_active:
+    text_input:
+      action: select
+  s_actionbtn_active:
+    text_input:
+      action: select
+  s_plunger_key_active:
+    text_input:
+      action: select
 
-
+# ------------------------------------------------------------
+# HIGH SCORE SETTINGS
+# ------------------------------------------------------------
+# VPW has 3 local scores only.
+# These are fallback defaults now that you have reset the score data.
+# ------------------------------------------------------------
 high_score:
   _overwrite: true
-  categories: 
+  categories:
     score:
       - YIPPIE KI YAY CHAMPION
       - DETECTIVE LIEUTENANT
       - BEAT COP
-      - PART TIME SECURITY GUARD
   defaults:
     score:
-      - BW: 120000000
-      - EJS: 9000000
-      - LFS: 5000000
+      - VPX: 50
+      - VPX: 30
+      - VPX: 10
   enter_initials_timeout: 90000ms
   award_slide_display_time: 3000ms
 
-slide_player: 
-  high_score_enter_initials: 
+# ------------------------------------------------------------
+# SLIDES
+# ------------------------------------------------------------
+# Plays the Godot initials-entry slide and award-display slide.
+# ------------------------------------------------------------
+slide_player:
+  high_score_enter_initials:
     high_score:
       action: play
       expire: 0s
-  high_score_award_display: 
-      high_score_award:
-        action: play
-        expire: 0s
-
+  high_score_award_display:
+    high_score_award:
+      action: play
+      expire: 0s
