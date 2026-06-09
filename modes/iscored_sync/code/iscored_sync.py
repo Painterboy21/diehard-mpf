@@ -49,6 +49,8 @@ class IscoredSync(Mode):
         self._records_lock = threading.Lock()
 
         self._pending_records = self._default_pending_records()
+        self._active_multiball_record = None
+        self._active_villain_record = None
 
         self.machine.events.add_handler(
             "iscored_submit_score",
@@ -108,6 +110,30 @@ class IscoredSync(Mode):
         self.machine.events.add_handler(
             "record_candidate_villain_mvp",
             self.record_candidate_villain_mvp
+        )
+
+        # Score-difference record trackers.
+        # YAML only needs to tell us when a mode starts/stops.
+        # Python reads the player score at start and calculates the
+        # score earned during that multiball/villain mode at stop.
+        self.machine.events.add_handler(
+            "record_start_multiball_hero",
+            self.record_start_multiball_hero
+        )
+
+        self.machine.events.add_handler(
+            "record_finish_multiball_hero",
+            self.record_finish_multiball_hero
+        )
+
+        self.machine.events.add_handler(
+            "record_start_villain_mvp",
+            self.record_start_villain_mvp
+        )
+
+        self.machine.events.add_handler(
+            "record_finish_villain_mvp",
+            self.record_finish_villain_mvp
         )
 
         self.machine.events.add_handler(
@@ -801,6 +827,134 @@ class IscoredSync(Mode):
         )
 
     # ------------------------------------------------------------
+    # RECORD TRACKER: MULTIBALL HERO START
+    # Called by multiball mode start events.
+    # Example YAML event arg:
+    #   mode: NAKATOMI MULTIBALL
+    # ------------------------------------------------------------
+    def record_start_multiball_hero(self, **kwargs):
+
+        mode_name = self._get_record_mode(kwargs)
+        start_score = self._get_current_player_score()
+
+        self._active_multiball_record = {
+            "score": start_score,
+            "mode": mode_name
+        }
+
+        self.info_log(
+            "Multiball Hero tracker started -> mode: %s start_score: %s",
+            mode_name,
+            start_score
+        )
+
+    # ------------------------------------------------------------
+    # RECORD TRACKER: MULTIBALL HERO FINISH
+    # Called by multiball mode stop/end events.
+    # Calculates score earned during that multiball and sends it to
+    # the pending-record system.
+    # ------------------------------------------------------------
+    def record_finish_multiball_hero(self, **kwargs):
+
+        current_score = self._get_current_player_score()
+        active = self._active_multiball_record
+
+        if not active:
+            self.info_log(
+                "Multiball Hero tracker skipped -> no active multiball tracker"
+            )
+            return
+
+        start_score = int(active.get("score", 0))
+        mode_name = active.get("mode", "---")
+        value = current_score - start_score
+
+        self._active_multiball_record = None
+
+        if value <= 0:
+            self.info_log(
+                "Multiball Hero tracker skipped -> mode: %s value: %s",
+                mode_name,
+                value
+            )
+            return
+
+        self.info_log(
+            "Multiball Hero tracker finished -> mode: %s score: %s",
+            mode_name,
+            value
+        )
+
+        self.record_candidate_multiball_hero(
+            value=value,
+            mode=mode_name
+        )
+
+    # ------------------------------------------------------------
+    # RECORD TRACKER: VILLAIN MVP START
+    # Called by villain mode start events.
+    # Example YAML event arg:
+    #   mode: SIMON DIE HARDER
+    # ------------------------------------------------------------
+    def record_start_villain_mvp(self, **kwargs):
+
+        mode_name = self._get_record_mode(kwargs)
+        start_score = self._get_current_player_score()
+
+        self._active_villain_record = {
+            "score": start_score,
+            "mode": mode_name
+        }
+
+        self.info_log(
+            "Villain MVP tracker started -> mode: %s start_score: %s",
+            mode_name,
+            start_score
+        )
+
+    # ------------------------------------------------------------
+    # RECORD TRACKER: VILLAIN MVP FINISH
+    # Called by villain mode stop/end events.
+    # Calculates score earned during that villain mode and sends it
+    # to the pending-record system.
+    # ------------------------------------------------------------
+    def record_finish_villain_mvp(self, **kwargs):
+
+        current_score = self._get_current_player_score()
+        active = self._active_villain_record
+
+        if not active:
+            self.info_log(
+                "Villain MVP tracker skipped -> no active villain tracker"
+            )
+            return
+
+        start_score = int(active.get("score", 0))
+        mode_name = active.get("mode", "---")
+        value = current_score - start_score
+
+        self._active_villain_record = None
+
+        if value <= 0:
+            self.info_log(
+                "Villain MVP tracker skipped -> mode: %s value: %s",
+                mode_name,
+                value
+            )
+            return
+
+        self.info_log(
+            "Villain MVP tracker finished -> mode: %s score: %s",
+            mode_name,
+            value
+        )
+
+        self.record_candidate_villain_mvp(
+            value=value,
+            mode=mode_name
+        )
+
+    # ------------------------------------------------------------
     # APPLY PENDING MACHINE RECORDS
     # Saves pending loop/multiball/villain records with the same
     # player initials used by the high-score entry screen.
@@ -979,6 +1133,26 @@ class IscoredSync(Mode):
             "Machine record initials needed -> trigger value: %s",
             value
         )
+
+    # ------------------------------------------------------------
+    # CURRENT PLAYER SCORE HELPER
+    # ------------------------------------------------------------
+    def _get_current_player_score(self):
+
+        player = self.machine.game.player if self.machine.game else None
+
+        if not player:
+            return 0
+
+        try:
+            return int(player.score)
+        except Exception:
+            pass
+
+        try:
+            return int(player["score"])
+        except Exception:
+            return 0
 
     # ------------------------------------------------------------
     # SET CURRENT PLAYER VAR HELPER

@@ -173,7 +173,7 @@ random_event_player:
 # EVENT PLAYER
 # ------------------------------------------------------------
 # Handles start, shot choice, timer choice, correct hits,
-# fail flow, completion flow, and cleanup.
+# fail flow, completion flow, Villain MVP tracking, and cleanup.
 # ------------------------------------------------------------
 event_player:
   mode_simon_diehard_started:
@@ -185,12 +185,18 @@ event_player:
     - release_villain_select_vuk
     - reset_bullet_total
     - reset_bullets
-
+    - record_start_simon_diehard_villain_mvp
+  record_start_simon_diehard_villain_mvp:
+    record_start_villain_mvp:
+      mode: SIMON DIE HARD
   mode_simon_diehard_stopping:
     - villain_mode_stopped
     - wire_ramp_exit_closed
     - simon_diehard_cleanup
-
+    - record_finish_simon_diehard_villain_mvp
+  record_finish_simon_diehard_villain_mvp:
+    record_finish_villain_mvp:
+      mode: SIMON DIE HARD
   simon_diehard_choose_next_shot{device.counters.simon_diehard_shots.value==0}:
     - simon_diehard_set_progress_1
   simon_diehard_choose_next_shot{device.counters.simon_diehard_shots.value==1}:
@@ -201,7 +207,6 @@ event_player:
     - simon_diehard_set_progress_4
   simon_diehard_choose_next_shot{device.counters.simon_diehard_shots.value==4}:
     - simon_diehard_set_progress_5
-
   simon_diehard_choose_left_loop{current_player.hans_bonus==1}:
     - simon_diehard_start_hans_bonus_shot_timer
   simon_diehard_choose_left_loop{current_player.hans_bonus!=1}:
@@ -222,7 +227,6 @@ event_player:
     - simon_diehard_start_hans_bonus_shot_timer
   simon_diehard_choose_left_ramp{current_player.hans_bonus!=1}:
     - simon_diehard_start_normal_shot_timer
-
   simon_diehard_left_loop_hit{current_player.simon_current_shot==1 and device.counters.simon_diehard_shots.value<4}:
     - simon_diehard_correct_progress_shot
   simon_diehard_captive_ball_hit{current_player.simon_current_shot==2 and device.counters.simon_diehard_shots.value<4}:
@@ -233,7 +237,6 @@ event_player:
     - simon_diehard_correct_progress_shot
   s_upper_pf_entrance_active{current_player.simon_current_shot==5 and device.counters.simon_diehard_shots.value<4}:
     - simon_diehard_correct_progress_shot
-
   simon_diehard_left_loop_hit{current_player.simon_current_shot==1 and device.counters.simon_diehard_shots.value>=4}:
     - simon_diehard_correct_final_shot
   simon_diehard_captive_ball_hit{current_player.simon_current_shot==2 and device.counters.simon_diehard_shots.value>=4}:
@@ -244,54 +247,44 @@ event_player:
     - simon_diehard_correct_final_shot
   s_upper_pf_entrance_active{current_player.simon_current_shot==5 and device.counters.simon_diehard_shots.value>=4}:
     - simon_diehard_correct_final_shot
-
   simon_diehard_correct_progress_shot:
     - simon_diehard_stop_shot_timer
     - simon_diehard_play_random_hit_video
     - simon_diehard_clear_current_shot
     - simon_diehard_choose_next_shot|500ms
-
   simon_diehard_correct_final_shot:
     - simon_diehard_stop_shot_timer
     - simon_diehard_complete
-
   timer_simon_diehard_timer_complete{current_player.simon_diehard_completion_active==0 and current_player.simon_diehard_failed_active==0}:
     - simon_diehard_fail_mode
     - simon_diehard_failed_complete|4s
     - reset_bullet_total
     - reset_bullets
-
   ball_drain{current_player.villain_mode_running==1 and current_player.simon_diehard_completion_active==0 and current_player.simon_diehard_failed_active==0}:
     - simon_diehard_fail_mode
     - simon_diehard_failed_complete|4s
     - reset_bullet_total
     - reset_bullets
-
   ball_drain{current_player.simon_diehard_completion_active==1}:
     - reset_bullet_total
     - reset_bullets
-
   ball_drain{current_player.simon_diehard_failed_active==1}:
     - simon_diehard_failed_complete|4s
-
   simon_diehard_complete:
     - simon_diehard_completed_slide
     - simon_diehard_won_complete|4s
     - reset_bullet_total
     - reset_bullets
-
   simon_diehard_won_complete:
     - simon_completed
     - count_simon_for_extra_ball
     - check_wizard_mode
     - reset_bullet_total
     - reset_bullets
-
   simon_diehard_failed_complete:
     - simon_failed
     - reset_bullet_total
     - reset_bullets
-
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------

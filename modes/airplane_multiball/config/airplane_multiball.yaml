@@ -113,49 +113,75 @@ show_player:
 # EVENT PLAYER
 # ------------------------------------------------------------
 # Starts multiball, enables jackpot selection, manages jackpot
-# progression, lights super jackpot, and posts the Extra Ball bridge.
+# progression, lights super jackpot, posts the Extra Ball bridge,
+# and tracks score earned for the Multiball Hero machine record.
 # ------------------------------------------------------------
 event_player:
   mode_airplane_multiball_started:
     - airplane_start_multiball|1s
+    - record_start_airplane_multiball_hero
+
+  record_start_airplane_multiball_hero:
+    record_start_multiball_hero:
+      mode: AIRPLANE MULTIBALL
+
   multiball_airplane_started:
     - airplane_enable_captive_for_jackpot
+
   airplane_left_orbit_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
     - airplane_enable_captive_for_jackpot
+
   airplane_right_orbit_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
     - airplane_enable_captive_for_jackpot
+
   airplane_mid_orbit_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
     - airplane_enable_captive_for_jackpot
+
   airplane_air_duct_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
     - airplane_enable_captive_for_jackpot
+
   airplane_upper_pf_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
     - airplane_enable_captive_for_jackpot
+
   airplane_left_orbit_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
     - airplane_enable_captive_for_jackpot
+
   airplane_right_orbit_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
     - airplane_enable_captive_for_jackpot
+
   airplane_mid_orbit_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
     - airplane_enable_captive_for_jackpot
+
   airplane_air_duct_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
     - airplane_enable_captive_for_jackpot
+
   airplane_upper_pf_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
     - airplane_enable_captive_for_jackpot
+
   airplane_super_jackpot_ready:
     - airplane_disable_jackpots
     - airplane_light_super_jackpot
+
   airplane_super_jackpot_hit{current_player.airplane_mb_stage==1}:
     - airplane_super_jackpot_score_stage_1
     - airplane_disable_super_jackpot
     - reset_airplane_stage_1_jackpot_counter
     - reset_airplane_stage_2_jackpot_counter
     - airplane_enable_captive_for_jackpot|100ms
+
   airplane_super_jackpot_hit{current_player.airplane_mb_stage>=2}:
     - airplane_super_jackpot_score_stage_2
     - airplane_disable_super_jackpot
     - reset_airplane_stage_2_jackpot_counter
     - airplane_enable_captive_for_jackpot|100ms
+
   multiball_airplane_ended:
     - count_airplane_for_extra_ball
+    - record_finish_airplane_multiball_hero
+
+  record_finish_airplane_multiball_hero:
+    record_finish_multiball_hero:
+      mode: AIRPLANE MULTIBALL
 
 # ------------------------------------------------------------
 # RANDOM EVENT PLAYER

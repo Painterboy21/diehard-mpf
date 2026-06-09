@@ -173,7 +173,8 @@ shots:
 # EVENT PLAYER
 # ------------------------------------------------------------
 # Handles mode start, target hit validation, relighting,
-# complete flow, fail flow, flippers, bullets, and cleanup.
+# complete flow, fail flow, flippers, bullets, Villain MVP
+# tracking, and cleanup.
 # ------------------------------------------------------------
 event_player:
   mode_hans_dieharder_started:
@@ -191,10 +192,18 @@ event_player:
     - wire_ramp_exit_open
     - reset_bullet_total
     - reset_bullets
+    - record_start_hans_dieharder_villain_mvp
+  record_start_hans_dieharder_villain_mvp:
+    record_start_villain_mvp:
+      mode: HANS DIE HARDER
   mode_hans_dieharder_stopping:
     - villain_mode_stopped
     - flipper_on
     - wire_ramp_exit_closed
+    - record_finish_hans_dieharder_villain_mvp
+  record_finish_hans_dieharder_villain_mvp:
+    record_finish_villain_mvp:
+      mode: HANS DIE HARDER
   hans_dieharder_h_hit{current_player.hans_dieharder_result_started==0}:
     - hans_dieharder_valid_h
   hans_dieharder_o_hit{current_player.hans_dieharder_result_started==0}:

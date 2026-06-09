@@ -148,7 +148,7 @@ random_event_player:
 # ------------------------------------------------------------
 # EVENT PLAYER
 # Handles start, shot choice, timer choice, correct hits,
-# fail flow, completion flow, and cleanup.
+# fail flow, completion flow, Villain MVP tracking, and cleanup.
 # ------------------------------------------------------------
 event_player:
   mode_simon_dieharder_started:
@@ -161,12 +161,19 @@ event_player:
     - release_villain_select_vuk
     - reset_bullet_total
     - reset_bullets
+    - record_start_simon_dieharder_villain_mvp
+  record_start_simon_dieharder_villain_mvp:
+    record_start_villain_mvp:
+      mode: SIMON DIE HARDER
   mode_simon_dieharder_stopping:
     - villain_mode_stopped
     - enable_flippers
     - wire_ramp_exit_closed
     - simon_dieharder_cleanup
-
+    - record_finish_simon_dieharder_villain_mvp
+  record_finish_simon_dieharder_villain_mvp:
+    record_finish_villain_mvp:
+      mode: SIMON DIE HARDER
   simon_dieharder_choose_next_shot{device.counters.simon_dieharder_shots.value==0}:
     - simon_dieharder_set_progress_1
   simon_dieharder_choose_next_shot{device.counters.simon_dieharder_shots.value==1}:
@@ -177,7 +184,6 @@ event_player:
     - simon_dieharder_set_progress_4
   simon_dieharder_choose_next_shot{device.counters.simon_dieharder_shots.value==4}:
     - simon_dieharder_set_progress_5
-
   simon_dieharder_choose_left_loop{current_player.hans_bonus==1}:
     - simon_dieharder_start_hans_bonus_shot_timer
   simon_dieharder_choose_left_loop{current_player.hans_bonus!=1}:
@@ -198,7 +204,6 @@ event_player:
     - simon_dieharder_start_hans_bonus_shot_timer
   simon_dieharder_choose_left_ramp{current_player.hans_bonus!=1}:
     - simon_dieharder_start_normal_shot_timer
-
   simon_dieharder_left_loop_hit{current_player.simon_dieharder_current_shot==1 and device.counters.simon_dieharder_shots.value<4}:
     - simon_dieharder_correct_progress_shot
   simon_dieharder_captive_ball_hit{current_player.simon_dieharder_current_shot==2 and device.counters.simon_dieharder_shots.value<4}:
@@ -209,7 +214,6 @@ event_player:
     - simon_dieharder_correct_progress_shot
   s_upper_pf_entrance_active{current_player.simon_dieharder_current_shot==5 and device.counters.simon_dieharder_shots.value<4}:
     - simon_dieharder_correct_progress_shot
-
   simon_dieharder_left_loop_hit{current_player.simon_dieharder_current_shot==1 and device.counters.simon_dieharder_shots.value>=4}:
     - simon_dieharder_correct_final_shot
   simon_dieharder_captive_ball_hit{current_player.simon_dieharder_current_shot==2 and device.counters.simon_dieharder_shots.value>=4}:
@@ -220,7 +224,6 @@ event_player:
     - simon_dieharder_correct_final_shot
   s_upper_pf_entrance_active{current_player.simon_dieharder_current_shot==5 and device.counters.simon_dieharder_shots.value>=4}:
     - simon_dieharder_correct_final_shot
-
   simon_dieharder_correct_progress_shot:
     - simon_dieharder_stop_shot_timer
     - simon_dieharder_clear_current_shot
@@ -228,12 +231,10 @@ event_player:
   simon_dieharder_correct_final_shot:
     - simon_dieharder_stop_shot_timer
     - simon_dieharder_complete
-
   timer_simon_dieharder_timer_complete{current_player.simon_dieharder_result_started==0}:
     - simon_dieharder_fail_mode
   ball_drain{current_player.simon_dieharder_result_started==0}:
     - simon_dieharder_fail_mode
-
   simon_dieharder_fail_mode:
     - disable_flippers
     - play_ball_lost
@@ -256,7 +257,6 @@ event_player:
     - resume_base_music|500ms
     - reset_bullet_total
     - reset_bullets
-
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # Stores Simon state, selected shot, Hans Bonus timer state,

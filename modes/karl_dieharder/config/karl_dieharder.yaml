@@ -97,7 +97,8 @@ ball_saves:
 # ---------------------------------------------------------------------
 # EVENT PLAYER
 # Starts mode state, handles spinner/pop damage, win/fail result flow,
-# bullet resets, flipper recovery, and Extra Ball bridge count.
+# bullet resets, flipper recovery, Extra Ball bridge count,
+# and Villain MVP tracking.
 # ---------------------------------------------------------------------
 event_player:
   mode_karl_dieharder_started:
@@ -113,65 +114,59 @@ event_player:
     - karl_dieharder_reset_mode
     - karl_dieharder_start_normal_timer{current_player.hans_bonus != 1}
     - karl_dieharder_start_hans_bonus_timer{current_player.hans_bonus == 1}
-
+    - record_start_karl_dieharder_villain_mvp
+  record_start_karl_dieharder_villain_mvp:
+    record_start_villain_mvp:
+      mode: KARL DIE HARDER
   mode_karl_dieharder_stopping:
     - villain_mode_stopped
     - flipper_on
     - wire_ramp_exit_closed
     - karl_dieharder_cleanup
-
+    - record_finish_karl_dieharder_villain_mvp
+  record_finish_karl_dieharder_villain_mvp:
+    record_finish_villain_mvp:
+      mode: KARL DIE HARDER
   SpinnerLeft_active{current_player.villain_mode_running==1 and current_player.karl_dieharder_failed_active==0 and current_player.karl_dieharder_completion_active==0 and current_player.karl_damage<100}:
     - karl_dieharder_spinner_hit
     - karl_dieharder_check_complete|20ms
-
   SpinnerRight_active{current_player.villain_mode_running==1 and current_player.karl_dieharder_failed_active==0 and current_player.karl_dieharder_completion_active==0 and current_player.karl_damage<100}:
     - karl_dieharder_spinner_hit
     - karl_dieharder_check_complete|20ms
-
   s_popbumper_left_active{current_player.villain_mode_running==1 and current_player.karl_dieharder_failed_active==0 and current_player.karl_dieharder_completion_active==0 and current_player.karl_damage<100}:
     - karl_dieharder_pop_hit
     - karl_dieharder_check_complete|20ms
-
   s_popbumper_right_active{current_player.villain_mode_running==1 and current_player.karl_dieharder_failed_active==0 and current_player.karl_dieharder_completion_active==0 and current_player.karl_damage<100}:
     - karl_dieharder_pop_hit
     - karl_dieharder_check_complete|20ms
-
   karl_dieharder_check_complete{current_player.karl_damage>=100 and current_player.karl_dieharder_failed_active==0 and current_player.karl_dieharder_completion_active==0}:
     - karl_dieharder_complete
-
   karl_dieharder_complete:
     - karl_dieharder_completed_slide
     - karl_dieharder_won_complete|7s
     - reset_bullet_total
     - reset_bullets
-
   timer_karl_dieharder_timer_complete{current_player.karl_dieharder_failed_active==0 and current_player.karl_dieharder_completion_active==0}:
     - karl_dieharder_fail_mode
     - karl_dieharder_failed_complete|4s
     - reset_bullet_total
     - reset_bullets
-
   ball_drain{current_player.villain_mode_running==1 and current_player.karl_dieharder_failed_active==0 and current_player.karl_dieharder_completion_active==0}:
     - karl_dieharder_fail_mode
     - karl_dieharder_failed_complete|4s
     - reset_bullet_total
     - reset_bullets
-
   ball_drain{current_player.karl_dieharder_completion_active==1}:
     - reset_bullet_total
     - reset_bullets
-
   ball_drain{current_player.karl_dieharder_failed_active==1}:
     - karl_dieharder_failed_complete|4s
-
   karl_dieharder_fail_mode:
     - flipper_off
-
   karl_dieharder_won_complete:
     - reset_bullet_total
     - reset_bullets
     - count_karl_for_extra_ball
-
   karl_dieharder_failed_complete:
     - reset_bullet_total
     - reset_bullets
