@@ -161,6 +161,7 @@ shots:
       - col_stuart_diehard_completed
       - col_stuart_diehard_failed
       - mode_col_stuart_diehard_stopping
+
 # ------------------------------------------------------------
 # EVENT PLAYER
 # ------------------------------------------------------------
@@ -195,7 +196,6 @@ event_player:
     - col_stuart_disable_all_shots
     - col_stuart_disable_start_ball_save
     - col_stuart_disable_complete_ball_save
-    - record_finish_col_stuart_diehard_villain_mvp
   record_finish_col_stuart_diehard_villain_mvp:
     record_finish_villain_mvp:
       mode: COL/STUART DIE HARD
@@ -210,6 +210,7 @@ event_player:
     - reset_bullets
     - reset_bullet_total
     - wire_ramp_exit_closed
+    - record_finish_col_stuart_diehard_villain_mvp
     - col_stuart_diehard_failed|5s
   col_stuart_diehard_failed:
     - resume_base_music|500ms
@@ -220,6 +221,7 @@ event_player:
     - col_stuart_enable_complete_ball_save
     - col_stuart_diehard_completed|5s
   col_stuart_diehard_completed:
+    - record_finish_col_stuart_diehard_villain_mvp
     - col_stuart_score_complete
     - count_stuart_for_extra_ball
     - unlock_4x_playfield
@@ -300,7 +302,7 @@ event_player:
   ball_save_col_stuart_complete_save_saving_ball:
     - ball_save_saving_ball
 
-# ------------------------------------------------------------
+
 # VARIABLE PLAYER
 # ------------------------------------------------------------
 # Stores mode running state, shot progress, last-shot state,

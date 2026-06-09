@@ -5,15 +5,15 @@
     "text": "3 LOOPS"
   },
   "multiball_hero": {
-    "name": "---",
-    "value": 0,
-    "text": "---",
-    "mode": "---"
+    "name": "BAD",
+    "value": 275750,
+    "text": "275,750",
+    "mode": "CENTRAL PARK MULTIBALL"
   },
   "villain_mvp": {
-    "name": "---",
-    "value": 0,
-    "text": "---",
-    "mode": "---"
+    "name": "EEE",
+    "value": 2029190,
+    "text": "2,029,190",
+    "mode": "COL/STUART DIE HARD"
   }
 }

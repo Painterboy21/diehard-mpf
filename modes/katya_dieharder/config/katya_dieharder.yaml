@@ -166,7 +166,8 @@ shots:
 # ------------------------------------------------------------
 # EVENT PLAYER
 # Handles start, Hans Bonus timer choice, loop scoring,
-# victory/fail flow, ball drain escape flow, and cleanup.
+# victory/fail flow, ball drain escape flow, Villain MVP
+# tracking, and cleanup.
 # ------------------------------------------------------------
 event_player:
   mode_katya_dieharder_started:
@@ -177,6 +178,10 @@ event_player:
     - reset_bullets
     - nakatomi_entrance_lock_close
     - wire_ramp_exit_open
+    - record_start_katya_dieharder_villain_mvp
+  record_start_katya_dieharder_villain_mvp:
+    record_start_villain_mvp:
+      mode: KATYA DIE HARDER
   mode_katya_dieharder_started{current_player.hans_bonus==1}:
     - katya_dieharder_start_bonus_timer
   mode_katya_dieharder_started{current_player.hans_bonus!=1}:
@@ -184,10 +189,9 @@ event_player:
   mode_katya_dieharder_stopping:
     - villain_mode_stopped
     - flipper_on
-
-  # ------------------------------------------------------------
-  # FAIL / ESCAPE FLOW
-  # ------------------------------------------------------------
+  record_finish_katya_dieharder_villain_mvp:
+    record_finish_villain_mvp:
+      mode: KATYA DIE HARDER
   timer_katya_dieharder_timer_complete:
     - katya_dieharder_fail_mode
   ball_drain{current_player.katya_dieharder_completion_active==0 and current_player.katya_dieharder_failed_active==0}:
@@ -213,28 +217,21 @@ event_player:
   katya_dieharder_failed_delay:
     - katya_dieharder_failed|4s
   katya_dieharder_failed:
+    - record_finish_katya_dieharder_villain_mvp
     - reset_bullet_total
     - reset_bullets
     - wire_ramp_exit_closed
-
-  # ------------------------------------------------------------
-  # COMPLETE FLOW
-  # ------------------------------------------------------------
   katya_dieharder_captive_final_hit:
     - katya_dieharder_victory_sequence
   katya_dieharder_victory_sequence:
     - katya_dieharder_completed_show
     - katya_dieharder_completed|4s
   katya_dieharder_completed:
+    - record_finish_katya_dieharder_villain_mvp
     - reset_bullet_total
     - reset_bullets
     - count_katya_for_extra_ball
     - wire_ramp_exit_closed
-
-  # ------------------------------------------------------------
-  # LOOP HIT FLOW
-  # Godot hit videos use current_player.katya_dieharder_shots.
-  # ------------------------------------------------------------
   katya_dieharder_left_loop_hit{device.counters.katya_dieharder_loop_counter.value<5}:
     - katya_dieharder_loop_hit_scored
     - katya_dieharder_left_loop_relight|3s

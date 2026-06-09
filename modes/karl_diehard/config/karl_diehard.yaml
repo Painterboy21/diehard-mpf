@@ -122,7 +122,6 @@ event_player:
     - karl_diehard_completed|4s
   mode_karl_diehard_stopping:
     - villain_mode_stopped
-    - record_finish_karl_diehard_villain_mvp
   record_finish_karl_diehard_villain_mvp:
     record_finish_villain_mvp:
       mode: KARL DIE HARD
@@ -153,11 +152,13 @@ event_player:
   karl_update_heartbeat{current_player.karl_damage >= 70 and current_player.karl_result_started==0}:
     - karl_heartbeat_fast
   karl_diehard_completed:
+    - record_finish_karl_diehard_villain_mvp
     - karl_score_complete
     - count_karl_for_extra_ball
     - reset_bullets
     - reset_bullet_total
   karl_diehard_failed:
+    - record_finish_karl_diehard_villain_mvp
     - reset_bullets
     - reset_bullet_total
   ball_save_karl_ball_save_saving_ball:

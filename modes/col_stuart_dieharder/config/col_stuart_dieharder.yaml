@@ -169,7 +169,6 @@ event_player:
     - col_stuart_disable_all_shots
     - col_stuart_disable_start_ball_save
     - col_stuart_disable_complete_ball_save
-    - record_finish_col_stuart_dieharder_villain_mvp
   record_finish_col_stuart_dieharder_villain_mvp:
     record_finish_villain_mvp:
       mode: COL/STUART DIE HARDER
@@ -187,6 +186,7 @@ event_player:
     - reset_bullets
     - reset_bullet_total
     - wire_ramp_exit_closed
+    - record_finish_col_stuart_dieharder_villain_mvp
     - col_stuart_dieharder_failed|5s
   col_stuart_dieharder_failed:
     - resume_base_music|500ms
@@ -199,6 +199,7 @@ event_player:
   col_stuart_defeated_slide:
     - show_col_dieharder_villian_bonus_widget|250ms
   col_stuart_dieharder_completed:
+    - record_finish_col_stuart_dieharder_villain_mvp
     - col_stuart_score_complete
     - count_stuart_for_extra_ball
     - unlock_5x_playfield
@@ -283,6 +284,8 @@ event_player:
     - ball_save_saving_ball
   ball_save_col_stuart_dieharder_complete_save_saving_ball:
     - ball_save_saving_ball
+
+
 variable_player:
   col_stuart_reset:
     villain_mode_running:

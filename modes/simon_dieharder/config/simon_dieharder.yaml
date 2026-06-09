@@ -170,7 +170,6 @@ event_player:
     - enable_flippers
     - wire_ramp_exit_closed
     - simon_dieharder_cleanup
-    - record_finish_simon_dieharder_villain_mvp
   record_finish_simon_dieharder_villain_mvp:
     record_finish_villain_mvp:
       mode: SIMON DIE HARDER
@@ -247,12 +246,14 @@ event_player:
     - reset_bullet_total
     - reset_bullets
   simon_dieharder_completed:
+    - record_finish_simon_dieharder_villain_mvp
     - simon_completed
     - count_simon_for_extra_ball
     - check_wizard_mode
     - reset_bullet_total
     - reset_bullets
   simon_dieharder_failed:
+    - record_finish_simon_dieharder_villain_mvp
     - simon_failed
     - resume_base_music|500ms
     - reset_bullet_total
