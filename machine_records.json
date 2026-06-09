@@ -1,0 +1,19 @@
+{
+  "loop_champion": {
+    "name": "AAA",
+    "value": 25,
+    "text": "25 LOOPS"
+  },
+  "multiball_hero": {
+    "name": "BBB",
+    "value": 1234567,
+    "text": "1,234,567",
+    "mode": "NAKATOMI"
+  },
+  "villain_mvp": {
+    "name": "CCC",
+    "value": 7654321,
+    "text": "7,654,321",
+    "mode": "SIMON_DIE_HARDER"
+  }
+}
