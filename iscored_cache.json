@@ -1,67 +1,67 @@
 {
-  "updatedAt": 1781029406,
+  "updatedAt": 1781029589,
   "entries": [
     {
       "rank": "1",
+      "name": "GGG",
+      "score": 10856660,
+      "score_text": "10,856,660",
+      "pending": false
+    },
+    {
+      "rank": "2",
       "name": "BAD",
       "score": 10257660,
       "score_text": "10,257,660",
       "pending": false
     },
     {
-      "rank": "2",
+      "rank": "3",
       "name": "EEE",
       "score": 7106260,
       "score_text": "7,106,260",
       "pending": false
     },
     {
-      "rank": "3",
+      "rank": "4",
       "name": "JohnMcClane",
       "score": 7103230,
       "score_text": "7,103,230",
       "pending": false
     },
     {
-      "rank": "4",
+      "rank": "5",
       "name": "CCC",
       "score": 4171560,
       "score_text": "4,171,560",
       "pending": false
     },
     {
-      "rank": "5",
+      "rank": "6",
       "name": "AAA",
       "score": 434690,
       "score_text": "434,690",
       "pending": false
     },
     {
-      "rank": "6",
+      "rank": "7",
       "name": "BBB",
       "score": 345650,
       "score_text": "345,650",
       "pending": false
     },
     {
-      "rank": "7",
+      "rank": "8",
       "name": "DAD",
       "score": 78130,
       "score_text": "78,130",
       "pending": false
     },
     {
-      "rank": "8",
+      "rank": "9",
       "name": "DDD",
       "score": 50350,
       "score_text": "50,350",
-      "pending": false
-    },
-    {
-      "rank": "9",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
       "pending": false
     },
     {
