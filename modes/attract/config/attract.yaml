@@ -119,3 +119,16 @@ timers:
     restart_on_complete: true
     start_running: true
     tick_interval: 10000ms
+
+# ------------------------------------------------------------
+# SOUND PLAYER
+# ------------------------------------------------------------
+# Ambush carries on with normal gameplay music.
+# It uses the same main_snd_music key as base music, so it does
+# not stack a second music track.
+# ------------------------------------------------------------
+sound_player:
+  mode_ambush_started:
+    gameplay_music_assault:
+      key: main_snd_music
+      action: play
