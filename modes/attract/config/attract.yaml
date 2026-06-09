@@ -25,14 +25,31 @@ mode:
 # EVENT PLAYER
 # ------------------------------------------------------------
 # Starts attract shows and iScored refresh.
-# Flippers rotate the attract display and reset the idle timer.
-# Idle completion restarts the show and refreshes scores.
+# Flippers rotate the Godot attract display using the original
+# rotate_attract_left / rotate_attract_right events.
+# Idle completion restarts the attract show and refreshes scores.
 # ------------------------------------------------------------
 event_player:
   mode_attract_started:
-    play_show_xmas:
-    play_show_start_button_flash:
-    iscored_refresh_scores:
+    - play_show_xmas
+    - play_show_start_button_flash
+    - iscored_refresh_scores
+    - reset_idle_timer
+
+  s_left_flipper_active:
+    - rotate_attract_left
+    - reset_idle_timer
+
+  s_right_flipper_active:
+    - rotate_attract_right
+    - reset_idle_timer
+
+  timer_attract_idle_complete:
+    - rotate_attract_right
+    - play_show_xmas
+    - iscored_refresh_scores
+    - reset_idle_timer
+
 # ------------------------------------------------------------
 # LIGHT PLAYER
 # ------------------------------------------------------------
@@ -42,6 +59,7 @@ light_player:
   mode_attract_started:
     GI:
       color: 000000
+
   mode_attract_stopping:
     GI:
       color: off
@@ -56,6 +74,7 @@ show_player:
     attract_show_runner:
       key: key_attract_christmas
       loops: 0
+
   play_show_start_button_flash:
     flash_start_button:
       key: key_attract_start_button_flash
@@ -65,17 +84,20 @@ show_player:
 # ------------------------------------------------------------
 # Shows the main attract slide.
 # Action button shows instructions while held, then removes them.
+# Record pages are handled inside Godot, not here.
 # ------------------------------------------------------------
 slide_player:
   mode_attract_started:
     attract:
       action: play
       expire: 0s
+
   s_actionbtn_active:
     attract_instructions:
       action: play
       expire: 0s
       priority: 100
+
   s_actionbtn_inactive:
     attract_instructions:
       action: remove
@@ -83,7 +105,7 @@ slide_player:
 # ------------------------------------------------------------
 # TIMERS
 # ------------------------------------------------------------
-# Idle timer restarts the attract show and refreshes iScored
+# Idle timer advances the attract display and refreshes iScored
 # after a period with no flipper activity.
 # ------------------------------------------------------------
 timers:
@@ -93,7 +115,7 @@ timers:
     direction: up
     control_events:
       - event: reset_idle_timer
-        action: reset
+        action: restart
     restart_on_complete: true
     start_running: true
     tick_interval: 10000ms

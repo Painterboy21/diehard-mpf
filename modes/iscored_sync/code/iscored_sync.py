@@ -33,8 +33,7 @@ class IscoredSync(Mode):
 
     # ------------------------------------------------------------
     # MODE START
-    # Registers iScored leaderboard, local machine records,
-    # and pending record candidate events.
+    # Registers iScored leaderboard and local machine record events.
     #
     # IMPORTANT:
     # Do not flush queued scores during boot.
@@ -48,6 +47,7 @@ class IscoredSync(Mode):
         self._refresh_lock = threading.Lock()
         self._cache_lock = threading.Lock()
         self._records_lock = threading.Lock()
+
         self._pending_records = self._default_pending_records()
 
         self.machine.events.add_handler(
@@ -70,7 +70,8 @@ class IscoredSync(Mode):
             self.refresh_scores
         )
 
-        # Manual/direct record save events.
+        # Manual/test record events.
+        # Later we will wire real loop, multiball, and villain events into these.
         self.machine.events.add_handler(
             "record_save_loop_champion",
             self.record_save_loop_champion
@@ -91,9 +92,9 @@ class IscoredSync(Mode):
             self.refresh_machine_records
         )
 
-        # Pending record candidate events.
-        # These store records beaten during the current game,
-        # then save them later using the player's initials/name.
+        # Pending machine record events.
+        # These collect values during the game, then save them
+        # with the same initials/name used for the normal high score.
         self.machine.events.add_handler(
             "record_candidate_loop_champion",
             self.record_candidate_loop_champion
@@ -120,8 +121,8 @@ class IscoredSync(Mode):
         )
 
         self.machine.events.add_handler(
-            "game_started",
-            self.record_clear_pending_records
+            "text_input_high_score_complete",
+            self.record_apply_pending_records
         )
 
         # Apply saved records on boot.
@@ -138,9 +139,6 @@ class IscoredSync(Mode):
     # SUBMIT SCORE
     # Called by event:
     #   iscored_submit_score
-    #
-    # This now also applies any pending machine records using
-    # the same initials/name as the iScored submission.
     # ------------------------------------------------------------
     def submit_score(self, **kwargs):
 
@@ -152,9 +150,6 @@ class IscoredSync(Mode):
 
         score = int(player.score)
         player_name = self._get_player_name(player)
-
-        # Save any beaten machine records using the same initials/name.
-        self._save_pending_records_for_player(player_name)
 
         threading.Thread(
             target=self._check_then_submit_or_queue,
@@ -681,21 +676,40 @@ class IscoredSync(Mode):
         )
 
     # ------------------------------------------------------------
+    # PENDING RECORD DEFAULTS
+    # ------------------------------------------------------------
+    def _default_pending_records(self):
+
+        return {
+            "loop_champion": 0,
+            "multiball_hero": {
+                "value": 0,
+                "mode": "---"
+            },
+            "villain_mvp": {
+                "value": 0,
+                "mode": "---"
+            }
+        }
+
+    # ------------------------------------------------------------
     # PENDING RECORD: LOOP CHAMPION
-    #
-    # Stores the best loop count from the current game.
-    # It does not save the record yet because initials are not known.
-    #
-    # Test event:
-    #   record_candidate_loop_champion{value=30}
+    # Called by base mode at ball ending.
+    # If MPF passes no useful value, read the real player var
+    # directly from current_player.best_loop_streak_this_game.
     # ------------------------------------------------------------
     def record_candidate_loop_champion(self, **kwargs):
 
         value = self._get_record_value(kwargs)
 
+        if value <= 0:
+            value = self._get_current_player_var_int(
+                "best_loop_streak_this_game"
+            )
+
         records = self._load_records()
         current_value = int(records["loop_champion"]["value"])
-        pending_value = int(self._pending_records["loop_champion"]["value"])
+        pending_value = int(self._pending_records.get("loop_champion", 0))
 
         if value <= current_value or value <= pending_value:
 
@@ -708,9 +722,8 @@ class IscoredSync(Mode):
 
             return
 
-        self._pending_records["loop_champion"] = {
-            "value": value
-        }
+        self._pending_records["loop_champion"] = value
+        self._mark_machine_record_initials_needed()
 
         self.info_log(
             "Pending Loop Champion set -> loops: %s",
@@ -719,11 +732,6 @@ class IscoredSync(Mode):
 
     # ------------------------------------------------------------
     # PENDING RECORD: MULTIBALL HERO
-    #
-    # Stores the best multiball score from the current game.
-    #
-    # Test event:
-    #   record_candidate_multiball_hero{value=2000000, mode="NAKATOMI"}
     # ------------------------------------------------------------
     def record_candidate_multiball_hero(self, **kwargs):
 
@@ -749,6 +757,7 @@ class IscoredSync(Mode):
             "value": value,
             "mode": mode_name
         }
+        self._mark_machine_record_initials_needed()
 
         self.info_log(
             "Pending Multiball Hero set -> score: %s mode: %s",
@@ -758,11 +767,6 @@ class IscoredSync(Mode):
 
     # ------------------------------------------------------------
     # PENDING RECORD: VILLAIN MVP
-    #
-    # Stores the best villain-mode score from the current game.
-    #
-    # Test event:
-    #   record_candidate_villain_mvp{value=9000000, mode="SIMON_DIE_HARDER"}
     # ------------------------------------------------------------
     def record_candidate_villain_mvp(self, **kwargs):
 
@@ -788,6 +792,7 @@ class IscoredSync(Mode):
             "value": value,
             "mode": mode_name
         }
+        self._mark_machine_record_initials_needed()
 
         self.info_log(
             "Pending Villain MVP set -> score: %s mode: %s",
@@ -796,152 +801,242 @@ class IscoredSync(Mode):
         )
 
     # ------------------------------------------------------------
-    # APPLY PENDING RECORDS
-    #
-    # Manual test event:
-    #   record_apply_pending_records{name="DAD"}
-    #
-    # Later this is also called automatically from submit_score()
-    # when the player has entered initials.
+    # APPLY PENDING MACHINE RECORDS
+    # Saves pending loop/multiball/villain records with the same
+    # player initials used by the high-score entry screen.
     # ------------------------------------------------------------
     def record_apply_pending_records(self, **kwargs):
 
         name = self._get_record_name(kwargs)
-        self._save_pending_records_for_player(name)
+
+        if name == "---":
+            text = kwargs.get("text", None)
+            if text is not None:
+                name = str(text).strip().upper()[:20]
+
+        if not name or name == "---":
+            player = self.machine.game.player if self.machine.game else None
+            if player:
+                name = self._get_player_name(player).upper()
+
+        if not name:
+            name = "---"
+
+        pending = self._pending_records
+        any_saved = False
+
+        loop_value = int(pending.get("loop_champion", 0))
+        if loop_value > 0:
+            self._save_pending_loop_champion(name, loop_value)
+            any_saved = True
+
+        multiball = pending.get("multiball_hero", {})
+        multiball_value = int(multiball.get("value", 0))
+        if multiball_value > 0:
+            self._save_pending_multiball_hero(
+                name,
+                multiball_value,
+                multiball.get("mode", "---")
+            )
+            any_saved = True
+
+        villain = pending.get("villain_mvp", {})
+        villain_value = int(villain.get("value", 0))
+        if villain_value > 0:
+            self._save_pending_villain_mvp(
+                name,
+                villain_value,
+                villain.get("mode", "---")
+            )
+            any_saved = True
+
+        if any_saved:
+            self._pending_records = self._default_pending_records()
+            self._set_current_player_var(
+                "machine_record_initials_score",
+                0
+            )
+            self.info_log(
+                "Pending machine records applied -> player: %s",
+                name
+            )
+        else:
+            self.info_log(
+                "No pending machine records to apply -> player: %s",
+                name
+            )
 
     # ------------------------------------------------------------
-    # CLEAR PENDING RECORDS
-    # Called on game_started and can be called manually.
+    # CLEAR PENDING MACHINE RECORDS
     # ------------------------------------------------------------
     def record_clear_pending_records(self, **kwargs):
 
         self._pending_records = self._default_pending_records()
+        self._set_current_player_var(
+            "machine_record_initials_score",
+            0
+        )
+        self.info_log("Pending machine records cleared")
+
+    # ------------------------------------------------------------
+    # SAVE PENDING RECORD HELPERS
+    # ------------------------------------------------------------
+    def _save_pending_loop_champion(self, name, value):
+
+        records = self._load_records()
+        current_value = int(records["loop_champion"]["value"])
+
+        if value <= current_value:
+            return
+
+        records["loop_champion"] = {
+            "name": name,
+            "value": value,
+            "text": "{} LOOPS".format(value)
+        }
+
+        self._save_records(records)
+        self._apply_record_machine_vars(records)
 
         self.info_log(
-            "Pending machine records cleared"
+            "Pending Loop Champion saved -> player: %s loops: %s",
+            name,
+            value
+        )
+
+    def _save_pending_multiball_hero(self, name, value, mode_name):
+
+        records = self._load_records()
+        current_value = int(records["multiball_hero"]["value"])
+
+        if value <= current_value:
+            return
+
+        records["multiball_hero"] = {
+            "name": name,
+            "value": value,
+            "text": self._format_score(value),
+            "mode": mode_name
+        }
+
+        self._save_records(records)
+        self._apply_record_machine_vars(records)
+
+        self.info_log(
+            "Pending Multiball Hero saved -> player: %s score: %s mode: %s",
+            name,
+            value,
+            mode_name
+        )
+
+    def _save_pending_villain_mvp(self, name, value, mode_name):
+
+        records = self._load_records()
+        current_value = int(records["villain_mvp"]["value"])
+
+        if value <= current_value:
+            return
+
+        records["villain_mvp"] = {
+            "name": name,
+            "value": value,
+            "text": self._format_score(value),
+            "mode": mode_name
+        }
+
+        self._save_records(records)
+        self._apply_record_machine_vars(records)
+
+        self.info_log(
+            "Pending Villain MVP saved -> player: %s score: %s mode: %s",
+            name,
+            value,
+            mode_name
         )
 
     # ------------------------------------------------------------
-    # DEFAULT PENDING RECORDS
+    # MACHINE RECORD INITIALS TRIGGER
     # ------------------------------------------------------------
-    def _default_pending_records(self):
-
-        return {
-            "loop_champion": {
-                "value": 0
-            },
-            "multiball_hero": {
-                "value": 0,
-                "mode": "---"
-            },
-            "villain_mvp": {
-                "value": 0,
-                "mode": "---"
-            }
-        }
-
-    # ------------------------------------------------------------
-    # SAVE PENDING RECORDS FOR PLAYER
+    # Uses the normal MPF high_score mode safely.
     #
-    # Saves all pending records using one initials/name.
-    # Then clears the pending record list.
+    # high_scores.yaml has an extra hidden/local category:
+    #   machine_record_initials_score
+    #
+    # When any machine record is pending, this player var is set
+    # to a fresh timestamp. That makes MPF's normal initials entry
+    # appear at game end, even if the normal score top 3 was not beaten.
+    # It does not change the normal score category.
     # ------------------------------------------------------------
-    def _save_pending_records_for_player(self, player_name):
+    def _mark_machine_record_initials_needed(self):
 
-        if not hasattr(self, "_pending_records"):
-            self._pending_records = self._default_pending_records()
+        value = int(time.time())
+        self._set_current_player_var(
+            "machine_record_initials_score",
+            value
+        )
 
-        records = self._load_records()
-        changed = False
+        self.info_log(
+            "Machine record initials needed -> trigger value: %s",
+            value
+        )
 
-        loop_value = int(self._pending_records["loop_champion"]["value"])
-        current_loop_value = int(records["loop_champion"]["value"])
+    # ------------------------------------------------------------
+    # SET CURRENT PLAYER VAR HELPER
+    # ------------------------------------------------------------
+    def _set_current_player_var(self, name, value):
 
-        if loop_value > current_loop_value:
+        player = self.machine.game.player if self.machine.game else None
 
-            records["loop_champion"] = {
-                "name": player_name,
-                "value": loop_value,
-                "text": "{} LOOPS".format(loop_value)
-            }
+        if not player:
+            return
 
-            changed = True
+        try:
+            player[name] = value
+            return
+        except Exception:
+            pass
 
-            self.info_log(
-                "Pending Loop Champion saved -> player: %s loops: %s",
-                player_name,
-                loop_value
+        try:
+            setattr(player, name, value)
+        except Exception:
+            self.warning_log(
+                "Could not set player var -> %s = %s",
+                name,
+                value
             )
 
-        multiball_value = int(self._pending_records["multiball_hero"]["value"])
-        current_multiball_value = int(records["multiball_hero"]["value"])
+    # ------------------------------------------------------------
+    # CURRENT PLAYER VAR HELPER
+    # ------------------------------------------------------------
+    def _get_current_player_var_int(self, name):
 
-        if multiball_value > current_multiball_value:
+        player = self.machine.game.player if self.machine.game else None
 
-            multiball_mode = self._pending_records["multiball_hero"]["mode"]
+        if not player:
+            return 0
 
-            records["multiball_hero"] = {
-                "name": player_name,
-                "value": multiball_value,
-                "text": self._format_score(multiball_value),
-                "mode": multiball_mode
-            }
+        value = None
 
-            changed = True
+        try:
+            value = getattr(player, name, None)
+        except Exception:
+            value = None
 
-            self.info_log(
-                "Pending Multiball Hero saved -> player: %s score: %s mode: %s",
-                player_name,
-                multiball_value,
-                multiball_mode
-            )
+        if value is None:
+            try:
+                value = player[name]
+            except Exception:
+                value = None
 
-        villain_value = int(self._pending_records["villain_mvp"]["value"])
-        current_villain_value = int(records["villain_mvp"]["value"])
-
-        if villain_value > current_villain_value:
-
-            villain_mode = self._pending_records["villain_mvp"]["mode"]
-
-            records["villain_mvp"] = {
-                "name": player_name,
-                "value": villain_value,
-                "text": self._format_score(villain_value),
-                "mode": villain_mode
-            }
-
-            changed = True
-
-            self.info_log(
-                "Pending Villain MVP saved -> player: %s score: %s mode: %s",
-                player_name,
-                villain_value,
-                villain_mode
-            )
-
-        if changed:
-
-            self._save_records(records)
-            self._apply_record_machine_vars(records)
-
-            self.info_log(
-                "Pending machine records applied -> player: %s",
-                player_name
-            )
-
-        else:
-
-            self.info_log(
-                "No pending machine records to apply -> player: %s",
-                player_name
-            )
-
-        self._pending_records = self._default_pending_records()
+        try:
+            return int(value)
+        except Exception:
+            return 0
 
     # ------------------------------------------------------------
     # RECORD EVENT: LOOP CHAMPION
     #
-    # Manual/direct save event:
+    # Manual test event:
     #   record_save_loop_champion{name="ABC", value=123}
     # ------------------------------------------------------------
     def record_save_loop_champion(self, **kwargs):
@@ -980,7 +1075,7 @@ class IscoredSync(Mode):
     # ------------------------------------------------------------
     # RECORD EVENT: MULTIBALL HERO
     #
-    # Manual/direct save event:
+    # Manual test event:
     #   record_save_multiball_hero{name="ABC", value=1000000, mode="NAKATOMI"}
     # ------------------------------------------------------------
     def record_save_multiball_hero(self, **kwargs):
@@ -1022,7 +1117,7 @@ class IscoredSync(Mode):
     # ------------------------------------------------------------
     # RECORD EVENT: VILLAIN MVP
     #
-    # Manual/direct save event:
+    # Manual test event:
     #   record_save_villain_mvp{name="ABC", value=1000000, mode="SIMON DIE HARDER"}
     # ------------------------------------------------------------
     def record_save_villain_mvp(self, **kwargs):

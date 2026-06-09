@@ -5,9 +5,8 @@
 # ------------------------------------------------------------
 # VPW-style high score entry.
 #
-# This mode gives us the initials-entry screen.
-# The main leaderboard will become the cached iScored top 10,
-# but this local table stays clean with 3 VPW-style entries only.
+# This mode gives us the normal MPF initials-entry screen.
+# Normal score top 3 stays separate from the machine-record initials trigger.
 # ------------------------------------------------------------
 mode:
   code: mpf.modes.high_score.code.high_score.HighScore
@@ -49,21 +48,32 @@ event_player:
 # ------------------------------------------------------------
 # HIGH SCORE SETTINGS
 # ------------------------------------------------------------
-# VPW has 3 local scores only.
-# These are fallback defaults now that you have reset the score data.
+# score:
+#   Your normal local top 3.
+#
+# machine_record_initials_score:
+#   Hidden/local trigger category.
+#   This lets Loop Champion, Multiball Hero, or Villain MVP open
+#   the normal initials screen without touching the score top 3.
 # ------------------------------------------------------------
 high_score:
   _overwrite: true
+  reset_high_scores_events:
+    - reset_local_high_scores
   categories:
     score:
       - YIPPIE KI YAY CHAMPION
       - DETECTIVE LIEUTENANT
       - BEAT COP
+    machine_record_initials_score:
+      - MACHINE RECORD
   defaults:
     score:
       - VPX: 50
       - VPX: 30
       - VPX: 10
+    machine_record_initials_score:
+      - VPX: 0
   enter_initials_timeout: 90000ms
   award_slide_display_time: 3000ms
 

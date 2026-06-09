@@ -12,6 +12,11 @@ var gameover_video: String = "res://videos/attractvideos/GameOver.ogv"
 @onready var vboxHighScore2 = $"../HighScore2"
 @onready var vboxHighScore3 = $"../HighScore3"
 
+@onready var vboxLoopChampion = get_node_or_null("../LoopChampion")
+@onready var lblLoopChampionTitle = get_node_or_null("../LoopChampion/Title")
+@onready var lblLoopChampionName = get_node_or_null("../LoopChampion/Name")
+@onready var lblLoopChampionValue = get_node_or_null("../LoopChampion/Value")
+
 @onready var iscoredLeaderboard = get_node_or_null("../iscored_leaderboard")
 
 
@@ -19,15 +24,18 @@ var gameover_video: String = "res://videos/attractvideos/GameOver.ogv"
 # 0 = HighScore3
 # 1 = HighScore1
 # 2 = HighScore2
-# 3 = iScored leaderboard
+# 3 = Loop Champion
+# 4 = iScored leaderboard
 var loop_videos: Array[String] = [
 	"res://videos/attractvideos/HSBackground3.ogv",
 	"res://videos/attractvideos/HSBackground1.ogv",
 	"res://videos/attractvideos/HSBackground2.ogv",
 	"res://videos/attractvideos/HSBackground3.ogv",
+	"res://videos/attractvideos/HSBackground3.ogv",
 ]
 
-const ISCORED_PAGE_INDEX := 3
+const LOOP_CHAMPION_PAGE_INDEX := 3
+const ISCORED_PAGE_INDEX := 4
 
 var current_index: int = -1   # -1 = intro not played yet
 var player_scores_index: int = -1
@@ -47,6 +55,13 @@ func _ready() -> void:
 		print("iScored leaderboard node found")
 	else:
 		push_warning("iscored_leaderboard node not found. Add it as a sibling of this VideoStreamPlayer.")
+
+	if vboxLoopChampion:
+		vboxLoopChampion.hide()
+		vboxLoopChampion.z_index = 100
+		print("LoopChampion node found")
+	else:
+		push_warning("LoopChampion node not found. Add it as a sibling of this VideoStreamPlayer.")
 
 	if MPF.game.machine_vars.has("last_game_players") and MPF.game.machine_vars["last_game_players"] > 0:
 		current_index = -2
@@ -107,6 +122,9 @@ func _hide_all_overlays() -> void:
 	vboxHighScore2.hide()
 	vboxHighScore3.hide()
 
+	if vboxLoopChampion:
+		vboxLoopChampion.hide()
+
 	if iscoredLeaderboard:
 		iscoredLeaderboard.hide()
 
@@ -154,6 +172,9 @@ func _play_next(increment: bool) -> void:
 		if current_index == 2:
 			vboxHighScore2.show()
 
+		if current_index == LOOP_CHAMPION_PAGE_INDEX:
+			_show_loop_champion()
+
 		if current_index == ISCORED_PAGE_INDEX:
 			_show_iscored_leaderboard()
 
@@ -168,6 +189,45 @@ func _play_next(increment: bool) -> void:
 
 	self.stream = stream
 	self.play()
+
+
+func _show_loop_champion() -> void:
+	if not vboxLoopChampion:
+		push_warning("LoopChampion node not found")
+		return
+
+	var champion_name := "---"
+	var champion_text := "---"
+
+	print("Checking Loop Champion machine vars...")
+
+	for key in MPF.game.machine_vars.keys():
+		if str(key).contains("loop") or str(key).contains("record"):
+			print("Machine var: ", key, " = ", MPF.game.machine_vars[key])
+
+	if MPF.game.machine_vars.has("record_loop_champion_name"):
+		champion_name = str(MPF.game.machine_vars["record_loop_champion_name"])
+	elif MPF.game.machine_vars.has("machine_var_record_loop_champion_name"):
+		champion_name = str(MPF.game.machine_vars["machine_var_record_loop_champion_name"])
+
+	if MPF.game.machine_vars.has("record_loop_champion_text"):
+		champion_text = str(MPF.game.machine_vars["record_loop_champion_text"])
+	elif MPF.game.machine_vars.has("machine_var_record_loop_champion_text"):
+		champion_text = str(MPF.game.machine_vars["machine_var_record_loop_champion_text"])
+
+	if lblLoopChampionTitle:
+		lblLoopChampionTitle.text = "LOOP CHAMPION"
+
+	if lblLoopChampionName:
+		lblLoopChampionName.text = champion_name
+
+	if lblLoopChampionValue:
+		lblLoopChampionValue.text = champion_text
+
+	vboxLoopChampion.show()
+	vboxLoopChampion.z_index = 100
+
+	print("Showing Loop Champion: ", champion_name, " ", champion_text)
 
 
 func _show_iscored_leaderboard() -> void:
