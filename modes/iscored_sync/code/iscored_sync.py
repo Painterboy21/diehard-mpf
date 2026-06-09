@@ -147,6 +147,11 @@ class IscoredSync(Mode):
         )
 
         self.machine.events.add_handler(
+            "reset_all_scores_and_records",
+            self.reset_all_scores_and_records
+        )
+
+        self.machine.events.add_handler(
             "text_input_high_score_complete",
             self.record_apply_pending_records
         )
@@ -1047,6 +1052,79 @@ class IscoredSync(Mode):
             ""
         )
         self.info_log("Pending machine records cleared")
+
+    # ------------------------------------------------------------
+    # RESET ALL LOCAL SCORES AND MACHINE RECORDS
+    # ------------------------------------------------------------
+    # Service/admin reset event:
+    #   reset_all_scores_and_records
+    #
+    # Clears:
+    #   - normal MPF high-score file
+    #   - machine records
+    #   - iScored local cache
+    #   - iScored queue
+    #
+    # Does not reset the online iScored leaderboard.
+    # ------------------------------------------------------------
+    def reset_all_scores_and_records(self, **kwargs):
+
+        files_to_delete = [
+            self._records_path(),
+            self._cache_path(),
+            self._queue_path(),
+            os.path.join(self.machine.machine_path, "data", "high_scores.yaml")
+        ]
+
+        for path in files_to_delete:
+
+            try:
+
+                if os.path.exists(path):
+                    os.remove(path)
+
+                    self.info_log(
+                        "Deleted score/reset file -> %s",
+                        path
+                    )
+
+            except Exception as e:
+
+                self.warning_log(
+                    "Could not delete score/reset file -> %s error: %s",
+                    path,
+                    e
+                )
+
+        self._pending_records = self._default_pending_records()
+        self._active_multiball_record = None
+        self._active_villain_record = None
+
+        records = self._default_records()
+        self._apply_record_machine_vars(records)
+
+        self._set_current_player_var(
+            "machine_record_initials_score",
+            0
+        )
+
+        self._set_machine_var(
+            "machine_record_pending_title",
+            ""
+        )
+
+        self._set_machine_var(
+            "machine_record_pending_subtitle",
+            ""
+        )
+
+        self.machine.events.post("reset_local_high_scores")
+        self.machine.events.post("record_refresh_machine_records")
+        self.machine.events.post("iscored_refresh_scores")
+
+        self.info_log(
+            "ALL LOCAL SCORES AND MACHINE RECORDS RESET"
+        )
 
     # ------------------------------------------------------------
     # SAVE PENDING RECORD HELPERS
