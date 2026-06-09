@@ -30,9 +30,9 @@ mode:
 # ------------------------------------------------------------
 event_player:
   mode_attract_started:
-    - play_show_xmas
-    - play_show_start_button_flash
-    - iscored_refresh_scores
+    play_show_xmas:
+    play_show_start_button_flash:
+    iscored_refresh_scores:
   s_left_flipper_active:
     - rotate_attract_left
     - reset_idle_timer
@@ -42,7 +42,6 @@ event_player:
   timer_attract_idle_complete:
     - play_show_xmas
     - iscored_refresh_scores
-
 # ------------------------------------------------------------
 # LIGHT PLAYER
 # ------------------------------------------------------------

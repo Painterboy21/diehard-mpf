@@ -23,6 +23,8 @@ ISCORED_SUBMIT_URL = "https://www.iscored.info/api/FT1/DIE%20HARD%20TRILOGY/subm
 DEFAULT_PLAYER_NAME = "JohnMcClane"
 QUEUE_FILE_NAME = "iscored_queue.json"
 CACHE_FILE_NAME = "iscored_cache.json"
+RECORDS_FILE_NAME = "machine_records.json"
+
 TOP_N = 10
 HTTP_TIMEOUT = 2
 
@@ -31,7 +33,7 @@ class IscoredSync(Mode):
 
     # ------------------------------------------------------------
     # MODE START
-    # Registers events only.
+    # Registers iScored leaderboard and local machine record events.
     #
     # IMPORTANT:
     # Do not flush queued scores during boot.
@@ -44,6 +46,7 @@ class IscoredSync(Mode):
         self._queue_lock = threading.Lock()
         self._refresh_lock = threading.Lock()
         self._cache_lock = threading.Lock()
+        self._records_lock = threading.Lock()
 
         self.machine.events.add_handler(
             "iscored_submit_score",
@@ -65,7 +68,33 @@ class IscoredSync(Mode):
             self.refresh_scores
         )
 
-        # Apply any saved local cache straight away.
+        # Manual/test record events.
+        # Later we will wire real loop, multiball, and villain events into these.
+        self.machine.events.add_handler(
+            "record_save_loop_champion",
+            self.record_save_loop_champion
+        )
+
+        self.machine.events.add_handler(
+            "record_save_multiball_hero",
+            self.record_save_multiball_hero
+        )
+
+        self.machine.events.add_handler(
+            "record_save_villain_mvp",
+            self.record_save_villain_mvp
+        )
+
+        self.machine.events.add_handler(
+            "record_refresh_machine_records",
+            self.refresh_machine_records
+        )
+
+        # Apply saved records on boot.
+        records = self._load_records()
+        self._apply_record_machine_vars(records)
+
+        # Apply any saved local iScored cache straight away.
         # Then the normal attract refresh will try to update from iScored.
         cached_entries = self._load_cache_entries()
         if cached_entries:
@@ -612,6 +641,353 @@ class IscoredSync(Mode):
         )
 
     # ------------------------------------------------------------
+    # RECORD EVENT: LOOP CHAMPION
+    #
+    # Manual test event:
+    #   record_save_loop_champion{name="ABC", value=123}
+    # ------------------------------------------------------------
+    def record_save_loop_champion(self, **kwargs):
+
+        name = self._get_record_name(kwargs)
+        value = self._get_record_value(kwargs)
+
+        records = self._load_records()
+        current_value = int(records["loop_champion"]["value"])
+
+        if value <= current_value:
+
+            self.info_log(
+                "Loop Champion skipped -> %s loops not higher than %s",
+                value,
+                current_value
+            )
+
+            return
+
+        records["loop_champion"] = {
+            "name": name,
+            "value": value,
+            "text": "{} LOOPS".format(value)
+        }
+
+        self._save_records(records)
+        self._apply_record_machine_vars(records)
+
+        self.info_log(
+            "Loop Champion saved -> player: %s loops: %s",
+            name,
+            value
+        )
+
+    # ------------------------------------------------------------
+    # RECORD EVENT: MULTIBALL HERO
+    #
+    # Manual test event:
+    #   record_save_multiball_hero{name="ABC", value=1000000, mode="NAKATOMI"}
+    # ------------------------------------------------------------
+    def record_save_multiball_hero(self, **kwargs):
+
+        name = self._get_record_name(kwargs)
+        value = self._get_record_value(kwargs)
+        mode_name = self._get_record_mode(kwargs)
+
+        records = self._load_records()
+        current_value = int(records["multiball_hero"]["value"])
+
+        if value <= current_value:
+
+            self.info_log(
+                "Multiball Hero skipped -> %s not higher than %s",
+                value,
+                current_value
+            )
+
+            return
+
+        records["multiball_hero"] = {
+            "name": name,
+            "value": value,
+            "text": self._format_score(value),
+            "mode": mode_name
+        }
+
+        self._save_records(records)
+        self._apply_record_machine_vars(records)
+
+        self.info_log(
+            "Multiball Hero saved -> player: %s score: %s mode: %s",
+            name,
+            value,
+            mode_name
+        )
+
+    # ------------------------------------------------------------
+    # RECORD EVENT: VILLAIN MVP
+    #
+    # Manual test event:
+    #   record_save_villain_mvp{name="ABC", value=1000000, mode="SIMON DIE HARDER"}
+    # ------------------------------------------------------------
+    def record_save_villain_mvp(self, **kwargs):
+
+        name = self._get_record_name(kwargs)
+        value = self._get_record_value(kwargs)
+        mode_name = self._get_record_mode(kwargs)
+
+        records = self._load_records()
+        current_value = int(records["villain_mvp"]["value"])
+
+        if value <= current_value:
+
+            self.info_log(
+                "Villain MVP skipped -> %s not higher than %s",
+                value,
+                current_value
+            )
+
+            return
+
+        records["villain_mvp"] = {
+            "name": name,
+            "value": value,
+            "text": self._format_score(value),
+            "mode": mode_name
+        }
+
+        self._save_records(records)
+        self._apply_record_machine_vars(records)
+
+        self.info_log(
+            "Villain MVP saved -> player: %s score: %s mode: %s",
+            name,
+            value,
+            mode_name
+        )
+
+    # ------------------------------------------------------------
+    # REFRESH MACHINE RECORDS
+    # Re-applies saved record machine vars.
+    # ------------------------------------------------------------
+    def refresh_machine_records(self, **kwargs):
+
+        records = self._load_records()
+        self._apply_record_machine_vars(records)
+
+    # ------------------------------------------------------------
+    # RECORD HELPERS
+    # ------------------------------------------------------------
+    def _get_record_name(self, kwargs):
+
+        name = kwargs.get("name", None)
+
+        if name is None:
+            name = kwargs.get("initials", None)
+
+        if name is None:
+            name = kwargs.get("player_name", None)
+
+        if name is None:
+            name = "---"
+
+        name = str(name).strip().upper()
+
+        if not name:
+            name = "---"
+
+        return name[:20]
+
+    def _get_record_value(self, kwargs):
+
+        value = kwargs.get("value", None)
+
+        if value is None:
+            value = kwargs.get("score", None)
+
+        if value is None:
+            value = 0
+
+        try:
+            return int(value)
+        except Exception:
+            return 0
+
+    def _get_record_mode(self, kwargs):
+
+        mode_name = kwargs.get("mode", None)
+
+        if mode_name is None:
+            mode_name = kwargs.get("mode_name", None)
+
+        if mode_name is None:
+            mode_name = kwargs.get("name_of_mode", None)
+
+        if mode_name is None:
+            mode_name = "---"
+
+        mode_name = str(mode_name).strip().upper()
+
+        if not mode_name:
+            mode_name = "---"
+
+        return mode_name[:40]
+
+    # ------------------------------------------------------------
+    # APPLY RECORD MACHINE VARS
+    # These are for your three individual attract record screens.
+    # ------------------------------------------------------------
+    def _apply_record_machine_vars(self, records):
+
+        records = self._normalise_records(records)
+
+        loop = records["loop_champion"]
+        multiball = records["multiball_hero"]
+        villain = records["villain_mvp"]
+
+        self._set_machine_var(
+            "record_loop_champion_name",
+            loop["name"]
+        )
+
+        self._set_machine_var(
+            "record_loop_champion_value",
+            loop["value"]
+        )
+
+        self._set_machine_var(
+            "record_loop_champion_text",
+            loop["text"]
+        )
+
+        self._set_machine_var(
+            "record_multiball_hero_name",
+            multiball["name"]
+        )
+
+        self._set_machine_var(
+            "record_multiball_hero_value",
+            multiball["value"]
+        )
+
+        self._set_machine_var(
+            "record_multiball_hero_text",
+            multiball["text"]
+        )
+
+        self._set_machine_var(
+            "record_multiball_hero_mode",
+            multiball["mode"]
+        )
+
+        self._set_machine_var(
+            "record_villain_mvp_name",
+            villain["name"]
+        )
+
+        self._set_machine_var(
+            "record_villain_mvp_value",
+            villain["value"]
+        )
+
+        self._set_machine_var(
+            "record_villain_mvp_text",
+            villain["text"]
+        )
+
+        self._set_machine_var(
+            "record_villain_mvp_mode",
+            villain["mode"]
+        )
+
+        self._set_machine_var(
+            "machine_records_last_update",
+            int(time.time())
+        )
+
+    # ------------------------------------------------------------
+    # DEFAULT / NORMALISE RECORDS
+    # ------------------------------------------------------------
+    def _default_records(self):
+
+        return {
+            "loop_champion": {
+                "name": "---",
+                "value": 0,
+                "text": "---"
+            },
+            "multiball_hero": {
+                "name": "---",
+                "value": 0,
+                "text": "---",
+                "mode": "---"
+            },
+            "villain_mvp": {
+                "name": "---",
+                "value": 0,
+                "text": "---",
+                "mode": "---"
+            }
+        }
+
+    def _normalise_records(self, records):
+
+        defaults = self._default_records()
+
+        if not isinstance(records, dict):
+            records = {}
+
+        for key in defaults:
+
+            if key not in records or not isinstance(records[key], dict):
+                records[key] = defaults[key]
+
+            for sub_key in defaults[key]:
+
+                if sub_key not in records[key]:
+                    records[key][sub_key] = defaults[key][sub_key]
+
+        try:
+            records["loop_champion"]["value"] = int(records["loop_champion"]["value"])
+        except Exception:
+            records["loop_champion"]["value"] = 0
+
+        try:
+            records["multiball_hero"]["value"] = int(records["multiball_hero"]["value"])
+        except Exception:
+            records["multiball_hero"]["value"] = 0
+
+        try:
+            records["villain_mvp"]["value"] = int(records["villain_mvp"]["value"])
+        except Exception:
+            records["villain_mvp"]["value"] = 0
+
+        if records["loop_champion"]["value"] <= 0:
+            records["loop_champion"]["name"] = "---"
+            records["loop_champion"]["text"] = "---"
+        elif not records["loop_champion"].get("text"):
+            records["loop_champion"]["text"] = "{} LOOPS".format(
+                records["loop_champion"]["value"]
+            )
+
+        if records["multiball_hero"]["value"] <= 0:
+            records["multiball_hero"]["name"] = "---"
+            records["multiball_hero"]["text"] = "---"
+            records["multiball_hero"]["mode"] = "---"
+        elif not records["multiball_hero"].get("text"):
+            records["multiball_hero"]["text"] = self._format_score(
+                records["multiball_hero"]["value"]
+            )
+
+        if records["villain_mvp"]["value"] <= 0:
+            records["villain_mvp"]["name"] = "---"
+            records["villain_mvp"]["text"] = "---"
+            records["villain_mvp"]["mode"] = "---"
+        elif not records["villain_mvp"].get("text"):
+            records["villain_mvp"]["text"] = self._format_score(
+                records["villain_mvp"]["value"]
+            )
+
+        return records
+
+    # ------------------------------------------------------------
     # RUN CALLBACK ON MPF THREAD
     # ------------------------------------------------------------
     def _run_on_mpf_thread(self, callback, *args):
@@ -879,6 +1255,16 @@ class IscoredSync(Mode):
         )
 
     # ------------------------------------------------------------
+    # RECORDS FILE PATH
+    # ------------------------------------------------------------
+    def _records_path(self):
+
+        return os.path.join(
+            self.machine.machine_path,
+            RECORDS_FILE_NAME
+        )
+
+    # ------------------------------------------------------------
     # LOAD QUEUE
     # ------------------------------------------------------------
     def _load_queue(self):
@@ -951,3 +1337,43 @@ class IscoredSync(Mode):
 
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2)
+
+    # ------------------------------------------------------------
+    # LOAD RECORDS
+    # ------------------------------------------------------------
+    def _load_records(self):
+
+        path = self._records_path()
+
+        if not os.path.exists(path):
+            return self._default_records()
+
+        try:
+
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            return self._normalise_records(data)
+
+        except Exception as e:
+
+            self.warning_log(
+                "Machine records load failed: %s",
+                e
+            )
+
+            return self._default_records()
+
+    # ------------------------------------------------------------
+    # SAVE RECORDS
+    # ------------------------------------------------------------
+    def _save_records(self, records):
+
+        records = self._normalise_records(records)
+
+        path = self._records_path()
+
+        with self._records_lock:
+
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(records, f, indent=2)
