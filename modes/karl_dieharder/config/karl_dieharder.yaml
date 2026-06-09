@@ -123,7 +123,6 @@ event_player:
     - flipper_on
     - wire_ramp_exit_closed
     - karl_dieharder_cleanup
-    - record_finish_karl_dieharder_villain_mvp
   record_finish_karl_dieharder_villain_mvp:
     record_finish_villain_mvp:
       mode: KARL DIE HARDER
@@ -164,10 +163,12 @@ event_player:
   karl_dieharder_fail_mode:
     - flipper_off
   karl_dieharder_won_complete:
+    - record_finish_karl_dieharder_villain_mvp
     - reset_bullet_total
     - reset_bullets
     - count_karl_for_extra_ball
   karl_dieharder_failed_complete:
+    - record_finish_karl_dieharder_villain_mvp
     - reset_bullet_total
     - reset_bullets
 

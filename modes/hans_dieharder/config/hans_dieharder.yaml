@@ -200,7 +200,6 @@ event_player:
     - villain_mode_stopped
     - flipper_on
     - wire_ramp_exit_closed
-    - record_finish_hans_dieharder_villain_mvp
   record_finish_hans_dieharder_villain_mvp:
     record_finish_villain_mvp:
       mode: HANS DIE HARDER
@@ -254,13 +253,15 @@ event_player:
     - reset_bullets
     - hans_dieharder_failed_complete|10s
   hans_dieharder_won_complete:
+    - record_finish_hans_dieharder_villain_mvp
     - reset_bullet_total
     - reset_bullets
     - count_hans_for_extra_ball
   hans_dieharder_failed_complete:
+    - record_finish_hans_dieharder_villain_mvp
     - reset_bullet_total
     - reset_bullets
-
+    
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------

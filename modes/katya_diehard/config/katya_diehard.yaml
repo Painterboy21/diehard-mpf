@@ -189,7 +189,6 @@ event_player:
     - katya_start_normal_timer
   mode_katya_diehard_stopping:
     - villain_mode_stopped
-    - record_finish_katya_diehard_villain_mvp
   record_finish_katya_diehard_villain_mvp:
     record_finish_villain_mvp:
       mode: KATYA DIE HARD
@@ -212,6 +211,7 @@ event_player:
   katya_failed_delay:
     - katya_failed|4s
   katya_failed:
+    - record_finish_katya_diehard_villain_mvp
     - reset_bullet_total
     - reset_bullets
     - wire_ramp_exit_closed
@@ -221,6 +221,7 @@ event_player:
     - katya_completed_show
     - katya_completed|4s
   katya_completed:
+    - record_finish_katya_diehard_villain_mvp
     - reset_bullet_total
     - reset_bullets
     - count_katya_for_extra_ball

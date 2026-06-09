@@ -153,7 +153,6 @@ shots:
       - hans_diehard_complete
       - hans_diehard_won_complete
       - hans_diehard_failed_complete
-
 # ------------------------------------------------------------
 # EVENT PLAYER
 # ------------------------------------------------------------
@@ -184,7 +183,6 @@ event_player:
   mode_hans_diehard_stopping:
     - villain_mode_stopped
     - wire_ramp_exit_closed
-    - record_finish_hans_diehard_villain_mvp
   record_finish_hans_diehard_villain_mvp:
     record_finish_villain_mvp:
       mode: HANS DIE HARD
@@ -237,10 +235,12 @@ event_player:
     - reset_bullet_total
     - reset_bullets
   hans_diehard_won_complete:
+    - record_finish_hans_diehard_villain_mvp
     - reset_bullet_total
     - reset_bullets
     - count_hans_for_extra_ball
   hans_diehard_failed_complete:
+    - record_finish_hans_diehard_villain_mvp
     - reset_bullet_total
     - reset_bullets
 

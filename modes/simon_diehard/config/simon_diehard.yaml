@@ -193,7 +193,6 @@ event_player:
     - villain_mode_stopped
     - wire_ramp_exit_closed
     - simon_diehard_cleanup
-    - record_finish_simon_diehard_villain_mvp
   record_finish_simon_diehard_villain_mvp:
     record_finish_villain_mvp:
       mode: SIMON DIE HARD
@@ -276,12 +275,14 @@ event_player:
     - reset_bullet_total
     - reset_bullets
   simon_diehard_won_complete:
+    - record_finish_simon_diehard_villain_mvp
     - simon_completed
     - count_simon_for_extra_ball
     - check_wizard_mode
     - reset_bullet_total
     - reset_bullets
   simon_diehard_failed_complete:
+    - record_finish_simon_diehard_villain_mvp
     - simon_failed
     - reset_bullet_total
     - reset_bullets
