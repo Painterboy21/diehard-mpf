@@ -293,3 +293,81 @@ theme_override_constants/shadow_outline_size = 22
 theme_override_font_sizes/font_size = 125
 text = "sdsd"
 horizontal_alignment = 1
+
+[node name="MultiballHero" type="VBoxContainer" parent="." unique_id=999315151]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 70
+
+[node name="Label" type="Label" parent="MultiballHero" unique_id=234173012]
+layout_mode = 2
+theme = ExtResource("3_f161n")
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_outline_size = 22
+theme_override_font_sizes/font_size = 125
+text = "MULTIBALL HERO"
+horizontal_alignment = 1
+
+[node name="Name" type="Label" parent="MultiballHero" unique_id=1359088516]
+layout_mode = 2
+theme = ExtResource("3_f161n")
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_outline_size = 22
+theme_override_font_sizes/font_size = 125
+text = "sdsd"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="MultiballHero" unique_id=1322133211]
+layout_mode = 2
+theme = ExtResource("3_f161n")
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_outline_size = 22
+theme_override_font_sizes/font_size = 125
+text = "sdsd"
+horizontal_alignment = 1
+
+[node name="VillainMVP" type="VBoxContainer" parent="." unique_id=668547090]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 70
+
+[node name="Label" type="Label" parent="VillainMVP" unique_id=1892915428]
+layout_mode = 2
+theme = ExtResource("3_f161n")
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_outline_size = 22
+theme_override_font_sizes/font_size = 125
+text = "VILLAIN MVP"
+horizontal_alignment = 1
+
+[node name="Name" type="Label" parent="VillainMVP" unique_id=1196264468]
+layout_mode = 2
+theme = ExtResource("3_f161n")
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_outline_size = 22
+theme_override_font_sizes/font_size = 125
+text = "sdsd"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="VillainMVP" unique_id=253906128]
+layout_mode = 2
+theme = ExtResource("3_f161n")
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_outline_size = 22
+theme_override_font_sizes/font_size = 125
+text = "sdsd"
+horizontal_alignment = 1
