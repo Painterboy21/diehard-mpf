@@ -94,7 +94,7 @@ ball_saves:
 # EVENT PLAYER
 # ------------------------------------------------------------
 # Handles Karl mode start, damage shots, heartbeat changes,
-# result flow, final cleanup, and bullet resets.
+# result flow, Villain MVP tracking, final cleanup, and bullet resets.
 # ------------------------------------------------------------
 event_player:
   mode_karl_diehard_started:
@@ -107,6 +107,10 @@ event_player:
     - karl_enable_ball_save
     - karl_heartbeat_slow
     - karl_apply_hans_bonus_time{current_player.hans_bonus == 1}|10ms
+    - record_start_karl_diehard_villain_mvp
+  record_start_karl_diehard_villain_mvp:
+    record_start_villain_mvp:
+      mode: KARL DIE HARD
   timer_karl_diehard_timer_complete{current_player.karl_result_started==0}:
     - karl_escaped_slide
     - karl_diehard_failed|5s
@@ -118,6 +122,10 @@ event_player:
     - karl_diehard_completed|4s
   mode_karl_diehard_stopping:
     - villain_mode_stopped
+    - record_finish_karl_diehard_villain_mvp
+  record_finish_karl_diehard_villain_mvp:
+    record_finish_villain_mvp:
+      mode: KARL DIE HARD
   SpinnerLeft_active{current_player.karl_damage < 100 and current_player.karl_result_started==0}:
     - karl_spinner_hit
     - karl_score_spinner

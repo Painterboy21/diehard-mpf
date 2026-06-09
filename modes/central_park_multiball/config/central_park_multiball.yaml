@@ -24,43 +24,61 @@ mode:
 # EVENT PLAYER
 # ------------------------------------------------------------
 # Handles Central Park Multiball shot flow, jackpot scoring,
-# Super Jackpot qualification, widget cleanup, and Extra Ball bridge.
+# Super Jackpot qualification, widget cleanup, Extra Ball bridge,
+# and tracks score earned for the Multiball Hero machine record.
 # ------------------------------------------------------------
 event_player:
   mode_qualify_central_park_stopped:
     - wire_ramp_exit_open
     - nakatomi_entrance_lock_close
+
   mode_central_park_multiball_started:
     - wire_ramp_exit_open
     - show_widget_park_jackpot_unlit
+    - record_start_central_park_multiball_hero
+
+  record_start_central_park_multiball_hero:
+    record_start_multiball_hero:
+      mode: CENTRAL PARK MULTIBALL
+
   slide_base_active:
     - wire_ramp_exit_open
+
   left_orbit_hit:
     - wire_ramp_exit_closed
+
   right_orbit_hit:
     - wire_ramp_exit_closed
+
   s_mid_orbit_active:
     - wire_ramp_exit_closed
+
   s_air_duct_active:
     - wire_ramp_exit_closed
+
   cp_jackpot_1_off_hit{current_player.park_super_jackpot_available == 0 and current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_jackpot
     - advance_cp_jackpot_1
+
   cp_jackpot_2_off_hit{current_player.park_super_jackpot_available == 0 and current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_jackpot
     - advance_cp_jackpot_2
+
   cp_jackpot_3_off_hit{current_player.park_super_jackpot_available == 0 and current_player.shot_cp_single_bullet_advance == 1}:
     - score_park_jackpot
     - advance_cp_jackpot_3
+
   slide_jackpot_removed{current_player.shot_cp_jackpot_1 == 1 and current_player.shot_cp_jackpot_2 == 1 and current_player.shot_cp_jackpot_3 == 1}:
     - enable_park_super_jackpot
     - cp_bullets_advance_super_red|100ms
+
   enable_park_super_jackpot:
     - remove_widget_park_jackpot_lit
     - remove_widget_park_jackpot_unlit
     - remove_widget_park_jackpot_lit|100ms
     - remove_widget_park_jackpot_unlit|100ms
     - show_cp_super_jackpot_lit|200ms
+
   cp_jackpot_1_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_super_advance == 2}:
     - remove_widget_park_jackpot_lit
     - remove_widget_park_jackpot_unlit
@@ -69,6 +87,7 @@ event_player:
     - score_park_super_jackpot_hit
     - score_park_super_jackpot_1
     - check_restart_cp_jackpots
+
   cp_jackpot_2_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_super_advance == 2}:
     - remove_widget_park_jackpot_lit
     - remove_widget_park_jackpot_unlit
@@ -77,6 +96,7 @@ event_player:
     - score_park_super_jackpot_hit
     - score_park_super_jackpot_2
     - check_restart_cp_jackpots
+
   cp_jackpot_3_super_hit{current_player.park_super_jackpot_available == 1 and current_player.shot_cp_single_bullet_super_advance == 2}:
     - remove_widget_park_jackpot_lit
     - remove_widget_park_jackpot_unlit
@@ -85,24 +105,36 @@ event_player:
     - score_park_super_jackpot_hit
     - score_park_super_jackpot_3
     - check_restart_cp_jackpots
+
   check_restart_cp_jackpots{current_player.cp_super_jackpots_collected >= 3}:
     - restart_cp_jackpots
+
   restart_cp_jackpots:
     - remove_cp_super_jackpot_lit|100ms
+
   player_shot_cp_bullets_advance{value==0 and current_player.park_super_jackpot_available == 0}:
     - show_widget_park_jackpot_unlit
+
   player_shot_cp_bullets_advance{value!=0}:
     - remove_widget_park_jackpot_unlit
+
   player_shot_cp_bullets_advance{value==1 and current_player.park_super_jackpot_available == 0}:
     - show_widget_park_jackpot_lit
+
   player_shot_cp_bullets_advance{value!=1}:
     - remove_widget_park_jackpot_lit
+
   player_shot_cp_bullets_advance{current_player.park_super_jackpot_available == 1}:
     - remove_widget_park_jackpot_lit
     - remove_widget_park_jackpot_unlit
+
   multiball_central_park_ended:
     - count_park_for_extra_ball
+    - record_finish_central_park_multiball_hero
 
+  record_finish_central_park_multiball_hero:
+    record_finish_multiball_hero:
+      mode: CENTRAL PARK MULTIBALL
 # ------------------------------------------------------------
 # MULTIBALLS
 # ------------------------------------------------------------

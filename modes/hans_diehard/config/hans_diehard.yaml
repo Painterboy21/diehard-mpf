@@ -158,7 +158,8 @@ shots:
 # EVENT PLAYER
 # ------------------------------------------------------------
 # Handles mode start, target validation, detonator progress,
-# result slides, ball drain fail flow, and final cleanup.
+# result slides, ball drain fail flow, Villain MVP tracking,
+# and final cleanup.
 # ------------------------------------------------------------
 event_player:
   mode_hans_diehard_started:
@@ -176,9 +177,17 @@ event_player:
     - wire_ramp_exit_open
     - reset_bullet_total
     - reset_bullets
+    - record_start_hans_diehard_villain_mvp
+  record_start_hans_diehard_villain_mvp:
+    record_start_villain_mvp:
+      mode: HANS DIE HARD
   mode_hans_diehard_stopping:
     - villain_mode_stopped
     - wire_ramp_exit_closed
+    - record_finish_hans_diehard_villain_mvp
+  record_finish_hans_diehard_villain_mvp:
+    record_finish_villain_mvp:
+      mode: HANS DIE HARD
   hans_diehard_h_hit:
     - hans_diehard_valid_h
   hans_diehard_o_hit:

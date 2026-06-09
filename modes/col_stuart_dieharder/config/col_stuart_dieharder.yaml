@@ -134,6 +134,13 @@ shots:
       - col_stuart_dieharder_failed
       - col_stuart_fail_mode
 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Handles mode start, timer choice, shot rules, Die Harder
+# ball-lost fail flow, complete flow, Extra Ball bridge,
+# Villain MVP tracking, and cleanup.
+# ------------------------------------------------------------
 event_player:
   mode_col_stuart_dieharder_started:
     - villain_mode_started
@@ -147,6 +154,10 @@ event_player:
     - col_stuart_enable_all_remaining|100ms
     - col_stuart_clear_start_text|50ms
     - col_stuart_set_start_text|150ms
+    - record_start_col_stuart_dieharder_villain_mvp
+  record_start_col_stuart_dieharder_villain_mvp:
+    record_start_villain_mvp:
+      mode: COL/STUART DIE HARDER
   mode_col_stuart_dieharder_started{current_player.hans_bonus == 1}:
     - col_stuart_start_hans_bonus_timer
   mode_col_stuart_dieharder_started{current_player.hans_bonus != 1}:
@@ -158,6 +169,10 @@ event_player:
     - col_stuart_disable_all_shots
     - col_stuart_disable_start_ball_save
     - col_stuart_disable_complete_ball_save
+    - record_finish_col_stuart_dieharder_villain_mvp
+  record_finish_col_stuart_dieharder_villain_mvp:
+    record_finish_villain_mvp:
+      mode: COL/STUART DIE HARDER
   timer_col_stuart_dieharder_timer_complete{current_player.col_stuart_result_started == 0}:
     - col_stuart_fail_mode
   ball_drain{current_player.col_stuart_result_started == 0}:
@@ -268,7 +283,6 @@ event_player:
     - ball_save_saving_ball
   ball_save_col_stuart_dieharder_complete_save_saving_ball:
     - ball_save_saving_ball
-
 variable_player:
   col_stuart_reset:
     villain_mode_running:

@@ -161,12 +161,12 @@ shots:
       - col_stuart_diehard_completed
       - col_stuart_diehard_failed
       - mode_col_stuart_diehard_stopping
-
 # ------------------------------------------------------------
 # EVENT PLAYER
 # ------------------------------------------------------------
 # Handles mode start, timer choice, shot rules, fail flow,
-# complete flow, Extra Ball bridge, and cleanup.
+# complete flow, Extra Ball bridge, Villain MVP tracking,
+# and cleanup.
 # ------------------------------------------------------------
 event_player:
   mode_col_stuart_diehard_started:
@@ -181,26 +181,28 @@ event_player:
     - col_stuart_enable_all_remaining|100ms
     - col_stuart_clear_start_text|50ms
     - col_stuart_set_start_text|150ms
-
+    - record_start_col_stuart_diehard_villain_mvp
+  record_start_col_stuart_diehard_villain_mvp:
+    record_start_villain_mvp:
+      mode: COL/STUART DIE HARD
   mode_col_stuart_diehard_started{current_player.hans_bonus == 1}:
     - col_stuart_start_hans_bonus_timer
-
   mode_col_stuart_diehard_started{current_player.hans_bonus != 1}:
     - col_stuart_start_normal_timer
-
   mode_col_stuart_diehard_stopping:
     - villain_mode_stopped
     - wire_ramp_exit_closed
     - col_stuart_disable_all_shots
     - col_stuart_disable_start_ball_save
     - col_stuart_disable_complete_ball_save
-
+    - record_finish_col_stuart_diehard_villain_mvp
+  record_finish_col_stuart_diehard_villain_mvp:
+    record_finish_villain_mvp:
+      mode: COL/STUART DIE HARD
   timer_col_stuart_diehard_timer_complete{current_player.col_stuart_result_started == 0}:
     - col_stuart_fail_mode
-
   ball_drain{current_player.col_stuart_result_started == 0}:
     - col_stuart_fail_mode
-
   col_stuart_fail_mode:
     - col_stuart_escaped_slide
     - col_stuart_disable_all_shots
@@ -209,17 +211,14 @@ event_player:
     - reset_bullet_total
     - wire_ramp_exit_closed
     - col_stuart_diehard_failed|5s
-
   col_stuart_diehard_failed:
     - resume_base_music|500ms
-
   col_stuart_check_complete{current_player.col_stuart_progress >= 2 and current_player.col_stuart_result_started == 0}:
     - col_stuart_defeated_slide
     - col_stuart_disable_all_shots
     - col_stuart_disable_start_ball_save
     - col_stuart_enable_complete_ball_save
     - col_stuart_diehard_completed|5s
-
   col_stuart_diehard_completed:
     - col_stuart_score_complete
     - count_stuart_for_extra_ball
@@ -229,93 +228,75 @@ event_player:
     - wire_ramp_exit_closed
     - resume_base_music|500ms
     - restore_col_stuart_complete_insert|750ms
-
   col_stuart_left_orbit_hit{current_player.col_stuart_shot_mode == 0 and current_player.col_stuart_left_orbit_done == 0 and current_player.col_stuart_result_started == 0}:
     - col_stuart_left_orbit_first_hit
     - col_stuart_disable_all_shots
     - col_stuart_enable_left_orbit
     - col_stuart_flash_left_orbit
     - col_stuart_update_remaining|20ms
-
   col_stuart_left_ramp_hit{current_player.col_stuart_shot_mode == 0 and current_player.col_stuart_left_ramp_done == 0 and current_player.col_stuart_result_started == 0}:
     - col_stuart_left_ramp_first_hit
     - col_stuart_disable_all_shots
     - col_stuart_enable_left_ramp
     - col_stuart_flash_left_ramp
     - col_stuart_update_remaining|20ms
-
   col_stuart_right_ramp_hit{current_player.col_stuart_shot_mode == 0 and current_player.col_stuart_right_ramp_done == 0 and current_player.col_stuart_result_started == 0}:
     - col_stuart_right_ramp_first_hit
     - col_stuart_disable_all_shots
     - col_stuart_enable_right_ramp
     - col_stuart_flash_right_ramp
     - col_stuart_update_remaining|20ms
-
   col_stuart_upper_loop_hit{current_player.col_stuart_shot_mode == 0 and current_player.col_stuart_upper_loop_done == 0 and current_player.col_stuart_result_started == 0}:
     - col_stuart_upper_loop_first_hit
     - col_stuart_disable_all_shots
     - col_stuart_enable_upper_loop
     - col_stuart_flash_upper_loop
     - col_stuart_update_remaining|20ms
-
   col_stuart_right_orbit_hit{current_player.col_stuart_shot_mode == 0 and current_player.col_stuart_right_orbit_done == 0 and current_player.col_stuart_result_started == 0}:
     - col_stuart_right_orbit_first_hit
     - col_stuart_disable_all_shots
     - col_stuart_enable_right_orbit
     - col_stuart_flash_right_orbit
     - col_stuart_update_remaining|20ms
-
   col_stuart_left_orbit_hit{current_player.col_stuart_shot_mode == 1 and current_player.col_stuart_last_shot == 1 and current_player.col_stuart_result_started == 0}:
     - col_stuart_left_orbit_confirmed
     - col_stuart_disable_all_shots
     - col_stuart_flash_left_orbit
     - col_stuart_after_confirmed|20ms
-
   col_stuart_left_ramp_hit{current_player.col_stuart_shot_mode == 1 and current_player.col_stuart_last_shot == 2 and current_player.col_stuart_result_started == 0}:
     - col_stuart_left_ramp_confirmed
     - col_stuart_disable_all_shots
     - col_stuart_flash_left_ramp
     - col_stuart_after_confirmed|20ms
-
   col_stuart_right_ramp_hit{current_player.col_stuart_shot_mode == 1 and current_player.col_stuart_last_shot == 3 and current_player.col_stuart_result_started == 0}:
     - col_stuart_right_ramp_confirmed
     - col_stuart_disable_all_shots
     - col_stuart_flash_right_ramp
     - col_stuart_after_confirmed|20ms
-
   col_stuart_upper_loop_hit{current_player.col_stuart_shot_mode == 1 and current_player.col_stuart_last_shot == 4 and current_player.col_stuart_result_started == 0}:
     - col_stuart_upper_loop_confirmed
     - col_stuart_disable_all_shots
     - col_stuart_flash_upper_loop
     - col_stuart_after_confirmed|20ms
-
   col_stuart_right_orbit_hit{current_player.col_stuart_shot_mode == 1 and current_player.col_stuart_last_shot == 5 and current_player.col_stuart_result_started == 0}:
     - col_stuart_right_orbit_confirmed
     - col_stuart_disable_all_shots
     - col_stuart_flash_right_orbit
     - col_stuart_after_confirmed|20ms
-
   col_stuart_after_confirmed{current_player.col_stuart_progress >= 2}:
     - col_stuart_check_complete
-
   col_stuart_enable_all_remaining{current_player.col_stuart_left_orbit_done == 0 and current_player.col_stuart_result_started == 0}:
     - col_stuart_enable_left_orbit
-
   col_stuart_enable_all_remaining{current_player.col_stuart_left_ramp_done == 0 and current_player.col_stuart_result_started == 0}:
     - col_stuart_enable_left_ramp
-
   col_stuart_enable_all_remaining{current_player.col_stuart_right_ramp_done == 0 and current_player.col_stuart_result_started == 0}:
     - col_stuart_enable_right_ramp
-
   col_stuart_enable_all_remaining{current_player.col_stuart_upper_loop_done == 0 and current_player.col_stuart_result_started == 0}:
     - col_stuart_enable_upper_loop
-
   col_stuart_enable_all_remaining{current_player.col_stuart_right_orbit_done == 0 and current_player.col_stuart_result_started == 0}:
     - col_stuart_enable_right_orbit
-
   ball_save_col_stuart_start_save_saving_ball:
     - ball_save_saving_ball
-
   ball_save_col_stuart_complete_save_saving_ball:
     - ball_save_saving_ball
 

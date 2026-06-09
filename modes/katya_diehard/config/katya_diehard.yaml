@@ -160,7 +160,8 @@ shots:
 # ------------------------------------------------------------
 # EVENT PLAYER
 # Handles start, Hans Bonus timer choice, loop scoring,
-# victory flow, escape flow, ball drain handling, and cleanup.
+# victory flow, escape flow, ball drain handling, Villain MVP
+# tracking, and cleanup.
 #
 # Die Hard ending:
 #   Timer fail / drain = Katya escaped.
@@ -178,83 +179,61 @@ event_player:
     - reset_bullets
     - nakatomi_entrance_lock_close
     - wire_ramp_exit_open
-
+    - record_start_katya_diehard_villain_mvp
+  record_start_katya_diehard_villain_mvp:
+    record_start_villain_mvp:
+      mode: KATYA DIE HARD
   mode_katya_diehard_started{current_player.hans_bonus==1}:
     - katya_start_bonus_timer
-
   mode_katya_diehard_started{current_player.hans_bonus!=1}:
     - katya_start_normal_timer
-
   mode_katya_diehard_stopping:
     - villain_mode_stopped
-
-  # ------------------------------------------------------------
-  # FAIL / ESCAPE FLOW
-  # ------------------------------------------------------------
+    - record_finish_katya_diehard_villain_mvp
+  record_finish_katya_diehard_villain_mvp:
+    record_finish_villain_mvp:
+      mode: KATYA DIE HARD
   timer_katya_timer_complete:
     - katya_escape_sequence
-
   ball_drain{current_player.katya_diehard_completion_active==0 and current_player.katya_diehard_result_started==0}:
     - katya_ball_drain_escape
-
   ball_drain{current_player.katya_diehard_completion_active==1}:
     - reset_bullet_total
     - reset_bullets
-
   ball_ended{current_player.katya_diehard_completion_active==0 and current_player.katya_diehard_result_started==0}:
     - katya_escape_sequence
-
   ball_ended{current_player.katya_diehard_completion_active==1}:
     - reset_bullet_total
     - reset_bullets
-
   katya_ball_drain_escape:
     - katya_failed|4s
-
   katya_escape_sequence:
     - katya_failed_delay
-
   katya_failed_delay:
     - katya_failed|4s
-
   katya_failed:
     - reset_bullet_total
     - reset_bullets
     - wire_ramp_exit_closed
-
-  # ------------------------------------------------------------
-  # COMPLETE FLOW
-  # ------------------------------------------------------------
   katya_captive_final_hit:
     - katya_victory_sequence
-
   katya_victory_sequence:
     - katya_completed_show
     - katya_completed|4s
-
   katya_completed:
     - reset_bullet_total
     - reset_bullets
     - count_katya_for_extra_ball
     - wire_ramp_exit_closed
-
-  # ------------------------------------------------------------
-  # LOOP HIT FLOW
-  # Godot hit videos use current_player.katya_shots.
-  # Old MPF hit slides are not called here.
-  # ------------------------------------------------------------
   katya_left_loop_hit{device.counters.katya_loop_counter.value<5}:
     - katya_loop_hit_scored
     - katya_left_loop_relight|3s
-
   katya_right_loop_hit{device.counters.katya_loop_counter.value<5}:
     - katya_loop_hit_scored
     - katya_right_loop_relight|3s
-
   katya_upper_loop_hit{device.counters.katya_loop_counter.value<5}:
     - katya_loop_hit_scored
     - katya_upper_loop_relight|3s
-
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # Stores Katya Die Hard state, timer, shots, Hans Bonus state,
