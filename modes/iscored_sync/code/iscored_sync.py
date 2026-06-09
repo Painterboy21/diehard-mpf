@@ -22,6 +22,7 @@ ISCORED_SUBMIT_URL = "https://www.iscored.info/api/FT1/DIE%20HARD%20TRILOGY/subm
 
 DEFAULT_PLAYER_NAME = "JohnMcClane"
 QUEUE_FILE_NAME = "iscored_queue.json"
+CACHE_FILE_NAME = "iscored_cache.json"
 TOP_N = 10
 HTTP_TIMEOUT = 2
 
@@ -42,6 +43,7 @@ class IscoredSync(Mode):
 
         self._queue_lock = threading.Lock()
         self._refresh_lock = threading.Lock()
+        self._cache_lock = threading.Lock()
 
         self.machine.events.add_handler(
             "iscored_submit_score",
@@ -62,6 +64,12 @@ class IscoredSync(Mode):
             "mode_attract_started",
             self.refresh_scores
         )
+
+        # Apply any saved local cache straight away.
+        # Then the normal attract refresh will try to update from iScored.
+        cached_entries = self._load_cache_entries()
+        if cached_entries:
+            self._apply_leaderboard_machine_vars(cached_entries)
 
     # ------------------------------------------------------------
     # SUBMIT SCORE
@@ -153,11 +161,12 @@ class IscoredSync(Mode):
 
     # ------------------------------------------------------------
     # CHECK THEN SUBMIT OR QUEUE
-    # Checks top 10 before posting.
+    # Checks cached top 10 before posting.
     #
     # Important:
-    # iScored may return accepted but not actually show the score
-    # in the following leaderboard GET, so we verify it.
+    # The local cached top 10 is now the machine's working copy.
+    # If a score qualifies, we insert it locally immediately so
+    # attract mode can show it even if internet is down.
     # ------------------------------------------------------------
     def _check_then_submit_or_queue(self, player_name, score):
 
@@ -166,16 +175,25 @@ class IscoredSync(Mode):
         if qualifies is True:
 
             self.info_log(
-                "iScored score qualifies for top %s -> player: %s score: %s",
+                "iScored cached score qualifies for top %s -> player: %s score: %s",
                 TOP_N,
                 player_name,
                 score
             )
 
+            # Add to local cached leaderboard immediately.
+            # This makes attract display update even before online sync.
+            self._run_on_mpf_thread(
+                self._insert_score_into_cache_and_apply,
+                player_name,
+                score,
+                True
+            )
+
             ok = self._post_to_iscored(
                 player_name=player_name,
                 score=score,
-                queue_on_fail=True
+                queue_on_fail=False
             )
 
             if ok:
@@ -204,12 +222,22 @@ class IscoredSync(Mode):
                     self._queue_score(player_name, score)
                     self._refresh_scores_thread()
 
+            else:
+
+                self.warning_log(
+                    "iScored submit failed, score kept locally and queued -> player: %s score: %s",
+                    player_name,
+                    score
+                )
+
+                self._queue_score(player_name, score)
+
             return
 
         if qualifies is False:
 
             self.info_log(
-                "iScored skipped -> score not top %s: player: %s score: %s",
+                "iScored skipped -> score not cached top %s: player: %s score: %s",
                 TOP_N,
                 player_name,
                 score
@@ -217,8 +245,10 @@ class IscoredSync(Mode):
 
             return
 
+        # No cache and no online check.
+        # Safer arcade behaviour: queue it, but do not overwrite display.
         self.warning_log(
-            "iScored could not check leaderboard, queued for later -> player: %s score: %s",
+            "iScored could not check cached/online leaderboard, queued for later -> player: %s score: %s",
             player_name,
             score
         )
@@ -257,25 +287,42 @@ class IscoredSync(Mode):
 
     # ------------------------------------------------------------
     # SCORE QUALIFIES CHECK
+    # Uses local cached top 10 first.
+    # If no cache exists yet, tries online.
     # ------------------------------------------------------------
     def _score_qualifies_for_top_ten(self, score):
 
         try:
-            scores = self._get_top_scores()
 
-            if len(scores) < TOP_N:
+            entries = self._load_cache_entries()
+
+            if not entries:
 
                 self.info_log(
-                    "iScored leaderboard has fewer than %s scores, score qualifies",
-                    TOP_N
+                    "iScored no local cache yet, checking online leaderboard"
                 )
 
-                return True
+                entries = self._get_leaderboard_entries(TOP_N)
+                entries = self._normalise_entries(entries)
+                self._save_cache_entries(entries)
+
+            scores = []
+
+            for entry in entries:
+                try:
+                    scores.append(int(entry.get("score", 0)))
+                except Exception:
+                    scores.append(0)
+
+            while len(scores) < TOP_N:
+                scores.append(0)
+
+            scores.sort(reverse=True)
 
             tenth_score = scores[TOP_N - 1]
 
             self.info_log(
-                "iScored top %s cutoff is %s, player score is %s",
+                "iScored cached top %s cutoff is %s, player score is %s",
                 TOP_N,
                 tenth_score,
                 score
@@ -285,30 +332,11 @@ class IscoredSync(Mode):
 
         except Exception as e:
 
-            self.warning_log("iScored leaderboard check failed: %s", e)
+            self.warning_log("iScored cached leaderboard check failed: %s", e)
             return None
 
     # ------------------------------------------------------------
-    # GET TOP SCORES
-    # ------------------------------------------------------------
-    def _get_top_scores(self):
-
-        entries = self._get_leaderboard_entries(TOP_N)
-
-        scores = []
-
-        for entry in entries:
-            try:
-                scores.append(int(entry.get("score", 0)))
-            except Exception:
-                pass
-
-        scores.sort(reverse=True)
-
-        return scores
-
-    # ------------------------------------------------------------
-    # GET LEADERBOARD ENTRIES
+    # GET LEADERBOARD ENTRIES FROM iSCORED
     # ------------------------------------------------------------
     def _get_leaderboard_entries(self, max_scores):
 
@@ -349,7 +377,8 @@ class IscoredSync(Mode):
                 "rank": rank,
                 "name": name if name else "---",
                 "score": score_value,
-                "score_text": self._format_score(score_value)
+                "score_text": self._format_score(score_value),
+                "pending": False
             })
 
         return entries
@@ -357,6 +386,13 @@ class IscoredSync(Mode):
     # ------------------------------------------------------------
     # REFRESH SCORES THREAD
     # Prevents overlapping leaderboard refreshes.
+    #
+    # Online success:
+    #   save online scores into local cache
+    #   apply machine vars
+    #
+    # Online failure:
+    #   keep/apply saved local cache
     # ------------------------------------------------------------
     def _refresh_scores_thread(self):
 
@@ -368,6 +404,9 @@ class IscoredSync(Mode):
         try:
 
             entries = self._get_leaderboard_entries(TOP_N)
+            entries = self._normalise_entries(entries)
+
+            self._save_cache_entries(entries)
 
             self._run_on_mpf_thread(
                 self._apply_leaderboard_machine_vars,
@@ -377,13 +416,106 @@ class IscoredSync(Mode):
         except Exception as e:
 
             self.warning_log(
-                "iScored leaderboard refresh failed: %s",
+                "iScored leaderboard refresh failed, using local cache: %s",
                 e
             )
+
+            cached_entries = self._load_cache_entries()
+
+            if cached_entries:
+
+                self._run_on_mpf_thread(
+                    self._apply_leaderboard_machine_vars,
+                    cached_entries
+                )
+
+            else:
+
+                self.warning_log(
+                    "iScored no local cache available yet"
+                )
 
         finally:
 
             self._refresh_lock.release()
+
+    # ------------------------------------------------------------
+    # INSERT SCORE INTO LOCAL CACHE AND APPLY VARS
+    # Used when a new score qualifies.
+    # ------------------------------------------------------------
+    def _insert_score_into_cache_and_apply(self, player_name, score, pending):
+
+        entries = self._load_cache_entries()
+
+        entries.append({
+            "rank": "",
+            "name": player_name,
+            "score": int(score),
+            "score_text": self._format_score(score),
+            "pending": bool(pending)
+        })
+
+        entries = self._normalise_entries(entries)
+        self._save_cache_entries(entries)
+        self._apply_leaderboard_machine_vars(entries)
+
+        self.info_log(
+            "iScored local cache inserted -> player: %s score: %s pending: %s",
+            player_name,
+            score,
+            pending
+        )
+
+    # ------------------------------------------------------------
+    # NORMALISE ENTRIES
+    # Sorts, trims to top 10, fills empty slots.
+    # ------------------------------------------------------------
+    def _normalise_entries(self, entries):
+
+        clean_entries = []
+
+        for entry in entries:
+
+            try:
+                score_value = int(entry.get("score", 0))
+            except Exception:
+                score_value = 0
+
+            name = str(entry.get("name", "---")).strip()
+            if not name:
+                name = "---"
+
+            pending = bool(entry.get("pending", False))
+
+            clean_entries.append({
+                "rank": "",
+                "name": name,
+                "score": score_value,
+                "score_text": self._format_score(score_value) if score_value > 0 else "---",
+                "pending": pending
+            })
+
+        clean_entries.sort(
+            key=lambda item: int(item.get("score", 0)),
+            reverse=True
+        )
+
+        clean_entries = clean_entries[:TOP_N]
+
+        while len(clean_entries) < TOP_N:
+            clean_entries.append({
+                "rank": "",
+                "name": "---",
+                "score": 0,
+                "score_text": "---",
+                "pending": False
+            })
+
+        for index, entry in enumerate(clean_entries):
+            entry["rank"] = str(index + 1)
+            entry["score_text"] = self._format_score(entry["score"]) if int(entry["score"]) > 0 else "---"
+
+        return clean_entries
 
     # ------------------------------------------------------------
     # APPLY LEADERBOARD MACHINE VARS
@@ -396,6 +528,8 @@ class IscoredSync(Mode):
     # So we clear display vars first, then apply real values.
     # ------------------------------------------------------------
     def _apply_leaderboard_machine_vars(self, entries):
+
+        entries = self._normalise_entries(entries)
 
         # Force change events first.
         for index in range(TOP_N):
@@ -422,65 +556,59 @@ class IscoredSync(Mode):
                 ""
             )
 
+            self._set_machine_var(
+                "iscored_{}_pending".format(slot),
+                0
+            )
+
         # Apply real values.
         for index in range(TOP_N):
 
             slot = index + 1
+            entry = entries[index]
 
-            if index < len(entries):
+            self._set_machine_var(
+                "iscored_{}_rank".format(slot),
+                entry["rank"]
+            )
 
-                entry = entries[index]
+            self._set_machine_var(
+                "iscored_{}_name".format(slot),
+                entry["name"]
+            )
 
-                self._set_machine_var(
-                    "iscored_{}_rank".format(slot),
-                    entry["rank"]
-                )
+            self._set_machine_var(
+                "iscored_{}_score".format(slot),
+                entry["score"]
+            )
 
-                self._set_machine_var(
-                    "iscored_{}_name".format(slot),
-                    entry["name"]
-                )
+            self._set_machine_var(
+                "iscored_{}_score_text".format(slot),
+                entry["score_text"]
+            )
 
-                self._set_machine_var(
-                    "iscored_{}_score".format(slot),
-                    entry["score"]
-                )
-
-                self._set_machine_var(
-                    "iscored_{}_score_text".format(slot),
-                    entry["score_text"]
-                )
-
-            else:
-
-                self._set_machine_var(
-                    "iscored_{}_rank".format(slot),
-                    str(slot)
-                )
-
-                self._set_machine_var(
-                    "iscored_{}_name".format(slot),
-                    "---"
-                )
-
-                self._set_machine_var(
-                    "iscored_{}_score".format(slot),
-                    0
-                )
-
-                self._set_machine_var(
-                    "iscored_{}_score_text".format(slot),
-                    "---"
-                )
+            self._set_machine_var(
+                "iscored_{}_pending".format(slot),
+                1 if entry.get("pending", False) else 0
+            )
 
         self._set_machine_var(
             "iscored_last_update",
             int(time.time())
         )
 
+        real_scores = 0
+
+        for entry in entries:
+            try:
+                if int(entry.get("score", 0)) > 0:
+                    real_scores += 1
+            except Exception:
+                pass
+
         self.info_log(
             "iScored leaderboard updated -> %s score(s)",
-            len(entries)
+            real_scores
         )
 
     # ------------------------------------------------------------
@@ -741,6 +869,16 @@ class IscoredSync(Mode):
         )
 
     # ------------------------------------------------------------
+    # CACHE FILE PATH
+    # ------------------------------------------------------------
+    def _cache_path(self):
+
+        return os.path.join(
+            self.machine.machine_path,
+            CACHE_FILE_NAME
+        )
+
+    # ------------------------------------------------------------
     # LOAD QUEUE
     # ------------------------------------------------------------
     def _load_queue(self):
@@ -767,3 +905,49 @@ class IscoredSync(Mode):
 
         with open(path, "w", encoding="utf-8") as f:
             json.dump(queue, f, indent=2)
+
+    # ------------------------------------------------------------
+    # LOAD CACHE ENTRIES
+    # ------------------------------------------------------------
+    def _load_cache_entries(self):
+
+        path = self._cache_path()
+
+        if not os.path.exists(path):
+            return []
+
+        try:
+
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            entries = data.get("entries", [])
+            return self._normalise_entries(entries)
+
+        except Exception as e:
+
+            self.warning_log(
+                "iScored cache load failed: %s",
+                e
+            )
+
+            return []
+
+    # ------------------------------------------------------------
+    # SAVE CACHE ENTRIES
+    # ------------------------------------------------------------
+    def _save_cache_entries(self, entries):
+
+        entries = self._normalise_entries(entries)
+
+        data = {
+            "updatedAt": int(time.time()),
+            "entries": entries
+        }
+
+        path = self._cache_path()
+
+        with self._cache_lock:
+
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2)
