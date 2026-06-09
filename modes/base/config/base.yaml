@@ -172,6 +172,26 @@ event_player:
   multiball_central_park_ended:
     - resume_base_music|5s
 
+  # Full loop streak tracking.
+  right_full_loop_hit:
+    - full_loop_hit
+  left_full_loop_hit:
+    - full_loop_hit
+  full_loop_hit:
+    - check_loop_streak_awards|1ms
+  timer_loop_combo_timer_complete:
+    - loop_streak_reset
+  ball_ending:
+    - loop_streak_reset
+  check_loop_streak_awards{current_player.current_loop_streak==5}:
+    - loop_streak_award_5
+  check_loop_streak_awards{current_player.current_loop_streak==10}:
+    - loop_streak_award_10
+  check_loop_streak_awards{current_player.current_loop_streak==15}:
+    - loop_streak_award_15
+  ball_ending{current_player.best_loop_streak_this_game > 0}:
+    record_candidate_loop_champion:
+
 # ------------------------------------------------------------
 # LIGHT PLAYER
 # ------------------------------------------------------------
@@ -383,6 +403,23 @@ random_event_player:
     scope: player
 
 # ------------------------------------------------------------
+# TIMERS
+# ------------------------------------------------------------
+# Five seconds to make another full loop and keep the streak alive.
+# ------------------------------------------------------------
+timers:
+  loop_combo_timer:
+    start_value: 0
+    end_value: 5
+    direction: up
+    tick_interval: 1s
+    control_events:
+      - event: full_loop_hit
+        action: restart
+      - event: loop_streak_reset
+        action: stop
+
+# ------------------------------------------------------------
 # SEQUENCE SHOTS
 # ------------------------------------------------------------
 # Left and right orbit switch sequences.
@@ -398,6 +435,20 @@ sequence_shots:
       - s_right_orbit
       - s_right_orbit2
     sequence_timeout: 1000ms
+  right_full_loop:
+    switch_sequence:
+      - s_right_orbit
+      - s_right_orbit2
+      - s_left_orbit2
+      - s_left_orbit
+    sequence_timeout: 3000ms
+  left_full_loop:
+    switch_sequence:
+      - s_left_orbit
+      - s_left_orbit2
+      - s_right_orbit2
+      - s_right_orbit
+    sequence_timeout: 3000ms
 
 # ------------------------------------------------------------
 # SHOTS
@@ -547,6 +598,10 @@ show_player:
     upper_pf_entrance:
       key: key_upper_pf_entrance_show
       loops: 0
+
+  loop_streak_award_15:
+    loop_jackpot_red_flash:
+      priority: 500
 
 # ------------------------------------------------------------
 # SLIDE PLAYER
@@ -729,7 +784,39 @@ variable_player:
     eob_bonus_x:
       action: set
       int: 0
+    current_loop_streak:
+      action: set
+      int: 0
+    loop_jackpot_collected_this_ball:
+      action: set
+      int: 0
   clear_bonus_x_held_flag:
     bonus_x_held:
       action: set
       int: 0
+  full_loop_hit:
+    current_loop_streak:
+      action: add
+      int: 1
+
+  check_loop_streak_awards{current_player.current_loop_streak > current_player.best_loop_streak_this_game}:
+    best_loop_streak_this_game:
+      action: set
+      int: current_player.current_loop_streak
+
+  loop_streak_reset:
+    current_loop_streak:
+      action: set
+      int: 0
+
+  loop_streak_award_5:
+    score: 250000
+
+  loop_streak_award_10:
+    score: 500000
+
+  loop_streak_award_15:
+    score: 1000000
+    loop_jackpot_collected_this_ball:
+      action: set
+      int: 1

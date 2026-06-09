@@ -1,19 +1,19 @@
 {
   "loop_champion": {
-    "name": "DAD",
-    "value": 30,
-    "text": "30 LOOPS"
+    "name": "EEE",
+    "value": 3,
+    "text": "3 LOOPS"
   },
   "multiball_hero": {
-    "name": "DAD",
-    "value": 2000000,
-    "text": "2,000,000",
-    "mode": "NAKATOMI"
+    "name": "---",
+    "value": 0,
+    "text": "---",
+    "mode": "---"
   },
   "villain_mvp": {
-    "name": "DAD",
-    "value": 9000000,
-    "text": "9,000,000",
-    "mode": "SIMON_DIE_HARDER"
+    "name": "---",
+    "value": 0,
+    "text": "---",
+    "mode": "---"
   }
 }
