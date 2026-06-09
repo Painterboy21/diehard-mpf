@@ -1,8 +1,8 @@
 {
   "loop_champion": {
-    "name": "EEE",
-    "value": 3,
-    "text": "3 LOOPS"
+    "name": "GGG",
+    "value": 5,
+    "text": "5 LOOPS"
   },
   "multiball_hero": {
     "name": "BAD",
@@ -11,9 +11,9 @@
     "mode": "CENTRAL PARK MULTIBALL"
   },
   "villain_mvp": {
-    "name": "EEE",
-    "value": 2029190,
-    "text": "2,029,190",
-    "mode": "COL/STUART DIE HARD"
+    "name": "GGG",
+    "value": 10816410,
+    "text": "10,816,410",
+    "mode": "KATYA DIE HARD"
   }
 }
