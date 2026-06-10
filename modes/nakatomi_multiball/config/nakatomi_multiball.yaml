@@ -33,7 +33,8 @@ light_player:
 # BALL HOLDS
 # ------------------------------------------------------------
 # Holds balls in the tower VUK for the Super Jackpot.
-# Original style restored.
+# Uses a separate safe-release event so the anti-stuck-ball fix
+# does not interfere with the proper Super Jackpot logic.
 # ------------------------------------------------------------
 ball_holds:
   nakatomi_super_hold:
@@ -45,13 +46,14 @@ ball_holds:
     release_all_events:
       - tilt
       - nakatomi_disable_super_jackpot
+      - nakatomi_release_super_hold_safely
 
 # ------------------------------------------------------------
 # EVENT PLAYER
 # ------------------------------------------------------------
 # Handles jackpot scoring, Super Jackpot enable/disable,
 # lock opening/closing, Extra Ball bridge count,
-# and Multiball Hero record tracking.
+# safe hold release, and Multiball Hero record tracking.
 # ------------------------------------------------------------
 event_player:
   mode_nakatomi_multiball_started:
@@ -87,9 +89,12 @@ event_player:
     - nakatomi_lock_close
     - nakatomi_entrance_lock_close
     - count_nakatomi_for_extra_ball
+    - nakatomi_release_super_hold_safely
 
-  ball_ended:
-    - record_finish_nakatomi_multiball_hero
+  mode_nakatomi_multiball_stopping:
+    - nakatomi_lock_close
+    - nakatomi_entrance_lock_close
+    - nakatomi_release_super_hold_safely
 
   record_finish_nakatomi_multiball_hero:
     record_finish_multiball_hero:
@@ -107,7 +112,7 @@ multiballs:
       - mode_nakatomi_multiball_started
     ball_count: 3
     ball_count_type: total
-    shoot_again: 20000
+    shoot_again: 15000
     hurry_up_time: 3000
     grace_period: 2000
     ball_locks:
