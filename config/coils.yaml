@@ -73,7 +73,7 @@ coils:
 
   c_trough_eject:
     number: d-1
-    default_pulse_ms: 50ms
+    default_pulse_ms: 100ms
 
   # ------------------------------------------------------------
   # DROP TARGET RESETS
