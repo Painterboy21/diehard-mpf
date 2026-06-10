@@ -14,12 +14,16 @@
 [ext_resource type="Script" uid="uid://dcwjyu352ua3g" path="res://modes/hans_diehard/slides/detonators.gd" id="16_w2tnv"]
 [ext_resource type="Texture2D" uid="uid://bb3045ld4jo7u" path="res://godot-media/images/Detonators/Detonator1.png" id="17_gwlfv"]
 [ext_resource type="Texture2D" uid="uid://bjquoenugp2oh" path="res://godot-media/images/Detonators/Detonator2.png" id="18_y2ju8"]
+[ext_resource type="Script" uid="uid://dinegb8scbud" path="res://slides/score-overlay-manager.gd" id="19_f6ckk"]
 [ext_resource type="Texture2D" uid="uid://duffsm3leqd04" path="res://godot-media/images/Detonators/Detonator3.png" id="19_p6llr"]
 [ext_resource type="Texture2D" uid="uid://d1oeuf2cfd8n5" path="res://godot-media/images/Detonators/Detonator4.png" id="20_e36fi"]
 [ext_resource type="Texture2D" uid="uid://d247imuretpi0" path="res://godot-media/images/Detonators/Detonator5.png" id="21_oikbv"]
+[ext_resource type="Texture2D" uid="uid://bgrlutxjsatig" path="res://godot-media/images/player 2 overlay.png" id="22_1tysp"]
 [ext_resource type="Texture2D" uid="uid://kgm007q4a0pd" path="res://godot-media/images/Detonators/Detonator6.png" id="22_rp60u"]
+[ext_resource type="Texture2D" uid="uid://cghope0h5kgp1" path="res://godot-media/images/player 3 overlay.png" id="23_d6q3j"]
 [ext_resource type="Texture2D" uid="uid://dgj3qlcbcqwa7" path="res://godot-media/images/Detonators/Detonator7.png" id="23_dqghc"]
 [ext_resource type="Texture2D" uid="uid://cyuh0skrfoso2" path="res://godot-media/images/Detonators/Detonator8.png" id="24_j0371"]
+[ext_resource type="Texture2D" uid="uid://6fk0ee3lpgir" path="res://godot-media/images/player 4 overlay.png" id="24_q2ytx"]
 
 [node name="hans_dieharder_background" type="Control" unique_id=1876849087]
 layout_mode = 3
@@ -77,43 +81,6 @@ layout_mode = 1
 
 [node name="hans_dieharder_progress_widget" parent="." unique_id=1421029567 instance=ExtResource("5_xr35f")]
 layout_mode = 1
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=1589179317]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-ratio = 1.777
-
-[node name="score_overlay" type="TextureRect" parent="AspectRatioContainer" unique_id=1107110937]
-layout_mode = 2
-texture = ExtResource("9_rpq1v")
-expand_mode = 1
-
-[node name="Control" type="Control" parent="AspectRatioContainer" unique_id=1695330213]
-layout_mode = 2
-
-[node name="player_1_score" type="Label" parent="AspectRatioContainer/Control" unique_id=88526952]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -112.0
-offset_right = 554.0
-grow_vertical = 0
-size_flags_horizontal = 0
-theme = ExtResource("6_pf4d5")
-theme_override_font_sizes/font_size = 60
-text = "00"
-horizontal_alignment = 1
-vertical_alignment = 1
-clip_text = true
-script = ExtResource("7_30ijy")
-variable_type = 4
-variable_name = "score"
-comma_separate = true
 
 [node name="Hollywhite" type="Sprite2D" parent="." unique_id=1237423753]
 position = Vector2(160, 823)
@@ -176,3 +143,419 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Control" type="Control" parent="." unique_id=1978726844]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -100.0
+grow_vertical = 0
+script = ExtResource("19_f6ckk")
+
+[node name="P1Overlay" type="Control" parent="Control" unique_id=237211771]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="score_overlay" type="TextureRect" parent="Control/P1Overlay" unique_id=692023301]
+layout_mode = 0
+offset_left = 0.42004395
+offset_top = -980.0
+offset_right = 1919.58
+offset_bottom = 100.0
+texture = ExtResource("9_rpq1v")
+expand_mode = 1
+
+[node name="player_1_score" type="Label" parent="Control/P1Overlay" unique_id=1941954755]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -52.0
+offset_right = 554.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 60
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 4
+variable_name = "score"
+comma_separate = true
+
+[node name="player_2_score" type="Label" parent="Control/P1Overlay" unique_id=1528571634]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 630.0
+offset_top = -6.0
+offset_right = 1054.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 40
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 5
+variable_name = "score"
+comma_separate = true
+
+[node name="player_3_score" type="Label" parent="Control/P1Overlay" unique_id=1594759046]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1056.0
+offset_top = -6.0
+offset_right = 1480.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 40
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 6
+variable_name = "score"
+comma_separate = true
+
+[node name="player_4_score" type="Label" parent="Control/P1Overlay" unique_id=760183406]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1488.0
+offset_top = -6.0
+offset_right = 1912.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 40
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 7
+variable_name = "score"
+comma_separate = true
+
+[node name="P2Overlay" type="Control" parent="Control" unique_id=658281511]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="score_overlay" type="TextureRect" parent="Control/P2Overlay" unique_id=1931158209]
+layout_mode = 0
+offset_left = 0.42004395
+offset_top = -980.0
+offset_right = 1919.58
+offset_bottom = 100.0
+texture = ExtResource("22_1tysp")
+expand_mode = 1
+
+[node name="player_1_score" type="Label" parent="Control/P2Overlay" unique_id=37657872]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 438.0
+offset_top = -52.0
+offset_right = 1056.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 60
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 5
+variable_name = "score"
+comma_separate = true
+
+[node name="player_2_score" type="Label" parent="Control/P2Overlay" unique_id=979003283]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -6.0
+offset_right = 428.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 40
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 4
+variable_name = "score"
+comma_separate = true
+
+[node name="player_3_score" type="Label" parent="Control/P2Overlay" unique_id=508112936]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1056.0
+offset_top = -6.0
+offset_right = 1480.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 40
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 6
+variable_name = "score"
+comma_separate = true
+
+[node name="player_4_score" type="Label" parent="Control/P2Overlay" unique_id=274167889]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1488.0
+offset_top = -6.0
+offset_right = 1912.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 40
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 7
+variable_name = "score"
+comma_separate = true
+
+[node name="P3Overlay" type="Control" parent="Control" unique_id=1425680612]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="score_overlay" type="TextureRect" parent="Control/P3Overlay" unique_id=1063410724]
+layout_mode = 0
+offset_left = 0.42004395
+offset_top = -980.0
+offset_right = 1919.58
+offset_bottom = 100.0
+texture = ExtResource("23_d6q3j")
+expand_mode = 1
+
+[node name="player_1_score" type="Label" parent="Control/P3Overlay" unique_id=933234223]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 862.0
+offset_top = -52.0
+offset_right = 1480.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 60
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 6
+variable_name = "score"
+comma_separate = true
+
+[node name="player_2_score" type="Label" parent="Control/P3Overlay" unique_id=92036551]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -6.0
+offset_right = 428.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 40
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 4
+variable_name = "score"
+comma_separate = true
+
+[node name="player_3_score" type="Label" parent="Control/P3Overlay" unique_id=83025620]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 432.0
+offset_top = -6.0
+offset_right = 856.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 40
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 5
+variable_name = "score"
+comma_separate = true
+
+[node name="player_4_score" type="Label" parent="Control/P3Overlay" unique_id=1511185173]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1488.0
+offset_top = -6.0
+offset_right = 1912.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 40
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 7
+variable_name = "score"
+comma_separate = true
+
+[node name="P4Overlay" type="Control" parent="Control" unique_id=191265355]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="score_overlay" type="TextureRect" parent="Control/P4Overlay" unique_id=1755132042]
+layout_mode = 0
+offset_left = 0.42004395
+offset_top = -980.0
+offset_right = 1919.58
+offset_bottom = 100.0
+texture = ExtResource("24_q2ytx")
+expand_mode = 1
+
+[node name="player_1_score" type="Label" parent="Control/P4Overlay" unique_id=1683881993]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1302.0
+offset_top = -52.0
+offset_right = 1920.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 60
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 7
+variable_name = "score"
+comma_separate = true
+
+[node name="player_2_score" type="Label" parent="Control/P4Overlay" unique_id=1172962957]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -6.0
+offset_right = 428.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 40
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 4
+variable_name = "score"
+comma_separate = true
+
+[node name="player_3_score" type="Label" parent="Control/P4Overlay" unique_id=139231439]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 432.0
+offset_top = -6.0
+offset_right = 856.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 40
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 5
+variable_name = "score"
+comma_separate = true
+
+[node name="player_4_score" type="Label" parent="Control/P4Overlay" unique_id=190897557]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 868.0
+offset_top = -6.0
+offset_right = 1292.0
+offset_bottom = 60.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_pf4d5")
+theme_override_font_sizes/font_size = 40
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_30ijy")
+variable_type = 6
+variable_name = "score"
+comma_separate = true
