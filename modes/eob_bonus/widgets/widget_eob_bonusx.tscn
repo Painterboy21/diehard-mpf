@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cpsihc4yxmmh8"]
+[gd_scene format=3 uid="uid://blxc21py6prxt"]
 
 [ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_drd1s"]
 [ext_resource type="Texture2D" uid="uid://c85sdor6cnpot" path="res://modes/eob_bonus/assets/target.png" id="2_d2376"]
@@ -41,7 +41,7 @@ _data = {
 &"created": SubResource("Animation_xtyed")
 }
 
-[node name="widget_eob_bonusx" type="Control" node_paths=PackedStringArray("animation_player")]
+[node name="widget_eob_bonusx" type="Control" unique_id=1101510245 node_paths=PackedStringArray("animation_player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,12 +52,12 @@ script = ExtResource("1_drd1s")
 animation_player = NodePath("AnimationPlayer")
 metadata/_custom_type_script = "uid://d4ky3s4bg1ouq"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1543053265]
 position = Vector2(1570, 697)
 scale = Vector2(0.3611111, 0.3611111)
 texture = ExtResource("2_d2376")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=526371548]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,14 +65,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_bottom = 40
-metadata/_edit_lock_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1108181219]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1182054351]
 layout_mode = 2
 theme = ExtResource("3_arrxm")
 theme_override_font_sizes/font_size = 95
@@ -80,7 +79,7 @@ text = "BONUS X"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MPFVariable" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="MPFVariable" type="Label" parent="MarginContainer/VBoxContainer" unique_id=143715982]
 layout_mode = 2
 theme = ExtResource("3_arrxm")
 theme_override_font_sizes/font_size = 95
@@ -90,10 +89,9 @@ vertical_alignment = 1
 script = ExtResource("4_i20gh")
 variable_name = "eob_bonus_x"
 comma_separate = true
-min_digits = 2
+min_digits = 0
+initialize_empty = false
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_pi4ew")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2106804637]
+libraries/ = SubResource("AnimationLibrary_pi4ew")

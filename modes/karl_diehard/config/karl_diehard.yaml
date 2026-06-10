@@ -1,0 +1,659 @@
+#config_version=6
+
+# =====================================================================
+# KARL DIE HARD
+# =====================================================================
+# VPW-style Karl:
+#   Spinner = +1 damage
+#   Pop bumper = +5 damage
+#   Complete at 100 damage
+#   Normal timer = 90 seconds
+#   Hans Bonus adds +30 seconds
+#
+# Project rules:
+#   Karl is only blocked after completion, not fail.
+#   Shared cap/gate is karl_complete.
+#   Ball lost / timer fail plays Karl Escaped.
+#   Defeated plays Karl defeated slide/video.
+#   Completion posts count_karl_for_extra_ball.
+#   Mystery Add More Time adds +20 seconds.
+#   2 second ball save on mode start.
+#   Karl villain insert l40 flashes during the mode.
+#   White flashers quickly flash on spinner/pop hits.
+#   No l80/l81/l82/l83.
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# MODE
+# ---------------------------------------------------------------------
+# Starts Karl Die Hard.
+# Stops after the delayed win/fail completion events.
+# ---------------------------------------------------------------------
+mode:
+  start_events:
+    - start_karl_diehard{current_player.karl_complete != 1}
+  stop_events:
+    - karl_diehard_completed
+    - karl_diehard_failed
+  priority: 170
+
+# ------------------------------------------------------------
+# TIMER
+# ------------------------------------------------------------
+# VPW Karl Die Hard = 90 seconds normally.
+# Hans Bonus adds +30 seconds.
+# Mystery Add More Time adds +20 seconds.
+# ------------------------------------------------------------
+timers:
+  karl_diehard_timer:
+    start_value: 90
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - event: mode_karl_diehard_started
+        action: restart
+      - event: karl_apply_hans_bonus_time
+        action: add
+        value: 30
+      - event: karl_defeated_slide
+        action: stop
+      - event: karl_escaped_slide
+        action: stop
+      - event: karl_diehard_completed
+        action: stop
+      - event: karl_diehard_failed
+        action: stop
+      - event: add_villain_time_from_mystery
+        action: add
+        value: 20
+
+# ------------------------------------------------------------
+# BALL SAVES
+# ------------------------------------------------------------
+# Karl gets a 2 second ball save at mode start.
+# ------------------------------------------------------------
+ball_saves:
+  karl_ball_save:
+    active_time: 2s
+    hurry_up_time: 1s
+    grace_period: 1s
+    enable_events:
+      - karl_enable_ball_save
+    disable_events:
+      - karl_defeated_slide
+      - karl_escaped_slide
+      - karl_diehard_completed
+      - karl_diehard_failed
+      - tilt
+    auto_launch: true
+    balls_to_save: -1
+
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Handles Karl mode start, damage shots, heartbeat changes,
+# result flow, Villain MVP tracking, final cleanup, and bullet resets.
+# ------------------------------------------------------------
+event_player:
+  mode_karl_diehard_started:
+    - villain_mode_started
+    - stop_base_music
+    - karl_music_start
+    - reset_bullets
+    - reset_bullet_total
+    - karl_reset_damage
+    - karl_enable_ball_save
+    - karl_heartbeat_slow
+    - karl_apply_hans_bonus_time{current_player.hans_bonus == 1}|10ms
+    - record_start_karl_diehard_villain_mvp
+  record_start_karl_diehard_villain_mvp:
+    record_start_villain_mvp:
+      mode: KARL DIE HARD
+  timer_karl_diehard_timer_complete{current_player.karl_result_started==0}:
+    - karl_escaped_slide
+    - karl_diehard_failed|5s
+  ball_drain{current_player.karl_result_started==0}:
+    - karl_escaped_slide
+    - karl_diehard_failed|5s
+  karl_check_complete{current_player.karl_damage >= 100 and current_player.karl_result_started==0}:
+    - karl_defeated_slide
+    - karl_diehard_completed|4s
+  mode_karl_diehard_stopping:
+    - villain_mode_stopped
+  record_finish_karl_diehard_villain_mvp:
+    record_finish_villain_mvp:
+      mode: KARL DIE HARD
+  SpinnerLeft_active{current_player.karl_damage < 100 and current_player.karl_result_started==0}:
+    - karl_spinner_hit
+    - karl_score_spinner
+    - karl_check_complete|20ms
+  SpinnerRight_active{current_player.karl_damage < 100 and current_player.karl_result_started==0}:
+    - karl_spinner_hit
+    - karl_score_spinner
+    - karl_check_complete|20ms
+  s_popbumper_left_active{current_player.karl_damage < 100 and current_player.karl_result_started==0}:
+    - karl_pop_hit
+    - karl_score_pop
+    - karl_check_complete|20ms
+  s_popbumper_right_active{current_player.karl_damage < 100 and current_player.karl_result_started==0}:
+    - karl_pop_hit
+    - karl_score_pop
+    - karl_check_complete|20ms
+  karl_spinner_hit:
+    - karl_update_heartbeat|50ms
+  karl_pop_hit:
+    - karl_update_heartbeat|50ms
+  karl_update_heartbeat{current_player.karl_damage < 35 and current_player.karl_result_started==0}:
+    - karl_heartbeat_slow
+  karl_update_heartbeat{current_player.karl_damage >= 35 and current_player.karl_damage < 70 and current_player.karl_result_started==0}:
+    - karl_heartbeat_medium
+  karl_update_heartbeat{current_player.karl_damage >= 70 and current_player.karl_result_started==0}:
+    - karl_heartbeat_fast
+  karl_diehard_completed:
+    - record_finish_karl_diehard_villain_mvp
+    - karl_score_complete
+    - count_karl_for_extra_ball
+    - reset_bullets
+    - reset_bullet_total
+  karl_diehard_failed:
+    - record_finish_karl_diehard_villain_mvp
+    - reset_bullets
+    - reset_bullet_total
+  ball_save_karl_ball_save_saving_ball:
+    - ball_save_saving_ball
+
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+# Stores Karl progress, scoring, result state, and display vars.
+# ------------------------------------------------------------
+variable_player:
+  mode_karl_diehard_started:
+    karl_played:
+      action: set
+      int: 1
+    karl_damage:
+      action: set
+      int: 0
+    karl_health_display:
+      action: set
+      int: 0
+    karl_result_display:
+      action: set
+      int: 0
+    karl_result_started:
+      action: set
+      int: 0
+    karl_diehard_won:
+      action: set
+      int: 0
+    karl_diehard_lost:
+      action: set
+      int: 0
+    karl_villain_score:
+      action: set
+      int: 500000
+  mode_karl_diehard_started{current_player.hans_bonus == 1}:
+    karl_hans_bonus_active:
+      action: set
+      int: 1
+  mode_karl_diehard_started{current_player.hans_bonus != 1}:
+    karl_hans_bonus_active:
+      action: set
+      int: 0
+  mode_karl_diehard_started{current_player.playfield_multiplier == None}:
+    playfield_multiplier:
+      action: set
+      int: 1
+  karl_reset_damage:
+    karl_damage:
+      action: set
+      int: 0
+    karl_health_display:
+      action: set
+      int: 0
+  karl_defeated_slide:
+    karl_result_started:
+      action: set
+      int: 1
+    karl_result_display:
+      action: set
+      int: 1
+    karl_health_display:
+      action: set
+      int: 100
+  karl_escaped_slide:
+    karl_result_started:
+      action: set
+      int: 1
+    karl_result_display:
+      action: set
+      int: 2
+  karl_spinner_hit:
+    karl_damage:
+      action: add
+      int: 1
+    karl_health_display:
+      action: set
+      int: "(current_player.karl_damage + 1)"
+  karl_pop_hit:
+    karl_damage:
+      action: add
+      int: 5
+    karl_health_display:
+      action: set
+      int: "(current_player.karl_damage + 5)"
+  karl_score_spinner:
+    score:
+      action: add
+      int: "(90000 * current_player.playfield_multiplier)"
+    karl_villain_score:
+      action: add
+      int: "(90000 * current_player.playfield_multiplier)"
+  karl_score_pop:
+    score:
+      action: add
+      int: "(450000 * current_player.playfield_multiplier)"
+    karl_villain_score:
+      action: add
+      int: "(450000 * current_player.playfield_multiplier)"
+  karl_score_complete:
+    score:
+      action: add
+      int: "(3000000 * current_player.playfield_multiplier)"
+    karl_villain_score:
+      action: add
+      int: "(3000000 * current_player.playfield_multiplier)"
+  karl_diehard_completed:
+    karl_diehard_won:
+      action: set
+      int: 1
+    karl_complete:
+      action: set
+      int: 1
+    karl_health_display:
+      action: set
+      int: 100
+    karl_result_started:
+      action: set
+      int: 0
+  karl_diehard_failed:
+    karl_diehard_lost:
+      action: set
+      int: 1
+    karl_result_started:
+      action: set
+      int: 0
+  mode_karl_diehard_stopping:
+    karl_result_started:
+      action: set
+      int: 0
+
+# ------------------------------------------------------------
+# SOUND PLAYER
+# ------------------------------------------------------------
+# Starts/stops Karl theme music.
+# ------------------------------------------------------------
+sound_player:
+  karl_music_start:
+    karltheme:
+      key: main_music
+      action: play
+      loops: -1
+      volume: 0.8
+  karl_defeated_slide:
+    karltheme:
+      key: main_music
+      action: stop
+  karl_escaped_slide:
+    karltheme:
+      key: main_music
+      action: stop
+  mode_karl_diehard_stopping:
+    karltheme:
+      key: main_music
+      action: stop
+
+# ------------------------------------------------------------
+# SHOWS
+# ------------------------------------------------------------
+# Local shows for Karl insert flashing and quick hit flashers.
+# The insert show is explicit on/off so it really flashes l40,
+# instead of being held solid by light_player fallback lighting.
+# ------------------------------------------------------------
+shows:
+  karl_mode_insert_flash:
+    - duration: 120ms
+      lights:
+        l40: ff8800
+    - duration: 120ms
+      lights:
+        l40: off
+
+  karl_white_flasher_hit:
+    - duration: 50ms
+      lights:
+        f140: ffffff
+        f141: ffffff
+        f142: ffffff
+        f143: ffffff
+        f144: ffffff
+        f145: ffffff
+        f146: ffffff
+        f147: ffffff
+    - duration: 80ms
+      lights:
+        f140: off
+        f141: off
+        f142: off
+        f143: off
+        f144: off
+        f145: off
+        f146: off
+        f147: off
+
+# ------------------------------------------------------------
+# SHOW PLAYER
+# ------------------------------------------------------------
+# VPW running/heartbeat shows, Karl insert flash, damage feedback,
+# white flasher hit burst, result shows, and cleanup.
+# ------------------------------------------------------------
+show_player:
+  mode_karl_diehard_started:
+    karl_vpw_running_pulse:
+      key: key_karl_vpw_running_pulse
+      loops: 0
+      speed: 1
+      priority: 760
+    karl_vpw_heartbeat_slow:
+      key: key_karl_vpw_heartbeat
+      loops: 0
+      speed: 1
+      priority: 650
+    karl_mode_insert_flash:
+      key: key_karl_mode_insert_flash
+      loops: -1
+      speed: 1
+      priority: 1300
+  karl_heartbeat_slow:
+    karl_vpw_heartbeat_medium:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    karl_vpw_heartbeat_fast:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    karl_vpw_heartbeat_slow:
+      key: key_karl_vpw_heartbeat
+      loops: 0
+      speed: 1
+      priority: 650
+  karl_heartbeat_medium:
+    karl_vpw_heartbeat_slow:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    karl_vpw_heartbeat_fast:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    karl_vpw_heartbeat_medium:
+      key: key_karl_vpw_heartbeat
+      loops: 0
+      speed: 1
+      priority: 650
+  karl_heartbeat_fast:
+    karl_vpw_heartbeat_slow:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    karl_vpw_heartbeat_medium:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    karl_vpw_heartbeat_fast:
+      key: key_karl_vpw_heartbeat
+      loops: 0
+      speed: 1
+      priority: 650
+  karl_spinner_hit:
+    karl_vpw_damage_pulse:
+      key: key_karl_spinner_damage_pulse
+      loops: 1
+      speed: 1
+      priority: 900
+    flash_color_with_fade:
+      key: key_karl_spinner_gi_flash
+      loops: 1
+      speed: 8
+      priority: 940
+      show_tokens:
+        lights: GI
+        color: ffffff
+        fade: 150
+    karl_white_flasher_hit:
+      key: key_karl_white_flasher_hit
+      loops: 1
+      speed: 1
+      priority: 950
+  karl_pop_hit:
+    karl_vpw_damage_pulse:
+      key: key_karl_pop_damage_pulse
+      loops: 2
+      speed: 1
+      priority: 920
+    flash_color:
+      key: key_karl_pop_bumper_flash
+      loops: 3
+      speed: 10
+      priority: 950
+      show_tokens:
+        lights: SPOTS_BUMPER
+        color: 969650
+    flash_color_with_fade:
+      key: key_karl_pop_gi_flash
+      loops: 1
+      speed: 8
+      priority: 940
+      show_tokens:
+        lights: GI
+        color: ffffff
+        fade: 150
+    karl_white_flasher_hit:
+      key: key_karl_white_flasher_hit
+      loops: 1
+      speed: 1
+      priority: 950
+  karl_defeated_slide:
+    karl_vpw_running_pulse:
+      action: stop
+      key: key_karl_vpw_running_pulse
+    karl_vpw_heartbeat_slow:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    karl_vpw_heartbeat_medium:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    karl_vpw_heartbeat_fast:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    key_karl_spinner_gi_flash:
+      action: stop
+    key_karl_pop_bumper_flash:
+      action: stop
+    key_karl_pop_gi_flash:
+      action: stop
+    key_karl_white_flasher_hit:
+      action: stop
+    key_karl_mode_insert_flash:
+      action: stop
+  karl_escaped_slide:
+    karl_vpw_running_pulse:
+      action: stop
+      key: key_karl_vpw_running_pulse
+    karl_vpw_heartbeat_slow:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    karl_vpw_heartbeat_medium:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    karl_vpw_heartbeat_fast:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    key_karl_spinner_gi_flash:
+      action: stop
+    key_karl_pop_bumper_flash:
+      action: stop
+    key_karl_pop_gi_flash:
+      action: stop
+    key_karl_white_flasher_hit:
+      action: stop
+    key_karl_mode_insert_flash:
+      action: stop
+  karl_diehard_completed:
+    karl_vpw_complete_show:
+      key: key_karl_vpw_complete_show
+      loops: 1
+      speed: 1
+      priority: 1000
+  karl_diehard_failed:
+    karl_vpw_failed_show:
+      key: key_karl_vpw_failed_show
+      loops: 1
+      speed: 1
+      priority: 1000
+  mode_karl_diehard_stopping:
+    karl_vpw_running_pulse:
+      action: stop
+      key: key_karl_vpw_running_pulse
+    karl_vpw_heartbeat_slow:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    karl_vpw_heartbeat_medium:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    karl_vpw_heartbeat_fast:
+      action: stop
+      key: key_karl_vpw_heartbeat
+    key_karl_spinner_gi_flash:
+      action: stop
+    key_karl_pop_bumper_flash:
+      action: stop
+    key_karl_pop_gi_flash:
+      action: stop
+    key_karl_white_flasher_hit:
+      action: stop
+    key_karl_mode_insert_flash:
+      action: stop
+
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# ------------------------------------------------------------
+# Sets Karl Die Hard lighting and result insert states.
+# l40 is not held solid during the mode now.
+# The karl_mode_insert_flash show owns l40 while Karl is running.
+# ------------------------------------------------------------
+light_player:
+  mode_karl_diehard_started:
+    GI:
+      color: ff8800
+      priority: 1000
+    SPOTS:
+      color: 505050
+      priority: 1000
+    SPOTS_BUMPER:
+      color: 757575
+    l1000:
+      color: ff8800
+      priority: 1100
+    l1001:
+      color: ff8800
+      priority: 1100
+  ball_save_karl_ball_save_enabled:
+    l1000:
+      color: ff8800
+      priority: 1000
+    l1001:
+      color: ff8800
+      priority: 1000
+  ball_save_karl_ball_save_hurry_up:
+    l1000:
+      color: ff8800
+      priority: 1000
+    l1001:
+      color: ff8800
+      priority: 1000
+  ball_save_karl_ball_save_saving_ball:
+    l1000:
+      color: ff8800
+      priority: 1000
+    l1001:
+      color: ff8800
+      priority: 1000
+  karl_diehard_completed:
+    l40:
+      color: ff8800
+      priority: 1100
+    l1000:
+      color: off
+      priority: 1100
+    l1001:
+      color: off
+      priority: 1100
+  karl_diehard_failed:
+    l40:
+      color: off
+      priority: 1100
+    l1000:
+      color: off
+      priority: 1100
+    l1001:
+      color: off
+      priority: 1100
+  mode_karl_diehard_stopped:
+    l1000:
+      color: off
+      priority: 1100
+    l1001:
+      color: off
+      priority: 1100
+
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# ------------------------------------------------------------
+# Result event removes background and plays high-priority result.
+# Final completed/failed event removes the result slide.
+# ------------------------------------------------------------
+slide_player:
+  mode_karl_diehard_started:
+    karl_diehard_background:
+      action: play
+      priority: 500
+  mode_karl_diehard_stopping:
+    karl_diehard_background:
+      action: remove
+  karl_defeated_slide:
+    karl_diehard_background:
+      action: remove
+    karl_defeated:
+      action: play
+      expire: 4s
+      priority: 10000
+  karl_escaped_slide:
+    karl_diehard_background:
+      action: remove
+    karl_escaped:
+      action: play
+      expire: 5s
+      priority: 10000
+  karl_diehard_completed:
+    karl_defeated:
+      action: remove
+  karl_diehard_failed:
+    karl_escaped:
+      action: remove
+
+# ------------------------------------------------------------
+# WIDGET PLAYER
+# ------------------------------------------------------------
+# No Karl Die Hard bonus widget is shown here.
+# Karl Die Harder bonus widget belongs in the Karl Die Harder mode.
+# ------------------------------------------------------------
+widget_player: {}

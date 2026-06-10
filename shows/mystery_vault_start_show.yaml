@@ -1,0 +1,206 @@
+#show_version=6
+
+# VPW-style vault entry.
+# l30/l31 are only in the FIRST burst so they do not flash late after release.
+# Hex colours are quoted so YAML/MPF reads them correctly.
+
+- duration: 80ms
+  lights:
+    f147: "B02603"
+    f146: "AA2503"
+    f145: "791A02"
+    f144: "881D02"
+    f143: "B42703"
+    f142: "B12603"
+    f141: "B02603"
+    l30: "B32603"
+    l31: "B92803"
+    l84: white
+    l60: blue
+
+- duration: 80ms
+  lights:
+    l30: off
+    l31: off
+    l84: off
+
+- duration: 80ms
+  lights:
+    l72: "911F02"
+    l71: "B42703"
+    l70: "B52703"
+    l75: "B62703"
+    l61: "C42A03"
+    l53: "C02903"
+    l43: "B92803"
+    l42: "C12903"
+    l41: "BB2803"
+    l40: "C12903"
+    l60: blue
+
+- duration: 80ms
+  lights:
+    l15: "C22A03"
+    l14: "C32A03"
+    l13: "C22A03"
+    l12: "C22A03"
+    l8: "BF2903"
+    l6: "B02603"
+    l5: "B02603"
+    l4: "A32302"
+    f147: "00ff00"
+    l60: blue
+
+- duration: 80ms
+  lights:
+    l3: "B22603"
+    l2: "B22603"
+    l1: "B02603"
+    l78: "9F2202"
+    l76: "B12603"
+    l77: "AA2503"
+    l50: "BF2903"
+    l20: "BE2903"
+    l21: "C42A03"
+    l32: "C12903"
+    l60: blue
+
+- duration: 80ms
+  lights:
+    l51: "C52A03"
+    l17: "C32A03"
+    l33: "C82B03"
+    l16: "C72B03"
+    l7: "C72B03"
+    l63: "BC2803"
+    l34: "BC2803"
+    l52: "C42A03"
+    l22: "BF2903"
+    l60: blue
+
+- duration: 80ms
+  lights:
+    l62: "C32A03"
+    l23: "C32A03"
+    l24: "C22A03"
+    l10: "B92803"
+    l54: "C52A03"
+    l55: "C32A03"
+    l9: "B62703"
+    l59: "B42703"
+    l58: "B12603"
+    l57: "AC2503"
+    l44: "BB2803"
+    l60: blue
+
+- duration: 80ms
+  lights:
+    l29: "9D2202"
+    l18: "BE2903"
+    f140: "B02603"
+    l73: "901F02"
+    l83: "AD2503"
+    l82: "B12603"
+    l81: "B12603"
+    l80: "AE2503"
+    f147: "00ff00"
+    l60: blue
+
+- duration: 80ms
+  lights:
+    f147: "962002"
+    f146: "982102"
+    f145: "511101"
+    f144: "7A1A02"
+    f142: "AC2503"
+    f141: "9F2202"
+    l72: "561201"
+    l70: "A22302"
+    l75: "B32603"
+    l60: blue
+
+- duration: 80ms
+  lights:
+    l61: "C62B03"
+    l43: "A82403"
+    l42: "B92803"
+    l41: "A92403"
+    l40: "B62703"
+    l15: "BE2903"
+    l14: "BF2903"
+    l13: "B92803"
+    l12: "BA2803"
+    l60: blue
+
+- duration: 80ms
+  lights:
+    l8: "B22603"
+    l6: "A42302"
+    l5: "8D1E02"
+    l4: "741902"
+    l3: "AF2603"
+    l2: "AC2503"
+    l1: "A82403"
+    l78: "982102"
+    l76: "AD2503"
+    l77: "A52402"
+    l60: blue
+
+- duration: 80ms
+  lights:
+    l50: "B32603"
+    l20: "B02603"
+    l21: "BF2903"
+    l32: "B72703"
+    l51: "C02903"
+    l17: "B92803"
+    l63: "B72703"
+    l10: "B42703"
+    l9: "AD2503"
+    l60: blue
+
+- duration: 80ms
+  lights:
+    l59: "992102"
+    l58: "952002"
+    l57: "891E02"
+    l44: "AF2603"
+    l29: "711802"
+    f140: "8F1F02"
+    l73: "6F1802"
+    l83: "9C2102"
+    l82: "A02202"
+    l81: "932002"
+    l80: "8D1E02"
+    l60: blue
+
+- duration: 100ms
+  lights:
+    f147: "00ff00"
+    l84: white
+    l60: blue
+
+- duration: 100ms
+  lights:
+    f147: off
+    l84: off
+
+- duration: 100ms
+  lights:
+    f147: "00ff00"
+    l84: white
+    l60: blue
+
+- duration: 100ms
+  lights:
+    f147: off
+    l84: off
+
+- duration: 120ms
+  lights:
+    f147: "00ff00"
+    l60: blue
+
+- duration: 120ms
+  lights:
+    f147: off

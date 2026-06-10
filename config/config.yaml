@@ -1,73 +1,75 @@
 #config_version=6
 
-
+# ------------------------------------------------------------
+# MAIN CONFIG
+# ------------------------------------------------------------
+# What this config does:
+#   - Sets up FAST Neuron hardware.
+#   - Loads all main device config files.
+#   - Defines extra ball group rules.
+#   - Defines flippers, drop targets, autofires, magnets, servos.
+#   - Loads all active game modes.
+# ------------------------------------------------------------
 hardware:
-    platform: fast
+  platform: fast
 
+# ------------------------------------------------------------
+# FAST CONFIG
+# ------------------------------------------------------------
 fast:
-
   net:
     controller: neuron
     io_loop:
-        j:
-          model: FP-I/O-0024
-          order: 1
-        d:
-          model: FP-I/O-3208
-          order: 2
-        e:
-          model: FP-I/O-1616
-          order: 3
-        f:
-          model: FP-I/O-1616
-          order: 4
-
+      j:
+        model: FP-I/O-0024
+        order: 1
+      d:
+        model: FP-I/O-3208
+        order: 2
+      e:
+        model: FP-I/O-1616
+        order: 3
+      f:
+        model: FP-I/O-1616
+        order: 4
   exp:
     port: auto
     boards:
       neuron:
-        model: FP-EXP-2000 
+        model: FP-EXP-2000
       playfield:
         model: FP-EXP-0071
       shakerboard:
         model: FP-EXP-1313
       cab:
         model: FP-EXP-0081
-
-        
   aud:
     port: auto
     debug: false
-
     main_amp_enabled: true
     sub_amp_enabled: true
     headphones_amp_enabled: true
-
     main_steps: 20
     sub_steps: 20
     headphones_steps: 20
-
-    default_main_volume: 60
-    default_sub_volume: 40
+    default_main_volume: 30
+    default_sub_volume: 60
     default_headphones_volume: 10
-
     persist_volume_settings: true
-
     max_hw_volume_main: 63
     max_hw_volume_sub: 63
     max_hw_volume_headphones: 63
-
     main_levels_list: None
     sub_levels_list: None
     headphones_levels_list: None
-
     link_sub_to_main: true
     link_headphones_to_main: false
-
     headphones_level: headphones
     mute_speakers_with_headphones: true
 
-
+# ------------------------------------------------------------
+# VIRTUAL PLATFORM START ACTIVE SWITCHES
+# ------------------------------------------------------------
 virtual_platform_start_active_switches:
   - s_trough1
   - s_trough2
@@ -76,9 +78,9 @@ virtual_platform_start_active_switches:
   - s_trough5
   - s_trough6
 
-
-
-
+# ------------------------------------------------------------
+# CONFIG FILES
+# ------------------------------------------------------------
 config:
   - ball_devices.yaml
   - coils.yaml
@@ -86,11 +88,27 @@ config:
   - shot_profiles.yaml
   - switches.yaml
   - player_vars.yaml
- # - shaker.yaml
+  #- shaker.yaml
 
+# ------------------------------------------------------------
+# EXTRA BALL GROUPS
+# ------------------------------------------------------------
+extra_ball_groups:
+  diehard_extra_balls:
+    enabled: true
+    max_per_game: 2
+    max_lit: 1
+    light_events:
+      - light_extra_ball
+    award_lit_events:
+      - collect_lit_extra_ball
 
-
-
+# ------------------------------------------------------------
+# FLIPPERS
+# ------------------------------------------------------------
+# Flippers stay disabled during initial / attract.
+# They only enable when a real ball starts or when enable_flippers is posted.
+# ------------------------------------------------------------
 flippers:
   left_flipper:
     main_coil: c_left_flipper_main
@@ -99,8 +117,20 @@ flippers:
     use_eos: true
     repulse_on_eos_open: false
     activation_switch: s_left_flipper
-    enable_events: ball_started, enableAutofire, flipper_on
-    disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
+    enable_events:
+      - ball_started
+      - enable_flippers
+    disable_events:
+      - init_phase_1
+      - machine_reset_phase_3
+      - mode_attract_started
+      - ball_will_end
+      - ball_ending
+      - ball_ended
+      - game_ended
+      - service_mode_entered
+      - disable_flippers
+      - flipper_off
 
   right_flipper:
     main_coil: c_right_flipper_main
@@ -109,8 +139,20 @@ flippers:
     use_eos: true
     repulse_on_eos_open: false
     activation_switch: s_right_flipper
-    enable_events: ball_started, enableAutofire, flipper_on
-    disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
+    enable_events:
+      - ball_started
+      - enable_flippers
+    disable_events:
+      - init_phase_1
+      - machine_reset_phase_3
+      - mode_attract_started
+      - ball_will_end
+      - ball_ending
+      - ball_ended
+      - game_ended
+      - service_mode_entered
+      - disable_flippers
+      - flipper_off
 
   left_top_flipper:
     main_coil: c_left_top_flipper_main
@@ -119,9 +161,24 @@ flippers:
     use_eos: true
     repulse_on_eos_open: false
     activation_switch: s_left_flipper
-    enable_events: ball_started, enableAutofire, flipper_on
-    disable_events: ball_will_end, service_mode_entered, disableAutofire, flipper_off
+    enable_events:
+      - ball_started
+      - enable_flippers
+    disable_events:
+      - init_phase_1
+      - machine_reset_phase_3
+      - mode_attract_started
+      - ball_will_end
+      - ball_ending
+      - ball_ended
+      - game_ended
+      - service_mode_entered
+      - disable_flippers
+      - flipper_off
 
+# ------------------------------------------------------------
+# DROP TARGETS
+# ------------------------------------------------------------
 drop_targets:
   bank1:
     switch: s_drop_target_1
@@ -139,47 +196,83 @@ drop_targets:
     knockdown_events: mystery_close_vault
     reset_events: ball_starting, machine_reset_phase_3, mystery_open_vault
 
+# ------------------------------------------------------------
+# DROP TARGET BANKS
+# ------------------------------------------------------------
 drop_target_banks:
   bank:
-    drop_targets: bank1, bank2, bank3
+    drop_targets:
+      - bank1
+      - bank2
+      - bank3
     reset_coils: c_reset_drop_targets
-    reset_on_complete: 0.1
+    reset_events:
+      - reset_drop_targets_after_delay
 
+# ------------------------------------------------------------
+# AUTOFIRE COILS
+# ------------------------------------------------------------
+# These devices can safely pulse during ball search.
+# ------------------------------------------------------------
 autofire_coils:
   left_sling:
     coil: c_left_sling
     switch: s_left_sling
+    ball_search_order: 40
   right_sling:
     coil: c_right_sling
     switch: s_right_sling
-  airplane:
-    coil: c_captivetarget
-    switch: s_captiveball
+    ball_search_order: 50
   popbumper_left:
     coil: c_popbumper_left
     switch: s_popbumper_left
+    ball_search_order: 60
   popbumper_right:
     coil: c_popbumper_right
     switch: s_popbumper_right
+    ball_search_order: 70
 
-
-
+# ------------------------------------------------------------
+# MAGNETS
+# ------------------------------------------------------------
 magnets:
   trmagrl:
     magnet_coil: c_trmagl
-    grab_ball_events: s_trmagl_active{machine.magnets_enabled}, central_park_start_multiball_hit
-    enable_events: ball_started
-    release_ball_events: s_trmagl_inactive, start_central_park_multiball
-
+    grab_ball_events:
+      - s_trmagl_active{machine.magnets_enabled}
+      - central_park_start_multiball_hit
+    enable_events:
+      - ball_started
+    release_ball_events:
+      - trmagl_fling_release
+      - start_central_park_multiball
   trmagr:
     magnet_coil: c_trmagr
-    grab_ball_events: s_trmagr_active{machine.magnets_enabled},  central_park_start_multiball_hit
-    enable_events: ball_started
-    release_ball_events: s_trmagr_inactive, start_central_park_multiball
+    grab_ball_events:
+      - s_trmagr_active{machine.magnets_enabled}
+      - central_park_start_multiball_hit
+    enable_events:
+      - ball_started
+    release_ball_events:
+      - trmagr_fling_release
+      - start_central_park_multiball
 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+event_player:
+  s_trmagl_active{machine.magnets_enabled}:
+    - trmagl_fling_release|350ms
+  s_trmagr_active{machine.magnets_enabled}:
+    - trmagr_fling_release|350ms
+  drop_target_bank_bank_down:
+    - reset_drop_targets_after_delay|1s
 
+# ------------------------------------------------------------
+# MACHINE VARS
+# ------------------------------------------------------------
 machine_vars:
-  var_which_attract: #to track which attract screen you are currently on
+  var_which_attract:
     value_type: int
     initial_value: 0
     persist: false
@@ -188,7 +281,9 @@ machine_vars:
     initial_value: 0
     persist: false
 
-
+# ------------------------------------------------------------
+# MODES
+# ------------------------------------------------------------
 modes:
   - attract
   - qualify_airplane
@@ -205,6 +300,8 @@ modes:
   - skillshot
   - eob_bonus
   - service
+  - super_jets
+  - super_spinners
   - qualify_nakatomi
   - nakatomi_multiball
   - qualify_central_park
@@ -215,20 +312,45 @@ modes:
   - karl_difficulty_select
   - katya_difficulty_select
   - simon_difficulty_select
+  - col_stuart_diehard
+  - col_stuart_dieharder
   - hans_diehard
   - hans_dieharder
   - katya_diehard
+  - katya_dieharder
+  - karl_diehard
+  - karl_dieharder
+  - simon_diehard
+  - bonus_x
+  - playfield_x
+  - iscored_sync
+  - extra_ball
 
+# ------------------------------------------------------------
+# MACHINE / GAME
+# ------------------------------------------------------------
 machine:
-    balls_installed: 6
+  balls_installed: 6
+
 game:
-    balls_per_game: 3
-    max_players: 4
+  balls_per_game: 3
+  max_players: 4
+
+# ------------------------------------------------------------
+# PLAYFIELDS
+# ------------------------------------------------------------
+# Enables MPF ball search on the main playfield.
+# Keep this simple first so MPF definitely starts the search.
+# ------------------------------------------------------------
 playfields:
   playfield:
     default_source_device: bd_plunger
     tags: default
+    enable_ball_search: true
 
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
 variable_player:
   increase_main_volume:
     fast_audio_main_volume:
@@ -255,10 +377,12 @@ variable_player:
       action: add_machine
       int: -1
 
-
+# ------------------------------------------------------------
+# SERVOS
+# ------------------------------------------------------------
 servos:
   servo1:
-    number: playfield-1 # left side wire ramp exit
+    number: playfield-1
     platform_settings:
       min_us: 0.2
       max_us: 0.2
@@ -269,9 +393,8 @@ servos:
     positions:
       0.2: wire_ramp_exit_closed
       0.90: wire_ramp_exit_open
-
   servo2:
-    number: playfield-2 #nakatomi lock entrance
+    number: playfield-2
     platform_settings:
       min_us: 400
       max_us: 2500
@@ -282,9 +405,8 @@ servos:
     positions:
       0: nakatomi_entrance_lock_close
       0.90: nakatomi_entrance_lock_open
-
   servo3:
-    number: playfield-3 #nakatomi multiball
+    number: playfield-3
     platform_settings:
       min_us: 1350
       max_us: 2500
@@ -295,9 +417,8 @@ servos:
     positions:
       0: nakatomi_lock_open
       0.9: nakatomi_lock_close
-
   servo4:
-    number: playfield-4 # vault door
+    number: playfield-4
     platform_settings:
       min_us: 650
       max_us: 2500
@@ -309,7 +430,9 @@ servos:
       0.1: mystery_close_vault
       0.90: mystery_open_vault
 
-
+# ------------------------------------------------------------
+# COIL PLAYER
+# ------------------------------------------------------------
 coil_player:
   reset_complete:
     c_cab_coin_return_left_right:

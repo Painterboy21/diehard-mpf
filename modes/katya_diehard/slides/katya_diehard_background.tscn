@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://bf1mha3cvnk3b"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_msb4v"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_msb4v"]
 [ext_resource type="VideoStream" uid="uid://grg0ho4bpkex" path="res://videos/DieHard3Background.ogv" id="2_5wbb6"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_65801"]
-[ext_resource type="PackedScene" uid="uid://b72gm5b1oa07x" path="res://modes/katya_diehard/widgets/katya_diehard_progress_widget.tscn" id="4_msb4v"]
+[ext_resource type="VideoStream" uid="uid://pke0b81gy7jo" path="res://modes/katya_diehard/slides/Katya1.ogv" id="4_5wbb6"]
+[ext_resource type="PackedScene" uid="uid://b72gm5b1oa07x" path="res://modes/katya_dieharder/widgets/katya_dieharder_progress_widget.tscn" id="4_msb4v"]
+[ext_resource type="Script" uid="uid://b3rcjyae56g0t" path="res://modes/katya_diehard/slides/katya_video_control.gd" id="5_65801"]
 [ext_resource type="PackedScene" uid="uid://660hrg5dn8jt" path="res://modes/katya_diehard/widgets/katya_timer_widget.tscn" id="5_ihpqg"]
 [ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="6_ppg7w"]
-[ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="7_uk4d1"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="7_uk4d1"]
 [ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="8_gby0f"]
 [ext_resource type="Texture2D" uid="uid://ytwrcjpchkp8" path="res://godot-media/images/player 1 overlay.png" id="9_4juy1"]
 [ext_resource type="Texture2D" uid="uid://cgdg61xeojmu8" path="res://godot-media/images/hollywhite.png" id="10_6hhe2"]
@@ -39,6 +41,36 @@ script = ExtResource("3_65801")
 end_behavior = 1
 preview_in_editor = true
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
+
+[node name="KatyaHitVideo" type="VideoStreamPlayer" parent="." unique_id=306946680]
+visible = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+scale = Vector2(1, 0.9)
+stream = ExtResource("4_5wbb6")
+volume_db = 7.999997
+
+[node name="KatyaVideoControl" type="Control" parent="." unique_id=1316789009]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_65801")
+
+[node name="KatyaShotsVariable" type="Label" parent="KatyaVideoControl" unique_id=2060018320]
+visible = false
+layout_mode = 0
+offset_right = 132.0
+offset_bottom = 166.0
+theme_override_font_sizes/font_size = 30
+text = "00"
+script = ExtResource("7_uk4d1")
+variable_name = "katya_shots"
+template_string = "%s"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [node name="katya_progress_widget" parent="." unique_id=916327062 instance=ExtResource("4_msb4v")]
 layout_mode = 1

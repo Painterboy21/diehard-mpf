@@ -1,0 +1,205 @@
+extends Control
+
+# ------------------------------------------------------------
+# KARL DIE HARD - CONTROL SCRIPT
+# ------------------------------------------------------------
+#
+# Scene:
+# karl_diehard_background
+# ├── KarlBackgroundVideo
+# ├── KarlFight
+# └── Control1
+#     ├── johnhealth
+#     ├── karlhealth
+#     ├── KarlTimerVariable
+#     ├── KarlDamageVariable
+#     └── KarlHansBonusVariable
+#
+# MPF/Godot variable labels:
+#   KarlTimerVariable      -> karl_diehard_remaining
+#   KarlDamageVariable     -> karl_health_display
+#   KarlHansBonusVariable  -> karl_hans_bonus_active / hans_bonus display
+# ------------------------------------------------------------
+
+@onready var john_health: TextureRect = $johnhealth
+@onready var karl_health: TextureRect = $karlhealth
+
+@onready var karl_timer_variable: Label = $KarlTimerVariable
+@onready var karl_damage_variable: Label = $KarlDamageVariable
+@onready var karl_hans_bonus_variable: Label = $KarlHansBonusVariable
+
+@onready var karl_fight_video: VideoStreamPlayer = $"../KarlFight"
+
+var last_timer: int = -1
+var last_damage: int = -1
+
+
+func _ready() -> void:
+	print("====================================")
+	print("KARL DIE HARD CONTROL READY")
+	print("john_health: ", john_health)
+	print("karl_health: ", karl_health)
+	print("timer variable: ", karl_timer_variable)
+	print("damage variable: ", karl_damage_variable)
+	print("hans bonus variable: ", karl_hans_bonus_variable)
+	print("fight video: ", karl_fight_video)
+	print("====================================")
+
+	if karl_fight_video == null:
+		push_warning("Karl Die Hard: KarlFight video node NOT found from Control1")
+		return
+
+	print("Karl Die Hard: KarlFight found")
+
+	karl_fight_video.visible = false
+	karl_fight_video.loop = false
+
+	if karl_fight_video.stream == null:
+		push_warning("Karl Die Hard: KarlFight found, but Stream is EMPTY")
+	else:
+		print("Karl Die Hard: KarlFight stream OK: ", karl_fight_video.stream)
+
+	if not karl_fight_video.finished.is_connected(_on_karl_fight_video_finished):
+		karl_fight_video.finished.connect(_on_karl_fight_video_finished)
+
+
+func _process(_delta: float) -> void:
+	handle_john_timer()
+	handle_karl_damage()
+
+
+# ------------------------------------------------------------
+# JOHN HEALTH FROM TIMER
+# ------------------------------------------------------------
+
+func handle_john_timer() -> void:
+	if john_health == null:
+		return
+
+	if karl_timer_variable == null:
+		return
+
+	var clean_text: String = karl_timer_variable.text.strip_edges()
+
+	if clean_text == "":
+		return
+
+	if not clean_text.is_valid_int():
+		return
+
+	var seconds_left: int = int(clean_text)
+
+	if seconds_left == last_timer:
+		return
+
+	last_timer = seconds_left
+
+	var max_time: float = 93.0
+
+	if is_hans_bonus_active():
+		max_time = 123.0
+
+	if john_health.has_method("set_john_health_by_time"):
+		john_health.set_john_health_by_time(seconds_left, max_time)
+
+
+func is_hans_bonus_active() -> bool:
+	if karl_hans_bonus_variable == null:
+		return false
+
+	var clean_text: String = karl_hans_bonus_variable.text.strip_edges()
+
+	if clean_text == "":
+		return false
+
+	if not clean_text.is_valid_int():
+		return false
+
+	return int(clean_text) == 1
+
+
+# ------------------------------------------------------------
+# KARL HEALTH FROM DAMAGE
+# ------------------------------------------------------------
+
+func handle_karl_damage() -> void:
+	if karl_health == null:
+		return
+
+	if karl_damage_variable == null:
+		return
+
+	var clean_text: String = karl_damage_variable.text.strip_edges()
+
+	if clean_text == "":
+		return
+
+	if not clean_text.is_valid_int():
+		return
+
+	var damage: int = int(clean_text)
+
+	if damage == last_damage:
+		return
+
+	print("Karl Die Hard damage changed from ", last_damage, " to ", damage)
+
+	if last_damage >= 0 and damage > last_damage:
+		print("Karl Die Hard: damage increased, playing fight video")
+		play_karl_fight_video()
+
+	last_damage = damage
+
+	update_karl_health(damage)
+
+
+func update_karl_health(damage: int) -> void:
+	var frame_number: int = 12 - int(float(damage) * 0.12)
+	frame_number = clamp(frame_number, 1, 12)
+
+	var path: String = "res://modes/karl_diehard/widgets/karl%d.png" % frame_number
+	var texture_file: Texture2D = load(path) as Texture2D
+
+	if texture_file == null:
+		push_warning("Karl Die Hard: Missing Karl health frame: %s" % path)
+		return
+
+	karl_health.texture = texture_file
+
+
+# ------------------------------------------------------------
+# KARL FIGHT VIDEO
+# ------------------------------------------------------------
+
+func play_karl_fight_video() -> void:
+	if karl_fight_video == null:
+		push_warning("Karl Die Hard: Cannot play fight video because node is null")
+		return
+
+	if karl_fight_video.stream == null:
+		push_warning("Karl Die Hard: KarlFight has no video stream set")
+		return
+
+	print("Karl Die Hard: play() called on KarlFight")
+
+	karl_fight_video.visible = true
+	karl_fight_video.stop()
+	karl_fight_video.play()
+
+
+func stop_karl_fight_video() -> void:
+	if karl_fight_video == null:
+		return
+
+	karl_fight_video.stop()
+	karl_fight_video.visible = false
+
+
+func _on_karl_fight_video_finished() -> void:
+	print("Karl Die Hard: fight video finished")
+
+	if karl_fight_video == null:
+		return
+
+	karl_fight_video.stop()
+	karl_fight_video.visible = false

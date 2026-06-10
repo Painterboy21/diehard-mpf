@@ -1,0 +1,207 @@
+[gd_scene format=3 uid="uid://dskgnff3f8x31"]
+
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_icsa6"]
+[ext_resource type="PackedScene" uid="uid://jckwpkv4117b" path="res://modes/katya_dieharder/widgets/katya_dieharder_timer_widget.tscn" id="2_icsa6"]
+[ext_resource type="PackedScene" uid="uid://b72gm5b1oa07x" path="res://modes/katya_diehard/widgets/katya_diehard_progress_widget.tscn" id="2_t8p6h"]
+[ext_resource type="VideoStream" uid="uid://pke0b81gy7jo" path="res://modes/katya_diehard/slides/Katya1.ogv" id="2_ucwdu"]
+[ext_resource type="VideoStream" uid="uid://grg0ho4bpkex" path="res://videos/DieHard3Background.ogv" id="4_q4r6v"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="5_c3vti"]
+[ext_resource type="Script" uid="uid://tmqw20jdwcy0" path="res://modes/katya_dieharder/slides/katya_dieharder_video_control.gd" id="5_ucwdu"]
+[ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="6_mhdkb"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="7_pfx0o"]
+[ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="8_lm63y"]
+[ext_resource type="Texture2D" uid="uid://ytwrcjpchkp8" path="res://godot-media/images/player 1 overlay.png" id="9_odl34"]
+[ext_resource type="Texture2D" uid="uid://cgdg61xeojmu8" path="res://godot-media/images/hollywhite.png" id="10_aciaw"]
+[ext_resource type="Script" uid="uid://bh8uniugrpk3c" path="res://slides/holly_letters.gd" id="11_2k7yw"]
+[ext_resource type="Texture2D" uid="uid://c0tj7020wfqu7" path="res://godot-media/images/H.png" id="12_k5iw4"]
+[ext_resource type="Texture2D" uid="uid://binlmwaj3sxtd" path="res://godot-media/images/O.png" id="13_hf6ra"]
+[ext_resource type="Texture2D" uid="uid://bo1y2txk5qfxf" path="res://godot-media/images/L.png" id="14_cykae"]
+[ext_resource type="Texture2D" uid="uid://bs0sdjldfa8j4" path="res://godot-media/images/Y.png" id="15_p38n1"]
+
+[node name="katya_dieharder_background" type="Control" unique_id=1876849087]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_icsa6")
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=2017886156]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("4_q4r6v")
+autoplay = true
+loop = true
+script = ExtResource("5_c3vti")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"
+
+[node name="KatyaDieHarderHitVideo" type="VideoStreamPlayer" parent="." unique_id=1815353815]
+visible = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+scale = Vector2(1, 0.9)
+stream = ExtResource("2_ucwdu")
+volume_db = 7.999997
+
+[node name="KatyaDieHarderVideoControl" type="Control" parent="." unique_id=166701307]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_ucwdu")
+
+[node name="KatyaDieHarderShotsVariable" type="Label" parent="KatyaDieHarderVideoControl" unique_id=2103096470]
+visible = false
+layout_mode = 0
+offset_right = 132.0
+offset_bottom = 166.0
+theme_override_font_sizes/font_size = 30
+text = "00"
+script = ExtResource("7_pfx0o")
+variable_name = "katya_dieharder_shots"
+template_string = "%s"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="katya_dieharder_timer_widget" parent="." unique_id=1875424892 instance=ExtResource("2_icsa6")]
+layout_mode = 1
+
+[node name="katya_dieharder_progress_widget" parent="." unique_id=916327062 instance=ExtResource("2_t8p6h")]
+layout_mode = 1
+
+[node name="Control2" type="Control" parent="." unique_id=967988825]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="main_score" type="Label" parent="Control2" unique_id=1048838247]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -98.0
+offset_bottom = -98.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+theme = ExtResource("6_mhdkb")
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_pfx0o")
+variable_name = "score"
+comma_separate = true
+
+[node name="current_ball" type="Label" parent="Control2" unique_id=1769272716]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -292.66998
+offset_bottom = -212.66998
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("8_lm63y")
+text = "Ball 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_pfx0o")
+variable_name = "ball"
+comma_separate = true
+template_string = "Ball %s"
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=1589179317]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.777
+
+[node name="score_overlay" type="TextureRect" parent="AspectRatioContainer" unique_id=1107110937]
+layout_mode = 2
+texture = ExtResource("9_odl34")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="AspectRatioContainer" unique_id=1695330213]
+layout_mode = 2
+
+[node name="player_1_score" type="Label" parent="AspectRatioContainer/Control" unique_id=88526952]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -112.0
+offset_right = 554.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("6_mhdkb")
+theme_override_font_sizes/font_size = 60
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_pfx0o")
+variable_type = 4
+variable_name = "score"
+comma_separate = true
+
+[node name="Hollywhite" type="Sprite2D" parent="." unique_id=1237423753]
+position = Vector2(160, 823)
+texture = ExtResource("10_aciaw")
+
+[node name="HollyLetters" type="Control" parent="." unique_id=126271155]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_2k7yw")
+
+[node name="H" type="Sprite2D" parent="HollyLetters" unique_id=24461905]
+visible = false
+position = Vector2(130.5, 822.763)
+scale = Vector2(0.140065, 0.109528)
+texture = ExtResource("12_k5iw4")
+
+[node name="O" type="Sprite2D" parent="HollyLetters" unique_id=478243289]
+visible = false
+position = Vector2(175, 823)
+scale = Vector2(0.147368, 0.107018)
+texture = ExtResource("13_hf6ra")
+
+[node name="L" type="Sprite2D" parent="HollyLetters" unique_id=108471217]
+visible = false
+position = Vector2(211.919, 821.967)
+scale = Vector2(0.138727, 0.103263)
+texture = ExtResource("14_cykae")
+
+[node name="L1" type="Sprite2D" parent="HollyLetters" unique_id=1562401939]
+visible = false
+position = Vector2(242.094, 822)
+scale = Vector2(0.137007, 0.103201)
+texture = ExtResource("14_cykae")
+
+[node name="Y" type="Sprite2D" parent="HollyLetters" unique_id=1523090683]
+visible = false
+position = Vector2(266.5, 822)
+scale = Vector2(0.134868, 0.103093)
+texture = ExtResource("15_p38n1")

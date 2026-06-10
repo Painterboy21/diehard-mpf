@@ -34,6 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://bs6w03tjnhpa2" path="res://modes/high_scores/assets/End.png" id="31_lwi0q"]
 [ext_resource type="Texture2D" uid="uid://e0jfkk1wi2q1" path="res://modes/high_scores/assets/Del.png" id="32_i08x5"]
 [ext_resource type="Script" uid="uid://ctn22bjte0o71" path="res://modes/high_scores/assets/high-score-timer.gd" id="35_jihut"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="35_q4j8p"]
 
 [node name="HighScore" type="Control" unique_id=1964300870]
 layout_mode = 3
@@ -231,5 +232,43 @@ grow_vertical = 2
 theme = ExtResource("5_qkqu0")
 text = "60"
 horizontal_alignment = 1
+
+[node name="MachineRecordTitle" type="Label" parent="." unique_id=1334890788]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 816.0
+offset_right = 549.0
+offset_bottom = 967.0
+theme_override_colors/font_color = Color(0.3882353, 0.78431374, 0.8980392, 1)
+theme_override_fonts/font = ExtResource("35_q4j8p")
+theme_override_font_sizes/font_size = 60
+text = "NEW MULTIBALL HERO
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_hewrl")
+variable_type = 2
+variable_name = "machine_record_pending_title"
+template_string = "%s"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
+
+[node name="MachineRecordValue" type="Label" parent="." unique_id=827087808]
+layout_mode = 0
+offset_left = 1379.0
+offset_top = 821.0
+offset_right = 1890.0
+offset_bottom = 972.0
+theme_override_colors/font_color = Color(0.3882353, 0.78431374, 0.8980392, 1)
+theme_override_fonts/font = ExtResource("35_q4j8p")
+theme_override_font_sizes/font_size = 60
+text = "NEW MULTIBALL HERO
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_hewrl")
+variable_type = 2
+variable_name = "machine_record_pending_value_text"
+template_string = "%s"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [connection signal="timeout" from="ExpireTimer" to="ExpireTimer" method="_on_ExpireTimer_timeout"]

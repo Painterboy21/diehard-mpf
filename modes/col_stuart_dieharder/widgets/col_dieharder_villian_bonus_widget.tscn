@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://byet2l3ike5iw"]
+
+[ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_vrqbo"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="2_u3sw7"]
+
+[node name="col_dieharder_villian_bonus_widget" type="Control" unique_id=1421029567]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vrqbo")
+
+[node name="col bonus awarded" type="Label" parent="." unique_id=1372042392]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 110.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.029999971, 0.029999971, 1)
+theme_override_colors/font_shadow_color = Color(0.99, 0.99, 0.99, 0.99215686)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 5
+theme_override_fonts/font = ExtResource("2_u3sw7")
+theme_override_font_sizes/font_size = 90
+text = "5X AVAILABLE"
+horizontal_alignment = 1

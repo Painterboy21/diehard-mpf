@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://bk745b5qva0gn"]
+
+[ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_wcfux"]
+[ext_resource type="FontFile" uid="uid://8bwe3lenjji0" path="res://godot-media/fonts/DieHardVPX-Regular.ttf" id="3_ewsn3"]
+
+[sub_resource type="Animation" id="Animation_3ftjh"]
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.033333335, 1.4333333, 1.9333333, 2.8666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_g2g34"]
+resource_name = "playfield x"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.0666667, 1.6, 1.9666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.011764706), Color(1, 1, 1, 1), Color(1, 1, 1, 0.019607844), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qnm6p"]
+_data = {
+&"RESET": SubResource("Animation_3ftjh"),
+&"playfield x": SubResource("Animation_g2g34")
+}
+
+[node name="playfield_5x" type="Control" unique_id=690265456]
+modulate = Color(1, 1, 1, 0.19999987)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -22.0
+offset_bottom = -706.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wcfux")
+metadata/_custom_type_script = "uid://d4ky3s4bg1ouq"
+
+[node name="Label" type="Label" parent="." unique_id=511965741]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.01999998, 0.01999998, 1)
+theme_override_colors/font_shadow_color = Color(0.99, 0.98010004, 0.98010004, 0.99215686)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 6
+theme_override_fonts/font = ExtResource("3_ewsn3")
+theme_override_font_sizes/font_size = 80
+text = "PLAYFIELD
+MULTIPLER
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="." unique_id=701704134]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 498.0
+offset_top = 580.0
+offset_right = -531.0
+offset_bottom = -177.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.01999998, 0.01999998, 1)
+theme_override_colors/font_shadow_color = Color(0.99, 0.98010004, 0.98010004, 0.99215686)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("3_ewsn3")
+theme_override_font_sizes/font_size = 120
+text = "5X
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1756772645]
+reset_on_save = false
+libraries/ = SubResource("AnimationLibrary_qnm6p")
+autoplay = &"RESET"

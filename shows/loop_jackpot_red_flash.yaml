@@ -1,0 +1,89 @@
+#show_version=6
+
+# ------------------------------------------------------------
+# LOOP JACKPOT RED FLASH
+# ------------------------------------------------------------
+# 15-loop streak jackpot show.
+# Uses GI/SPOTS and known villain inserts only.
+# Does NOT use l80, l81, l82, or l83.
+# ------------------------------------------------------------
+
+- duration: 100ms
+  lights:
+    GI: red
+    SPOTS: red
+    l40: red
+    l41: red
+    l42: red
+    l43: red
+    l44: red
+
+- duration: 100ms
+  lights:
+    GI: black
+    SPOTS: black
+    l40: black
+    l41: black
+    l42: black
+    l43: black
+    l44: black
+
+- duration: 100ms
+  lights:
+    GI: red
+    SPOTS: red
+    l40: red
+    l41: red
+    l42: red
+    l43: red
+    l44: red
+
+- duration: 100ms
+  lights:
+    GI: black
+    SPOTS: black
+    l40: black
+    l41: black
+    l42: black
+    l43: black
+    l44: black
+
+- duration: 100ms
+  lights:
+    GI: red
+    SPOTS: red
+    l40: red
+    l41: red
+    l42: red
+    l43: red
+    l44: red
+
+- duration: 100ms
+  lights:
+    GI: black
+    SPOTS: black
+    l40: black
+    l41: black
+    l42: black
+    l43: black
+    l44: black
+
+- duration: 100ms
+  lights:
+    GI: red
+    SPOTS: red
+    l40: red
+    l41: red
+    l42: red
+    l43: red
+    l44: red
+
+- duration: 100ms
+  lights:
+    GI: black
+    SPOTS: black
+    l40: black
+    l41: black
+    l42: black
+    l43: black
+    l44: black

@@ -1,5 +1,17 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# ATTRACT
+# ------------------------------------------------------------
+# What this mode does:
+#   - Starts when the game ends or reset completes.
+#   - Stops when a game starts or service mode opens.
+#   - Plays the main attract slide.
+#   - Runs the attract light show and start button flash.
+#   - Refreshes iScored scores when attract begins and on idle.
+#   - Flippers rotate the attract display and reset the idle timer.
+#   - Action button shows the instructions slide while held.
+# ------------------------------------------------------------
 mode:
   start_events:
     - game_ended
@@ -9,10 +21,20 @@ mode:
     - service_mode_entered
   priority: 10
 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Starts attract shows and iScored refresh.
+# Flippers rotate the Godot attract display using the original
+# rotate_attract_left / rotate_attract_right events.
+# Idle completion restarts the attract show and refreshes scores.
+# ------------------------------------------------------------
 event_player:
   mode_attract_started:
     - play_show_xmas
     - play_show_start_button_flash
+    - iscored_refresh_scores
+    - reset_idle_timer
 
   s_left_flipper_active:
     - rotate_attract_left
@@ -23,8 +45,16 @@ event_player:
     - reset_idle_timer
 
   timer_attract_idle_complete:
+    - rotate_attract_right
     - play_show_xmas
+    - iscored_refresh_scores
+    - reset_idle_timer
 
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# ------------------------------------------------------------
+# Turns GI off during attract and clears it when attract stops.
+# ------------------------------------------------------------
 light_player:
   mode_attract_started:
     GI:
@@ -34,6 +64,11 @@ light_player:
     GI:
       color: off
 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# ------------------------------------------------------------
+# Runs the main attract light show and flashing start button show.
+# ------------------------------------------------------------
 show_player:
   play_show_xmas:
     attract_show_runner:
@@ -44,6 +79,13 @@ show_player:
     flash_start_button:
       key: key_attract_start_button_flash
 
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# ------------------------------------------------------------
+# Shows the main attract slide.
+# Action button shows instructions while held, then removes them.
+# Record pages are handled inside Godot, not here.
+# ------------------------------------------------------------
 slide_player:
   mode_attract_started:
     attract:
@@ -60,7 +102,12 @@ slide_player:
     attract_instructions:
       action: remove
 
-
+# ------------------------------------------------------------
+# TIMERS
+# ------------------------------------------------------------
+# Idle timer advances the attract display and refreshes iScored
+# after a period with no flipper activity.
+# ------------------------------------------------------------
 timers:
   attract_idle:
     start_value: 0
@@ -68,7 +115,20 @@ timers:
     direction: up
     control_events:
       - event: reset_idle_timer
-        action: reset
+        action: restart
     restart_on_complete: true
     start_running: true
     tick_interval: 10000ms
+
+# ------------------------------------------------------------
+# SOUND PLAYER
+# ------------------------------------------------------------
+# Ambush carries on with normal gameplay music.
+# It uses the same main_snd_music key as base music, so it does
+# not stack a second music track.
+# ------------------------------------------------------------
+sound_player:
+  mode_ambush_started:
+    gameplay_music_assault:
+      key: main_snd_music
+      action: play

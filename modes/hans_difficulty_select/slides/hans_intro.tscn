@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cwwcm0gf1mvc"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_m66su"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_m66su"]
 [ext_resource type="VideoStream" uid="uid://bidrjey1e5x8p" path="res://videos/VillainSelect/HansEnters.ogv" id="2_catck"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_as445"]
 
@@ -21,6 +21,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_catck")
+volume_db = 7.999999
 autoplay = true
 script = ExtResource("3_as445")
 end_behavior = 1

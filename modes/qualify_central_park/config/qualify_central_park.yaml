@@ -6,21 +6,75 @@ mode:
     - multiball_nakatomi_ended
     - multiball_airplane_ended
     - mode_ambush_stopped
+
+    # Hans finished
     - hans_diehard_won_complete
     - hans_diehard_failed_complete
     - hans_dieharder_won_complete
     - hans_dieharder_failed_complete
+
+    # Katya finished
     - katya_completed
     - katya_failed
+    - katya_dieharder_completed
+    - katya_dieharder_failed
+
+    # Karl finished
+    - karl_diehard_completed
+    - karl_diehard_failed
+    - karl_dieharder_completed
+    - karl_dieharder_failed
+
+    # Simon finished
+    - simon_completed
+    - simon_failed
+    - simon_dieharder_completed
+    - simon_dieharder_failed
+
+    # Stuart / Col finished
+    - stuart_completed
+    - stuart_failed
+    - stuart_dieharder_completed
+    - stuart_dieharder_failed
+    - col_completed
+    - col_failed
+    - col_dieharder_completed
+    - col_dieharder_failed
+
   stop_events:
     - ball_ended
+
+    # Stop during Central Park itself / other multiballs
     - multiball_central_park_started
     - multiball_nakatomi_started
     - multiball_airplane_started
+
+    # Stop during Ambush
+    - start_ambush
+    - mode_ambush_started
+
+    # Hans started
     - start_hans_diehard
     - start_hans_dieharder
+
+    # Katya started
     - start_katya_diehard
     - start_katya_dieharder
+
+    # Karl started
+    - start_karl_diehard
+    - start_karl_dieharder
+
+    # Simon started
+    - start_simon_diehard
+    - start_simon_dieharder
+
+    # Stuart / Col started
+    - start_stuart_diehard
+    - start_stuart_dieharder
+    - start_col_diehard
+    - start_col_dieharder
+
   priority: 200
 
 
@@ -45,16 +99,27 @@ shots:
     profile: profile_central_park_lock
     show_tokens: 
       lights: l76
+    control_events:
+      - events: mystery_award_cp_left_lane
+        state: 1
+
   central_park_lock_middle:
     switch: s_TrPF2
     profile: profile_central_park_lock
     show_tokens: 
       lights: l77
+    control_events:
+      - events: mystery_award_cp_middle_lane
+        state: 1
+
   central_park_lock_right:
     switch: s_TrPF3
     profile: profile_central_park_lock
     show_tokens: 
       lights: l78
+    control_events:
+      - events: mystery_award_cp_right_lane
+        state: 1
 
   central_park_start_multiball:
     profile: cp_start_multiball_profile
@@ -107,15 +172,16 @@ slide_player:
       action: play
       expire: 0s
 
+event_player:
+  slide_centralpark_mb_removed:
+   - start_central_park_multiball
+
 variable_player:
   trigger_central_park_ball_locked:
     score:
       action: add
-      int: 250000
+      int: "250000 * current_player.playfield_multiplier"
+
     eob_bonus_multiball:
       action: add
       int: 100000
-
-event_player:
-  slide_centralpark_mb_removed:
-   - start_central_park_multiball

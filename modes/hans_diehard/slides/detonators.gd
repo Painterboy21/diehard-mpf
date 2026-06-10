@@ -17,7 +17,7 @@ func _process(_delta: float) -> void:
 
 
 func update_from_mpf() -> void:
-	var hits = int(MPF.game.player.get("hans_diehard_progress", 0))
+	var hits = int(MPF.game.player.get("hans_dieharder_progress", 0))
 	hits = clampi(hits, 0, 8)
 
 	if hits == last_hits:

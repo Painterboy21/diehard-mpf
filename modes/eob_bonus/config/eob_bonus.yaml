@@ -1,21 +1,47 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# EOB BONUS
+# ------------------------------------------------------------
+# What this mode does:
+#   - Starts from MPF ball_ending.
+#   - Waits in the ball-ending queue until bonus_finished.
+#   - Plays the EOB bonus show/video.
+#   - Shows the bonus summary when the EOB timer completes.
+#   - Allows both flippers to skip to the summary.
+#   - Delays EOB bonus show when a villain result is active.
+#   - Starts EOB after the villain result completion event.
+# ------------------------------------------------------------
 mode:
   start_events: ball_ending{game.tilted == False}
   stop_events: bonus_finished
   priority: 9999
   use_wait_queue: true
 
-combo_switches: 
+# ------------------------------------------------------------
+# COMBO SWITCHES
+# ------------------------------------------------------------
+# Press both flippers together to skip straight to the bonus summary.
+# ------------------------------------------------------------
+combo_switches:
   flipper_cancel_bonus:
     switches_1: s_left_flipper
     switches_2: s_right_flipper
-    events_when_both: 
+    events_when_both:
       - show_bonus_summary
 
-event_player: 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Handles EOB timer completion, summary start, final finish,
+# and stopping normal gameplay music when EOB begins.
+# ------------------------------------------------------------
+event_player:
   timer_eob_bonus_complete:
     - show_bonus_summary
+    - calculate_eob_bonus_x
+  calculate_eob_bonus_x:
+    - show_bonus_summary|250ms
   timer_eob_bonus_summary_complete:
     - bonus_finished
   mode_eob_bonus_started:
@@ -24,69 +50,228 @@ event_player:
     - stop_main_music3
     - stop_main_music4
 
-
-show_player: 
-  mode_eob_bonus_started: 
-    eob_bonus: 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# ------------------------------------------------------------
+# Starts the EOB bonus show on a normal drain.
+# If a villain result is active, waits until that villain result
+# completion event before starting the EOB bonus show.
+# ------------------------------------------------------------
+show_player:
+  mode_eob_bonus_started{current_player.karl_result_started != 1 and current_player.karl_dieharder_result_started != 1 and current_player.hans_result_started != 1 and current_player.hans_dieharder_result_started != 1 and current_player.hans_dieharder_failed_active != 1 and current_player.katya_diehard_result_started != 1 and current_player.katya_dieharder_result_started != 1 and current_player.simon_result_started != 1 and current_player.simon_dieharder_result_started != 1 and current_player.col_stuart_result_started != 1 and current_player.col_stuart_dieharder_result_started != 1}:
+    eob_bonus:
       key: key_eob_bonus
       loops: 0
-  show_bonus_summary: 
-    eob_bonus: 
+  karl_diehard_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  karl_diehard_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  karl_dieharder_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  karl_dieharder_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  hans_diehard_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  hans_diehard_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  hans_dieharder_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  katya_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  katya_diehard_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  katya_dieharder_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  katya_dieharder_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  simon_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  simon_diehard_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  simon_diehard_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  simon_dieharder_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  simon_dieharder_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  col_stuart_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  col_stuart_diehard_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  col_stuart_diehard_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  col_stuart_dieharder_failed:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  col_stuart_dieharder_failed_complete:
+    eob_bonus:
+      key: key_eob_bonus
+      loops: 0
+  show_bonus_summary:
+    eob_bonus:
       action: stop
       key: key_eob_bonus
 
-
-slide_player: 
-  show_bonus_summary: 
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# ------------------------------------------------------------
+# Shows the final EOB bonus summary slide.
+# ------------------------------------------------------------
+slide_player:
+  show_bonus_summary:
     eob_bonus_summary:
       action: play
       expire: 0s
 
+# ------------------------------------------------------------
+# SOUND PLAYER
+# ------------------------------------------------------------
+# Stops normal gameplay music when EOB starts.
+# ------------------------------------------------------------
+sound_player:
+  stop_main_music1:
+    gameplay_music_beethoven:
+      key: main_snd_music
+      action: stop
+  stop_main_music2:
+    gameplay_music_assault:
+      key: main_snd_music
+      action: stop
+  stop_main_music3:
+    gameplay_music_finlandia:
+      key: main_snd_music
+      action: stop
+  stop_main_music4:
+    gameplay_music_battle:
+      key: main_snd_music
+      action: stop
 
-sound_player: 
-  stop_main_music1: 
-    gameplay_music_beethoven: 
-      key: main_snd_music
-      action: stop
-  stop_main_music2: 
-    gameplay_music_assault: 
-      key: main_snd_music
-      action: stop
-  stop_main_music3: 
-    gameplay_music_finlandia: 
-      key: main_snd_music
-      action: stop
-  stop_main_music4: 
-    gameplay_music_battle: 
-      key: main_snd_music
-      action: stop
-
-
-timers: 
+# ------------------------------------------------------------
+# TIMERS
+# ------------------------------------------------------------
+# Main EOB timer runs the bonus count/video timing.
+# Summary timer controls how long the summary slide stays up.
+# ------------------------------------------------------------
+timers:
   eob_bonus:
     start_value: 0
     end_value: 12
     direction: up
-    control_events: 
+    tick_interval: 1000ms
+    start_running: false
+    restart_on_complete: false
+    control_events:
+      - event: mode_eob_bonus_started{current_player.karl_result_started != 1 and current_player.karl_dieharder_result_started != 1 and current_player.hans_result_started != 1 and current_player.hans_dieharder_result_started != 1 and current_player.hans_dieharder_failed_active != 1 and current_player.katya_diehard_result_started != 1 and current_player.katya_dieharder_result_started != 1 and current_player.simon_result_started != 1 and current_player.simon_dieharder_result_started != 1 and current_player.col_stuart_result_started != 1 and current_player.col_stuart_dieharder_result_started != 1}
+        action: restart
+      - event: karl_diehard_failed
+        action: restart
+      - event: karl_diehard_failed_complete
+        action: restart
+      - event: karl_dieharder_failed
+        action: restart
+      - event: karl_dieharder_failed_complete
+        action: restart
+      - event: hans_diehard_failed
+        action: restart
+      - event: hans_diehard_failed_complete
+        action: restart
+      - event: hans_dieharder_failed_complete
+        action: restart
+      - event: katya_failed
+        action: restart
+      - event: katya_diehard_failed_complete
+        action: restart
+      - event: katya_dieharder_failed
+        action: restart
+      - event: katya_dieharder_failed_complete
+        action: restart
+      - event: simon_failed
+        action: restart
+      - event: simon_diehard_failed
+        action: restart
+      - event: simon_diehard_failed_complete
+        action: restart
+      - event: simon_dieharder_failed
+        action: restart
+      - event: simon_dieharder_failed_complete
+        action: restart
+      - event: col_stuart_failed
+        action: restart
+      - event: col_stuart_diehard_failed
+        action: restart
+      - event: col_stuart_diehard_failed_complete
+        action: restart
+      - event: col_stuart_dieharder_failed
+        action: restart
+      - event: col_stuart_dieharder_failed_complete
+        action: restart
       - event: show_bonus_summary
         action: stop
-    restart_on_complete: False
-    start_running: True
-    tick_interval: 1000ms
   eob_bonus_summary:
     start_value: 0
     end_value: 3
     direction: up
-    control_events: 
+    tick_interval: 1000ms
+    start_running: false
+    restart_on_complete: false
+    control_events:
       - event: show_bonus_summary
         action: start
-    restart_on_complete: False
-    start_running: False
-    tick_interval: 1000ms
 
-
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+# Calculates EOB bonus totals when EOB starts.
+# Adds the final EOB bonus score when the main EOB timer completes.
+# ------------------------------------------------------------
 variable_player:
-  mode_started:
+  mode_eob_bonus_started:
+    eob_bonus_total:
+      int: current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains
+      action: set
+    eob_bonus_x:
+      int: (current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains) * current_player.bonus_multiplier
+      action: set
+  timer_eob_bonus_complete:
     score:
-      int: (current_player.eob_bonus_bullets + current_player.eob_bonus_ambush + current_player.eob_bonus_multiball + current_player.eob_bonus_holly + current_player.eob_bonus_villains + current_player.eob_bonus_x) * current_player.eob_bonus_x
+      int: current_player.eob_bonus_x
       action: add

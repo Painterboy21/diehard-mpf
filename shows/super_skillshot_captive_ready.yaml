@@ -1,0 +1,14 @@
+#show_version=6
+
+# ---------------------------------------------------------------------
+# SUPER SKILLSHOT CAPTIVE READY
+# Flashes the captive ball insert red when Super Skill Shot is ready.
+# ---------------------------------------------------------------------
+
+- duration: 100ms
+  lights:
+    (captive): red
+
+- duration: 100ms
+  lights:
+    (captive): off

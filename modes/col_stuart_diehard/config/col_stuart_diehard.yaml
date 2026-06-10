@@ -1,0 +1,1073 @@
+#config_version=6
+
+# ------------------------------------------------------------
+# COL / STUART DIE HARD
+# ------------------------------------------------------------
+# What this mode does:
+#   - Starts from start_col_stuart_diehard.
+#   - Only starts if Col/Stuart has not already been completed.
+#   - Player hits any lit yellow shot once.
+#   - That same shot stays lit.
+#   - Player must hit that same shot again to defeat Col/Stuart.
+#   - Normal timer = 45 seconds.
+#   - Hans Bonus timer = 70 seconds.
+#   - Mystery Add More Time adds +10 seconds.
+#   - Complete awards 4x path, counts Extra Ball, and locks Col/Stuart out.
+#   - Fail plays ColEscaped and allows Col/Stuart to be replayed.
+#   - Left ramp uses s_upper_pf_entrance.
+# ------------------------------------------------------------
+mode:
+  start_events:
+    - start_col_stuart_diehard{current_player.col_stuart_complete != 1}
+  stop_events:
+    - col_stuart_diehard_completed
+    - col_stuart_diehard_failed
+    - ball_ended
+  priority: 170
+
+# ------------------------------------------------------------
+# TIMERS
+# ------------------------------------------------------------
+# Runs the Col/Stuart Die Hard countdown.
+# Hans Bonus gives the longer timer.
+# Mystery can add time while the mode is running.
+# ------------------------------------------------------------
+timers:
+  col_stuart_diehard_timer:
+    start_value: 45
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - event: col_stuart_start_normal_timer
+        action: restart
+        value: 45
+      - event: col_stuart_start_hans_bonus_timer
+        action: restart
+        value: 70
+      - event: add_villain_time_from_mystery
+        action: add
+        value: 10
+      - event: col_stuart_defeated_slide
+        action: stop
+      - event: col_stuart_escaped_slide
+        action: stop
+      - event: col_stuart_diehard_completed
+        action: stop
+      - event: col_stuart_diehard_failed
+        action: stop
+      - event: ball_ended
+        action: stop
+
+# ------------------------------------------------------------
+# BALL SAVES
+# ------------------------------------------------------------
+# Start save is active briefly when the mode begins.
+# Complete save is active after defeating Col/Stuart.
+# ------------------------------------------------------------
+ball_saves:
+  col_stuart_start_save:
+    active_time: 2s
+    hurry_up_time: 0s
+    grace_period: 0s
+    auto_launch: true
+    balls_to_save: 1
+    enable_events:
+      - col_stuart_enable_start_ball_save
+    disable_events:
+      - col_stuart_disable_start_ball_save
+      - col_stuart_defeated_slide
+      - col_stuart_escaped_slide
+      - col_stuart_diehard_completed
+      - col_stuart_diehard_failed
+      - mode_col_stuart_diehard_stopping
+      - tilt
+
+  col_stuart_complete_save:
+    active_time: 5s
+    hurry_up_time: 0s
+    grace_period: 0s
+    auto_launch: true
+    balls_to_save: 1
+    enable_events:
+      - col_stuart_enable_complete_ball_save
+    disable_events:
+      - col_stuart_disable_complete_ball_save
+      - col_stuart_diehard_completed
+      - col_stuart_diehard_failed
+      - mode_col_stuart_diehard_stopping
+      - tilt
+
+# ------------------------------------------------------------
+# SHOTS
+# ------------------------------------------------------------
+# Five Col/Stuart shots.
+# First hit stores the chosen shot.
+# Second hit on the same shot completes the mode.
+# ------------------------------------------------------------
+shots:
+  col_stuart_left_orbit:
+    hit_events: left_orbit_hit
+    enable_events:
+      - col_stuart_enable_left_orbit
+    disable_events:
+      - col_stuart_disable_all_shots
+      - col_stuart_disable_left_orbit
+      - col_stuart_diehard_completed
+      - col_stuart_diehard_failed
+      - mode_col_stuart_diehard_stopping
+
+  col_stuart_left_ramp:
+    switch: s_upper_pf_entrance
+    enable_events:
+      - col_stuart_enable_left_ramp
+    disable_events:
+      - col_stuart_disable_all_shots
+      - col_stuart_disable_left_ramp
+      - col_stuart_diehard_completed
+      - col_stuart_diehard_failed
+      - mode_col_stuart_diehard_stopping
+
+  col_stuart_right_ramp:
+    switch: s_air_duct
+    enable_events:
+      - col_stuart_enable_right_ramp
+    disable_events:
+      - col_stuart_disable_all_shots
+      - col_stuart_disable_right_ramp
+      - col_stuart_diehard_completed
+      - col_stuart_diehard_failed
+      - mode_col_stuart_diehard_stopping
+
+  col_stuart_upper_loop:
+    switch: s_mid_orbit
+    enable_events:
+      - col_stuart_enable_upper_loop
+    disable_events:
+      - col_stuart_disable_all_shots
+      - col_stuart_disable_upper_loop
+      - col_stuart_diehard_completed
+      - col_stuart_diehard_failed
+      - mode_col_stuart_diehard_stopping
+
+  col_stuart_right_orbit:
+    hit_events: right_orbit_hit
+    enable_events:
+      - col_stuart_enable_right_orbit
+    disable_events:
+      - col_stuart_disable_all_shots
+      - col_stuart_disable_right_orbit
+      - col_stuart_diehard_completed
+      - col_stuart_diehard_failed
+      - mode_col_stuart_diehard_stopping
+
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Handles mode start, timer choice, shot rules, fail flow,
+# complete flow, Extra Ball bridge, Villain MVP tracking,
+# and cleanup.
+# ------------------------------------------------------------
+event_player:
+  mode_col_stuart_diehard_started:
+    - villain_mode_started
+    - stop_base_music
+    - col_stuart_music_start
+    - col_stuart_reset
+    - col_stuart_enable_start_ball_save
+    - reset_bullets
+    - reset_bullet_total
+    - nakatomi_entrance_lock_close
+    - col_stuart_enable_all_remaining|100ms
+    - col_stuart_clear_start_text|50ms
+    - col_stuart_set_start_text|150ms
+    - record_start_col_stuart_diehard_villain_mvp
+  record_start_col_stuart_diehard_villain_mvp:
+    record_start_villain_mvp:
+      mode: COL/STUART DIE HARD
+  mode_col_stuart_diehard_started{current_player.hans_bonus == 1}:
+    - col_stuart_start_hans_bonus_timer
+  mode_col_stuart_diehard_started{current_player.hans_bonus != 1}:
+    - col_stuart_start_normal_timer
+  mode_col_stuart_diehard_stopping:
+    - villain_mode_stopped
+    - wire_ramp_exit_closed
+    - col_stuart_disable_all_shots
+    - col_stuart_disable_start_ball_save
+    - col_stuart_disable_complete_ball_save
+  record_finish_col_stuart_diehard_villain_mvp:
+    record_finish_villain_mvp:
+      mode: COL/STUART DIE HARD
+  timer_col_stuart_diehard_timer_complete{current_player.col_stuart_result_started == 0}:
+    - col_stuart_fail_mode
+  ball_drain{current_player.col_stuart_result_started == 0}:
+    - col_stuart_fail_mode
+  col_stuart_fail_mode:
+    - col_stuart_escaped_slide
+    - col_stuart_disable_all_shots
+    - col_stuart_disable_start_ball_save
+    - reset_bullets
+    - reset_bullet_total
+    - wire_ramp_exit_closed
+    - record_finish_col_stuart_diehard_villain_mvp
+    - col_stuart_diehard_failed|5s
+  col_stuart_diehard_failed:
+    - resume_base_music|500ms
+  col_stuart_check_complete{current_player.col_stuart_progress >= 2 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_defeated_slide
+    - col_stuart_disable_all_shots
+    - col_stuart_disable_start_ball_save
+    - col_stuart_enable_complete_ball_save
+    - col_stuart_diehard_completed|5s
+  col_stuart_diehard_completed:
+    - record_finish_col_stuart_diehard_villain_mvp
+    - col_stuart_score_complete
+    - count_stuart_for_extra_ball
+    - unlock_4x_playfield
+    - reset_bullets
+    - reset_bullet_total
+    - wire_ramp_exit_closed
+    - resume_base_music|500ms
+    - restore_col_stuart_complete_insert|750ms
+  col_stuart_left_orbit_hit{current_player.col_stuart_shot_mode == 0 and current_player.col_stuart_left_orbit_done == 0 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_left_orbit_first_hit
+    - col_stuart_disable_all_shots
+    - col_stuart_enable_left_orbit
+    - col_stuart_flash_left_orbit
+    - col_stuart_update_remaining|20ms
+  col_stuart_left_ramp_hit{current_player.col_stuart_shot_mode == 0 and current_player.col_stuart_left_ramp_done == 0 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_left_ramp_first_hit
+    - col_stuart_disable_all_shots
+    - col_stuart_enable_left_ramp
+    - col_stuart_flash_left_ramp
+    - col_stuart_update_remaining|20ms
+  col_stuart_right_ramp_hit{current_player.col_stuart_shot_mode == 0 and current_player.col_stuart_right_ramp_done == 0 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_right_ramp_first_hit
+    - col_stuart_disable_all_shots
+    - col_stuart_enable_right_ramp
+    - col_stuart_flash_right_ramp
+    - col_stuart_update_remaining|20ms
+  col_stuart_upper_loop_hit{current_player.col_stuart_shot_mode == 0 and current_player.col_stuart_upper_loop_done == 0 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_upper_loop_first_hit
+    - col_stuart_disable_all_shots
+    - col_stuart_enable_upper_loop
+    - col_stuart_flash_upper_loop
+    - col_stuart_update_remaining|20ms
+  col_stuart_right_orbit_hit{current_player.col_stuart_shot_mode == 0 and current_player.col_stuart_right_orbit_done == 0 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_right_orbit_first_hit
+    - col_stuart_disable_all_shots
+    - col_stuart_enable_right_orbit
+    - col_stuart_flash_right_orbit
+    - col_stuart_update_remaining|20ms
+  col_stuart_left_orbit_hit{current_player.col_stuart_shot_mode == 1 and current_player.col_stuart_last_shot == 1 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_left_orbit_confirmed
+    - col_stuart_disable_all_shots
+    - col_stuart_flash_left_orbit
+    - col_stuart_after_confirmed|20ms
+  col_stuart_left_ramp_hit{current_player.col_stuart_shot_mode == 1 and current_player.col_stuart_last_shot == 2 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_left_ramp_confirmed
+    - col_stuart_disable_all_shots
+    - col_stuart_flash_left_ramp
+    - col_stuart_after_confirmed|20ms
+  col_stuart_right_ramp_hit{current_player.col_stuart_shot_mode == 1 and current_player.col_stuart_last_shot == 3 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_right_ramp_confirmed
+    - col_stuart_disable_all_shots
+    - col_stuart_flash_right_ramp
+    - col_stuart_after_confirmed|20ms
+  col_stuart_upper_loop_hit{current_player.col_stuart_shot_mode == 1 and current_player.col_stuart_last_shot == 4 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_upper_loop_confirmed
+    - col_stuart_disable_all_shots
+    - col_stuart_flash_upper_loop
+    - col_stuart_after_confirmed|20ms
+  col_stuart_right_orbit_hit{current_player.col_stuart_shot_mode == 1 and current_player.col_stuart_last_shot == 5 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_right_orbit_confirmed
+    - col_stuart_disable_all_shots
+    - col_stuart_flash_right_orbit
+    - col_stuart_after_confirmed|20ms
+  col_stuart_after_confirmed{current_player.col_stuart_progress >= 2}:
+    - col_stuart_check_complete
+  col_stuart_enable_all_remaining{current_player.col_stuart_left_orbit_done == 0 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_enable_left_orbit
+  col_stuart_enable_all_remaining{current_player.col_stuart_left_ramp_done == 0 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_enable_left_ramp
+  col_stuart_enable_all_remaining{current_player.col_stuart_right_ramp_done == 0 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_enable_right_ramp
+  col_stuart_enable_all_remaining{current_player.col_stuart_upper_loop_done == 0 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_enable_upper_loop
+  col_stuart_enable_all_remaining{current_player.col_stuart_right_orbit_done == 0 and current_player.col_stuart_result_started == 0}:
+    - col_stuart_enable_right_orbit
+  ball_save_col_stuart_start_save_saving_ball:
+    - ball_save_saving_ball
+  ball_save_col_stuart_complete_save_saving_ball:
+    - ball_save_saving_ball
+
+
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+# Stores mode running state, shot progress, last-shot state,
+# display text, scoring, completion lockout, and result state.
+# ------------------------------------------------------------
+variable_player:
+  col_stuart_reset:
+    villain_mode_running:
+      action: set
+      int: 1
+    col_stuart_progress:
+      action: set
+      int: 0
+    col_stuart_remaining:
+      action: set
+      int: 2
+    col_stuart_time:
+      action: set
+      int: 45
+    col_stuart_shot_mode:
+      action: set
+      int: 0
+    col_stuart_last_shot:
+      action: set
+      int: 0
+    col_stuart_result_started:
+      action: set
+      int: 0
+    col_stuart_result_display:
+      action: set
+      int: 0
+    col_stuart_left_orbit_done:
+      action: set
+      int: 0
+    col_stuart_left_ramp_done:
+      action: set
+      int: 0
+    col_stuart_right_ramp_done:
+      action: set
+      int: 0
+    col_stuart_upper_loop_done:
+      action: set
+      int: 0
+    col_stuart_right_orbit_done:
+      action: set
+      int: 0
+    col_stuart_villain_score:
+      action: set
+      int: 500000
+    col_stuart_progress_shot_text:
+      action: set
+      string: "HIT ANY YELLOW SHOT"
+
+  col_stuart_clear_start_text:
+    col_stuart_progress_shot_text:
+      action: set
+      string: ""
+
+  col_stuart_set_start_text:
+    col_stuart_progress_shot_text:
+      action: set
+      string: "HIT ANY YELLOW SHOT"
+
+  mode_col_stuart_diehard_started{current_player.playfield_multiplier == None}:
+    playfield_multiplier:
+      action: set
+      int: 1
+
+  col_stuart_start_normal_timer:
+    col_stuart_time:
+      action: set
+      int: 45
+
+  col_stuart_start_hans_bonus_timer:
+    col_stuart_time:
+      action: set
+      int: 70
+
+  timer_col_stuart_diehard_timer_tick:
+    col_stuart_time:
+      action: set
+      int: ticks
+
+  col_stuart_update_remaining:
+    col_stuart_remaining:
+      action: set
+      int: "2 - current_player.col_stuart_progress"
+
+  col_stuart_left_orbit_first_hit:
+    score:
+      action: add
+      int: "1000000 * current_player.playfield_multiplier"
+    col_stuart_villain_score:
+      action: add
+      int: 1000000
+    col_stuart_progress:
+      action: add
+      int: 1
+    col_stuart_last_shot:
+      action: set
+      int: 1
+    col_stuart_shot_mode:
+      action: set
+      int: 1
+    col_stuart_progress_shot_text:
+      action: set
+      string: "HIT LEFT ORBIT AGAIN"
+
+  col_stuart_left_ramp_first_hit:
+    score:
+      action: add
+      int: "1000000 * current_player.playfield_multiplier"
+    col_stuart_villain_score:
+      action: add
+      int: 1000000
+    col_stuart_progress:
+      action: add
+      int: 1
+    col_stuart_last_shot:
+      action: set
+      int: 2
+    col_stuart_shot_mode:
+      action: set
+      int: 1
+    col_stuart_progress_shot_text:
+      action: set
+      string: "HIT LEFT RAMP AGAIN"
+
+  col_stuart_right_ramp_first_hit:
+    score:
+      action: add
+      int: "1000000 * current_player.playfield_multiplier"
+    col_stuart_villain_score:
+      action: add
+      int: 1000000
+    col_stuart_progress:
+      action: add
+      int: 1
+    col_stuart_last_shot:
+      action: set
+      int: 3
+    col_stuart_shot_mode:
+      action: set
+      int: 1
+    col_stuart_progress_shot_text:
+      action: set
+      string: "HIT RIGHT RAMP AGAIN"
+
+  col_stuart_upper_loop_first_hit:
+    score:
+      action: add
+      int: "1000000 * current_player.playfield_multiplier"
+    col_stuart_villain_score:
+      action: add
+      int: 1000000
+    col_stuart_progress:
+      action: add
+      int: 1
+    col_stuart_last_shot:
+      action: set
+      int: 4
+    col_stuart_shot_mode:
+      action: set
+      int: 1
+    col_stuart_progress_shot_text:
+      action: set
+      string: "HIT UPPER LOOP AGAIN"
+
+  col_stuart_right_orbit_first_hit:
+    score:
+      action: add
+      int: "1000000 * current_player.playfield_multiplier"
+    col_stuart_villain_score:
+      action: add
+      int: 1000000
+    col_stuart_progress:
+      action: add
+      int: 1
+    col_stuart_last_shot:
+      action: set
+      int: 5
+    col_stuart_shot_mode:
+      action: set
+      int: 1
+    col_stuart_progress_shot_text:
+      action: set
+      string: "HIT RIGHT ORBIT AGAIN"
+
+  col_stuart_left_orbit_confirmed:
+    score:
+      action: add
+      int: "1000000 * current_player.playfield_multiplier"
+    col_stuart_villain_score:
+      action: add
+      int: 1000000
+    col_stuart_progress:
+      action: add
+      int: 1
+    col_stuart_left_orbit_done:
+      action: set
+      int: 1
+    col_stuart_shot_mode:
+      action: set
+      int: 0
+
+  col_stuart_left_ramp_confirmed:
+    score:
+      action: add
+      int: "1000000 * current_player.playfield_multiplier"
+    col_stuart_villain_score:
+      action: add
+      int: 1000000
+    col_stuart_progress:
+      action: add
+      int: 1
+    col_stuart_left_ramp_done:
+      action: set
+      int: 1
+    col_stuart_shot_mode:
+      action: set
+      int: 0
+
+  col_stuart_right_ramp_confirmed:
+    score:
+      action: add
+      int: "1000000 * current_player.playfield_multiplier"
+    col_stuart_villain_score:
+      action: add
+      int: 1000000
+    col_stuart_progress:
+      action: add
+      int: 1
+    col_stuart_right_ramp_done:
+      action: set
+      int: 1
+    col_stuart_shot_mode:
+      action: set
+      int: 0
+
+  col_stuart_upper_loop_confirmed:
+    score:
+      action: add
+      int: "1000000 * current_player.playfield_multiplier"
+    col_stuart_villain_score:
+      action: add
+      int: 1000000
+    col_stuart_progress:
+      action: add
+      int: 1
+    col_stuart_upper_loop_done:
+      action: set
+      int: 1
+    col_stuart_shot_mode:
+      action: set
+      int: 0
+
+  col_stuart_right_orbit_confirmed:
+    score:
+      action: add
+      int: "1000000 * current_player.playfield_multiplier"
+    col_stuart_villain_score:
+      action: add
+      int: 1000000
+    col_stuart_progress:
+      action: add
+      int: 1
+    col_stuart_right_orbit_done:
+      action: set
+      int: 1
+    col_stuart_shot_mode:
+      action: set
+      int: 0
+
+  col_stuart_defeated_slide:
+    col_stuart_result_started:
+      action: set
+      int: 1
+    col_stuart_result_display:
+      action: set
+      int: 1
+    col_stuart_progress_shot_text:
+      action: set
+      string: "COL DEFEATED"
+
+  col_stuart_escaped_slide:
+    col_stuart_result_started:
+      action: set
+      int: 1
+    col_stuart_result_display:
+      action: set
+      int: 2
+    col_stuart_progress_shot_text:
+      action: set
+      string: "COL ESCAPED"
+
+  col_stuart_score_complete:
+    score:
+      action: add
+      int: "3000000 * current_player.playfield_multiplier"
+    col_stuart_villain_score:
+      action: add
+      int: 3000000
+
+  col_stuart_diehard_completed:
+    col_stuart_complete:
+      action: set
+      int: 1
+    col_stuart_diehard_complete:
+      action: set
+      int: 1
+    modes_complete:
+      action: add
+      int: 1
+    villains_completed:
+      action: add
+      int: 1
+    villain_mode_running:
+      action: set
+      int: 0
+    col_stuart_result_started:
+      action: set
+      int: 0
+
+  col_stuart_diehard_failed:
+    villain_mode_running:
+      action: set
+      int: 0
+    col_stuart_result_started:
+      action: set
+      int: 0
+
+  mode_col_stuart_diehard_stopping:
+    villain_mode_running:
+      action: set
+      int: 0
+    col_stuart_result_started:
+      action: set
+      int: 0
+    col_stuart_shot_mode:
+      action: set
+      int: 0
+
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# ------------------------------------------------------------
+# Sets Col/Stuart blue mode colour, clears shot lights on result,
+# and leaves Col/Stuart insert solid blue on completion.
+# ------------------------------------------------------------
+light_player:
+  mode_col_stuart_diehard_started:
+    GI:
+      color: "0044ff"
+    SPOTS:
+      color: 757575
+    SPOTS_BUMPER:
+      color: 757575
+    l1000:
+      color: "0044ff"
+    l1001:
+      color: "0044ff"
+    l44:
+      color: "0044ff"
+
+  col_stuart_diehard_completed:
+    l1000: off
+    l1001: off
+    l20: off
+    l21: off
+    l22: off
+    l23: off
+    l24: off
+    l44:
+      color: "0044ff"
+    l14:
+      color: "0044ff"
+    l15:
+      color: "0044ff"
+
+  col_stuart_diehard_failed:
+    l1000: off
+    l1001: off
+    l20: off
+    l21: off
+    l22: off
+    l23: off
+    l24: off
+
+# ------------------------------------------------------------
+# SHOWS
+# ------------------------------------------------------------
+# Local shot insert flash, blue flasher burst, and GI/SPOTS hit flash.
+# ------------------------------------------------------------
+shows:
+  col_stuart_flash_insert:
+    - duration: 220ms
+      lights:
+        (led): (color)
+    - duration: 220ms
+      lights:
+        (led): off
+
+  col_stuart_hit_flashers:
+    - duration: 80ms
+      lights:
+        f140: "0044ff"
+        f141: "0044ff"
+        f142: "0044ff"
+        f143: "0044ff"
+        f144: "0044ff"
+        f145: "0044ff"
+        f146: "0044ff"
+        f147: "0044ff"
+    - duration: 80ms
+      lights:
+        f140: off
+        f141: off
+        f142: off
+        f143: off
+        f144: off
+        f145: off
+        f146: off
+        f147: off
+
+  col_stuart_gi_spots_hit_flash:
+    - duration: 80ms
+      lights:
+        GI: "ffffff"
+        SPOTS: "ffffff"
+        SPOTS_BUMPER: "ffffff"
+    - duration: 120ms
+      lights:
+        GI: "0044ff"
+        SPOTS: "202050"
+        SPOTS_BUMPER: "101040"
+
+# ------------------------------------------------------------
+# SHOW PLAYER
+# ------------------------------------------------------------
+# Handles villain insert flash, yellow shot flashes, hit feedback,
+# GI/SPOTS hit flash, and ball-save insert flashing.
+# ------------------------------------------------------------
+show_player:
+  mode_col_stuart_diehard_started:
+    col_stuart_insert_flash:
+      show: col_stuart_flash_insert
+      loops: -1
+      speed: 2
+      priority: 900
+      show_tokens:
+        led: l44
+        color: "0044ff"
+
+  col_stuart_enable_left_orbit:
+    col_stuart_left_orbit_flash:
+      show: col_stuart_flash_insert
+      loops: -1
+      speed: 2
+      priority: 700
+      show_tokens:
+        led: l20
+        color: "ffff00"
+
+  col_stuart_disable_left_orbit:
+    col_stuart_left_orbit_flash:
+      action: stop
+
+  col_stuart_enable_left_ramp:
+    col_stuart_left_ramp_flash:
+      show: col_stuart_flash_insert
+      loops: -1
+      speed: 2
+      priority: 700
+      show_tokens:
+        led: l21
+        color: "ffff00"
+
+  col_stuart_disable_left_ramp:
+    col_stuart_left_ramp_flash:
+      action: stop
+
+  col_stuart_enable_right_ramp:
+    col_stuart_right_ramp_flash:
+      show: col_stuart_flash_insert
+      loops: -1
+      speed: 2
+      priority: 700
+      show_tokens:
+        led: l24
+        color: "ffff00"
+
+  col_stuart_disable_right_ramp:
+    col_stuart_right_ramp_flash:
+      action: stop
+
+  col_stuart_enable_upper_loop:
+    col_stuart_upper_loop_flash:
+      show: col_stuart_flash_insert
+      loops: -1
+      speed: 2
+      priority: 700
+      show_tokens:
+        led: l23
+        color: "ffff00"
+
+  col_stuart_disable_upper_loop:
+    col_stuart_upper_loop_flash:
+      action: stop
+
+  col_stuart_enable_right_orbit:
+    col_stuart_right_orbit_flash:
+      show: col_stuart_flash_insert
+      loops: -1
+      speed: 2
+      priority: 700
+      show_tokens:
+        led: l22
+        color: "ffff00"
+
+  col_stuart_disable_right_orbit:
+    col_stuart_right_orbit_flash:
+      action: stop
+
+  col_stuart_disable_all_shots:
+    col_stuart_left_orbit_flash:
+      action: stop
+    col_stuart_left_ramp_flash:
+      action: stop
+    col_stuart_right_ramp_flash:
+      action: stop
+    col_stuart_upper_loop_flash:
+      action: stop
+    col_stuart_right_orbit_flash:
+      action: stop
+
+  col_stuart_flash_left_orbit:
+    col_stuart_hit_flashers:
+      loops: 1
+      priority: 800
+    col_stuart_gi_spots_hit_flash:
+      loops: 1
+      priority: 850
+
+  col_stuart_flash_left_ramp:
+    col_stuart_hit_flashers:
+      loops: 1
+      priority: 800
+    col_stuart_gi_spots_hit_flash:
+      loops: 1
+      priority: 850
+
+  col_stuart_flash_right_ramp:
+    col_stuart_hit_flashers:
+      loops: 1
+      priority: 800
+    col_stuart_gi_spots_hit_flash:
+      loops: 1
+      priority: 850
+
+  col_stuart_flash_upper_loop:
+    col_stuart_hit_flashers:
+      loops: 1
+      priority: 800
+    col_stuart_gi_spots_hit_flash:
+      loops: 1
+      priority: 850
+
+  col_stuart_flash_right_orbit:
+    col_stuart_hit_flashers:
+      loops: 1
+      priority: 800
+    col_stuart_gi_spots_hit_flash:
+      loops: 1
+      priority: 850
+
+  ball_save_col_stuart_start_save_enabled:
+    flash_color:
+      key: col_stuart_start_save_flash
+      loops: -1
+      speed: 8
+      show_tokens:
+        lights: BALL_SAVE
+        color: "0044ff"
+
+  ball_save_col_stuart_start_save_disabled:
+    col_stuart_start_save_flash:
+      action: stop
+
+  ball_save_col_stuart_complete_save_enabled:
+    flash_color:
+      key: col_stuart_complete_save_flash
+      loops: -1
+      speed: 8
+      show_tokens:
+        lights: BALL_SAVE
+        color: "0044ff"
+
+  ball_save_col_stuart_complete_save_disabled:
+    col_stuart_complete_save_flash:
+      action: stop
+
+  col_stuart_diehard_completed:
+    col_stuart_insert_flash:
+      action: stop
+
+  col_stuart_diehard_failed:
+    col_stuart_insert_flash:
+      action: stop
+
+  mode_col_stuart_diehard_stopping:
+    col_stuart_insert_flash:
+      action: stop
+    col_stuart_left_orbit_flash:
+      action: stop
+    col_stuart_left_ramp_flash:
+      action: stop
+    col_stuart_right_ramp_flash:
+      action: stop
+    col_stuart_upper_loop_flash:
+      action: stop
+    col_stuart_right_orbit_flash:
+      action: stop
+    col_stuart_start_save_flash:
+      action: stop
+    col_stuart_complete_save_flash:
+      action: stop
+
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# ------------------------------------------------------------
+# Plays Col/Stuart background and intro, then swaps to defeated
+# or escaped result slides.
+# Mystery clear restores the Col/Stuart background after Add More Time.
+# ------------------------------------------------------------
+slide_player:
+  mode_col_stuart_diehard_started:
+    col_stuart_background:
+      action: play
+      expire: 0s
+      priority: 500
+    col_intro:
+      action: play
+      expire: 5s
+      priority: 10000
+
+  add_villain_time_from_mystery:
+    col_intro:
+      action: remove
+
+  mystery_clear_award_display:
+    col_intro:
+      action: remove
+    col_stuart_background:
+      action: play
+      expire: 0s
+      priority: 10050
+
+  slide_mystery_removed:
+    col_stuart_background:
+      action: play
+      expire: 0s
+      priority: 10050
+
+  mode_col_stuart_diehard_stopping:
+    col_stuart_background:
+      action: remove
+    col_intro:
+      action: remove
+    ColDefeated:
+      action: remove
+    ColEscaped:
+      action: remove
+
+  col_stuart_defeated_slide:
+    col_intro:
+      action: remove
+    col_stuart_background:
+      action: remove
+    ColDefeated:
+      action: play
+      expire: 5s
+      priority: 10000
+
+  col_stuart_escaped_slide:
+    col_intro:
+      action: remove
+    col_stuart_background:
+      action: remove
+    ColEscaped:
+      action: play
+      expire: 5s
+      priority: 10000
+
+# ------------------------------------------------------------
+# WIDGET PLAYER
+# ------------------------------------------------------------
+# Shows and removes timer and progress-shot widgets.
+# Mystery clear restores the Col/Stuart widgets after Add More Time.
+# ------------------------------------------------------------
+widget_player:
+  mode_col_stuart_diehard_started:
+    col_stuart_diehard_timer_widget:
+      slide: col_stuart_background
+      action: play
+    col_stuart_progress_shot_widget:
+      slide: col_stuart_background
+      action: play
+
+  mystery_clear_award_display:
+    col_stuart_diehard_timer_widget:
+      slide: col_stuart_background
+      action: play
+    col_stuart_progress_shot_widget:
+      slide: col_stuart_background
+      action: play
+
+  slide_mystery_removed:
+    col_stuart_diehard_timer_widget:
+      slide: col_stuart_background
+      action: play
+    col_stuart_progress_shot_widget:
+      slide: col_stuart_background
+      action: play
+
+  mode_col_stuart_diehard_stopping:
+    col_stuart_diehard_timer_widget:
+      action: remove
+    col_stuart_progress_shot_widget:
+      action: remove
+
+  col_stuart_diehard_completed:
+    col_stuart_diehard_timer_widget:
+      action: remove
+    col_stuart_progress_shot_widget:
+      action: remove
+
+  col_stuart_diehard_failed:
+    col_stuart_diehard_timer_widget:
+      action: remove
+    col_stuart_progress_shot_widget:
+      action: remove
+
+# ------------------------------------------------------------
+# SOUND PLAYER
+# ------------------------------------------------------------
+# Plays Col/Stuart music and stops it when the mode ends.
+# ------------------------------------------------------------
+sound_player:
+  col_stuart_music_start:
+    colonel_stuart:
+      key: main_music
+      action: play
+      loops: -1
+      volume: 0.8
+
+  col_stuart_diehard_completed:
+    colonel_stuart:
+      key: main_music
+      action: stop
+
+  col_stuart_diehard_failed:
+    colonel_stuart:
+      key: main_music
+      action: stop
+
+  ball_ended:
+    colonel_stuart:
+      key: main_music
+      action: stop

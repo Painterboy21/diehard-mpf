@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://dm0l8jti2m6b7"]
+
+[ext_resource type="Script" uid="uid://bdhor4xpcn0ov" path="res://modes/skillshot/widgets/super_skill_shot.gd" id="1_2e4t0"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="2_oc7nm"]
+
+[node name="super_skill_shot" type="Control" unique_id=687125773]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2e4t0")
+metadata/_custom_type_script = "uid://d4ky3s4bg1ouq"
+
+[node name="label" type="Label" parent="." unique_id=1178293529]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = 174.0
+offset_right = -1.0
+offset_bottom = -766.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.050000012, 0.050000012, 1)
+theme_override_colors/font_shadow_color = Color(0.99, 0.99, 0.99, 0.98039216)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 6
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 12
+theme_override_fonts/font = ExtResource("2_oc7nm")
+theme_override_font_sizes/font_size = 140
+text = "SUPER SKILL SHOT HIT"
+horizontal_alignment = 1
