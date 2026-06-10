@@ -1,5 +1,12 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# MODE
+# ------------------------------------------------------------
+# Nakatomi Multiball.
+# Starts from the Nakatomi qualify/lock flow and stops when the
+# ball ends or MPF ends the Nakatomi multiball.
+# ------------------------------------------------------------
 mode:
   start_events:
     - start_nakatomi_multiball
@@ -10,6 +17,7 @@ mode:
 
 # ------------------------------------------------------------
 # LIGHT PLAYER
+# ------------------------------------------------------------
 # Sets Nakatomi Multiball lighting.
 # ------------------------------------------------------------
 light_player:
@@ -23,6 +31,7 @@ light_player:
 
 # ------------------------------------------------------------
 # BALL HOLDS
+# ------------------------------------------------------------
 # Holds balls in the tower VUK for the Super Jackpot.
 # Original style restored.
 # ------------------------------------------------------------
@@ -39,10 +48,19 @@ ball_holds:
 
 # ------------------------------------------------------------
 # EVENT PLAYER
+# ------------------------------------------------------------
 # Handles jackpot scoring, Super Jackpot enable/disable,
-# lock opening/closing, and Extra Ball bridge count.
+# lock opening/closing, Extra Ball bridge count,
+# and Multiball Hero record tracking.
 # ------------------------------------------------------------
 event_player:
+  mode_nakatomi_multiball_started:
+    - record_start_nakatomi_multiball_hero
+
+  record_start_nakatomi_multiball_hero:
+    record_start_multiball_hero:
+      mode: NAKATOMI MULTIBALL
+
   nakatomi_jackpots_on_hit.1:
     - jackpot_2mil
     - nakatomi_jackpot_collected
@@ -65,12 +83,21 @@ event_player:
     - nakatomi_lock_close
 
   multiball_nakatomi_ended.1:
+    - record_finish_nakatomi_multiball_hero
     - nakatomi_lock_close
     - nakatomi_entrance_lock_close
     - count_nakatomi_for_extra_ball
 
+  ball_ended:
+    - record_finish_nakatomi_multiball_hero
+
+  record_finish_nakatomi_multiball_hero:
+    record_finish_multiball_hero:
+      mode: NAKATOMI MULTIBALL
+
 # ------------------------------------------------------------
 # MULTIBALLS
+# ------------------------------------------------------------
 # Starts the 3-ball Nakatomi Multiball.
 # Uses the tower VUK as the lock device.
 # ------------------------------------------------------------
@@ -91,6 +118,7 @@ multiballs:
 
 # ------------------------------------------------------------
 # SHOT GROUPS
+# ------------------------------------------------------------
 # Tracks all Nakatomi Jackpot shots.
 # Completing all jackpot shots enables Super Jackpot.
 # ------------------------------------------------------------
@@ -107,6 +135,7 @@ shot_groups:
 
 # ------------------------------------------------------------
 # SHOTS
+# ------------------------------------------------------------
 # Nakatomi Jackpot and Super Jackpot shots.
 # Air duct is your real-machine right ramp shot.
 # ------------------------------------------------------------
@@ -161,6 +190,7 @@ shots:
 
 # ------------------------------------------------------------
 # SLIDE PLAYER
+# ------------------------------------------------------------
 # Plays the jackpot and Super Jackpot slides.
 # ------------------------------------------------------------
 slide_player:
@@ -176,6 +206,7 @@ slide_player:
 
 # ------------------------------------------------------------
 # WIDGET PLAYER
+# ------------------------------------------------------------
 # Shows/removes Super Jackpot lit and collected widgets.
 # ------------------------------------------------------------
 widget_player:
@@ -194,6 +225,7 @@ widget_player:
 
 # ------------------------------------------------------------
 # SHOW PLAYER
+# ------------------------------------------------------------
 # Plays jackpot shot shows and the Super Jackpot show.
 # Super Jackpot show loops for 4 seconds, then stops.
 # ------------------------------------------------------------
@@ -241,6 +273,7 @@ show_player:
 
 # ------------------------------------------------------------
 # COIL PLAYER
+# ------------------------------------------------------------
 # Original style restored:
 # pulses the tower VUK eject coil when Super Jackpot hold fires.
 # ------------------------------------------------------------
@@ -251,6 +284,7 @@ coil_player:
 
 # ------------------------------------------------------------
 # VARIABLE PLAYER
+# ------------------------------------------------------------
 # Sets Nakatomi played state, resets Super Jackpot lock count,
 # awards EOB multiball bonus, and scores jackpots.
 # ------------------------------------------------------------
@@ -297,6 +331,7 @@ variable_player:
 
 # ------------------------------------------------------------
 # SOUND PLAYER
+# ------------------------------------------------------------
 # Starts/stops Nakatomi Multiball music.
 # File:
 # sounds/src/Johns Escape-You Want Money.mp3
