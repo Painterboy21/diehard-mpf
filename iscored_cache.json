@@ -1,39 +1,39 @@
 {
-  "updatedAt": 1781096328,
+  "updatedAt": 1781098924,
   "entries": [
     {
       "rank": "1",
+      "name": "BAD",
+      "score": 56884610,
+      "score_text": "56,884,610",
+      "pending": false
+    },
+    {
+      "rank": "2",
       "name": "SMD",
       "score": 52632420,
       "score_text": "52,632,420",
       "pending": false
     },
     {
-      "rank": "2",
+      "rank": "3",
       "name": "FFF",
       "score": 31991890,
       "score_text": "31,991,890",
       "pending": false
     },
     {
-      "rank": "3",
+      "rank": "4",
       "name": "ABC",
       "score": 6563430,
       "score_text": "6,563,430",
       "pending": false
     },
     {
-      "rank": "4",
+      "rank": "5",
       "name": "JOHNMCCLANE",
       "score": 2242120,
       "score_text": "2,242,120",
-      "pending": false
-    },
-    {
-      "rank": "5",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
       "pending": false
     },
     {
