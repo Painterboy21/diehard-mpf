@@ -13,6 +13,9 @@
 #   - right VUK
 #   - tower VUK
 #   - captive ball / airplane device
+#
+# Ball search order has been added so MPF can try to free
+# a stuck ball safely if the playfield goes quiet.
 # ------------------------------------------------------------
 
 ball_devices:
@@ -22,6 +25,8 @@ ball_devices:
   # ------------------------------------------------------------
   # Main ball trough with jam switch and eject to plunger lane.
   # Tags include trough, home, and drain.
+  # Kept late/low priority for ball search because we do not
+  # want the trough doing anything unless MPF really needs it.
   # ------------------------------------------------------------
   trough:
     ball_switches: s_trough1, s_trough2, s_trough3, s_trough4, s_trough5, s_trough6, s_trough_jam
@@ -30,6 +35,7 @@ ball_devices:
     jam_switch: s_trough_jam
     eject_coil_jam_pulse: 15ms
     eject_targets: bd_plunger
+    ball_search_order: 0
 
   # ------------------------------------------------------------
   # PLUNGER LANE
@@ -41,15 +47,18 @@ ball_devices:
     ball_switches: s_plunger_lane
     eject_coil: c_plunger
     player_controlled_eject_event: s_fire_active
+    ball_search_order: 10
 
   # ------------------------------------------------------------
   # VAULT KICKER
   # ------------------------------------------------------------
   # Used by vault, mystery, and ambush style ball holds/releases.
+  # Added to ball search because this is a likely stuck-ball spot.
   # ------------------------------------------------------------
   kickervault1_eject:
     ball_switches: s_kickervault1
     eject_coil: c_kickervault1_eject
+    ball_search_order: 20
 
   # ------------------------------------------------------------
   # RIGHT KICKER
@@ -60,6 +69,7 @@ ball_devices:
     ball_switches: s_rightkicker
     eject_coil: c_rightkicker_eject
     eject_timeouts: 1s
+    ball_search_order: 30
 
   # ------------------------------------------------------------
   # UPPER RAMP DEVICE
@@ -70,6 +80,7 @@ ball_devices:
     ball_switches: s_UrampUp001
     eject_coil: c_UrampUp001_eject
     eject_timeouts: 1s
+    ball_search_order: 40
 
   # ------------------------------------------------------------
   # RIGHT VUK
@@ -81,6 +92,7 @@ ball_devices:
     ball_switches: s_rightvuk
     eject_coil: c_rightvuk_eject
     eject_timeouts: 1s
+    ball_search_order: 50
 
   # ------------------------------------------------------------
   # TOWER VUK
@@ -88,6 +100,8 @@ ball_devices:
   # Nakatomi tower VUK.
   # Mechanical eject device with 3-ball capacity.
   # Ejects all balls when Nakatomi multiball starts.
+  # Added to ball search because Nakatomi is the one that just
+  # showed a stuck playfield-ball warning.
   # ------------------------------------------------------------
   tower_vuk:
     entrance_switch: s_towervuk
@@ -97,13 +111,16 @@ ball_devices:
     eject_targets: playfield
     eject_timeouts: 250ms
     eject_all_events: multiball_nakatomi_started
+    ball_search_order: 60
 
   # ------------------------------------------------------------
   # AIRPLANE / CAPTIVE BALL
   # ------------------------------------------------------------
   # Captive ball / airplane device.
+  # Kept later in ball search because it is stronger/mechanical.
   # ------------------------------------------------------------
   airplane:
     ball_switches: s_captiveball
     eject_coil: c_captivetarget
     eject_timeouts: 1s
+    ball_search_order: 70
