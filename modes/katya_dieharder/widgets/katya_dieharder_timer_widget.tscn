@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://jckwpkv4117b"]
+
+[ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_ido3r"]
+[ext_resource type="Texture2D" uid="uid://cfxyj8151nfrt" path="res://godot-media/images/PoliceBadge.png" id="2_easr8"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="3_0tdg7"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="4_neu1s"]
+
+[node name="katya_dieharder_timer_widget" type="Control" unique_id=1875424892]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ido3r")
+
+[node name="PoliceBadge" type="Sprite2D" parent="." unique_id=565013197]
+position = Vector2(154, 522)
+scale = Vector2(0.7561838, 0.738764)
+texture = ExtResource("2_easr8")
+
+[node name="MPFVariable" type="Label" parent="." unique_id=1460676956]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 441.0
+offset_right = 200.0
+offset_bottom = 559.0
+theme_override_colors/font_color = Color(1, 0.00999999, 0.00999999, 1)
+theme_override_colors/font_shadow_color = Color(0.99, 0.99, 0.99, 0.99215686)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 6
+theme_override_fonts/font = ExtResource("3_0tdg7")
+theme_override_font_sizes/font_size = 80
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_neu1s")
+variable_name = "katya_dieharder_remaining"
+template_string = "%s"
+initialize_empty = false
+update_event = "player_katya_dieharder_remaining"

@@ -1,106 +1,160 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# COILS
+# ------------------------------------------------------------
+# Physical coil outputs for slingshots, flippers, magnets,
+# trough/plunger, drop targets, VUKs, pop bumpers, airplane,
+# and cabinet lamps.
+# ------------------------------------------------------------
+
 coils:
- # Slingshots
+
+  # ------------------------------------------------------------
+  # SLINGSHOTS
+  # ------------------------------------------------------------
   c_left_sling:
     number: d-6
-    default_pulse_ms: 50ms
+    default_pulse_ms: 80ms
+
   c_right_sling:
     number: d-7
-    default_pulse_ms: 50ms
+    default_pulse_ms: 80ms
 
- # Flippers
+  # ------------------------------------------------------------
+  # FLIPPERS
+  # ------------------------------------------------------------
+  # Main coils pulse.
+  # Hold coils are allowed to enable.
+  # ------------------------------------------------------------
   c_left_flipper_main:
     number: d-3
     default_pulse_ms: 26ms
+
   c_left_flipper_hold:
     number: d-2
     allow_enable: true
+
   c_left_top_flipper_main:
     number: e-4
     default_pulse_ms: 50ms
+
   c_left_top_flipper_hold:
     number: e-3
-    allow_enable: true 
+    allow_enable: true
+
   c_right_flipper_main:
     number: d-5
     default_pulse_ms: 28ms
+
   c_right_flipper_hold:
     number: d-4
     allow_enable: true
 
- # Magnets
+  # ------------------------------------------------------------
+  # MAGNETS
+  # ------------------------------------------------------------
   c_trmagr:
     number: e-15
-    default_pulse_ms: 100ms
-    default_hold_power: 0.7
+    default_pulse_ms: 195ms
+    default_hold_power: 0.95
+
   c_trmagl:
     number: e-14
-    default_pulse_ms: 100ms
-    default_hold_power: 0.7
+    default_pulse_ms: 120ms
+    default_hold_power: 0.85
 
- # Plunger & Trough
+  # ------------------------------------------------------------
+  # PLUNGER & TROUGH
+  # ------------------------------------------------------------
   c_plunger:
     number: d-0
-    default_pulse_ms: 90ms
+    default_pulse_ms: 180ms
+
   c_trough_eject:
     number: d-1
-    default_pulse_ms: 20ms
+    default_pulse_ms: 50ms
 
-
- # Three Drop Targets
+  # ------------------------------------------------------------
+  # DROP TARGET RESETS
+  # ------------------------------------------------------------
+  # Three-bank drop target reset, Nakatomi lock drop reset,
+  # and vault lock drop reset.
+  # ------------------------------------------------------------
   c_reset_drop_targets:
     number: e-12
     default_pulse_ms: 60ms
- # Nakatomi Lock Drop Target
+
   c_reset_drop_target_nakotomi:
     number: e-5
     default_pulse_ms: 80ms
- # vault Lock Drop Target
+
   c_reset_drop_target_vault:
     number: e-2
     default_pulse_ms: 80ms
 
- # push drop targets 12v
+  # ------------------------------------------------------------
+  # VAULT PUSH DROP TARGET
+  # ------------------------------------------------------------
+  # 12v push coil for the vault drop target.
+  # ------------------------------------------------------------
   c_push_drop_target_vault:
     number: e-7
     default_pulse_ms: 60ms
- 
- # Vuks
+
+  # ------------------------------------------------------------
+  # VUKS / KICKERS
+  # ------------------------------------------------------------
   c_rightkicker_eject:
     number: e-8
     default_pulse_ms: 180ms
+
   c_UrampUp001_eject:
     number: e-9
     default_pulse_ms: 30ms
+
   c_rightvuk_eject:
     number: e-13
     default_pulse_ms: 25ms
+
   c_towervuk_eject:
     number: e-0
     default_pulse_ms: 20ms
+
   c_kickervault1_eject:
     number: e-6
     default_pulse_ms: 17ms
 
- # Pop Bumpers
+  # ------------------------------------------------------------
+  # POP BUMPERS
+  # ------------------------------------------------------------
+  # Real machine has two pop bumpers.
+  # ------------------------------------------------------------
   c_popbumper_left:
     number: e-1
     default_pulse_ms: 40ms
+
   c_popbumper_right:
     number: e-10
     default_pulse_ms: 20ms
 
- # Airplane
+  # ------------------------------------------------------------
+  # AIRPLANE / CAPTIVE TARGET
+  # ------------------------------------------------------------
   c_captivetarget:
     number: e-11
     default_pulse_ms: 90ms
 
-
- # Lights
+  # ------------------------------------------------------------
+  # CABINET LIGHTS
+  # ------------------------------------------------------------
+  # Cabinet start button and coin return lamps.
+  # These are coil-style outputs with allow_enable.
+  # ------------------------------------------------------------
   c_cab_start_button:
     number: j-3
     allow_enable: true
+
   c_cab_coin_return_left_right:
     number: j-1
     allow_enable: true

@@ -1,0 +1,53 @@
+#show_version=6
+
+# VPW-style vault release:
+# l40-l44 red blink, l60 red blink, f147 green pulse.
+# No l30/l31 here, so H/O lamps do not flash late.
+
+- duration: 120ms
+  lights:
+    l40: red
+    l41: red
+    l42: red
+    l43: red
+    l44: red
+    l60: red
+    f147: "00ff00"
+
+- duration: 120ms
+  lights:
+    l40: off
+    l41: off
+    l42: off
+    l43: off
+    l44: off
+    l60: off
+    f147: off
+
+- duration: 120ms
+  lights:
+    l40: red
+    l41: red
+    l42: red
+    l43: red
+    l44: red
+    l60: red
+
+- duration: 120ms
+  lights:
+    l40: off
+    l41: off
+    l42: off
+    l43: off
+    l44: off
+    l60: off
+
+- duration: 150ms
+  lights:
+    l60: red
+    f147: "00ff00"
+
+- duration: 150ms
+  lights:
+    l60: off
+    f147: off

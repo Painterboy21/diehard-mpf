@@ -1,0 +1,14 @@
+#show_version=6
+
+# VPW-style Karl heartbeat GI, slow.
+# l40 removed so Karl villain insert stays solid from light_player.
+
+- duration: 420ms
+  lights:
+    GI: "301500"
+    SPOTS: "202020"
+
+- duration: 420ms
+  lights:
+    GI: off
+    SPOTS: off

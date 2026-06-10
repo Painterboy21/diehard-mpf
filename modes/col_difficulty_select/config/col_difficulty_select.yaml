@@ -1,14 +1,32 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# COL / STUART DIFFICULTY SELECT
+# ------------------------------------------------------------
+# What this mode does:
+#   - Starts from start_col_difficulty_select.
+#   - Lets the player choose Col/Stuart Die Hard or Die Harder.
+#   - Flippers move through the carousel choices.
+#   - Fire/action button selects the highlighted difficulty.
+#   - Difficulty select slide is removed when a choice is made.
+#   - The correct Col/Stuart background is preloaded under the intro.
+#   - col_intro plays over the background.
+#   - The selected Col/Stuart mode starts after the intro.
+# ------------------------------------------------------------
 mode:
-  start_events: start_col_difficulty_select
+  start_events:
+    - start_col_difficulty_select
   stop_events:
     - villain_selection_complete
     - ball_ended
   priority: 310
   code: mpf.modes.carousel.code.carousel.Carousel
 
-
+# ------------------------------------------------------------
+# MODE SETTINGS
+# ------------------------------------------------------------
+# Carousel choices and controls for selecting Die Hard or Die Harder.
+# ------------------------------------------------------------
 mode_settings:
   selectable_items:
     - col_die_hard
@@ -21,6 +39,12 @@ mode_settings:
     - s_fire_active
     - s_actionbtn_active
 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# ------------------------------------------------------------
+# Flashes Col/Stuart insert and villain lights blue while selecting.
+# Stops the select flash when a difficulty is chosen or mode stops.
+# ------------------------------------------------------------
 show_player:
   mode_col_difficulty_select_started:
     flash_color:
@@ -31,49 +55,91 @@ show_player:
       show_tokens:
         lights: l44, l1000, l1001
         color: 0044ff
-
   set_difficulty_die_hard:
     selected_villain_flash:
       action: stop
-
   set_difficulty_die_harder:
     selected_villain_flash:
       action: stop
-      
+  mode_col_difficulty_select_stopping:
+    selected_villain_flash:
+      action: stop
+
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# ------------------------------------------------------------
+# Shows the difficulty select slide.
+# Preloads the correct Col/Stuart background after selection.
+# Plays the Col intro over the preloaded background.
+# ------------------------------------------------------------
 slide_player:
   mode_col_difficulty_select_started:
     col_difficulty_select:
       action: play
       expire: 0s
+      priority: 1000
+  set_difficulty_die_hard:
+    col_difficulty_select:
+      action: remove
+    col_stuart_background:
+      action: play
+      expire: 0s
+      priority: 500
+  set_difficulty_die_harder:
+    col_difficulty_select:
+      action: remove
+    col_stuart_dieharder_background:
+      action: play
+      expire: 0s
+      priority: 500
   play_col_intro:
     col_intro:
       action: play
-      expire: 3s
+      expire: 5s
+      priority: 10000
+  mode_col_difficulty_select_stopping:
+    col_difficulty_select:
+      action: remove
+    col_intro:
+      action: remove
 
-
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Stores the selected difficulty, plays the intro, then starts
+# the correct Col/Stuart mode after the intro has played.
+# ------------------------------------------------------------
 event_player:
   carousel_item_selected{carousel=="col_difficulty_select" and item=="col_die_hard"}:
     - set_difficulty_die_hard
     - play_col_intro
-    - villain_intro_finished|3s
+    - start_col_stuart_diehard|5000ms
+    - villain_selection_complete|5100ms
   carousel_item_selected{carousel=="col_difficulty_select" and item=="col_die_harder"}:
     - set_difficulty_die_harder
     - play_col_intro
-    - villain_intro_finished|3s
-  villain_intro_finished:
-    - release_villain_select_vuk
-    - start_colonel_stuart
-    - villain_selection_complete|100ms
+    - start_col_stuart_dieharder|5000ms
+    - villain_selection_complete|5100ms
 
-
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+# Stores selected difficulty and whether difficulty select is running.
+# ------------------------------------------------------------
 variable_player:
   set_difficulty_die_hard:
     selected_diehard_mode:
       string: die_hard
       action: set
-
-
   set_difficulty_die_harder:
     selected_diehard_mode:
       string: die_harder
       action: set
+  mode_col_difficulty_select_started:
+    villain_difficulty_select_running:
+      action: set
+      int: 1
+  mode_col_difficulty_select_stopping:
+    villain_difficulty_select_running:
+      action: set
+      int: 0

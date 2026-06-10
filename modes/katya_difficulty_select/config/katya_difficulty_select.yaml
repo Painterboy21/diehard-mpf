@@ -6,11 +6,11 @@ mode:
   stop_events:
     - villain_selection_complete
     - ball_ended
-
   priority: 310
-
   code: mpf.modes.carousel.code.carousel.Carousel
 
+
+      
 mode_settings:
   selectable_items:
     - katya_die_hard
@@ -34,15 +34,28 @@ show_player:
       loops: -1
       speed: 6
       show_tokens:
-        lights: l42,l1000,l1001
+        lights: l42, l1000, l1001
         color: ff00aa
+    InsertsVillainSpinOrange:
+      loops: -1
+      speed: 50
 
   set_difficulty_die_hard:
     selected_villain_flash:
       action: stop
+    InsertsVillainSpinOrange:
+      action: stop
 
   set_difficulty_die_harder:
     selected_villain_flash:
+      action: stop
+    InsertsVillainSpinOrange:
+      action: stop
+
+  mode_katya_difficulty_select_stopped:
+    selected_villain_flash:
+      action: stop
+    InsertsVillainSpinOrange:
       action: stop
 
 slide_player:
@@ -54,7 +67,7 @@ slide_player:
   play_katya_intro:
     katya_intro:
       action: play
-      expire: 3s
+      expire: 5s
 
   hide_katya_difficulty_select:
     katya_difficulty_select:
@@ -68,14 +81,14 @@ event_player:
     - katya_mode_start_warning|2.5s
     - start_katya_diehard|3s
     - villain_intro_finished|3.1s
-
   carousel_item_selected{carousel=="katya_difficulty_select" and item=="katya_die_harder" and current_player.katya_complete!=1}:
-    - set_difficulty_die_harder
-    - hide_katya_difficulty_select
-    - play_katya_intro
-    - katya_mode_start_warning|2.5s
-    - start_katya_dieharder|3s
-    - villain_intro_finished|3.1s
+  - set_difficulty_die_harder
+  - hide_katya_difficulty_select
+  - play_katya_intro
+  - katya_mode_start_warning|2.5s
+  - start_katya_dieharder|3s
+  - villain_intro_finished|3.1s
+
 
   villain_intro_finished:
     - release_villain_select_vuk
@@ -92,6 +105,16 @@ variable_player:
       string: die_harder
       action: set
 
+  mode_katya_difficulty_select_started:
+    villain_difficulty_select_running:
+      action: set
+      int: 1
+
+  mode_katya_difficulty_select_stopping:
+    villain_difficulty_select_running:
+      action: set
+      int: 0
+
 light_player:
   katya_mode_start_warning:
     f142:
@@ -103,3 +126,8 @@ light_player:
 
   start_katya_dieharder:
     f142: off
+
+    GI:
+      color: 000000
+    SPOTS:
+      color: 000000

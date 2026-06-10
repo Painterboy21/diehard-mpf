@@ -5,50 +5,179 @@ mode:
   stop_events: ball_ended, end_skillshot
   priority: 1100
 
-event_player: 
+# ---------------------------------------------------------------------
+# EVENT PLAYER
+# skillshot_hit_fast comes from Godot immediately when skillshot is made.
+# skillshot_hit still comes later after the reward video for normal scoring.
+# Captive ball collects Super Skill Shot while available.
+# Widget now appears straight away on Super Skill Shot collect.
+# ---------------------------------------------------------------------
+event_player:
+  mode_skillshot_started:
+    - reset_super_skillshot
   s_plunger_key_active:
     - skillshot_check
   s_fire_active:
     - skillshot_check
+  skillshot_hit_fast:
+    - light_super_skillshot
   skillshot_hit.1{current_player.ball==1}:
     - ball_save_one
   skillshot_hit.1{current_player.ball==2}:
     - ball_save_two
   skillshot_hit.1{current_player.ball==3}:
     - ball_save_three
-  skillshot_hit:
-    - end_skillshot
   skillshot_miss:
     - end_skillshot
+  s_captiveball_active{current_player.super_skillshot_available==1 and current_player.super_skillshot_awarded==0}:
+    - super_skillshot_award
+  super_skillshot_award:
+    - villain_start_lit
+    - super_skillshot_full_bullets
+    - end_skillshot|6s
+  timer_super_skillshot_timer_complete{current_player.super_skillshot_awarded==0}:
+    - end_skillshot
 
+# ---------------------------------------------------------------------
+# TIMERS
+# Super Skill Shot is available for 4 seconds from skillshot_hit_fast.
+# ---------------------------------------------------------------------
+timers:
+  super_skillshot_timer:
+    start_value: 4
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - event: skillshot_hit_fast
+        action: restart
+      - event: super_skillshot_award
+        action: stop
+      - event: mode_skillshot_stopping
+        action: stop
 
-slide_player: 
-  mode_skillshot_started: 
+# ---------------------------------------------------------------------
+# COIL PLAYER
+# Plane bounce show posts super_skillshot_plane_pulse.
+# Each pulse fires the captive target / airplane coil.
+# ---------------------------------------------------------------------
+coil_player:
+  super_skillshot_plane_pulse:
+    c_captivetarget:
+      action: pulse
+
+# ---------------------------------------------------------------------
+# SHOW PLAYER
+# l52 flashes red straight away from skillshot_hit_fast.
+# Collect stops ready flash and starts reward shows.
+# ---------------------------------------------------------------------
+show_player:
+  skillshot_hit_fast:
+    super_skillshot_captive_ready:
+      key: super_skillshot_captive_ready
+      speed: 8
+      show_tokens:
+        captive: l52
+  super_skillshot_award:
+    super_skillshot_captive_ready:
+      key: super_skillshot_captive_ready
+      action: stop
+    super_skillshot_plane_bounce:
+      key: super_skillshot_plane_bounce
+      speed: 1
+      loops: 0
+    super_skillshot_collected_crazy:
+      key: super_skillshot_collected_crazy
+      speed: 1
+      loops: 2
+  mode_skillshot_stopping:
+    super_skillshot_captive_ready:
+      key: super_skillshot_captive_ready
+      action: stop
+    super_skillshot_plane_bounce:
+      key: super_skillshot_plane_bounce
+      action: stop
+    super_skillshot_collected_crazy:
+      key: super_skillshot_collected_crazy
+      action: stop
+
+# ---------------------------------------------------------------------
+# SLIDE PLAYER
+# Keeps your normal skillshot slide/video until Godot posts skillshot_hit.
+# Super Skill Shot does not use a slide.
+# ---------------------------------------------------------------------
+slide_player:
+  mode_skillshot_started:
     skillshot:
       action: play
       expire: 0s
-  mode_skillshot_stopping: 
+  skillshot_hit:
+    skillshot:
+      action: remove
+      expire: 0s
+  skillshot_miss:
+    skillshot:
+      action: remove
+      expire: 0s
+  mode_skillshot_stopping:
     skillshot:
       action: remove
       expire: 0s
 
+# ---------------------------------------------------------------------
+# WIDGET PLAYER
+# Widget displays straight away when Super Skill Shot is collected.
+# ---------------------------------------------------------------------
+widget_player:
+  super_skillshot_award:
+    super_skill_shot:
+      action: play
+      expire: 6s
+  mode_skillshot_stopping:
+    super_skill_shot:
+      action: remove
 
-variable_player: 
-  ball_save_one: 
-    score: 
+# ---------------------------------------------------------------------
+# VARIABLE PLAYER
+# Skillshot scoring is unchanged.
+# Super Skill Shot awards 1,000,000 and fills bullets to 15.
+# Your bullets mode uses bullet_hits.
+# ---------------------------------------------------------------------
+variable_player:
+  reset_super_skillshot:
+    super_skillshot_available:
+      action: set
+      int: 0
+    super_skillshot_awarded:
+      action: set
+      int: 0
+  skillshot_hit_fast:
+    super_skillshot_available:
+      action: set
+      int: 1
+  super_skillshot_award:
+    score:
       action: add
       int: 1000000
-
-  ball_save_two: 
-    score: 
+    super_skillshot_awarded:
+      action: set
+      int: 1
+    super_skillshot_available:
+      action: set
+      int: 0
+    bullet_hits:
+      action: set
+      int: 15
+  ball_save_one:
+    score:
+      action: add
+      int: 1000000
+  ball_save_two:
+    score:
       action: add
       int: 2000000
-
-  ball_save_three: 
-    score: 
+  ball_save_three:
+    score:
       action: add
       int: 4000000
-
-
-
-

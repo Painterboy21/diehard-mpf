@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://b565itqeb74kn"]
+
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_338ki"]
+[ext_resource type="VideoStream" uid="uid://b4275mayb1e3d" path="res://modes/karl_dieharder/slides/karl_player_died.ogv" id="2_kmub4"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_v7wf7"]
+
+[node name="karl_player_died" type="Control" unique_id=527270716]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_338ki")
+metadata/_custom_type_script = "uid://dru3usokwlhd3"
+
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=1957710692]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_kmub4")
+volume_db = 7.999999
+autoplay = true
+script = ExtResource("3_v7wf7")
+metadata/_custom_type_script = "uid://bov7mrgxslshq"

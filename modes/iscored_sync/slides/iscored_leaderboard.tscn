@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bxwceiokhxrib"]
+
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_blbuo"]
+[ext_resource type="Script" uid="uid://vig0iiut4req" path="res://modes/iscored_sync/slides/scored_leaderboard.gd" id="2_j6yvo"]
+[ext_resource type="Texture2D" uid="uid://bb7yeuyiuwf1p" path="res://modes/iscored_sync/slides/monthly_leaderboard_ft1.png" id="3_pu3qe"]
+
+[node name="iscored_leaderboard" type="Control" unique_id=1029941091]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_blbuo")
+metadata/_custom_type_script = "uid://dru3usokwlhd3"
+
+[node name="Control" type="Control" parent="." unique_id=850786064]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_j6yvo")
+
+[node name="MonthlyLeaderboardFt1" type="Sprite2D" parent="." unique_id=1933637107]
+position = Vector2(959.4998, 539.5)
+scale = Vector2(1.1477271, 1.1466525)
+texture = ExtResource("3_pu3qe")

@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://chkvyjies528o"]
 
-[ext_resource type="Script" uid="uid://dwcsp83138nco" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_nl61l"]
+[ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_nl61l"]
 [ext_resource type="Theme" uid="uid://cfix632dro1cx" path="res://godot-media/themes/lbl_holly.tres" id="2_6yunp"]
 [ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="3_wmdc6"]
-[ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="4_j1ua2"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="4_j1ua2"]
 
 [sub_resource type="Animation" id="Animation_nl61l"]
 length = 10.0
@@ -83,6 +83,7 @@ min_digits = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1847812782]
 deterministic = true
+reset_on_save = false
 libraries/ = SubResource("AnimationLibrary_wmdc6")
 autoplay = &"RESET"
 movie_quit_on_finish = true

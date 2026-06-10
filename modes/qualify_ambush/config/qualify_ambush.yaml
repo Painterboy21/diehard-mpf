@@ -8,103 +8,224 @@ mode:
     - mode_ambush_stopped
     - multiball_airplane_ended
     - multiball_central_park_ended
+
+    # Hans finished
     - hans_diehard_won_complete
     - hans_diehard_failed_complete
     - hans_dieharder_won_complete
     - hans_dieharder_failed_complete
+
+    # Katya finished
     - katya_completed
     - katya_failed
+    - katya_dieharder_completed
+    - katya_dieharder_failed
+
+    # Karl finished
+    - karl_diehard_completed
+    - karl_diehard_failed
+    - karl_dieharder_completed
+    - karl_dieharder_failed
+
+    # Simon finished
+    - simon_completed
+    - simon_failed
+    - simon_dieharder_completed
+    - simon_dieharder_failed
+
+    # Stuart / Col finished
+    - stuart_completed
+    - stuart_failed
+    - stuart_dieharder_completed
+    - stuart_dieharder_failed
+    - col_completed
+    - col_failed
+    - col_dieharder_completed
+    - col_dieharder_failed
+
   stop_events:
     - ball_ended
     - start_ambush
+
+    # Stop during multiballs
     - multiball_central_park_started
     - multiball_nakatomi_started
     - multiball_airplane_started
+
+    # Hans started
     - start_hans_diehard
     - start_hans_dieharder
+
+    # Katya started
     - start_katya_diehard
     - start_katya_dieharder
-  priority: 120
 
-ball_holds: 
+    # Karl started
+    - start_karl_diehard
+    - start_karl_dieharder
+
+    # Simon started
+    - start_simon_diehard
+    - start_simon_dieharder
+
+    # Stuart / Col started
+    - start_stuart_diehard
+    - start_stuart_dieharder
+    - start_col_diehard
+    - start_col_dieharder
+
+  priority: 120
+ball_holds:
   ambush_hold:
-    enable_events: qualify_ambush_on_complete
-    disable_events: start_ambush.1
+    enable_events:
+      - qualify_ambush_on_complete
+    disable_events:
+      - mode_ambush_started
+      - ball_ended
+      - tilt
     hold_devices: rightkicker
     balls_to_hold: 1
-    release_all_events: tilt, start_ambush.2
+    release_all_events:
+      - start_ambush
+      - ball_ended
+      - tilt
 
-event_player: 
-  timer_ambush_hold_complete:
+event_player:
+
+  ball_hold_ambush_hold_full:
+    - ambush_hold_timer_start
+
+
+  s_rightkicker_active{current_player.ambush_qualified == 1}:
+    - ambush_hold_timer_start
+
+  balldevice_rightkicker_ball_enter{current_player.ambush_qualified == 1}:
+    - ambush_hold_timer_start
+
+  s_rightvuk_active{current_player.ambush_qualified == 1}:
+    - ambush_hold_timer_start
+
+  balldevice_rightvuk_ball_enter{current_player.ambush_qualified == 1}:
+    - ambush_hold_timer_start
+
+
+  timer_ambush_hold_complete{current_player.ambush_qualified == 1}:
     - start_ambush
 
+  qualify_ambush_start_from_mystery:
+    - start_ambush
+    - ambush_start_timers|250ms
 
-shot_groups: 
+shot_groups:
   qualify_ambush:
-    shots: die_inlane_d,die_inlane_i,die_inlane_e
-    restart_events: start_ambush.2
-    rotate_left_events: s_left_flipper_active
-    rotate_right_events: s_right_flipper_active
+    shots:
+      - die_inlane_d
+      - die_inlane_i
+      - die_inlane_e
+    restart_events:
+      - start_ambush
+    rotate_left_events:
+      - s_left_flipper_active
+    rotate_right_events:
+      - s_right_flipper_active
 
-shots: 
+shots:
   die_inlane_d:
     switch: s_swleftoutlane
     profile: qualify_ambush
-    show_tokens: 
+    show_tokens:
       lights: l5
+
   die_inlane_i:
     switch: s_swleftinlane
     profile: qualify_ambush
-    show_tokens: 
+    show_tokens:
       lights: l4
+
   die_inlane_e:
     switch: s_swrightinlane
     profile: qualify_ambush
-    show_tokens: 
+    show_tokens:
       lights: l6
+
   die_inlane_ambush:
     switch: s_rightkicker
     profile: ambush
-    show_tokens: 
+    show_tokens:
       lights: l9
-    control_events: 
+    control_events:
       - events: qualify_ambush_on_complete
         state: 1
-      - events: start_ambush.2
+      - events: start_ambush
+        state: 0
+      - events: mode_ambush_started
+        state: 0
+      - events: ball_ended
+        state: 0
+      - events: tilt
         state: 0
 
-show_player: 
-  ball_hold_ambush_hold_full: 
-    ambush_start: 
+show_player:
+  ball_hold_ambush_hold_full:
+    ambush_start:
       key: key_ambush_start
       loops: 0
       speed: 2
 
-
-slide_player: 
-  ball_hold_ambush_hold_full: 
+slide_player:
+  ball_hold_ambush_hold_full:
     ambush_started:
       action: play
       expire: 3s
 
-
-timers: 
+timers:
   ambush_hold:
     start_value: 0
     end_value: 3
     direction: up
-    control_events: 
+    tick_interval: 1000ms
+    restart_on_complete: false
+    start_running: false
+    control_events:
       - event: ball_hold_ambush_hold_full
         action: restart
-    restart_on_complete: False
-    start_running: False
-    tick_interval: 1000ms
+      - event: ambush_hold_timer_start
+        action: restart
+      - event: start_ambush
+        action: stop
+      - event: ball_ended
+        action: stop
+      - event: tilt
+        action: stop
 
-widget_player: 
-  qualify_ambush_on_complete: 
+widget_player:
+  qualify_ambush_on_complete:
     qualify_ambush:
       action: play
       expire: 3s
 
+variable_player:
+  qualify_ambush_on_complete:
+    ambush_qualified:
+      action: set
+      int: 1
 
+  start_ambush:
+    ambush_qualified:
+      action: set
+      int: 0
 
+  mode_ambush_started:
+    ambush_qualified:
+      action: set
+      int: 0
+
+  ball_ended:
+    ambush_qualified:
+      action: set
+      int: 0
+
+  tilt:
+    ambush_qualified:
+      action: set
+      int: 0

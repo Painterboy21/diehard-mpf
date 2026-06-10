@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://bmr1ejbhflkrc"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_23x1e"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_23x1e"]
 [ext_resource type="VideoStream" uid="uid://d11wn3dk276s4" path="res://videos/DieHard1Background.ogv" id="2_b2frs"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_uas50"]
+[ext_resource type="VideoStream" uid="uid://b3u8pr02538pc" path="res://modes/hans_diehard/slides/Hans1.ogv" id="4_iqljn"]
 [ext_resource type="PackedScene" uid="uid://cerpiy4w578gl" path="res://modes/hans_diehard/widgets/hans_progress_widget.tscn" id="4_uas50"]
+[ext_resource type="Script" uid="uid://dn8kd4bkicwek" path="res://modes/hans_dieharder/slides/hans_dieharder_video_control.gd" id="5_hk5xl"]
 [ext_resource type="PackedScene" uid="uid://660hrg5dn8jt" path="res://modes/katya_diehard/widgets/katya_timer_widget.tscn" id="5_yudu3"]
 [ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="6_mugig"]
-[ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="7_kferj"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="7_kferj"]
 [ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="8_ktfam"]
 [ext_resource type="Texture2D" uid="uid://ytwrcjpchkp8" path="res://godot-media/images/player 1 overlay.png" id="9_g3nsm"]
 [ext_resource type="Texture2D" uid="uid://cgdg61xeojmu8" path="res://godot-media/images/hollywhite.png" id="10_iqljn"]
@@ -37,12 +39,44 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_b2frs")
+volume_db = 8.57
 autoplay = true
 loop = true
 script = ExtResource("3_uas50")
 end_behavior = 1
 preview_in_editor = true
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
+
+[node name="HansHitVideo" type="VideoStreamPlayer" parent="." unique_id=1371983911]
+visible = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+scale = Vector2(1, 0.9)
+stream = ExtResource("4_iqljn")
+volume_db = 7.999997
+
+[node name="HansVideoControl" type="Control" parent="." unique_id=959045619]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_hk5xl")
+
+[node name="HansRemainingVariable" type="Label" parent="HansVideoControl" unique_id=1659313648]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_kferj")
+variable_name = "hans_diehard_remaining"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [node name="hans_progress_widget" parent="." unique_id=1421029567 instance=ExtResource("4_uas50")]
 layout_mode = 1

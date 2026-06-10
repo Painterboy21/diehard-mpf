@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://bwfnlwyo7cfy"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_f6ckk"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_f6ckk"]
 [ext_resource type="VideoStream" uid="uid://d11wn3dk276s4" path="res://videos/DieHard1Background.ogv" id="2_1tysp"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_d6q3j"]
+[ext_resource type="PackedScene" uid="uid://cocgao1q71trh" path="res://modes/hans_dieharder/widgets/hans_dieharder_timer_widget.tscn" id="4_3055c"]
+[ext_resource type="VideoStream" uid="uid://b3u8pr02538pc" path="res://modes/hans_diehard/slides/Hans1.ogv" id="4_xr35f"]
+[ext_resource type="Script" uid="uid://dn8kd4bkicwek" path="res://modes/hans_dieharder/slides/hans_dieharder_video_control.gd" id="5_4oip1"]
+[ext_resource type="PackedScene" uid="uid://d3sjdnflo7xki" path="res://modes/hans_dieharder/widgets/hans_dieharder_progress_widget.tscn" id="5_xr35f"]
 [ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="6_pf4d5"]
-[ext_resource type="Script" uid="uid://bojo76gkx41ow" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="7_30ijy"]
-[ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="8_ujiuw"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="7_30ijy"]
 [ext_resource type="Texture2D" uid="uid://ytwrcjpchkp8" path="res://godot-media/images/player 1 overlay.png" id="9_rpq1v"]
 [ext_resource type="Texture2D" uid="uid://cgdg61xeojmu8" path="res://godot-media/images/hollywhite.png" id="10_mhple"]
 [ext_resource type="Script" uid="uid://dcwjyu352ua3g" path="res://modes/hans_diehard/slides/detonators.gd" id="16_w2tnv"]
@@ -42,53 +45,38 @@ end_behavior = 1
 preview_in_editor = true
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
 
-[node name="Control2" type="Control" parent="." unique_id=967988825]
+[node name="HansDieHarderHitVideo" type="VideoStreamPlayer" parent="." unique_id=1446997150]
+visible = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+scale = Vector2(1, 0.9)
+stream = ExtResource("4_xr35f")
+volume_db = 7.999997
+
+[node name="HansDieHarderVideoControl" type="Control" parent="." unique_id=266920814]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("5_4oip1")
 
-[node name="main_score" type="Label" parent="Control2" unique_id=1048838247]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -98.0
-offset_bottom = -98.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 0
-theme = ExtResource("6_pf4d5")
-text = "00"
-horizontal_alignment = 1
-vertical_alignment = 1
-clip_text = true
+[node name="HansDieHarderRemainingVariable" type="Label" parent="HansDieHarderVideoControl" unique_id=904363494]
+visible = false
+layout_mode = 0
+offset_right = 223.0
+offset_bottom = 208.0
 script = ExtResource("7_30ijy")
-variable_name = "score"
-comma_separate = true
+variable_name = "hans_dieharder_remaining"
+metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
-[node name="current_ball" type="Label" parent="Control2" unique_id=1769272716]
+[node name="hans_dieharder_timer_widget" parent="." unique_id=1684703874 instance=ExtResource("4_3055c")]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -292.66998
-offset_bottom = -212.66998
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 0
-theme = ExtResource("8_ujiuw")
-text = "Ball 1"
-horizontal_alignment = 1
-vertical_alignment = 1
-clip_text = true
-script = ExtResource("7_30ijy")
-variable_name = "ball"
-comma_separate = true
-template_string = "Ball %s"
+
+[node name="hans_dieharder_progress_widget" parent="." unique_id=1421029567 instance=ExtResource("5_xr35f")]
+layout_mode = 1
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=1589179317]
 layout_mode = 1
@@ -186,9 +174,5 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 9.0
-offset_right = 5.0
-offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 2

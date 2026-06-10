@@ -1,0 +1,11 @@
+#show_version=6
+
+# VPW-style l60 blue blink while the Mystery scroll is running.
+
+- duration: 250ms
+  lights:
+    l60: blue
+
+- duration: 250ms
+  lights:
+    l60: off

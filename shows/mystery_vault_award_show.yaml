@@ -1,0 +1,22 @@
+#show_version=6
+
+# Award lock-in pulse.
+# Short green f147 hit before the release show.
+
+- duration: 100ms
+  lights:
+    f147: "00ff00"
+    l60: white
+
+- duration: 100ms
+  lights:
+    f147: off
+    l60: off
+
+- duration: 100ms
+  lights:
+    f147: "00ff00"
+
+- duration: 100ms
+  lights:
+    f147: off

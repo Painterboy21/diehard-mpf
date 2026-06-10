@@ -1,5 +1,18 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# MYSTERY / VAULT
+# ------------------------------------------------------------
+# What this mode does:
+#   - Starts with every ball and manages the real-machine Mystery/Vault.
+#   - Vault opens from H/O targets using HO, then HOHO, then HOHOHO.
+#   - H and O can be hit in any order.
+#   - Holds the ball in the vault, scrolls Mystery, chooses an award, then releases.
+#   - First Mystery during multiball gives Add-A-Ball.
+#   - First Mystery during a villain mode gives Add More Time.
+#   - Mystery uses playfield_x_max for Playfield X cap.
+#   - Award display clears after every award so the current mode returns.
+# ------------------------------------------------------------
 mode:
   start_events: ball_started
   stop_events: ball_ended
@@ -15,32 +28,15 @@ ball_holds:
       - tilt
       - mystery_awarded
 
-shot_groups:
-  mystery_ho:
-    shots:
-      - vault_h
-      - vault_o
-    restart_events:
-      - mystery_ho_qualified_step
-      - mystery_awarded
-
 shots:
   vault_h:
     switch: s_holly_h
     profile: profile_mystery_ho
     start_enabled: true
-    show_tokens:
-      lights: l30
-      color: 00ff00
-
   vault_o:
     switch: s_holly_o
     profile: profile_mystery_ho
     start_enabled: true
-    show_tokens:
-      lights: l31
-      color: 00ff00
-
   vault_mystery:
     profile: profile_mystery
     show_tokens:
@@ -55,79 +51,252 @@ shots:
 event_player:
   mode_mystery_started:
     - mystery_close_vault
+    - mystery_reset_ho_counts
+    - mystery_clear_pending_ambush
+    - hide_bonus_x_held_widget
+    - mystery_villain_inactive
+    - mystery_ambush_inactive
+    - mystery_multiball_inactive
+    - mystery_clear_add_time_available
+    - mystery_clear_add_a_ball_available
+  mode_mystery_started{current_player.mystery_ho_level == None}:
+    - mystery_init_ho_level
+  mode_mystery_started{current_player.mystery_ho_level == 0}:
+    - mystery_init_ho_level
+  mode_mystery_started{current_player.super_spinners == None}:
+    - mystery_init_super_spinners
 
-  mystery_ho_on_complete{current_player.mystery_hits_count < 2}:
-    - mystery_ho_qualified_step
+  # ------------------------------------------------------------
+  # H/O TARGET HIT HANDLING
+  # Each H/O hit posts progress, then checks if a non-opening HO pair
+  # was completed, then checks if the vault should open.
+  # ------------------------------------------------------------
+  s_holly_h_active{current_player.mystery_vault_open == 0}:
+    - mystery_ho_progress
+    - mystery_check_ho_red|1ms
+    - mystery_check_ho|2ms
+  s_holly_o_active{current_player.mystery_vault_open == 0}:
+    - mystery_ho_progress
+    - mystery_check_ho_red|1ms
+    - mystery_check_ho|2ms
 
-  mystery_ho_on_complete{current_player.mystery_hits_count >= 2}:
+  # ------------------------------------------------------------
+  # H/O RED INSERT FLASH
+  # Only flashes red when a full HO pair has been completed but the
+  # vault is NOT opening yet.
+  #
+  # Level 1:
+  #   HO opens the vault, so no red flash.
+  #
+  # Level 2:
+  #   First HO pair flashes red.
+  #   Second HO pair opens vault, so no red flash.
+  #
+  # Level 3:
+  #   First HO pair flashes red.
+  #   Second HO pair flashes red.
+  #   Third HO pair opens vault, so no red flash.
+  # ------------------------------------------------------------
+  mystery_check_ho_red{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level == 2 and current_player.mystery_h_hits == 1 and current_player.mystery_o_hits == 1}:
+    - mystery_ho_red_flash
+  mystery_check_ho_red{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level >= 3 and current_player.mystery_h_hits == 1 and current_player.mystery_o_hits == 1}:
+    - mystery_ho_red_flash
+  mystery_check_ho_red{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level >= 3 and current_player.mystery_h_hits == 2 and current_player.mystery_o_hits == 2}:
+    - mystery_ho_red_flash
+
+  # ------------------------------------------------------------
+  # H/O VAULT OPEN CHECK
+  # When the required HO / HOHO / HOHOHO pattern is complete,
+  # opens the vault. This keeps the opening green show clean.
+  # ------------------------------------------------------------
+  mystery_check_ho{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level <= 1 and current_player.mystery_h_hits >= 1 and current_player.mystery_o_hits >= 1}:
+    - mystery_open_vault
+  mystery_check_ho{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level == 2 and current_player.mystery_h_hits >= 2 and current_player.mystery_o_hits >= 2}:
+    - mystery_open_vault
+  mystery_check_ho{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level >= 3 and current_player.mystery_h_hits >= 3 and current_player.mystery_o_hits >= 3}:
     - mystery_open_vault
 
   ball_hold_mystery_hold_full:
     - mystery_close_vault
     - mystery_scroll_start
-
   timer_mystery_scroll_complete:
     - mystery_pick_award
 
-  # Add-A-Ball first if a multiball is active
-  mystery_pick_award{current_player.mystery_multiball_active == 1}:
+  mystery_pick_award{current_player.mystery_multiball_active == 1 and current_player.mystery_add_a_ball_available == 1}:
     - mystery_award_add_a_ball
-
-  mystery_pick_award{current_player.mystery_multiball_active == 0}:
+  mystery_pick_award{current_player.mystery_multiball_active == 1 and current_player.mystery_add_a_ball_available == 0}:
+    - mystery_pick_multiball_safe_award
+  mystery_pick_award{current_player.mystery_multiball_active == 0 and current_player.mystery_villain_active == 1 and current_player.mystery_add_time_available == 1}:
+    - mystery_award_add_time
+  mystery_pick_award{current_player.mystery_multiball_active == 0 and current_player.mystery_villain_active == 1 and current_player.mystery_add_time_available == 0}:
+    - mystery_pick_villain_safe_award
+  mystery_pick_award{current_player.mystery_multiball_active == 0 and current_player.mystery_villain_active == 0 and current_player.mystery_ambush_active == 1}:
+    - mystery_pick_ambush_safe_award
+  mystery_pick_award{current_player.mystery_multiball_active == 0 and current_player.mystery_villain_active == 0 and current_player.mystery_pending_ambush == 1}:
+    - mystery_pick_ambush_safe_award
+  mystery_pick_award{current_player.mystery_multiball_active == 0 and current_player.mystery_villain_active == 0 and current_player.mystery_ambush_active == 0 and current_player.mystery_pending_ambush == 0}:
     - mystery_pick_normal_award
 
-  # These events track your main multiballs
   multiball_nakatomi_started:
     - mystery_multiball_active
+    - mystery_set_add_a_ball_available
   multiball_airplane_started:
     - mystery_multiball_active
+    - mystery_set_add_a_ball_available
   multiball_central_park_started:
     - mystery_multiball_active
-
+    - mystery_set_add_a_ball_available
   multiball_nakatomi_ended:
     - mystery_multiball_inactive
+    - mystery_clear_add_a_ball_available
   multiball_airplane_ended:
     - mystery_multiball_inactive
+    - mystery_clear_add_a_ball_available
   multiball_central_park_ended:
     - mystery_multiball_inactive
+    - mystery_clear_add_a_ball_available
+
+  villain_mode_started:
+    - mystery_villain_active
+    - mystery_set_add_time_available
+  villain_mode_stopped:
+    - mystery_villain_inactive
+    - mystery_clear_add_time_available
+  villain_mode_ended:
+    - mystery_villain_inactive
+    - mystery_clear_add_time_available
+
+  start_ambush:
+    - mystery_ambush_active
+  mode_ambush_started:
+    - mystery_ambush_active
+  mode_ambush_stopped:
+    - mystery_ambush_inactive
+  ambush_finished:
+    - mystery_ambush_inactive
+  ambush_failed:
+    - mystery_ambush_inactive
+  stop_ambush:
+    - mystery_ambush_inactive
+
+  ball_ended:
+    - hide_bonus_x_held_widget
+    - mystery_villain_inactive
+    - mystery_ambush_inactive
+    - mystery_multiball_inactive
+    - mystery_clear_pending_ambush
+    - mystery_clear_add_time_available
+    - mystery_clear_add_a_ball_available
 
   mystery_award_add_a_ball:
-    - add_a_ball_in_multiball
     - mystery_awarded
-
+    - mystery_clear_add_a_ball_available
+    - add_a_ball_in_multiball|750ms
   mystery_award_points:
     - mystery_awarded
   mystery_award_tower_lock:
+    - qualify_nakatomi_on_complete
     - mystery_awarded
   mystery_award_airplane_lock:
+    - lock_lit
+    - airplane_disable_lock_counter
     - mystery_awarded
+  mystery_award_add_time:
+    - mystery_set_award_add_time
+    - add_villain_time_from_mystery
+    - mystery_clear_add_time_available
+    - mystery_awarded|100ms
   mystery_award_park_lock:
+    - mystery_choose_park_lane
+
+  mystery_choose_park_lane{current_player.shot_central_park_lock_left == 1 and current_player.shot_central_park_lock_middle == 1 and current_player.shot_central_park_lock_right == 1}:
+    - mystery_award_points
+  mystery_choose_park_lane{current_player.shot_central_park_lock_left == 0 or current_player.shot_central_park_lock_middle == 0 or current_player.shot_central_park_lock_right == 0}:
+    - mystery_choose_park_lane_random
+
+  mystery_try_cp_left_lane{current_player.shot_central_park_lock_left == 0}:
+    - mystery_award_cp_left_lane
+  mystery_try_cp_left_lane{current_player.shot_central_park_lock_left == 1}:
+    - mystery_choose_park_lane|1ms
+  mystery_try_cp_middle_lane{current_player.shot_central_park_lock_middle == 0}:
+    - mystery_award_cp_middle_lane
+  mystery_try_cp_middle_lane{current_player.shot_central_park_lock_middle == 1}:
+    - mystery_choose_park_lane|1ms
+  mystery_try_cp_right_lane{current_player.shot_central_park_lock_right == 0}:
+    - mystery_award_cp_right_lane
+  mystery_try_cp_right_lane{current_player.shot_central_park_lock_right == 1}:
+    - mystery_choose_park_lane|1ms
+
+  mystery_award_cp_left_lane:
+    - mystery_awarded|100ms
+  mystery_award_cp_middle_lane:
+    - mystery_awarded|100ms
+  mystery_award_cp_right_lane:
+    - mystery_awarded|100ms
+
+  mystery_award_villain{current_player.bullet_hits < 15}:
+    - villain_start_lit
     - mystery_awarded
-  mystery_award_villain:
-    - mystery_awarded
+  mystery_award_villain{current_player.bullet_hits >= 15}:
+    - mystery_pick_normal_award
+
   mystery_award_ball_save:
+    - ball_save_three
     - mystery_awarded
   mystery_award_bonus_x:
+    - mystery_bonus_x_flash
     - mystery_awarded
   mystery_award_hold_bonus_x:
+    - show_bonus_x_held_widget
+    - hide_bonus_x_held_widget|4s
     - mystery_awarded
-  mystery_award_super_spinner:
+  mystery_award_super_spinners:
+    - super_spinners_start
     - mystery_awarded
   mystery_award_super_jets:
     - mystery_awarded
-  mystery_award_playfield_x:
+
+  mystery_award_playfield_x{current_player.playfield_multiplier < current_player.playfield_x_max}:
+    - mystery_do_award_playfield_x
+  mystery_award_playfield_x{current_player.playfield_multiplier >= current_player.playfield_x_max}:
+    - mystery_award_points
+  mystery_do_award_playfield_x:
+    - increase_playfield_x
+    - playfield_x_collected|10ms
+    - playfield_x_started|20ms
     - mystery_awarded
-  mystery_award_ambush:
-    - mystery_awarded
+
   mystery_award_extra_ball_lit:
+    - light_extra_ball_from_mystery
     - mystery_awarded
+
+  mystery_award_ambush{current_player.mystery_villain_active == 0 and current_player.mystery_multiball_active == 0 and current_player.mystery_ambush_active == 0 and current_player.mystery_pending_ambush == 0}:
+    - mystery_set_pending_ambush
+    - mystery_awarded
+  mystery_award_ambush{current_player.mystery_villain_active == 1}:
+    - mystery_award_points
+  mystery_award_ambush{current_player.mystery_multiball_active == 1}:
+    - mystery_award_points
+  mystery_award_ambush{current_player.mystery_ambush_active == 1}:
+    - mystery_award_points
+  mystery_award_ambush{current_player.mystery_pending_ambush == 1}:
+    - mystery_award_points
+
+  slide_mystery_removed{current_player.mystery_pending_ambush == 1}:
+    - mystery_start_ambush_from_vault
+  mystery_start_ambush_from_vault:
+    - mystery_clear_pending_ambush
+    - start_ambush
 
   mystery_awarded:
     - mystery_close_vault
-    - mystery_reset_ho
+    - mystery_advance_ho_level
+    - mystery_reset_ho_counts
+    - mystery_clear_award_display|1200ms
+    - slide_mystery_removed|1300ms
 
 random_event_player:
-  mystery_pick_normal_award:
+  mystery_pick_normal_award{current_player.bullet_hits < 15 and current_player.super_spinners == 0}:
     events:
       mystery_award_points: 20
       mystery_award_tower_lock: 8
@@ -137,11 +306,248 @@ random_event_player:
       mystery_award_ball_save: 8
       mystery_award_bonus_x: 8
       mystery_award_hold_bonus_x: 8
-      mystery_award_super_spinner: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_ambush: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+  mystery_pick_normal_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 0}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_ambush: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+  mystery_pick_normal_award{current_player.bullet_hits < 15 and current_player.super_spinners == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
       mystery_award_super_jets: 8
       mystery_award_playfield_x: 8
       mystery_award_ambush: 8
       mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+  mystery_pick_normal_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_ambush: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+  mystery_pick_villain_safe_award{current_player.bullet_hits < 15 and current_player.super_spinners == 0}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+  mystery_pick_villain_safe_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 0}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+  mystery_pick_villain_safe_award{current_player.bullet_hits < 15 and current_player.super_spinners == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+  mystery_pick_villain_safe_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+  mystery_pick_multiball_safe_award{current_player.bullet_hits < 15 and current_player.super_spinners == 0}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+  mystery_pick_multiball_safe_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 0}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+  mystery_pick_multiball_safe_award{current_player.bullet_hits < 15 and current_player.super_spinners == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+  mystery_pick_multiball_safe_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_ambush: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+  mystery_pick_ambush_safe_award{current_player.bullet_hits < 15 and current_player.super_spinners == 0}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+  mystery_pick_ambush_safe_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 0}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_super_spinners: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+  mystery_pick_ambush_safe_award{current_player.bullet_hits < 15 and current_player.super_spinners == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_villain: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+  mystery_pick_ambush_safe_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 1}:
+    events:
+      mystery_award_points: 20
+      mystery_award_tower_lock: 8
+      mystery_award_airplane_lock: 8
+      mystery_award_park_lock: 8
+      mystery_award_ball_save: 8
+      mystery_award_bonus_x: 8
+      mystery_award_hold_bonus_x: 8
+      mystery_award_super_jets: 8
+      mystery_award_playfield_x: 8
+      mystery_award_extra_ball_lit: 4
+    scope: player
+    force_all: false
+
+  mystery_choose_park_lane_random:
+    events:
+      mystery_try_cp_left_lane: 1
+      mystery_try_cp_middle_lane: 1
+      mystery_try_cp_right_lane: 1
     scope: player
     force_all: false
 
@@ -159,57 +565,239 @@ timers:
 
 show_player:
   mystery_open_vault:
+    flash_color:
+      action: stop
+      key: mystery_ho_red_insert_flash
     flicker_color:
       key: key_mystery_open_vault
       speed: 4
       show_tokens:
         lights: l84
         color: FFFFFF
-
   mystery_close_vault:
     flicker_color:
       action: stop
       key: key_mystery_open_vault
-
-  mystery_awarded:
-    flicker_color:
-      key: key_mystery_awarded
-      loops: 2
-      speed: 4
+    flash_color:
+      action: stop
+      key: mystery_ho_red_insert_flash
+  mystery_ho_red_flash:
+    flash_color:
+      key: mystery_ho_red_insert_flash
+      speed: 18
+      loops: 4
+      priority: 1350
       show_tokens:
-        lights: f147
-        color: 00ff00
+        lights: l60
+        color: red
+  ball_hold_mystery_hold_full:
+    mystery_vault_start_show:
+      key: key_mystery_vault_start
+      loops: 1
+      speed: 1
+      priority: 1700
+    mystery_vault_running_show:
+      key: key_mystery_vault_running
+      loops: 0
+      speed: 1
+      priority: 1180
+  mystery_awarded:
+    mystery_vault_start_show:
+      action: stop
+      key: key_mystery_vault_start
+    mystery_vault_running_show:
+      action: stop
+      key: key_mystery_vault_running
+    mystery_vault_award_show:
+      key: key_mystery_vault_award
+      loops: 1
+      speed: 1
+      priority: 1700
+  slide_mystery_removed:
+    mystery_vault_start_show:
+      action: stop
+      key: key_mystery_vault_start
+    mystery_vault_running_show:
+      action: stop
+      key: key_mystery_vault_running
+    mystery_vault_release_show:
+      key: key_mystery_vault_release
+      loops: 1
+      speed: 1
+      priority: 1700
+  mystery_bonus_x_flash:
+    flash_color:
+      key: mystery_bonus_x_lights_flash
+      speed: 10
+      loops: 8
+      priority: 1000
+      show_tokens:
+        lights: l1,l2,l3
+        color: yellow
 
+sound_player:
+  mystery_scroll_start:
+    dh_mysterscroll1:
+      action: play
+      loops: -1
+      volume: 1.0
+  timer_mystery_scroll_complete:
+    dh_mysterscroll1:
+      action: stop
+  mystery_awarded:
+    dh_mysterscroll1:
+      action: stop
+  ball_ended:
+    dh_mysterscroll1:
+      action: stop
+
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# Plays the Mystery slide while the vault scrolls.
+# The slide stays up while the award displays, then removes
+# when mystery_clear_award_display fires.
+# ------------------------------------------------------------
 slide_player:
   ball_hold_mystery_hold_full:
     mystery:
       action: play
-      expire: 7s
+      priority: 9999
+      expire: 0s
+  mystery_clear_award_display:
+    mystery:
+      action: remove
+  ball_ended:
+    mystery:
+      action: remove
 
 widget_player:
-  mystery_ho_qualified_step:
+  mystery_ho_progress:
     mystery_qualify:
       action: play
       expire: 3s
 
 variable_player:
-  mystery_ho_qualified_step:
-    mystery_hits_count:
-      action: add
-      int: 1
-
-  mystery_reset_ho:
-    mystery_hits_count:
+  mode_mystery_started:
+    mystery_multiball_active:
       action: set
       int: 0
+    mystery_villain_active:
+      action: set
+      int: 0
+    mystery_ambush_active:
+      action: set
+      int: 0
+    mystery_pending_ambush:
+      action: set
+      int: 0
+    mystery_add_time_available:
+      action: set
+      int: 0
+    mystery_add_a_ball_available:
+      action: set
+      int: 0
+    mystery_vault_open:
+      action: set
+      int: 0
+  mystery_init_ho_level:
+    mystery_ho_level:
+      action: set
+      int: 1
+  mystery_init_super_spinners:
+    super_spinners:
+      action: set
+      int: 0
+  mystery_open_vault:
+    mystery_vault_open:
+      action: set
+      int: 1
+  mystery_reset_ho_counts:
+    mystery_h_hits:
+      action: set
+      int: 0
+    mystery_o_hits:
+      action: set
+      int: 0
+    mystery_vault_open:
+      action: set
+      int: 0
+  s_holly_h_active{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level <= 1 and current_player.mystery_h_hits < 1}:
+    mystery_h_hits:
+      action: add
+      int: 1
+  s_holly_h_active{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level == 2 and current_player.mystery_h_hits < 2}:
+    mystery_h_hits:
+      action: add
+      int: 1
+  s_holly_h_active{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level >= 3 and current_player.mystery_h_hits < 3}:
+    mystery_h_hits:
+      action: add
+      int: 1
+  s_holly_o_active{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level <= 1 and current_player.mystery_o_hits < 1}:
+    mystery_o_hits:
+      action: add
+      int: 1
+  s_holly_o_active{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level == 2 and current_player.mystery_o_hits < 2}:
+    mystery_o_hits:
+      action: add
+      int: 1
+  s_holly_o_active{current_player.mystery_vault_open == 0 and current_player.mystery_ho_level >= 3 and current_player.mystery_o_hits < 3}:
+    mystery_o_hits:
+      action: add
+      int: 1
+  mystery_advance_ho_level:
+    mystery_ho_level:
+      action: set
+      int: "(current_player.mystery_ho_level % 3) + 1"
 
   mystery_multiball_active:
     mystery_multiball_active:
       action: set
       int: 1
-
   mystery_multiball_inactive:
     mystery_multiball_active:
+      action: set
+      int: 0
+  mystery_set_add_a_ball_available:
+    mystery_add_a_ball_available:
+      action: set
+      int: 1
+  mystery_clear_add_a_ball_available:
+    mystery_add_a_ball_available:
+      action: set
+      int: 0
+
+  mystery_villain_active:
+    mystery_villain_active:
+      action: set
+      int: 1
+  mystery_villain_inactive:
+    mystery_villain_active:
+      action: set
+      int: 0
+  mystery_ambush_active:
+    mystery_ambush_active:
+      action: set
+      int: 1
+  mystery_ambush_inactive:
+    mystery_ambush_active:
+      action: set
+      int: 0
+
+  mystery_set_add_time_available:
+    mystery_add_time_available:
+      action: set
+      int: 1
+  mystery_clear_add_time_available:
+    mystery_add_time_available:
+      action: set
+      int: 0
+  mystery_set_pending_ambush:
+    mystery_pending_ambush:
+      action: set
+      int: 1
+  mystery_clear_pending_ambush:
+    mystery_pending_ambush:
       action: set
       int: 0
 
@@ -218,7 +806,6 @@ variable_player:
     mystery_awarded_index:
       action: set
       int: 0
-
   mystery_award_tower_lock:
     tower_lock_lit:
       action: set
@@ -226,7 +813,6 @@ variable_player:
     mystery_awarded_index:
       action: set
       int: 1
-
   mystery_award_airplane_lock:
     airplane_lock_lit:
       action: set
@@ -237,23 +823,37 @@ variable_player:
     mystery_awarded_index:
       action: set
       int: 2
-
-  mystery_award_park_lock:
+  mystery_award_cp_left_lane:
     park_locks:
       action: add
       int: 1
     mystery_awarded_index:
       action: set
       int: 3
-
-  mystery_award_villain:
-    collected_bullets:
+  mystery_award_cp_middle_lane:
+    park_locks:
+      action: add
+      int: 1
+    mystery_awarded_index:
+      action: set
+      int: 3
+  mystery_award_cp_right_lane:
+    park_locks:
+      action: add
+      int: 1
+    mystery_awarded_index:
+      action: set
+      int: 3
+  mystery_award_villain{current_player.bullet_hits < 15}:
+    bullet_hits:
       action: set
       int: 15
+    bullet_combo_hits:
+      action: set
+      int: 0
     mystery_awarded_index:
       action: set
       int: 4
-
   mystery_award_ball_save:
     mystery_ball_save_awarded:
       action: set
@@ -261,7 +861,6 @@ variable_player:
     mystery_awarded_index:
       action: set
       int: 5
-
   mystery_award_bonus_x:
     bonus_multiplier:
       action: add
@@ -269,7 +868,6 @@ variable_player:
     mystery_awarded_index:
       action: set
       int: 6
-
   mystery_award_hold_bonus_x:
     bonus_x_held:
       action: set
@@ -277,7 +875,6 @@ variable_player:
     mystery_awarded_index:
       action: set
       int: 7
-
   mystery_award_super_jets:
     super_jets:
       action: set
@@ -285,23 +882,17 @@ variable_player:
     mystery_awarded_index:
       action: set
       int: 8
-
-  mystery_award_super_spinner:
-    super_spinner:
+  mystery_award_super_spinners:
+    super_spinners:
       action: set
       int: 1
     mystery_awarded_index:
       action: set
       int: 9
-
-  mystery_award_playfield_x:
-    playfield_multiplier:
-      action: add
-      int: 1
+  mystery_do_award_playfield_x:
     mystery_awarded_index:
       action: set
       int: 10
-
   mystery_award_ambush:
     ambush:
       action: add
@@ -309,19 +900,22 @@ variable_player:
     mystery_awarded_index:
       action: set
       int: 11
-
   mystery_award_extra_ball_lit:
-    extra_balls_lit:
-      action: add
-      int: 1
     extra_ball_mball_awarded:
       action: set
       int: 1
     mystery_awarded_index:
       action: set
       int: 12
-
   mystery_award_add_a_ball:
     mystery_awarded_index:
       action: set
       int: 13
+  mystery_set_award_add_time:
+    mystery_awarded_index:
+      action: set
+      int: 14
+  mystery_clear_award_display:
+    mystery_awarded_index:
+      action: set
+      int: -1

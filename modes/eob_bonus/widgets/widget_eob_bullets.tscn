@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cujlvfss7llww"]
+[gd_scene format=3 uid="uid://cujlvfss7llww"]
 
 [ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_82kmx"]
 [ext_resource type="Texture2D" uid="uid://c85sdor6cnpot" path="res://modes/eob_bonus/assets/target.png" id="2_rb0np"]
@@ -41,7 +41,7 @@ _data = {
 &"created": SubResource("Animation_xtyed")
 }
 
-[node name="widget_eob_bullets" type="Control" node_paths=PackedStringArray("animation_player")]
+[node name="widget_eob_bullets" type="Control" unique_id=483093010 node_paths=PackedStringArray("animation_player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,12 +52,12 @@ script = ExtResource("1_82kmx")
 animation_player = NodePath("AnimationPlayer")
 metadata/_custom_type_script = "uid://d4ky3s4bg1ouq"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=550956283]
 position = Vector2(326, 356)
 scale = Vector2(0.3611111, 0.3611111)
 texture = ExtResource("2_rb0np")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1618786844]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -66,12 +66,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_bottom = 40
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1221152102]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=2016780815]
 layout_mode = 2
 theme = ExtResource("3_xtyed")
 theme_override_font_sizes/font_size = 95
@@ -79,7 +79,7 @@ text = "BULLETS COLLECTED"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MPFVariable" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="MPFVariable" type="Label" parent="MarginContainer/VBoxContainer" unique_id=394746187]
 layout_mode = 2
 theme = ExtResource("3_xtyed")
 theme_override_font_sizes/font_size = 95
@@ -90,9 +90,8 @@ script = ExtResource("4_oj6er")
 variable_name = "eob_bonus_bullet"
 comma_separate = true
 min_digits = 2
+initialize_empty = false
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_pi4ew")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1616655452]
+libraries/ = SubResource("AnimationLibrary_pi4ew")

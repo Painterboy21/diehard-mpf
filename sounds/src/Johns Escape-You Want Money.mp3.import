@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://djfi11e025cmm"
+path="res://.godot/imported/Johns Escape-You Want Money.mp3-a22e4068417444d7d73d31c4ed46e658.mp3str"
+
+[deps]
+
+source_file="res://sounds/src/Johns Escape-You Want Money.mp3"
+dest_files=["res://.godot/imported/Johns Escape-You Want Money.mp3-a22e4068417444d7d73d31c4ed46e658.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

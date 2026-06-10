@@ -1,0 +1,209 @@
+#config_version=6
+
+# ------------------------------------------------------------
+# BONUS X
+# ------------------------------------------------------------
+# What this mode does:
+#   - Starts on each ball.
+#   - Uses the three rear targets for Bonus X.
+#   - Each unlit target scores 250 and lights solid white.
+#   - Completing all three targets increases bonus_multiplier up to 6x.
+#   - If bonus_multiplier is already 6x or higher, bank complete awards 100,000.
+#   - Bank complete flashes the three Bonus X lights, then resets them.
+#   - Each target hit plays a random target hit sound.
+# ------------------------------------------------------------
+mode:
+  start_events:
+    - ball_started
+  priority: 150
+
+# ------------------------------------------------------------
+# SHOTS
+# ------------------------------------------------------------
+# Three rear target shots used to complete the Bonus X bank.
+# ------------------------------------------------------------
+shots:
+  bonus_x_target_1:
+    switch: s_target002
+  bonus_x_target_2:
+    switch: s_target003
+  bonus_x_target_3:
+    switch: s_target004
+
+# ------------------------------------------------------------
+# SHOWS
+# ------------------------------------------------------------
+# Flashes all three Bonus X lights when the target bank is complete.
+# ------------------------------------------------------------
+shows:
+  bonus_x_complete_flash:
+    - duration: 120ms
+      lights:
+        l1: fdda0d
+        l2: fdda0d
+        l3: fdda0d
+    - duration: 120ms
+      lights:
+        l1: off
+        l2: off
+        l3: off
+    - duration: 120ms
+      lights:
+        l1: fdda0d
+        l2: fdda0d
+        l3: fdda0d
+    - duration: 120ms
+      lights:
+        l1: off
+        l2: off
+        l3: off
+    - duration: 120ms
+      lights:
+        l1: fdda0d
+        l2: fdda0d
+        l3: fdda0d
+    - duration: 120ms
+      lights:
+        l1: off
+        l2: off
+        l3: off
+
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Collects each unlit target, checks for bank completion,
+# and resets the bank after the complete flash.
+# ------------------------------------------------------------
+event_player:
+  bonus_x_target_1_hit{current_player.bonus_x_1_lit == 0}:
+    - bonus_x_target_1_collected
+  bonus_x_target_2_hit{current_player.bonus_x_2_lit == 0}:
+    - bonus_x_target_2_collected
+  bonus_x_target_3_hit{current_player.bonus_x_3_lit == 0}:
+    - bonus_x_target_3_collected
+  bonus_x_target_1_collected{current_player.bonus_x_2_lit == 1 and current_player.bonus_x_3_lit == 1}:
+    - bonus_x_bank_complete
+  bonus_x_target_2_collected{current_player.bonus_x_1_lit == 1 and current_player.bonus_x_3_lit == 1}:
+    - bonus_x_bank_complete
+  bonus_x_target_3_collected{current_player.bonus_x_1_lit == 1 and current_player.bonus_x_2_lit == 1}:
+    - bonus_x_bank_complete
+  bonus_x_bank_complete:
+    - bonus_x_reset_bank|800ms
+
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+# Stores lit target states, target scoring, bank completion
+# bonus multiplier award, and bank reset state.
+# ------------------------------------------------------------
+variable_player:
+  bonus_x_target_1_collected:
+    score: 250
+    bonus_x_1_lit:
+      int: 1
+      action: set
+  bonus_x_target_2_collected:
+    score: 250
+    bonus_x_2_lit:
+      int: 1
+      action: set
+  bonus_x_target_3_collected:
+    score: 250
+    bonus_x_3_lit:
+      int: 1
+      action: set
+  bonus_x_bank_complete{current_player.bonus_multiplier < 6}:
+    bonus_multiplier:
+      int: 1
+      action: add
+  bonus_x_bank_complete{current_player.bonus_multiplier >= 6}:
+    score: 100000
+  bonus_x_reset_bank:
+    bonus_x_1_lit:
+      int: 0
+      action: set
+    bonus_x_2_lit:
+      int: 0
+      action: set
+    bonus_x_3_lit:
+      int: 0
+      action: set
+
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# ------------------------------------------------------------
+# Clears Bonus X lights on mode start, lights collected targets,
+# and turns all three lights off when the bank resets.
+# ------------------------------------------------------------
+light_player:
+  mode_bonus_x_started:
+    l1:
+      color: off
+    l2:
+      color: off
+    l3:
+      color: off
+  bonus_x_target_1_collected:
+    l1:
+      color: white
+  bonus_x_target_2_collected:
+    l2:
+      color: white
+  bonus_x_target_3_collected:
+    l3:
+      color: white
+  bonus_x_reset_bank:
+    l1:
+      color: off
+    l2:
+      color: off
+    l3:
+      color: off
+
+# ------------------------------------------------------------
+# SHOW PLAYER
+# ------------------------------------------------------------
+# Runs the Bonus X complete flash when all three targets are lit.
+# ------------------------------------------------------------
+show_player:
+  bonus_x_bank_complete:
+    bonus_x_complete_flash:
+      loops: 1
+
+# ------------------------------------------------------------
+# RANDOM EVENT PLAYER
+# ------------------------------------------------------------
+# Chooses a random target hit sound for each collected target.
+# ------------------------------------------------------------
+random_event_player:
+  bonus_x_target_1_collected:
+    events:
+      - bonusx_sound_1
+      - bonusx_sound_2
+      - bonusx_sound_3
+  bonus_x_target_2_collected:
+    events:
+      - bonusx_sound_1
+      - bonusx_sound_2
+      - bonusx_sound_3
+  bonus_x_target_3_collected:
+    events:
+      - bonusx_sound_1
+      - bonusx_sound_2
+      - bonusx_sound_3
+
+# ------------------------------------------------------------
+# SOUND PLAYER
+# ------------------------------------------------------------
+# Plays one of the random target hit sounds.
+# ------------------------------------------------------------
+sound_player:
+  bonusx_sound_1:
+    Target_Hit_1:
+      action: play
+  bonusx_sound_2:
+    Target_Hit_2:
+      action: play
+  bonusx_sound_3:
+    Target_Hit_3:
+      action: play
