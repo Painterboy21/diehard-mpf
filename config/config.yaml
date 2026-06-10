@@ -43,6 +43,8 @@ fast:
         model: FP-EXP-1313
       cab:
         model: FP-EXP-0081
+
+fast:
   aud:
     port: auto
     debug: false
@@ -62,11 +64,10 @@ fast:
     main_levels_list: None
     sub_levels_list: None
     headphones_levels_list: None
-    link_sub_to_main: true
+    link_sub_to_main: false
     link_headphones_to_main: false
     headphones_level: headphones
     mute_speakers_with_headphones: true
-
 # ------------------------------------------------------------
 # VIRTUAL PLATFORM START ACTIVE SWITCHES
 # ------------------------------------------------------------
@@ -364,11 +365,11 @@ variable_player:
   increase_sub_volume:
     fast_audio_sub_volume:
       action: add_machine
-      int: 30
+      int: 1
   decrease_sub_volume:
     fast_audio_sub_volume:
       action: add_machine
-      int: -10
+      int: -1
   increase_headphones_volume:
     fast_audio_headphones_volume:
       action: add_machine
