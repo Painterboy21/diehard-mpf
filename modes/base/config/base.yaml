@@ -9,6 +9,7 @@
 #   - Runs base ball saves, base music, base slide, and playfield effects.
 #   - Stops base music and slide when villain/multiball/Ambush modes take over.
 #   - Restores completed villain and multiball inserts.
+#   - Plays VPW-style Player 2/3/4 added sound and posts Godot turn screen events.
 # ------------------------------------------------------------
 mode:
   start_events: ball_started
@@ -81,7 +82,8 @@ ball_saves:
 # EVENT PLAYER
 # ------------------------------------------------------------
 # Handles base playfield events, ball save feedback, air duct
-# feedback, stopping base music, and resuming base music.
+# feedback, player added / turn screen events, stopping base music,
+# and resuming base music.
 # ------------------------------------------------------------
 event_player:
   s_popbumper_left_active:
@@ -101,6 +103,25 @@ event_player:
   s_air_duct_active:
     - show_airduct
     - show_airduct2
+
+  # Player added / turn screen events for Godot.
+  # Player 2/3/4 added can show "PLAYER X ADDED".
+  # Player turn events can show "PLAYER X'S TURN".
+  player_added{num==2}:
+    - player_2_added
+  player_added{num==3}:
+    - player_3_added
+  player_added{num==4}:
+    - player_4_added
+  player_turn_started{number==1}:
+    - show_player_1_turn
+  player_turn_started{number==2}:
+    - show_player_2_turn
+  player_turn_started{number==3}:
+    - show_player_3_turn
+  player_turn_started{number==4}:
+    - show_player_4_turn
+
   villain_mode_started:
     - stop_base_music
   start_airplane_multiball:
@@ -641,7 +662,8 @@ slide_player:
 # ------------------------------------------------------------
 # SOUND PLAYER
 # ------------------------------------------------------------
-# Base music, base sound effects, and stop base music event.
+# Base music, base sound effects, player added sound,
+# and stop base music event.
 # ------------------------------------------------------------
 sound_player:
   gameplay_music_1:
@@ -660,6 +682,18 @@ sound_player:
     gameplay_music_battle:
       key: main_snd_music
       action: play
+
+  # VPW-style sound when Player 2/3/4 is added.
+  player_added{num==2}:
+    DHYippee_Ki_Yay:
+      action: play
+  player_added{num==3}:
+    DHYippee_Ki_Yay:
+      action: play
+  player_added{num==4}:
+    DHYippee_Ki_Yay:
+      action: play
+
   stop_base_music:
     gameplay_music_beethoven:
       key: main_snd_music

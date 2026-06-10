@@ -44,7 +44,7 @@ fast:
       cab:
         model: FP-EXP-0081
 
-fast:
+
   aud:
     port: auto
     debug: false
