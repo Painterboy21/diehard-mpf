@@ -4,7 +4,7 @@
 # ATTRACT
 # ------------------------------------------------------------
 # What this mode does:
-#   - Starts when the game ends or reset completes.
+#   - Starts when the game ends, reset completes, or service mode exits.
 #   - Stops when a game starts or service mode opens.
 #   - Plays the main attract slide.
 #   - Runs the attract light show and start button flash.
@@ -16,6 +16,8 @@ mode:
   start_events:
     - game_ended
     - reset_complete
+    - service_mode_exited
+    - mode_service_stopped
   stop_events:
     - game_start
     - service_mode_entered
