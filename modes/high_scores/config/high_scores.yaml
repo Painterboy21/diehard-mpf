@@ -53,8 +53,8 @@ event_player:
 #
 # machine_record_initials_score:
 #   Hidden/local trigger category.
-#   This lets Loop Champion, Multiball Hero, or Villain MVP open
-#   the normal initials screen without touching the score top 3.
+#   This still lets Loop Champion, Multiball Hero, Villain MVP,
+#   or iScored force the normal initials screen.
 # ------------------------------------------------------------
 high_score:
   _overwrite: true
@@ -78,16 +78,25 @@ high_score:
   award_slide_display_time: 3000ms
 
 # ------------------------------------------------------------
-# SLIDES
+# SLIDE PLAYER
 # ------------------------------------------------------------
-# Plays the Godot initials-entry slide and award-display slide.
+# Initials screen always still shows.
+#
+# Award screen ONLY shows for the real score category:
+#   - YIPPIE KI YAY CHAMPION
+#   - DETECTIVE LIEUTENANT
+#   - BEAT COP
+#
+# The hidden machine_record_initials_score category still saves initials,
+# iScored, and machine records, but it does not play the award slide.
 # ------------------------------------------------------------
 slide_player:
   high_score_enter_initials:
     high_score:
       action: play
       expire: 0s
-  high_score_award_display:
+
+  high_score_award_display{category_name=="score"}:
     high_score_award:
       action: play
       expire: 0s

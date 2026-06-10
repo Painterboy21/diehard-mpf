@@ -16,7 +16,7 @@
 [ext_resource type="Script" uid="uid://bh8uniugrpk3c" path="res://slides/holly_letters.gd" id="10_4yxvp"]
 [ext_resource type="Texture2D" uid="uid://c0tj7020wfqu7" path="res://godot-media/images/H.png" id="10_s2a5r"]
 [ext_resource type="Texture2D" uid="uid://binlmwaj3sxtd" path="res://godot-media/images/O.png" id="11_4yxvp"]
-[ext_resource type="Script" uid="uid://dinegb8scbud" path="res://slides/score-overlay-manager.gd" id="11_gjonj"]
+[ext_resource type="Script" path="res://slides/score-overlay-manager.gd" id="11_gjonj"]
 [ext_resource type="Texture2D" uid="uid://bo1y2txk5qfxf" path="res://godot-media/images/L.png" id="12_dm14r"]
 [ext_resource type="Texture2D" uid="uid://bgrlutxjsatig" path="res://godot-media/images/player 2 overlay.png" id="13_77bry"]
 [ext_resource type="Texture2D" uid="uid://bs0sdjldfa8j4" path="res://godot-media/images/Y.png" id="13_735fb"]
@@ -134,7 +134,9 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 296.0
 offset_top = -292.66998
+offset_right = -62.0
 offset_bottom = -212.66998
 grow_horizontal = 2
 grow_vertical = 0
@@ -147,7 +149,30 @@ clip_text = true
 script = ExtResource("2_06ewq")
 variable_name = "ball"
 comma_separate = true
-template_string = "Ball %s"
+template_string = "BALL %s"
+
+[node name="current_player_number" type="Label" parent="Control2" unique_id=1525190024]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 667.0
+offset_top = -292.66998
+offset_right = -855.0
+offset_bottom = -212.66998
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = ExtResource("7_smx5b")
+text = "PLAYER 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("2_06ewq")
+variable_name = "number"
+comma_separate = true
+template_string = "PLAYER %s"
 
 [node name="Control" type="Control" parent="." unique_id=526275576]
 layout_mode = 1

@@ -7,6 +7,7 @@ ratio = 6.0
 sidechain = &"voice"
 
 [resource]
+bus/0/bypass_fx = true
 bus/1/name = &"music"
 bus/1/solo = false
 bus/1/mute = false
@@ -19,7 +20,7 @@ bus/2/name = &"effects"
 bus/2/solo = false
 bus/2/mute = false
 bus/2/bypass_fx = false
-bus/2/volume_db = -0.13049698
+bus/2/volume_db = 1.4582329
 bus/2/send = &"Master"
 bus/3/name = &"voice"
 bus/3/solo = false

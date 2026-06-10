@@ -104,6 +104,14 @@ event_player:
     - show_airduct
     - show_airduct2
 
+  # Drop target hit sound trigger.
+  s_drop_target_1_active:
+    - drop_target_hit
+  s_drop_target_2_active:
+    - drop_target_hit
+  s_drop_target_3_active:
+    - drop_target_hit
+
   # Player added / turn screen events for Godot.
   # Player 2/3/4 added can show "PLAYER X ADDED".
   # Player turn events can show "PLAYER X'S TURN".
@@ -422,6 +430,12 @@ random_event_player:
       inlanerollover2_fx: 1
       inlanerollover3_fx: 1
     scope: player
+  drop_target_hit:
+    events:
+      drop_target_sound_1: 1
+      drop_target_sound_2: 1
+      drop_target_sound_3: 1
+    scope: player
 
 # ------------------------------------------------------------
 # TIMERS
@@ -663,7 +677,7 @@ slide_player:
 # SOUND PLAYER
 # ------------------------------------------------------------
 # Base music, base sound effects, player added sound,
-# and stop base music event.
+# captive ball hit sound, drop target hit sounds, and stop base music event.
 # ------------------------------------------------------------
 sound_player:
   gameplay_music_1:
@@ -707,6 +721,7 @@ sound_player:
     gameplay_music_battle:
       key: main_snd_music
       action: stop
+
   s_left_sling_active:
     sling_1:
       action: play
@@ -719,6 +734,27 @@ sound_player:
   flash_right_sling_blue:
     sling_1:
       action: play
+
+  # Captive ball hit sound.
+  s_captiveball_active:
+    dh_captiveballhit1:
+      action: play
+      volume: 1.0
+
+  # Drop target hit sounds.
+  drop_target_sound_1:
+    dh_droptarget1:
+      action: play
+      volume: 1.0
+  drop_target_sound_2:
+    dh_droptarget2:
+      action: play
+      volume: 1.0
+  drop_target_sound_3:
+    dh_droptarget3:
+      action: play
+      volume: 1.0
+
   spinner_fx1:
     spinner_fx1:
       action: play

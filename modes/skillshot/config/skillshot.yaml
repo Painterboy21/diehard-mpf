@@ -10,32 +10,58 @@ mode:
 # skillshot_hit_fast comes from Godot immediately when skillshot is made.
 # skillshot_hit still comes later after the reward video for normal scoring.
 # Captive ball collects Super Skill Shot while available.
-# Widget now appears straight away on Super Skill Shot collect.
+# Player / ball text is handled directly in Godot by Mobiler.gd.
+# clear_skillshot_player_ball tells Godot to hide PLAYER X BALL X text.
 # ---------------------------------------------------------------------
 event_player:
   mode_skillshot_started:
     - reset_super_skillshot
+
   s_plunger_key_active:
     - skillshot_check
   s_fire_active:
     - skillshot_check
+
   skillshot_hit_fast:
     - light_super_skillshot
+
+  skillshot_hit:
+    - clear_skillshot_player_ball
+
   skillshot_hit.1{current_player.ball==1}:
     - ball_save_one
   skillshot_hit.1{current_player.ball==2}:
     - ball_save_two
   skillshot_hit.1{current_player.ball==3}:
     - ball_save_three
+
   skillshot_miss:
+    - clear_skillshot_player_ball
     - end_skillshot
+
+  end_skillshot:
+    - clear_skillshot_player_ball
+
+  mode_skillshot_stopping:
+    - clear_skillshot_player_ball
+
+  ball_will_end:
+    - clear_skillshot_player_ball
+
+  ball_ended:
+    - clear_skillshot_player_ball
+
   s_captiveball_active{current_player.super_skillshot_available==1 and current_player.super_skillshot_awarded==0}:
     - super_skillshot_award
+
   super_skillshot_award:
+    - clear_skillshot_player_ball
     - villain_start_lit
     - super_skillshot_full_bullets
     - end_skillshot|6s
+
   timer_super_skillshot_timer_complete{current_player.super_skillshot_awarded==0}:
+    - clear_skillshot_player_ball
     - end_skillshot
 
 # ---------------------------------------------------------------------
@@ -79,6 +105,7 @@ show_player:
       speed: 8
       show_tokens:
         captive: l52
+
   super_skillshot_award:
     super_skillshot_captive_ready:
       key: super_skillshot_captive_ready
@@ -91,6 +118,7 @@ show_player:
       key: super_skillshot_collected_crazy
       speed: 1
       loops: 2
+
   mode_skillshot_stopping:
     super_skillshot_captive_ready:
       key: super_skillshot_captive_ready
@@ -105,6 +133,7 @@ show_player:
 # ---------------------------------------------------------------------
 # SLIDE PLAYER
 # Keeps your normal skillshot slide/video until Godot posts skillshot_hit.
+# Player / ball text is handled in Godot, not MPF widgets.
 # Super Skill Shot does not use a slide.
 # ---------------------------------------------------------------------
 slide_player:
@@ -112,14 +141,17 @@ slide_player:
     skillshot:
       action: play
       expire: 0s
+
   skillshot_hit:
     skillshot:
       action: remove
       expire: 0s
+
   skillshot_miss:
     skillshot:
       action: remove
       expire: 0s
+
   mode_skillshot_stopping:
     skillshot:
       action: remove
@@ -134,6 +166,7 @@ widget_player:
     super_skill_shot:
       action: play
       expire: 6s
+
   mode_skillshot_stopping:
     super_skill_shot:
       action: remove
@@ -152,10 +185,12 @@ variable_player:
     super_skillshot_awarded:
       action: set
       int: 0
+
   skillshot_hit_fast:
     super_skillshot_available:
       action: set
       int: 1
+
   super_skillshot_award:
     score:
       action: add
@@ -169,14 +204,17 @@ variable_player:
     bullet_hits:
       action: set
       int: 15
+
   ball_save_one:
     score:
       action: add
       int: 1000000
+
   ball_save_two:
     score:
       action: add
       int: 2000000
+
   ball_save_three:
     score:
       action: add

@@ -121,6 +121,35 @@ event_player:
     - set_start_villain_after_extra_ball
 
 # ------------------------------------------------------------
+# RANDOM EVENT PLAYER
+# Randomly chooses one of two VPW-style bullet collect sounds
+# each time a new unique bullet shot is collected.
+# ------------------------------------------------------------
+random_event_player:
+  bullet_new_unique_shot:
+    events:
+      bullet_collected_sound_1: 1
+      bullet_collected_sound_2: 1
+    scope: player
+
+# ------------------------------------------------------------
+# SOUND PLAYER
+# Plays the chosen bullet collect sound.
+# Sound files:
+#   dh_bulletcollected1.wav
+#   dh_bulletcollected2.wav
+# ------------------------------------------------------------
+sound_player:
+  bullet_collected_sound_1:
+    dh_bulletcollected1:
+      action: play
+      volume: 1.0
+  bullet_collected_sound_2:
+    dh_bulletcollected2:
+      action: play
+      volume: 1.0
+
+# ------------------------------------------------------------
 # SHOTS
 # Five unique bullet shots.
 # ------------------------------------------------------------
