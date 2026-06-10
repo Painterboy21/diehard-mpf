@@ -175,6 +175,7 @@ flippers:
       - service_mode_entered
       - disable_flippers
       - flipper_off
+
 # ------------------------------------------------------------
 # DROP TARGETS
 # ------------------------------------------------------------
@@ -211,19 +212,25 @@ drop_target_banks:
 # ------------------------------------------------------------
 # AUTOFIRE COILS
 # ------------------------------------------------------------
+# These devices can safely pulse during ball search.
+# ------------------------------------------------------------
 autofire_coils:
   left_sling:
     coil: c_left_sling
     switch: s_left_sling
+    ball_search_order: 40
   right_sling:
     coil: c_right_sling
     switch: s_right_sling
+    ball_search_order: 50
   popbumper_left:
     coil: c_popbumper_left
     switch: s_popbumper_left
+    ball_search_order: 60
   popbumper_right:
     coil: c_popbumper_right
     switch: s_popbumper_right
+    ball_search_order: 70
 
 # ------------------------------------------------------------
 # MAGNETS
@@ -319,7 +326,6 @@ modes:
   - iscored_sync
   - extra_ball
 
-
 # ------------------------------------------------------------
 # MACHINE / GAME
 # ------------------------------------------------------------
@@ -333,10 +339,14 @@ game:
 # ------------------------------------------------------------
 # PLAYFIELDS
 # ------------------------------------------------------------
+# Enables MPF ball search on the main playfield.
+# Keep this simple first so MPF definitely starts the search.
+# ------------------------------------------------------------
 playfields:
   playfield:
     default_source_device: bd_plunger
     tags: default
+    enable_ball_search: true
 
 # ------------------------------------------------------------
 # VARIABLE PLAYER
