@@ -1,5 +1,12 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# MODE
+# ------------------------------------------------------------
+# Hans difficulty select.
+# Lets player choose Die Hard or Die Harder.
+# Plays Hans intro before starting the real villain mode.
+# ------------------------------------------------------------
 mode:
   start_events: start_hans_difficulty_select
   stop_events:
@@ -8,6 +15,11 @@ mode:
   priority: 310
   code: mpf.modes.carousel.code.carousel.Carousel
 
+# ------------------------------------------------------------
+# MODE SETTINGS
+# ------------------------------------------------------------
+# Carousel items and controls.
+# ------------------------------------------------------------
 mode_settings:
   selectable_items:
     - hans_die_hard
@@ -23,6 +35,12 @@ mode_settings:
     - s_fire_active
     - s_actionbtn_active
 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# ------------------------------------------------------------
+# Runs Hans selected flash and orange insert spin.
+# Stops both when difficulty is chosen or mode stops.
+# ------------------------------------------------------------
 show_player:
   mode_hans_difficulty_select_started:
     flash_color:
@@ -55,6 +73,12 @@ show_player:
     InsertsVillainSpinOrange:
       action: stop
 
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# ------------------------------------------------------------
+# Shows the difficulty select, then plays the Hans intro video.
+# Intro is timed to 4.5 seconds.
+# ------------------------------------------------------------
 slide_player:
   mode_hans_difficulty_select_started:
     hans_difficulty_select:
@@ -64,34 +88,44 @@ slide_player:
   play_hans_intro:
     hans_intro:
       action: play
-      expire: 5s
+      expire: 4.5s
 
   hide_hans_difficulty_select:
     hans_difficulty_select:
       action: remove
 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Starts Hans after the 4.5-second intro.
+# VUK releases just after the villain mode starts.
+# ------------------------------------------------------------
 event_player:
   carousel_item_selected{carousel=="hans_difficulty_select" and item=="hans_die_hard" and current_player.hans_complete!=1}:
     - set_difficulty_die_hard
     - hide_hans_difficulty_select
     - play_hans_intro
-    - hans_mode_start_warning|2.5s
-    - start_hans_diehard|3s
-    - villain_intro_finished|3.1s
+    - hans_mode_start_warning|3s
+    - start_hans_diehard|3.5s
+    - villain_intro_finished|3.6s
 
   carousel_item_selected{carousel=="hans_difficulty_select" and item=="hans_die_harder" and current_player.hans_complete!=1}:
     - set_difficulty_die_harder
     - hide_hans_difficulty_select
     - play_hans_intro
-    - hans_mode_start_warning|2.5s
-    - start_hans_dieharder|3s
-    - villain_intro_finished|3.1s
-
+    - hans_mode_start_warning|3s
+    - start_hans_dieharder|3.5s
+    - villain_intro_finished|3.6s
 
   villain_intro_finished:
     - release_villain_select_vuk
     - villain_selection_complete|100ms
 
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+# Stores selected difficulty and tracks difficulty select state.
+# ------------------------------------------------------------
 variable_player:
   set_difficulty_die_hard:
     selected_diehard_mode:
@@ -113,7 +147,19 @@ variable_player:
       action: set
       int: 0
 
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# ------------------------------------------------------------
+# Turns off GI/spots during difficulty select.
+# Flashes the Hans flasher shortly before mode start.
+# ------------------------------------------------------------
 light_player:
+  mode_hans_difficulty_select_started:
+    GI:
+      color: 000000
+    SPOTS:
+      color: 000000
+
   hans_mode_start_warning:
     f142:
       color: 00ff00
@@ -124,8 +170,3 @@ light_player:
 
   start_hans_dieharder:
     f142: off
-
-    GI:
-      color: 000000
-    SPOTS:
-      color: 000000

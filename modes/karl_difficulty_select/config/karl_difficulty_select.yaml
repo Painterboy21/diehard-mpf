@@ -119,12 +119,12 @@ event_player:
   carousel_item_selected{carousel=="karl_difficulty_select" and item=="karl_die_hard"}:
     - set_difficulty_die_hard
     - play_karl_intro
-    - start_karl_diehard_after_intro|3s
+    - start_karl_diehard_after_intro|4.5s
 
   carousel_item_selected{carousel=="karl_difficulty_select" and item=="karl_die_harder"}:
     - set_difficulty_die_harder
     - play_karl_intro
-    - start_karl_dieharder_after_intro|3s
+    - start_karl_dieharder_after_intro|4.5s
 
   start_karl_diehard_after_intro:
     - reset_karl_result_state
@@ -137,7 +137,6 @@ event_player:
     - release_villain_select_vuk
     - start_karl_dieharder
     - villain_selection_complete|100ms
-
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # Stores selected difficulty and clears Karl result variables

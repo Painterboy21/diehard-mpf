@@ -61,8 +61,7 @@ timers:
 # pop bumpers, resets the drop bank, and handles timer expiry.
 # ------------------------------------------------------------
 event_player:
-  mode_playfield_x_started:
-    - reset_drop_targets_after_delay|500ms
+
 
   drop_target_bank1_down{current_player.playfield_multiplier < current_player.playfield_x_max}:
     - pf_x_drop_1_lit
