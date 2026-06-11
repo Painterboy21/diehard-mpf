@@ -29,7 +29,7 @@ coils:
   # ------------------------------------------------------------
   c_left_flipper_main:
     number: d-3
-    default_pulse_ms: 26ms
+    default_pulse_ms: 28ms
 
   c_left_flipper_hold:
     number: d-2
@@ -45,7 +45,7 @@ coils:
 
   c_right_flipper_main:
     number: d-5
-    default_pulse_ms: 28ms
+    default_pulse_ms: 35ms
 
   c_right_flipper_hold:
     number: d-4
@@ -61,19 +61,21 @@ coils:
 
   c_trmagl:
     number: e-14
-    default_pulse_ms: 120ms
-    default_hold_power: 0.85
+    default_pulse_ms: 195ms
+    default_hold_power: 0.95
 
   # ------------------------------------------------------------
   # PLUNGER & TROUGH
   # ------------------------------------------------------------
+
   c_plunger:
     number: d-0
-    default_pulse_ms: 180ms
+    default_pulse_ms: 255ms
 
+    
   c_trough_eject:
     number: d-1
-    default_pulse_ms: 100ms
+    default_pulse_ms: 130ms
 
   # ------------------------------------------------------------
   # DROP TARGET RESETS

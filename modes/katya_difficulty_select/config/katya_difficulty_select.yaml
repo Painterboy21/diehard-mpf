@@ -78,16 +78,16 @@ event_player:
     - set_difficulty_die_hard
     - hide_katya_difficulty_select
     - play_katya_intro
-    - katya_mode_start_warning|2.5s
-    - start_katya_diehard|3s
-    - villain_intro_finished|3.1s
+    - katya_mode_start_warning|3s
+    - start_katya_diehard|3.5s
+    - villain_intro_finished|3.5s
   carousel_item_selected{carousel=="katya_difficulty_select" and item=="katya_die_harder" and current_player.katya_complete!=1}:
   - set_difficulty_die_harder
   - hide_katya_difficulty_select
   - play_katya_intro
-  - katya_mode_start_warning|2.5s
-  - start_katya_dieharder|3s
-  - villain_intro_finished|3.1s
+  - katya_mode_start_warning|3s
+  - start_katya_dieharder|3.5s
+  - villain_intro_finished|3.5s
 
 
   villain_intro_finished:

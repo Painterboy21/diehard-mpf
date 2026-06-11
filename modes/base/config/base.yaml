@@ -16,37 +16,28 @@ mode:
   stop_events: ball_ended
   priority: 100
 
+
 # ------------------------------------------------------------
 # BALL HOLDS
 # ------------------------------------------------------------
 # Holds the ball at the right VUK when villain start is lit.
-# Releases when a villain mode starts, ball ends, tilt happens,
-# or villain select releases the VUK.
+# The ball is NOT released when the villain mode starts.
+# It only releases after the intro/Godot flow posts
+# release_villain_select_vuk.
 # ------------------------------------------------------------
 ball_holds:
   villain_hold:
     enable_events: villain_start_lit
     disable_events:
       - ball_ended
-      - villain_mode_started
+      - tilt
+      - release_villain_select_vuk
     hold_devices: rightvuk
     balls_to_hold: 1
     release_all_events:
       - tilt
       - ball_ended
-      - villain_mode_started
       - release_villain_select_vuk
-      - start_hans_diehard
-      - start_hans_dieharder
-      - start_katya_diehard
-      - start_katya_dieharder
-      - start_karl_diehard
-      - start_karl_dieharder
-      - start_simon_diehard
-      - start_simon_dieharder
-      - start_col_stuart_diehard
-      - start_col_stuart_dieharder
-
 # ------------------------------------------------------------
 # BALL SAVES
 # ------------------------------------------------------------
@@ -103,7 +94,6 @@ event_player:
   s_air_duct_active:
     - show_airduct
     - show_airduct2
-
   # Drop target hit sound trigger.
   s_drop_target_1_active:
     - drop_target_hit
@@ -111,7 +101,9 @@ event_player:
     - drop_target_hit
   s_drop_target_3_active:
     - drop_target_hit
-
+  # Start villain select only after the right VUK hold confirms full.
+  ball_hold_villain_hold_full:
+    - start_villain_select
   # Player added / turn screen events for Godot.
   # Player 2/3/4 added can show "PLAYER X ADDED".
   # Player turn events can show "PLAYER X'S TURN".
@@ -129,7 +121,6 @@ event_player:
     - show_player_3_turn
   player_turn_started{number==4}:
     - show_player_4_turn
-
   villain_mode_started:
     - stop_base_music
   start_airplane_multiball:
@@ -200,7 +191,6 @@ event_player:
     - resume_base_music|5s
   multiball_central_park_ended:
     - resume_base_music|5s
-
   # Full loop streak tracking.
   right_full_loop_hit:
     - full_loop_hit

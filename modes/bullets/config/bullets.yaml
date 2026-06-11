@@ -10,6 +10,9 @@
 # If Extra Ball is lit/owed/pending, bullets does not start villain
 # select directly. Extra Ball mode starts villain select after its
 # award delay.
+#
+# If the player drains after qualifying villain start, this mode
+# restores the count display and re-lights villain start on the next ball.
 # ------------------------------------------------------------
 mode:
   start_events:
@@ -43,7 +46,9 @@ mode:
     - multiball_nakatomi_started
     - multiball_central_park_started
     - multiball_airplane_started
-    - start_ambush
+    - start_ambush_from_vuk_hold
+    - start_ambush_from_mystery
+    - mode_ambush_started
     - start_hans_diehard
     - start_hans_dieharder
     - start_katya_diehard
@@ -59,11 +64,23 @@ mode:
 # ------------------------------------------------------------
 # EVENT PLAYER
 # Checks VPW minimum bullet count, locks unique bullet shots,
-# lights villain start, and starts villain select safely.
+# lights villain start, restores ready light after ball drain,
+# and starts villain select safely.
 # ------------------------------------------------------------
 event_player:
   mode_bullets_started:
     - bullets_check_vpw_minimum
+    - bullets_force_bullet_count_refresh|250ms
+    - bullets_restore_villain_start_ready|750ms
+
+  bullets_force_bullet_count_refresh{current_player.bullet_hits >= 15}:
+    - bullets_save_count_for_refresh
+    - bullets_temp_count_refresh_low|50ms
+    - bullets_restore_count_after_refresh|150ms
+
+  bullets_restore_villain_start_ready{current_player.bullet_hits >= 15 or current_player.villain_start_ready == 1}:
+    - villain_start_lit
+
   bullets_check_vpw_minimum{current_player.bullet_hits < 9 and current_player.modes_complete==0}:
     - bullets_set_minimum_9
   bullets_check_vpw_minimum{current_player.bullet_hits < 7 and current_player.modes_complete==1}:
@@ -100,24 +117,21 @@ event_player:
     - bullets_combo_max
     - villain_start_lit
     - reset_bullets|100ms
+
   player_bullet_hits{value>=15}:
     - villain_start_lit
 
   # ------------------------------------------------------------
   # VILLAIN VUK START
-  # Normal:
-  #   Villain lit + VUK = start villain select.
-  #
-  # Extra Ball conflict:
-  #   If Extra Ball is lit/owed/pending, do not start villain here.
-  #   Extra Ball mode will start villain select after its award delay.
+  # Only starts villain select if villain start is actually ready.
+  # Extra Ball still gets first priority.
   # ------------------------------------------------------------
-  ball_hold_villain_hold_full{current_player.extra_balls_lit != 1 and current_player.extra_ball_owed != 1 and current_player.start_villain_after_extra_ball != 1}:
+  ball_hold_villain_hold_full{current_player.villain_start_ready == 1 and current_player.extra_balls_lit != 1 and current_player.extra_ball_owed != 1 and current_player.start_villain_after_extra_ball != 1}:
     - start_villain_select
     - reset_bullet_total
     - reset_bullets
 
-  ball_hold_villain_hold_full{current_player.extra_balls_lit == 1 or current_player.extra_ball_owed == 1 or current_player.start_villain_after_extra_ball == 1}:
+  ball_hold_villain_hold_full{current_player.villain_start_ready == 1 and (current_player.extra_balls_lit == 1 or current_player.extra_ball_owed == 1 or current_player.start_villain_after_extra_ball == 1)}:
     - set_start_villain_after_extra_ball
 
 # ------------------------------------------------------------
@@ -325,7 +339,7 @@ timers:
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # Tracks bullet total, combo hits, EOB bonus, VPW minimums,
-# and villain-start-ready latch.
+# display refresh, and villain-start-ready latch.
 # ------------------------------------------------------------
 variable_player:
   bullet_new_unique_shot:
@@ -351,9 +365,27 @@ variable_player:
     bullet_combo_hits:
       action: set
       int: 0
+    bullet_hits_restore_value:
+      action: set
+      int: 0
     villain_start_ready:
       action: set
       int: 0
+
+  bullets_save_count_for_refresh:
+    bullet_hits_restore_value:
+      action: set
+      int: "current_player.bullet_hits"
+
+  bullets_temp_count_refresh_low:
+    bullet_hits:
+      action: set
+      int: 14
+
+  bullets_restore_count_after_refresh:
+    bullet_hits:
+      action: set
+      int: "current_player.bullet_hits_restore_value"
 
   bullets_set_minimum_9:
     bullet_hits:
