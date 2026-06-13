@@ -17,14 +17,17 @@ mode:
 # ------------------------------------------------------------
 # BALL HOLDS
 # ------------------------------------------------------------
-# Holds the ball at the right VUK when villain start is lit.
-# The ball is NOT released when the villain mode starts.
+# Holds the ball at the right VUK when villain start is lit
+# or when Yippee Ki Yay Wizard is ready.
+# The ball is NOT released when the villain/wizard start event posts.
 # It only releases after the intro/Godot flow posts
 # release_villain_select_vuk.
 # ------------------------------------------------------------
 ball_holds:
   villain_hold:
-    enable_events: villain_start_lit
+    enable_events:
+      - villain_start_lit
+      - yippee_ki_yay_wizard_ready
     disable_events:
       - ball_ended
       - tilt
