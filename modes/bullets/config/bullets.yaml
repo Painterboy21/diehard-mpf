@@ -42,6 +42,8 @@ mode:
     - col_stuart_dieharder_failed
   stop_events:
     - ball_ended
+    - start_yippee_ki_yay_wizard
+    - mode_yippee_ki_yay_wizard_started
     - multiball_nakatomi_started
     - multiball_central_park_started
     - multiball_airplane_started

@@ -1,0 +1,256 @@
+#config_version=6
+# ------------------------------------------------------------
+# YIPPEE KI YAY WIZARD MODE
+# ------------------------------------------------------------
+# What this mode does:
+#   - Starts after wizard_check finishes the intro and releases the VUK.
+#   - Runs Wizard Phase 1.
+#   - Starts a 3-ball wizard multiball.
+#   - Starts a 60 second VPW-style ball save.
+#   - Shows the main yippee_ki_yay_wizard Godot scene.
+#   - Posts yippee_ki_yay_phase_1_play_background for the Phase 1 DH1 background video.
+#   - Closes the Nakatomi lock/release gate so balls are held in the lock trap.
+#   - Opens only the Nakatomi entrance gate so balls can enter the lock trap.
+#   - Leaves the entrance gate open until all 3 balls are locked.
+#   - Uses tower_vuk for the current Phase 1 lock count flow.
+#   - Pulses c_towervuk_eject after each counted lock so the ball moves onward.
+#   - When 3 balls are locked, Phase 1 completes.
+#   - Closes the entrance gate and posts yippee_ki_yay_phase_1_play_kill.
+#   - Godot should post yippee_ki_yay_phase_1_kill_finished when the kill video ends.
+#   - Then Phase 2 starts.
+# ------------------------------------------------------------
+mode:
+  start_events:
+    - start_yippee_ki_yay_wizard
+  stop_events:
+    - ball_ending
+    - yippee_ki_yay_wizard_complete
+    - yippee_ki_yay_wizard_failed
+  priority: 600
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Starts Phase 1 shortly after the mode starts.
+# The Nakatomi lock/release gate is closed so balls stay trapped.
+# The Nakatomi entrance gate opens so balls can enter the trap.
+# The entrance gate stays open until all 3 wizard balls are locked.
+# ------------------------------------------------------------
+event_player:
+  mode_yippee_ki_yay_wizard_started:
+    - yippee_ki_yay_wizard_phase_1_start|500ms
+  yippee_ki_yay_wizard_phase_1_start:
+    - yippee_ki_yay_phase_1_play_background
+    - nakatomi_lock_close
+    - nakatomi_entrance_lock_open
+    - enable_yippee_ki_yay_phase_1_lock
+    - start_yippee_ki_yay_multiball
+    - enable_yippee_ki_yay_phase_1_ball_save
+  multiball_lock_yippee_ki_yay_phase_1_locked_ball:
+    - yippee_ki_yay_phase_1_ball_locked
+    - yippee_ki_yay_phase_1_eject_locked_ball|500ms
+  multiball_lock_yippee_ki_yay_phase_1_full:
+    - yippee_ki_yay_wizard_phase_1_complete
+  yippee_ki_yay_wizard_phase_1_complete:
+    - disable_yippee_ki_yay_phase_1_ball_save
+    - nakatomi_entrance_lock_close
+    - yippee_ki_yay_phase_1_play_kill
+  yippee_ki_yay_phase_1_kill_finished:
+    - yippee_ki_yay_wizard_phase_2_start
+  mode_yippee_ki_yay_wizard_stopping:
+    - disable_yippee_ki_yay_phase_1_ball_save
+    - nakatomi_entrance_lock_close
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+# Stores wizard state and Phase 1 progress.
+# The multiball lock itself controls true completion.
+# yippee_ki_yay_phase_1_locks is used for display/progress only.
+# ------------------------------------------------------------
+variable_player:
+  mode_yippee_ki_yay_wizard_started:
+    yippee_ki_yay_wizard_running:
+      action: set
+      int: 1
+    yippee_ki_yay_wizard_phase:
+      action: set
+      int: 1
+    yippee_ki_yay_phase_1_locks:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_complete:
+      action: set
+      int: 0
+  yippee_ki_yay_phase_1_ball_locked{current_player.yippee_ki_yay_phase_1_locks < 3}:
+    yippee_ki_yay_phase_1_locks:
+      action: add
+      int: 1
+  yippee_ki_yay_wizard_phase_1_complete:
+    yippee_ki_yay_phase_1_complete:
+      action: set
+      int: 1
+    yippee_ki_yay_wizard_phase:
+      action: set
+      int: 0
+  yippee_ki_yay_wizard_phase_2_start:
+    yippee_ki_yay_wizard_phase:
+      action: set
+      int: 2
+  mode_yippee_ki_yay_wizard_stopping:
+    yippee_ki_yay_wizard_running:
+      action: set
+      int: 0
+# ------------------------------------------------------------
+# MULTIBALLS
+# ------------------------------------------------------------
+# Starts the 3-ball wizard multiball.
+# VPW Phase 1 is a 3-ball sequence where the player must lock
+# all 3 balls in the tower/Nakatomi lock path.
+# ------------------------------------------------------------
+multiballs:
+  yippee_ki_yay_multiball:
+    ball_count: 3
+    ball_count_type: total
+    shoot_again: 0s
+    start_events:
+      - start_yippee_ki_yay_multiball
+    stop_events:
+      - yippee_ki_yay_wizard_complete
+      - yippee_ki_yay_wizard_failed
+      - ball_ending
+# ------------------------------------------------------------
+# MULTIBALL LOCKS
+# ------------------------------------------------------------
+# Phase 1 physical lock flow.
+# The entrance gate stays open until all 3 balls are locked.
+# The Nakatomi lock/release gate is kept closed from Phase 1 start
+# so the balls remain trapped.
+# ------------------------------------------------------------
+multiball_locks:
+  yippee_ki_yay_phase_1:
+    balls_to_lock: 3
+    lock_devices: tower_vuk
+    balls_to_replace: 0
+    enable_events:
+      - enable_yippee_ki_yay_phase_1_lock
+    disable_events:
+      - yippee_ki_yay_wizard_phase_1_complete
+      - yippee_ki_yay_wizard_failed
+      - ball_ending
+    locked_ball_counting_strategy: physical_only
+# ------------------------------------------------------------
+# BALL SAVES
+# ------------------------------------------------------------
+# VPW Phase 1 uses a 60 second ball save.
+# This is not a 145 second mode timer.
+# The background video can end/loop without failing the mode.
+# ------------------------------------------------------------
+ball_saves:
+  yippee_ki_yay_phase_1_ball_save:
+    active_time: 60s
+    hurry_up_time: 10s
+    grace_period: 2s
+    auto_launch: true
+    balls_to_save: -1
+    enable_events:
+      - enable_yippee_ki_yay_phase_1_ball_save
+    disable_events:
+      - disable_yippee_ki_yay_phase_1_ball_save
+      - yippee_ki_yay_wizard_phase_1_complete
+      - yippee_ki_yay_wizard_failed
+      - ball_ending
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# ------------------------------------------------------------
+# Shows the main wizard scene.
+# Godot handles the video changes inside this one scene:
+#   - yippee_ki_yay_phase_1_play_background
+#   - yippee_ki_yay_phase_1_play_kill
+#   - yippee_ki_yay_phase_1_kill_finished
+# ------------------------------------------------------------
+slide_player:
+  yippee_ki_yay_wizard_phase_1_start:
+    yippee_ki_yay_wizard:
+      action: play
+      expire: 0s
+  mode_yippee_ki_yay_wizard_stopping:
+    yippee_ki_yay_wizard:
+      action: remove
+# ------------------------------------------------------------
+# SHOW PLAYER
+# ------------------------------------------------------------
+# Phase 1 insert lights.
+# l8 is the centre Yippee Ki Yay insert.
+# l7 is the Nakatomi/tower lock prompt.
+# ------------------------------------------------------------
+show_player:
+  yippee_ki_yay_wizard_phase_1_start:
+    yippee_ki_yay_phase_1_l8_blue_flash:
+      key: yippee_ki_yay_phase_1_l8_blue_flash
+      priority: 3000
+      loops: -1
+    yippee_ki_yay_phase_1_tower_blue_flash:
+      key: yippee_ki_yay_phase_1_tower_blue_flash
+      priority: 3000
+      loops: -1
+  yippee_ki_yay_wizard_phase_1_complete:
+    yippee_ki_yay_phase_1_l8_blue_flash:
+      action: stop
+    yippee_ki_yay_phase_1_tower_blue_flash:
+      action: stop
+  mode_yippee_ki_yay_wizard_stopping:
+    yippee_ki_yay_phase_1_l8_blue_flash:
+      action: stop
+    yippee_ki_yay_phase_1_tower_blue_flash:
+      action: stop
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# ------------------------------------------------------------
+# Turns off Phase 1 lights when Phase 1 ends or the mode stops.
+# ------------------------------------------------------------
+light_player:
+  yippee_ki_yay_wizard_phase_1_complete:
+    l8:
+      color: off
+      priority: 5000
+    l7:
+      color: off
+      priority: 5000
+  mode_yippee_ki_yay_wizard_stopping:
+    l8:
+      color: off
+      priority: 5000
+    l7:
+      color: off
+      priority: 5000
+# ------------------------------------------------------------
+# COIL PLAYER
+# ------------------------------------------------------------
+# After MPF counts a wizard Phase 1 lock, pulse the tower VUK
+# so the ball moves onward into the physical lock path.
+# This matches the current working Nakatomi-style tower feed flow.
+# ------------------------------------------------------------
+coil_player:
+  yippee_ki_yay_phase_1_eject_locked_ball: c_towervuk_eject
+# ------------------------------------------------------------
+# SHOWS
+# ------------------------------------------------------------
+# Local Phase 1 blue flashes.
+# Keep only one copy of these show names in the project.
+# ------------------------------------------------------------
+shows:
+  yippee_ki_yay_phase_1_l8_blue_flash:
+    - time: 0
+      lights:
+        l8: 0000ff
+    - time: 250ms
+      lights:
+        l8: off
+    - time: 500ms
+  yippee_ki_yay_phase_1_tower_blue_flash:
+    - time: 0
+      lights:
+        l7: 0000ff
+    - time: 250ms
+      lights:
+        l7: off
+    - time: 500ms
