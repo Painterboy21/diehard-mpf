@@ -1,5 +1,4 @@
 #config_version=6
-
 # ------------------------------------------------------------
 # AIRPLANE MULTIBALL
 # ------------------------------------------------------------
@@ -19,7 +18,6 @@ mode:
     - ball_ended
     - multiball_airplane_ended
   priority: 150
-
 # ------------------------------------------------------------
 # LIGHT PLAYER
 # ------------------------------------------------------------
@@ -36,7 +34,6 @@ light_player:
       color: 969650
   airplane_disable_super_jackpot:
     l52: off
-
 # ------------------------------------------------------------
 # SHOWS
 # ------------------------------------------------------------
@@ -66,7 +63,6 @@ shows:
         c_captivetarget:
           pulse_ms: 50
     - duration: 70ms
-
 # ------------------------------------------------------------
 # SHOW PLAYER
 # ------------------------------------------------------------
@@ -108,7 +104,6 @@ show_player:
   airplane_disable_super_jackpot:
     airplane_super_red_flash:
       action: stop
-
 # ------------------------------------------------------------
 # EVENT PLAYER
 # ------------------------------------------------------------
@@ -120,69 +115,51 @@ event_player:
   mode_airplane_multiball_started:
     - airplane_start_multiball|1s
     - record_start_airplane_multiball_hero
-
   record_start_airplane_multiball_hero:
     record_start_multiball_hero:
       mode: AIRPLANE MULTIBALL
-
   multiball_airplane_started:
     - airplane_enable_captive_for_jackpot
-
   airplane_left_orbit_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
     - airplane_enable_captive_for_jackpot
-
   airplane_right_orbit_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
     - airplane_enable_captive_for_jackpot
-
   airplane_mid_orbit_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
     - airplane_enable_captive_for_jackpot
-
   airplane_air_duct_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
     - airplane_enable_captive_for_jackpot
-
   airplane_upper_pf_jackpot_hit{current_player.airplane_mb_stage==1 and device.counters.airplane_stage_1_jackpot_counter.value<5}:
     - airplane_enable_captive_for_jackpot
-
   airplane_left_orbit_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
     - airplane_enable_captive_for_jackpot
-
   airplane_right_orbit_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
     - airplane_enable_captive_for_jackpot
-
   airplane_mid_orbit_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
     - airplane_enable_captive_for_jackpot
-
   airplane_air_duct_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
     - airplane_enable_captive_for_jackpot
-
   airplane_upper_pf_jackpot_hit{current_player.airplane_mb_stage>=2 and device.counters.airplane_stage_2_jackpot_counter.value<8}:
     - airplane_enable_captive_for_jackpot
-
   airplane_super_jackpot_ready:
     - airplane_disable_jackpots
     - airplane_light_super_jackpot
-
   airplane_super_jackpot_hit{current_player.airplane_mb_stage==1}:
     - airplane_super_jackpot_score_stage_1
     - airplane_disable_super_jackpot
     - reset_airplane_stage_1_jackpot_counter
     - reset_airplane_stage_2_jackpot_counter
     - airplane_enable_captive_for_jackpot|100ms
-
   airplane_super_jackpot_hit{current_player.airplane_mb_stage>=2}:
     - airplane_super_jackpot_score_stage_2
     - airplane_disable_super_jackpot
     - reset_airplane_stage_2_jackpot_counter
     - airplane_enable_captive_for_jackpot|100ms
-
   multiball_airplane_ended:
     - count_airplane_for_extra_ball
     - record_finish_airplane_multiball_hero
-
   record_finish_airplane_multiball_hero:
     record_finish_multiball_hero:
       mode: AIRPLANE MULTIBALL
-
 # ------------------------------------------------------------
 # RANDOM EVENT PLAYER
 # ------------------------------------------------------------
@@ -198,7 +175,6 @@ random_event_player:
       - airplane_light_mid_orbit_jackpot
       - airplane_light_air_duct_jackpot
       - airplane_light_upper_pf_jackpot
-
 # ------------------------------------------------------------
 # SHOTS
 # ------------------------------------------------------------
@@ -278,7 +254,6 @@ shots:
       - airplane_disable_super_jackpot
     show_tokens:
       lights: l52
-
 # ------------------------------------------------------------
 # COUNTERS
 # ------------------------------------------------------------
@@ -314,7 +289,6 @@ counters:
     reset_events:
       - multiball_airplane_started
       - reset_airplane_stage_2_jackpot_counter
-
 # ------------------------------------------------------------
 # MULTIBALLS
 # ------------------------------------------------------------
@@ -331,7 +305,6 @@ multiballs:
     add_a_ball_events:
       - add_a_ball_in_multiball
     add_a_ball_shoot_again: 5s
-
 # ------------------------------------------------------------
 # WIDGET PLAYER
 # ------------------------------------------------------------
@@ -353,7 +326,6 @@ widget_player:
     airplane_super_jackpot:
       action: play
       expire: 3s
-
 # ------------------------------------------------------------
 # SLIDE PLAYER
 # ------------------------------------------------------------
@@ -384,7 +356,6 @@ slide_player:
     airplane_super_jackpot:
       action: play
       expire: 0s
-
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------
@@ -501,7 +472,6 @@ variable_player:
     last_jackpot_value:
       action: set
       int: "4000000 * current_player.playfield_multiplier"
-
 # ------------------------------------------------------------
 # SOUND PLAYER
 # ------------------------------------------------------------

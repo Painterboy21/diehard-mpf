@@ -1,0 +1,183 @@
+#config_version=6
+# ------------------------------------------------------------
+# WIZARD CHECK
+# ------------------------------------------------------------
+# What this mode does:
+#   - Runs during each ball.
+#   - Checks whether all five main villains have been completed.
+#   - Uses named villain complete variables instead of modes_complete.
+#   - Posts yippee_ki_yay_wizard_ready once all five are complete.
+#   - Uses l10, the same start light as villain select.
+#   - Starts Yippee Ki Yay Wizard from the villain VUK hold.
+#   - Wizard takes priority over normal villain select.
+#   - No slides are used in this check mode.
+#   - TEMP TEST: fakes all five villains complete shortly after mode start.
+# ------------------------------------------------------------
+mode:
+  start_events:
+    - ball_started
+  stop_events:
+    - ball_ending
+  priority: 165
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Checks wizard qualification on mode start and after any villain
+# completion event.
+# Starts wizard from the same VUK hold used by villain select.
+# TEMP TEST: mode start fakes all five villains complete for real-table testing.
+# Keep test_fake_all_villains_complete|2s until the wizard flow is finished.
+# ------------------------------------------------------------
+event_player:
+  mode_wizard_check_started:
+    - test_fake_all_villains_complete|2s
+    - check_yippee_ki_yay_wizard_ready|3s
+  hans_diehard_won_complete:
+    - check_yippee_ki_yay_wizard_ready|500ms
+  hans_dieharder_won_complete:
+    - check_yippee_ki_yay_wizard_ready|500ms
+  katya_completed:
+    - check_yippee_ki_yay_wizard_ready|500ms
+  katya_dieharder_completed:
+    - check_yippee_ki_yay_wizard_ready|500ms
+  karl_diehard_completed:
+    - check_yippee_ki_yay_wizard_ready|500ms
+  karl_dieharder_completed:
+    - check_yippee_ki_yay_wizard_ready|500ms
+  simon_completed:
+    - check_yippee_ki_yay_wizard_ready|500ms
+  simon_dieharder_completed:
+    - check_yippee_ki_yay_wizard_ready|500ms
+  col_stuart_diehard_completed:
+    - check_yippee_ki_yay_wizard_ready|500ms
+  col_stuart_dieharder_completed:
+    - check_yippee_ki_yay_wizard_ready|500ms
+  test_fake_all_villains_complete:
+    - check_yippee_ki_yay_wizard_ready|500ms
+  check_yippee_ki_yay_wizard_ready{current_player.hans_complete == 1 and current_player.katya_complete == 1 and current_player.karl_complete == 1 and current_player.simon_complete == 1 and current_player.col_stuart_complete == 1 and current_player.yippee_ki_yay_wizard_ready != 1}:
+    - yippee_ki_yay_wizard_ready
+  ball_hold_villain_hold_full{current_player.yippee_ki_yay_wizard_ready == 1 and current_player.yippee_ki_yay_wizard_started != 1}:
+    - start_yippee_ki_yay_wizard
+    - release_villain_select_vuk|500ms
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+# Stores wizard ready state once all five villains are complete.
+# Stores wizard started state so the VUK hold cannot double-start it.
+# TEMP TEST: test_fake_all_villains_complete sets all five villain complete vars.
+# ------------------------------------------------------------
+variable_player:
+  mode_wizard_check_started{current_player.yippee_ki_yay_wizard_ready == None}:
+    yippee_ki_yay_wizard_ready:
+      action: set
+      int: 0
+  mode_wizard_check_started{current_player.yippee_ki_yay_wizard_started == None}:
+    yippee_ki_yay_wizard_started:
+      action: set
+      int: 0
+  test_fake_all_villains_complete:
+    hans_complete:
+      action: set
+      int: 1
+    katya_complete:
+      action: set
+      int: 1
+    karl_complete:
+      action: set
+      int: 1
+    simon_complete:
+      action: set
+      int: 1
+    col_stuart_complete:
+      action: set
+      int: 1
+    yippee_ki_yay_wizard_ready:
+      action: set
+      int: 0
+    wizard_mode_ready:
+      action: set
+      int: 0
+    yippee_ki_yay_wizard_started:
+      action: set
+      int: 0
+  test_clear_wizard_fake:
+    hans_complete:
+      action: set
+      int: 0
+    katya_complete:
+      action: set
+      int: 0
+    karl_complete:
+      action: set
+      int: 0
+    simon_complete:
+      action: set
+      int: 0
+    col_stuart_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_wizard_ready:
+      action: set
+      int: 0
+    wizard_mode_ready:
+      action: set
+      int: 0
+    yippee_ki_yay_wizard_started:
+      action: set
+      int: 0
+    villain_start_ready:
+      action: set
+      int: 0
+  yippee_ki_yay_wizard_ready:
+    yippee_ki_yay_wizard_ready:
+      action: set
+      int: 1
+    wizard_mode_ready:
+      action: set
+      int: 1
+  start_yippee_ki_yay_wizard:
+    yippee_ki_yay_wizard_started:
+      action: set
+      int: 1
+    villain_start_ready:
+      action: set
+      int: 0
+# ------------------------------------------------------------
+# SHOW PLAYER
+# ------------------------------------------------------------
+# Uses l10, the same start light as villain select.
+# Wizard ready flashes red.
+# Wizard start stops the ready flash.
+# Temporary clear event also stops the ready flash.
+# ------------------------------------------------------------
+show_player:
+  yippee_ki_yay_wizard_ready:
+    flash_color:
+      key: yippee_ki_yay_wizard_ready_flash
+      priority: 2000
+      loops: -1
+      speed: 4
+      show_tokens:
+        lights: l10
+        color: ff0000
+  start_yippee_ki_yay_wizard:
+    yippee_ki_yay_wizard_ready_flash:
+      action: stop
+  test_clear_wizard_fake:
+    yippee_ki_yay_wizard_ready_flash:
+      action: stop
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# ------------------------------------------------------------
+# Only turns l10 off on wizard start or clear events.
+# No solid red test light here, so the wizard-ready flash can show properly.
+# ------------------------------------------------------------
+light_player:
+  start_yippee_ki_yay_wizard:
+    l10:
+      color: off
+      priority: 5000
+  test_clear_wizard_fake:
+    l10:
+      color: off
+      priority: 5000

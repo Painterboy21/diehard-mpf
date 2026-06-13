@@ -1,421 +1,308 @@
 #config_version=6
-
 # ------------------------------------------------------------
 # PLAYER VARS
 # Player-specific variables used across modes.
 # ------------------------------------------------------------
-
 player_vars:
-
   # ------------------------------------------------------------
   # GENERAL / GLOBAL
   # ------------------------------------------------------------
-
   mystery_hits_count:
     initial_value: 0
     value_type: int
-
   villain_select_running:
     initial_value: 0
     value_type: int
-
   villain_difficulty_select_running:
     initial_value: 0
     value_type: int
-
   tower_lock:
     initial_value: 0
     value_type: int
-
   modes_complete:
     initial_value: 0
     value_type: int
-
   mode_running:
     initial_value:
     value_type: str
-
   collected_bullets:
     initial_value: 0
     value_type: int
-
   time_ball_save:
     initial_value: 0
     value_type: int
-
   bonus_x_held:
     initial_value: 0
     value_type: int
-
   karl_bonus:
     initial_value: 0
     value_type: int
-
   stuart_bonus:
     initial_value: 0
     value_type: int
-
   point_multiplier:
     initial_value: 1
     value_type: int
-
   ambush:
     initial_value: 0
     value_type: int
-
   mystery_awarded_index:
     initial_value: 0
     value_type: int
-
   villains_completed:
     initial_value: 0
     value_type: int
-
-
   # ------------------------------------------------------------
   # SUPER JETS / SUPER SPINNERS
   # ------------------------------------------------------------
-
   super_jets:
     initial_value: 0
     value_type: int
-
   super_jets_goal:
     initial_value: 40
     value_type: int
-
   super_spinners:
     initial_value: 0
     value_type: int
-
-
   # ------------------------------------------------------------
   # BULLETS
   # ------------------------------------------------------------
-
   bullet_hits:
     initial_value: 0
     value_type: int
-
   bullet_combo_hits:
     initial_value: 0
     value_type: int
-
   shot_holly_h:
     initial_value: 0
     value_type: int
-
   shot_holly_o:
     initial_value: 0
     value_type: int
-
   shot_holly_l:
     initial_value: 0
     value_type: int
-
   shot_holly_l1:
     initial_value: 0
     value_type: int
-
   shot_holly_y:
     initial_value: 0
     value_type: int
-
-
   # ------------------------------------------------------------
   # EOB BONUS VALUES
   # ------------------------------------------------------------
-
   eob_bonus_bullet:
     initial_value: 0
     value_type: int
-
   eob_bonus_multiball:
     initial_value: 0
     value_type: int
-
   eob_bonus_ambush:
     initial_value: 0
     value_type: int
-
   eob_bonus_holly:
     initial_value: 0
     value_type: int
-
   eob_bonus_villains:
     initial_value: 0
     value_type: int
-
   eob_bonus_x:
     initial_value: 0
     value_type: int
-
-
   # ------------------------------------------------------------
   # NAKATOMI MULTIBALL
   # ------------------------------------------------------------
-
   ball_locking_nakatomi:
     initial_value: 0
     value_type: int
-
   nakatomi_balls_locked:
     initial_value: 0
     value_type: int
-
   nakatomi_mb_available:
     initial_value: 1
     value_type: int
-
   nakatomi_super_jackpot_collected:
     initial_value: 0
     value_type: int
-
   nakatomi_super_collected:
     initial_value: 0
     value_type: int
-
   played_nakatomi_multiball:
     initial_value: 0
     value_type: int
-
   jackpot_2mil:
     initial_value: 0
     value_type: int
-
   jackpot_20mil:
     initial_value: 0
     value_type: int
-
-
   # ------------------------------------------------------------
   # CENTRAL PARK MULTIBALL
   # ------------------------------------------------------------
-
   central_park_played:
     initial_value: 0
     value_type: int
-
   score_park_super_jackpot_hit:
     initial_value: 0
     value_type: int
-
   park_super_jackpot_available:
     initial_value: 0
     value_type: int
-
-
   # ------------------------------------------------------------
   # AIRPLANE MULTIBALL
   # ------------------------------------------------------------
-
   airplane_virtual_locks:
     initial_value: 0
     value_type: int
-
   airplane_lock_lit:
     initial_value: 0
     value_type: int
-
   airplane_mb_played:
     initial_value: 0
     value_type: int
-
   airplane_mb_stage:
     initial_value: 1
     value_type: int
-
   airplane_super_jackpot_available:
     initial_value: 0
     value_type: int
-
   last_jackpot_value:
     initial_value: 0
     value_type: int
-
   airplane_mb_stage2:
     initial_value: 0
     value_type: int
-
-
   # ------------------------------------------------------------
   # MYSTERY
   # ------------------------------------------------------------
-
   mystery_add_a_ball_airplane_awarded:
     initial_value: 0
     value_type: int
-
   mystery_add_a_ball_central_park_awarded:
     initial_value: 0
     value_type: int
-
   mystery_add_a_ball_nakatomi_awarded:
     initial_value: 0
     value_type: int
-
-
   # ------------------------------------------------------------
   # HANS
   # ------------------------------------------------------------
-
   hans_complete:
     initial_value: 0
     value_type: int
-
   hans_dieharder_complete:
     initial_value: 0
     value_type: int
-
   hans_dieharder_progress:
     initial_value: 0
     value_type: int
-
   hans_dieharder_time:
     initial_value: 93
     value_type: int
-
   hans_dieharder_remaining:
     initial_value: 8
     value_type: int
-
   hans_dieharder_failed_active:
     initial_value: 0
     value_type: int
-
   hans_bonus:
     initial_value: 0
     value_type: int
-
   hans_diehard_completion_active:
     initial_value: 0
     value_type: int
-
   hans_dieharder_completion_active:
     initial_value: 0
     value_type: int
-
-
   # ------------------------------------------------------------
   # KATYA
   # ------------------------------------------------------------
-
   katya_complete:
     initial_value: 0
     value_type: int
-
   katya_dieharder_complete:
     initial_value: 0
     value_type: int
-
   katya_diehard_completion_active:
     initial_value: 0
     value_type: int
-
   katya_dieharder_shots:
     initial_value: 0
     value_type: int
-
   katya_dieharder_time:
     initial_value: 93
     value_type: int
-
   katya_dieharder_failed_active:
     initial_value: 0
     value_type: int
-
   katya_bonus:
     initial_value: 0
     value_type: int
-
   katya_dieharder_completion_active:
     initial_value: 0
     value_type: int
-
-
   # ------------------------------------------------------------
   # KARL
   # Karl can be replayed after fail/escape.
   # Karl is only blocked once karl_complete = 1.
   # ------------------------------------------------------------
-
   karl_complete:
     initial_value: 0
     value_type: int
-
   karl_played:
     initial_value: 0
     value_type: int
-
   karl_damage:
     initial_value: 0
     value_type: int
-
   karl_health_display:
     initial_value: 0
     value_type: int
-
   karl_result_display:
     initial_value: 0
     value_type: int
-
   karl_result_started:
     initial_value: 0
     value_type: int
-
   karl_diehard_won:
     initial_value: 0
     value_type: int
-
   karl_diehard_lost:
     initial_value: 0
     value_type: int
-
   karl_villain_score:
     initial_value: 0
     value_type: int
-
   karl_dieharder_complete:
     initial_value: 0
     value_type: int
-
   karl_dieharder_failed:
     initial_value: 0
     value_type: int
-
   karl_dieharder_completion_active:
     initial_value: 0
     value_type: int
-
   karl_dieharder_failed_active:
     initial_value: 0
     value_type: int
-
   karl_dieharder_time:
     initial_value: 90
     value_type: int
-
   karl_hans_bonus_active:
     initial_value: 0
     value_type: int
-
-
   # ------------------------------------------------------------
   # BONUS MULTIPLIERS
   # ------------------------------------------------------------
-
   bonus_multiplier:
     initial_value: 1
     value_type: int
-
   bonus_x_1_lit:
     initial_value: 0
     value_type: int
-
   bonus_x_2_lit:
     initial_value: 0
     value_type: int
-
   bonus_x_3_lit:
     initial_value: 0
     value_type: int

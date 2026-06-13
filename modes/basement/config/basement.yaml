@@ -1,33 +1,39 @@
 #config_version=6
-
+# ------------------------------------------------------------
+# BASEMENT
+# ------------------------------------------------------------
+# What this mode does:
+#   - Starts after reset_complete.
+#   - Keeps machine-level boot/game/player count values.
+#   - Tracks how many players were in the last game for attract/game over.
+# ------------------------------------------------------------
 mode:
   start_events: reset_complete
   stop_events: when_the_universe_ends
   game_mode: false
   priority: 100
-
-variable_player: 
-  mode_basement_started: 
-    games_played_since_boot: 
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+# Resets boot values when basement starts.
+# Tracks games played since boot and last game player count.
+# ------------------------------------------------------------
+variable_player:
+  mode_basement_started:
+    games_played_since_boot:
       action: set_machine
       int: 0
-    last_game_players: 
+    last_game_players:
       action: set_machine
       int: 0
-
-  game_started: 
-    games_played_since_boot: 
+  game_started:
+    games_played_since_boot:
       action: add_machine
       int: 1
-    last_game_players: 
+    last_game_players:
       action: set_machine
       int: 1
-
-  player_added: 
-    last_game_players: 
+  player_added:
+    last_game_players:
       action: add_machine
       int: 1
-
-
-
-

@@ -1,5 +1,4 @@
 #config_version=6
-
 # ------------------------------------------------------------
 # COL / STUART DIFFICULTY SELECT
 # ------------------------------------------------------------
@@ -22,7 +21,6 @@ mode:
     - ball_ended
   priority: 310
   code: mpf.modes.carousel.code.carousel.Carousel
-
 # ------------------------------------------------------------
 # MODE SETTINGS
 # ------------------------------------------------------------
@@ -39,7 +37,6 @@ mode_settings:
   select_item_events:
     - s_fire_active
     - s_actionbtn_active
-
 # ------------------------------------------------------------
 # SHOW PLAYER
 # ------------------------------------------------------------
@@ -59,25 +56,21 @@ show_player:
     InsertsVillainSpinOrange:
       loops: -1
       speed: 50
-
   set_difficulty_die_hard:
     selected_villain_flash:
       action: stop
     InsertsVillainSpinOrange:
       action: stop
-
   set_difficulty_die_harder:
     selected_villain_flash:
       action: stop
     InsertsVillainSpinOrange:
       action: stop
-
   mode_col_difficulty_select_stopping:
     selected_villain_flash:
       action: stop
     InsertsVillainSpinOrange:
       action: stop
-
 # ------------------------------------------------------------
 # SLIDE PLAYER
 # ------------------------------------------------------------
@@ -91,7 +84,6 @@ slide_player:
       action: play
       expire: 0s
       priority: 1000
-
   set_difficulty_die_hard:
     col_difficulty_select:
       action: remove
@@ -99,7 +91,6 @@ slide_player:
       action: play
       expire: 0s
       priority: 500
-
   set_difficulty_die_harder:
     col_difficulty_select:
       action: remove
@@ -107,19 +98,16 @@ slide_player:
       action: play
       expire: 0s
       priority: 500
-
   play_col_intro:
     col_intro:
       action: play
       expire: 5s
       priority: 10000
-
   mode_col_difficulty_select_stopping:
     col_difficulty_select:
       action: remove
     col_intro:
       action: remove
-
 # ------------------------------------------------------------
 # EVENT PLAYER
 # ------------------------------------------------------------
@@ -134,7 +122,6 @@ event_player:
     - release_villain_select_vuk|5000ms
     - start_col_stuart_diehard|5100ms
     - villain_selection_complete|5200ms
-
   carousel_item_selected{carousel=="col_difficulty_select" and item=="col_die_harder"}:
     - set_difficulty_die_harder
     - play_col_intro
@@ -142,7 +129,6 @@ event_player:
     - release_villain_select_vuk|5000ms
     - start_col_stuart_dieharder|5100ms
     - villain_selection_complete|5200ms
-
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------
@@ -153,22 +139,18 @@ variable_player:
     selected_diehard_mode:
       string: die_hard
       action: set
-
   set_difficulty_die_harder:
     selected_diehard_mode:
       string: die_harder
       action: set
-
   mode_col_difficulty_select_started:
     villain_difficulty_select_running:
       action: set
       int: 1
-
   mode_col_difficulty_select_stopping:
     villain_difficulty_select_running:
       action: set
       int: 0
-
 # ------------------------------------------------------------
 # LIGHT PLAYER
 # ------------------------------------------------------------
@@ -181,14 +163,11 @@ light_player:
       color: 000000
     SPOTS:
       color: 000000
-
   col_mode_start_warning:
     f142:
       color: 0044ff
       fade: 100ms
-
   start_col_stuart_diehard:
     f142: off
-
   start_col_stuart_dieharder:
     f142: off
