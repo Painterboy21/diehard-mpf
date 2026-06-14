@@ -273,8 +273,7 @@ event_player:
     - trmagl_fling|180ms
   s_trmagr_active{machine.magnets_enabled}:
     - trmagr_fling|180ms
-  drop_target_bank_bank_down:
-    - reset_drop_targets_after_delay|1s
+
 
 # ------------------------------------------------------------
 # MACHINE VARS

@@ -1,5 +1,4 @@
 #config_version=6
-
 # ------------------------------------------------------------
 # PLAYFIELD X
 # ------------------------------------------------------------
@@ -12,6 +11,7 @@
 #   - unlock_5x_playfield allows 5x for the rest of the game.
 #   - Active multiplier resets when timer expires.
 #   - Unlocked max does not reset each ball.
+#   - Drop target reset uses a pending lockout so it cannot double-fire.
 # ------------------------------------------------------------
 widgets:
   playfield_2x:
@@ -22,7 +22,6 @@ widgets:
     widget: playfield_4x
   playfield_5x:
     widget: playfield_5x
-
 # ------------------------------------------------------------
 # MODE
 # ------------------------------------------------------------
@@ -32,7 +31,6 @@ mode:
   start_events: ball_started
   stop_events: ball_ended
   priority: 90
-
 # ------------------------------------------------------------
 # TIMERS
 # ------------------------------------------------------------
@@ -53,28 +51,28 @@ timers:
         action: stop
       - event: ball_ended
         action: stop
-
 # ------------------------------------------------------------
 # EVENT PLAYER
 # ------------------------------------------------------------
 # Qualifies Playfield X from drop targets, collects it from
 # pop bumpers, resets the drop bank, and handles timer expiry.
+# The reset pending lockout allows startup reset if the bank is down,
+# but blocks the bank_down event from posting the reset twice.
 # ------------------------------------------------------------
 event_player:
-
-
   drop_target_bank1_down{current_player.playfield_multiplier < current_player.playfield_x_max}:
     - pf_x_drop_1_lit
   drop_target_bank2_down{current_player.playfield_multiplier < current_player.playfield_x_max}:
     - pf_x_drop_2_lit
   drop_target_bank3_down{current_player.playfield_multiplier < current_player.playfield_x_max}:
     - pf_x_drop_3_lit
-
-  drop_target_bank_bank_down:
+  drop_target_bank_bank_down{current_player.drop_target_reset_pending != 1}:
+    - mark_drop_target_reset_pending
     - reset_drop_targets_after_delay|750ms
   drop_target_bank_bank_down{current_player.playfield_multiplier < current_player.playfield_x_max}:
     - playfield_x_qualified
-
+  reset_drop_targets_after_delay:
+    - clear_drop_target_reset_pending|1000ms
   s_popbumper_left_active{current_player.playfield_x_qualified==1 and current_player.playfield_multiplier < current_player.playfield_x_max}:
     - increase_playfield_x
     - playfield_x_collected|10ms
@@ -83,15 +81,14 @@ event_player:
     - increase_playfield_x
     - playfield_x_collected|10ms
     - playfield_x_started|20ms
-
   timer_playfield_x_timer_complete:
     - playfield_x_expired
-
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------
-# Stores active multiplier, qualification state, and max
-# multiplier unlock. Max stays unlocked for the rest of the game.
+# Stores active multiplier, qualification state, max multiplier unlock,
+# and drop target reset pending lockout.
+# Max stays unlocked for the rest of the game.
 # ------------------------------------------------------------
 variable_player:
   mode_playfield_x_started:
@@ -101,17 +98,17 @@ variable_player:
     playfield_x_qualified:
       int: 0
       action: set
-
+    drop_target_reset_pending:
+      int: 0
+      action: set
   mode_playfield_x_started{current_player.playfield_x_max == None}:
     playfield_x_max:
       int: 3
       action: set
-
   mode_playfield_x_started{current_player.playfield_x_max < 3}:
     playfield_x_max:
       int: 3
       action: set
-
   mode_playfield_x_started{current_player.col_stuart_diehard_complete==1 and current_player.playfield_x_max < 4}:
     playfield_x_max:
       int: 4
@@ -120,7 +117,6 @@ variable_player:
     playfield_x_max:
       int: 5
       action: set
-
   unlock_4x_playfield{current_player.playfield_x_max < 4}:
     playfield_x_max:
       int: 4
@@ -129,7 +125,14 @@ variable_player:
     playfield_x_max:
       int: 5
       action: set
-
+  mark_drop_target_reset_pending:
+    drop_target_reset_pending:
+      int: 1
+      action: set
+  clear_drop_target_reset_pending:
+    drop_target_reset_pending:
+      int: 0
+      action: set
   drop_target_bank1_down:
     score:
       int: "10000 * current_player.playfield_multiplier"
@@ -142,17 +145,14 @@ variable_player:
     score:
       int: "10000 * current_player.playfield_multiplier"
       action: add
-
   playfield_x_qualified:
     playfield_x_qualified:
       int: 1
       action: set
-
   increase_playfield_x{current_player.playfield_multiplier < current_player.playfield_x_max}:
     playfield_multiplier:
       int: 1
       action: add
-
   playfield_x_collected:
     score:
       int: "50000 * current_player.playfield_multiplier"
@@ -160,7 +160,6 @@ variable_player:
     playfield_x_qualified:
       int: 0
       action: set
-
   playfield_x_expired:
     playfield_multiplier:
       int: 1
@@ -168,7 +167,6 @@ variable_player:
     playfield_x_qualified:
       int: 0
       action: set
-
 # ------------------------------------------------------------
 # WIDGET PLAYER
 # ------------------------------------------------------------
@@ -191,7 +189,6 @@ widget_player:
     playfield_5x:
       action: play
       expire: 2s
-
 # ------------------------------------------------------------
 # SHOW PLAYER
 # ------------------------------------------------------------
@@ -208,7 +205,6 @@ show_player:
       show_tokens:
         lights: l18
         color: yellow
-
   pf_x_drop_2_lit:
     pf_x_l18_yellow_slow:
       action: stop
@@ -220,13 +216,11 @@ show_player:
       show_tokens:
         lights: l18
         color: yellow
-
   pf_x_drop_3_lit:
     pf_x_l18_yellow_slow:
       action: stop
     pf_x_l18_yellow_fast:
       action: stop
-
   playfield_x_qualified:
     pf_x_l18_yellow_slow:
       action: stop
@@ -242,7 +236,6 @@ show_player:
       show_tokens:
         lights: l18
         color: green
-
   playfield_x_collected:
     pf_x_l18_yellow_slow:
       action: stop
@@ -258,7 +251,6 @@ show_player:
       action: stop
     pf_x_5x_flash:
       action: stop
-
   playfield_x_started{current_player.playfield_multiplier==2}:
     flash_color:
       key: pf_x_2x_flash
@@ -268,7 +260,6 @@ show_player:
       show_tokens:
         lights: l12
         color: yellow
-
   playfield_x_started{current_player.playfield_multiplier==3}:
     pf_x_2x_flash:
       action: stop
@@ -280,7 +271,6 @@ show_player:
       show_tokens:
         lights: l13
         color: yellow
-
   playfield_x_started{current_player.playfield_multiplier==4}:
     pf_x_3x_flash:
       action: stop
@@ -292,7 +282,6 @@ show_player:
       show_tokens:
         lights: l15
         color: yellow
-
   playfield_x_started{current_player.playfield_multiplier==5}:
     pf_x_4x_flash:
       action: stop
@@ -304,7 +293,6 @@ show_player:
       show_tokens:
         lights: l14
         color: yellow
-
   playfield_x_expired:
     pf_x_l18_yellow_slow:
       action: stop
@@ -320,7 +308,6 @@ show_player:
       action: stop
     pf_x_5x_flash:
       action: stop
-
   ball_ended:
     pf_x_l18_yellow_slow:
       action: stop
@@ -336,7 +323,6 @@ show_player:
       action: stop
     pf_x_5x_flash:
       action: stop
-
 # ------------------------------------------------------------
 # LIGHT PLAYER
 # ------------------------------------------------------------
@@ -348,12 +334,10 @@ light_player:
     l18:
       color: off
       priority: 1000
-
   playfield_x_started{current_player.playfield_multiplier==2}:
     l18:
       color: off
       priority: 1000
-
   playfield_x_started{current_player.playfield_multiplier==3}:
     l12:
       color: white
@@ -361,7 +345,6 @@ light_player:
     l18:
       color: off
       priority: 1000
-
   playfield_x_started{current_player.playfield_multiplier==4}:
     l12:
       color: white
@@ -372,7 +355,6 @@ light_player:
     l18:
       color: off
       priority: 1000
-
   playfield_x_started{current_player.playfield_multiplier==5}:
     l12:
       color: white
@@ -386,7 +368,6 @@ light_player:
     l18:
       color: off
       priority: 1000
-
   playfield_x_expired:
     l12:
       color: off
@@ -403,7 +384,6 @@ light_player:
     l18:
       color: off
       priority: 1000
-
   ball_ended:
     l12:
       color: off
