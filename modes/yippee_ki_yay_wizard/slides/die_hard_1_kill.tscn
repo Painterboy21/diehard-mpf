@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://bm0yqrhpaqlb2"]
+
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_4376p"]
+[ext_resource type="VideoStream" uid="uid://coh1e3rs7ulud" path="res://modes/yippee_ki_yay_wizard/slides/DiaHard1Kill.ogv" id="2_qenfc"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_oulvl"]
+
+[node name="DieHard1Kill" type="Control" unique_id=1406998591]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4376p")
+metadata/_custom_type_script = "uid://dru3usokwlhd3"
+
+[node name="DiaHard1Kill" type="VideoStreamPlayer" parent="." unique_id=1221378670]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+stream = ExtResource("2_qenfc")
+volume_db = 7.9999976
+autoplay = true
+script = ExtResource("3_oulvl")
+end_behavior = 1
+preview_in_editor = true
+metadata/_custom_type_script = "uid://bov7mrgxslshq"

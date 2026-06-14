@@ -64,6 +64,9 @@ mode:
     - start_col_stuart_diehard
     - start_col_stuart_dieharder
 
+    - start_yippee_ki_yay_wizard
+    - mode_yippee_ki_yay_wizard_started
+
   priority: 120
 
 # ------------------------------------------------------------

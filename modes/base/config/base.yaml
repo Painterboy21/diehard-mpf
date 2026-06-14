@@ -1,5 +1,4 @@
 #config_version=6
-
 # ------------------------------------------------------------
 # BASE
 # ------------------------------------------------------------
@@ -15,19 +14,20 @@ mode:
   start_events: ball_started
   stop_events: ball_ended
   priority: 100
-
-
 # ------------------------------------------------------------
 # BALL HOLDS
 # ------------------------------------------------------------
-# Holds the ball at the right VUK when villain start is lit.
-# The ball is NOT released when the villain mode starts.
+# Holds the ball at the right VUK when villain start is lit
+# or when Yippee Ki Yay Wizard is ready.
+# The ball is NOT released when the villain/wizard start event posts.
 # It only releases after the intro/Godot flow posts
 # release_villain_select_vuk.
 # ------------------------------------------------------------
 ball_holds:
   villain_hold:
-    enable_events: villain_start_lit
+    enable_events:
+      - villain_start_lit
+      - yippee_ki_yay_wizard_ready
     disable_events:
       - ball_ended
       - tilt
@@ -68,7 +68,6 @@ ball_saves:
     enable_events: ball_save_three
     auto_launch: true
     balls_to_save: -1
-
 # ------------------------------------------------------------
 # EVENT PLAYER
 # ------------------------------------------------------------
@@ -94,19 +93,20 @@ event_player:
   s_air_duct_active:
     - show_airduct
     - show_airduct2
-  # Drop target hit sound trigger.
+  s_TrPF1_active{machine.magnets_enabled}:
+    - magnets_turn_off_after_switch|4s
+  s_TrPF2_active{machine.magnets_enabled}:
+    - magnets_turn_off_after_switch|4s
+  s_TrPF3_active{machine.magnets_enabled}:
+    - magnets_turn_off_after_switch|4s
   s_drop_target_1_active:
     - drop_target_hit
   s_drop_target_2_active:
     - drop_target_hit
   s_drop_target_3_active:
     - drop_target_hit
-  # Start villain select only after the right VUK hold confirms full.
-  ball_hold_villain_hold_full:
+  ball_hold_villain_hold_full{current_player.wizard_mode_ready != 1}:
     - start_villain_select
-  # Player added / turn screen events for Godot.
-  # Player 2/3/4 added can show "PLAYER X ADDED".
-  # Player turn events can show "PLAYER X'S TURN".
   player_added{num==2}:
     - player_2_added
   player_added{num==3}:
@@ -191,7 +191,6 @@ event_player:
     - resume_base_music|5s
   multiball_central_park_ended:
     - resume_base_music|5s
-  # Full loop streak tracking.
   right_full_loop_hit:
     - full_loop_hit
   left_full_loop_hit:
@@ -210,7 +209,6 @@ event_player:
     - loop_streak_award_15
   ball_ending{current_player.best_loop_streak_this_game > 0}:
     record_candidate_loop_champion:
-
 # ------------------------------------------------------------
 # LIGHT PLAYER
 # ------------------------------------------------------------
@@ -343,7 +341,6 @@ light_player:
     l58:
       color: 00ff00
       priority: 50
-
 # ------------------------------------------------------------
 # RANDOM EVENT PLAYER
 # ------------------------------------------------------------
@@ -426,7 +423,6 @@ random_event_player:
       drop_target_sound_2: 1
       drop_target_sound_3: 1
     scope: player
-
 # ------------------------------------------------------------
 # TIMERS
 # ------------------------------------------------------------
@@ -443,7 +439,6 @@ timers:
         action: restart
       - event: loop_streak_reset
         action: stop
-
 # ------------------------------------------------------------
 # SEQUENCE SHOTS
 # ------------------------------------------------------------
@@ -474,7 +469,6 @@ sequence_shots:
       - s_right_orbit2
       - s_right_orbit
     sequence_timeout: 3000ms
-
 # ------------------------------------------------------------
 # SHOTS
 # ------------------------------------------------------------
@@ -490,7 +484,6 @@ shots:
     control_events:
       - events: ball_save_one_hurry_up, ball_save_two_hurry_up, ball_save_three_hurry_up, ball_save_holly_hurry_up
         state: 1
-
 # ------------------------------------------------------------
 # SHOW PLAYER
 # ------------------------------------------------------------
@@ -623,11 +616,9 @@ show_player:
     upper_pf_entrance:
       key: key_upper_pf_entrance_show
       loops: 0
-
   loop_streak_award_15:
     loop_jackpot_red_flash:
       priority: 500
-
 # ------------------------------------------------------------
 # SLIDE PLAYER
 # ------------------------------------------------------------
@@ -662,7 +653,6 @@ slide_player:
     airplane_mb_failed:
       action: play
       expire: 0s
-
 # ------------------------------------------------------------
 # SOUND PLAYER
 # ------------------------------------------------------------
@@ -686,8 +676,6 @@ sound_player:
     gameplay_music_battle:
       key: main_snd_music
       action: play
-
-  # VPW-style sound when Player 2/3/4 is added.
   player_added{num==2}:
     DHYippee_Ki_Yay:
       action: play
@@ -697,7 +685,6 @@ sound_player:
   player_added{num==4}:
     DHYippee_Ki_Yay:
       action: play
-
   stop_base_music:
     gameplay_music_beethoven:
       key: main_snd_music
@@ -711,7 +698,6 @@ sound_player:
     gameplay_music_battle:
       key: main_snd_music
       action: stop
-
   s_left_sling_active:
     sling_1:
       action: play
@@ -724,14 +710,10 @@ sound_player:
   flash_right_sling_blue:
     sling_1:
       action: play
-
-  # Captive ball hit sound.
   s_captiveball_active:
     dh_captiveballhit1:
       action: play
       volume: 1.0
-
-  # Drop target hit sounds.
   drop_target_sound_1:
     dh_droptarget1:
       action: play
@@ -744,7 +726,6 @@ sound_player:
     dh_droptarget3:
       action: play
       volume: 1.0
-
   spinner_fx1:
     spinner_fx1:
       action: play
@@ -793,7 +774,6 @@ sound_player:
   inlanerollover3_fx:
     inlanerollover3_fx:
       action: play
-
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------
@@ -801,15 +781,7 @@ sound_player:
 # reset values when base starts.
 # ------------------------------------------------------------
 variable_player:
-  s_TrPF1_active:
-    magnets_enabled:
-      action: set_machine
-      int: 0
-  s_TrPF2_active:
-    magnets_enabled:
-      action: set_machine
-      int: 0
-  s_TrPF3_active:
+  magnets_turn_off_after_switch:
     magnets_enabled:
       action: set_machine
       int: 0
@@ -858,23 +830,18 @@ variable_player:
     current_loop_streak:
       action: add
       int: 1
-
   check_loop_streak_awards{current_player.current_loop_streak > current_player.best_loop_streak_this_game}:
     best_loop_streak_this_game:
       action: set
       int: current_player.current_loop_streak
-
   loop_streak_reset:
     current_loop_streak:
       action: set
       int: 0
-
   loop_streak_award_5:
     score: 250000
-
   loop_streak_award_10:
     score: 500000
-
   loop_streak_award_15:
     score: 1000000
     loop_jackpot_collected_this_ball:

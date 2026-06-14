@@ -1,0 +1,517 @@
+#config_version=6
+# ------------------------------------------------------------
+# YIPPEE KI YAY WIZARD
+# ------------------------------------------------------------
+# Phase 1:
+#   - Starts from start_yippee_ki_yay_wizard after wizard_intro.
+#   - Starts a 3-ball wizard multiball total.
+#   - Uses a 60s blue ball save.
+#   - Opens the Nakatomi cage lock to HOLD balls.
+#   - Opens the Nakatomi entrance gate.
+#   - Shows the Phase 1 Godot wizard slide.
+#   - Flashes l7 blue for the tower/Nakatomi lock.
+#   - Flashes l8 red/yellow like VPW Yippee Ki Yay insert.
+#   - Flashes BALL_SAVE blue while ball save is active.
+#   - Sets GI/SPOTS to dark wizard blue during Phase 1.
+#   - Ball 1 lock plays VPW lSeqAllLights1 style show.
+#   - Ball 2 lock plays VPW lSeqAllLights1 + lSeqAllLights2 style show.
+#   - Ball 3 lock plays the wild VPW converted third-lock show.
+#   - Removes Phase 1 slide and plays die_hard_1_kill on ball 3.
+#   - Releases the Nakatomi lock after the kill slide delay.
+# ------------------------------------------------------------
+mode:
+  start_events:
+    - start_yippee_ki_yay_wizard
+  stop_events:
+    - yippee_ki_yay_phase_1_failed
+    - ball_ended
+  priority: 500
+# ------------------------------------------------------------
+# MULTIBALLS
+# ------------------------------------------------------------
+multiballs:
+  yippee_ki_yay_phase_1:
+    ball_count: 3
+    ball_count_type: total
+    start_events:
+      - yippee_ki_yay_phase_1_start_multiball
+    stop_events:
+      - yippee_ki_yay_phase_1_failed
+      - ball_ending
+# ------------------------------------------------------------
+# BALL SAVES
+# ------------------------------------------------------------
+ball_saves:
+  yippee_ki_yay_phase_1_ball_save:
+    active_time: 60s
+    hurry_up_time: 10s
+    grace_period: 2s
+    auto_launch: true
+    balls_to_save: -1
+    enable_events:
+      - yippee_ki_yay_phase_1_start
+    disable_events:
+      - yippee_ki_yay_phase_1_three_balls_locked
+      - yippee_ki_yay_phase_1_complete
+      - yippee_ki_yay_phase_1_failed
+      - mode_yippee_ki_yay_wizard_stopping
+      - ball_ending
+      - tilt
+# ------------------------------------------------------------
+# TIMERS
+# ------------------------------------------------------------
+# Keeps the Nakatomi cage lock refreshed while Phase 1 is holding balls.
+# This copies the normal qualify_nakatomi hold-reset pattern.
+# On this real machine:
+#   nakatomi_lock_open  = hold/keep balls locked
+#   nakatomi_lock_close = release balls
+# ------------------------------------------------------------
+timers:
+  yippee_ki_yay_nakatomi_lock_hold_reset:
+    start_value: 0
+    end_value: 1
+    direction: up
+    control_events:
+      - event: mode_yippee_ki_yay_wizard_started
+        action: restart
+      - event: yippee_ki_yay_phase_1_start
+        action: restart
+      - event: yippee_ki_yay_phase_1_vuk_counted
+        action: restart
+      - event: yippee_ki_yay_phase_1_release_after_kill
+        action: stop
+      - event: yippee_ki_yay_phase_1_complete
+        action: stop
+      - event: yippee_ki_yay_phase_1_failed
+        action: stop
+      - event: mode_yippee_ki_yay_wizard_stopping
+        action: stop
+      - event: ball_ending
+        action: stop
+    restart_on_complete: true
+    start_running: false
+    tick_interval: 60000ms
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+event_player:
+  mode_yippee_ki_yay_wizard_started:
+    - nakatomi_lock_open
+    - yippee_ki_yay_phase_1_start|650ms
+    - show_yippee_ki_yay_wizard_slide
+  yippee_ki_yay_phase_1_start:
+    - yippee_ki_yay_phase_1_start_multiball
+    - nakatomi_lock_open
+    - nakatomi_entrance_lock_open
+    - yippee_ki_yay_phase_1_lock_lit
+    - arm_yippee_ki_yay_phase_1_vuk|500ms
+    - wire_ramp_exit_open
+  yippee_ki_yay_phase_1_vuk_counted:
+    - nakatomi_lock_open
+  timer_yippee_ki_yay_nakatomi_lock_hold_reset_complete:
+    - nakatomi_lock_open
+  show_yippee_ki_yay_wizard_slide:
+    - show_yippee_lock_3_balls_widget|250ms
+  balldevice_tower_vuk_ball_enter{current_player.yippee_ki_yay_phase_1_active == 1 and current_player.yippee_ki_yay_phase_1_complete != 1 and current_player.yippee_ki_yay_phase_1_vuk_armed == 1 and current_player.yippee_ki_yay_phase_1_balls_locked == 0}:
+    - yippee_ki_yay_phase_1_vuk_counted
+    - yippee_ki_yay_phase_1_ball_1_lock_show
+    - yippee_ki_yay_phase_1_release_vuk|1000ms
+    - yippee_ki_yay_phase_1_check_count|1500ms
+  balldevice_tower_vuk_ball_enter{current_player.yippee_ki_yay_phase_1_active == 1 and current_player.yippee_ki_yay_phase_1_complete != 1 and current_player.yippee_ki_yay_phase_1_vuk_armed == 1 and current_player.yippee_ki_yay_phase_1_balls_locked == 1}:
+    - yippee_ki_yay_phase_1_vuk_counted
+    - yippee_ki_yay_phase_1_ball_2_lock_show
+    - yippee_ki_yay_phase_1_release_vuk|1000ms
+    - yippee_ki_yay_phase_1_check_count|1500ms
+  balldevice_tower_vuk_ball_enter{current_player.yippee_ki_yay_phase_1_active == 1 and current_player.yippee_ki_yay_phase_1_complete != 1 and current_player.yippee_ki_yay_phase_1_vuk_armed == 1 and current_player.yippee_ki_yay_phase_1_balls_locked == 2}:
+    - yippee_ki_yay_phase_1_vuk_counted
+    - yippee_ki_yay_phase_1_release_vuk|1000ms
+    - yippee_ki_yay_phase_1_check_count|1500ms
+  yippee_ki_yay_phase_1_check_count{current_player.yippee_ki_yay_phase_1_balls_locked < 3 and current_player.yippee_ki_yay_phase_1_complete != 1}:
+    - arm_yippee_ki_yay_phase_1_vuk
+  yippee_ki_yay_phase_1_check_count{current_player.yippee_ki_yay_phase_1_balls_locked >= 3 and current_player.yippee_ki_yay_phase_1_complete != 1}:
+    - yippee_ki_yay_phase_1_three_balls_locked
+  yippee_ki_yay_phase_1_three_balls_locked:
+    - disarm_yippee_ki_yay_phase_1_vuk
+    - nakatomi_entrance_lock_close
+    - yippee_ki_yay_phase_1_play_kill_video
+    - yippee_ki_yay_phase_1_release_after_kill|9500ms
+    - wire_ramp_exit_close
+  yippee_ki_yay_phase_1_release_after_kill{current_player.yippee_ki_yay_phase_1_complete != 1}:
+    - nakatomi_lock_close
+    - yippee_ki_yay_phase_1_complete
+  ball_drain{current_player.yippee_ki_yay_phase_1_active == 1 and current_player.yippee_ki_yay_phase_1_complete != 1 and current_player.yippee_ki_yay_phase_1_ball_save_running != 1}:
+    - yippee_ki_yay_phase_1_failed
+  ball_save_yippee_ki_yay_phase_1_ball_save_saving_ball:
+    - ball_save_saving_ball
+  yippee_ki_yay_phase_1_failed:
+    - disarm_yippee_ki_yay_phase_1_vuk
+    - nakatomi_entrance_lock_close
+    - nakatomi_lock_close
+    - wire_ramp_exit_close
+  mode_yippee_ki_yay_wizard_stopping:
+    - disarm_yippee_ki_yay_phase_1_vuk
+    - nakatomi_entrance_lock_close
+    - nakatomi_lock_close
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+variable_player:
+  mode_yippee_ki_yay_wizard_started:
+    yippee_ki_yay_phase_1_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_balls_locked:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_vuk_armed:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_ball_save_running:
+      action: set
+      int: 0
+  yippee_ki_yay_phase_1_start:
+    yippee_ki_yay_phase_1_active:
+      action: set
+      int: 1
+    yippee_ki_yay_phase_1_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_balls_locked:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_vuk_armed:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_ball_save_running:
+      action: set
+      int: 1
+  ball_save_yippee_ki_yay_phase_1_ball_save_enabled:
+    yippee_ki_yay_phase_1_ball_save_running:
+      action: set
+      int: 1
+  ball_save_yippee_ki_yay_phase_1_ball_save_disabled:
+    yippee_ki_yay_phase_1_ball_save_running:
+      action: set
+      int: 0
+  arm_yippee_ki_yay_phase_1_vuk:
+    yippee_ki_yay_phase_1_vuk_armed:
+      action: set
+      int: 1
+  disarm_yippee_ki_yay_phase_1_vuk:
+    yippee_ki_yay_phase_1_vuk_armed:
+      action: set
+      int: 0
+  yippee_ki_yay_phase_1_vuk_counted:
+    yippee_ki_yay_phase_1_balls_locked:
+      action: add
+      int: 1
+    yippee_ki_yay_phase_1_vuk_armed:
+      action: set
+      int: 0
+  yippee_ki_yay_phase_1_three_balls_locked:
+    yippee_ki_yay_phase_1_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_vuk_armed:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_ball_save_running:
+      action: set
+      int: 0
+  yippee_ki_yay_phase_1_release_after_kill:
+    yippee_ki_yay_phase_1_complete:
+      action: set
+      int: 1
+  yippee_ki_yay_phase_1_failed:
+    yippee_ki_yay_phase_1_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_vuk_armed:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_ball_save_running:
+      action: set
+      int: 0
+# ------------------------------------------------------------
+# COIL PLAYER
+# ------------------------------------------------------------
+coil_player:
+  yippee_ki_yay_phase_1_release_vuk: c_towervuk_eject
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# ------------------------------------------------------------
+# Kill slide scene:
+#   modes/yippee_ki_yay_wizard/slides/die_hard_1_kill.tscn
+# MPF slide name:
+#   die_hard_1_kill
+# ------------------------------------------------------------
+slide_player:
+  show_yippee_ki_yay_wizard_slide:
+    yippee_ki_yay_wizard:
+      priority: 500
+  yippee_ki_yay_phase_1_play_kill_video:
+    yippee_ki_yay_wizard:
+      action: remove
+    die_hard_1_kill:
+      action: play
+      priority: 800
+      expire: 10s
+  yippee_ki_yay_phase_1_complete:
+    die_hard_1_kill:
+      action: remove
+    yippee_ki_yay_wizard:
+      action: remove
+  yippee_ki_yay_phase_1_failed:
+    die_hard_1_kill:
+      action: remove
+    yippee_ki_yay_wizard:
+      action: remove
+  mode_yippee_ki_yay_wizard_stopping:
+    die_hard_1_kill:
+      action: remove
+    yippee_ki_yay_wizard:
+      action: remove
+# ------------------------------------------------------------
+# WIDGET PLAYER
+# ------------------------------------------------------------
+# Uses your existing widgets to count DOWN how many balls still
+# need to be locked in the tower.
+# ------------------------------------------------------------
+widget_player:
+  show_yippee_lock_3_balls_widget:
+    yippee_lock_3_balls_widget:
+      action: play
+      slide: yippee_ki_yay_wizard
+      priority: 950
+  yippee_ki_yay_phase_1_ball_1_lock_show:
+    yippee_lock_3_balls_widget:
+      action: remove
+    yippee_lock_2_balls_widget:
+      action: play
+      slide: yippee_ki_yay_wizard
+      priority: 950
+  yippee_ki_yay_phase_1_ball_2_lock_show:
+    yippee_lock_2_balls_widget:
+      action: remove
+    yippee_lock_1_balls_widget:
+      action: play
+      slide: yippee_ki_yay_wizard
+      priority: 950
+  yippee_ki_yay_phase_1_three_balls_locked:
+    yippee_lock_3_balls_widget:
+      action: remove
+    yippee_lock_2_balls_widget:
+      action: remove
+    yippee_lock_1_balls_widget:
+      action: remove
+  yippee_ki_yay_phase_1_complete:
+    yippee_lock_3_balls_widget:
+      action: remove
+    yippee_lock_2_balls_widget:
+      action: remove
+    yippee_lock_1_balls_widget:
+      action: remove
+  yippee_ki_yay_phase_1_failed:
+    yippee_lock_3_balls_widget:
+      action: remove
+    yippee_lock_2_balls_widget:
+      action: remove
+    yippee_lock_1_balls_widget:
+      action: remove
+  mode_yippee_ki_yay_wizard_stopping:
+    yippee_lock_3_balls_widget:
+      action: remove
+    yippee_lock_2_balls_widget:
+      action: remove
+    yippee_lock_1_balls_widget:
+      action: remove
+# ------------------------------------------------------------
+# SHOW PLAYER
+# ------------------------------------------------------------
+# Ball 1, ball 2, and ball 3 now each have their own VPW-style show.
+# l8 gets its own high-priority red/yellow flash so the VPW lock shows
+# do not hide it.
+# ------------------------------------------------------------
+show_player:
+  yippee_ki_yay_phase_1_start:
+    yippee_ki_yay_insert_red_yellow_flash:
+      key: yippee_ki_yay_insert_red_yellow_flash
+      priority: 9000
+      loops: -1
+  yippee_ki_yay_phase_1_lock_lit:
+    yippee_ki_yay_nakatomi_lock_blue_flash:
+      key: yippee_ki_yay_nakatomi_lock_blue_flash
+      priority: 3000
+      loops: -1
+  yippee_ki_yay_phase_1_ball_1_lock_show:
+    yippee_ki_yay_phase_1_ball_1_locked_vpw_show:
+      key: yippee_ki_yay_phase_1_ball_1_locked_vpw_show
+      priority: 3200
+      loops: 1
+  yippee_ki_yay_phase_1_ball_2_lock_show:
+    yippee_ki_yay_phase_1_ball_2_locked_vpw_show:
+      key: yippee_ki_yay_phase_1_ball_2_locked_vpw_show
+      priority: 3250
+      loops: 1
+  yippee_ki_yay_phase_1_three_balls_locked:
+    yippee_ki_yay_insert_red_yellow_flash:
+      action: stop
+    yippee_ki_yay_nakatomi_lock_blue_flash:
+      action: stop
+    yippee_ki_yay_phase_1_ball_save_blue_flash:
+      action: stop
+    yippee_ki_yay_phase_1_third_lock_show:
+      key: yippee_ki_yay_phase_1_third_lock_show
+      priority: 3400
+      loops: 1
+  ball_save_yippee_ki_yay_phase_1_ball_save_enabled:
+    flash_color:
+      key: yippee_ki_yay_phase_1_ball_save_blue_flash
+      loops: -1
+      speed: 8
+      show_tokens:
+        lights: BALL_SAVE
+        color: 0000ff
+  ball_save_yippee_ki_yay_phase_1_ball_save_hurry_up:
+    flash_color:
+      key: yippee_ki_yay_phase_1_ball_save_blue_flash
+      loops: -1
+      speed: 12
+      show_tokens:
+        lights: BALL_SAVE
+        color: 0000ff
+  ball_save_yippee_ki_yay_phase_1_ball_save_disabled:
+    yippee_ki_yay_phase_1_ball_save_blue_flash:
+      action: stop
+  yippee_ki_yay_phase_1_complete:
+    yippee_ki_yay_insert_red_yellow_flash:
+      action: stop
+    yippee_ki_yay_nakatomi_lock_blue_flash:
+      action: stop
+    yippee_ki_yay_phase_1_ball_save_blue_flash:
+      action: stop
+    yippee_ki_yay_phase_1_ball_1_locked_vpw_show:
+      action: stop
+    yippee_ki_yay_phase_1_ball_2_locked_vpw_show:
+      action: stop
+    yippee_ki_yay_phase_1_third_lock_show:
+      action: stop
+  yippee_ki_yay_phase_1_failed:
+    yippee_ki_yay_insert_red_yellow_flash:
+      action: stop
+    yippee_ki_yay_nakatomi_lock_blue_flash:
+      action: stop
+    yippee_ki_yay_phase_1_ball_save_blue_flash:
+      action: stop
+    yippee_ki_yay_phase_1_ball_1_locked_vpw_show:
+      action: stop
+    yippee_ki_yay_phase_1_ball_2_locked_vpw_show:
+      action: stop
+    yippee_ki_yay_phase_1_third_lock_show:
+      action: stop
+  mode_yippee_ki_yay_wizard_stopping:
+    yippee_ki_yay_insert_red_yellow_flash:
+      action: stop
+    yippee_ki_yay_nakatomi_lock_blue_flash:
+      action: stop
+    yippee_ki_yay_phase_1_ball_save_blue_flash:
+      action: stop
+    yippee_ki_yay_phase_1_ball_1_locked_vpw_show:
+      action: stop
+    yippee_ki_yay_phase_1_ball_2_locked_vpw_show:
+      action: stop
+    yippee_ki_yay_phase_1_third_lock_show:
+      action: stop
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# ------------------------------------------------------------
+light_player:
+  yippee_ki_yay_phase_1_start:
+    GI:
+      color: ff0000
+    SPOTS:
+      color: 505050
+    SPOTS_BUMPER:
+      color: 909090
+    l1000:
+      color: ff0000
+    l1001:
+      color: ff0000
+  yippee_ki_yay_phase_1_three_balls_locked:
+    l7:
+      color: off
+      priority: 5000
+    l8:
+      color: off
+      priority: 5000
+    BALL_SAVE:
+      color: off
+      priority: 5000
+  yippee_ki_yay_phase_1_complete:
+    l7:
+      color: off
+      priority: 5000
+    l8:
+      color: off
+      priority: 5000
+    BALL_SAVE:
+      color: off
+      priority: 5000
+  yippee_ki_yay_phase_1_failed:
+    l7:
+      color: off
+      priority: 5000
+    l8:
+      color: off
+      priority: 5000
+    BALL_SAVE:
+      color: off
+      priority: 5000
+  mode_yippee_ki_yay_wizard_stopping:
+    l7:
+      color: off
+      priority: 5000
+    l8:
+      color: off
+      priority: 5000
+    BALL_SAVE:
+      color: off
+      priority: 5000
+# ------------------------------------------------------------
+# SHOWS
+# ------------------------------------------------------------
+shows:
+  yippee_ki_yay_nakatomi_lock_blue_flash:
+    - time: 0
+      lights:
+        l7: 0000ff
+    - time: 250ms
+      lights:
+        l7: off
+    - time: 500ms
+  yippee_ki_yay_insert_red_yellow_flash:
+    - time: 0
+      lights:
+        l8: ff0000
+    - time: 1500ms
+      lights:
+        l8: ffff00
+    - time: 1650ms
+      lights:
+        l8: ff0000
+    - time: 1780ms
+      lights:
+        l8: ffff00
+    - time: 1930ms
+      lights:
+        l8: ff0000
+    - time: 2200ms

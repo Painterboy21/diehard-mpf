@@ -73,6 +73,8 @@ mode:
     - start_stuart_dieharder
     - start_col_diehard
     - start_col_dieharder
+    - start_yippee_ki_yay_wizard
+    - mode_yippee_ki_yay_wizard_started
 
   priority: 120
 ball_holds:

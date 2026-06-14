@@ -1,0 +1,84 @@
+#show_version=6
+# ------------------------------------------------------------
+# YIPPEE KI YAY - BALL LOCKED VPW-STYLE SHOW
+# ------------------------------------------------------------
+# Special FAST normal-bulb spot boards:
+#   - l132 = left-ramp spot board
+#   - l136 = front spot board/device
+#   - l138 = rear/pop bumper spot board
+#   - Use ffffff for ON and 000000 for OFF.
+#   - Do not use internal/comment-only VPW lamp names l130/l133/l135/l137.
+#   - Avoids l80/l81/l82/l83.
+# ------------------------------------------------------------
+- duration: 60ms
+  lights:
+    f145: "ffffff"
+    f146: "ffffff"
+    l7: "0000ff"
+    l132: "ffffff"
+    l136: "ffffff"
+    l138: "ffffff"
+- duration: 70ms
+  lights:
+    f145: "ff7a12"
+    f146: "ff7a12"
+    f140: "ff7a12"
+    f141: "ff7a12"
+    f142: "ff7a12"
+    f143: "ff7a12"
+    f144: "ff7a12"
+    f147: "ff7a12"
+    l7: "004cff"
+    l132: "000000"
+    l136: "000000"
+    l138: "000000"
+- duration: 70ms
+  lights:
+    f145: "ffffff"
+    f146: "ffffff"
+    l7: "ffffff"
+    l132: "ffffff"
+    l136: "ffffff"
+    l138: "ffffff"
+- duration: 80ms
+  lights:
+    f145: "000000"
+    f146: "000000"
+    f140: "000000"
+    f141: "000000"
+    f142: "000000"
+    f143: "000000"
+    f144: "000000"
+    f147: "000000"
+    l7: "0000ff"
+    l132: "000000"
+    l136: "000000"
+    l138: "000000"
+- duration: 70ms
+  lights:
+    f145: "ffffff"
+    f146: "ffffff"
+    l7: "0000ff"
+    l132: "ffffff"
+    l138: "ffffff"
+- duration: 90ms
+  lights:
+    f145: "ff7a12"
+    f146: "ff7a12"
+    l7: "004cff"
+    l132: "000000"
+    l138: "000000"
+- duration: 120ms
+  lights:
+    f145: "ffffff"
+    f146: "ffffff"
+    l7: "ffffff"
+    l136: "ffffff"
+- duration: 160ms
+  lights:
+    f145: "000000"
+    f146: "000000"
+    l7: "0000ff"
+    l132: "000000"
+    l136: "000000"
+    l138: "000000"

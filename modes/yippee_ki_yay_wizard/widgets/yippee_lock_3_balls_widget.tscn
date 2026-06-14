@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dc21wiexvnblm"]
+
+[ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_1240m"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="2_a30ew"]
+
+[node name="yippee_lock_3_balls_widget" type="Control" unique_id=916327062]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1240m")
+
+[node name="3 LOCKS" type="Label" parent="." unique_id=611263550]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 63.0
+offset_top = -5.0
+offset_right = -211.0
+offset_bottom = 93.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.01999998, 0.01999998, 1)
+theme_override_colors/font_shadow_color = Color(0.98, 0.98, 0.98, 0.99215686)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 7
+theme_override_fonts/font = ExtResource("2_a30ew")
+theme_override_font_sizes/font_size = 80
+text = "LOCK 3 BALLS IN TOWER"
+horizontal_alignment = 1
+vertical_alignment = 1
