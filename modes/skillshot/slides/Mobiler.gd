@@ -44,7 +44,7 @@ func _ready():
 
 	update_player_ball_label()
 
-		if MPF.game.player:
+	if MPF.game.player:
 		var currentBall = MPF.game.player.ball
 		speed = 1700 + currentBall * 900
 		if speed > 4000:

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bewmsnv76fw2u"]
+
+[ext_resource type="Script" uid="uid://b76k7r1f3nkqs" path="res://modes/status_check/slides/status_display.gd" id="1_eaf7u"]
+
+[node name="status_display" type="Control" unique_id=773635388]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eaf7u")
+metadata/_custom_type_script = "uid://dru3usokwlhd3"

@@ -16,11 +16,13 @@
 #   10 loops in a row = 500,000
 #   15 loops in a row = 1,000,000 + red jackpot show
 #
+# Status display:
+#   loops_this_ball is shown on the flipper-hold status display.
+#
 # Loop Champion:
 #   Best loop streak in one game.
 #   Posted to the pending machine-record system at game end.
 # ------------------------------------------------------------
-
 mode:
   start_events:
     - game_started
@@ -53,7 +55,6 @@ timers:
         action: stop
       - event: loop_sequence_reset
         action: stop
-
   loop_combo_timer:
     start_value: 0
     end_value: 5
@@ -73,8 +74,8 @@ timers:
 #   1 = right full loop
 #   2 = left full loop
 #
-# The first left/right orbit starts are now unconditional so
-# we can confirm the mode is posting events from the real switches.
+# The first left/right orbit starts are unconditional so the real
+# switches can begin either loop direction.
 # ------------------------------------------------------------
 event_player:
   # Right loop sequence start.
@@ -86,11 +87,9 @@ event_player:
   s_right_orbit2_active{current_player.loop_sequence_direction==1 and current_player.loop_sequence_step==1}:
     loop_right_step_2:
     loop_sequence_advanced:
-
   s_left_orbit2_active{current_player.loop_sequence_direction==1 and current_player.loop_sequence_step==2}:
     loop_right_step_3:
     loop_sequence_advanced:
-
   s_left_orbit_active{current_player.loop_sequence_direction==1 and current_player.loop_sequence_step==3}:
     loop_right_full_loop_completed:
 
@@ -103,22 +102,19 @@ event_player:
   s_left_orbit2_active{current_player.loop_sequence_direction==2 and current_player.loop_sequence_step==1}:
     loop_left_step_2:
     loop_sequence_advanced:
-
   s_right_orbit2_active{current_player.loop_sequence_direction==2 and current_player.loop_sequence_step==2}:
     loop_left_step_3:
     loop_sequence_advanced:
-
   s_right_orbit_active{current_player.loop_sequence_direction==2 and current_player.loop_sequence_step==3}:
     loop_left_full_loop_completed:
 
   # Both directions become one shared full-loop event.
   loop_right_full_loop_completed:
     loop_full_loop_completed:
-
   loop_left_full_loop_completed:
     loop_full_loop_completed:
 
-  # Give variable_player 1ms to add the streak before checking awards.
+  # Give variable_player 1ms to add the loop before checking awards.
   loop_full_loop_completed:
     loop_check_streak_awards|1ms:
 
@@ -138,10 +134,8 @@ event_player:
   # Awards at exact streak values.
   loop_check_streak_awards{current_player.current_loop_streak==5}:
     loop_streak_award_5:
-
   loop_check_streak_awards{current_player.current_loop_streak==10}:
     loop_streak_award_10:
-
   loop_check_streak_awards{current_player.current_loop_streak==15}:
     loop_streak_award_15:
 
@@ -156,6 +150,8 @@ event_player:
 # Tracks:
 #   current_loop_streak
 #   best_loop_streak_this_game
+#   loops_this_ball
+#   loops_this_game
 #   loop_sequence_step
 #   loop_sequence_direction
 #   loop_jackpot_collected_this_ball
@@ -168,10 +164,24 @@ variable_player:
     best_loop_streak_this_game:
       action: set
       int: 0
+    loops_this_ball:
+      action: set
+      int: 0
+    loops_this_game:
+      action: set
+      int: 0
     loop_sequence_step:
       action: set
       int: 0
     loop_sequence_direction:
+      action: set
+      int: 0
+    loop_jackpot_collected_this_ball:
+      action: set
+      int: 0
+
+  ball_started:
+    loops_this_ball:
       action: set
       int: 0
     loop_jackpot_collected_this_ball:
@@ -186,12 +196,10 @@ variable_player:
     loop_sequence_step:
       action: set
       int: 1
-
   loop_right_step_2:
     loop_sequence_step:
       action: set
       int: 2
-
   loop_right_step_3:
     loop_sequence_step:
       action: set
@@ -205,20 +213,24 @@ variable_player:
     loop_sequence_step:
       action: set
       int: 1
-
   loop_left_step_2:
     loop_sequence_step:
       action: set
       int: 2
-
   loop_left_step_3:
     loop_sequence_step:
       action: set
       int: 3
 
-  # Any completed full loop increments the streak and clears the sequence.
+  # Any completed full loop increments streak and status counters.
   loop_full_loop_completed:
     current_loop_streak:
+      action: add
+      int: 1
+    loops_this_ball:
+      action: add
+      int: 1
+    loops_this_game:
       action: add
       int: 1
     loop_sequence_step:
@@ -252,10 +264,8 @@ variable_player:
   # Scoring awards.
   loop_streak_award_5:
     score: 250000
-
   loop_streak_award_10:
     score: 500000
-
   loop_streak_award_15:
     score: 1000000
     loop_jackpot_collected_this_ball:

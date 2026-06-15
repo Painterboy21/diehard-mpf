@@ -1,5 +1,15 @@
 #config_version=6
 
+# ------------------------------------------------------------
+# SUPER SPINNERS
+# ------------------------------------------------------------
+# What this mode does:
+#   - Runs during each ball.
+#   - Counts left/right spinner hits toward Super Spinners.
+#   - Starts Super Spinners after 50 spinner hits.
+#   - While active, spinner scoring is boosted.
+#   - Tracks progress with player vars for the status display.
+# ------------------------------------------------------------
 mode:
   start_events:
     - ball_started
@@ -7,7 +17,11 @@ mode:
     - ball_ended
   priority: 160
 
-
+# ------------------------------------------------------------
+# TIMERS
+# ------------------------------------------------------------
+# Super Spinners lasts 120 seconds once started.
+# ------------------------------------------------------------
 timers:
   super_spinners_timer:
     start_value: 120
@@ -15,36 +29,93 @@ timers:
     direction: down
     tick_interval: 1s
     start_running: false
-
     control_events:
       - event: super_spinners_start
         action: restart
-
       - event: super_spinners_stop
         action: stop
-
       - event: ball_ended
         action: stop
 
+# ------------------------------------------------------------
+# COUNTERS
+# ------------------------------------------------------------
+# Counts spinner hits until Super Spinners starts.
+# 50 hits starts Super Spinners.
+# ------------------------------------------------------------
+counters:
+  super_spinners_counter:
+    count_events:
+      - SpinnerLeft_active{current_player.super_spinners != 1}
+      - SpinnerRight_active{current_player.super_spinners != 1}
+    starting_count: 0
+    count_complete_value: 50
+    direction: up
+    persist_state: false
+    reset_on_complete: true
+    events_when_complete:
+      - super_spinners_start
+    events_when_hit:
+      - super_spinners_counted
 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Stops Super Spinners when the timer expires.
+# ------------------------------------------------------------
 event_player:
   timer_super_spinners_timer_complete:
     - super_spinners_stop
 
-
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+# super_spinners:
+#   0 = off
+#   1 = active
+#
+# super_spinners_hits:
+#   Current spinner hits toward Super Spinners.
+#
+# super_spinners_goal:
+#   Target spinner hits needed. Used by the status display.
+# ------------------------------------------------------------
 variable_player:
+  mode_super_spinners_started:
+    super_spinners:
+      action: set
+      int: 0
+    super_spinners_hits:
+      action: set
+      int: 0
+    super_spinners_goal:
+      action: set
+      int: 50
 
   # ------------------------------------------------------------
-  # Start / stop Super Spinners
+  # Count spinner hits toward Super Spinners while inactive.
   # ------------------------------------------------------------
+  super_spinners_counted{current_player.super_spinners != 1}:
+    super_spinners_hits:
+      action: add
+      int: 1
 
+  # ------------------------------------------------------------
+  # Start / stop Super Spinners.
+  # ------------------------------------------------------------
   super_spinners_start:
     super_spinners:
       action: set
       int: 1
+    super_spinners_hits:
+      action: set
+      int: 50
 
   super_spinners_stop:
     super_spinners:
+      action: set
+      int: 0
+    super_spinners_hits:
       action: set
       int: 0
 
@@ -52,7 +123,9 @@ variable_player:
     super_spinners:
       action: set
       int: 0
-
+    super_spinners_hits:
+      action: set
+      int: 0
 
   # ------------------------------------------------------------
   # VPW score adjusted to timed version:
@@ -62,7 +135,6 @@ variable_player:
   # This adds the extra 4000 while active:
   # 1010 + 4000 = 5010.
   # ------------------------------------------------------------
-
   SpinnerLeft_active{current_player.super_spinners == 1}:
     score:
       action: add

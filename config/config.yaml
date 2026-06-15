@@ -308,6 +308,7 @@ modes:
   - eob_bonus
   - service
   - super_jets
+  - status_check
   - super_spinners
   - qualify_nakatomi
   - nakatomi_multiball
