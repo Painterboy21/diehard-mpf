@@ -378,7 +378,7 @@ light_player:
     GI:
       color: ff00ff
     SPOTS:
-      color: 505050
+      color: 757575
     SPOTS_BUMPER:
       color: 757575
     l1000:
