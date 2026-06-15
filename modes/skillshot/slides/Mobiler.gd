@@ -44,11 +44,11 @@ func _ready():
 
 	update_player_ball_label()
 
-	if MPF.game.player:
+		if MPF.game.player:
 		var currentBall = MPF.game.player.ball
-		speed = 1000 + currentBall * 1000
-		if speed > 3000:
-			speed = 3000
+		speed = 1700 + currentBall * 900
+		if speed > 4000:
+			speed = 4000
 
 	videoPlayer.stream = load("res://modes/skillshot/slides/assets/SkillShot.ogv")
 	videoPlayer.finished.connect(_on_video_finished)
