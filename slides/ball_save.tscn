@@ -22,6 +22,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_f0y7e")
+volume_db = 7.999999
 autoplay = true
 bus = &"voice"
 script = ExtResource("2_hrsh4")

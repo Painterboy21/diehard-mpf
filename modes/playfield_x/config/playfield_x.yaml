@@ -4,14 +4,15 @@
 # ------------------------------------------------------------
 # What this mode does:
 #   - Starts each ball.
-#   - Drop target bank qualifies Playfield X.
-#   - Pop bumper collects and increases the playfield multiplier.
+#   - All 3 drop targets down qualifies Playfield X.
+#   - Drop targets stay down while qualified.
+#   - Pop bumper collects the next multiplier and then resets the bank.
+#   - Player must knock all 3 drop targets down again for the next multiplier.
 #   - Normal max is 3x.
 #   - unlock_4x_playfield allows 4x for the rest of the game.
 #   - unlock_5x_playfield allows 5x for the rest of the game.
 #   - Active multiplier resets when timer expires.
 #   - Unlocked max does not reset each ball.
-#   - Drop target reset uses a pending lockout so it cannot double-fire.
 # ------------------------------------------------------------
 widgets:
   playfield_2x:
@@ -54,41 +55,38 @@ timers:
 # ------------------------------------------------------------
 # EVENT PLAYER
 # ------------------------------------------------------------
-# Qualifies Playfield X from drop targets, collects it from
-# pop bumpers, resets the drop bank, and handles timer expiry.
-# The reset pending lockout allows startup reset if the bank is down,
-# but blocks the bank_down event from posting the reset twice.
+# Drop targets qualify Playfield X.
+# Pop bumpers collect the next multiplier, start/restart the timer,
+# then reset the drop target bank.
 # ------------------------------------------------------------
 event_player:
-  drop_target_bank1_down{current_player.playfield_multiplier < current_player.playfield_x_max}:
+  drop_target_bank1_down{current_player.playfield_x_qualified==0 and current_player.playfield_multiplier < current_player.playfield_x_max}:
     - pf_x_drop_1_lit
-  drop_target_bank2_down{current_player.playfield_multiplier < current_player.playfield_x_max}:
+  drop_target_bank2_down{current_player.playfield_x_qualified==0 and current_player.playfield_multiplier < current_player.playfield_x_max}:
     - pf_x_drop_2_lit
-  drop_target_bank3_down{current_player.playfield_multiplier < current_player.playfield_x_max}:
+  drop_target_bank3_down{current_player.playfield_x_qualified==0 and current_player.playfield_multiplier < current_player.playfield_x_max}:
     - pf_x_drop_3_lit
-  drop_target_bank_bank_down{current_player.drop_target_reset_pending != 1}:
-    - mark_drop_target_reset_pending
-    - reset_drop_targets_after_delay|750ms
-  drop_target_bank_bank_down{current_player.playfield_multiplier < current_player.playfield_x_max}:
+  drop_target_bank_bank_down{current_player.playfield_x_qualified==0 and current_player.playfield_multiplier < current_player.playfield_x_max}:
     - playfield_x_qualified
-  reset_drop_targets_after_delay:
-    - clear_drop_target_reset_pending|1000ms
   s_popbumper_left_active{current_player.playfield_x_qualified==1 and current_player.playfield_multiplier < current_player.playfield_x_max}:
     - increase_playfield_x
     - playfield_x_collected|10ms
     - playfield_x_started|20ms
+    - reset_drop_targets_after_delay|750ms
   s_popbumper_right_active{current_player.playfield_x_qualified==1 and current_player.playfield_multiplier < current_player.playfield_x_max}:
     - increase_playfield_x
     - playfield_x_collected|10ms
     - playfield_x_started|20ms
+    - reset_drop_targets_after_delay|750ms
   timer_playfield_x_timer_complete:
     - playfield_x_expired
+    - reset_drop_targets_after_delay|250ms
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------
-# Stores active multiplier, qualification state, max multiplier unlock,
-# and drop target reset pending lockout.
+# Stores active multiplier, qualification state, and max multiplier unlock.
 # Max stays unlocked for the rest of the game.
+# 4x and 5x only become available from the villain unlocks.
 # ------------------------------------------------------------
 variable_player:
   mode_playfield_x_started:
@@ -96,9 +94,6 @@ variable_player:
       int: 1
       action: set
     playfield_x_qualified:
-      int: 0
-      action: set
-    drop_target_reset_pending:
       int: 0
       action: set
   mode_playfield_x_started{current_player.playfield_x_max == None}:
@@ -124,14 +119,6 @@ variable_player:
   unlock_5x_playfield{current_player.playfield_x_max < 5}:
     playfield_x_max:
       int: 5
-      action: set
-  mark_drop_target_reset_pending:
-    drop_target_reset_pending:
-      int: 1
-      action: set
-  clear_drop_target_reset_pending:
-    drop_target_reset_pending:
-      int: 0
       action: set
   drop_target_bank1_down:
     score:

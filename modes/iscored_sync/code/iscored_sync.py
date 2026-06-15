@@ -1466,7 +1466,16 @@ class IscoredSync(Mode):
     # ------------------------------------------------------------
     def _force_iscored_initials_needed(self):
 
-        value = int(time.time())
+        try:
+            value = int(self._pending_iscored_score)
+        except Exception:
+            value = self._get_current_player_score()
+
+        if value <= 0:
+            value = self._get_current_player_score()
+
+        if value <= 0:
+            value = int(time.time())
 
         existing_title = ""
 
@@ -1488,13 +1497,33 @@ class IscoredSync(Mode):
                 "ENTER INITIALS"
             )
 
+        self._set_machine_var(
+            "machine_record_pending_score",
+            value
+        )
+
+        self._set_machine_var(
+            "machine_record_pending_score_text",
+            self._format_score(value)
+        )
+
+        self._set_current_player_var(
+            "machine_record_display_score",
+            value
+        )
+
+        self._set_current_player_var(
+            "machine_record_display_score_text",
+            self._format_score(value)
+        )
+
         self._set_current_player_var(
             "machine_record_initials_score",
             value
         )
 
         self.info_log(
-            "iScored initials trigger set -> value: %s",
+            "iScored initials trigger set -> display score: %s",
             value
         )
 
@@ -1515,7 +1544,10 @@ class IscoredSync(Mode):
     # ------------------------------------------------------------
     def _mark_machine_record_initials_needed(self, title="NEW MACHINE RECORD"):
 
-        value = int(time.time())
+        value = self._get_current_player_score()
+
+        if value <= 0:
+            value = int(time.time())
 
         self._set_machine_var(
             "machine_record_pending_title",
@@ -1527,13 +1559,33 @@ class IscoredSync(Mode):
             "ENTER INITIALS"
         )
 
+        self._set_machine_var(
+            "machine_record_pending_score",
+            value
+        )
+
+        self._set_machine_var(
+            "machine_record_pending_score_text",
+            self._format_score(value)
+        )
+
+        self._set_current_player_var(
+            "machine_record_display_score",
+            value
+        )
+
+        self._set_current_player_var(
+            "machine_record_display_score_text",
+            self._format_score(value)
+        )
+
         self._set_current_player_var(
             "machine_record_initials_score",
             value
         )
 
         self.info_log(
-            "Machine record initials needed -> title: %s trigger value: %s",
+            "Machine record initials needed -> title: %s display score: %s",
             title,
             value
         )

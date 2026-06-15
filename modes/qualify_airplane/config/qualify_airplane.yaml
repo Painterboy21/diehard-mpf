@@ -50,7 +50,8 @@ mode:
     - multiball_airplane_started
 
     # Stop during Ambush
-    - start_ambush
+    - start_ambush_from_vuk_hold
+    - start_ambush_from_mystery
     - mode_ambush_started
 
     # Stop during any villain mode

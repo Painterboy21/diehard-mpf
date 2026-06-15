@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1781467374,
+  "updatedAt": 1781526988,
   "entries": [
     {
       "rank": "1",
@@ -11,64 +11,64 @@
     {
       "rank": "2",
       "name": "SMD",
-      "score": 22844210,
-      "score_text": "22,844,210",
+      "score": 36449840,
+      "score_text": "36,449,840",
       "pending": false
     },
     {
       "rank": "3",
       "name": "AAA",
-      "score": 13159020,
-      "score_text": "13,159,020",
+      "score": 20573510,
+      "score_text": "20,573,510",
       "pending": false
     },
     {
       "rank": "4",
+      "name": "DFG",
+      "score": 19441820,
+      "score_text": "19,441,820",
+      "pending": false
+    },
+    {
+      "rank": "5",
+      "name": "BBB",
+      "score": 13021500,
+      "score_text": "13,021,500",
+      "pending": false
+    },
+    {
+      "rank": "6",
+      "name": "CCB",
+      "score": 10852820,
+      "score_text": "10,852,820",
+      "pending": false
+    },
+    {
+      "rank": "7",
+      "name": "DEH",
+      "score": 8881500,
+      "score_text": "8,881,500",
+      "pending": false
+    },
+    {
+      "rank": "8",
+      "name": "EGJ",
+      "score": 8849180,
+      "score_text": "8,849,180",
+      "pending": false
+    },
+    {
+      "rank": "9",
       "name": "JOHNMCCLANE",
       "score": 8557510,
       "score_text": "8,557,510",
       "pending": false
     },
     {
-      "rank": "5",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
-      "pending": false
-    },
-    {
-      "rank": "6",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
-      "pending": false
-    },
-    {
-      "rank": "7",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
-      "pending": false
-    },
-    {
-      "rank": "8",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
-      "pending": false
-    },
-    {
-      "rank": "9",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
-      "pending": false
-    },
-    {
       "rank": "10",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
+      "name": "ACD",
+      "score": 4832670,
+      "score_text": "4,832,670",
       "pending": false
     }
   ]

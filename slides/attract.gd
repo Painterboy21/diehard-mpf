@@ -3,6 +3,10 @@ extends VideoStreamPlayer
 
 var intro_video: String = "res://videos/attractvideos/DieHardTrilogyOpener.ogv"
 var gameover_video: String = "res://videos/attractvideos/GameOver.ogv"
+var instruction_video: String = "res://videos/attractvideos/Instruction.ogv"
+
+var normal_volume_db: float = 0.0
+var silent_volume_db: float = -80.0
 
 @onready var lblP1Score = $"../P1Score"
 @onready var lblP2Score = $"../P2Score"
@@ -40,6 +44,7 @@ var gameover_video: String = "res://videos/attractvideos/GameOver.ogv"
 # 4 = Multiball Hero
 # 5 = Villain MVP
 # 6 = iScored leaderboard
+# Last page = Instruction video
 # ------------------------------------------------------------
 var loop_videos: Array[String] = [
 	"res://videos/attractvideos/HSBackground3.ogv",
@@ -49,6 +54,7 @@ var loop_videos: Array[String] = [
 	"res://videos/attractvideos/HSBackground1.ogv",
 	"res://videos/attractvideos/HSBackground2.ogv",
 	"res://videos/attractvideos/HSBackground3.ogv",
+	"res://videos/attractvideos/Instruction.ogv",
 ]
 
 const LOOP_CHAMPION_PAGE_INDEX := 3
@@ -58,9 +64,12 @@ const ISCORED_PAGE_INDEX := 6
 
 var current_index: int = -1
 var player_scores_index: int = -1
+var instruction_page_index: int = -1
 var iscored_refresh_elapsed: float = 0.0
 
 func _ready() -> void:
+	normal_volume_db = self.volume_db
+
 	MPF.server.add_event_handler("rotate_attract_left", self._on_rotate_attract_left)
 	MPF.server.add_event_handler("rotate_attract_right", self._on_rotate_attract_right)
 	MPF.server.add_event_handler("play_show_xmas", self._on_timer_attract_idle_complete)
@@ -94,6 +103,10 @@ func _ready() -> void:
 	else:
 		push_warning("VillainMVP node not found. Add it as a sibling of this VideoStreamPlayer.")
 
+	# Keep instruction video as the final attract page,
+	# even if a last-game player score video gets added.
+	loop_videos.erase(instruction_video)
+
 	if MPF.game.machine_vars.has("last_game_players") and MPF.game.machine_vars["last_game_players"] != null and int(MPF.game.machine_vars["last_game_players"]) > 0:
 		current_index = -2
 
@@ -108,6 +121,9 @@ func _ready() -> void:
 				loop_videos.append("res://videos/attractvideos/pl4gameover.ogv")
 
 		player_scores_index = loop_videos.size() - 1
+
+	loop_videos.append(instruction_video)
+	instruction_page_index = loop_videos.size() - 1
 
 	_play_next(false)
 
@@ -212,6 +228,11 @@ func _play_next(increment: bool) -> void:
 
 		if current_index == ISCORED_PAGE_INDEX:
 			_show_iscored_leaderboard()
+
+	if current_index == instruction_page_index:
+		self.volume_db = silent_volume_db
+	else:
+		self.volume_db = normal_volume_db
 
 	var stream: VideoStream = load(path)
 

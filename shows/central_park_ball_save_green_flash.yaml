@@ -1,0 +1,8 @@
+#show_version=6
+- time: 0
+  lights:
+    BALL_SAVE: "00ff00"
+- time: 0.25
+  lights:
+    BALL_SAVE: "000000"
+- time: 0.5

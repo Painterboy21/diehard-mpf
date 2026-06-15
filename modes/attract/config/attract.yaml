@@ -94,15 +94,6 @@ slide_player:
       action: play
       expire: 0s
 
-  s_actionbtn_active:
-    attract_instructions:
-      action: play
-      expire: 0s
-      priority: 100
-
-  s_actionbtn_inactive:
-    attract_instructions:
-      action: remove
 
 # ------------------------------------------------------------
 # TIMERS
