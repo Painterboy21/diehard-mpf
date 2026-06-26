@@ -29,14 +29,10 @@ mode:
     - simon_dieharder_completed
     - simon_dieharder_failed
     # Stuart / Col finished
-    - stuart_completed
-    - stuart_failed
-    - stuart_dieharder_completed
-    - stuart_dieharder_failed
-    - col_completed
-    - col_failed
-    - col_dieharder_completed
-    - col_dieharder_failed
+    - col_stuart_diehard_completed
+    - col_stuart_diehard_failed
+    - col_stuart_dieharder_completed
+    - col_stuart_dieharder_failed
   stop_events:
     - ball_ended
     - start_ambush_from_vuk_hold
@@ -58,10 +54,8 @@ mode:
     - start_simon_diehard
     - start_simon_dieharder
     # Stuart / Col started
-    - start_stuart_diehard
-    - start_stuart_dieharder
-    - start_col_diehard
-    - start_col_dieharder
+    - start_col_stuart_diehard
+    - start_col_stuart_dieharder
     - start_yippee_ki_yay_wizard
     - mode_yippee_ki_yay_wizard_started
   priority: 120

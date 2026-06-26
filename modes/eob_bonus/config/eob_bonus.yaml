@@ -126,10 +126,6 @@ show_player:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  col_stuart_failed:
-    eob_bonus:
-      key: key_eob_bonus
-      loops: 0
   col_stuart_diehard_failed:
     eob_bonus:
       key: key_eob_bonus
@@ -234,8 +230,6 @@ timers:
         action: restart
       - event: simon_dieharder_failed_complete
         action: restart
-      - event: col_stuart_failed
-        action: restart
       - event: col_stuart_diehard_failed
         action: restart
       - event: col_stuart_diehard_failed_complete
@@ -246,6 +240,7 @@ timers:
         action: restart
       - event: show_bonus_summary
         action: stop
+
   eob_bonus_summary:
     start_value: 0
     end_value: 3
@@ -257,19 +252,13 @@ timers:
       - event: show_bonus_summary
         action: start
 
-# ------------------------------------------------------------
-# VARIABLE PLAYER
-# ------------------------------------------------------------
-# Calculates EOB bonus totals when EOB starts.
-# Adds the final EOB bonus score when the main EOB timer completes.
-# ------------------------------------------------------------
 variable_player:
   mode_eob_bonus_started:
     eob_bonus_total:
-      int: current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains
+      int: "current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains"
       action: set
     eob_bonus_x:
-      int: (current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains) * current_player.bonus_multiplier
+      int: "(current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains) * current_player.bonus_multiplier"
       action: set
   timer_eob_bonus_complete:
     score:
