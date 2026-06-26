@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_icsa6"]
 [ext_resource type="PackedScene" uid="uid://jckwpkv4117b" path="res://modes/katya_dieharder/widgets/katya_dieharder_timer_widget.tscn" id="2_icsa6"]
-[ext_resource type="PackedScene" uid="uid://b72gm5b1oa07x" path="res://modes/katya_dieharder/widgets/katya_dieharder_progress_widget.tscn" id="2_t8p6h"]
 [ext_resource type="VideoStream" uid="uid://pke0b81gy7jo" path="res://modes/katya_diehard/slides/Katya1.ogv" id="2_ucwdu"]
 [ext_resource type="VideoStream" uid="uid://grg0ho4bpkex" path="res://videos/DieHard3Background.ogv" id="4_q4r6v"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="5_c3vti"]
@@ -17,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://binlmwaj3sxtd" path="res://godot-media/images/O.png" id="13_hf6ra"]
 [ext_resource type="Texture2D" uid="uid://bo1y2txk5qfxf" path="res://godot-media/images/L.png" id="14_cykae"]
 [ext_resource type="Texture2D" uid="uid://bs0sdjldfa8j4" path="res://godot-media/images/Y.png" id="15_p38n1"]
-[ext_resource type="Script" uid="uid://dinegb8scbud" path="res://slides/score-overlay-manager.gd" id="17_pfx0o"]
+[ext_resource type="Script" path="res://slides/score-overlay-manager.gd" id="17_pfx0o"]
 [ext_resource type="Texture2D" uid="uid://bgrlutxjsatig" path="res://godot-media/images/player 2 overlay.png" id="19_lm63y"]
 [ext_resource type="Texture2D" uid="uid://cghope0h5kgp1" path="res://godot-media/images/player 3 overlay.png" id="20_odl34"]
 [ext_resource type="Texture2D" uid="uid://6fk0ee3lpgir" path="res://godot-media/images/player 4 overlay.png" id="21_aciaw"]
@@ -77,9 +76,6 @@ template_string = "%s"
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
 
 [node name="katya_dieharder_timer_widget" parent="." unique_id=1875424892 instance=ExtResource("2_icsa6")]
-layout_mode = 1
-
-[node name="katya_dieharder_progress_widget" parent="." unique_id=916327062 instance=ExtResource("2_t8p6h")]
 layout_mode = 1
 
 [node name="Control2" type="Control" parent="." unique_id=967988825]

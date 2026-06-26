@@ -776,6 +776,14 @@ sound_player:
   inlanerollover3_fx:
     inlanerollover3_fx:
       action: play
+  s_start_active:
+    Start_Button:
+      action: play
+      volume: 1.0
+  s_actionbtn_active:
+    Start_Button:
+      action: play
+      volume: 1.0
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------
@@ -800,7 +808,7 @@ variable_player:
       action: set
       int: 0
   mode_base_started:
-    eob_bonus_bullet:
+    eob_bonus_bullets:
       action: set
       int: 0
     eob_bonus_multiball:

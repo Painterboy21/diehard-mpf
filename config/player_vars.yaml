@@ -126,7 +126,7 @@ player_vars:
   # EOB BONUS VALUES
   # ------------------------------------------------------------
 
-  eob_bonus_bullet:
+  eob_bonus_bullets:
     initial_value: 0
     value_type: int
 

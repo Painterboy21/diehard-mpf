@@ -125,3 +125,11 @@ sound_player:
     gameplay_music_assault:
       key: main_snd_music
       action: play
+  s_start_active:
+    Start_Button:
+      action: play
+      volume: 1.0
+  s_actionbtn_active:
+    Start_Button:
+      action: play
+      volume: 1.0
