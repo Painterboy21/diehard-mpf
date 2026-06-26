@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1781555536,
+  "updatedAt": 1782492102,
   "entries": [
     {
       "rank": "1",
@@ -17,58 +17,58 @@
     },
     {
       "rank": "3",
+      "name": "DML",
+      "score": 25230940,
+      "score_text": "25,230,940",
+      "pending": false
+    },
+    {
+      "rank": "4",
+      "name": "FFF",
+      "score": 25224670,
+      "score_text": "25,224,670",
+      "pending": false
+    },
+    {
+      "rank": "5",
       "name": "AAA",
       "score": 20573510,
       "score_text": "20,573,510",
       "pending": false
     },
     {
-      "rank": "4",
+      "rank": "6",
       "name": "DFG",
       "score": 19441820,
       "score_text": "19,441,820",
       "pending": false
     },
     {
-      "rank": "5",
+      "rank": "7",
+      "name": "JohnMcClane",
+      "score": 15805700,
+      "score_text": "15,805,700",
+      "pending": false
+    },
+    {
+      "rank": "8",
+      "name": "SML",
+      "score": 15281030,
+      "score_text": "15,281,030",
+      "pending": false
+    },
+    {
+      "rank": "9",
       "name": "BBB",
       "score": 13021500,
       "score_text": "13,021,500",
       "pending": false
     },
     {
-      "rank": "6",
+      "rank": "10",
       "name": "CCB",
       "score": 10852820,
       "score_text": "10,852,820",
-      "pending": false
-    },
-    {
-      "rank": "7",
-      "name": "DEH",
-      "score": 8881500,
-      "score_text": "8,881,500",
-      "pending": false
-    },
-    {
-      "rank": "8",
-      "name": "EGJ",
-      "score": 8849180,
-      "score_text": "8,849,180",
-      "pending": false
-    },
-    {
-      "rank": "9",
-      "name": "JOHNMCCLANE",
-      "score": 8557510,
-      "score_text": "8,557,510",
-      "pending": false
-    },
-    {
-      "rank": "10",
-      "name": "ACD",
-      "score": 4832670,
-      "score_text": "4,832,670",
       "pending": false
     }
   ]

@@ -105,8 +105,10 @@ event_player:
     - drop_target_hit
   s_drop_target_3_active:
     - drop_target_hit
-  ball_hold_villain_hold_full{current_player.wizard_mode_ready != 1}:
+  ball_hold_villain_hold_full{current_player.multiball_running != 1 and current_player.wizard_mode_ready != 1 and current_player.villain_start_ready == 1}:
     - start_villain_select
+  ball_hold_villain_hold_full{current_player.multiball_running == 1}:
+    - release_villain_select_vuk
   player_added{num==2}:
     - player_2_added
   player_added{num==3}:
@@ -777,7 +779,7 @@ sound_player:
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------
-# Magnet enable/disable state, ball save state, and EOB bonus
+# Magnet enable/disable state, ball save state, EOB bonus
 # reset values when base starts.
 # ------------------------------------------------------------
 variable_player:
@@ -822,6 +824,9 @@ variable_player:
     loop_jackpot_collected_this_ball:
       action: set
       int: 0
+    multiball_running:
+      action: set
+      int: 0
   clear_bonus_x_held_flag:
     bonus_x_held:
       action: set
@@ -839,11 +844,109 @@ variable_player:
       action: set
       int: 0
   loop_streak_award_5:
-    score: 250000
+    score:
+      action: add
+      int: 250000
   loop_streak_award_10:
-    score: 500000
+    score:
+      action: add
+      int: 500000
   loop_streak_award_15:
-    score: 1000000
+    score:
+      action: add
+      int: 1000000
     loop_jackpot_collected_this_ball:
       action: set
       int: 1
+  multiball_nakatomi_started:
+    multiball_running:
+      action: set
+      int: 1
+    villain_start_ready:
+      action: set
+      int: 0
+    start_villain_after_extra_ball:
+      action: set
+      int: 0
+    villain_select_running:
+      action: set
+      int: 0
+    villain_difficulty_select_running:
+      action: set
+      int: 0
+    villain_mode_running:
+      action: set
+      int: 0
+  multiball_central_park_started:
+    multiball_running:
+      action: set
+      int: 1
+    villain_start_ready:
+      action: set
+      int: 0
+    start_villain_after_extra_ball:
+      action: set
+      int: 0
+    villain_select_running:
+      action: set
+      int: 0
+    villain_difficulty_select_running:
+      action: set
+      int: 0
+    villain_mode_running:
+      action: set
+      int: 0
+  multiball_airplane_started:
+    multiball_running:
+      action: set
+      int: 1
+    villain_start_ready:
+      action: set
+      int: 0
+    start_villain_after_extra_ball:
+      action: set
+      int: 0
+    villain_select_running:
+      action: set
+      int: 0
+    villain_difficulty_select_running:
+      action: set
+      int: 0
+    villain_mode_running:
+      action: set
+      int: 0
+  yippee_ki_yay_multiball_started:
+    multiball_running:
+      action: set
+      int: 1
+    villain_start_ready:
+      action: set
+      int: 0
+    start_villain_after_extra_ball:
+      action: set
+      int: 0
+    villain_select_running:
+      action: set
+      int: 0
+    villain_difficulty_select_running:
+      action: set
+      int: 0
+    villain_mode_running:
+      action: set
+      int: 0
+  multiball_nakatomi_ended:
+    multiball_running:
+      action: set
+      int: 0
+  multiball_central_park_ended:
+    multiball_running:
+      action: set
+      int: 0
+  multiball_airplane_ended:
+    multiball_running:
+      action: set
+      int: 0
+  yippee_ki_yay_multiball_ended:
+    multiball_running:
+      action: set
+      int: 0

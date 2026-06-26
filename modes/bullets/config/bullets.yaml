@@ -10,14 +10,8 @@
 # select directly. Extra Ball mode starts villain select after its
 # award delay.
 #
-# If the player drains after qualifying villain start, this mode
-# restores the count display and re-lights villain start on the next ball.
-#
-# Important gating:
-#   - Stops as soon as any multiball is requested.
-#   - Also stops when any multiball officially starts.
-#   - This prevents the villain VUK from starting villain select
-#     during Nakatomi, Central Park, or Airplane Multiball.
+# If any multiball starts, villain start is cleared and blocked
+# until bullets starts again after multiball ends.
 # ------------------------------------------------------------
 mode:
   start_events:
@@ -48,49 +42,25 @@ mode:
     - col_stuart_dieharder_failed
   stop_events:
     - ball_ended
-    # Stop as soon as any multiball is requested
-    - start_nakatomi_multiball
-    - start_central_park_multiball
-    - start_airplane_multiball
-    # Stop when any multiball officially starts
+    - start_yippee_ki_yay_wizard
+    - mode_yippee_ki_yay_wizard_started
     - multiball_nakatomi_started
     - multiball_central_park_started
     - multiball_airplane_started
-    - mode_nakatomi_multiball_started
-    - mode_central_park_multiball_started
-    - mode_airplane_multiball_started
-    # Stop during Ambush
+    - yippee_ki_yay_multiball_started
     - start_ambush_from_vuk_hold
     - start_ambush_from_mystery
     - mode_ambush_started
-    # Stop during villain select / villain modes
-    - start_villain_select
-    - mode_villain_select_started
-    - villain_mode_started
-    # Hans started
     - start_hans_diehard
     - start_hans_dieharder
-    # Katya started
     - start_katya_diehard
     - start_katya_dieharder
-    # Karl started
     - start_karl_diehard
     - start_karl_dieharder
-    # Simon started
     - start_simon_diehard
     - start_simon_dieharder
-    # Col / Stuart started
     - start_col_stuart_diehard
     - start_col_stuart_dieharder
-    - start_col_diehard
-    - start_col_dieharder
-    - mode_col_diehard_started
-    - mode_col_dieharder_started
-    - mode_col_stuart_diehard_started
-    - mode_col_stuart_dieharder_started
-    # Wizard mode
-    - start_yippee_ki_yay_wizard
-    - mode_yippee_ki_yay_wizard_started
   priority: 110
 # ------------------------------------------------------------
 # EVENT PLAYER
@@ -104,11 +74,19 @@ event_player:
     - bullets_check_vpw_minimum
     - bullets_force_bullet_count_refresh|250ms
     - bullets_restore_villain_start_ready|750ms
-  bullets_force_bullet_count_refresh{current_player.bullet_hits >= 15}:
+  multiball_nakatomi_started:
+    - bullets_multiball_safety_clear
+  multiball_central_park_started:
+    - bullets_multiball_safety_clear
+  multiball_airplane_started:
+    - bullets_multiball_safety_clear
+  yippee_ki_yay_multiball_started:
+    - bullets_multiball_safety_clear
+  bullets_force_bullet_count_refresh{current_player.bullet_hits >= 15 and current_player.multiball_running != 1}:
     - bullets_save_count_for_refresh
     - bullets_temp_count_refresh_low|50ms
     - bullets_restore_count_after_refresh|150ms
-  bullets_restore_villain_start_ready{current_player.bullet_hits >= 15 or current_player.villain_start_ready == 1}:
+  bullets_restore_villain_start_ready{current_player.multiball_running != 1 and (current_player.bullet_hits >= 15 or current_player.villain_start_ready == 1)}:
     - villain_start_lit
   bullets_check_vpw_minimum{current_player.bullet_hits < 9 and current_player.modes_complete==0}:
     - bullets_set_minimum_9
@@ -120,43 +98,43 @@ event_player:
     - bullets_set_minimum_3
   bullets_check_vpw_minimum{current_player.bullet_hits < 1 and current_player.modes_complete>=4}:
     - bullets_set_minimum_1
-  left_orbit_hit{current_player.shot_bullet_left_orbit == 0}:
+  left_orbit_hit{current_player.multiball_running != 1 and current_player.shot_bullet_left_orbit == 0}:
     - bullet_new_unique_shot
     - bullet_lock_left_orbit
-  right_orbit_hit{current_player.shot_bullet_right_orbit == 0}:
+  right_orbit_hit{current_player.multiball_running != 1 and current_player.shot_bullet_right_orbit == 0}:
     - bullet_new_unique_shot
     - bullet_lock_right_orbit
-  bullet_mid_orbit_hit{current_player.shot_bullet_mid_orbit == 0}:
+  bullet_mid_orbit_hit{current_player.multiball_running != 1 and current_player.shot_bullet_mid_orbit == 0}:
     - bullet_new_unique_shot
     - bullet_lock_mid_orbit
-  bullet_air_duct_hit{current_player.shot_bullet_air_duct == 0}:
+  bullet_air_duct_hit{current_player.multiball_running != 1 and current_player.shot_bullet_air_duct == 0}:
     - bullet_new_unique_shot
     - bullet_lock_air_duct
-  bullet_upper_pf_hit{current_player.shot_bullet_upper_pf == 0}:
+  bullet_upper_pf_hit{current_player.multiball_running != 1 and current_player.shot_bullet_upper_pf == 0}:
     - bullet_new_unique_shot
     - bullet_lock_upper_pf
   timer_bullets_combo_complete:
     - reset_bullets
   mode_bullets_stopping:
     - reset_bullets
-  player_bullet_combo_hits{value==5}:
+  player_bullet_combo_hits{value==5 and current_player.multiball_running != 1}:
     - bullets_combo_max
     - villain_start_lit
     - reset_bullets|100ms
-  player_bullet_hits{value>=15}:
+  player_bullet_hits{value>=15 and current_player.multiball_running != 1}:
     - villain_start_lit
   # ------------------------------------------------------------
   # VILLAIN VUK START
   # ------------------------------------------------------------
   # Only starts villain select if villain start is actually ready.
   # Extra Ball still gets first priority.
-  # Multiball protection is handled by the mode stop_events above.
+  # Completely blocked while any multiball is running.
   # ------------------------------------------------------------
-  ball_hold_villain_hold_full{current_player.villain_start_ready == 1 and current_player.extra_balls_lit != 1 and current_player.extra_ball_owed != 1 and current_player.start_villain_after_extra_ball != 1}:
+  ball_hold_villain_hold_full{current_player.multiball_running != 1 and current_player.villain_start_ready == 1 and current_player.extra_balls_lit != 1 and current_player.extra_ball_owed != 1 and current_player.start_villain_after_extra_ball != 1}:
     - start_villain_select
     - reset_bullet_total
     - reset_bullets
-  ball_hold_villain_hold_full{current_player.villain_start_ready == 1 and (current_player.extra_balls_lit == 1 or current_player.extra_ball_owed == 1 or current_player.start_villain_after_extra_ball == 1)}:
+  ball_hold_villain_hold_full{current_player.multiball_running != 1 and current_player.villain_start_ready == 1 and (current_player.extra_balls_lit == 1 or current_player.extra_ball_owed == 1 or current_player.start_villain_after_extra_ball == 1)}:
     - set_start_villain_after_extra_ball
 # ------------------------------------------------------------
 # RANDOM EVENT PLAYER
@@ -318,16 +296,23 @@ show_player:
   start_villain_select:
     key_villain_start_lit:
       action: stop
+  bullets_multiball_safety_clear:
+    key_villain_start_lit:
+      action: stop
 # ------------------------------------------------------------
 # LIGHT PLAYER
 # ------------------------------------------------------------
 # l10 indicates villain start/select.
+# It is forced off when any multiball starts.
 # ------------------------------------------------------------
 light_player:
   start_villain_select:
     l10:
       color: ffff00
   reset_bullet_total:
+    l10:
+      color: off
+  bullets_multiball_safety_clear:
     l10:
       color: off
 # ------------------------------------------------------------
@@ -345,6 +330,8 @@ timers:
         action: restart
       - event: villain_start_lit
         action: stop
+      - event: bullets_multiball_safety_clear
+        action: stop
     restart_on_complete: false
     start_running: false
     tick_interval: 100ms
@@ -352,10 +339,24 @@ timers:
 # VARIABLE PLAYER
 # ------------------------------------------------------------
 # Tracks bullet total, combo hits, EOB bonus, VPW minimums,
-# display refresh, and villain-start-ready latch.
+# display refresh, villain-start-ready latch, and multiball lockout.
 # ------------------------------------------------------------
 variable_player:
-  bullet_new_unique_shot:
+  mode_bullets_started:
+    multiball_running:
+      action: set
+      int: 0
+  bullets_multiball_safety_clear:
+    multiball_running:
+      action: set
+      int: 1
+    villain_start_ready:
+      action: set
+      int: 0
+    start_villain_after_extra_ball:
+      action: set
+      int: 0
+  bullet_new_unique_shot{current_player.multiball_running != 1}:
     bullet_hits:
       action: add
       int: "1 + current_player.bullet_combo_hits"
@@ -418,7 +419,7 @@ variable_player:
     villain_start_ready:
       action: set
       int: 0
-  villain_start_lit:
+  villain_start_lit{current_player.multiball_running != 1}:
     villain_start_ready:
       action: set
       int: 1
