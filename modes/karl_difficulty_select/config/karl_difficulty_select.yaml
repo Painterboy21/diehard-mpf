@@ -1,5 +1,4 @@
 #config_version=6
-
 # ------------------------------------------------------------
 # MODE
 # Karl difficulty select carousel.
@@ -13,7 +12,6 @@ mode:
     - ball_ended
   priority: 310
   code: mpf.modes.carousel.code.carousel.Carousel
-
 # ------------------------------------------------------------
 # LIGHT PLAYER
 # Turns off GI and spots while Karl difficulty select is active.
@@ -24,7 +22,6 @@ light_player:
       color: 000000
     SPOTS:
       color: 000000
-
 # ------------------------------------------------------------
 # MODE SETTINGS
 # Karl difficulty choices and carousel controls.
@@ -33,17 +30,13 @@ mode_settings:
   selectable_items:
     - karl_die_hard
     - karl_die_harder
-
   next_item_events:
     - s_right_flipper_active
-
   previous_item_events:
     - s_left_flipper_active
-
   select_item_events:
     - s_fire_active
     - s_actionbtn_active
-
 # ------------------------------------------------------------
 # SHOW PLAYER
 # Flashes Karl insert/action button orange while choosing
@@ -59,84 +52,69 @@ show_player:
       show_tokens:
         lights: l40, l1000, l1001
         color: ff8800
-
     InsertsVillainSpinOrange:
       key: key_karl_difficulty_spin
       loops: -1
       speed: 50
-
   set_difficulty_die_hard:
     flash_color:
       action: stop
       key: selected_villain_flash
-
     InsertsVillainSpinOrange:
       action: stop
       key: key_karl_difficulty_spin
-
   set_difficulty_die_harder:
     flash_color:
       action: stop
       key: selected_villain_flash
-
     InsertsVillainSpinOrange:
       action: stop
       key: key_karl_difficulty_spin
-
   mode_karl_difficulty_select_stopped:
     flash_color:
       action: stop
       key: selected_villain_flash
-
     InsertsVillainSpinOrange:
       action: stop
       key: key_karl_difficulty_spin
-
 # ------------------------------------------------------------
 # SLIDE PLAYER
 # Shows Karl difficulty select and Karl intro.
+# Removes the select slide when the intro starts so it cannot
+# flash back onscreen before the Karl mode slide appears.
 # ------------------------------------------------------------
 slide_player:
   mode_karl_difficulty_select_started:
     karl_difficulty_select:
       action: play
       expire: 0s
-
   play_karl_intro:
+    karl_difficulty_select:
+      action: remove
     karl_intro:
       action: play
-      expire: 5s
-
+      expire: 4.15s
 # ------------------------------------------------------------
 # EVENT PLAYER
-# Starts the selected Karl mode after the intro.
-#
-# Important:
-#   reset_karl_result_state clears the previous fail/escaped
-#   state before posting start_karl_diehard again.
+# Starts Karl just before the intro finishes.
+# The selected mode starts first, VUK releases next, then the
+# difficulty select mode stops just after.
 # ------------------------------------------------------------
 event_player:
   carousel_item_selected{carousel=="karl_difficulty_select" and item=="karl_die_hard"}:
     - set_difficulty_die_hard
     - play_karl_intro
-    - start_karl_diehard_after_intro|4.5s
-
+    - reset_karl_result_state|3.75s
+    - start_karl_diehard|3.9s
+    - release_villain_select_vuk|4s
+    - villain_selection_complete|4.05s
   carousel_item_selected{carousel=="karl_difficulty_select" and item=="karl_die_harder"}:
     - set_difficulty_die_harder
     - play_karl_intro
-    - start_karl_dieharder_after_intro|4.5s
-
-  start_karl_diehard_after_intro:
-    - reset_karl_result_state
-    - release_villain_select_vuk
-    - start_karl_diehard
-    - villain_selection_complete|100ms
-
-  start_karl_dieharder_after_intro:
-    - reset_karl_result_state
-    - release_villain_select_vuk
-    - start_karl_dieharder
-    - villain_selection_complete|100ms
+    - reset_karl_result_state|3.75s
+    - start_karl_dieharder|3.9s
+    - release_villain_select_vuk|4s
+    - villain_selection_complete|4.05s
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # Stores selected difficulty and clears Karl result variables
@@ -147,35 +125,28 @@ variable_player:
     selected_diehard_mode:
       string: die_hard
       action: set
-
   set_difficulty_die_harder:
     selected_diehard_mode:
       string: die_harder
       action: set
-
   mode_karl_difficulty_select_started:
     villain_difficulty_select_running:
       action: set
       int: 1
-
   mode_karl_difficulty_select_stopping:
     villain_difficulty_select_running:
       action: set
       int: 0
-
   reset_karl_result_state:
     karl_result_started:
       action: set
       int: 0
-
     karl_result_display:
       action: set
       int: 0
-
     karl_diehard_lost:
       action: set
       int: 0
-
     karl_diehard_won:
       action: set
       int: 0

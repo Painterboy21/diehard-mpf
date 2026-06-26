@@ -4,7 +4,6 @@
 [ext_resource type="VideoStream" uid="uid://grg0ho4bpkex" path="res://videos/DieHard3Background.ogv" id="2_5wbb6"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_65801"]
 [ext_resource type="VideoStream" uid="uid://pke0b81gy7jo" path="res://modes/katya_diehard/slides/Katya1.ogv" id="4_5wbb6"]
-[ext_resource type="PackedScene" uid="uid://b72gm5b1oa07x" path="res://modes/katya_dieharder/widgets/katya_dieharder_progress_widget.tscn" id="4_msb4v"]
 [ext_resource type="Script" uid="uid://b3rcjyae56g0t" path="res://modes/katya_diehard/slides/katya_video_control.gd" id="5_65801"]
 [ext_resource type="PackedScene" uid="uid://660hrg5dn8jt" path="res://modes/katya_diehard/widgets/katya_timer_widget.tscn" id="5_ihpqg"]
 [ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="6_ppg7w"]
@@ -75,9 +74,6 @@ script = ExtResource("7_uk4d1")
 variable_name = "katya_shots"
 template_string = "%s"
 metadata/_custom_type_script = "uid://bfvhmv2eirpua"
-
-[node name="katya_progress_widget" parent="." unique_id=916327062 instance=ExtResource("4_msb4v")]
-layout_mode = 1
 
 [node name="katya_timer_widget" parent="." unique_id=1875424892 instance=ExtResource("5_ihpqg")]
 layout_mode = 1

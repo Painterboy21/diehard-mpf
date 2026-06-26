@@ -556,7 +556,7 @@ light_player:
       color: ff8800
       priority: 1000
     SPOTS:
-      color: 505050
+      color: 757575
       priority: 1000
     SPOTS_BUMPER:
       color: 757575

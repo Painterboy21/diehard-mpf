@@ -3,131 +3,113 @@
 mode:
   start_events:
     - ball_started{current_player.central_park_played==0}
-    - multiball_nakatomi_ended
-    - multiball_airplane_ended
-    - mode_ambush_stopped
-
+    - multiball_nakatomi_ended{current_player.central_park_played==0}
+    - multiball_airplane_ended{current_player.central_park_played==0}
+    - mode_ambush_stopped{current_player.central_park_played==0}
     # Hans finished
-    - hans_diehard_won_complete
-    - hans_diehard_failed_complete
-    - hans_dieharder_won_complete
-    - hans_dieharder_failed_complete
-
+    - hans_diehard_won_complete{current_player.central_park_played==0}
+    - hans_diehard_failed_complete{current_player.central_park_played==0}
+    - hans_dieharder_won_complete{current_player.central_park_played==0}
+    - hans_dieharder_failed_complete{current_player.central_park_played==0}
     # Katya finished
-    - katya_completed
-    - katya_failed
-    - katya_dieharder_completed
-    - katya_dieharder_failed
-
+    - katya_completed{current_player.central_park_played==0}
+    - katya_failed{current_player.central_park_played==0}
+    - katya_dieharder_completed{current_player.central_park_played==0}
+    - katya_dieharder_failed{current_player.central_park_played==0}
     # Karl finished
-    - karl_diehard_completed
-    - karl_diehard_failed
-    - karl_dieharder_completed
-    - karl_dieharder_failed
-
+    - karl_diehard_completed{current_player.central_park_played==0}
+    - karl_diehard_failed{current_player.central_park_played==0}
+    - karl_dieharder_completed{current_player.central_park_played==0}
+    - karl_dieharder_failed{current_player.central_park_played==0}
     # Simon finished
-    - simon_completed
-    - simon_failed
-    - simon_dieharder_completed
-    - simon_dieharder_failed
-
+    - simon_completed{current_player.central_park_played==0}
+    - simon_failed{current_player.central_park_played==0}
+    - simon_dieharder_completed{current_player.central_park_played==0}
+    - simon_dieharder_failed{current_player.central_park_played==0}
     # Stuart / Col finished
-    - stuart_completed
-    - stuart_failed
-    - stuart_dieharder_completed
-    - stuart_dieharder_failed
-    - col_completed
-    - col_failed
-    - col_dieharder_completed
-    - col_dieharder_failed
-
+    - col_stuart_diehard_completed{current_player.central_park_played==0}
+    - col_stuart_diehard_failed{current_player.central_park_played==0}
+    - col_stuart_dieharder_completed{current_player.central_park_played==0}
+    - col_stuart_dieharder_failed{current_player.central_park_played==0}
   stop_events:
     - ball_ended
-
     # Stop during Central Park itself / other multiballs
     - multiball_central_park_started
     - multiball_nakatomi_started
     - multiball_airplane_started
-
     # Stop during Ambush
-    - start_ambush
+    - start_ambush_from_vuk_hold
+    - start_ambush_from_mystery
     - mode_ambush_started
-
     # Hans started
     - start_hans_diehard
     - start_hans_dieharder
-
     # Katya started
     - start_katya_diehard
     - start_katya_dieharder
-
     # Karl started
     - start_karl_diehard
     - start_karl_dieharder
-
     # Simon started
     - start_simon_diehard
     - start_simon_dieharder
-
     # Stuart / Col started
-    - start_stuart_diehard
-    - start_stuart_dieharder
-    - start_col_diehard
-    - start_col_dieharder
-
+    - start_col_stuart_diehard
+    - start_col_stuart_dieharder
+    - start_yippee_ki_yay_wizard
+    - mode_yippee_ki_yay_wizard_started
   priority: 200
-
 
 light_player:
   central_park_start_multiball_hit:
-    GI: 
+    GI:
       color: ffb700
     SPOTS:
       color: 505050
     SPOTS_BUMPER:
       color: 969650
 
-shot_groups: 
+shot_groups:
   qualify_central_park:
     shots: central_park_lock_left,central_park_lock_middle,central_park_lock_right
     restart_events: trigger_central_park_ball_locked
-    disable_events: multiball_central_park_started
-    
-shots: 
+    disable_events:
+      - central_park_start_multiball_hit
+      - start_central_park_multiball
+      - multiball_central_park_started
+
+shots:
   central_park_lock_left:
     switch: s_TrPF1
     profile: profile_central_park_lock
-    show_tokens: 
+    show_tokens:
       lights: l76
     control_events:
       - events: mystery_award_cp_left_lane
         state: 1
-
   central_park_lock_middle:
     switch: s_TrPF2
     profile: profile_central_park_lock
-    show_tokens: 
+    show_tokens:
       lights: l77
     control_events:
       - events: mystery_award_cp_middle_lane
         state: 1
-
   central_park_lock_right:
     switch: s_TrPF3
     profile: profile_central_park_lock
-    show_tokens: 
+    show_tokens:
       lights: l78
     control_events:
       - events: mystery_award_cp_right_lane
         state: 1
-
   central_park_start_multiball:
     profile: cp_start_multiball_profile
     switch: s_upper_pf_entrance
     start_enabled: false
     enable_events: counter_central_park_multiball_counter_hit{hits==3}
-    disable_events: shot_central_park_start_multiball_hit
-    show_tokens: 
+    disable_events: central_park_start_multiball_hit
+    show_tokens:
       lights: CP_LOCK
       color: 00ff00
 
@@ -137,12 +119,16 @@ counters:
     count_complete_value: 3
     persist_state: true
     enable_events: mode_qualify_central_park_started
-    disable_events: multiball_central_park_started, ball_ended
+    disable_events:
+      - central_park_start_multiball_hit
+      - start_central_park_multiball
+      - multiball_central_park_started
+      - ball_ended
     events_when_complete: trigger_central_park_ball_locked
-   
-show_player: 
-  qualify_central_park_on_complete: 
-    park_mb_ball_locked: 
+
+show_player:
+  qualify_central_park_on_complete:
+    park_mb_ball_locked:
       key: key_central_park_ball_locked
       loops: 0
       priority: 999
@@ -153,12 +139,11 @@ show_player:
       loops: 0
       priority: 999
 
-
-slide_player: 
+slide_player:
   counter_central_park_multiball_counter_hit{hits==1}:
     centralparkball_1_locked:
       action: play
-      expire: 0s 
+      expire: 0s
   counter_central_park_multiball_counter_hit{hits==2}:
     centralparkball_2_locked:
       action: play
@@ -174,14 +159,13 @@ slide_player:
 
 event_player:
   slide_centralpark_mb_removed:
-   - start_central_park_multiball
+    - start_central_park_multiball
 
 variable_player:
   trigger_central_park_ball_locked:
     score:
       action: add
       int: "250000 * current_player.playfield_multiplier"
-
     eob_bonus_multiball:
       action: add
       int: 100000

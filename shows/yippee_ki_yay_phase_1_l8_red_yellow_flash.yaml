@@ -1,0 +1,18 @@
+#show_version=6
+# ------------------------------------------------------------
+# YIPPEE KI YAY L8 FLASH
+# ------------------------------------------------------------
+# Only l8 does the red/yellow/red flash during Phase 1.
+# ------------------------------------------------------------
+- duration: 200ms
+  lights:
+    l8: red
+- duration: 90ms
+  lights:
+    l8: yellow
+- duration: 200ms
+  lights:
+    l8: red
+- duration: 180ms
+  lights:
+    l8: off

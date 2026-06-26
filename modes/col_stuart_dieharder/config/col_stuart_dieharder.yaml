@@ -864,7 +864,7 @@ light_player:
     GI:
       color: 0044ff
     SPOTS:
-      color: 505050
+      color: 757575
     SPOTS_BUMPER:
       color: 757575
     l44:

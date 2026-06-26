@@ -1,102 +1,108 @@
 #config_version=6
-
+# ------------------------------------------------------------
+# QUALIFY AIRPLANE
+# ------------------------------------------------------------
+# VPW reference:
+#   - Const AirplaneLocksNeededForMB = 2
+#
+# What this mode does:
+#   - Runs during normal single-ball play before Airplane Multiball.
+#   - Counts captive ball hits to light the Airplane lock.
+#   - Lets the player lock 2 virtual balls at the upper ramp device.
+#   - Starts Airplane Multiball after the 2nd lock slide finishes.
+#   - Stops while villains, Ambush, wizard mode, or other multiballs run.
+#   - Enables a white shoot-again/ball-save after the 2nd lock.
+# ------------------------------------------------------------
 mode:
   start_events:
     - ball_started{current_player.airplane_mb_played==0}
     - multiball_nakatomi_ended
     - multiball_central_park_ended
     - mode_ambush_stopped
-
     # Hans finished
     - hans_diehard_won_complete
     - hans_diehard_failed_complete
     - hans_dieharder_won_complete
     - hans_dieharder_failed_complete
-
     # Katya finished
     - katya_completed
     - katya_failed
     - katya_dieharder_completed
     - katya_dieharder_failed
-
     # Karl finished
     - karl_diehard_completed
     - karl_diehard_failed
     - karl_dieharder_completed
     - karl_dieharder_failed
-
     # Simon finished
     - simon_completed
     - simon_failed
     - simon_dieharder_completed
     - simon_dieharder_failed
-
     # Stuart / Col finished
-    - stuart_completed
-    - stuart_failed
-    - stuart_dieharder_completed
-    - stuart_dieharder_failed
-    - col_completed
-    - col_failed
-    - col_dieharder_completed
-    - col_dieharder_failed
-
+    - col_stuart_diehard_completed
+    - col_stuart_diehard_failed
+    - col_stuart_dieharder_completed
+    - col_stuart_dieharder_failed
   stop_events:
     - ball_ended
-
     # Stop while other multiballs run
     - multiball_nakatomi_started
     - multiball_central_park_started
     - multiball_airplane_started
-
     # Stop during Ambush
-    - start_ambush
+    - start_ambush_from_vuk_hold
+    - start_ambush_from_mystery
     - mode_ambush_started
-
     # Stop during any villain mode
     - villain_mode_started
-
     # Hans started
     - start_hans_diehard
     - start_hans_dieharder
-
     # Katya started
     - start_katya_diehard
     - start_katya_dieharder
-
     # Karl started
     - start_karl_diehard
     - start_karl_dieharder
-
     # Simon started
     - start_simon_diehard
     - start_simon_dieharder
-
     # Stuart / Col started
-    - start_stuart_diehard
-    - start_stuart_dieharder
-    - start_col_diehard
-    - start_col_dieharder
-
-    # Col mode actually started
-    - mode_col_diehard_started
-    - mode_col_dieharder_started
+    - start_col_stuart_diehard
+    - start_col_stuart_dieharder
+    # Col/Stuart mode actually started
     - mode_col_stuart_diehard_started
     - mode_col_stuart_dieharder_started
+    # Wizard mode
+    - start_yippee_ki_yay_wizard
+    - mode_yippee_ki_yay_wizard_started
   priority: 150
 
+# ------------------------------------------------------------
+# BALL SAVE
+# ------------------------------------------------------------
+# White shoot-again after the 2nd Airplane lock.
+# Lasts 18 seconds and turns off when Airplane Multiball starts.
+# ------------------------------------------------------------
 ball_saves:
   airplane_save:
-    active_time: 8s           
-    hurry_up_time: 4s                
-    enable_events: airplane_ball_3_locked_complete
+    active_time: 18s
+    hurry_up_time: 4s
+    enable_events: airplane_ball_2_locked_complete
     disable_events: start_airplane_multiball
     auto_launch: true
     balls_to_save: -1
 
+# ------------------------------------------------------------
+# BALL HOLD
+# ------------------------------------------------------------
+# Holds the ball at UrampUp001 when the Airplane lock is lit.
+# Releases the ball after each lock slide is removed.
+# ------------------------------------------------------------
 ball_holds:
-  airplane_lock_hold: 
-    enable_events: 
+  airplane_lock_hold:
+    enable_events:
       - counter_airplane_light_lock_hit{hits==5}
       - lock_lit
     disable_events: start_airplane_multiball
@@ -104,12 +110,16 @@ ball_holds:
     balls_to_hold: 1
     release_all_events:
       - slide_airplane_ball_1_removed
-      - slide_airplane_ball_2_removed
-      - slide_airplane_mb_removed 
+      - slide_airplane_mb_removed
       - start_airplane_multiball
       - tilt
-      - ball_ended  
+      - ball_ended
 
+# ------------------------------------------------------------
+# SHOWS
+# ------------------------------------------------------------
+# Small captive-ball flash and lock-release warning flash.
+# ------------------------------------------------------------
 shows:
   flash_captive_yellow:
     - duration: 100ms
@@ -126,6 +136,11 @@ shows:
       lights:
         f142: off
 
+# ------------------------------------------------------------
+# SHOW PLAYER
+# ------------------------------------------------------------
+# Plays feedback when captive ball is hit, lock releases, or ball enters lock.
+# ------------------------------------------------------------
 show_player:
   s_captiveball_active:
     flash_captive_yellow:
@@ -135,11 +150,20 @@ show_player:
     flash_rightvuk_release:
       loops: 8
       speed: 1
-  s_UrampUp001_active{current_player.airplane_lock_lit==1}: 
-    plane_ball_locked: 
+  s_UrampUp001_active{current_player.airplane_lock_lit==1}:
+    plane_ball_locked:
       key: key_plane_ball_locked1
       loops: 0
 
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Main Airplane flow:
+#   - Start mode resets/arms the captive-ball counter.
+#   - 5 captive hits lights lock.
+#   - Upper ramp locks ball 1, then ball 2.
+#   - 2nd lock starts the multiball flow after the slide is removed.
+# ------------------------------------------------------------
 event_player:
   mode_qualify_airplane_started:
     - airplane_reset_locks
@@ -151,27 +175,25 @@ event_player:
     - airplane_ball_1_locked_complete
   s_UrampUp001_active{current_player.airplane_lock_lit==1 and current_player.airplane_virtual_locks==1}:
     - airplane_ball_2_locked_complete
-  s_UrampUp001_active{current_player.airplane_lock_lit==1 and current_player.airplane_virtual_locks==2}:
-    - airplane_ball_3_locked_complete
   slide_airplane_ball_1_removed:
     - airplane_lock_release_warning
     - airplane_lock_slide_done|500ms
     - airplane_reset_locks|600ms
     - airplane_enable_lock_counter|600ms
-  slide_airplane_ball_2_removed:
-    - airplane_lock_release_warning
-    - airplane_lock_slide_done|500ms
-    - airplane_reset_locks|600ms
-    - airplane_enable_lock_counter|600ms
-  airplane_ball_3_locked_complete:
-    - airplane_ball_3_locked
+  airplane_ball_2_locked_complete:
+    - airplane_ball_2_locked
     - airplane_disable_lock_counter
   slide_airplane_mb_removed:
     - airplane_lock_release_warning
     - airplane_lock_slide_done|500ms
     - start_airplane_multiball|600ms
 
-
+# ------------------------------------------------------------
+# COUNTERS
+# ------------------------------------------------------------
+# Counts 5 captive ball hits to light the Airplane lock.
+# Resets after the 1st lock, then stops after the 2nd lock.
+# ------------------------------------------------------------
 counters:
   airplane_light_lock:
     count_events: s_captiveball_active
@@ -183,15 +205,19 @@ counters:
     reset_events: airplane_reset_locks
     persist_state: false
 
-
+# ------------------------------------------------------------
+# SHOTS
+# ------------------------------------------------------------
+# Controls the Airplane lock inserts and the white shoot-again insert.
+# ------------------------------------------------------------
 shots:
   airplane_save:
     profile: shoot_again
-    show_tokens: 
-      color: ff0000
-    enable_events: airplane_ball_3_locked_complete
+    show_tokens:
+      color: ffffff
+    enable_events: airplane_ball_2_locked_complete
     disable_events: start_airplane_multiball
-    control_events: 
+    control_events:
       - events: qualify_airplane_on_complete
         state: 1
 
@@ -205,7 +231,7 @@ shots:
         state: 0
       - events: airplane_reset_locks
         state: 1
-      - events: airplane_ball_3_locked_complete
+      - events: airplane_ball_2_locked_complete
         state: 2
 
   airplane_lock:
@@ -218,22 +244,25 @@ shots:
         state: 0
       - events: airplane_reset_locks
         state: 1
-      - events: airplane_ball_3_locked_complete
+      - events: airplane_ball_2_locked_complete
         state: 2
 
   airplane_lock_complete:
     switch: s_UrampUp001
 
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# ------------------------------------------------------------
+# Shows the first lock slide and the Airplane Multiball intro slide.
+# The second lock now goes straight to the multiball intro,
+# matching VPW's 2-lock rule.
+# ------------------------------------------------------------
 slide_player:
   airplane_ball_1_locked_complete:
     airplane_ball_1:
       action: play
       expire: 0s
   airplane_ball_2_locked_complete:
-    airplane_ball_2:
-      action: play
-      expire: 0s
-  airplane_ball_3_locked_complete:
     airplane_mb:
       action: play
       expire: 0s
@@ -242,8 +271,17 @@ slide_player:
       action: play
       expire: 0s
 
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+# Tracks whether the lock is lit and how many virtual balls are locked.
+# Also scores captive-ball hits and adds multiball EOB bonus value.
+# Important fix:
+#   - Uses mode_qualify_airplane_started instead of generic mode_started,
+#     so other modes do not accidentally wipe Airplane progress.
+# ------------------------------------------------------------
 variable_player:
-  mode_started:
+  mode_qualify_airplane_started:
     airplane_lock_lit:
       int: 0
       action: set
@@ -268,17 +306,6 @@ variable_player:
       int: 100000
 
   airplane_ball_2_locked_complete:
-    airplane_virtual_locks:
-      int: 1
-      action: add
-    airplane_lock_lit:
-      int: 0
-      action: set
-    eob_bonus_multiball:
-      action: add
-      int: 100000
-
-  airplane_ball_3_locked_complete:
     airplane_virtual_locks:
       int: 1
       action: add

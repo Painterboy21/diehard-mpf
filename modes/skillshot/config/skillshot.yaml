@@ -6,6 +6,19 @@ mode:
   priority: 1100
 
 # ---------------------------------------------------------------------
+# SOUND PLAYER
+# Preloads gunfire when skillshot starts, then plays it instantly
+# when the fire button is pressed.
+# Sound file:
+#   sounds/src/gunfire.wav
+# ---------------------------------------------------------------------
+sound_player:
+  s_fire_active:
+    gunfire:
+      action: play
+      volume: 1.0
+
+# ---------------------------------------------------------------------
 # EVENT PLAYER
 # skillshot_hit_fast comes from Godot immediately when skillshot is made.
 # skillshot_hit still comes later after the reward video for normal scoring.

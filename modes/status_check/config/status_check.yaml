@@ -1,0 +1,85 @@
+#config_version=6
+
+# ------------------------------------------------------------
+# STATUS CHECK
+# ------------------------------------------------------------
+# What this mode does:
+#   - Starts every ball.
+#   - Watches both flipper buttons.
+#   - If both flippers are held for 4 seconds, it shows the
+#     player's current progress/status screen.
+#   - Releasing either flipper hides the status screen.
+#   - This does not change scoring, locks, mystery, jets, spinners,
+#     loops, or any gameplay logic.
+# ------------------------------------------------------------
+mode:
+  start_events:
+    - ball_started
+  stop_events:
+    - ball_ended
+  priority: 50
+
+# ------------------------------------------------------------
+# COMBO SWITCHES
+# ------------------------------------------------------------
+# Both flippers must be held continuously for 4 seconds.
+# Releasing either flipper removes the status display.
+# ------------------------------------------------------------
+combo_switches:
+  status_check_flipper_hold:
+    switches_1:
+      - s_left_flipper
+    switches_2:
+      - s_right_flipper
+    hold_time: 4s
+    release_time: 100ms
+    events_when_both:
+      - status_check_show
+    events_when_one:
+      - status_check_hide
+    events_when_inactive:
+      - status_check_hide
+
+# ------------------------------------------------------------
+# SLIDE PLAYER
+# ------------------------------------------------------------
+# Shows/removes the Godot MPFSlide.
+# Scene file must be:
+#   modes/status_check/slides/status_display.tscn
+# ------------------------------------------------------------
+slide_player:
+  status_check_show:
+    status_display:
+      priority: 20000
+  status_check_hide:
+    status_display:
+      action: remove
+  ball_will_end:
+    status_display:
+      action: remove
+  ball_ending:
+    status_display:
+      action: remove
+  ball_ended:
+    status_display:
+      action: remove
+  game_ending:
+    status_display:
+      action: remove
+
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+# Safety cleanup so the status screen never stays stuck on.
+# ------------------------------------------------------------
+event_player:
+  mode_status_check_started:
+    - status_check_hide
+  ball_will_end:
+    - status_check_hide
+  ball_ending:
+    - status_check_hide
+  ball_ended:
+    - status_check_hide
+  game_ending:
+    - status_check_hide

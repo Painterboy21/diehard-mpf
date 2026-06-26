@@ -166,7 +166,9 @@ event_player:
     - mystery_villain_inactive
     - mystery_clear_add_time_available
 
-  start_ambush:
+  start_ambush_from_vuk_hold:
+    - mystery_ambush_active
+  start_ambush_from_mystery:
     - mystery_ambush_active
   mode_ambush_started:
     - mystery_ambush_active
@@ -286,7 +288,7 @@ event_player:
     - mystery_start_ambush_from_vault
   mystery_start_ambush_from_vault:
     - mystery_clear_pending_ambush
-    - start_ambush
+    - start_ambush_from_mystery
 
   mystery_awarded:
     - mystery_close_vault

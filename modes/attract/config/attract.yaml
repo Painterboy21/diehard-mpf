@@ -94,15 +94,6 @@ slide_player:
       action: play
       expire: 0s
 
-  s_actionbtn_active:
-    attract_instructions:
-      action: play
-      expire: 0s
-      priority: 100
-
-  s_actionbtn_inactive:
-    attract_instructions:
-      action: remove
 
 # ------------------------------------------------------------
 # TIMERS
@@ -134,3 +125,11 @@ sound_player:
     gameplay_music_assault:
       key: main_snd_music
       action: play
+  s_start_active:
+    Start_Button:
+      action: play
+      volume: 1.0
+  s_actionbtn_active:
+    Start_Button:
+      action: play
+      volume: 1.0
