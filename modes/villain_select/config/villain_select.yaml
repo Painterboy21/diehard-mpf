@@ -1,12 +1,5 @@
 #config_version=6
 
-# ------------------------------------------------------------
-# MODE
-# ------------------------------------------------------------
-# Villain select carousel.
-# Starts from start_villain_select and stops when a difficulty
-# select begins, selection completes, or the ball ends.
-# ------------------------------------------------------------
 mode:
   start_events:
     - start_villain_select
@@ -21,11 +14,6 @@ mode:
   priority: 300
   code: mpf.modes.carousel.code.carousel.Carousel
 
-# ------------------------------------------------------------
-# LIGHT PLAYER
-# ------------------------------------------------------------
-# Turns off GI and spots while villain select is active.
-# ------------------------------------------------------------
 light_player:
   mode_villain_select_started:
     GI:
@@ -33,26 +21,14 @@ light_player:
     SPOTS:
       color: 000000
 
-# ------------------------------------------------------------
-# MODE SETTINGS
-# ------------------------------------------------------------
-# Carousel items and controls.
-#
-# Villains use their shared complete variables:
-#   complete = 0 means the villain can still be selected.
-#   complete = 1 means the villain was defeated and removed.
-#
-# Failed / escaped villains do not set complete, so they can
-# be selected again after a fail.
-# ------------------------------------------------------------
 mode_settings:
   selectable_items:
     - villain_instructions
-    - Katya_Villain_Select{current_player.katya_complete==0}
-    - Col_Stuart_Villain_Select{current_player.col_stuart_complete==0}
-    - Hans_Gruber_Villain_Select{current_player.hans_complete==0}
-    - Simon_Gruber_Villain_Select{current_player.simon_complete==0}
-    - Karl_Vreski_Villain_Select{current_player.karl_complete==0}
+    - Katya_Villain_Select{current_player.katya_complete!=1}
+    - Col_Stuart_Villain_Select{current_player.col_stuart_complete!=1}
+    - Hans_Gruber_Villain_Select{current_player.hans_complete!=1}
+    - Simon_Gruber_Villain_Select{current_player.simon_complete!=1}
+    - Karl_Vreski_Villain_Select{current_player.karl_complete!=1}
 
   next_item_events:
     - s_right_flipper_active
@@ -61,14 +37,12 @@ mode_settings:
     - s_left_flipper_active
 
   select_item_events:
-    - s_fire_active
-    - s_actionbtn_active
+    - villain_select_choose
 
-# ------------------------------------------------------------
-# SLIDE PLAYER
-# ------------------------------------------------------------
-# Shows/removes the villain select slide.
-# ------------------------------------------------------------
+blocking:
+  sw_start:
+    all: True
+
 slide_player:
   mode_villain_select_started:
     villain_select:
@@ -79,60 +53,69 @@ slide_player:
     villain_select:
       action: remove
 
-# ------------------------------------------------------------
-# EVENT PLAYER
-# ------------------------------------------------------------
-# Handles carousel selection and highlighted-item light events.
-# Villains can be chosen again after fail/escape, but not after defeat.
-# ------------------------------------------------------------
 event_player:
+  s_start_active:
+    - villain_select_no_pick
+
+  s_actionbtn_active{current_player.villain_select_highlighted=="villain_instructions"}:
+    - villain_select_no_pick
+
+  s_actionbtn_active{current_player.villain_select_highlighted!="villain_instructions"}:
+    - villain_select_choose
+
+  s_fire_active{current_player.villain_select_highlighted=="villain_instructions"}:
+    - villain_select_no_pick
+
+  s_fire_active{current_player.villain_select_highlighted!="villain_instructions"}:
+    - villain_select_choose
+
   carousel_item_selected{carousel=="villain_select" and item=="villain_instructions"}:
     - villain_select_no_pick
 
-  carousel_item_selected{carousel=="villain_select" and item=="Col_Stuart_Villain_Select" and current_player.col_stuart_complete==0}:
+  carousel_item_selected{carousel=="villain_select" and item=="Col_Stuart_Villain_Select" and current_player.col_stuart_complete!=1}:
     - set_villain_col
     - start_col_difficulty_select|250ms
 
-  carousel_item_selected{carousel=="villain_select" and item=="Hans_Gruber_Villain_Select" and current_player.hans_complete==0}:
+  carousel_item_selected{carousel=="villain_select" and item=="Hans_Gruber_Villain_Select" and current_player.hans_complete!=1}:
     - set_villain_hans
     - start_hans_difficulty_select|250ms
 
-  carousel_item_selected{carousel=="villain_select" and item=="Karl_Vreski_Villain_Select" and current_player.karl_complete==0}:
+  carousel_item_selected{carousel=="villain_select" and item=="Karl_Vreski_Villain_Select" and current_player.karl_complete!=1}:
     - set_villain_karl
     - start_karl_difficulty_select|250ms
 
-  carousel_item_selected{carousel=="villain_select" and item=="Katya_Villain_Select" and current_player.katya_complete==0}:
+  carousel_item_selected{carousel=="villain_select" and item=="Katya_Villain_Select" and current_player.katya_complete!=1}:
     - set_villain_katya
     - start_katya_difficulty_select|250ms
 
-  carousel_item_selected{carousel=="villain_select" and item=="Simon_Gruber_Villain_Select" and current_player.simon_complete==0}:
+  carousel_item_selected{carousel=="villain_select" and item=="Simon_Gruber_Villain_Select" and current_player.simon_complete!=1}:
     - set_villain_simon
     - start_simon_difficulty_select|250ms
 
-  carousel_item_highlighted{carousel=="villain_select" and item=="Col_Stuart_Villain_Select" and current_player.col_stuart_complete==0}:
+  carousel_item_highlighted{carousel=="villain_select" and item=="Col_Stuart_Villain_Select" and current_player.col_stuart_complete!=1}:
     - flash_col_light
 
-  carousel_item_highlighted{carousel=="villain_select" and item=="Hans_Gruber_Villain_Select" and current_player.hans_complete==0}:
+  carousel_item_highlighted{carousel=="villain_select" and item=="Hans_Gruber_Villain_Select" and current_player.hans_complete!=1}:
     - flash_hans_light
 
-  carousel_item_highlighted{carousel=="villain_select" and item=="Karl_Vreski_Villain_Select" and current_player.karl_complete==0}:
+  carousel_item_highlighted{carousel=="villain_select" and item=="Karl_Vreski_Villain_Select" and current_player.karl_complete!=1}:
     - flash_karl_light
 
-  carousel_item_highlighted{carousel=="villain_select" and item=="Katya_Villain_Select" and current_player.katya_complete==0}:
+  carousel_item_highlighted{carousel=="villain_select" and item=="Katya_Villain_Select" and current_player.katya_complete!=1}:
     - flash_katya_light
 
-  carousel_item_highlighted{carousel=="villain_select" and item=="Simon_Gruber_Villain_Select" and current_player.simon_complete==0}:
+  carousel_item_highlighted{carousel=="villain_select" and item=="Simon_Gruber_Villain_Select" and current_player.simon_complete!=1}:
     - flash_simon_light
 
   carousel_item_highlighted{carousel=="villain_select" and item=="villain_instructions"}:
     - stop_villain_flash
 
-# ------------------------------------------------------------
-# VARIABLE PLAYER
-# ------------------------------------------------------------
-# Stores selected villain name.
-# ------------------------------------------------------------
 variable_player:
+  carousel_item_highlighted{carousel=="villain_select"}:
+    villain_select_highlighted:
+      string: "{item}"
+      action: set
+
   set_villain_col:
     selected_villain:
       string: col
@@ -158,9 +141,6 @@ variable_player:
       string: simon
       action: set
 
-  # ------------------------------------------------------------
-  # AMBUSH BLOCKING WHILE PICKING A VILLAIN
-  # ------------------------------------------------------------
   mode_villain_select_started:
     villain_select_running:
       int: 1
@@ -171,14 +151,6 @@ variable_player:
       int: 0
       action: set
 
-# ------------------------------------------------------------
-# SHOW PLAYER
-# ------------------------------------------------------------
-# Runs villain select insert flash, orange spin show, and
-# highlighted villain colour flashes.
-#
-# Do not use l80, l81, l82, or l83.
-# ------------------------------------------------------------
 show_player:
   mode_villain_select_started:
     flash_color:
