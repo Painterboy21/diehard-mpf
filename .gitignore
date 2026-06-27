@@ -13,3 +13,7 @@ modes/yippee_ki_yay_wizard/slides/DIEHard1Trailer.ogv
 modes/yippee_ki_yay_wizard/slides/DIEHard2Trailer.ogv
 modes/yippee_ki_yay_wizard/slides/DIEHard3Trailer.ogv
 videos/attractvideos/Instruction.ogv
+
+# Python cache files
+__pycache__/
+*.pyc
