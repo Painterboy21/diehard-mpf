@@ -29,6 +29,7 @@ ball_devices:
   # want the trough doing anything unless MPF really needs it.
   # ------------------------------------------------------------
   trough:
+    label: Trough
     ball_switches: s_trough1, s_trough2, s_trough3, s_trough4, s_trough5, s_trough6, s_trough_jam
     eject_coil: c_trough_eject
     tags: trough, home, drain
@@ -44,6 +45,7 @@ ball_devices:
   # Player controlled eject uses the fire/action button switch.
   # ------------------------------------------------------------
   bd_plunger:
+    label: Plunger Lane
     ball_switches: s_plunger_lane
     eject_coil: c_plunger
     player_controlled_eject_event: s_fire_active
@@ -56,6 +58,7 @@ ball_devices:
   # Added to ball search because this is a likely stuck-ball spot.
   # ------------------------------------------------------------
   kickervault1_eject:
+    label: Vault Kicker
     ball_switches: s_kickervault1
     eject_coil: c_kickervault1_eject
     ball_search_order: 20
@@ -66,6 +69,7 @@ ball_devices:
   # Standard right kicker device.
   # ------------------------------------------------------------
   rightkicker:
+    label: Right Kicker
     ball_switches: s_rightkicker
     eject_coil: c_rightkicker_eject
     eject_timeouts: 1s
@@ -77,6 +81,7 @@ ball_devices:
   # Upper ramp ball device.
   # ------------------------------------------------------------
   UrampUp001:
+    label: Upper Ramp VUK
     ball_switches: s_UrampUp001
     eject_coil: c_UrampUp001_eject
     eject_timeouts: 1s
@@ -89,6 +94,7 @@ ball_devices:
   # Also used elsewhere for right VUK collections.
   # ------------------------------------------------------------
   rightvuk:
+    label: Right VUK
     ball_switches: s_rightvuk
     eject_coil: c_rightvuk_eject
     eject_timeouts: 1s
@@ -104,6 +110,7 @@ ball_devices:
   # showed a stuck playfield-ball warning.
   # ------------------------------------------------------------
   tower_vuk:
+    label: Tower VUK / Nakatomi Lock
     entrance_switch: s_towervuk
     ball_capacity: 3
     mechanical_eject: true
@@ -120,6 +127,7 @@ ball_devices:
   # Kept later in ball search because it is stronger/mechanical.
   # ------------------------------------------------------------
   airplane:
+    label: Airplane Captive Ball
     ball_switches: s_captiveball
     eject_coil: c_captivetarget
     eject_timeouts: 1s

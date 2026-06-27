@@ -6,223 +6,291 @@ switches:
   s_trough1:
     number: d-29
     type: 'NC'
+    label: Trough Ball 1
   s_trough2:
     number: d-26
+    label: Trough Ball 2
   s_trough3:
     number: d-25
+    label: Trough Ball 3
   s_trough4:
     number: d-27
+    label: Trough Ball 4
   s_trough5:
     number: d-28
+    label: Trough Ball 5
   s_trough6:
     number: d-24
+    label: Trough Ball 6
   s_trough_jam:
     number: d-30
     type: 'NC'
+    label: Trough Jam
 
  # Plungers
   s_plunger_lane:
     number: d-31
+    label: Plunger Lane
   s_kickervault1:
     number: d-2
+    label: Vault Kicker
 
  # Coin Door and cab Switches
   s_start:
     number: j-10
     tags: start
-  s_door_open: 
+    label: Start Button
+  s_door_open:
     number: j-12
     type: 'NC'
     tags: service_door_open, power_off
+    label: Coin Door Open
   s_service_esc:
     number: j-0
     tags: service_esc
+    label: Service Escape
   s_service_down:
     number: j-2
     tags: service_down
+    label: Service Down
   s_service_up:
     number: j-1
     tags: service_up
+    label: Service Up
   s_service_enter:
     number: j-3
     tags: service_enter
+    label: Service Enter
   s_right_coin:
     number: j-4
+    label: Right Coin Switch
   s_left_coin:
     number: j-5
+    label: Left Coin Switch
   s_door_tilt:
     number: j-6
+    label: Door Tilt
   s_tilt_bob:
     number: j-19
     tags: tilt_warning
+    label: Tilt Bob
   s_fire:
     number: j-18
+    label: Fire Button
   s_actionbtn:
     number: j-13
+    label: Action Button
 
  # Flippers
   s_right_flipper_eos:
     number: d-21
+    label: Right Flipper EOS
   s_left_flipper_eos:
     number: d-20
+    label: Left Flipper EOS
   s_left_flipper:
     number: j-9
     tags: left_flipper_top_flipper
+    label: Left Flipper Button
   s_right_flipper:
     number: j-16
     tags: right_flipper
+    label: Right Flipper Button
   s_top_flipper_eos:
     number: d-6
+    label: Top Flipper EOS
 
  # Magnets
   s_trmagl:
     number: j-17
     tags: left_magnet
+    label: Left Magnet Switch
   s_trmagr:
     number: j-8
     tags: right_magnet
+    label: Right Magnet Switch
 
  # three drop targets
   s_drop_target_1:
     number: e-2
     type: 'NC'
+    label: Drop Target 1
   s_drop_target_2:
     number: e-3
     type: 'NC'
+    label: Drop Target 2
   s_drop_target_3:
     number: e-4
     type: 'NC'
+    label: Drop Target 3
 
  # Nakatomi Lock Drop Target
   s_push_drop_target_4:
     number: f-10
+    label: Nakatomi Lock Drop Target
+
  # Nakatomi Lock ball count
   s_nakatomi_lock_ball_count:
     number: e-6
     type: 'NC'
+    label: Nakatomi Lock Ball Count
+
  # Safe Lock Drop Target
   s_push_drop_target_5:
     number: d-3
+    label: Vault Drop Target
 
  # Slings
   s_left_sling:
     number: d-19
     tags: left_sling
+    label: Left Sling
   s_right_sling:
     number: d-18
     tags: right_sling
+    label: Right Sling
 
 # Lane Switches
   s_swrightoutlane:
     number: d-22
     tags: playfield_active
+    label: Right Outlane
   s_swrightinlane:
     number: d-23
     tags: playfield_active
+    label: Right Inlane
   s_swleftoutlane:
     number: d-17
     tags: playfield_active
+    label: Left Outlane
   s_swleftinlane:
     number: d-16
     tags: playfield_active
+    label: Left Inlane
   s_right_orbit:
     number: e-14
     tags: playfield_active
+    label: Right Orbit
   s_left_orbit:
     number: d-7
     tags: playfield_active
+    label: Left Orbit
   s_right_orbit2:
     number: f-4
     tags: playfield_active
+    label: Right Orbit Upper
   s_left_orbit2:
     number: f-0
     tags: playfield_active
+    label: Left Orbit Upper
   s_mid_orbit:
     number: e-13
     tags: playfield_active
+    label: Mid Orbit
 
  # Top Targets
   s_target002:
     number: f-1
     tags: playfield_active
+    label: Top Target 2
   s_target003:
     number: f-2
     tags: playfield_active
+    label: Top Target 3
   s_target004:
     number: f-3
     tags: playfield_active
+    label: Top Target 4
 
  # Holly Switches
   s_holly_h:
     number: d-0
     tags: playfield_active
+    label: Holly H Target
   s_holly_o:
     number: d-1
     tags: playfield_active
+    label: Holly O Target
   s_holly_l:
     number: d-4
     tags: playfield_active
+    label: Holly L Target
   s_holly_l1:
     number: e-0
     tags: playfield_active
+    label: Holly Second L Target
   s_holly_y:
     number: e-10
     tags: playfield_active
+    label: Holly Y Target
 
  # Pop Bumpers
   s_popbumper_left:
     number: e-7
     tags: left_pop_bumper
+    label: Left Pop Bumper
   s_popbumper_right:
     number: e-5
     tags: right_pop_bumper
+    label: Right Pop Bumper
 
  # spinners
   SpinnerLeft:
     number: d-5
     tags: playfield_active
+    label: Left Spinner
   SpinnerRight:
     number: e-15
     tags: playfield_active
+    label: Right Spinner
 
  # airplane
   s_captiveball:
     number: e-12
-
+    label: Airplane Captive Ball
 
 # air_ducts
   s_air_duct:
     number: f-8
     type: 'NC'
+    label: Air Duct
 
  #vuks
   s_towervuk:
     number: e-1
     type: 'NC'
+    label: Tower VUK
   s_rightkicker:
     number: e-9
     type: 'NC'
+    label: Right Kicker
   s_UrampUp001:
     number: e-8
     type: 'NC'
+    label: Upper Ramp VUK
   s_rightvuk:
     number: e-11
     type: 'NC'
+    label: Right VUK
 
-# Top Playfield 
+# Top Playfield
   s_TrPF1:
     number: f-9
     type: 'NC'
     tags: playfield_active
+    label: Top Playfield 1
   s_TrPF2:
     number: f-6
     type: 'NC'
     tags: playfield_active
+    label: Top Playfield 2
   s_TrPF3:
     number: f-7
     type: 'NC'
     tags: playfield_active
+    label: Top Playfield 3
   s_upper_pf_entrance:
     number: f-5
     type: 'NC'
     tags: playfield_active
+    label: Upper Playfield Entrance

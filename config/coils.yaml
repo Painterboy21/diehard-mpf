@@ -13,9 +13,12 @@ coils:
   c_left_sling:
     number: d-6
     default_pulse_ms: 80ms
+    label: Left Sling
   c_right_sling:
     number: d-7
     default_pulse_ms: 80ms
+    label: Right Sling
+
   # ------------------------------------------------------------
   # FLIPPERS
   # ------------------------------------------------------------
@@ -25,21 +28,28 @@ coils:
   c_left_flipper_main:
     number: d-3
     default_pulse_ms: 28ms
+    label: Left Flipper Main
   c_left_flipper_hold:
     number: d-2
     allow_enable: true
+    label: Left Flipper Hold
   c_left_top_flipper_main:
     number: e-4
     default_pulse_ms: 50ms
+    label: Left Top Flipper Main
   c_left_top_flipper_hold:
     number: e-3
     allow_enable: true
+    label: Left Top Flipper Hold
   c_right_flipper_main:
     number: d-5
     default_pulse_ms: 35ms
+    label: Right Flipper Main
   c_right_flipper_hold:
     number: d-4
     allow_enable: true
+    label: Right Flipper Hold
+
    # ------------------------------------------------------------
   # MAGNETS
   # ------------------------------------------------------------
@@ -48,20 +58,26 @@ coils:
     default_pulse_ms: 230ms
     default_hold_power: 1
     allow_enable: true
+    label: Right Magnet
   c_trmagl:
     number: e-14
     default_pulse_ms: 195ms
     default_hold_power: 0.95
     allow_enable: true
+    label: Left Magnet
+
   # ------------------------------------------------------------
   # PLUNGER & TROUGH
   # ------------------------------------------------------------
   c_plunger:
     number: d-0
     default_pulse_ms: 255ms
+    label: Plunger
   c_trough_eject:
     number: d-1
     default_pulse_ms: 130ms
+    label: Trough Eject
+
   # ------------------------------------------------------------
   # DROP TARGET RESETS
   # ------------------------------------------------------------
@@ -71,12 +87,16 @@ coils:
   c_reset_drop_targets:
     number: e-12
     default_pulse_ms: 60ms
+    label: Drop Target Bank Reset
   c_reset_drop_target_nakotomi:
     number: e-5
     default_pulse_ms: 80ms
+    label: Nakatomi Drop Target Reset
   c_reset_drop_target_vault:
     number: e-2
     default_pulse_ms: 80ms
+    label: Vault Drop Target Reset
+
   # ------------------------------------------------------------
   # VAULT PUSH DROP TARGET
   # ------------------------------------------------------------
@@ -85,6 +105,8 @@ coils:
   c_push_drop_target_vault:
     number: e-7
     default_pulse_ms: 60ms
+    label: Vault Drop Target Push
+
   # ------------------------------------------------------------
   # VUKS / KICKERS
   # ------------------------------------------------------------
@@ -93,18 +115,24 @@ coils:
     default_pulse_ms: 220ms
     default_pulse_power: 1.0
     max_pulse_ms: 255ms
+    label: Right Kicker Eject
   c_UrampUp001_eject:
     number: e-9
-    default_pulse_ms: 30ms
+    default_pulse_ms: 20ms
+    label: Upper Ramp VUK Eject
   c_rightvuk_eject:
     number: e-13
     default_pulse_ms: 25ms
+    label: Right VUK Eject
   c_towervuk_eject:
     number: e-0
     default_pulse_ms: 35ms
+    label: Tower VUK Eject
   c_kickervault1_eject:
     number: e-6
     default_pulse_ms: 17ms
+    label: Vault Kicker Eject
+
   # ------------------------------------------------------------
   # POP BUMPERS
   # ------------------------------------------------------------
@@ -113,15 +141,20 @@ coils:
   c_popbumper_left:
     number: e-1
     default_pulse_ms: 40ms
+    label: Left Pop Bumper
   c_popbumper_right:
     number: e-10
     default_pulse_ms: 20ms
+    label: Right Pop Bumper
+
   # ------------------------------------------------------------
   # AIRPLANE / CAPTIVE TARGET
   # ------------------------------------------------------------
   c_captivetarget:
     number: e-11
     default_pulse_ms: 90ms
+    label: Airplane Captive Target
+
   # ------------------------------------------------------------
   # CABINET LIGHTS
   # ------------------------------------------------------------
@@ -131,6 +164,8 @@ coils:
   c_cab_start_button:
     number: j-3
     allow_enable: true
+    label: Cabinet Start Button Lamp
   c_cab_coin_return_left_right:
     number: j-1
     allow_enable: true
+    label: Coin Return Lamps
