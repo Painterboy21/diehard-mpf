@@ -1,5 +1,9 @@
 from mpf.core.mode import Mode
 
+import json
+import os
+import time
+
 
 class DieHardService(Mode):
     """Custom Die Hard service overlay without MPF's reset-on-exit behavior."""
@@ -22,6 +26,7 @@ class DieHardService(Mode):
         self.add_mode_event_handler("service_mode_entered", self._service_entered)
         self.add_mode_event_handler("service_mode_exited", self._service_exited)
         self.add_mode_event_handler("service_reset_game_requested", self._reset_game_requested)
+        self.add_mode_event_handler("service_reset_local_scores_requested", self._reset_local_scores_requested)
 
     def _service_entered(self, **kwargs):
         del kwargs
@@ -94,6 +99,77 @@ class DieHardService(Mode):
             self.machine.modes["game"].stop()
 
         self.machine.clock.loop.create_task(self.machine.reset())
+
+    def _reset_local_scores_requested(self, **kwargs):
+        del kwargs
+
+        records = self._default_machine_records()
+        path = os.path.join(self.machine.machine_path, "machine_records.json")
+
+        try:
+            with open(path, "w", encoding="utf-8") as records_file:
+                json.dump(records, records_file, indent=2)
+        except Exception as exc:
+            self.warning_log("Could not reset local machine records: %s", exc)
+            self.machine.events.post("service_local_scores_reset_failed")
+            return
+
+        self._apply_machine_record_vars(records)
+        self._delete_local_high_score_file()
+        self.machine.events.post("record_clear_pending_records")
+        self.machine.events.post("record_refresh_machine_records")
+        self.machine.events.post("reset_local_high_scores")
+        self.machine.events.post("service_local_scores_reset_complete")
+        self.info_log("Local scores reset without touching iScored cache or queue")
+
+    def _default_machine_records(self):
+        return {
+            "loop_champion": {
+                "name": "---",
+                "value": 0,
+                "text": "---"
+            },
+            "multiball_hero": {
+                "name": "---",
+                "value": 0,
+                "text": "---",
+                "mode": "---"
+            },
+            "villain_mvp": {
+                "name": "---",
+                "value": 0,
+                "text": "---",
+                "mode": "---"
+            }
+        }
+
+    def _apply_machine_record_vars(self, records):
+        loop = records["loop_champion"]
+        multiball = records["multiball_hero"]
+        villain = records["villain_mvp"]
+
+        self.machine.variables.set_machine_var("record_loop_champion_name", loop["name"])
+        self.machine.variables.set_machine_var("record_loop_champion_value", loop["value"])
+        self.machine.variables.set_machine_var("record_loop_champion_text", loop["text"])
+        self.machine.variables.set_machine_var("record_multiball_hero_name", multiball["name"])
+        self.machine.variables.set_machine_var("record_multiball_hero_value", multiball["value"])
+        self.machine.variables.set_machine_var("record_multiball_hero_text", multiball["text"])
+        self.machine.variables.set_machine_var("record_multiball_hero_mode", multiball["mode"])
+        self.machine.variables.set_machine_var("record_villain_mvp_name", villain["name"])
+        self.machine.variables.set_machine_var("record_villain_mvp_value", villain["value"])
+        self.machine.variables.set_machine_var("record_villain_mvp_text", villain["text"])
+        self.machine.variables.set_machine_var("record_villain_mvp_mode", villain["mode"])
+        self.machine.variables.set_machine_var("machine_records_last_update", int(time.time()))
+
+    def _delete_local_high_score_file(self):
+        path = os.path.join(self.machine.machine_path, "data", "high_scores.yaml")
+
+        try:
+            if os.path.exists(path):
+                os.remove(path)
+                self.info_log("Deleted local MPF high-score file: %s", path)
+        except Exception as exc:
+            self.warning_log("Could not delete local MPF high-score file: %s", exc)
 
     def _clear_restore_state(self):
         self._service_locked = False

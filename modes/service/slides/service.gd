@@ -13,6 +13,8 @@ const TRIGGERS := [
 	"service_coil_test_stop",
 	"service_light_test_start",
 	"service_light_test_stop",
+	"service_local_scores_reset_complete",
+	"service_local_scores_reset_failed",
 ]
 
 const MENU_ITEMS := [
@@ -22,6 +24,7 @@ const MENU_ITEMS := [
 	"SWITCH TEST",
 	"LIGHTS",
 	"FREE PLAY",
+	"RESET LOCAL SCORES",
 	"RESET GAME",
 	"CLOSE DOOR TO RESUME",
 ]
@@ -477,6 +480,24 @@ func _on_service_event(payload: Dictionary) -> void:
 		"service_light_test_stop":
 			_show_menu()
 
+		"service_local_scores_reset_complete":
+			_show_detail("RESET LOCAL SCORES", [
+				"LOCAL SCORES RESET",
+				"",
+				"ISCORED CACHE AND QUEUE WERE NOT TOUCHED",
+				"",
+				"SERVICE ESC: BACK TO MENU",
+			])
+
+		"service_local_scores_reset_failed":
+			_show_detail("RESET LOCAL SCORES", [
+				"RESET FAILED",
+				"",
+				"CHECK MPF LOG FOR DETAILS",
+				"",
+				"SERVICE ESC: BACK TO MENU",
+			])
+
 
 func _show_switch_test(payload: Dictionary) -> void:
 	var switch_name := str(payload.get("switch_name", ""))
@@ -549,6 +570,8 @@ func _on_button(button: String) -> void:
 			_on_volume_button(button)
 		"free_play":
 			_on_back_only_button(button)
+		"reset_local_scores_confirm":
+			_on_reset_local_scores_confirm_button(button)
 		"reset_game_confirm":
 			_on_reset_game_confirm_button(button)
 		_:
@@ -830,11 +853,41 @@ func _select_current() -> void:
 		"FREE PLAY":
 			_show_free_play()
 
+		"RESET LOCAL SCORES":
+			_show_reset_local_scores_confirm()
+
 		"RESET GAME":
 			_show_reset_game_confirm()
 
 		"CLOSE DOOR TO RESUME":
 			_exit_service()
+
+
+func _show_reset_local_scores_confirm() -> void:
+	screen_mode = "reset_local_scores_confirm"
+	_show_detail("RESET LOCAL SCORES", [
+		"RESET LOCAL HIGH SCORES AND DIE HARD RECORDS?",
+		"",
+		"THIS WILL NOT TOUCH ISCORED CACHE OR QUEUE",
+		"ONLINE ISCORED SCORES WILL STAY AS THEY ARE",
+		"",
+		"SERVICE ENTER: RESET LOCAL SCORES",
+		"SERVICE ESC: BACK TO MENU",
+	])
+
+
+func _on_reset_local_scores_confirm_button(button: String) -> void:
+	match button:
+		"ENTER":
+			_show_detail("RESET LOCAL SCORES", [
+				"RESETTING LOCAL SCORES...",
+				"",
+				"ISCORED CACHE AND QUEUE ARE NOT TOUCHED",
+			])
+			MPF.server.send_event("service_reset_local_scores_requested")
+
+		"ESC", "START", "UP", "DOWN":
+			_show_menu()
 
 
 func _show_reset_game_confirm() -> void:
