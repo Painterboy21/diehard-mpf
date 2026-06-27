@@ -1,74 +1,74 @@
 {
-  "updatedAt": 1782502201,
+  "updatedAt": 1782601727,
   "entries": [
     {
       "rank": "1",
-      "name": "GHJ",
-      "score": 40166600,
-      "score_text": "40,166,600",
+      "name": "SMD",
+      "score": 31297660,
+      "score_text": "31,297,660",
       "pending": false
     },
     {
       "rank": "2",
-      "name": "SMD",
-      "score": 36449840,
-      "score_text": "36,449,840",
+      "name": "BAD",
+      "score": 8312150,
+      "score_text": "8,312,150",
       "pending": false
     },
     {
       "rank": "3",
-      "name": "DML",
-      "score": 25230940,
-      "score_text": "25,230,940",
+      "name": "JOHNMCCLANE",
+      "score": 7737400,
+      "score_text": "7,737,400",
       "pending": false
     },
     {
       "rank": "4",
-      "name": "FFF",
-      "score": 25224670,
-      "score_text": "25,224,670",
+      "name": "DAD",
+      "score": 6005860,
+      "score_text": "6,005,860",
       "pending": false
     },
     {
       "rank": "5",
-      "name": "AAA",
-      "score": 20573510,
-      "score_text": "20,573,510",
+      "name": "---",
+      "score": 0,
+      "score_text": "---",
       "pending": false
     },
     {
       "rank": "6",
-      "name": "DFG",
-      "score": 19441820,
-      "score_text": "19,441,820",
+      "name": "---",
+      "score": 0,
+      "score_text": "---",
       "pending": false
     },
     {
       "rank": "7",
-      "name": "JohnMcClane",
-      "score": 15805700,
-      "score_text": "15,805,700",
+      "name": "---",
+      "score": 0,
+      "score_text": "---",
       "pending": false
     },
     {
       "rank": "8",
-      "name": "SML",
-      "score": 15281030,
-      "score_text": "15,281,030",
+      "name": "---",
+      "score": 0,
+      "score_text": "---",
       "pending": false
     },
     {
       "rank": "9",
-      "name": "BBB",
-      "score": 13021500,
-      "score_text": "13,021,500",
+      "name": "---",
+      "score": 0,
+      "score_text": "---",
       "pending": false
     },
     {
       "rank": "10",
-      "name": "CCB",
-      "score": 10852820,
-      "score_text": "10,852,820",
+      "name": "---",
+      "score": 0,
+      "score_text": "---",
       "pending": false
     }
   ]

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dg55pusu8qlba"
+path="res://.godot/imported/High Score Initial Press Boosted.mp3-ee0284eb6eee5498fae0976f9be8af50.mp3str"
+
+[deps]
+
+source_file="res://sounds/src/High Score Initial Press Boosted.mp3"
+dest_files=["res://.godot/imported/High Score Initial Press Boosted.mp3-ee0284eb6eee5498fae0976f9be8af50.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
