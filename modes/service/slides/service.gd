@@ -33,10 +33,22 @@ const BALL_STATUS_SWITCHES := [
 	["AIRPLANE", "s_captiveball"],
 ]
 
+const DEVICE_TESTS := [
+	["TROUGH EJECT", "service_test_trough_eject"],
+	["PLUNGER", "service_test_plunger"],
+	["VAULT KICKER", "service_test_vault_kicker"],
+	["RIGHT KICKER", "service_test_right_kicker"],
+	["UPPER RAMP VUK", "service_test_upper_ramp_vuk"],
+	["RIGHT VUK", "service_test_right_vuk"],
+	["TOWER VUK", "service_test_tower_vuk"],
+	["AIRPLANE CAPTIVE", "service_test_airplane_captive"],
+]
+
 var diehard_font: Font
 var menu_items: Array[Label] = []
 var detail_labels: Array[Label] = []
 var selected_index := 0
+var device_test_index := 0
 var screen_mode := "menu"
 var refresh_time := 0.0
 var refresh_speed := 0.75
@@ -96,24 +108,25 @@ func _setup_background() -> void:
 
 
 func _make_menu() -> void:
-	var start_y := 300
-	var row_gap := 54
+	var start_y := 275
+	var row_gap := 50
 	var block_width := 760
 	var screen_width := get_viewport_rect().size.x
 	var x := int((screen_width - block_width) / 2)
 
 	_add_menu_item("BALL STATUS", x, start_y + row_gap * 0)
-	_add_menu_item("SWITCH TEST", x, start_y + row_gap * 1)
-	_add_menu_item("COIL TEST", x, start_y + row_gap * 2)
-	_add_menu_item("LIGHT TEST", x, start_y + row_gap * 3)
-	_add_menu_item("LIGHT CHAIN TEST", x, start_y + row_gap * 4)
-	_add_menu_item("EXIT SERVICE", x, start_y + row_gap * 5)
+	_add_menu_item("DEVICE TEST", x, start_y + row_gap * 1)
+	_add_menu_item("SWITCH TEST", x, start_y + row_gap * 2)
+	_add_menu_item("COIL TEST", x, start_y + row_gap * 3)
+	_add_menu_item("LIGHT TEST", x, start_y + row_gap * 4)
+	_add_menu_item("LIGHT CHAIN TEST", x, start_y + row_gap * 5)
+	_add_menu_item("EXIT SERVICE", x, start_y + row_gap * 6)
 
 	_add_hint("SERVICE UP/DOWN MOVE    SERVICE ENTER SELECT    SERVICE ESC BACK")
 
 
 func _add_menu_item(text: String, x: int, y: int) -> void:
-	var label := _make_label(text, Vector2(x, y), Vector2(760, 50), 40, Color.WHITE)
+	var label := _make_label(text, Vector2(x, y), Vector2(760, 48), 38, Color.WHITE)
 	menu_items.append(label)
 	add_child(label)
 
@@ -221,6 +234,38 @@ func _show_ball_status() -> void:
 	_show_detail("BALL STATUS", lines)
 
 
+func _show_device_test() -> void:
+	screen_mode = "device_test"
+
+	var selected_name: String = str(DEVICE_TESTS[device_test_index][0])
+	var lines: Array[String] = []
+
+	lines.append("SELECTED: %s" % selected_name)
+	lines.append("")
+	lines.append("SERVICE UP/DOWN: CHANGE DEVICE")
+	lines.append("SERVICE ENTER: FIRE SINGLE PULSE")
+	lines.append("SERVICE ESC: BACK TO MENU")
+	lines.append("")
+	lines.append("WARNING: ONLY TEST WITH PLAYFIELD CLEAR")
+
+	_show_detail("DEVICE TEST", lines)
+
+
+func _fire_selected_device_test() -> void:
+	var event_name: String = str(DEVICE_TESTS[device_test_index][1])
+	var selected_name: String = str(DEVICE_TESTS[device_test_index][0])
+
+	MPF.server.send_event(event_name)
+
+	_show_detail("DEVICE TEST", [
+		"FIRED: %s" % selected_name,
+		"",
+		"SERVICE UP/DOWN: CHANGE DEVICE",
+		"SERVICE ENTER: FIRE AGAIN",
+		"SERVICE ESC: BACK TO MENU",
+	])
+
+
 func _update_switch_state_cache(payload: Dictionary) -> void:
 	if not payload.has("switches"):
 		return
@@ -268,11 +313,11 @@ func _update_menu() -> void:
 		if i == selected_index:
 			label.text = "> %s <" % clean_text
 			label.add_theme_color_override("font_color", highlight_color)
-			label.add_theme_font_size_override("font_size", 46)
+			label.add_theme_font_size_override("font_size", 44)
 		else:
 			label.text = clean_text
 			label.add_theme_color_override("font_color", Color.WHITE)
-			label.add_theme_font_size_override("font_size", 40)
+			label.add_theme_font_size_override("font_size", 38)
 
 
 func _clean_menu_text(text: String) -> String:
@@ -295,6 +340,8 @@ func _on_service(payload: Dictionary) -> void:
 			_on_menu_button(payload.button)
 		elif screen_mode == "ball_status":
 			_on_ball_status_button(payload.button)
+		elif screen_mode == "device_test":
+			_on_device_test_button(payload.button)
 
 
 func _on_service_event(payload: Dictionary) -> void:
@@ -414,6 +461,30 @@ func _on_ball_status_button(button: String) -> void:
 			_show_menu()
 
 
+func _on_device_test_button(button: String) -> void:
+	match button:
+		"UP":
+			device_test_index -= 1
+			if device_test_index < 0:
+				device_test_index = DEVICE_TESTS.size() - 1
+			_show_device_test()
+
+		"DOWN":
+			device_test_index += 1
+			if device_test_index >= DEVICE_TESTS.size():
+				device_test_index = 0
+			_show_device_test()
+
+		"ENTER":
+			_fire_selected_device_test()
+
+		"ESC":
+			_show_menu()
+
+		"START":
+			_show_menu()
+
+
 func _move_selection(direction: int) -> void:
 	selected_index += direction
 
@@ -434,26 +505,30 @@ func _select_current() -> void:
 			_request_ball_status()
 
 		1:
+			screen_mode = "device_test"
+			_show_device_test()
+
+		2:
 			screen_mode = "switch_test"
 			_show_detail("SWITCH TEST", ["WAITING FOR SWITCH DATA..."])
 			MPF.server.send_event("service_trigger&action=switch_test")
 
-		2:
+		3:
 			screen_mode = "coil_test"
 			_show_detail("COIL TEST", ["WAITING FOR COIL DATA..."])
 			MPF.server.send_event("service_trigger&action=coil_test")
 
-		3:
+		4:
 			screen_mode = "light_test"
 			_show_detail("LIGHT TEST", ["WAITING FOR LIGHT DATA..."])
 			MPF.server.send_event("service_trigger&action=light_test")
 
-		4:
+		5:
 			screen_mode = "light_test"
 			_show_detail("LIGHT CHAIN TEST", ["WAITING FOR LIGHT CHAIN DATA..."])
 			MPF.server.send_event("service_trigger&action=light_chain_test")
 
-		5:
+		6:
 			_exit_service()
 
 

@@ -2,8 +2,17 @@
 # ------------------------------------------------------------
 # SERVICE MODE
 # ------------------------------------------------------------
-# Uses MPF's built-in service backend.
-# The Godot scene controls the look/menu.
+# MPF built-in service backend.
+# Die Hard Godot scene provides the front end.
+#
+# Coin door behaviour:
+#   - Open coin door: enter service mode automatically.
+#   - Close coin door: exit service mode automatically.
+#
+# Device Test:
+#   - Single pulse only.
+#   - No flippers.
+#   - No hold coils.
 # ------------------------------------------------------------
 
 mode:
@@ -49,15 +58,19 @@ mode_settings:
 event_player:
   sw_service_door_open_active:
     - service_door_opened
+    - sw_service_enter_active
 
   sw_service_door_open_inactive:
     - service_door_closed
+    - service_exit_from_door_closed
 
   sw_service_door_closed_active:
     - service_door_closed
+    - service_exit_from_door_closed
 
   sw_service_door_closed_inactive:
     - service_door_opened
+    - sw_service_enter_active
 
   sw_power_off_inactive:
     - service_power_on
@@ -75,6 +88,10 @@ event_player:
     - disable_flippers
     - flipper_off
 
+  service_exit_from_door_closed:
+    service_trigger:
+      action: service_exit
+
 slide_player:
   service_mode_entered:
     service:
@@ -83,3 +100,42 @@ slide_player:
   service_mode_exited:
     service:
       action: remove
+
+# ------------------------------------------------------------
+# DEVICE TEST COIL PLAYER
+# ------------------------------------------------------------
+# These are fired from the Godot service Device Test page.
+# Keep these single pulse only.
+# ------------------------------------------------------------
+coil_player:
+  service_test_trough_eject:
+    c_trough_eject:
+      action: pulse
+
+  service_test_plunger:
+    c_plunger:
+      action: pulse
+
+  service_test_vault_kicker:
+    c_kickervault1_eject:
+      action: pulse
+
+  service_test_right_kicker:
+    c_rightkicker_eject:
+      action: pulse
+
+  service_test_upper_ramp_vuk:
+    c_UrampUp001_eject:
+      action: pulse
+
+  service_test_right_vuk:
+    c_rightvuk_eject:
+      action: pulse
+
+  service_test_tower_vuk:
+    c_towervuk_eject:
+      action: pulse
+
+  service_test_airplane_captive:
+    c_captivetarget:
+      action: pulse
