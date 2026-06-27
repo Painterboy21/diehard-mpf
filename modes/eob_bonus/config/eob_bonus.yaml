@@ -28,7 +28,7 @@ combo_switches:
     switches_1: s_left_flipper
     switches_2: s_right_flipper
     events_when_both:
-      - show_bonus_summary
+      - calculate_eob_bonus_x
 
 # ------------------------------------------------------------
 # EVENT PLAYER
@@ -38,9 +38,12 @@ combo_switches:
 # ------------------------------------------------------------
 event_player:
   timer_eob_bonus_complete:
-    - show_bonus_summary
     - calculate_eob_bonus_x
-  calculate_eob_bonus_x:
+  calculate_eob_bonus_x{current_player.eob_bonus_awarded != 1}:
+    - award_eob_bonus|50ms
+  calculate_eob_bonus_x{current_player.eob_bonus_awarded == 1}:
+    - show_bonus_summary
+  award_eob_bonus:
     - show_bonus_summary|250ms
   timer_eob_bonus_summary_complete:
     - bonus_finished
@@ -254,13 +257,26 @@ timers:
 
 variable_player:
   mode_eob_bonus_started:
+    eob_bonus_awarded:
+      int: 0
+      action: set
     eob_bonus_total:
       int: "current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains"
       action: set
     eob_bonus_x:
       int: "(current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains) * current_player.bonus_multiplier"
       action: set
-  timer_eob_bonus_complete:
+  calculate_eob_bonus_x:
+    eob_bonus_total:
+      int: "current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains"
+      action: set
+    eob_bonus_x:
+      int: "(current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains) * current_player.bonus_multiplier"
+      action: set
+  award_eob_bonus{current_player.eob_bonus_awarded != 1}:
     score:
       int: current_player.eob_bonus_x
       action: add
+    eob_bonus_awarded:
+      int: 1
+      action: set
