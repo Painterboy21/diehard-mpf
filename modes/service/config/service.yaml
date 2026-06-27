@@ -1,0 +1,85 @@
+#config_version=6
+# ------------------------------------------------------------
+# SERVICE MODE
+# ------------------------------------------------------------
+# Uses MPF's built-in service backend.
+# The Godot scene controls the look/menu.
+# ------------------------------------------------------------
+
+mode:
+  code: mpf.modes.service.code.service.Service
+  priority: 100000
+  game_mode: false
+  start_events:
+    - reset_complete
+  stop_events:
+    - shutdown
+  stop_on_ball_end: false
+
+mode_settings:
+  sort_devices_by_number: true
+
+  door_opened_events:
+    - service_door_opened
+
+  door_closed_events:
+    - service_door_closed
+
+  high_power_on_events:
+    - service_power_on
+
+  high_power_off_events:
+    - service_power_off
+
+  enter_events:
+    - sw_service_enter_active
+
+  esc_events:
+    - sw_service_esc_active
+
+  up_events:
+    - sw_service_up_active
+
+  down_events:
+    - sw_service_down_active
+
+  software_update: false
+  software_update_script: None
+
+event_player:
+  sw_service_door_open_active:
+    - service_door_opened
+
+  sw_service_door_open_inactive:
+    - service_door_closed
+
+  sw_service_door_closed_active:
+    - service_door_closed
+
+  sw_service_door_closed_inactive:
+    - service_door_opened
+
+  sw_power_off_inactive:
+    - service_power_on
+
+  sw_power_off_active:
+    - service_power_off
+
+  sw_power_on_inactive:
+    - service_power_off
+
+  sw_power_on_active:
+    - service_power_on
+
+  service_mode_entered:
+    - disable_flippers
+    - flipper_off
+
+slide_player:
+  service_mode_entered:
+    service:
+      priority: 100000
+
+  service_mode_exited:
+    service:
+      action: remove

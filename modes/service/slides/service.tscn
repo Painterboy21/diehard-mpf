@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://sewc8b2j20ru"]
+
+[ext_resource type="Script" uid="uid://r4um80i6qvlc" path="res://modes/service/slides/service.gd" id="1_ihuiu"]
+[ext_resource type="Texture2D" uid="uid://c7r0y7cv2sgmj" path="res://modes/service/slides/service_mode.png" id="2_dxx1d"]
+
+[node name="service" type="Control" unique_id=1877965776]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ihuiu")
+metadata/_custom_type_script = "uid://dru3usokwlhd3"
+
+[node name="servicemode" type="TextureRect" parent="." unique_id=454889162]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_dxx1d")
