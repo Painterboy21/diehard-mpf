@@ -77,10 +77,6 @@ event_player:
   sw_power_on_active:
     - service_power_on
 
-  service_mode_entered:
-    - disable_flippers
-    - flipper_off
-
   service_test_full_mech_check:
     - service_test_trough_eject
     - service_test_vault_kicker

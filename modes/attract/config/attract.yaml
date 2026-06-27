@@ -20,7 +20,6 @@ mode:
     - mode_service_stopped{game.num_players==0}
   stop_events:
     - game_start
-    - service_mode_entered
   priority: 10
 
 # ------------------------------------------------------------

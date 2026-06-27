@@ -13,6 +13,7 @@ class DieHardService(Mode):
         "_enabled_shots",
         "_running_timers",
         "_rotating_shot_groups",
+        "_service_started_during_game",
     ]
 
     def mode_start(self, **kwargs):
@@ -29,7 +30,15 @@ class DieHardService(Mode):
 
         self._clear_restore_state()
         self._service_locked = True
+        self._service_started_during_game = bool(self.machine.game)
         self.machine.variables.set_machine_var("service_mode_active", 1)
+
+        if not self._service_started_during_game:
+            return
+
+        self._disable_magnets()
+        self._disable_autofires()
+        self._disable_flippers()
 
         for playfield in self.machine.playfields.values():
             playfield.ball_search.block()
@@ -38,14 +47,12 @@ class DieHardService(Mode):
         self._disable_ball_saves()
         self._disable_shot_logic()
         self._disable_shot_group_rotation()
-        self._disable_magnets()
-        self._disable_autofires()
-        self._disable_flippers()
 
     def _service_exited(self, restore_game=True, **kwargs):
         del kwargs
         if not restore_game:
-            self._unblock_ball_search()
+            if self._service_started_during_game:
+                self._unblock_ball_search()
             self._service_locked = False
             self.machine.variables.set_machine_var("service_mode_active", 0)
             self._clear_restore_state()
@@ -58,11 +65,15 @@ class DieHardService(Mode):
         self._service_locked = False
         self.machine.variables.set_machine_var("service_mode_active", 0)
 
-        self._unblock_ball_search()
-
         self._restore_flippers()
         self._restore_autofires()
         self._restore_magnets()
+
+        if not self._service_started_during_game:
+            self._clear_restore_state()
+            return
+
+        self._unblock_ball_search()
         self._restore_shot_group_rotation()
         self._restore_shot_logic()
         self._restore_ball_saves()
@@ -75,7 +86,7 @@ class DieHardService(Mode):
         self.machine.events.post("service_mode_exited", restore_game=False)
 
         for mode in self.machine.modes.values():
-            if not mode.active or mode.name == "game":
+            if not mode.active or mode.name in ("game", "service"):
                 continue
             mode.stop()
 
@@ -93,6 +104,7 @@ class DieHardService(Mode):
         self._enabled_shots = set()
         self._running_timers = set()
         self._rotating_shot_groups = set()
+        self._service_started_during_game = False
 
     def _safe_call(self, device, method_name):
         method = getattr(device, method_name, None)

@@ -126,7 +126,6 @@ func _ready() -> void:
 	_make_menu()
 	_make_detail_screen()
 	_show_menu()
-	_request_switches()
 
 
 func _exit_tree() -> void:
@@ -325,7 +324,7 @@ func _show_volume_page() -> void:
 	var lines: Array[String] = []
 	var row_number := 0
 
-	lines.append("SERVICE UP/DOWN: SELECT    ENTER: UP    START: DOWN    ESC: BACK")
+	lines.append("SERVICE UP/DOWN: ADJUST    ENTER: NEXT    START: PREV    ESC: BACK")
 	lines.append("")
 
 	for item in _available_godot_volume_rows():
@@ -444,7 +443,9 @@ func _on_service(payload: Dictionary) -> void:
 		last_switch_name = str(payload.switch)
 		if payload.has("state"):
 			last_switch_state = str(payload.state)
-		_request_switches()
+
+		if screen_mode == "ball_status":
+			_request_switches()
 
 	if payload.has("name"):
 		_on_service_event(payload)
@@ -606,23 +607,23 @@ func _on_volume_button(button: String) -> void:
 
 	match button:
 		"UP":
-			page_index -= 1
-			if page_index < 0:
-				page_index = row_count - 1
+			_adjust_selected_volume(1)
 			_show_volume_page()
 
 		"DOWN":
+			_adjust_selected_volume(-1)
+			_show_volume_page()
+
+		"ENTER":
 			page_index += 1
 			if page_index >= row_count:
 				page_index = 0
 			_show_volume_page()
 
-		"ENTER":
-			_adjust_selected_volume(1)
-			_show_volume_page()
-
 		"START":
-			_adjust_selected_volume(-1)
+			page_index -= 1
+			if page_index < 0:
+				page_index = row_count - 1
 			_show_volume_page()
 
 		"ESC":
