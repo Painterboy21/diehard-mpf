@@ -2,21 +2,16 @@
 # ------------------------------------------------------------
 # SERVICE MODE
 # ------------------------------------------------------------
-# MPF built-in service backend.
-# Die Hard Godot scene provides the front end.
-#
-# Coin door:
-#   - open = enter service
-#   - close = exit service
-#
-# Device tests:
-#   - single pulse only
-#   - no flippers
-#   - no hold coils
+# Die Hard custom service front end.
+# Door open shows the custom service screen.
+# Door close hides it and resumes the current game.
+# Service mode does not force lamp dimming or restore.
+# Native MPF service exit is not used because MPF 0.80 resets the
+# machine when service exits.
 # ------------------------------------------------------------
 
 mode:
-  code: mpf.modes.service.code.service.Service
+  code: diehard_service.DieHardService
   priority: 100000
   game_mode: false
   start_events:
@@ -25,52 +20,50 @@ mode:
     - shutdown
   stop_on_ball_end: false
 
-mode_settings:
-  sort_devices_by_number: true
-
-  door_opened_events:
-    - service_door_opened
-
-  door_closed_events:
-    - service_door_closed
-
-  high_power_on_events:
-    - service_power_on
-
-  high_power_off_events:
-    - service_power_off
-
-  enter_events:
-    - sw_service_enter_active
-
-  esc_events:
-    - sw_service_esc_active
-
-  up_events:
-    - sw_service_up_active
-
-  down_events:
-    - sw_service_down_active
-
-  software_update: false
-  software_update_script: None
-
 event_player:
+  sw_s_door_open_active:
+    - service_door_opened
+    - service_mode_entered
+
+  sw_s_door_open_inactive:
+    - service_door_closed
+    - service_mode_exited
+
   sw_service_door_open_active:
     - service_door_opened
-    - sw_service_enter_active
+    - service_mode_entered
 
   sw_service_door_open_inactive:
     - service_door_closed
-    - service_exit_from_door_closed
+    - service_mode_exited
 
   sw_service_door_closed_active:
     - service_door_closed
-    - service_exit_from_door_closed
+    - service_mode_exited
 
   sw_service_door_closed_inactive:
     - service_door_opened
-    - sw_service_enter_active
+    - service_mode_entered
+
+  sw_service_up_active:
+    service_button:
+      button: UP
+
+  sw_service_down_active:
+    service_button:
+      button: DOWN
+
+  sw_service_enter_active:
+    service_button:
+      button: ENTER
+
+  sw_service_esc_active:
+    service_button:
+      button: ESC
+
+  sw_start_active:
+    service_button:
+      button: START
 
   sw_power_off_inactive:
     - service_power_on
@@ -88,9 +81,15 @@ event_player:
     - disable_flippers
     - flipper_off
 
-  service_exit_from_door_closed:
-    service_trigger:
-      action: service_exit
+  service_test_full_mech_check:
+    - service_test_trough_eject
+    - service_test_vault_kicker
+    - service_test_right_kicker
+    - service_test_upper_ramp_vuk
+    - service_test_right_vuk
+    - service_test_tower_vuk
+    - service_test_airplane_captive
+    - service_test_shaker_light
 
 slide_player:
   service_mode_entered:
@@ -141,3 +140,159 @@ coil_player:
   service_test_right_magnet:
     c_trmagr:
       action: pulse
+
+light_player:
+  service_mode_entered:
+    INSERT:
+      color: 000000
+      priority: 100000
+      fade: 300ms
+    GI:
+      color: 000000
+      priority: 100000
+      fade: 300ms
+    SPOTS:
+      color: 000000
+      priority: 100000
+      fade: 300ms
+    SPOTS_BUMPER:
+      color: 000000
+      priority: 100000
+      fade: 300ms
+    LeftSling:
+      color: 000000
+      priority: 100000
+      fade: 300ms
+    RightSling:
+      color: 000000
+      priority: 100000
+      fade: 300ms
+    s_actionbtn:
+      color: 000000
+      priority: 100000
+      fade: 300ms
+
+  service_mode_exited:
+    INSERT:
+      color: stop
+      fade: 300ms
+    GI:
+      color: stop
+      fade: 300ms
+    SPOTS:
+      color: stop
+      fade: 300ms
+    SPOTS_BUMPER:
+      color: stop
+      fade: 300ms
+    LeftSling:
+      color: stop
+      fade: 300ms
+    RightSling:
+      color: stop
+      fade: 300ms
+    s_actionbtn:
+      color: stop
+      fade: 300ms
+
+  service_test_lamps_inserts:
+    INSERT:
+      color: ff0000
+
+  service_test_lamps_gi:
+    GI:
+      color: ffffff
+
+  service_test_lamps_flashers:
+    SPOTS:
+      color: ffffff
+    SPOTS_BUMPER:
+      color: ffffff
+    LeftSling:
+      color: ffffff
+    RightSling:
+      color: ffffff
+
+  service_test_lamps_cabinet:
+    s_actionbtn:
+      color: ff0000
+
+  service_test_lamps_all_white:
+    INSERT:
+      color: ffffff
+    GI:
+      color: ffffff
+    SPOTS:
+      color: ffffff
+    SPOTS_BUMPER:
+      color: ffffff
+    LeftSling:
+      color: ffffff
+    RightSling:
+      color: ffffff
+    s_actionbtn:
+      color: ffffff
+
+  service_test_lamps_all_red:
+    INSERT:
+      color: ff0000
+    GI:
+      color: ff0000
+    SPOTS:
+      color: ff0000
+    SPOTS_BUMPER:
+      color: ff0000
+    LeftSling:
+      color: ff0000
+    RightSling:
+      color: ff0000
+    s_actionbtn:
+      color: ff0000
+
+  service_test_lamps_all_green:
+    INSERT:
+      color: 00ff00
+    GI:
+      color: 00ff00
+    SPOTS:
+      color: 00ff00
+    SPOTS_BUMPER:
+      color: 00ff00
+    LeftSling:
+      color: 00ff00
+    RightSling:
+      color: 00ff00
+    s_actionbtn:
+      color: 00ff00
+
+  service_test_lamps_all_blue:
+    INSERT:
+      color: 0000ff
+    GI:
+      color: 0000ff
+    SPOTS:
+      color: 0000ff
+    SPOTS_BUMPER:
+      color: 0000ff
+    LeftSling:
+      color: 0000ff
+    RightSling:
+      color: 0000ff
+    s_actionbtn:
+      color: 0000ff
+
+  service_test_lamps_all_off:
+    INSERT:
+      color: off
+    GI:
+      color: off
+    SPOTS:
+      color: off
+    SPOTS_BUMPER:
+      color: off
+    LeftSling:
+      color: off
+    RightSling:
+      color: off
+    s_actionbtn:
+      color: off

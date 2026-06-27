@@ -1,0 +1,16 @@
+#config_version=6
+
+# ------------------------------------------------------------
+# GAME MODE OVERRIDE
+# ------------------------------------------------------------
+# MPF's built-in game mode normally stops on service_mode_entered.
+# Die Hard service mode uses service_mode_entered for the service
+# slide and flipper disable, but we do not want that to end the
+# live game. Keep the game mode alive until the game really ends.
+# ------------------------------------------------------------
+
+mode:
+  start_events: game_start
+  stop_events: game_ended
+  priority: 20
+  code: mpf.modes.game.code.game.Game
