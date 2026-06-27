@@ -320,3 +320,15 @@ variable_player:
     score:
       int: "50000 * current_player.playfield_multiplier"
       action: add
+
+light_player:
+  airplane_ball_2_locked_complete:
+    GI:
+      color: ffb700
+      fade: 500ms
+    SPOTS:
+      color: 505050
+      fade: 500ms
+    SPOTS_BUMPER:
+      color: 969650
+      fade: 500ms
