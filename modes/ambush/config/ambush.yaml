@@ -126,6 +126,7 @@ event_player:
     - ambush_extend
 
   ambush_right_ramp_collect_hit:
+    - ambush_score_collected
     - ambush_collected
 
   ambush_collected:
@@ -305,14 +306,13 @@ variable_player:
       action: add
       int: -80000
 
-  ambush_collected:
+  ambush_score_collected:
     score:
       action: add
       int: "current_player.ambush_value * current_player.playfield_multiplier"
-
-  eob_bonus_ambush:
-    action: add
-    int: "200000 * current_player.ambush_level"
+    eob_bonus_ambush:
+      action: add
+      int: "current_player.ambush_value * current_player.playfield_multiplier"
 
   ambush_finished:
     ambush_running:
