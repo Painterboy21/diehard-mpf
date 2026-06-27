@@ -100,3 +100,22 @@ slide_player:
     high_score_award:
       action: play
       expire: 0s
+
+
+# ------------------------------------------------------------
+# SOUND PLAYER
+# ------------------------------------------------------------
+# Plays when flippers move the high-score initials cursor.
+# ------------------------------------------------------------
+sound_player:
+  s_left_flipper_active:
+    High Score Initial Press Boosted:
+      action: play
+      volume: 3.0
+      start_at: 20ms
+
+  s_right_flipper_active:
+    High Score Initial Press Boosted:
+      action: play
+      volume: 3.0
+      start_at: 20ms
