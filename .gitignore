@@ -7,3 +7,9 @@ data
 modes/nakatomi_multiball/config/nakatomi_multiball.yaml.rej
 archive.zip
 videos/Die Hard Trilogy (Vpw 2023) - Vpx Video Instruction.ogv
+
+# Local large video files
+modes/yippee_ki_yay_wizard/slides/DIEHard1Trailer.ogv
+modes/yippee_ki_yay_wizard/slides/DIEHard2Trailer.ogv
+modes/yippee_ki_yay_wizard/slides/DIEHard3Trailer.ogv
+videos/attractvideos/Instruction.ogv
