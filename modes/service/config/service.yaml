@@ -5,14 +5,14 @@
 # MPF built-in service backend.
 # Die Hard Godot scene provides the front end.
 #
-# Coin door behaviour:
-#   - Open coin door: enter service mode automatically.
-#   - Close coin door: exit service mode automatically.
+# Coin door:
+#   - open = enter service
+#   - close = exit service
 #
-# Device Test:
-#   - Single pulse only.
-#   - No flippers.
-#   - No hold coils.
+# Device tests:
+#   - single pulse only
+#   - no flippers
+#   - no hold coils
 # ------------------------------------------------------------
 
 mode:
@@ -101,12 +101,6 @@ slide_player:
     service:
       action: remove
 
-# ------------------------------------------------------------
-# DEVICE TEST COIL PLAYER
-# ------------------------------------------------------------
-# These are fired from the Godot service Device Test page.
-# Keep these single pulse only.
-# ------------------------------------------------------------
 coil_player:
   service_test_trough_eject:
     c_trough_eject:
@@ -138,4 +132,12 @@ coil_player:
 
   service_test_airplane_captive:
     c_captivetarget:
+      action: pulse
+
+  service_test_left_magnet:
+    c_trmagl:
+      action: pulse
+
+  service_test_right_magnet:
+    c_trmagr:
       action: pulse

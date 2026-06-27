@@ -89,7 +89,7 @@ config:
   - shot_profiles.yaml
   - switches.yaml
   - player_vars.yaml
-  #- shaker.yaml
+  - shaker.yaml
 
 # ------------------------------------------------------------
 # EXTRA BALL GROUPS

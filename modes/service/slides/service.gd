@@ -42,6 +42,19 @@ const DEVICE_TESTS := [
 	["RIGHT VUK", "service_test_right_vuk"],
 	["TOWER VUK", "service_test_tower_vuk"],
 	["AIRPLANE CAPTIVE", "service_test_airplane_captive"],
+	["LEFT MAGNET", "service_test_left_magnet"],
+	["RIGHT MAGNET", "service_test_right_magnet"],
+	["SHAKER LIGHT", "service_test_shaker_light"],
+	["SHAKER MEDIUM", "service_test_shaker_medium"],
+	["SHAKER STRONG", "service_test_shaker_strong"],
+	["WIRE RAMP OPEN", "wire_ramp_exit_open"],
+	["WIRE RAMP CLOSE", "wire_ramp_exit_closed"],
+	["NAKATOMI ENTRANCE OPEN", "nakatomi_entrance_lock_open"],
+	["NAKATOMI ENTRANCE CLOSE", "nakatomi_entrance_lock_close"],
+	["NAKATOMI LOCK OPEN", "nakatomi_lock_open"],
+	["NAKATOMI LOCK CLOSE", "nakatomi_lock_close"],
+	["VAULT OPEN", "mystery_open_vault"],
+	["VAULT CLOSE", "mystery_close_vault"],
 ]
 
 var diehard_font: Font
@@ -238,17 +251,16 @@ func _show_device_test() -> void:
 	screen_mode = "device_test"
 
 	var selected_name: String = str(DEVICE_TESTS[device_test_index][0])
-	var lines: Array[String] = []
 
-	lines.append("SELECTED: %s" % selected_name)
-	lines.append("")
-	lines.append("SERVICE UP/DOWN: CHANGE DEVICE")
-	lines.append("SERVICE ENTER: FIRE SINGLE PULSE")
-	lines.append("SERVICE ESC: BACK TO MENU")
-	lines.append("")
-	lines.append("WARNING: ONLY TEST WITH PLAYFIELD CLEAR")
-
-	_show_detail("DEVICE TEST", lines)
+	_show_detail("DEVICE TEST", [
+		"SELECTED: %s" % selected_name,
+		"",
+		"SERVICE UP/DOWN: CHANGE DEVICE",
+		"SERVICE ENTER: FIRE SINGLE PULSE",
+		"SERVICE ESC: BACK TO MENU",
+		"",
+		"WARNING: ONLY TEST WITH PLAYFIELD CLEAR",
+	])
 
 
 func _fire_selected_device_test() -> void:
