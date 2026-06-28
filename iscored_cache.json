@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1782601727,
+  "updatedAt": 1782662358,
   "entries": [
     {
       "rank": "1",
@@ -10,37 +10,37 @@
     },
     {
       "rank": "2",
+      "name": "DEF",
+      "score": 9450990,
+      "score_text": "9,450,990",
+      "pending": false
+    },
+    {
+      "rank": "3",
       "name": "BAD",
       "score": 8312150,
       "score_text": "8,312,150",
       "pending": false
     },
     {
-      "rank": "3",
+      "rank": "4",
       "name": "JOHNMCCLANE",
       "score": 7737400,
       "score_text": "7,737,400",
       "pending": false
     },
     {
-      "rank": "4",
+      "rank": "5",
       "name": "DAD",
       "score": 6005860,
       "score_text": "6,005,860",
       "pending": false
     },
     {
-      "rank": "5",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
-      "pending": false
-    },
-    {
       "rank": "6",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
+      "name": "AAA",
+      "score": 3487330,
+      "score_text": "3,487,330",
       "pending": false
     },
     {

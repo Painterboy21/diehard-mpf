@@ -105,7 +105,11 @@ ball_holds:
     enable_events:
       - counter_airplane_light_lock_hit{hits==5}
       - lock_lit
-    disable_events: start_airplane_multiball
+    disable_events:
+      - airplane_lock_slide_done
+      - start_airplane_multiball
+      - tilt
+      - ball_ended
     hold_devices: UrampUp001
     balls_to_hold: 1
     release_all_events:
@@ -114,7 +118,6 @@ ball_holds:
       - start_airplane_multiball
       - tilt
       - ball_ended
-
 # ------------------------------------------------------------
 # SHOWS
 # ------------------------------------------------------------

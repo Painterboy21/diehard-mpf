@@ -12,109 +12,132 @@
 
 - time: 1s
   shows:
-    ball_drain: 
-      key: key_eob_bonus
+    ball_drain:
+      key: key_eob_bonus_ball_drain
       loops: 0
 
 - time: 5s
-  shows:
-    flicker_color: 
-      key: key_eob_bonus_bullet_flash
-      loops: 0
-      speed: 2
-      show_tokens: 
-        lights: BONUS_BULLET
-        color: ff0000
   widgets:
     widget_eob_bullets:
       action: play
       expire: 6s
   sounds:
-    gunfire_fx: 
+    gunfire_fx:
       key: snd_gunfire_eob_bullets
       action: play
 
-- time: 6s
+- time: 5.12s
   shows:
-    flicker_color: 
-      key: key_eob_bonus_mb_flash
+    flicker_color:
+      key: key_eob_bonus_bullet_flash
       loops: 0
       speed: 2
-      show_tokens: 
-        lights: BONUS_MB
-        color: 00ff00
+      show_tokens:
+        lights: BONUS_BULLET
+        color: ff0000
+
+- time: 6s
   widgets:
     widget_eob_multiball:
       action: play
       expire: 5s
   sounds:
-    gunfire_fx: 
+    gunfire_fx:
       key: snd_gunfire_eob_multiball
       action: play
 
-- time: 7s
+- time: 6.12s
   shows:
-    flicker_color: 
-      key: key_eob_bonus_ambush_flash
+    flicker_color:
+      key: key_eob_bonus_mb_flash
       loops: 0
       speed: 2
-      show_tokens: 
-        lights: BONUS_AMBUSH
-        color: ffffff
+      show_tokens:
+        lights: BONUS_MB
+        color: 00ff00
+
+- time: 7s
   widgets:
     widget_eob_ambush:
       action: play
       expire: 4s
   sounds:
-    gunfire_fx: 
+    gunfire_fx:
       key: snd_gunfire_eob_ambush
       action: play
 
-- time: 8s
+- time: 7.12s
   shows:
-    flicker_color: 
-      key: key_eob_bonus_holly_flash
+    flicker_color:
+      key: key_eob_bonus_ambush_flash
       loops: 0
       speed: 2
-      show_tokens: 
-        lights: HOLLY
+      show_tokens:
+        lights: BONUS_AMBUSH
         color: ffffff
+
+- time: 8s
   widgets:
     widget_eob_holly:
       action: play
       expire: 3s
   sounds:
-    gunfire_fx: 
+    gunfire_fx:
       key: snd_gunfire_eob_holly
       action: play
 
-- time: 9s
+- time: 8.12s
   shows:
-    flicker_color: 
-      key: key_eob_bonus_villain_flash
+    flicker_color:
+      key: key_eob_bonus_holly_flash
       loops: 0
       speed: 2
-      show_tokens: 
-        lights: BONUS_VILLAIN
+      show_tokens:
+        lights: HOLLY
         color: ffffff
+
+- time: 9s
   widgets:
     widget_eob_villain:
       action: play
       expire: 2s
   sounds:
-    gunfire_fx: 
+    gunfire_fx:
       key: snd_gunfire_eob_villain
       action: play
 
+- time: 9.12s
+  shows:
+    flicker_color:
+      key: key_eob_bonus_villain_flash
+      loops: 0
+      speed: 2
+      show_tokens:
+        lights: BONUS_VILLAIN
+        color: ffffff
+
 - time: 10s
-  duration: 1s
+  lights:
+    GI: 000000%100
+    NONRGB: 000000%100
+    INSERT: 000000%100
+    SPOTS: 000000%100
+    SPOTS_BUMPER: 000000%100
   widgets:
     widget_eob_bonusx:
       action: play
       expire: 1s
   sounds:
-    gunfire_fx: 
+    gunfire_fx:
       key: snd_gunfire_eob_bonusx
       action: play
 
-
+- time: 10.12s
+  shows:
+    flicker_color:
+      key: key_eob_bonus_bonusx_flash
+      loops: 0
+      speed: 5
+      show_tokens:
+        lights: INSERT,GI,SPOTS,SPOTS_BUMPER
+        color: ff0000

@@ -99,6 +99,10 @@ event_player:
     - magnets_turn_off_after_switch|4s
   s_TrPF3_active{machine.magnets_enabled}:
     - magnets_turn_off_after_switch|4s
+  s_trmagl_active{machine.magnets_enabled}:
+    - trmagl_fling|180ms
+  s_trmagr_active{machine.magnets_enabled}:
+    - trmagr_fling|180ms
   s_drop_target_1_active:
     - drop_target_hit
   s_drop_target_2_active:
@@ -784,6 +788,16 @@ sound_player:
     Start_Button:
       action: play
       volume: 1.0
+  s_trmagl_active{machine.magnets_enabled}:
+    magnet:
+      action: play
+      volume: 0.8
+      max_queue_time: 0
+  s_trmagr_active{machine.magnets_enabled}:
+    magnet:
+      action: play
+      volume: 0.8
+      max_queue_time: 0
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------

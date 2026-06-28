@@ -1,19 +1,19 @@
 {
   "loop_champion": {
     "name": "SMD",
-    "value": 2,
-    "text": "2 LOOPS"
+    "value": 4,
+    "text": "4 LOOPS"
   },
   "multiball_hero": {
-    "name": "---",
-    "value": 0,
-    "text": "---",
-    "mode": "---"
+    "name": "SMD",
+    "value": 6309550,
+    "text": "6,309,550",
+    "mode": "NAKATOMI MULTIBALL"
   },
   "villain_mvp": {
-    "name": "SMD",
-    "value": 26398630,
-    "text": "26,398,630",
-    "mode": "HANS DIE HARDER"
+    "name": "DEF",
+    "value": 3082350,
+    "text": "3,082,350",
+    "mode": "KATYA DIE HARDER"
   }
 }
