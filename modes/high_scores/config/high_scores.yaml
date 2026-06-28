@@ -109,50 +109,78 @@ sound_player:
   s_left_flipper_active:
     High Score Initial Press Boosted:
       action: play
-      volume: 3.0
+      volume: 4.0
       start_at: 20ms
 
   s_right_flipper_active:
     High Score Initial Press Boosted:
       action: play
-      volume: 3.0
+      volume: 4.0
       start_at: 20ms
 
   s_start_active:
-    High Score Initial Press Boosted:
+    Start_Button:
       action: play
-      volume: 3.0
-      start_at: 20ms
-
-  s_fire_active:
-    High Score Initial Press Boosted:
-      action: play
-      volume: 3.0
-      start_at: 20ms
+      volume: 1.0
 
   s_actionbtn_active:
-    High Score Initial Press Boosted:
+    Start_Button:
       action: play
-      volume: 3.0
-      start_at: 20ms
+      volume: 1.0
+
+  s_fire_active:
+    Start_Button:
+      action: play
+      volume: 1.0
 
 # ------------------------------------------------------------
-# HIGH SCORE BUTTON LIGHTS
+# HIGH SCORE BUTTON FLASH
+# ------------------------------------------------------------
+show_player:
+  mode_high_scores_started:
+    flash_start_button:
+      key: key_high_score_button_flash
+      loops: 0
+
+  s_start_active:
+    flash_start_button:
+      action: stop
+      key: key_high_score_button_flash
+
+  s_start_inactive:
+    flash_start_button:
+      key: key_high_score_button_flash
+      loops: 0
+
+  s_actionbtn_active:
+    flash_start_button:
+      action: stop
+      key: key_high_score_button_flash
+
+  s_actionbtn_inactive:
+    flash_start_button:
+      key: key_high_score_button_flash
+      loops: 0
+
+  mode_high_scores_stopping:
+    flash_start_button:
+      action: stop
+      key: key_high_score_button_flash
+
+# ------------------------------------------------------------
+# ACTION BUTTON WHITE WHILE PRESSED
 # ------------------------------------------------------------
 light_player:
-  mode_high_scores_started:
-    s_actionbtn:
-      color: ff0000
-      fade: 100ms
-
   s_actionbtn_active:
     s_actionbtn:
       color: ffffff
+      priority: 1000
       fade: 0ms
 
   s_actionbtn_inactive:
     s_actionbtn:
       color: ff0000
+      priority: 1000
       fade: 100ms
 
   mode_high_scores_stopping:
@@ -160,15 +188,13 @@ light_player:
       color: stop
       fade: 100ms
 
+# ------------------------------------------------------------
+# START BUTTON SOLID WHILE PRESSED
+# ------------------------------------------------------------
 coil_player:
-  mode_high_scores_started:
-    c_cab_start_button:
-      action: enable
-
   s_start_active:
     c_cab_start_button:
-      action: pulse
-      pulse_ms: 80
+      action: enable
 
   mode_high_scores_stopping:
     c_cab_start_button:

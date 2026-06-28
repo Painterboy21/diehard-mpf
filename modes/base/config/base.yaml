@@ -958,3 +958,11 @@ variable_player:
     multiball_running:
       action: set
       int: 0
+
+coil_player:
+  mode_base_started:
+    c_cab_start_button:
+      action: enable
+  mode_base_stopping:
+    c_cab_start_button:
+      action: disable
