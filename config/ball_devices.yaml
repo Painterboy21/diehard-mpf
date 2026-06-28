@@ -117,7 +117,9 @@ ball_devices:
     auto_fire_on_unexpected_ball: false
     eject_targets: playfield
     eject_timeouts: 250ms
-    eject_all_events: multiball_nakatomi_started
+    eject_all_events: 
+      - multiball_nakatomi_started
+      - service_test_tower_vuk
     ball_search_order: 60
 
   # ------------------------------------------------------------

@@ -791,12 +791,12 @@ sound_player:
   s_trmagl_active{machine.magnets_enabled}:
     magnet:
       action: play
-      volume: 1.0
+      volume: 0.2
       max_queue_time: 0
   s_trmagr_active{machine.magnets_enabled}:
     magnet:
       action: play
-      volume: 1.0
+      volume: 0.2
       max_queue_time: 0
 # ------------------------------------------------------------
 # VARIABLE PLAYER

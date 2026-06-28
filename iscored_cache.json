@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1782675413,
+  "updatedAt": 1782677773,
   "entries": [
     {
       "rank": "1",
@@ -31,23 +31,23 @@
     },
     {
       "rank": "5",
+      "name": "JohnMcClane",
+      "score": 9604780,
+      "score_text": "9,604,780",
+      "pending": false
+    },
+    {
+      "rank": "6",
       "name": "DEF",
       "score": 9450990,
       "score_text": "9,450,990",
       "pending": false
     },
     {
-      "rank": "6",
+      "rank": "7",
       "name": "BAD",
       "score": 8312150,
       "score_text": "8,312,150",
-      "pending": false
-    },
-    {
-      "rank": "7",
-      "name": "JOHNMCCLANE",
-      "score": 7737400,
-      "score_text": "7,737,400",
       "pending": false
     },
     {
