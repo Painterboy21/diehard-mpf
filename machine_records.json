@@ -6,14 +6,14 @@
   },
   "multiball_hero": {
     "name": "SMD",
-    "value": 6309550,
-    "text": "6,309,550",
+    "value": 10458070,
+    "text": "10,458,070",
     "mode": "NAKATOMI MULTIBALL"
   },
   "villain_mvp": {
-    "name": "DEF",
-    "value": 3082350,
-    "text": "3,082,350",
-    "mode": "KATYA DIE HARDER"
+    "name": "SMD",
+    "value": 24128180,
+    "text": "24,128,180",
+    "mode": "HANS DIE HARDER"
   }
 }

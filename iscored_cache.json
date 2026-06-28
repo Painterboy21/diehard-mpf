@@ -1,74 +1,74 @@
 {
-  "updatedAt": 1782662358,
+  "updatedAt": 1782675413,
   "entries": [
     {
       "rank": "1",
       "name": "SMD",
-      "score": 31297660,
-      "score_text": "31,297,660",
+      "score": 36642580,
+      "score_text": "36,642,580",
       "pending": false
     },
     {
       "rank": "2",
+      "name": "YXX",
+      "score": 17981420,
+      "score_text": "17,981,420",
+      "pending": false
+    },
+    {
+      "rank": "3",
+      "name": "AAA",
+      "score": 13159900,
+      "score_text": "13,159,900",
+      "pending": false
+    },
+    {
+      "rank": "4",
+      "name": "ZZZ",
+      "score": 11355170,
+      "score_text": "11,355,170",
+      "pending": false
+    },
+    {
+      "rank": "5",
       "name": "DEF",
       "score": 9450990,
       "score_text": "9,450,990",
       "pending": false
     },
     {
-      "rank": "3",
+      "rank": "6",
       "name": "BAD",
       "score": 8312150,
       "score_text": "8,312,150",
       "pending": false
     },
     {
-      "rank": "4",
+      "rank": "7",
       "name": "JOHNMCCLANE",
       "score": 7737400,
       "score_text": "7,737,400",
       "pending": false
     },
     {
-      "rank": "5",
+      "rank": "8",
       "name": "DAD",
       "score": 6005860,
       "score_text": "6,005,860",
       "pending": false
     },
     {
-      "rank": "6",
-      "name": "AAA",
-      "score": 3487330,
-      "score_text": "3,487,330",
-      "pending": false
-    },
-    {
-      "rank": "7",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
-      "pending": false
-    },
-    {
-      "rank": "8",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
-      "pending": false
-    },
-    {
       "rank": "9",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
+      "name": "BBB",
+      "score": 5138450,
+      "score_text": "5,138,450",
       "pending": false
     },
     {
       "rank": "10",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
+      "name": "ADB",
+      "score": 4385100,
+      "score_text": "4,385,100",
       "pending": false
     }
   ]

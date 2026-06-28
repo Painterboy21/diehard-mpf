@@ -42,12 +42,11 @@ _data = {
 }
 
 [node name="playfield_3x" type="Control" unique_id=690265456]
-modulate = Color(1, 1, 1, 0.4503264)
+modulate = Color(1, 1, 1, 0.19999987)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -667.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0meg0")
@@ -58,6 +57,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -737.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.01999998, 0.01999998, 1)
@@ -79,7 +79,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 498.0
-offset_top = 580.0
+offset_top = -195.0
 offset_right = -531.0
 offset_bottom = -177.0
 grow_horizontal = 2
@@ -91,7 +91,7 @@ theme_override_constants/shadow_offset_y = 2
 theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/font = ExtResource("2_0meg0")
 theme_override_font_sizes/font_size = 120
-text = "3X
+text = "2X
 "
 horizontal_alignment = 1
 vertical_alignment = 1
