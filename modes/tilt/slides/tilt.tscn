@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://be5dlg6di26ux"]
+
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_slide"]
+[ext_resource type="Texture2D" uid="uid://cx83xonm5p76g" path="res://modes/tilt/slides/tilt.png" id="2_bg"]
+[ext_resource type="FontFile" uid="uid://8bwe3lenjji0" path="res://godot-media/fonts/DieHardVPX-Regular.ttf" id="3_font"]
+
+[node name="tilt" type="Control" unique_id=48839091]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_slide")
+
+[node name="Background" type="TextureRect" parent="." unique_id=2073604261]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+
+[node name="TiltText" type="Label" parent="." unique_id=338259501]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 18
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 260
+text = "TILT"
+horizontal_alignment = 1
+vertical_alignment = 1

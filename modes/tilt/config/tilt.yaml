@@ -1,0 +1,135 @@
+#config_version=6
+
+mode:
+  code: mpf.modes.tilt.code.tilt.Tilt
+  priority: 1000000
+  start_events: machine_reset_phase_3
+  game_mode: false
+  stop_on_ball_end: false
+
+tilt:
+  tilt_warning_switch_tag: tilt_warning
+  tilt_switch_tag: tilt
+  slam_tilt_switch_tag: slam_tilt
+  warnings_to_tilt: 3
+  multiple_hit_window: 300ms
+  settle_time: 5s
+  tilt_warnings_player_var: tilt_warnings
+
+event_player:
+  tilt_warning_1:
+    - diehard_tilt_warning_1
+
+  tilt_warning_2:
+    - diehard_tilt_warning_2
+
+  tilt:
+    - diehard_tilt
+    - disable_flippers
+    - flipper_off
+
+  slam_tilt:
+    - diehard_slam_tilt
+    - disable_flippers
+    - flipper_off
+
+slide_player:
+  tilt_warning_1:
+    tilt_warning:
+      action: play
+      expire: 1s
+
+  tilt_warning_2:
+    tilt_warning:
+      action: play
+      expire: 1s
+
+  tilt:
+    tilt:
+      action: play
+      expire: 0s
+
+  tilt_clear:
+    tilt:
+      action: remove
+    tilt_warning:
+      action: remove
+
+sound_player:
+  diehard_tilt_warning_1:
+    Tilt Warning1:
+      action: play
+      volume: 1.0
+
+  diehard_tilt_warning_2:
+    Tilt Warning1:
+      action: play
+      volume: 1.0
+
+  diehard_tilt:
+    Tilt1:
+      action: play
+      volume: 1.0
+
+  diehard_slam_tilt:
+    Tilt1:
+      action: play
+      volume: 1.3
+
+  tilt:
+    gameplay_music_beethoven:
+      key: main_snd_music
+      action: stop
+    gameplay_music_assault:
+      key: main_snd_music
+      action: stop
+    gameplay_music_finlandia:
+      key: main_snd_music
+      action: stop
+    gameplay_music_battle:
+      key: main_snd_music
+      action: stop
+
+light_player:
+  tilt:
+    INSERT:
+      color: off
+      priority: 1000000
+    GI:
+      color: off
+      priority: 1000000
+    SPOTS:
+      color: off
+      priority: 1000000
+    SPOTS_BUMPER:
+      color: off
+      priority: 1000000
+    s_actionbtn:
+      color: off
+      priority: 1000000
+
+  tilt_clear:
+    INSERT:
+      color: stop
+      fade: 300ms
+    GI:
+      color: stop
+      fade: 300ms
+    SPOTS:
+      color: stop
+      fade: 300ms
+    SPOTS_BUMPER:
+      color: stop
+      fade: 300ms
+    s_actionbtn:
+      color: stop
+      fade: 300ms
+
+coil_player:
+  tilt:
+    c_cab_start_button:
+      action: disable
+
+  slam_tilt:
+    c_cab_start_button:
+      action: disable

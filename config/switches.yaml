@@ -35,7 +35,7 @@ switches:
     number: d-2
     label: Vault Kicker
 
- # Coin Door and cab Switches
+  # Coin Door and cab Switches
   s_start:
     number: j-10
     tags: start
@@ -69,6 +69,7 @@ switches:
     label: Left Coin Switch
   s_door_tilt:
     number: j-6
+    tags: slam_tilt
     label: Door Tilt
   s_tilt_bob:
     number: j-19
