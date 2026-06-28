@@ -26,7 +26,7 @@
       key: snd_gunfire_eob_bullets
       action: play
 
-- time: 5.12s
+- time: 5.04s
   shows:
     flicker_color:
       key: key_eob_bonus_bullet_flash
@@ -46,7 +46,7 @@
       key: snd_gunfire_eob_multiball
       action: play
 
-- time: 6.12s
+- time: 6.04s
   shows:
     flicker_color:
       key: key_eob_bonus_mb_flash
@@ -66,7 +66,7 @@
       key: snd_gunfire_eob_ambush
       action: play
 
-- time: 7.12s
+- time: 7.04s
   shows:
     flicker_color:
       key: key_eob_bonus_ambush_flash
@@ -86,7 +86,7 @@
       key: snd_gunfire_eob_holly
       action: play
 
-- time: 8.12s
+- time: 8.04s
   shows:
     flicker_color:
       key: key_eob_bonus_holly_flash
@@ -106,7 +106,7 @@
       key: snd_gunfire_eob_villain
       action: play
 
-- time: 9.12s
+- time: 9.04s
   shows:
     flicker_color:
       key: key_eob_bonus_villain_flash
@@ -126,18 +126,20 @@
   widgets:
     widget_eob_bonusx:
       action: play
-      expire: 1s
+      expire: 1.5s
   sounds:
     gunfire_fx:
       key: snd_gunfire_eob_bonusx
       action: play
 
-- time: 10.12s
+- time: 10.04s
   shows:
     flicker_color:
       key: key_eob_bonus_bonusx_flash
       loops: 0
-      speed: 5
+      speed: 3
       show_tokens:
         lights: INSERT,GI,SPOTS,SPOTS_BUMPER
         color: ff0000
+
+- time: 11.5s
