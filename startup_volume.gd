@@ -1,4 +1,3 @@
-
 extends Node
 
 const SETTINGS_FILE := "user://settings.cfg"
@@ -11,28 +10,25 @@ const GODOT_VOLUME_SETTINGS := [
 	"video",
 ]
 
+var apply_time_left := 90.0
+var apply_interval := 0.25
+var apply_elapsed := 0.0
+
+
 func _ready() -> void:
-	print("StartupVolume: running")
-	_apply_volume_repeated()
-
-
-func _apply_volume_repeated() -> void:
 	_apply_saved_volumes()
 
-	await get_tree().create_timer(0.25).timeout
-	_apply_saved_volumes()
 
-	await get_tree().create_timer(0.75).timeout
-	_apply_saved_volumes()
+func _process(delta: float) -> void:
+	if apply_time_left <= 0.0:
+		return
 
-	await get_tree().create_timer(1.5).timeout
-	_apply_saved_volumes()
+	apply_time_left -= delta
+	apply_elapsed += delta
 
-	await get_tree().create_timer(2.5).timeout
-	_apply_saved_volumes()
-
-	await get_tree().create_timer(4.0).timeout
-	_apply_saved_volumes()
+	if apply_elapsed >= apply_interval:
+		apply_elapsed = 0.0
+		_apply_saved_volumes()
 
 
 func _apply_saved_volumes() -> void:
@@ -40,12 +36,10 @@ func _apply_saved_volumes() -> void:
 	var error := config.load(SETTINGS_FILE)
 
 	if error != OK:
-		print("StartupVolume: no saved settings file yet")
 		return
 
 	for bus_name in GODOT_VOLUME_SETTINGS:
 		var saved_value = config.get_value("audio", bus_name, null)
-
 		if saved_value == null:
 			continue
 
@@ -54,19 +48,17 @@ func _apply_saved_volumes() -> void:
 
 
 func _apply_bus_percent(bus_name: String, percent: int) -> void:
-	var linear_value: float = 0.0
+	var linear_value := 0.0
 
-	if percent <= 0:
-		linear_value = 0.0
-	else:
+	if percent > 0:
 		linear_value = float(percent) / 100.0
 
-	var db_value: float = -80.0
+	var db_value := -80.0
 
 	if linear_value > 0.0:
 		db_value = linear_to_db(linear_value)
 
-	var audio_bus_index: int = AudioServer.get_bus_index(bus_name)
+	var audio_bus_index := AudioServer.get_bus_index(bus_name)
 
 	if audio_bus_index >= 0:
 		AudioServer.set_bus_volume_db(audio_bus_index, db_value)
@@ -74,5 +66,3 @@ func _apply_bus_percent(bus_name: String, percent: int) -> void:
 	if bus_name != "Master" and MPF and MPF.media and MPF.media.sound:
 		if MPF.media.sound.buses.has(bus_name):
 			MPF.media.sound.buses[bus_name].set_bus_volume_full(db_value)
-
-	print("StartupVolume: applied ", bus_name, " = ", percent)

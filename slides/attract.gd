@@ -1,4 +1,3 @@
-
 extends VideoStreamPlayer
 
 var intro_video: String = "res://videos/attractvideos/DieHardTrilogyOpener.ogv"
@@ -7,6 +6,7 @@ var instruction_video: String = "res://videos/attractvideos/Instruction.ogv"
 
 var normal_volume_db: float = 0.0
 var silent_volume_db: float = -80.0
+var attract_sound_asleep: bool = false
 
 @onready var lblP1Score = $"../P1Score"
 @onready var lblP2Score = $"../P2Score"
@@ -34,18 +34,6 @@ var silent_volume_db: float = -80.0
 
 @onready var iscoredLeaderboard = get_node_or_null("../iscored_leaderboard")
 
-# ------------------------------------------------------------
-# PLAYLIST
-# ------------------------------------------------------------
-# 0 = HighScore3
-# 1 = HighScore1
-# 2 = HighScore2
-# 3 = Loop Champion
-# 4 = Multiball Hero
-# 5 = Villain MVP
-# 6 = iScored leaderboard
-# Last page = Instruction video
-# ------------------------------------------------------------
 var loop_videos: Array[String] = [
 	"res://videos/attractvideos/HSBackground3.ogv",
 	"res://videos/attractvideos/HSBackground1.ogv",
@@ -67,12 +55,15 @@ var player_scores_index: int = -1
 var instruction_page_index: int = -1
 var iscored_refresh_elapsed: float = 0.0
 
+
 func _ready() -> void:
 	normal_volume_db = self.volume_db
 
 	MPF.server.add_event_handler("rotate_attract_left", self._on_rotate_attract_left)
 	MPF.server.add_event_handler("rotate_attract_right", self._on_rotate_attract_right)
 	MPF.server.add_event_handler("play_show_xmas", self._on_timer_attract_idle_complete)
+	MPF.server.add_event_handler("attract_sound_sleep", self._on_attract_sound_sleep)
+	MPF.server.add_event_handler("attract_sound_wake", self._on_attract_sound_wake)
 	self.finished.connect(_on_video_finished)
 
 	if iscoredLeaderboard:
@@ -103,8 +94,6 @@ func _ready() -> void:
 	else:
 		push_warning("VillainMVP node not found. Add it as a sibling of this VideoStreamPlayer.")
 
-	# Keep instruction video as the final attract page,
-	# even if a last-game player score video gets added.
 	loop_videos.erase(instruction_video)
 
 	if MPF.game.machine_vars.has("last_game_players") and MPF.game.machine_vars["last_game_players"] != null and int(MPF.game.machine_vars["last_game_players"]) > 0:
@@ -127,10 +116,14 @@ func _ready() -> void:
 
 	_play_next(false)
 
+
 func _exit_tree() -> void:
 	MPF.server.remove_event_handler("rotate_attract_left", self._on_rotate_attract_left)
 	MPF.server.remove_event_handler("rotate_attract_right", self._on_rotate_attract_right)
 	MPF.server.remove_event_handler("play_show_xmas", self._on_timer_attract_idle_complete)
+	MPF.server.remove_event_handler("attract_sound_sleep", self._on_attract_sound_sleep)
+	MPF.server.remove_event_handler("attract_sound_wake", self._on_attract_sound_wake)
+
 
 func _process(delta: float) -> void:
 	if iscoredLeaderboard and iscoredLeaderboard.visible:
@@ -140,18 +133,45 @@ func _process(delta: float) -> void:
 			iscored_refresh_elapsed = 0.0
 			_update_iscored_leaderboard()
 
+
+func _on_attract_sound_sleep(_payload: Dictionary) -> void:
+	print("Attract video sound asleep")
+	attract_sound_asleep = true
+	_apply_video_volume()
+
+
+func _on_attract_sound_wake(_payload: Dictionary) -> void:
+	print("Attract video sound awake")
+	attract_sound_asleep = false
+	_apply_video_volume()
+
+
+func _apply_video_volume() -> void:
+	if attract_sound_asleep:
+		self.volume_db = silent_volume_db
+		return
+
+	if current_index == instruction_page_index:
+		self.volume_db = silent_volume_db
+	else:
+		self.volume_db = normal_volume_db
+
+
 func _on_rotate_attract_left(payload: Dictionary) -> void:
 	print(payload)
 	_play_next(false)
+
 
 func _on_rotate_attract_right(payload: Dictionary) -> void:
 	print(payload)
 	_play_next(true)
 
+
 func _on_timer_attract_idle_complete(payload: Dictionary) -> void:
 	print(payload)
 	current_index = -1
 	_play_next(false)
+
 
 func _hide_all_overlays() -> void:
 	lblP1Score.hide()
@@ -175,9 +195,11 @@ func _hide_all_overlays() -> void:
 	if iscoredLeaderboard:
 		iscoredLeaderboard.hide()
 
+
 func _close_nakatomi_lock_on_game_over() -> void:
 	print("Game Over: closing Nakatomi entrance lock")
 	MPF.server.send_event("nakatomi_entrance_lock_close")
+
 
 func _play_next(increment: bool) -> void:
 	var path: String
@@ -229,22 +251,20 @@ func _play_next(increment: bool) -> void:
 		if current_index == ISCORED_PAGE_INDEX:
 			_show_iscored_leaderboard()
 
-	if current_index == instruction_page_index:
-		self.volume_db = silent_volume_db
-	else:
-		self.volume_db = normal_volume_db
+	_apply_video_volume()
 
-	var stream: VideoStream = load(path)
+	var video_stream: VideoStream = load(path)
 
-	if stream == null:
+	if video_stream == null:
 		push_warning("Could not load video: %s" % path)
 		return
 
 	if player_scores_index >= 0 and current_index == player_scores_index:
 		_show_last_game_player_scores()
 
-	self.stream = stream
+	self.stream = video_stream
 	self.play()
+
 
 func _show_loop_champion() -> void:
 	if not vboxLoopChampion:
@@ -277,6 +297,7 @@ func _show_loop_champion() -> void:
 	vboxLoopChampion.z_index = 100
 
 	print("Showing Loop Champion: ", champion_name, " ", champion_text)
+
 
 func _show_multiball_hero() -> void:
 	if not vboxMultiballHero:
@@ -319,6 +340,7 @@ func _show_multiball_hero() -> void:
 
 	print("Showing Multiball Hero: ", hero_name, " ", hero_text, " ", hero_mode)
 
+
 func _show_villain_mvp() -> void:
 	if not vboxVillainMVP:
 		push_warning("VillainMVP node not found")
@@ -360,6 +382,7 @@ func _show_villain_mvp() -> void:
 
 	print("Showing Villain MVP: ", villain_name, " ", villain_text, " ", villain_mode)
 
+
 func _show_iscored_leaderboard() -> void:
 	if not iscoredLeaderboard:
 		push_warning("iscored_leaderboard node not found")
@@ -372,6 +395,7 @@ func _show_iscored_leaderboard() -> void:
 	iscored_refresh_elapsed = 0.0
 
 	_update_iscored_leaderboard()
+
 
 func _update_iscored_leaderboard() -> void:
 	if not iscoredLeaderboard:
@@ -388,6 +412,7 @@ func _update_iscored_leaderboard() -> void:
 		_send_iscored_var("iscored_%s_name" % i)
 		_send_iscored_var("iscored_%s_score" % i)
 		_send_iscored_var("iscored_%s_score_text" % i)
+
 
 func _send_iscored_var(key: String) -> void:
 	var value = null
@@ -406,6 +431,7 @@ func _send_iscored_var(key: String) -> void:
 		iscoredLeaderboard.set_machine_var(key, value)
 	else:
 		print("Missing iScored var: ", key)
+
 
 func _show_last_game_player_scores() -> void:
 	if MPF.game.machine_vars.has("player1_score") and MPF.game.machine_vars["player1_score"] != null:
@@ -446,6 +472,7 @@ func _show_last_game_player_scores() -> void:
 				lblP2Score.show()
 				lblP3Score.show()
 				lblP4Score.show()
+
 
 func _on_video_finished() -> void:
 	_play_next(true)

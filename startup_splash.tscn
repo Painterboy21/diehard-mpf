@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://chyyii4xjrs6"]
+[gd_scene format=3 uid="uid://chyyii4xjrs6"]
 
 [ext_resource type="Script" uid="uid://ujpd25534tqk" path="res://addons/mpf-gmc/slides/startup.gd" id="1_jfo37"]
-[ext_resource type="VideoStream" uid="uid://bm7i5a6eggqsu" path="res://loading.ogv" id="2_auahs"]
+[ext_resource type="VideoStream" uid="uid://bbtlxgbn2ekkl" path="res://loading.ogv" id="2_auahs"]
 
 [node name="MPFSlide" type="Control"]
 layout_mode = 3

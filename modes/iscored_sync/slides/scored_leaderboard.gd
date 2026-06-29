@@ -5,7 +5,6 @@ const ROW_COUNT := 10
 const BACKDROP_PATH := "res://modes/iscored_sync/slides/monthly_leaderboard_ft1.png"
 const DIEHARD_FONT_PATH := "res://godot-media/fonts/DieHardVPX-Regular.ttf"
 
-# Live MPF use.
 const USE_TEST_DATA := false
 
 var diehard_font: Font
@@ -86,7 +85,7 @@ func _make_rows() -> void:
 			HORIZONTAL_ALIGNMENT_RIGHT
 		)
 
-		var name := _make_label(
+		var player_name := _make_label(
 			"---",
 			Vector2(350, y),
 			Vector2(570, 60),
@@ -105,32 +104,31 @@ func _make_rows() -> void:
 		)
 
 		rank.z_index = 10
-		name.z_index = 10
+		player_name.z_index = 10
 		score.z_index = 10
 
 		rank_labels.append(rank)
-		name_labels.append(name)
+		name_labels.append(player_name)
 		score_labels.append(score)
 
 		add_child(rank)
-		add_child(name)
+		add_child(player_name)
 		add_child(score)
 
 
 func _make_label(
 	text: String,
 	pos: Vector2,
-	size: Vector2,
+	label_size: Vector2,
 	font_size: int,
 	color: Color,
 	align: HorizontalAlignment
 ) -> Label:
-
 	var label := Label.new()
 
 	label.text = text
 	label.position = pos
-	label.size = size
+	label.size = label_size
 	label.horizontal_alignment = align
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.clip_text = false
@@ -153,25 +151,10 @@ func _make_label(
 
 func _register_mpf_machine_var_events() -> void:
 	for i in range(1, ROW_COUNT + 1):
-		_add_mpf_var_handler(
-			"machine_var_iscored_%s_rank" % i,
-			"iscored_%s_rank" % i
-		)
-
-		_add_mpf_var_handler(
-			"machine_var_iscored_%s_name" % i,
-			"iscored_%s_name" % i
-		)
-
-		_add_mpf_var_handler(
-			"machine_var_iscored_%s_score" % i,
-			"iscored_%s_score" % i
-		)
-
-		_add_mpf_var_handler(
-			"machine_var_iscored_%s_score_text" % i,
-			"iscored_%s_score_text" % i
-		)
+		_add_mpf_var_handler("machine_var_iscored_%s_rank" % i, "iscored_%s_rank" % i)
+		_add_mpf_var_handler("machine_var_iscored_%s_name" % i, "iscored_%s_name" % i)
+		_add_mpf_var_handler("machine_var_iscored_%s_score" % i, "iscored_%s_score" % i)
+		_add_mpf_var_handler("machine_var_iscored_%s_score_text" % i, "iscored_%s_score_text" % i)
 
 
 func _add_mpf_var_handler(event_name: String, clean_name: String) -> void:

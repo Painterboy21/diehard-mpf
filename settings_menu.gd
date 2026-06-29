@@ -11,28 +11,28 @@ var pos_display: String
 
 const MPF_DISPLAY_SCRIPT := preload("res://addons/mpf-gmc/classes/mpf_display.gd")
 
+
 func _ready():
-	
 	var config = ConfigFile.new()
 	var error = config.load(CONFIG_FILE)
 	if error != OK:
 		config.save(CONFIG_FILE)
-		
 
 	mpf_window = get_tree().current_scene
 
 	_build_position_dialog()
 
 	for mpf_display in mpf_window.displays:
-		self.add_display_menu(mpf_display)
+		add_display_menu(mpf_display)
 
-	self.add_item("Exit", 0)
+	add_item("Exit", 0)
+
 
 func add_display_menu(display):
 	var display_menu = PopupMenu.new()
 	display_menu.name = display
-	self.add_child(display_menu)
-	self.add_submenu_item(display, display)
+	add_child(display_menu)
+	add_submenu_item(display, display)
 
 	var submenu = PopupMenu.new()
 	submenu.name = "resolution_submenu"
@@ -48,18 +48,18 @@ func add_display_menu(display):
 	display_menu.add_child(submenu, 1)
 	display_menu.add_submenu_item("Window Resolution", "resolution_submenu")
 
-	self.connect("id_pressed", Callable(self, "_on_self_item_pressed"))
+	connect("id_pressed", Callable(self, "_on_self_item_pressed"))
 
 	display_menu.add_check_item("Toggle Borderless Window", 3)
 	display_menu.add_check_item("Toggle Always On Top", 4)
-	display_menu.add_item("Set Position…", 5)
+	display_menu.add_item("Set Position...", 5)
 	display_menu.connect("id_pressed", Callable(self, "_on_submenu_item_pressed").bind(display, display_menu))
 
-	# Optional: keep menu open when toggling
 	display_menu.set_hide_on_checkable_item_selection(false)
 
-	self.add_separator()
+	add_separator()
 	call_deferred("load_window_settings", display, display_menu)
+
 
 func load_window_settings(display: String, display_menu: PopupMenu):
 	var config = ConfigFile.new()
@@ -74,11 +74,12 @@ func load_window_settings(display: String, display_menu: PopupMenu):
 	var aot_idx := display_menu.get_item_index(4)
 
 	var display_name = mpf_display.name
+
 	if error == OK:
-		var wsize = config.get_value(display_name, "size", Vector2i(800, 600))  # Default size
-		var wposition = config.get_value(display_name, "position", Vector2i(100, 100))  # Default position
-		var wborderless = config.get_value(display_name, "borderless", false)  # Default to false
-		var walwaysOnTop = config.get_value(display_name, "alwaysOnTop", false)  # Default to false
+		var wsize = config.get_value(display_name, "size", Vector2i(800, 600))
+		var wposition = config.get_value(display_name, "position", Vector2i(100, 100))
+		var wborderless = config.get_value(display_name, "borderless", false)
+		var walwaysOnTop = config.get_value(display_name, "alwaysOnTop", false)
 
 		if borderless_idx != -1:
 			display_menu.set_item_checked(borderless_idx, wborderless)
@@ -91,78 +92,75 @@ func load_window_settings(display: String, display_menu: PopupMenu):
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, wborderless, win_id)
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, walwaysOnTop, win_id)
 
-		window.size		 = wsize
+		window.size = wsize
 		window.position = wposition
-		
 	else:
 		print("No settings file found or other error: ", error)
 
-func _on_self_item_pressed(id):
 
-	match id:
-		0:
-			get_tree().quit()
+func _on_self_item_pressed(id):
+	if id == 0:
+		get_tree().quit()
 
 
 func _on_submenu_item_pressed(id, display: String, display_menu: PopupMenu):
-
 	var mpf_display = mpf_window.get_display(display)
-	var display_name = mpf_display.name
 	var window = mpf_display.get_window()
 	var win_id = window.get_window_id()
 
 	var borderless_idx := display_menu.get_item_index(3)
 	var aot_idx := display_menu.get_item_index(4)
 
-	match id:
-		3:
-			var is_borderless := DisplayServer.window_get_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, win_id)
-			if borderless_idx != -1:
-				display_menu.set_item_checked(borderless_idx, !is_borderless)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, !is_borderless, win_id)
-		4:
-			var is_always_on_top := DisplayServer.window_get_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, win_id)
-			if aot_idx != -1:
-				display_menu.set_item_checked(aot_idx, !is_always_on_top)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, !is_always_on_top, win_id)
-		5:
-			_open_position_dialog(display)
+	if id == 3:
+		var is_borderless := DisplayServer.window_get_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, win_id)
+		if borderless_idx != -1:
+			display_menu.set_item_checked(borderless_idx, !is_borderless)
+		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, !is_borderless, win_id)
+
+	elif id == 4:
+		var is_always_on_top := DisplayServer.window_get_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, win_id)
+		if aot_idx != -1:
+			display_menu.set_item_checked(aot_idx, !is_always_on_top)
+		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, !is_always_on_top, win_id)
+
+	elif id == 5:
+		_open_position_dialog(display)
 
 	save_window_settings()
 
-func _on_resolution_selected(id, display):
 
+func _on_resolution_selected(id, display):
 	var mpf_display = mpf_window.get_display(display)
-	var display_name = mpf_display.name
 	var window = mpf_display.get_window()
 	var win_id = window.get_window_id()
 
-	match id:
-		0:
-			size = Vector2i(640, 360)
-		1:
-			size = Vector2i(854, 480)
-		2:
-			size = Vector2i(1280, 720)
-		3:
-			size = Vector2i(1600, 900)
-		4:
-			size = Vector2i(1920, 1080)
-		5:
-			size = Vector2i(2560, 1440)
-		6:
-			size = Vector2i(3840, 2160)
+	var window_size := Vector2i(1280, 720)
 
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED, win_id)  # Ensure not fullscreen
-	DisplayServer.window_set_size(size, win_id)  # Force the OS-level resize
+	if id == 0:
+		window_size = Vector2i(640, 360)
+	elif id == 1:
+		window_size = Vector2i(854, 480)
+	elif id == 2:
+		window_size = Vector2i(1280, 720)
+	elif id == 3:
+		window_size = Vector2i(1600, 900)
+	elif id == 4:
+		window_size = Vector2i(1920, 1080)
+	elif id == 5:
+		window_size = Vector2i(2560, 1440)
+	elif id == 6:
+		window_size = Vector2i(3840, 2160)
+
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED, win_id)
+	DisplayServer.window_set_size(window_size, win_id)
 	save_window_settings()
+
 
 func save_window_settings():
 	var config = ConfigFile.new()
 	var error = config.load(CONFIG_FILE)
 
 	if error == OK:
-
 		for display in mpf_window.displays:
 			var mpf_display = mpf_window.get_display(display)
 			var display_name = mpf_display.name
@@ -178,6 +176,7 @@ func save_window_settings():
 			if error != OK:
 				print("Failed to save window settings: ", error)
 
+
 func _open_position_dialog(display: String) -> void:
 	pos_display = display
 	var mpf_display = mpf_window.get_display(display)
@@ -187,6 +186,7 @@ func _open_position_dialog(display: String) -> void:
 	pos_y.value = window.position.y
 
 	position_dialog.popup_centered()
+
 
 func _apply_position_dialog() -> void:
 	if pos_display == "":
@@ -198,6 +198,7 @@ func _apply_position_dialog() -> void:
 	var new_pos := Vector2i(int(pos_x.value), int(pos_y.value))
 	DisplayServer.window_set_position(new_pos, win_id)
 	save_window_settings()
+
 
 func _build_position_dialog():
 	position_dialog = AcceptDialog.new()
