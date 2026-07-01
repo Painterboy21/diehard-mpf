@@ -1,18 +1,18 @@
-[gd_scene format=3 uid="uid://b1pqijt4etrjw"]
+[gd_scene format=3 uid="uid://dyibmigeh2kin"]
 
 [ext_resource type="Script" uid="uid://bb27fld4nt1o3" path="res://modes/yippee_ki_yay_wizard/slides/yippee_ki_yay_wizard.gd" id="1_grbr4"]
-[ext_resource type="VideoStream" uid="uid://clpax7mj86cf0" path="res://modes/yippee_ki_yay_wizard/slides/DIEHard1Trailer.ogv" id="2_3efy4"]
-[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="2_grbr4"]
-[ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="3_3efy4"]
-[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="4_ojj33"]
-[ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="5_js1mk"]
-[ext_resource type="Script" path="res://slides/score-overlay-manager.gd" id="6_l57q2"]
-[ext_resource type="Texture2D" uid="uid://ytwrcjpchkp8" path="res://godot-media/images/player 1 overlay.png" id="7_x7kf4"]
-[ext_resource type="Texture2D" uid="uid://bgrlutxjsatig" path="res://godot-media/images/player 2 overlay.png" id="8_5rp25"]
-[ext_resource type="Texture2D" uid="uid://cghope0h5kgp1" path="res://godot-media/images/player 3 overlay.png" id="9_4dwlc"]
-[ext_resource type="Texture2D" uid="uid://6fk0ee3lpgir" path="res://godot-media/images/player 4 overlay.png" id="10_hgxie"]
+[ext_resource type="VideoStream" uid="uid://prrmw6f3sqtr" path="res://modes/yippee_ki_yay_wizard/slides/DIEHard2Trailer.ogv" id="2_3wybv"]
+[ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_d3670"]
+[ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="4_3wybv"]
+[ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="5_d3670"]
+[ext_resource type="Theme" uid="uid://doj8rviv5j1n8" path="res://godot-media/themes/lbl_ball.tres" id="6_dqqpl"]
+[ext_resource type="Script" path="res://slides/score-overlay-manager.gd" id="7_8y8hq"]
+[ext_resource type="Texture2D" uid="uid://ytwrcjpchkp8" path="res://godot-media/images/player 1 overlay.png" id="8_qj4wa"]
+[ext_resource type="Texture2D" uid="uid://bgrlutxjsatig" path="res://godot-media/images/player 2 overlay.png" id="9_bk7sp"]
+[ext_resource type="Texture2D" uid="uid://cghope0h5kgp1" path="res://godot-media/images/player 3 overlay.png" id="10_d6le1"]
+[ext_resource type="Texture2D" uid="uid://6fk0ee3lpgir" path="res://godot-media/images/player 4 overlay.png" id="11_ndmgs"]
 
-[node name="yippee_ki_yay_wizard" type="Control" unique_id=1079522263]
+[node name="yippee_ki_yay_phase_2_intro" type="Control" unique_id=1079522263]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,20 +21,21 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_grbr4")
 
-[node name="Phase1Video" type="VideoStreamPlayer" parent="." unique_id=153933561]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stream = ExtResource("2_3efy4")
-volume_db = 7.999997
+[node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="." unique_id=1241280034]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+scale = Vector2(1, 0.9)
+stream = ExtResource("2_3wybv")
+volume_db = 5.999998
 autoplay = true
-script = ExtResource("2_grbr4")
+script = ExtResource("3_d3670")
+end_behavior = 1
+events_when_stopped = "yippee_ki_yay_phase_2_intro_done"
+preview_in_editor = true
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
 
-[node name="Control2" type="Control" parent="." unique_id=131316709]
+[node name="Control2" type="Control" parent="." unique_id=1659558031]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -42,7 +43,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="main_score" type="Label" parent="Control2" unique_id=335568833]
+[node name="main_score" type="Label" parent="Control2" unique_id=1638761526]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,16 +54,16 @@ offset_bottom = -98.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_name = "score"
 comma_separate = true
 
-[node name="current_ball" type="Label" parent="Control2" unique_id=1821157397]
+[node name="current_ball" type="Label" parent="Control2" unique_id=1797150946]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -74,17 +76,17 @@ offset_bottom = -212.66998
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("5_js1mk")
+theme = ExtResource("6_dqqpl")
 text = "Ball 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_name = "ball"
 comma_separate = true
 template_string = "BALL %s"
 
-[node name="current_player_number" type="Label" parent="Control2" unique_id=1525190024]
+[node name="current_player_number" type="Label" parent="Control2" unique_id=1132223420]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -97,40 +99,40 @@ offset_bottom = -212.66998
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("5_js1mk")
+theme = ExtResource("6_dqqpl")
 text = "PLAYER 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_name = "number"
 comma_separate = true
 template_string = "PLAYER %s"
 
-[node name="Control" type="Control" parent="." unique_id=526275576]
+[node name="Control" type="Control" parent="." unique_id=1760023088]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -100.0
 grow_vertical = 0
-script = ExtResource("6_l57q2")
+script = ExtResource("7_8y8hq")
 
-[node name="P1Overlay" type="Control" parent="Control" unique_id=1211022955]
+[node name="P1Overlay" type="Control" parent="Control" unique_id=21120732]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="score_overlay" type="TextureRect" parent="Control/P1Overlay" unique_id=1152697542]
+[node name="score_overlay" type="TextureRect" parent="Control/P1Overlay" unique_id=1840885218]
 layout_mode = 0
 offset_left = 0.42004395
 offset_top = -980.0
 offset_right = 1919.58
 offset_bottom = 100.0
-texture = ExtResource("7_x7kf4")
+texture = ExtResource("8_qj4wa")
 expand_mode = 1
 
-[node name="player_1_score" type="Label" parent="Control/P1Overlay" unique_id=733890098]
+[node name="player_1_score" type="Label" parent="Control/P1Overlay" unique_id=156828313]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -140,18 +142,18 @@ offset_right = 554.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 60
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 4
 variable_name = "score"
 comma_separate = true
 
-[node name="player_2_score" type="Label" parent="Control/P1Overlay" unique_id=793378019]
+[node name="player_2_score" type="Label" parent="Control/P1Overlay" unique_id=650281110]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -162,18 +164,18 @@ offset_right = 1054.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 40
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 5
 variable_name = "score"
 comma_separate = true
 
-[node name="player_3_score" type="Label" parent="Control/P1Overlay" unique_id=507569942]
+[node name="player_3_score" type="Label" parent="Control/P1Overlay" unique_id=706849570]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -184,18 +186,18 @@ offset_right = 1480.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 40
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 6
 variable_name = "score"
 comma_separate = true
 
-[node name="player_4_score" type="Label" parent="Control/P1Overlay" unique_id=156613394]
+[node name="player_4_score" type="Label" parent="Control/P1Overlay" unique_id=569440648]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -206,32 +208,32 @@ offset_right = 1912.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 40
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 7
 variable_name = "score"
 comma_separate = true
 
-[node name="P2Overlay" type="Control" parent="Control" unique_id=354819992]
+[node name="P2Overlay" type="Control" parent="Control" unique_id=877313660]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="score_overlay" type="TextureRect" parent="Control/P2Overlay" unique_id=1681543740]
+[node name="score_overlay" type="TextureRect" parent="Control/P2Overlay" unique_id=1685563748]
 layout_mode = 0
 offset_left = 0.42004395
 offset_top = -980.0
 offset_right = 1919.58
 offset_bottom = 100.0
-texture = ExtResource("8_5rp25")
+texture = ExtResource("9_bk7sp")
 expand_mode = 1
 
-[node name="player_1_score" type="Label" parent="Control/P2Overlay" unique_id=624330397]
+[node name="player_1_score" type="Label" parent="Control/P2Overlay" unique_id=160057251]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -242,18 +244,18 @@ offset_right = 1056.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 60
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 5
 variable_name = "score"
 comma_separate = true
 
-[node name="player_2_score" type="Label" parent="Control/P2Overlay" unique_id=1309747786]
+[node name="player_2_score" type="Label" parent="Control/P2Overlay" unique_id=1736246644]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -264,18 +266,18 @@ offset_right = 428.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 40
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 4
 variable_name = "score"
 comma_separate = true
 
-[node name="player_3_score" type="Label" parent="Control/P2Overlay" unique_id=377264248]
+[node name="player_3_score" type="Label" parent="Control/P2Overlay" unique_id=728194221]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -286,18 +288,18 @@ offset_right = 1480.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 40
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 6
 variable_name = "score"
 comma_separate = true
 
-[node name="player_4_score" type="Label" parent="Control/P2Overlay" unique_id=659720768]
+[node name="player_4_score" type="Label" parent="Control/P2Overlay" unique_id=1201133085]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -308,32 +310,32 @@ offset_right = 1912.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 40
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 7
 variable_name = "score"
 comma_separate = true
 
-[node name="P3Overlay" type="Control" parent="Control" unique_id=207078188]
+[node name="P3Overlay" type="Control" parent="Control" unique_id=1176475952]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="score_overlay" type="TextureRect" parent="Control/P3Overlay" unique_id=1597635535]
+[node name="score_overlay" type="TextureRect" parent="Control/P3Overlay" unique_id=1246817390]
 layout_mode = 0
 offset_left = 0.42004395
 offset_top = -980.0
 offset_right = 1919.58
 offset_bottom = 100.0
-texture = ExtResource("9_4dwlc")
+texture = ExtResource("10_d6le1")
 expand_mode = 1
 
-[node name="player_1_score" type="Label" parent="Control/P3Overlay" unique_id=1119633747]
+[node name="player_1_score" type="Label" parent="Control/P3Overlay" unique_id=934722616]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -344,18 +346,18 @@ offset_right = 1480.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 60
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 6
 variable_name = "score"
 comma_separate = true
 
-[node name="player_2_score" type="Label" parent="Control/P3Overlay" unique_id=87061608]
+[node name="player_2_score" type="Label" parent="Control/P3Overlay" unique_id=1088345489]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -366,18 +368,18 @@ offset_right = 428.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 40
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 4
 variable_name = "score"
 comma_separate = true
 
-[node name="player_3_score" type="Label" parent="Control/P3Overlay" unique_id=302634252]
+[node name="player_3_score" type="Label" parent="Control/P3Overlay" unique_id=848422076]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -388,18 +390,18 @@ offset_right = 856.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 40
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 5
 variable_name = "score"
 comma_separate = true
 
-[node name="player_4_score" type="Label" parent="Control/P3Overlay" unique_id=1904341778]
+[node name="player_4_score" type="Label" parent="Control/P3Overlay" unique_id=1531959965]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -410,32 +412,32 @@ offset_right = 1912.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 40
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 7
 variable_name = "score"
 comma_separate = true
 
-[node name="P4Overlay" type="Control" parent="Control" unique_id=296979703]
+[node name="P4Overlay" type="Control" parent="Control" unique_id=1595994300]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="score_overlay" type="TextureRect" parent="Control/P4Overlay" unique_id=279118988]
+[node name="score_overlay" type="TextureRect" parent="Control/P4Overlay" unique_id=296028273]
 layout_mode = 0
 offset_left = 0.42004395
 offset_top = -980.0
 offset_right = 1919.58
 offset_bottom = 100.0
-texture = ExtResource("10_hgxie")
+texture = ExtResource("11_ndmgs")
 expand_mode = 1
 
-[node name="player_1_score" type="Label" parent="Control/P4Overlay" unique_id=59466146]
+[node name="player_1_score" type="Label" parent="Control/P4Overlay" unique_id=328022251]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -446,18 +448,18 @@ offset_right = 1920.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 60
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 7
 variable_name = "score"
 comma_separate = true
 
-[node name="player_2_score" type="Label" parent="Control/P4Overlay" unique_id=789335275]
+[node name="player_2_score" type="Label" parent="Control/P4Overlay" unique_id=1142969477]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -468,18 +470,18 @@ offset_right = 428.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 40
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 4
 variable_name = "score"
 comma_separate = true
 
-[node name="player_3_score" type="Label" parent="Control/P4Overlay" unique_id=1114046308]
+[node name="player_3_score" type="Label" parent="Control/P4Overlay" unique_id=119578144]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -490,18 +492,18 @@ offset_right = 856.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 40
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 5
 variable_name = "score"
 comma_separate = true
 
-[node name="player_4_score" type="Label" parent="Control/P4Overlay" unique_id=479717575]
+[node name="player_4_score" type="Label" parent="Control/P4Overlay" unique_id=1512075774]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -512,13 +514,13 @@ offset_right = 1292.0
 offset_bottom = 60.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme = ExtResource("3_3efy4")
+theme = ExtResource("4_3wybv")
 theme_override_font_sizes/font_size = 40
 text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
-script = ExtResource("4_ojj33")
+script = ExtResource("5_d3670")
 variable_type = 6
 variable_name = "score"
 comma_separate = true

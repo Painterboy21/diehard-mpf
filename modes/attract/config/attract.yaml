@@ -8,6 +8,7 @@
 #   - Stops when a game starts or service mode opens.
 #   - Plays the main attract slide.
 #   - Runs the attract light show and start button flash.
+#   - Mutes attract video audio after 10 minutes, then wakes on cabinet buttons.
 #   - Refreshes iScored scores when attract begins and on idle.
 #   - Flippers rotate the attract display and reset the idle timer.
 #   - Action button shows the instructions slide while held.
@@ -36,20 +37,35 @@ event_player:
     - play_show_start_button_flash
     - iscored_refresh_scores
     - reset_idle_timer
+    - attract_sound_wake
 
   s_left_flipper_active:
     - rotate_attract_left
     - reset_idle_timer
+    - attract_sound_wake
 
   s_right_flipper_active:
     - rotate_attract_right
     - reset_idle_timer
+    - attract_sound_wake
+
+  s_start_active:
+    - attract_sound_wake
+
+  s_actionbtn_active:
+    - attract_sound_wake
+
+  s_fire_active:
+    - attract_sound_wake
 
   timer_attract_idle_complete:
     - rotate_attract_right
     - play_show_xmas
     - iscored_refresh_scores
     - reset_idle_timer
+
+  timer_attract_sound_sleep_complete:
+    - attract_sound_sleep
 
 # ------------------------------------------------------------
 # LIGHT PLAYER
@@ -111,6 +127,19 @@ timers:
     restart_on_complete: true
     start_running: true
     tick_interval: 10000ms
+
+  attract_sound_sleep:
+    start_value: 0
+    end_value: 600
+    direction: up
+    tick_interval: 1s
+    control_events:
+      - event: mode_attract_started
+        action: restart
+      - event: attract_sound_wake
+        action: restart
+      - event: mode_attract_stopping
+        action: stop
 
 # ------------------------------------------------------------
 # SOUND PLAYER

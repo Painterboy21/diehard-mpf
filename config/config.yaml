@@ -335,8 +335,8 @@ modes:
   - playfield_x
   - iscored_sync
   - extra_ball
- # - wizard_check
-  #- yippee_ki_yay_wizard
+  - wizard_check
+  - yippee_ki_yay_wizard
 # ------------------------------------------------------------
 # MACHINE / GAME
 # ------------------------------------------------------------

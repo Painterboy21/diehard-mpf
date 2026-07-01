@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_2kill"]
+[ext_resource type="VideoStream" path="res://modes/yippee_ki_yay_wizard/slides/DieHard2Kill.ogv" id="2_2kill"]
+[ext_resource type="Script" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_2kill"]
+
+[node name="DieHard2Kill" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2kill")
+
+[node name="DieHard2KillVideo" type="VideoStreamPlayer" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+stream = ExtResource("2_2kill")
+volume_db = 7.9999976
+autoplay = true
+script = ExtResource("3_2kill")
+end_behavior = 1
+preview_in_editor = true

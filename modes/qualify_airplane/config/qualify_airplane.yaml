@@ -103,7 +103,7 @@ ball_saves:
 ball_holds:
   airplane_lock_hold:
     enable_events:
-      - counter_airplane_light_lock_hit{hits==5}
+      - counter_airplane_light_lock_hit{hits==4}
       - lock_lit
     disable_events:
       - airplane_lock_slide_done
@@ -163,7 +163,7 @@ show_player:
 # ------------------------------------------------------------
 # Main Airplane flow:
 #   - Start mode resets/arms the captive-ball counter.
-#   - 5 captive hits lights lock.
+#   - 4 captive hits lights lock.
 #   - Upper ramp locks ball 1, then ball 2.
 #   - 2nd lock starts the multiball flow after the slide is removed.
 # ------------------------------------------------------------
@@ -171,7 +171,7 @@ event_player:
   mode_qualify_airplane_started:
     - airplane_reset_locks
     - airplane_enable_lock_counter
-  counter_airplane_light_lock_hit{hits==5}:
+  counter_airplane_light_lock_hit{hits==4}:
     - lock_lit
     - airplane_disable_lock_counter
   s_UrampUp001_active{current_player.airplane_lock_lit==1 and current_player.airplane_virtual_locks==0}:
@@ -194,13 +194,13 @@ event_player:
 # ------------------------------------------------------------
 # COUNTERS
 # ------------------------------------------------------------
-# Counts 5 captive ball hits to light the Airplane lock.
+# Counts 4 captive ball hits to light the Airplane lock.
 # Resets after the 1st lock, then stops after the 2nd lock.
 # ------------------------------------------------------------
 counters:
   airplane_light_lock:
     count_events: s_captiveball_active
-    count_complete_value: 5
+    count_complete_value: 4
     enable_events: airplane_enable_lock_counter
     disable_events:
       - airplane_disable_lock_counter
@@ -269,7 +269,7 @@ slide_player:
     airplane_mb:
       action: play
       expire: 0s
-  counter_airplane_light_lock_hit{hits==5}:
+  counter_airplane_light_lock_hit{hits==4}:
     airplane_lock_lit:
       action: play
       expire: 0s
@@ -292,7 +292,7 @@ variable_player:
       int: 0
       action: set
 
-  counter_airplane_light_lock_hit{hits==5}:
+  counter_airplane_light_lock_hit{hits==4}:
     airplane_lock_lit:
       int: 1
       action: set

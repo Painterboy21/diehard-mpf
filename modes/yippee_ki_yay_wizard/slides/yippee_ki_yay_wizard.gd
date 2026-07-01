@@ -2,7 +2,7 @@
 extends MPFSlide
 
 # ------------------------------------------------------------
-# YIPPEE KI YAY WIZARD - PHASE 1 ONLY
+# YIPPEE KI YAY WIZARD
 # ------------------------------------------------------------
 # Phase1Video plays while locking balls.
 # DiaHard1Kill plays when MPF posts:
@@ -11,8 +11,8 @@ extends MPFSlide
 # When DiaHard1Kill finishes, this posts:
 #   dia_hard_1_kill_finished
 #
-# MPF also has a timed fallback release, so the physical lock
-# cannot stay stuck if Godot does not send the finished event.
+# If the phase trailer video finishes, the same video node swaps
+# to DieHardBackground.ogv and keeps playing behind the widgets.
 # ------------------------------------------------------------
 
 @onready var phase_1_video = get_node_or_null("Phase1Video")
@@ -21,8 +21,15 @@ extends MPFSlide
 @onready var phase_objective_label: Label = get_node_or_null("PhaseObjectiveLabel")
 @onready var phase_progress_label: Label = get_node_or_null("PhaseProgressLabel")
 
+var phase_1_video_path: String = "res://modes/yippee_ki_yay_wizard/slides/DIEHard1Trailer.ogv"
+var phase_2_video_path: String = "res://modes/yippee_ki_yay_wizard/slides/DIEHard2Trailer.ogv"
+var die_hard_background_video_path: String = "res://videos/DieHardBackground.ogv"
+
 var phase_1_balls_locked: int = 0
+var phase_2_balls_locked: int = 0
 var kill_video_started: bool = false
+var current_phase: int = 1
+var playing_background_video: bool = false
 
 
 func _ready() -> void:
@@ -38,8 +45,14 @@ func _register_mpf_events() -> void:
 
 	if MPF.has_method("register_event"):
 		MPF.register_event("yippee_ki_yay_phase_1_play_kill_video", Callable(self, "_on_play_kill_video"))
+		MPF.register_event("yippee_ki_yay_phase_2_start", Callable(self, "_on_phase_2_start"))
+		MPF.register_event("yippee_ki_yay_phase_2_refresh", Callable(self, "_on_phase_2_start"))
+		MPF.register_event("yippee_ki_yay_phase_2_play_kill_video", Callable(self, "_on_play_phase_2_kill_video"))
 	elif MPF.server != null and MPF.server.has_method("register_event"):
 		MPF.server.register_event("yippee_ki_yay_phase_1_play_kill_video", Callable(self, "_on_play_kill_video"))
+		MPF.server.register_event("yippee_ki_yay_phase_2_start", Callable(self, "_on_phase_2_start"))
+		MPF.server.register_event("yippee_ki_yay_phase_2_refresh", Callable(self, "_on_phase_2_start"))
+		MPF.server.register_event("yippee_ki_yay_phase_2_play_kill_video", Callable(self, "_on_play_phase_2_kill_video"))
 
 
 func set_machine_var(name: String, value) -> void:
@@ -47,15 +60,37 @@ func set_machine_var(name: String, value) -> void:
 		"yippee_ki_yay_phase_1_balls_locked":
 			phase_1_balls_locked = int(value)
 			_update_phase_1_text()
+		"yippee_ki_yay_phase_2_active":
+			if int(value) == 1:
+				_show_phase_2()
+		"yippee_ki_yay_phase_2_balls_locked":
+			phase_2_balls_locked = int(value)
+			_update_phase_2_text()
+
+
+func set_player_var(name: String, value) -> void:
+	set_machine_var(name, value)
 
 
 func _on_play_kill_video(_kwargs := {}) -> void:
 	_show_dia_hard_1_kill()
 
 
+func _on_phase_2_start(_kwargs := {}) -> void:
+	_show_phase_2()
+
+
+func _on_play_phase_2_kill_video(_kwargs := {}) -> void:
+	if MPF != null and MPF.server != null:
+		MPF.server.send_event("show_die_hard_2_kill_slide")
+
+
 func _setup_videos() -> void:
 	if phase_1_video != null:
 		phase_1_video.visible = true
+
+		if phase_1_video.has_signal("finished") and not phase_1_video.finished.is_connected(_on_phase_video_finished):
+			phase_1_video.finished.connect(_on_phase_video_finished)
 
 	if dia_hard_1_kill != null:
 		dia_hard_1_kill.visible = false
@@ -67,8 +102,24 @@ func _setup_videos() -> void:
 			dia_hard_1_kill.finished.connect(_on_dia_hard_1_kill_finished)
 
 
+func _on_phase_video_finished() -> void:
+	if kill_video_started:
+		return
+
+	if phase_1_video == null:
+		return
+
+	playing_background_video = true
+	_set_video_stream(phase_1_video, die_hard_background_video_path)
+
+	if phase_1_video.has_method("play"):
+		phase_1_video.play()
+
+
 func _show_phase_1() -> void:
 	kill_video_started = false
+	current_phase = 1
+	playing_background_video = false
 
 	if dia_hard_1_kill != null:
 		if dia_hard_1_kill.has_method("stop"):
@@ -77,11 +128,32 @@ func _show_phase_1() -> void:
 
 	if phase_1_video != null:
 		phase_1_video.visible = true
+		_set_video_stream(phase_1_video, phase_1_video_path)
 		if phase_1_video.has_method("play"):
 			phase_1_video.play()
 
 	_set_label_text(phase_title_label, "YIPPEE KI YAY")
 	_update_phase_1_text()
+
+
+func _show_phase_2() -> void:
+	kill_video_started = false
+	current_phase = 2
+	playing_background_video = false
+
+	if dia_hard_1_kill != null:
+		if dia_hard_1_kill.has_method("stop"):
+			dia_hard_1_kill.stop()
+		dia_hard_1_kill.visible = false
+
+	if phase_1_video != null:
+		phase_1_video.visible = true
+		_set_video_stream(phase_1_video, phase_2_video_path)
+		if phase_1_video.has_method("play"):
+			phase_1_video.play()
+
+	_set_label_text(phase_title_label, "DIE HARD")
+	_update_phase_2_text()
 
 
 func _show_dia_hard_1_kill() -> void:
@@ -116,7 +188,7 @@ func _on_dia_hard_1_kill_finished() -> void:
 
 
 func _update_phase_1_text() -> void:
-	if kill_video_started:
+	if kill_video_started or current_phase != 1:
 		return
 
 	var clamped_locked: int = clamp(phase_1_balls_locked, 0, 3)
@@ -124,6 +196,30 @@ func _update_phase_1_text() -> void:
 	_set_label_text(phase_title_label, "YIPPEE KI YAY")
 	_set_label_text(phase_objective_label, "LOCK 3 BALLS IN THE TOWER")
 	_set_label_text(phase_progress_label, str(clamped_locked) + " / 3 LOCKED")
+
+
+func _update_phase_2_text() -> void:
+	if kill_video_started or current_phase != 2:
+		return
+
+	var clamped_locked: int = clamp(phase_2_balls_locked, 0, 3)
+
+	_set_label_text(phase_title_label, "DIE HARD")
+	_set_label_text(phase_objective_label, "LOCK 3 BALLS IN AIRPLANE LOCK")
+	_set_label_text(phase_progress_label, str(clamped_locked) + " / 3 LOCKED")
+
+
+func _set_video_stream(video_node, path: String) -> void:
+	if video_node == null:
+		return
+
+	var stream: VideoStream = load(path)
+
+	if stream == null:
+		push_warning("Could not load wizard video: %s" % path)
+		return
+
+	video_node.stream = stream
 
 
 func _set_label_text(label_node: Label, text_value: String) -> void:
