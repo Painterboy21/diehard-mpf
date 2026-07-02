@@ -8,6 +8,7 @@ mode:
   stop_events:
     - yippee_ki_yay_phase_1_failed
     - yippee_ki_yay_phase_2_failed
+    - yippee_ki_yay_phase_3_failed
     - ball_ended
   priority: 500
 # ------------------------------------------------------------
@@ -53,6 +54,21 @@ ball_saves:
       - yippee_ki_yay_phase_2_all_balls_locked
       - yippee_ki_yay_phase_2_complete
       - yippee_ki_yay_phase_2_failed
+      - mode_yippee_ki_yay_wizard_stopping
+      - ball_ending
+      - tilt
+  yippee_ki_yay_phase_3_ball_save:
+    active_time: 60s
+    hurry_up_time: 10s
+    grace_period: 2s
+    auto_launch: true
+    balls_to_save: -1
+    enable_events:
+      - yippee_ki_yay_phase_3_start
+    disable_events:
+      - yippee_ki_yay_phase_3_all_lanes_complete
+      - yippee_ki_yay_phase_3_complete
+      - yippee_ki_yay_phase_3_failed
       - mode_yippee_ki_yay_wizard_stopping
       - ball_ending
       - tilt
@@ -170,7 +186,42 @@ event_player:
   yippee_ki_yay_phase_2_all_balls_locked:
     - disarm_yippee_ki_yay_phase_2_scoop
     - yippee_ki_yay_phase_2_play_kill_video
-    - yippee_ki_yay_phase_2_complete|9200ms
+    - yippee_ki_yay_phase_2_to_phase_3|9200ms
+  yippee_ki_yay_phase_2_to_phase_3:
+    - yippee_ki_yay_phase_2_complete
+    - show_yippee_ki_yay_phase_3_slide
+    - yippee_ki_yay_phase_3_start|100ms
+    - wire_ramp_exit_closed
+  yippee_ki_yay_phase_3_start:
+    - yippee_ki_yay_phase_3_refresh|500ms
+    - show_yippee_phase_3_lanes_1_widget|250ms
+  s_upper_pf_entrance_inactive{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_lanes_hit >= 2 and current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - central_park_start_multiball_hit
+    - yippee_ki_yay_phase_3_final_lane_complete|500ms
+  s_TrPF1_active{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_left_done != 1 and current_player.yippee_ki_yay_phase_3_lanes_hit < 2 and current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - yippee_ki_yay_phase_3_left_lane_hit
+  s_TrPF2_active{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_middle_done != 1 and current_player.yippee_ki_yay_phase_3_lanes_hit < 2 and current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - yippee_ki_yay_phase_3_middle_lane_hit
+  s_TrPF3_active{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_right_done != 1 and current_player.yippee_ki_yay_phase_3_lanes_hit < 2 and current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - yippee_ki_yay_phase_3_right_lane_hit
+  s_TrPF1_active{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_left_done != 1 and current_player.yippee_ki_yay_phase_3_lanes_hit >= 2 and current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - yippee_ki_yay_phase_3_left_lane_hit
+    - yippee_ki_yay_phase_3_final_lane_complete|50ms
+  s_TrPF2_active{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_middle_done != 1 and current_player.yippee_ki_yay_phase_3_lanes_hit >= 2 and current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - yippee_ki_yay_phase_3_middle_lane_hit
+    - yippee_ki_yay_phase_3_final_lane_complete|50ms
+  s_TrPF3_active{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_right_done != 1 and current_player.yippee_ki_yay_phase_3_lanes_hit >= 2 and current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - yippee_ki_yay_phase_3_right_lane_hit
+    - yippee_ki_yay_phase_3_final_lane_complete|50ms
+  yippee_ki_yay_phase_3_final_lane_complete{current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - yippee_ki_yay_phase_3_all_lanes_complete
+    - yippee_ki_yay_phase_3_play_kill_video
+    - yippee_ki_yay_phase_3_release_after_kill|9200ms
+  yippee_ki_yay_phase_3_release_after_kill:
+    - trmagl_fling
+    - trmagr_fling
+    - yippee_ki_yay_phase_3_complete
+    - start_yippee_ki_yay_final_wizard|500ms
   ball_drain{current_player.yippee_ki_yay_phase_1_active == 1 and current_player.yippee_ki_yay_phase_1_complete != 1 and current_player.yippee_ki_yay_phase_1_ball_save_running != 1}:
     - yippee_ki_yay_phase_1_failed
   ball_save_yippee_ki_yay_phase_1_ball_save_saving_ball:
@@ -178,6 +229,10 @@ event_player:
   ball_drain{current_player.yippee_ki_yay_phase_2_active == 1 and current_player.yippee_ki_yay_phase_2_complete != 1 and current_player.yippee_ki_yay_phase_2_ball_save_running != 1}:
     - yippee_ki_yay_phase_2_failed
   ball_save_yippee_ki_yay_phase_2_ball_save_saving_ball:
+    - ball_save_saving_ball
+  ball_drain{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_complete != 1 and current_player.yippee_ki_yay_phase_3_ball_save_running != 1}:
+    - yippee_ki_yay_phase_3_failed
+  ball_save_yippee_ki_yay_phase_3_ball_save_saving_ball:
     - ball_save_saving_ball
   yippee_ki_yay_phase_1_failed:
     - disarm_yippee_ki_yay_phase_1_vuk
@@ -187,11 +242,16 @@ event_player:
   yippee_ki_yay_phase_2_failed:
     - disarm_yippee_ki_yay_phase_2_scoop
     - yippee_ki_yay_phase_2_release_scoop
+  yippee_ki_yay_phase_3_failed:
+    - wire_ramp_exit_closed
+    - trmagl_fling
+    - trmagr_fling
   mode_yippee_ki_yay_wizard_stopping:
     - disarm_yippee_ki_yay_phase_1_vuk
     - disarm_yippee_ki_yay_phase_2_scoop
     - nakatomi_entrance_lock_close
     - nakatomi_lock_close
+    - wire_ramp_exit_close
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------
@@ -225,6 +285,27 @@ variable_player:
       action: set
       int: 0
     yippee_ki_yay_phase_2_ball_save_running:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_lanes_hit:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_left_done:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_middle_done:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_right_done:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_ball_save_running:
       action: set
       int: 0
   yippee_ki_yay_phase_1_start:
@@ -387,6 +468,92 @@ variable_player:
     yippee_ki_yay_phase_2_ball_save_running:
       action: set
       int: 0
+  yippee_ki_yay_phase_3_start:
+    yippee_ki_yay_phase_2_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_active:
+      action: set
+      int: 1
+    yippee_ki_yay_phase_3_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_lanes_hit:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_left_done:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_middle_done:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_right_done:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_ball_save_running:
+      action: set
+      int: 1
+  ball_save_yippee_ki_yay_phase_3_ball_save_enabled:
+    yippee_ki_yay_phase_3_ball_save_running:
+      action: set
+      int: 1
+  ball_save_yippee_ki_yay_phase_3_ball_save_disabled:
+    yippee_ki_yay_phase_3_ball_save_running:
+      action: set
+      int: 0
+  yippee_ki_yay_phase_3_left_lane_hit:
+    yippee_ki_yay_phase_3_left_done:
+      action: set
+      int: 1
+    yippee_ki_yay_phase_3_lanes_hit:
+      action: add
+      int: 1
+    score:
+      action: add
+      int: 2500000
+  yippee_ki_yay_phase_3_middle_lane_hit:
+    yippee_ki_yay_phase_3_middle_done:
+      action: set
+      int: 1
+    yippee_ki_yay_phase_3_lanes_hit:
+      action: add
+      int: 1
+    score:
+      action: add
+      int: 2500000
+  yippee_ki_yay_phase_3_right_lane_hit:
+    yippee_ki_yay_phase_3_right_done:
+      action: set
+      int: 1
+    yippee_ki_yay_phase_3_lanes_hit:
+      action: add
+      int: 1
+    score:
+      action: add
+      int: 2500000
+  yippee_ki_yay_phase_3_all_lanes_complete:
+    yippee_ki_yay_phase_3_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_complete:
+      action: set
+      int: 1
+    yippee_ki_yay_phase_3_ball_save_running:
+      action: set
+      int: 0
+    score:
+      action: add
+      int: 5000000
+  yippee_ki_yay_phase_3_failed:
+    yippee_ki_yay_phase_3_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_ball_save_running:
+      action: set
+      int: 0
   yippee_ki_yay_phase_1_failed:
     yippee_ki_yay_phase_1_active:
       action: set
@@ -421,6 +588,16 @@ slide_player:
     yippee_ki_yay_phase_2_intro:
       action: play
       priority: 950
+  show_yippee_ki_yay_phase_3_slide:
+    yippee_ki_yay_phase_1_intro:
+      action: remove
+    yippee_ki_yay_phase_2_intro:
+      action: remove
+    die_hard_2_kill:
+      action: remove
+    yippee_ki_yay_phase_3_intro:
+      action: play
+      priority: 950
   yippee_ki_yay_phase_1_play_kill_video:
     yippee_ki_yay_phase_1_intro:
       action: remove
@@ -445,9 +622,25 @@ slide_player:
   yippee_ki_yay_phase_2_complete:
     die_hard_2_kill:
       action: remove
+    die_hard_3_kill:
+      action: remove
     yippee_ki_yay_phase_1_intro:
       action: remove
     yippee_ki_yay_phase_2_intro:
+      action: remove
+    yippee_ki_yay_phase_3_intro:
+      action: remove
+  yippee_ki_yay_phase_3_play_kill_video:
+    yippee_ki_yay_phase_3_intro:
+      action: remove
+    die_hard_3_kill:
+      action: play
+      priority: 1200
+      expire: 11s
+  yippee_ki_yay_phase_3_complete:
+    die_hard_3_kill:
+      action: remove
+    yippee_ki_yay_phase_3_intro:
       action: remove
   yippee_ki_yay_phase_2_failed:
     die_hard_2_kill:
@@ -455,6 +648,11 @@ slide_player:
     yippee_ki_yay_phase_1_intro:
       action: remove
     yippee_ki_yay_phase_2_intro:
+      action: remove
+  yippee_ki_yay_phase_3_failed:
+    die_hard_3_kill:
+      action: remove
+    yippee_ki_yay_phase_3_intro:
       action: remove
   yippee_ki_yay_phase_1_failed:
     die_hard_1_kill:
@@ -468,9 +666,13 @@ slide_player:
       action: remove
     die_hard_2_kill:
       action: remove
+    die_hard_3_kill:
+      action: remove
     yippee_ki_yay_phase_1_intro:
       action: remove
     yippee_ki_yay_phase_2_intro:
+      action: remove
+    yippee_ki_yay_phase_3_intro:
       action: remove
 # ------------------------------------------------------------
 # WIDGET PLAYER
@@ -564,6 +766,20 @@ widget_player:
       action: remove
     yippee_airplane_lock_3_widget:
       action: remove
+  show_yippee_phase_3_lanes_1_widget:
+    yippee_phase_3_lanes_1_widget:
+      action: play
+      slide: yippee_ki_yay_phase_3_intro
+      priority: 1700
+  yippee_ki_yay_phase_3_play_kill_video:
+    yippee_phase_3_lanes_1_widget:
+      action: remove
+  yippee_ki_yay_phase_3_complete:
+    yippee_phase_3_lanes_1_widget:
+      action: remove
+  yippee_ki_yay_phase_3_failed:
+    yippee_phase_3_lanes_1_widget:
+      action: remove
   yippee_ki_yay_phase_1_complete:
     yippee_lock_3_balls_widget:
       action: remove
@@ -584,12 +800,16 @@ widget_player:
       action: remove
     yippee_airplane_lock_3_widget:
       action: remove
+    yippee_phase_3_lanes_1_widget:
+      action: remove
   yippee_ki_yay_phase_2_failed:
     yippee_airplane_lock_1_widget:
       action: remove
     yippee_airplane_lock_2_widget:
       action: remove
     yippee_airplane_lock_3_widget:
+      action: remove
+    yippee_phase_3_lanes_1_widget:
       action: remove
   yippee_ki_yay_phase_2_complete:
     yippee_airplane_lock_1_widget:
@@ -611,6 +831,8 @@ widget_player:
       action: remove
     yippee_airplane_lock_3_widget:
       action: remove
+    yippee_phase_3_lanes_1_widget:
+      action: remove
 # ------------------------------------------------------------
 # SHOW PLAYER
 # ------------------------------------------------------------
@@ -627,18 +849,18 @@ show_player:
       key: yippee_ki_yay_phase_2_l8_green_yellow_flash
       priority: 9000
       loops: -1
-    yippee_ki_yay_phase_2_airplane_lock_green_flash:
-      key: yippee_ki_yay_phase_2_airplane_lock_green_flash
+    yippee_ki_yay_phase_2_airplane_lock_red_flash:
+      key: yippee_ki_yay_phase_2_airplane_lock_red_flash
       priority: 8500
       loops: -1
     flash_color:
-      key: yippee_ki_yay_phase_2_ball_save_green_flash
+      key: yippee_ki_yay_phase_2_ball_save_red_flash
       priority: 9000
       loops: -1
       speed: 8
       show_tokens:
         lights: BALL_SAVE
-        color: "00ff00"
+        color: ff0000
   yippee_ki_yay_phase_1_lock_lit:
     yippee_ki_yay_nakatomi_lock_blue_flash:
       key: yippee_ki_yay_nakatomi_lock_blue_flash
@@ -684,24 +906,24 @@ show_player:
       action: stop
   ball_save_yippee_ki_yay_phase_2_ball_save_enabled:
     flash_color:
-      key: yippee_ki_yay_phase_2_ball_save_green_flash
+      key: yippee_ki_yay_phase_2_ball_save_red_flash
       priority: 9000
       loops: -1
       speed: 8
       show_tokens:
         lights: BALL_SAVE
-        color: "00ff00"
+        color: ff0000
   ball_save_yippee_ki_yay_phase_2_ball_save_hurry_up:
     flash_color:
-      key: yippee_ki_yay_phase_2_ball_save_green_flash
+      key: yippee_ki_yay_phase_2_ball_save_red_flash
       priority: 9000
       loops: -1
       speed: 12
       show_tokens:
         lights: BALL_SAVE
-        color: "00ff00"
+        color: ff0000
   ball_save_yippee_ki_yay_phase_2_ball_save_disabled:
-    yippee_ki_yay_phase_2_ball_save_green_flash:
+    yippee_ki_yay_phase_2_ball_save_red_flash:
       action: stop
   yippee_ki_yay_phase_1_complete:
     yippee_ki_yay_nakatomi_lock_blue_flash:
@@ -715,61 +937,192 @@ show_player:
     yippee_ki_yay_phase_1_third_lock_show:
       action: stop
   yippee_ki_yay_phase_2_ball_1_lock_show:
-    yippee_ki_yay_phase_2_ball_1_locked_green_insert_show:
-      key: yippee_ki_yay_phase_2_ball_1_locked_green_insert_show
+    yippee_ki_yay_phase_2_ball_1_locked_blue_insert_show:
+      key: yippee_ki_yay_phase_2_ball_1_locked_blue_insert_show
       priority: 4300
       loops: 1
   yippee_ki_yay_phase_2_ball_2_lock_show:
-    yippee_ki_yay_phase_2_ball_2_locked_green_insert_show:
-      key: yippee_ki_yay_phase_2_ball_2_locked_green_insert_show
+    yippee_ki_yay_phase_2_ball_2_locked_blue_insert_show:
+      key: yippee_ki_yay_phase_2_ball_2_locked_blue_insert_show
       priority: 4350
       loops: 1
   yippee_ki_yay_phase_2_ball_3_lock_show:
-    yippee_ki_yay_phase_2_ball_3_locked_green_insert_show:
-      key: yippee_ki_yay_phase_2_ball_3_locked_green_insert_show
+    yippee_ki_yay_phase_2_ball_3_locked_blue_insert_show:
+      key: yippee_ki_yay_phase_2_ball_3_locked_blue_insert_show
       priority: 4400
       loops: 1
   yippee_ki_yay_phase_2_all_balls_locked:
-    yippee_ki_yay_phase_2_airplane_lock_green_flash:
+    yippee_ki_yay_phase_2_airplane_lock_red_flash:
       action: stop
-    yippee_ki_yay_phase_2_ball_save_green_flash:
+    yippee_ki_yay_phase_2_ball_save_red_flash:
       action: stop
-    yippee_ki_yay_phase_2_ball_1_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_1_locked_blue_insert_show:
       action: stop
-    yippee_ki_yay_phase_2_ball_2_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_2_locked_blue_insert_show:
       action: stop
-    yippee_ki_yay_phase_2_ball_3_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_3_locked_blue_insert_show:
       action: stop
   yippee_ki_yay_phase_2_play_kill_video:
-    yippee_ki_yay_phase_2_complete_green_show:
-      key: yippee_ki_yay_phase_2_complete_green_show
+    yippee_ki_yay_phase_2_complete_blue_show:
+      key: yippee_ki_yay_phase_2_complete_blue_show
       priority: 9500
       loops: 1
   yippee_ki_yay_phase_2_complete:
     yippee_ki_yay_phase_2_l8_green_yellow_flash:
       action: stop
-    yippee_ki_yay_phase_2_airplane_lock_green_flash:
+    yippee_ki_yay_phase_2_airplane_lock_red_flash:
       action: stop
-    yippee_ki_yay_phase_2_ball_save_green_flash:
+    yippee_ki_yay_phase_2_ball_save_red_flash:
       action: stop
-    yippee_ki_yay_phase_2_ball_1_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_1_locked_blue_insert_show:
       action: stop
-    yippee_ki_yay_phase_2_ball_2_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_2_locked_blue_insert_show:
       action: stop
-    yippee_ki_yay_phase_2_ball_3_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_3_locked_blue_insert_show:
       action: stop
   yippee_ki_yay_phase_2_failed:
     yippee_ki_yay_phase_2_l8_green_yellow_flash:
       action: stop
-    yippee_ki_yay_phase_2_airplane_lock_green_flash:
+    yippee_ki_yay_phase_2_airplane_lock_red_flash:
       action: stop
-    yippee_ki_yay_phase_2_ball_save_green_flash:
+    yippee_ki_yay_phase_2_ball_save_red_flash:
       action: stop
-    yippee_ki_yay_phase_2_ball_1_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_1_locked_blue_insert_show:
       action: stop
-    yippee_ki_yay_phase_2_ball_2_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_2_locked_blue_insert_show:
       action: stop
-    yippee_ki_yay_phase_2_ball_3_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_3_locked_blue_insert_show:
+      action: stop
+  yippee_ki_yay_phase_3_start:
+    yippee_ki_yay_phase_2_l8_green_yellow_flash:
+      action: stop
+    yippee_ki_yay_phase_3_l8_green_flash:
+      key: yippee_ki_yay_phase_3_l8_green_flash
+      priority: 12000
+      loops: -1
+    yippee_ki_yay_phase_3_entrance_arrow_green_flash:
+      key: yippee_ki_yay_phase_3_entrance_arrow_green_flash
+      priority: 9500
+      loops: -1
+    yippee_ki_yay_phase_3_lane_left_green_flash:
+      key: yippee_ki_yay_phase_3_lane_left_green_flash
+      priority: 9500
+      loops: -1
+    yippee_ki_yay_phase_3_lane_middle_green_flash:
+      key: yippee_ki_yay_phase_3_lane_middle_green_flash
+      priority: 9500
+      loops: -1
+    yippee_ki_yay_phase_3_lane_right_green_flash:
+      key: yippee_ki_yay_phase_3_lane_right_green_flash
+      priority: 9500
+      loops: -1
+    flash_color:
+      key: yippee_ki_yay_phase_3_ball_save_green_flash
+      priority: 12000
+      loops: -1
+      speed: 8
+      show_tokens:
+        lights: BALL_SAVE
+        color: "00ff00"
+  yippee_ki_yay_phase_3_left_lane_hit:
+    yippee_ki_yay_phase_3_lane_left_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_1_locked_green_insert_show:
+      key: yippee_ki_yay_phase_3_ball_1_locked_green_insert_show
+      priority: 9600
+      loops: 1
+  yippee_ki_yay_phase_3_middle_lane_hit:
+    yippee_ki_yay_phase_3_lane_middle_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_2_locked_green_insert_show:
+      key: yippee_ki_yay_phase_3_ball_2_locked_green_insert_show
+      priority: 9650
+      loops: 1
+  yippee_ki_yay_phase_3_right_lane_hit:
+    yippee_ki_yay_phase_3_lane_right_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_3_locked_green_insert_show:
+      key: yippee_ki_yay_phase_3_ball_3_locked_green_insert_show
+      priority: 9700
+      loops: 1
+  yippee_ki_yay_phase_3_all_lanes_complete:
+    yippee_ki_yay_phase_3_entrance_arrow_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_left_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_middle_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_right_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_save_green_flash:
+      action: stop
+  yippee_ki_yay_phase_3_play_kill_video:
+    yippee_ki_yay_phase_3_complete_green_show:
+      key: yippee_ki_yay_phase_3_complete_green_show
+      priority: 9800
+      loops: 1
+  ball_save_yippee_ki_yay_phase_3_ball_save_enabled:
+    flash_color:
+      key: yippee_ki_yay_phase_3_ball_save_green_flash
+      priority: 12000
+      loops: -1
+      speed: 8
+      show_tokens:
+        lights: BALL_SAVE
+        color: "00ff00"
+  ball_save_yippee_ki_yay_phase_3_ball_save_hurry_up:
+    flash_color:
+      key: yippee_ki_yay_phase_3_ball_save_green_flash
+      priority: 12000
+      loops: -1
+      speed: 12
+      show_tokens:
+        lights: BALL_SAVE
+        color: "00ff00"
+  ball_save_yippee_ki_yay_phase_3_ball_save_disabled:
+    yippee_ki_yay_phase_3_ball_save_green_flash:
+      action: stop
+  yippee_ki_yay_phase_3_complete:
+    yippee_ki_yay_phase_3_l8_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_entrance_arrow_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_left_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_middle_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_right_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_save_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_1_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_2_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_3_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_complete_green_show:
+      action: stop
+  yippee_ki_yay_phase_3_failed:
+    yippee_ki_yay_phase_3_l8_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_entrance_arrow_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_left_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_middle_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_right_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_save_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_1_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_2_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_3_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_complete_green_show:
       action: stop
   yippee_ki_yay_phase_1_failed:
     yippee_ki_yay_insert_red_yellow_flash:
@@ -780,9 +1133,9 @@ show_player:
       action: stop
     yippee_ki_yay_phase_1_ball_save_blue_flash:
       action: stop
-    yippee_ki_yay_phase_2_airplane_lock_green_flash:
+    yippee_ki_yay_phase_2_airplane_lock_red_flash:
       action: stop
-    yippee_ki_yay_phase_2_ball_save_green_flash:
+    yippee_ki_yay_phase_2_ball_save_red_flash:
       action: stop
     yippee_ki_yay_phase_1_ball_1_locked_vpw_show:
       action: stop
@@ -790,11 +1143,31 @@ show_player:
       action: stop
     yippee_ki_yay_phase_1_third_lock_show:
       action: stop
-    yippee_ki_yay_phase_2_ball_1_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_1_locked_blue_insert_show:
       action: stop
-    yippee_ki_yay_phase_2_ball_2_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_2_locked_blue_insert_show:
       action: stop
-    yippee_ki_yay_phase_2_ball_3_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_3_locked_blue_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_l8_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_entrance_arrow_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_left_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_middle_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_right_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_save_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_1_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_2_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_3_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_complete_green_show:
       action: stop
   mode_yippee_ki_yay_wizard_stopping:
     yippee_ki_yay_insert_red_yellow_flash:
@@ -805,9 +1178,9 @@ show_player:
       action: stop
     yippee_ki_yay_phase_1_ball_save_blue_flash:
       action: stop
-    yippee_ki_yay_phase_2_airplane_lock_green_flash:
+    yippee_ki_yay_phase_2_airplane_lock_red_flash:
       action: stop
-    yippee_ki_yay_phase_2_ball_save_green_flash:
+    yippee_ki_yay_phase_2_ball_save_red_flash:
       action: stop
     yippee_ki_yay_phase_1_ball_1_locked_vpw_show:
       action: stop
@@ -815,11 +1188,31 @@ show_player:
       action: stop
     yippee_ki_yay_phase_1_third_lock_show:
       action: stop
-    yippee_ki_yay_phase_2_ball_1_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_1_locked_blue_insert_show:
       action: stop
-    yippee_ki_yay_phase_2_ball_2_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_2_locked_blue_insert_show:
       action: stop
-    yippee_ki_yay_phase_2_ball_3_locked_green_insert_show:
+    yippee_ki_yay_phase_2_ball_3_locked_blue_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_l8_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_entrance_arrow_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_left_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_middle_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_right_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_save_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_1_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_2_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_3_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_complete_green_show:
       action: stop
 # ------------------------------------------------------------
 # LIGHT PLAYER
@@ -857,8 +1250,8 @@ light_player:
       color: "ffffff"
       priority: 1200
     l10:
-      color: ffff00
-      priority: 1200
+      color: off
+      priority: 9700
   yippee_ki_yay_phase_1_start:
     GI:
       color: ff0000
@@ -878,22 +1271,22 @@ light_player:
     # Villain inserts stay lit in their proper villain colours through the wizard.
     l44:
       color: 0044ff
-      priority: 1200
+      priority: 9600
     l43:
       color: "00ff00"
-      priority: 1200
+      priority: 9600
     l40:
       color: ff8800
-      priority: 1200
+      priority: 9600
     l42:
       color: ff00aa
-      priority: 1200
+      priority: 9600
     l41:
       color: "ffffff"
-      priority: 1200
+      priority: 9600
     l10:
-      color: ffff00
-      priority: 1200
+      color: off
+      priority: 9700
   yippee_ki_yay_phase_1_three_balls_locked:
     BALL_SAVE:
       color: off
@@ -904,6 +1297,40 @@ light_player:
       priority: 5000
   yippee_ki_yay_phase_2_start:
     GI:
+      color: 0000ff
+      priority: 3000
+    SPOTS:
+      color: 757575
+      priority: 3000
+    SPOTS_BUMPER:
+      color: 757575
+      priority: 3000
+    l1000:
+      color: 0000ff
+      priority: 3000
+    l1001:
+      color: 0000ff
+      priority: 3000
+    l44:
+      color: 0044ff
+      priority: 9600
+    l43:
+      color: "00ff00"
+      priority: 9600
+    l40:
+      color: ff8800
+      priority: 9600
+    l42:
+      color: ff00aa
+      priority: 9600
+    l41:
+      color: "ffffff"
+      priority: 9600
+    l10:
+      color: off
+      priority: 9700
+  yippee_ki_yay_phase_3_start:
+    GI:
       color: "00ff00"
       priority: 3000
     SPOTS:
@@ -912,47 +1339,64 @@ light_player:
     SPOTS_BUMPER:
       color: 757575
       priority: 3000
+    l1000:
+      color: "00ff00"
+      priority: 3000
+    l1001:
+      color: "00ff00"
+      priority: 3000
     l44:
       color: 0044ff
-      priority: 1200
+      priority: 9600
     l43:
       color: "00ff00"
-      priority: 1200
+      priority: 9600
     l40:
       color: ff8800
-      priority: 1200
+      priority: 9600
     l42:
       color: ff00aa
-      priority: 1200
+      priority: 9600
     l41:
       color: "ffffff"
-      priority: 1200
+      priority: 9600
     l10:
-      color: ffff00
-      priority: 1200
+      color: off
+      priority: 9700
+  yippee_ki_yay_phase_3_left_lane_hit:
+    l76:
+      color: "00ff00"
+      priority: 9600
+  yippee_ki_yay_phase_3_middle_lane_hit:
+    l77:
+      color: "00ff00"
+      priority: 9600
+  yippee_ki_yay_phase_3_right_lane_hit:
+    l78:
+      color: "00ff00"
+      priority: 9600
+  yippee_ki_yay_phase_3_all_lanes_complete:
+    l10:
+      color: off
+      priority: 9700
+    l21:
+      color: off
+      priority: 9700
+    l76:
+      color: off
+      priority: 9700
+    l77:
+      color: off
+      priority: 9700
+    l78:
+      color: off
+      priority: 9700
+    BALL_SAVE:
+      color: off
+      priority: 9700
   yippee_ki_yay_phase_2_complete:
-    l44:
-      color: off
-      priority: 9000
-    l43:
-      color: off
-      priority: 9000
-    l40:
-      color: off
-      priority: 9000
-    l42:
-      color: off
-      priority: 9000
-    l41:
-      color: off
-      priority: 9000
-    l10:
-      color: off
-      priority: 9000
+    # Keep villain inserts alive for Phase 3. Only clear the Phase 1 lock and Phase 2 ball-save light here.
     l7:
-      color: off
-      priority: 9000
-    l8:
       color: off
       priority: 9000
     BALL_SAVE:
@@ -986,6 +1430,25 @@ light_player:
     BALL_SAVE:
       color: off
       priority: 9000
+  yippee_ki_yay_phase_3_failed:
+    l10:
+      color: off
+      priority: 9700
+    l21:
+      color: off
+      priority: 9700
+    l76:
+      color: off
+      priority: 9700
+    l77:
+      color: off
+      priority: 9700
+    l78:
+      color: off
+      priority: 9700
+    BALL_SAVE:
+      color: off
+      priority: 9700
   yippee_ki_yay_phase_1_failed:
     l44:
       color: off
@@ -1039,6 +1502,18 @@ light_player:
     l8:
       color: off
       priority: 9000
+    l21:
+      color: off
+      priority: 9700
+    l76:
+      color: off
+      priority: 9700
+    l77:
+      color: off
+      priority: 9700
+    l78:
+      color: off
+      priority: 9700
     BALL_SAVE:
       color: off
       priority: 9000
@@ -1088,11 +1563,52 @@ shows:
       lights:
         l8: "00ff00"
     - time: 2200ms
-  yippee_ki_yay_phase_2_airplane_lock_green_flash:
+  yippee_ki_yay_phase_2_airplane_lock_red_flash:
     - time: 0
       lights:
-        l61: "00ff00"
+        l61: ff0000
     - time: 250ms
       lights:
         l61: off
+    - time: 500ms
+
+  yippee_ki_yay_phase_3_l8_green_flash:
+    - time: 0
+      lights:
+        l8: "00ff00"
+    - time: 250ms
+      lights:
+        l8: off
+    - time: 500ms
+  yippee_ki_yay_phase_3_entrance_arrow_green_flash:
+    - time: 0
+      lights:
+        l21: "00ff00"
+    - time: 250ms
+      lights:
+        l21: off
+    - time: 500ms
+  yippee_ki_yay_phase_3_lane_left_green_flash:
+    - time: 0
+      lights:
+        l76: "00ff00"
+    - time: 250ms
+      lights:
+        l76: off
+    - time: 500ms
+  yippee_ki_yay_phase_3_lane_middle_green_flash:
+    - time: 0
+      lights:
+        l77: "00ff00"
+    - time: 250ms
+      lights:
+        l77: off
+    - time: 500ms
+  yippee_ki_yay_phase_3_lane_right_green_flash:
+    - time: 0
+      lights:
+        l78: "00ff00"
+    - time: 250ms
+      lights:
+        l78: off
     - time: 500ms

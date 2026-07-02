@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://qi2govqxkrfc"]
+
+[ext_resource type="Script" uid="uid://d4ky3s4bg1ouq" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1_ltc02"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="2_s45sw"]
+
+[node name="yippee_phase_3_complete_lanes_1_widget" type="Control" unique_id=916427062]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ltc02")
+
+[node name="phase_3_widget_label" type="Label" parent="." unique_id=916427063]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = -5.0
+offset_right = -20.0
+offset_bottom = 93.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.98, 0.98, 0.98, 0.99215686)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 7
+theme_override_fonts/font = ExtResource("2_s45sw")
+theme_override_font_sizes/font_size = 46
+text = "SHOOT UPPER PLAYFIELD "
+horizontal_alignment = 1
+vertical_alignment = 1

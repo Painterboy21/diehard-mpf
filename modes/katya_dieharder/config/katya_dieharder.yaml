@@ -1,734 +1,1619 @@
 #config_version=6
-
 # ------------------------------------------------------------
-# KATYA DIE HARDER
+# YIPPEE KI YAY WIZARD
 # ------------------------------------------------------------
-# What this mode does:
-#   - Starts when start_katya_dieharder is posted, only if Katya
-#     has not already been completed.
-#   - Player must hit 5 loop shots: left loop, right loop, or upper loop.
-#   - After 5 loop hits, the captive ball final shot lights.
-#   - Hitting the captive ball defeats Katya.
-#   - Normal timer = 83 seconds.
-#   - Hans Bonus timer = 113 seconds.
-#   - Mystery Add More Time adds +20 seconds.
-#   - On completion:
-#       * Plays katya_defeated.
-#       * Doubles the player's current score.
-#       * Counts Katya toward Extra Ball.
-#       * Sets katya_complete and katya_bonus.
-#   - On timer fail:
-#       * Turns flippers off using flipper_off.
-#       * Plays katya_ball_lost.
-#   - On ball drain escape:
-#       * Plays katya_escaped.
-#   - On mode stop:
-#       * Turns flippers back on using flipper_on.
-#
-# Flipper note:
-#   Your real machine flippers listen to flipper_on / flipper_off.
-#   So this file does not use direct coil_player flipper control.
-# ------------------------------------------------------------
-
 mode:
   start_events:
-    - start_katya_dieharder{current_player.katya_complete==0}
+    - start_yippee_ki_yay_wizard
   stop_events:
-    - katya_dieharder_completed
-    - katya_dieharder_failed
-  priority: 170
-
+    - yippee_ki_yay_phase_1_failed
+    - yippee_ki_yay_phase_2_failed
+    - yippee_ki_yay_phase_3_failed
+    - ball_ended
+  priority: 500
 # ------------------------------------------------------------
-# TIMERS
-# Normal = 83s.
-# Hans Bonus = 113s.
-# Mystery Add More Time = +20s.
-# Hans Bonus is NOT cleared here.
+# MULTIBALLS
 # ------------------------------------------------------------
-timers:
-  katya_dieharder_timer:
-    start_value: 83
-    end_value: 0
-    direction: down
-    tick_interval: 1s
-    start_running: false
-    control_events:
-      - event: katya_dieharder_start_normal_timer
-        action: restart
-        value: 83
-      - event: katya_dieharder_start_bonus_timer
-        action: restart
-        value: 113
-      - event: katya_dieharder_completed
-        action: stop
-      - event: katya_dieharder_failed
-        action: stop
-      - event: add_villain_time_from_mystery
-        action: add
-        value: 20
-
+multiballs:
+  yippee_ki_yay_phase_1:
+    ball_count: 3
+    ball_count_type: total
+    start_events:
+      - yippee_ki_yay_phase_1_start_multiball
+    stop_events:
+      - yippee_ki_yay_phase_1_failed
+      - ball_ending
 # ------------------------------------------------------------
 # BALL SAVES
-# Start save = 2s.
-# Complete save = 8s on victory sequence.
 # ------------------------------------------------------------
 ball_saves:
-  katya_dieharder_start_save:
-    active_time: 2s
-    hurry_up_time: 0s
-    grace_period: 0s
+  yippee_ki_yay_phase_1_ball_save:
+    active_time: 60s
+    hurry_up_time: 10s
+    grace_period: 2s
     auto_launch: true
-    balls_to_save: 1
+    balls_to_save: -1
     enable_events:
-      - mode_katya_dieharder_started
+      - yippee_ki_yay_phase_1_start
     disable_events:
-      - mode_katya_dieharder_stopping
-  katya_dieharder_complete_save:
-    active_time: 8s
-    hurry_up_time: 1s
-    grace_period: 1s
+      - yippee_ki_yay_phase_1_three_balls_locked
+      - yippee_ki_yay_phase_1_complete
+      - yippee_ki_yay_phase_1_failed
+      - mode_yippee_ki_yay_wizard_stopping
+      - ball_ending
+      - tilt
+  yippee_ki_yay_phase_2_ball_save:
+    active_time: 60s
+    hurry_up_time: 10s
+    grace_period: 2s
     auto_launch: true
-    balls_to_save: 1
+    balls_to_save: -1
     enable_events:
-      - katya_dieharder_victory_sequence
+      - yippee_ki_yay_phase_2_start
     disable_events:
-      - mode_katya_dieharder_stopping
-
+      - yippee_ki_yay_phase_2_all_balls_locked
+      - yippee_ki_yay_phase_2_complete
+      - yippee_ki_yay_phase_2_failed
+      - mode_yippee_ki_yay_wizard_stopping
+      - ball_ending
+      - tilt
+  yippee_ki_yay_phase_3_ball_save:
+    active_time: 60s
+    hurry_up_time: 10s
+    grace_period: 2s
+    auto_launch: true
+    balls_to_save: -1
+    enable_events:
+      - yippee_ki_yay_phase_3_start
+    disable_events:
+      - yippee_ki_yay_phase_3_all_lanes_complete
+      - yippee_ki_yay_phase_3_complete
+      - yippee_ki_yay_phase_3_failed
+      - mode_yippee_ki_yay_wizard_stopping
+      - ball_ending
+      - tilt
 # ------------------------------------------------------------
-# COUNTERS
-# Counts Katya loop hits.
-# 5 loop hits lights/enables captive ball final shot.
+# TIMERS
 # ------------------------------------------------------------
-counters:
-  katya_dieharder_loop_counter:
-    count_events:
-      - katya_dieharder_left_loop_hit
-      - katya_dieharder_right_loop_hit
-      - katya_dieharder_upper_loop_hit
-    starting_count: 0
-    count_complete_value: 5
+timers:
+  yippee_ki_yay_nakatomi_lock_hold_reset:
+    start_value: 0
+    end_value: 1
     direction: up
-    persist_state: false
-    reset_on_complete: false
-    reset_events:
-      - mode_katya_dieharder_started
-    events_when_complete:
-      - katya_dieharder_loops_complete
-
-# ------------------------------------------------------------
-# SHOTS
-# Loop shots disable when hit and relight after 3s.
-# Captive ball enables after 5 loop hits.
-# ------------------------------------------------------------
-shots:
-  katya_dieharder_left_loop:
-    hit_events: left_orbit_hit
-    enable_events:
-      - mode_katya_dieharder_started
-      - katya_dieharder_left_loop_relight
-    disable_events:
-      - katya_dieharder_left_loop_hit
-      - katya_dieharder_loops_complete
-      - katya_dieharder_completed
-      - katya_dieharder_failed
-      - katya_dieharder_fail_mode
-  katya_dieharder_right_loop:
-    hit_events: right_orbit_hit
-    enable_events:
-      - mode_katya_dieharder_started
-      - katya_dieharder_right_loop_relight
-    disable_events:
-      - katya_dieharder_right_loop_hit
-      - katya_dieharder_loops_complete
-      - katya_dieharder_completed
-      - katya_dieharder_failed
-      - katya_dieharder_fail_mode
-  katya_dieharder_upper_loop:
-    switch: s_mid_orbit
-    enable_events:
-      - mode_katya_dieharder_started
-      - katya_dieharder_upper_loop_relight
-    disable_events:
-      - katya_dieharder_upper_loop_hit
-      - katya_dieharder_loops_complete
-      - katya_dieharder_completed
-      - katya_dieharder_failed
-      - katya_dieharder_fail_mode
-  katya_dieharder_captive_final:
-    switch: s_captiveball
-    enable_events:
-      - katya_dieharder_loops_complete
-    disable_events:
-      - katya_dieharder_completed
-      - katya_dieharder_failed
-      - katya_dieharder_fail_mode
-
+    control_events:
+      - event: mode_yippee_ki_yay_wizard_started
+        action: restart
+      - event: yippee_ki_yay_phase_1_start
+        action: restart
+      - event: yippee_ki_yay_phase_1_vuk_counted
+        action: restart
+      - event: yippee_ki_yay_phase_1_release_after_kill
+        action: stop
+      - event: yippee_ki_yay_phase_1_complete
+        action: stop
+      - event: yippee_ki_yay_phase_1_failed
+        action: stop
+      - event: mode_yippee_ki_yay_wizard_stopping
+        action: stop
+      - event: ball_ending
+        action: stop
+    restart_on_complete: true
+    start_running: false
+    tick_interval: 60000ms
 # ------------------------------------------------------------
 # EVENT PLAYER
-# Handles start, Hans Bonus timer choice, loop scoring,
-# victory/fail flow, ball drain escape flow, Villain MVP
-# tracking, and cleanup.
 # ------------------------------------------------------------
 event_player:
-  mode_katya_dieharder_started:
-    - villain_mode_started
-    - katya_dieharder_start
-    - katya_dieharder_music_start
-    - reset_bullet_total
-    - reset_bullets
-    - nakatomi_entrance_lock_close
+  mode_yippee_ki_yay_wizard_started:
+    - show_yippee_ki_yay_phase_1_slide
+    - yippee_ki_yay_phase_1_start|750ms
+  yippee_ki_yay_phase_1_start:
+    - yippee_ki_yay_phase_1_start_multiball
+    - nakatomi_lock_open
+    - nakatomi_entrance_lock_open
+    - yippee_ki_yay_phase_1_lock_lit
+    - show_yippee_lock_3_balls_widget|250ms
+    - arm_yippee_ki_yay_phase_1_vuk|500ms
     - wire_ramp_exit_open
-    - record_start_katya_dieharder_villain_mvp
-  record_start_katya_dieharder_villain_mvp:
-    record_start_villain_mvp:
-      mode: KATYA DIE HARDER
-  mode_katya_dieharder_started{current_player.hans_bonus==1}:
-    - katya_dieharder_start_bonus_timer
-  mode_katya_dieharder_started{current_player.hans_bonus!=1}:
-    - katya_dieharder_start_normal_timer
-  mode_katya_dieharder_stopping:
-    - villain_mode_stopped
-    - flipper_on
-  record_finish_katya_dieharder_villain_mvp:
-    record_finish_villain_mvp:
-      mode: KATYA DIE HARDER
-  timer_katya_dieharder_timer_complete:
-    - katya_dieharder_fail_mode
-  ball_drain{current_player.katya_dieharder_completion_active==0 and current_player.katya_dieharder_failed_active==0}:
-    - katya_dieharder_ball_drain_escape
-  ball_drain{current_player.katya_dieharder_completion_active==1}:
-    - reset_bullet_total
-    - reset_bullets
-  ball_drain{current_player.katya_dieharder_failed_active==1}:
-    - katya_dieharder_failed|4s
-  ball_ended{current_player.katya_dieharder_completion_active==0 and current_player.katya_dieharder_failed_active==0}:
-    - katya_dieharder_escape_sequence
-  ball_ended{current_player.katya_dieharder_completion_active==1}:
-    - reset_bullet_total
-    - reset_bullets
-  ball_ended{current_player.katya_dieharder_failed_active==1}:
-    - katya_dieharder_failed|4s
-  katya_dieharder_fail_mode:
-    - flipper_off
-  katya_dieharder_ball_drain_escape:
-    - katya_dieharder_failed|4s
-  katya_dieharder_escape_sequence:
-    - katya_dieharder_failed_delay
-  katya_dieharder_failed_delay:
-    - katya_dieharder_failed|4s
-  katya_dieharder_failed:
-    - record_finish_katya_dieharder_villain_mvp
-    - reset_bullet_total
-    - reset_bullets
+  yippee_ki_yay_phase_1_vuk_counted:
+    - nakatomi_lock_open
+  timer_yippee_ki_yay_nakatomi_lock_hold_reset_complete:
+    - nakatomi_lock_open
+  balldevice_tower_vuk_ball_enter{current_player.yippee_ki_yay_phase_1_active == 1 and current_player.yippee_ki_yay_phase_1_complete != 1 and current_player.yippee_ki_yay_phase_1_vuk_armed == 1 and current_player.yippee_ki_yay_phase_1_balls_locked == 0}:
+    - yippee_ki_yay_phase_1_ball_1_locked
+    - yippee_ki_yay_phase_1_vuk_counted
+    - yippee_ki_yay_phase_1_ball_1_lock_show
+    - yippee_ki_yay_phase_1_release_vuk|1000ms
+    - yippee_ki_yay_phase_1_check_count|1500ms
+  balldevice_tower_vuk_ball_enter{current_player.yippee_ki_yay_phase_1_active == 1 and current_player.yippee_ki_yay_phase_1_complete != 1 and current_player.yippee_ki_yay_phase_1_vuk_armed == 1 and current_player.yippee_ki_yay_phase_1_balls_locked == 1}:
+    - yippee_ki_yay_phase_1_ball_2_locked
+    - yippee_ki_yay_phase_1_vuk_counted
+    - yippee_ki_yay_phase_1_ball_2_lock_show
+    - yippee_ki_yay_phase_1_release_vuk|1000ms
+    - yippee_ki_yay_phase_1_check_count|1500ms
+  balldevice_tower_vuk_ball_enter{current_player.yippee_ki_yay_phase_1_active == 1 and current_player.yippee_ki_yay_phase_1_complete != 1 and current_player.yippee_ki_yay_phase_1_vuk_armed == 1 and current_player.yippee_ki_yay_phase_1_balls_locked == 2}:
+    - yippee_ki_yay_phase_1_ball_3_locked
+    - yippee_ki_yay_phase_1_vuk_counted
+    - yippee_ki_yay_phase_1_release_vuk|1000ms
+    - yippee_ki_yay_phase_1_check_count|1500ms
+  yippee_ki_yay_phase_1_check_count{current_player.yippee_ki_yay_phase_1_balls_locked < 3 and current_player.yippee_ki_yay_phase_1_complete != 1}:
+    - arm_yippee_ki_yay_phase_1_vuk
+  yippee_ki_yay_phase_1_check_count{current_player.yippee_ki_yay_phase_1_balls_locked >= 3 and current_player.yippee_ki_yay_phase_1_complete != 1}:
+    - yippee_ki_yay_phase_1_three_balls_locked
+  yippee_ki_yay_phase_1_three_balls_locked:
+    - disarm_yippee_ki_yay_phase_1_vuk
+    - nakatomi_entrance_lock_close
+    - yippee_ki_yay_phase_1_play_kill_video
+    - yippee_ki_yay_phase_1_release_after_kill|8000ms
+    - wire_ramp_exit_close
+  yippee_ki_yay_phase_1_release_after_kill{current_player.yippee_ki_yay_phase_1_complete != 1}:
+    - nakatomi_lock_close
+    - yippee_ki_yay_phase_1_complete
+    - show_yippee_ki_yay_phase_2_slide
+    - yippee_ki_yay_phase_2_start|100ms
+  yippee_ki_yay_phase_2_start:
+    - yippee_ki_yay_phase_2_refresh|500ms
+    - show_yippee_airplane_lock_1_widget|100ms
+    - arm_yippee_ki_yay_phase_2_scoop|500ms
+    - yippee_ki_yay_phase_2_show_trailer
+  s_UrampUp001_active{current_player.yippee_ki_yay_phase_2_active == 1 and current_player.yippee_ki_yay_phase_2_scoop_armed == 1 and current_player.yippee_ki_yay_phase_2_balls_locked == 0}:
+    - disarm_yippee_ki_yay_phase_2_scoop
+    - yippee_ki_yay_phase_2_ball_1_locked
+    - yippee_ki_yay_phase_2_ball_1_lock_show
+    - yippee_ki_yay_phase_2_scoop_counted
+    - show_yippee_airplane_lock_2_widget|250ms
+    - yippee_ki_yay_phase_2_release_scoop|1000ms
+    - yippee_ki_yay_phase_2_check_count|1500ms
+  s_UrampUp001_active{current_player.yippee_ki_yay_phase_2_active == 1 and current_player.yippee_ki_yay_phase_2_scoop_armed == 1 and current_player.yippee_ki_yay_phase_2_balls_locked == 1}:
+    - disarm_yippee_ki_yay_phase_2_scoop
+    - yippee_ki_yay_phase_2_ball_2_locked
+    - yippee_ki_yay_phase_2_ball_2_lock_show
+    - yippee_ki_yay_phase_2_scoop_counted
+    - show_yippee_airplane_lock_3_widget|250ms
+    - yippee_ki_yay_phase_2_release_scoop|1000ms
+    - yippee_ki_yay_phase_2_check_count|1500ms
+  s_UrampUp001_active{current_player.yippee_ki_yay_phase_2_active == 1 and current_player.yippee_ki_yay_phase_2_scoop_armed == 1 and current_player.yippee_ki_yay_phase_2_balls_locked == 2}:
+    - disarm_yippee_ki_yay_phase_2_scoop
+    - yippee_ki_yay_phase_2_ball_3_locked
+    - yippee_ki_yay_phase_2_ball_3_lock_show
+    - yippee_ki_yay_phase_2_scoop_counted
+    - show_yippee_airplane_lock_3_widget|250ms
+    - yippee_ki_yay_phase_2_release_scoop|1000ms
+    - yippee_ki_yay_phase_2_check_count|1500ms
+  yippee_ki_yay_phase_2_check_count{current_player.yippee_ki_yay_phase_2_balls_locked < 3 and current_player.yippee_ki_yay_phase_2_complete != 1}:
+    - arm_yippee_ki_yay_phase_2_scoop
+  yippee_ki_yay_phase_2_check_count{current_player.yippee_ki_yay_phase_2_balls_locked >= 3 and current_player.yippee_ki_yay_phase_2_complete != 1}:
+    - yippee_ki_yay_phase_2_all_balls_locked
+  yippee_ki_yay_phase_2_all_balls_locked:
+    - disarm_yippee_ki_yay_phase_2_scoop
+    - yippee_ki_yay_phase_2_play_kill_video
+    - yippee_ki_yay_phase_2_to_phase_3|9200ms
+  yippee_ki_yay_phase_2_to_phase_3:
+    - yippee_ki_yay_phase_2_complete
+    - show_yippee_ki_yay_phase_3_slide
+    - yippee_ki_yay_phase_3_start|100ms
     - wire_ramp_exit_closed
-  katya_dieharder_captive_final_hit:
-    - katya_dieharder_victory_sequence
-  katya_dieharder_victory_sequence:
-    - katya_dieharder_completed_show
-    - katya_dieharder_completed|4s
-  katya_dieharder_completed:
-    - record_finish_katya_dieharder_villain_mvp
-    - reset_bullet_total
-    - reset_bullets
-    - count_katya_for_extra_ball
+  yippee_ki_yay_phase_3_start:
+    - yippee_ki_yay_phase_3_refresh|500ms
+    - show_yippee_phase_3_lanes_1_widget|250ms
+  s_upper_pf_entrance_inactive{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_lanes_hit >= 2 and current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - central_park_start_multiball_hit
+    - yippee_ki_yay_phase_3_final_lane_complete|500ms
+  s_TrPF1_active{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_left_done != 1 and current_player.yippee_ki_yay_phase_3_lanes_hit < 2 and current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - yippee_ki_yay_phase_3_left_lane_hit
+  s_TrPF2_active{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_middle_done != 1 and current_player.yippee_ki_yay_phase_3_lanes_hit < 2 and current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - yippee_ki_yay_phase_3_middle_lane_hit
+  s_TrPF3_active{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_right_done != 1 and current_player.yippee_ki_yay_phase_3_lanes_hit < 2 and current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - yippee_ki_yay_phase_3_right_lane_hit
+  s_TrPF1_active{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_left_done != 1 and current_player.yippee_ki_yay_phase_3_lanes_hit >= 2 and current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - yippee_ki_yay_phase_3_left_lane_hit
+    - yippee_ki_yay_phase_3_final_lane_complete|50ms
+  s_TrPF2_active{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_middle_done != 1 and current_player.yippee_ki_yay_phase_3_lanes_hit >= 2 and current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - yippee_ki_yay_phase_3_middle_lane_hit
+    - yippee_ki_yay_phase_3_final_lane_complete|50ms
+  s_TrPF3_active{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_right_done != 1 and current_player.yippee_ki_yay_phase_3_lanes_hit >= 2 and current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - yippee_ki_yay_phase_3_right_lane_hit
+    - yippee_ki_yay_phase_3_final_lane_complete|50ms
+  yippee_ki_yay_phase_3_final_lane_complete{current_player.yippee_ki_yay_phase_3_complete != 1}:
+    - yippee_ki_yay_phase_3_all_lanes_complete
+    - yippee_ki_yay_phase_3_play_kill_video
+    - yippee_ki_yay_phase_3_release_after_kill|9200ms
+  yippee_ki_yay_phase_3_release_after_kill:
+    - trmagl_fling
+    - trmagr_fling
+    - yippee_ki_yay_phase_3_complete
+    - start_yippee_ki_yay_final_wizard|500ms
+  ball_drain{current_player.yippee_ki_yay_phase_1_active == 1 and current_player.yippee_ki_yay_phase_1_complete != 1 and current_player.yippee_ki_yay_phase_1_ball_save_running != 1}:
+    - yippee_ki_yay_phase_1_failed
+  ball_save_yippee_ki_yay_phase_1_ball_save_saving_ball:
+    - ball_save_saving_ball
+  ball_drain{current_player.yippee_ki_yay_phase_2_active == 1 and current_player.yippee_ki_yay_phase_2_complete != 1 and current_player.yippee_ki_yay_phase_2_ball_save_running != 1}:
+    - yippee_ki_yay_phase_2_failed
+  ball_save_yippee_ki_yay_phase_2_ball_save_saving_ball:
+    - ball_save_saving_ball
+  ball_drain{current_player.yippee_ki_yay_phase_3_active == 1 and current_player.yippee_ki_yay_phase_3_complete != 1 and current_player.yippee_ki_yay_phase_3_ball_save_running != 1}:
+    - yippee_ki_yay_phase_3_failed
+  ball_save_yippee_ki_yay_phase_3_ball_save_saving_ball:
+    - ball_save_saving_ball
+  yippee_ki_yay_phase_1_failed:
+    - disarm_yippee_ki_yay_phase_1_vuk
+    - nakatomi_entrance_lock_close
+    - nakatomi_lock_close
+    - wire_ramp_exit_close
+  yippee_ki_yay_phase_2_failed:
+    - disarm_yippee_ki_yay_phase_2_scoop
+    - yippee_ki_yay_phase_2_release_scoop
+  yippee_ki_yay_phase_3_failed:
     - wire_ramp_exit_closed
-  katya_dieharder_left_loop_hit{device.counters.katya_dieharder_loop_counter.value<5}:
-    - katya_dieharder_loop_hit_scored
-    - katya_dieharder_left_loop_relight|3s
-  katya_dieharder_right_loop_hit{device.counters.katya_dieharder_loop_counter.value<5}:
-    - katya_dieharder_loop_hit_scored
-    - katya_dieharder_right_loop_relight|3s
-  katya_dieharder_upper_loop_hit{device.counters.katya_dieharder_loop_counter.value<5}:
-    - katya_dieharder_loop_hit_scored
-    - katya_dieharder_upper_loop_relight|3s
-
+    - trmagl_fling
+    - trmagr_fling
+  mode_yippee_ki_yay_wizard_stopping:
+    - disarm_yippee_ki_yay_phase_1_vuk
+    - disarm_yippee_ki_yay_phase_2_scoop
+    - nakatomi_entrance_lock_close
+    - nakatomi_lock_close
+    - wire_ramp_exit_close
 # ------------------------------------------------------------
 # VARIABLE PLAYER
-# Stores Katya Die Harder state, timer, shots, Hans Bonus state,
-# scoring, completion flags, and result state.
 # ------------------------------------------------------------
 variable_player:
-  katya_dieharder_start:
-    villain_mode_running:
+  mode_yippee_ki_yay_wizard_started:
+    yippee_ki_yay_phase_1_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_balls_locked:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_vuk_armed:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_ball_save_running:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_balls_locked:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_scoop_armed:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_ball_save_running:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_lanes_hit:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_left_done:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_middle_done:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_right_done:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_ball_save_running:
+      action: set
+      int: 0
+  yippee_ki_yay_phase_1_start:
+    yippee_ki_yay_phase_1_active:
+      action: set
       int: 1
+    yippee_ki_yay_phase_1_complete:
       action: set
-    katya_dieharder_failed_active:
       int: 0
+    yippee_ki_yay_phase_1_balls_locked:
       action: set
-    katya_dieharder_completion_active:
       int: 0
+    yippee_ki_yay_phase_1_vuk_armed:
       action: set
-    katya_dieharder_result_started:
       int: 0
+    yippee_ki_yay_phase_1_ball_save_running:
       action: set
-    katya_dieharder_shots:
-      int: 0
-      action: set
-    katya_dieharder_time:
-      int: 83
-      action: set
-    katya_dieharder_remaining:
-      int: 83
-      action: set
-    katya_dieharder_hans_bonus_active:
-      int: 0
-      action: set
-    villain_bonus:
-      int: 500000
-      action: add
-  katya_dieharder_start{current_player.hans_bonus==1}:
-    katya_dieharder_hans_bonus_active:
       int: 1
-      action: set
-    katya_dieharder_time:
-      int: 113
-      action: set
-    katya_dieharder_remaining:
-      int: 113
-      action: set
-  timer_katya_dieharder_timer_tick:
-    katya_dieharder_remaining:
-      int: ticks
-      action: set
-  katya_dieharder_loop_hit_scored:
+  yippee_ki_yay_phase_1_ball_1_locked:
     score:
-      int: "1500000 * current_player.playfield_multiplier"
       action: add
-    villain_bonus:
-      int: 1500000
-      action: add
-    katya_dieharder_shots:
-      int: 1
-      action: add
-  katya_dieharder_victory_sequence:
-    katya_dieharder_completion_active:
-      int: 1
-      action: set
-    katya_dieharder_result_started:
-      int: 1
-      action: set
-  katya_dieharder_fail_mode:
-    katya_dieharder_failed_active:
-      int: 1
-      action: set
-    katya_dieharder_result_started:
-      int: 1
-      action: set
-  katya_dieharder_ball_drain_escape:
-    katya_dieharder_result_started:
-      int: 1
-      action: set
-  katya_dieharder_escape_sequence:
-    katya_dieharder_result_started:
-      int: 1
-      action: set
-  katya_dieharder_captive_final_hit:
+      int: "2500000 * current_player.playfield_multiplier"
+  yippee_ki_yay_phase_1_ball_2_locked:
     score:
-      int: "3000000 * current_player.playfield_multiplier"
       action: add
-    villain_bonus:
-      int: 3000000
-      action: add
-  katya_dieharder_completed:
+      int: "2500000 * current_player.playfield_multiplier"
+  yippee_ki_yay_phase_1_ball_3_locked:
     score:
-      int: current_player.score
       action: add
-    katya_complete:
-      int: 1
+      int: "2500000 * current_player.playfield_multiplier"
+  ball_save_yippee_ki_yay_phase_1_ball_save_enabled:
+    yippee_ki_yay_phase_1_ball_save_running:
       action: set
-    katya_dieharder_complete:
       int: 1
+  ball_save_yippee_ki_yay_phase_1_ball_save_disabled:
+    yippee_ki_yay_phase_1_ball_save_running:
       action: set
-    katya_bonus:
-      int: 1
-      action: set
-    modes_complete:
-      int: 1
+      int: 0
+    score:
       action: add
-    villains_completed:
+      int: "5000000 * current_player.playfield_multiplier"
+  arm_yippee_ki_yay_phase_1_vuk:
+    yippee_ki_yay_phase_1_vuk_armed:
+      action: set
       int: 1
+  disarm_yippee_ki_yay_phase_1_vuk:
+    yippee_ki_yay_phase_1_vuk_armed:
+      action: set
+      int: 0
+  yippee_ki_yay_phase_1_vuk_counted:
+    yippee_ki_yay_phase_1_balls_locked:
       action: add
-    katya_dieharder_result_started:
-      int: 0
+      int: 1
+    yippee_ki_yay_phase_1_vuk_armed:
       action: set
-  katya_dieharder_failed:
-    katya_dieharder_result_started:
       int: 0
+  yippee_ki_yay_phase_1_three_balls_locked:
+    yippee_ki_yay_phase_1_active:
       action: set
-  mode_katya_dieharder_stopping:
-    villain_mode_running:
       int: 0
+    yippee_ki_yay_phase_1_complete:
       action: set
-    katya_dieharder_failed_active:
       int: 0
+    yippee_ki_yay_phase_1_vuk_armed:
       action: set
-    katya_dieharder_completion_active:
       int: 0
+    yippee_ki_yay_phase_1_ball_save_running:
       action: set
-    katya_dieharder_result_started:
       int: 0
+  yippee_ki_yay_phase_1_release_after_kill:
+    yippee_ki_yay_phase_1_complete:
       action: set
-
+      int: 1
+  yippee_ki_yay_phase_2_start:
+    yippee_ki_yay_phase_1_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_active:
+      action: set
+      int: 1
+    yippee_ki_yay_phase_2_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_balls_locked:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_scoop_armed:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_ball_save_running:
+      action: set
+      int: 1
+  ball_save_yippee_ki_yay_phase_2_ball_save_enabled:
+    yippee_ki_yay_phase_2_ball_save_running:
+      action: set
+      int: 1
+  ball_save_yippee_ki_yay_phase_2_ball_save_disabled:
+    yippee_ki_yay_phase_2_ball_save_running:
+      action: set
+      int: 0
+  arm_yippee_ki_yay_phase_2_scoop:
+    yippee_ki_yay_phase_2_scoop_armed:
+      action: set
+      int: 1
+  disarm_yippee_ki_yay_phase_2_scoop:
+    yippee_ki_yay_phase_2_scoop_armed:
+      action: set
+      int: 0
+  yippee_ki_yay_phase_2_scoop_counted:
+    yippee_ki_yay_phase_2_balls_locked:
+      action: add
+      int: 1
+    yippee_ki_yay_phase_2_scoop_armed:
+      action: set
+      int: 0
+  yippee_ki_yay_phase_2_ball_1_locked:
+    score:
+      action: add
+      int: "2500000 * current_player.playfield_multiplier"
+  yippee_ki_yay_phase_2_ball_2_locked:
+    score:
+      action: add
+      int: "2500000 * current_player.playfield_multiplier"
+  yippee_ki_yay_phase_2_ball_3_locked:
+    score:
+      action: add
+      int: "2500000 * current_player.playfield_multiplier"
+  yippee_ki_yay_phase_2_all_balls_locked:
+    yippee_ki_yay_phase_2_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_scoop_armed:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_ball_save_running:
+      action: set
+      int: 0
+    score:
+      action: add
+      int: "5000000 * current_player.playfield_multiplier"
+  yippee_ki_yay_phase_2_complete:
+    yippee_ki_yay_phase_2_complete:
+      action: set
+      int: 1
+    yippee_ki_yay_phase_2_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_scoop_armed:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_ball_save_running:
+      action: set
+      int: 0
+  yippee_ki_yay_phase_2_failed:
+    yippee_ki_yay_phase_2_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_scoop_armed:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_2_ball_save_running:
+      action: set
+      int: 0
+  yippee_ki_yay_phase_3_start:
+    yippee_ki_yay_phase_2_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_active:
+      action: set
+      int: 1
+    yippee_ki_yay_phase_3_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_lanes_hit:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_left_done:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_middle_done:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_right_done:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_ball_save_running:
+      action: set
+      int: 1
+  ball_save_yippee_ki_yay_phase_3_ball_save_enabled:
+    yippee_ki_yay_phase_3_ball_save_running:
+      action: set
+      int: 1
+  ball_save_yippee_ki_yay_phase_3_ball_save_disabled:
+    yippee_ki_yay_phase_3_ball_save_running:
+      action: set
+      int: 0
+  yippee_ki_yay_phase_3_left_lane_hit:
+    yippee_ki_yay_phase_3_left_done:
+      action: set
+      int: 1
+    yippee_ki_yay_phase_3_lanes_hit:
+      action: add
+      int: 1
+    score:
+      action: add
+      int: "2500000 * current_player.playfield_multiplier"
+  yippee_ki_yay_phase_3_middle_lane_hit:
+    yippee_ki_yay_phase_3_middle_done:
+      action: set
+      int: 1
+    yippee_ki_yay_phase_3_lanes_hit:
+      action: add
+      int: 1
+    score:
+      action: add
+      int: "2500000 * current_player.playfield_multiplier"
+  yippee_ki_yay_phase_3_right_lane_hit:
+    yippee_ki_yay_phase_3_right_done:
+      action: set
+      int: 1
+    yippee_ki_yay_phase_3_lanes_hit:
+      action: add
+      int: 1
+    score:
+      action: add
+      int: "2500000 * current_player.playfield_multiplier"
+  yippee_ki_yay_phase_3_all_lanes_complete:
+    yippee_ki_yay_phase_3_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_complete:
+      action: set
+      int: 1
+    yippee_ki_yay_phase_3_ball_save_running:
+      action: set
+      int: 0
+    score:
+      action: add
+      int: "5000000 * current_player.playfield_multiplier"
+  yippee_ki_yay_phase_3_failed:
+    yippee_ki_yay_phase_3_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_3_ball_save_running:
+      action: set
+      int: 0
+  yippee_ki_yay_phase_1_failed:
+    yippee_ki_yay_phase_1_active:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_complete:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_vuk_armed:
+      action: set
+      int: 0
+    yippee_ki_yay_phase_1_ball_save_running:
+      action: set
+      int: 0
 # ------------------------------------------------------------
-# LIGHT PLAYER
-# Sets Katya Die Harder lighting.
+# COIL PLAYER
 # ------------------------------------------------------------
-light_player:
-  mode_katya_dieharder_started:
-    GI:
-      color: ff00ff
-    SPOTS:
-      color: 757575
-    SPOTS_BUMPER:
-      color: 757575
-    l1000:
-      color: ff00ff
-    l1001:
-      color: ff00ff
-  katya_dieharder_completed:
-    l1000: off
-    l1001: off
-    l42:
-      color: ff00ff
-  katya_dieharder_failed:
-    l1000: off
-    l1001: off
-  katya_dieharder_fail_mode:
-    GI: off
-    SPOTS: off
-    SPOTS_BUMPER: off
-    l20: off
-    l22: off
-    l23: off
-    l42: off
-    l52: off
-    l1000: off
-    l1001: off
-
+coil_player:
+  yippee_ki_yay_phase_1_release_vuk: c_towervuk_eject
 # ------------------------------------------------------------
-# SHOWS
-# Inline Katya Die Harder light shows.
+# SLIDE PLAYER
 # ------------------------------------------------------------
-shows:
-  katya_dieharder_left_loop_flash:
-    - duration: 200ms
-      lights:
-        l20: ff00ff
-    - duration: 200ms
-      lights:
-        l20: off
-  katya_dieharder_right_loop_flash:
-    - duration: 200ms
-      lights:
-        l22: ff00ff
-    - duration: 200ms
-      lights:
-        l22: off
-  katya_dieharder_upper_loop_flash:
-    - duration: 200ms
-      lights:
-        l23: ff00ff
-    - duration: 200ms
-      lights:
-        l23: off
-  katya_dieharder_captive_flash:
-    - duration: 120ms
-      lights:
-        l52: ff0000
-    - duration: 120ms
-      lights:
-        l52: off
-  katya_dieharder_hit_flashers:
-    - duration: 80ms
-      lights:
-        f142: ff00ff
-        f143: ff00ff
-        f144: ff00ff
-        f145: ff00ff
-        f146: ff00ff
-        f147: ff00ff
-    - duration: 80ms
-      lights:
-        f142: off
-        f143: off
-        f144: off
-        f145: off
-        f146: off
-        f147: off
-  katya_dieharder_gi_spots_hit_flash:
-    - duration: 80ms
-      lights:
-        GI: ffffff
-        SPOTS: ffffff
-        SPOTS_BUMPER: ffffff
-    - duration: 120ms
-      lights:
-        GI: ff00ff
-        SPOTS: 505050
-        SPOTS_BUMPER: 757575
-  katya_dieharder_insert_flash:
-    - duration: 200ms
-      lights:
-        l42: ff00ff
-    - duration: 200ms
-      lights:
-        l42: off
-
+slide_player:
+  show_yippee_ki_yay_phase_1_slide:
+    yippee_ki_yay_phase_2_intro:
+      action: remove
+    yippee_ki_yay_phase_1_intro:
+      action: play
+      priority: 950
+  show_yippee_ki_yay_phase_2_slide:
+    yippee_ki_yay_phase_1_intro:
+      action: remove
+    yippee_ki_yay_phase_2_intro:
+      action: play
+      priority: 950
+  show_yippee_ki_yay_phase_3_slide:
+    yippee_ki_yay_phase_1_intro:
+      action: remove
+    yippee_ki_yay_phase_2_intro:
+      action: remove
+    die_hard_2_kill:
+      action: remove
+    yippee_ki_yay_phase_3_intro:
+      action: play
+      priority: 950
+  yippee_ki_yay_phase_1_play_kill_video:
+    yippee_ki_yay_phase_1_intro:
+      action: remove
+    yippee_ki_yay_phase_2_intro:
+      action: remove
+    die_hard_1_kill:
+      action: play
+      priority: 1200
+      expire: 13s
+  yippee_ki_yay_phase_1_complete:
+    die_hard_1_kill:
+      action: remove
+  yippee_ki_yay_phase_2_play_kill_video:
+    yippee_ki_yay_phase_1_intro:
+      action: remove
+    yippee_ki_yay_phase_2_intro:
+      action: remove
+    die_hard_2_kill:
+      action: play
+      priority: 1200
+      expire: 11s
+  yippee_ki_yay_phase_2_complete:
+    die_hard_2_kill:
+      action: remove
+    die_hard_3_kill:
+      action: remove
+    yippee_ki_yay_phase_1_intro:
+      action: remove
+    yippee_ki_yay_phase_2_intro:
+      action: remove
+    yippee_ki_yay_phase_3_intro:
+      action: remove
+  yippee_ki_yay_phase_3_play_kill_video:
+    yippee_ki_yay_phase_3_intro:
+      action: remove
+    die_hard_3_kill:
+      action: play
+      priority: 1200
+      expire: 11s
+  yippee_ki_yay_phase_3_complete:
+    die_hard_3_kill:
+      action: remove
+    yippee_ki_yay_phase_3_intro:
+      action: remove
+  yippee_ki_yay_phase_2_failed:
+    die_hard_2_kill:
+      action: remove
+    yippee_ki_yay_phase_1_intro:
+      action: remove
+    yippee_ki_yay_phase_2_intro:
+      action: remove
+  yippee_ki_yay_phase_3_failed:
+    die_hard_3_kill:
+      action: remove
+    yippee_ki_yay_phase_3_intro:
+      action: remove
+  yippee_ki_yay_phase_1_failed:
+    die_hard_1_kill:
+      action: remove
+    yippee_ki_yay_phase_1_intro:
+      action: remove
+    yippee_ki_yay_phase_2_intro:
+      action: remove
+  mode_yippee_ki_yay_wizard_stopping:
+    die_hard_1_kill:
+      action: remove
+    die_hard_2_kill:
+      action: remove
+    die_hard_3_kill:
+      action: remove
+    yippee_ki_yay_phase_1_intro:
+      action: remove
+    yippee_ki_yay_phase_2_intro:
+      action: remove
+    yippee_ki_yay_phase_3_intro:
+      action: remove
+# ------------------------------------------------------------
+# WIDGET PLAYER
+# ------------------------------------------------------------
+widget_player:
+  show_yippee_lock_3_balls_widget:
+    yippee_lock_3_balls_widget:
+      action: play
+      slide: yippee_ki_yay_phase_1_intro
+      priority: 950
+  yippee_ki_yay_phase_1_ball_1_lock_show:
+    yippee_lock_3_balls_widget:
+      action: remove
+    yippee_lock_2_balls_widget:
+      action: play
+      slide: yippee_ki_yay_phase_1_intro
+      priority: 950
+  yippee_ki_yay_phase_1_ball_2_lock_show:
+    yippee_lock_2_balls_widget:
+      action: remove
+    yippee_lock_1_balls_widget:
+      action: play
+      slide: yippee_ki_yay_phase_1_intro
+      priority: 950
+  yippee_ki_yay_phase_1_three_balls_locked:
+    yippee_lock_3_balls_widget:
+      action: remove
+    yippee_lock_2_balls_widget:
+      action: remove
+    yippee_lock_1_balls_widget:
+      action: remove
+  yippee_ki_yay_phase_2_start:
+    yippee_lock_3_balls_widget:
+      action: remove
+    yippee_lock_2_balls_widget:
+      action: remove
+    yippee_lock_1_balls_widget:
+      action: remove
+  show_yippee_airplane_lock_1_widget:
+    yippee_airplane_lock_1_widget:
+      action: play
+      slide: yippee_ki_yay_phase_2_intro
+      priority: 1600
+  show_yippee_airplane_lock_2_widget:
+    yippee_airplane_lock_1_widget:
+      action: remove
+    yippee_airplane_lock_3_widget:
+      action: remove
+    yippee_airplane_lock_2_widget:
+      action: play
+      slide: yippee_ki_yay_phase_2_intro
+      priority: 1600
+  show_yippee_airplane_lock_3_widget:
+    yippee_airplane_lock_1_widget:
+      action: remove
+    yippee_airplane_lock_2_widget:
+      action: remove
+    yippee_airplane_lock_3_widget:
+      action: play
+      slide: yippee_ki_yay_phase_2_intro
+      priority: 1600
+  yippee_ki_yay_phase_2_ball_1_lock_show:
+    yippee_airplane_lock_1_widget:
+      action: remove
+    yippee_airplane_lock_2_widget:
+      action: play
+      slide: yippee_ki_yay_phase_2_intro
+      priority: 1600
+  yippee_ki_yay_phase_2_ball_2_lock_show:
+    yippee_airplane_lock_1_widget:
+      action: remove
+    yippee_airplane_lock_2_widget:
+      action: remove
+    yippee_airplane_lock_3_widget:
+      action: play
+      slide: yippee_ki_yay_phase_2_intro
+      priority: 1600
+  yippee_ki_yay_phase_2_ball_3_lock_show:
+    yippee_airplane_lock_1_widget:
+      action: remove
+    yippee_airplane_lock_2_widget:
+      action: remove
+    yippee_airplane_lock_3_widget:
+      action: play
+      slide: yippee_ki_yay_phase_2_intro
+      priority: 1600
+  yippee_ki_yay_phase_2_all_balls_locked:
+    yippee_airplane_lock_1_widget:
+      action: remove
+    yippee_airplane_lock_2_widget:
+      action: remove
+    yippee_airplane_lock_3_widget:
+      action: remove
+  show_yippee_phase_3_lanes_1_widget:
+    yippee_phase_3_lanes_1_widget:
+      action: play
+      slide: yippee_ki_yay_phase_3_intro
+      priority: 1700
+  yippee_ki_yay_phase_3_play_kill_video:
+    yippee_phase_3_lanes_1_widget:
+      action: remove
+  yippee_ki_yay_phase_3_complete:
+    yippee_phase_3_lanes_1_widget:
+      action: remove
+  yippee_ki_yay_phase_3_failed:
+    yippee_phase_3_lanes_1_widget:
+      action: remove
+  yippee_ki_yay_phase_1_complete:
+    yippee_lock_3_balls_widget:
+      action: remove
+    yippee_lock_2_balls_widget:
+      action: remove
+    yippee_lock_1_balls_widget:
+      action: remove
+  yippee_ki_yay_phase_1_failed:
+    yippee_lock_3_balls_widget:
+      action: remove
+    yippee_lock_2_balls_widget:
+      action: remove
+    yippee_lock_1_balls_widget:
+      action: remove
+    yippee_airplane_lock_1_widget:
+      action: remove
+    yippee_airplane_lock_2_widget:
+      action: remove
+    yippee_airplane_lock_3_widget:
+      action: remove
+    yippee_phase_3_lanes_1_widget:
+      action: remove
+  yippee_ki_yay_phase_2_failed:
+    yippee_airplane_lock_1_widget:
+      action: remove
+    yippee_airplane_lock_2_widget:
+      action: remove
+    yippee_airplane_lock_3_widget:
+      action: remove
+    yippee_phase_3_lanes_1_widget:
+      action: remove
+  yippee_ki_yay_phase_2_complete:
+    yippee_airplane_lock_1_widget:
+      action: remove
+    yippee_airplane_lock_2_widget:
+      action: remove
+    yippee_airplane_lock_3_widget:
+      action: remove
+  mode_yippee_ki_yay_wizard_stopping:
+    yippee_lock_3_balls_widget:
+      action: remove
+    yippee_lock_2_balls_widget:
+      action: remove
+    yippee_lock_1_balls_widget:
+      action: remove
+    yippee_airplane_lock_1_widget:
+      action: remove
+    yippee_airplane_lock_2_widget:
+      action: remove
+    yippee_airplane_lock_3_widget:
+      action: remove
+    yippee_phase_3_lanes_1_widget:
+      action: remove
 # ------------------------------------------------------------
 # SHOW PLAYER
-# Handles ball-save flashes, loop/captive flashes, hit flashers,
-# GI/SPOTS hit flash, insert flashing, fail blackout, and cleanup.
 # ------------------------------------------------------------
 show_player:
-  ball_save_katya_dieharder_start_save_enabled:
+  yippee_ki_yay_phase_1_start:
+    yippee_ki_yay_insert_red_yellow_flash:
+      key: yippee_ki_yay_insert_red_yellow_flash
+      priority: 9000
+      loops: -1
+  yippee_ki_yay_phase_2_start:
+    yippee_ki_yay_insert_red_yellow_flash:
+      action: stop
+    yippee_ki_yay_phase_2_l8_green_yellow_flash:
+      key: yippee_ki_yay_phase_2_l8_green_yellow_flash
+      priority: 9000
+      loops: -1
+    yippee_ki_yay_phase_2_airplane_lock_red_flash:
+      key: yippee_ki_yay_phase_2_airplane_lock_red_flash
+      priority: 8500
+      loops: -1
     flash_color:
-      key: katya_dieharder_start_save_flash
+      key: yippee_ki_yay_phase_2_ball_save_red_flash
+      priority: 9000
       loops: -1
       speed: 8
       show_tokens:
         lights: BALL_SAVE
-        color: ff00ff
-  ball_save_katya_dieharder_start_save_disabled:
-    katya_dieharder_start_save_flash:
-      action: stop
-  ball_save_katya_dieharder_complete_save_enabled:
-    flash_color_with_fade:
-      key: katya_dieharder_ball_save_flash
+        color: ff0000
+  yippee_ki_yay_phase_1_lock_lit:
+    yippee_ki_yay_nakatomi_lock_blue_flash:
+      key: yippee_ki_yay_nakatomi_lock_blue_flash
+      priority: 3000
       loops: -1
-      speed: 2
-      show_tokens:
-        lights: BALL_SAVE
-        color: ff00ff
-        fade: 500
-  ball_save_katya_dieharder_complete_save_hurry_up:
-    flash_color:
-      key: katya_dieharder_ball_save_flash
-      loops: -1
-      speed: 7
-      show_tokens:
-        lights: BALL_SAVE
-        color: ff00ff
-  ball_save_katya_dieharder_complete_save_disabled:
-    flash_color_with_fade:
-      action: stop
-      key: katya_dieharder_ball_save_flash
-    flash_color:
-      action: stop
-      key: katya_dieharder_ball_save_flash
-  mode_katya_dieharder_started:
-    katya_dieharder_left_loop_flash:
-      loops: -1
-    katya_dieharder_right_loop_flash:
-      loops: -1
-    katya_dieharder_upper_loop_flash:
-      loops: -1
-    katya_dieharder_insert_flash:
-      loops: -1
-  katya_dieharder_loop_hit_scored:
-    katya_dieharder_hit_flashers:
-      loops: 2
-    katya_dieharder_gi_spots_hit_flash:
+  yippee_ki_yay_phase_1_ball_1_lock_show:
+    yippee_ki_yay_phase_1_ball_1_locked_vpw_show:
+      key: yippee_ki_yay_phase_1_ball_1_locked_vpw_show
+      priority: 3200
       loops: 1
-      priority: 850
-  katya_dieharder_left_loop_hit:
-    katya_dieharder_left_loop_flash:
+  yippee_ki_yay_phase_1_ball_2_lock_show:
+    yippee_ki_yay_phase_1_ball_2_locked_vpw_show:
+      key: yippee_ki_yay_phase_1_ball_2_locked_vpw_show
+      priority: 3250
+      loops: 1
+  yippee_ki_yay_phase_1_three_balls_locked:
+    yippee_ki_yay_nakatomi_lock_blue_flash:
       action: stop
-  katya_dieharder_left_loop_relight:
-    katya_dieharder_left_loop_flash:
-      loops: -1
-  katya_dieharder_right_loop_hit:
-    katya_dieharder_right_loop_flash:
+    yippee_ki_yay_phase_1_ball_save_blue_flash:
       action: stop
-  katya_dieharder_right_loop_relight:
-    katya_dieharder_right_loop_flash:
-      loops: -1
-  katya_dieharder_upper_loop_hit:
-    katya_dieharder_upper_loop_flash:
-      action: stop
-  katya_dieharder_upper_loop_relight:
-    katya_dieharder_upper_loop_flash:
-      loops: -1
-  katya_dieharder_loops_complete:
-    katya_dieharder_left_loop_flash:
-      action: stop
-    katya_dieharder_right_loop_flash:
-      action: stop
-    katya_dieharder_upper_loop_flash:
-      action: stop
-    katya_dieharder_captive_flash:
-      loops: -1
-  katya_dieharder_completed:
-    katya_dieharder_start_save_flash:
-      action: stop
-    flash_color_with_fade:
-      action: stop
-      key: katya_dieharder_ball_save_flash
+    yippee_ki_yay_phase_1_third_lock_show:
+      key: yippee_ki_yay_phase_1_third_lock_show
+      priority: 3400
+      loops: 1
+  ball_save_yippee_ki_yay_phase_1_ball_save_enabled:
     flash_color:
-      action: stop
-      key: katya_dieharder_ball_save_flash
-    katya_dieharder_gi_spots_hit_flash:
-      action: stop
-    katya_dieharder_captive_flash:
-      action: stop
-    katya_dieharder_insert_flash:
-      action: stop
-  katya_dieharder_failed:
-    katya_dieharder_start_save_flash:
-      action: stop
-    flash_color_with_fade:
-      action: stop
-      key: katya_dieharder_ball_save_flash
+      key: yippee_ki_yay_phase_1_ball_save_blue_flash
+      loops: -1
+      speed: 8
+      show_tokens:
+        lights: BALL_SAVE
+        color: 0000ff
+  ball_save_yippee_ki_yay_phase_1_ball_save_hurry_up:
     flash_color:
+      key: yippee_ki_yay_phase_1_ball_save_blue_flash
+      loops: -1
+      speed: 12
+      show_tokens:
+        lights: BALL_SAVE
+        color: 0000ff
+  ball_save_yippee_ki_yay_phase_1_ball_save_disabled:
+    yippee_ki_yay_phase_1_ball_save_blue_flash:
       action: stop
-      key: katya_dieharder_ball_save_flash
-    katya_dieharder_gi_spots_hit_flash:
-      action: stop
-    katya_dieharder_left_loop_flash:
-      action: stop
-    katya_dieharder_right_loop_flash:
-      action: stop
-    katya_dieharder_upper_loop_flash:
-      action: stop
-    katya_dieharder_captive_flash:
-      action: stop
-    katya_dieharder_insert_flash:
-      action: stop
-  katya_dieharder_fail_mode:
-    katya_dieharder_start_save_flash:
-      action: stop
-    flash_color_with_fade:
-      action: stop
-      key: katya_dieharder_ball_save_flash
+  ball_save_yippee_ki_yay_phase_2_ball_save_enabled:
     flash_color:
-      action: stop
-      key: katya_dieharder_ball_save_flash
-    katya_dieharder_gi_spots_hit_flash:
-      action: stop
-    katya_dieharder_left_loop_flash:
-      action: stop
-    katya_dieharder_right_loop_flash:
-      action: stop
-    katya_dieharder_upper_loop_flash:
-      action: stop
-    katya_dieharder_captive_flash:
-      action: stop
-    katya_dieharder_insert_flash:
-      action: stop
-  mode_katya_dieharder_stopping:
-    katya_dieharder_start_save_flash:
-      action: stop
-    flash_color_with_fade:
-      action: stop
-      key: katya_dieharder_ball_save_flash
+      key: yippee_ki_yay_phase_2_ball_save_red_flash
+      priority: 9000
+      loops: -1
+      speed: 8
+      show_tokens:
+        lights: BALL_SAVE
+        color: ff0000
+  ball_save_yippee_ki_yay_phase_2_ball_save_hurry_up:
     flash_color:
+      key: yippee_ki_yay_phase_2_ball_save_red_flash
+      priority: 9000
+      loops: -1
+      speed: 12
+      show_tokens:
+        lights: BALL_SAVE
+        color: ff0000
+  ball_save_yippee_ki_yay_phase_2_ball_save_disabled:
+    yippee_ki_yay_phase_2_ball_save_red_flash:
       action: stop
-      key: katya_dieharder_ball_save_flash
-    katya_dieharder_gi_spots_hit_flash:
+  yippee_ki_yay_phase_1_complete:
+    yippee_ki_yay_nakatomi_lock_blue_flash:
       action: stop
-    katya_dieharder_left_loop_flash:
+    yippee_ki_yay_phase_1_ball_save_blue_flash:
       action: stop
-    katya_dieharder_right_loop_flash:
+    yippee_ki_yay_phase_1_ball_1_locked_vpw_show:
       action: stop
-    katya_dieharder_upper_loop_flash:
+    yippee_ki_yay_phase_1_ball_2_locked_vpw_show:
       action: stop
-    katya_dieharder_captive_flash:
+    yippee_ki_yay_phase_1_third_lock_show:
       action: stop
-    katya_dieharder_insert_flash:
+  yippee_ki_yay_phase_2_ball_1_lock_show:
+    yippee_ki_yay_phase_2_ball_1_locked_blue_insert_show:
+      key: yippee_ki_yay_phase_2_ball_1_locked_blue_insert_show
+      priority: 4300
+      loops: 1
+  yippee_ki_yay_phase_2_ball_2_lock_show:
+    yippee_ki_yay_phase_2_ball_2_locked_blue_insert_show:
+      key: yippee_ki_yay_phase_2_ball_2_locked_blue_insert_show
+      priority: 4350
+      loops: 1
+  yippee_ki_yay_phase_2_ball_3_lock_show:
+    yippee_ki_yay_phase_2_ball_3_locked_blue_insert_show:
+      key: yippee_ki_yay_phase_2_ball_3_locked_blue_insert_show
+      priority: 4400
+      loops: 1
+  yippee_ki_yay_phase_2_all_balls_locked:
+    yippee_ki_yay_phase_2_airplane_lock_red_flash:
       action: stop
+    yippee_ki_yay_phase_2_ball_save_red_flash:
+      action: stop
+    yippee_ki_yay_phase_2_ball_1_locked_blue_insert_show:
+      action: stop
+    yippee_ki_yay_phase_2_ball_2_locked_blue_insert_show:
+      action: stop
+    yippee_ki_yay_phase_2_ball_3_locked_blue_insert_show:
+      action: stop
+  yippee_ki_yay_phase_2_play_kill_video:
+    yippee_ki_yay_phase_2_complete_blue_show:
+      key: yippee_ki_yay_phase_2_complete_blue_show
+      priority: 9500
+      loops: 1
+  yippee_ki_yay_phase_2_complete:
+    yippee_ki_yay_phase_2_l8_green_yellow_flash:
+      action: stop
+    yippee_ki_yay_phase_2_airplane_lock_red_flash:
+      action: stop
+    yippee_ki_yay_phase_2_ball_save_red_flash:
+      action: stop
+    yippee_ki_yay_phase_2_ball_1_locked_blue_insert_show:
+      action: stop
+    yippee_ki_yay_phase_2_ball_2_locked_blue_insert_show:
+      action: stop
+    yippee_ki_yay_phase_2_ball_3_locked_blue_insert_show:
+      action: stop
+  yippee_ki_yay_phase_2_failed:
+    yippee_ki_yay_phase_2_l8_green_yellow_flash:
+      action: stop
+    yippee_ki_yay_phase_2_airplane_lock_red_flash:
+      action: stop
+    yippee_ki_yay_phase_2_ball_save_red_flash:
+      action: stop
+    yippee_ki_yay_phase_2_ball_1_locked_blue_insert_show:
+      action: stop
+    yippee_ki_yay_phase_2_ball_2_locked_blue_insert_show:
+      action: stop
+    yippee_ki_yay_phase_2_ball_3_locked_blue_insert_show:
+      action: stop
+  yippee_ki_yay_phase_3_start:
+    yippee_ki_yay_phase_2_l8_green_yellow_flash:
+      action: stop
+    yippee_ki_yay_phase_3_l8_green_flash:
+      key: yippee_ki_yay_phase_3_l8_green_flash
+      priority: 12000
+      loops: -1
+    yippee_ki_yay_phase_3_entrance_arrow_green_flash:
+      key: yippee_ki_yay_phase_3_entrance_arrow_green_flash
+      priority: 9500
+      loops: -1
+    yippee_ki_yay_phase_3_lane_left_green_flash:
+      key: yippee_ki_yay_phase_3_lane_left_green_flash
+      priority: 9500
+      loops: -1
+    yippee_ki_yay_phase_3_lane_middle_green_flash:
+      key: yippee_ki_yay_phase_3_lane_middle_green_flash
+      priority: 9500
+      loops: -1
+    yippee_ki_yay_phase_3_lane_right_green_flash:
+      key: yippee_ki_yay_phase_3_lane_right_green_flash
+      priority: 9500
+      loops: -1
+    flash_color:
+      key: yippee_ki_yay_phase_3_ball_save_green_flash
+      priority: 12000
+      loops: -1
+      speed: 8
+      show_tokens:
+        lights: BALL_SAVE
+        color: "00ff00"
+  yippee_ki_yay_phase_3_left_lane_hit:
+    yippee_ki_yay_phase_3_lane_left_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_1_locked_green_insert_show:
+      key: yippee_ki_yay_phase_3_ball_1_locked_green_insert_show
+      priority: 9600
+      loops: 1
+  yippee_ki_yay_phase_3_middle_lane_hit:
+    yippee_ki_yay_phase_3_lane_middle_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_2_locked_green_insert_show:
+      key: yippee_ki_yay_phase_3_ball_2_locked_green_insert_show
+      priority: 9650
+      loops: 1
+  yippee_ki_yay_phase_3_right_lane_hit:
+    yippee_ki_yay_phase_3_lane_right_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_3_locked_green_insert_show:
+      key: yippee_ki_yay_phase_3_ball_3_locked_green_insert_show
+      priority: 9700
+      loops: 1
+  yippee_ki_yay_phase_3_all_lanes_complete:
+    yippee_ki_yay_phase_3_entrance_arrow_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_left_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_middle_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_right_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_save_green_flash:
+      action: stop
+  yippee_ki_yay_phase_3_play_kill_video:
+    yippee_ki_yay_phase_3_complete_green_show:
+      key: yippee_ki_yay_phase_3_complete_green_show
+      priority: 9800
+      loops: 1
+  ball_save_yippee_ki_yay_phase_3_ball_save_enabled:
+    flash_color:
+      key: yippee_ki_yay_phase_3_ball_save_green_flash
+      priority: 12000
+      loops: -1
+      speed: 8
+      show_tokens:
+        lights: BALL_SAVE
+        color: "00ff00"
+  ball_save_yippee_ki_yay_phase_3_ball_save_hurry_up:
+    flash_color:
+      key: yippee_ki_yay_phase_3_ball_save_green_flash
+      priority: 12000
+      loops: -1
+      speed: 12
+      show_tokens:
+        lights: BALL_SAVE
+        color: "00ff00"
+  ball_save_yippee_ki_yay_phase_3_ball_save_disabled:
+    yippee_ki_yay_phase_3_ball_save_green_flash:
+      action: stop
+  yippee_ki_yay_phase_3_complete:
+    yippee_ki_yay_phase_3_l8_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_entrance_arrow_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_left_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_middle_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_right_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_save_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_1_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_2_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_3_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_complete_green_show:
+      action: stop
+  yippee_ki_yay_phase_3_failed:
+    yippee_ki_yay_phase_3_l8_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_entrance_arrow_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_left_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_middle_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_right_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_save_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_1_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_2_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_3_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_complete_green_show:
+      action: stop
+  yippee_ki_yay_phase_1_failed:
+    yippee_ki_yay_insert_red_yellow_flash:
+      action: stop
+    yippee_ki_yay_phase_2_l8_green_yellow_flash:
+      action: stop
+    yippee_ki_yay_nakatomi_lock_blue_flash:
+      action: stop
+    yippee_ki_yay_phase_1_ball_save_blue_flash:
+      action: stop
+    yippee_ki_yay_phase_2_airplane_lock_red_flash:
+      action: stop
+    yippee_ki_yay_phase_2_ball_save_red_flash:
+      action: stop
+    yippee_ki_yay_phase_1_ball_1_locked_vpw_show:
+      action: stop
+    yippee_ki_yay_phase_1_ball_2_locked_vpw_show:
+      action: stop
+    yippee_ki_yay_phase_1_third_lock_show:
+      action: stop
+    yippee_ki_yay_phase_2_ball_1_locked_blue_insert_show:
+      action: stop
+    yippee_ki_yay_phase_2_ball_2_locked_blue_insert_show:
+      action: stop
+    yippee_ki_yay_phase_2_ball_3_locked_blue_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_l8_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_entrance_arrow_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_left_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_middle_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_right_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_save_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_1_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_2_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_3_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_complete_green_show:
+      action: stop
+  mode_yippee_ki_yay_wizard_stopping:
+    yippee_ki_yay_insert_red_yellow_flash:
+      action: stop
+    yippee_ki_yay_phase_2_l8_green_yellow_flash:
+      action: stop
+    yippee_ki_yay_nakatomi_lock_blue_flash:
+      action: stop
+    yippee_ki_yay_phase_1_ball_save_blue_flash:
+      action: stop
+    yippee_ki_yay_phase_2_airplane_lock_red_flash:
+      action: stop
+    yippee_ki_yay_phase_2_ball_save_red_flash:
+      action: stop
+    yippee_ki_yay_phase_1_ball_1_locked_vpw_show:
+      action: stop
+    yippee_ki_yay_phase_1_ball_2_locked_vpw_show:
+      action: stop
+    yippee_ki_yay_phase_1_third_lock_show:
+      action: stop
+    yippee_ki_yay_phase_2_ball_1_locked_blue_insert_show:
+      action: stop
+    yippee_ki_yay_phase_2_ball_2_locked_blue_insert_show:
+      action: stop
+    yippee_ki_yay_phase_2_ball_3_locked_blue_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_l8_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_entrance_arrow_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_left_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_middle_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_lane_right_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_save_green_flash:
+      action: stop
+    yippee_ki_yay_phase_3_ball_1_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_2_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_ball_3_locked_green_insert_show:
+      action: stop
+    yippee_ki_yay_phase_3_complete_green_show:
+      action: stop
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# ------------------------------------------------------------
+light_player:
+  mode_yippee_ki_yay_wizard_started:
+    GI:
+      color: ff0000
+      priority: 3000
+    SPOTS:
+      color: 505050
+      priority: 3000
+    SPOTS_BUMPER:
+      color: 909090
+      priority: 3000
+    l1000:
+      color: ff0000
+      priority: 3000
+    l1001:
+      color: ff0000
+      priority: 3000
+    l44:
+      color: 0044ff
+      priority: 1200
+    l43:
+      color: "00ff00"
+      priority: 1200
+    l40:
+      color: ff8800
+      priority: 1200
+    l42:
+      color: ff00aa
+      priority: 1200
+    l41:
+      color: "ffffff"
+      priority: 1200
+    l10:
+      color: off
+      priority: 9700
+  yippee_ki_yay_phase_1_start:
+    GI:
+      color: ff0000
+      priority: 3000
+    SPOTS:
+      color: 757575
+      priority: 3000
+    SPOTS_BUMPER:
+      color: 757575
+      priority: 3000
+    l1000:
+      color: ff0000
+      priority: 3000
+    l1001:
+      color: ff0000
+      priority: 3000
+    # Villain inserts stay lit in their proper villain colours through the wizard.
+    l44:
+      color: 0044ff
+      priority: 9600
+    l43:
+      color: "00ff00"
+      priority: 9600
+    l40:
+      color: ff8800
+      priority: 9600
+    l42:
+      color: ff00aa
+      priority: 9600
+    l41:
+      color: "ffffff"
+      priority: 9600
+    l10:
+      color: off
+      priority: 9700
+  yippee_ki_yay_phase_1_three_balls_locked:
+    BALL_SAVE:
+      color: off
+      priority: 5000
+  yippee_ki_yay_phase_1_complete:
+    BALL_SAVE:
+      color: off
+      priority: 5000
+  yippee_ki_yay_phase_2_start:
+    GI:
+      color: 0000ff
+      priority: 3000
+    SPOTS:
+      color: 757575
+      priority: 3000
+    SPOTS_BUMPER:
+      color: 757575
+      priority: 3000
+    l1000:
+      color: 0000ff
+      priority: 3000
+    l1001:
+      color: 0000ff
+      priority: 3000
+    l44:
+      color: 0044ff
+      priority: 9600
+    l43:
+      color: "00ff00"
+      priority: 9600
+    l40:
+      color: ff8800
+      priority: 9600
+    l42:
+      color: ff00aa
+      priority: 9600
+    l41:
+      color: "ffffff"
+      priority: 9600
+    l10:
+      color: off
+      priority: 9700
+  yippee_ki_yay_phase_3_start:
+    GI:
+      color: "00ff00"
+      priority: 3000
+    SPOTS:
+      color: 757575
+      priority: 3000
+    SPOTS_BUMPER:
+      color: 757575
+      priority: 3000
+    l1000:
+      color: "00ff00"
+      priority: 3000
+    l1001:
+      color: "00ff00"
+      priority: 3000
+    l44:
+      color: 0044ff
+      priority: 9600
+    l43:
+      color: "00ff00"
+      priority: 9600
+    l40:
+      color: ff8800
+      priority: 9600
+    l42:
+      color: ff00aa
+      priority: 9600
+    l41:
+      color: "ffffff"
+      priority: 9600
+    l10:
+      color: off
+      priority: 9700
+  yippee_ki_yay_phase_3_left_lane_hit:
+    l76:
+      color: "00ff00"
+      priority: 9600
+  yippee_ki_yay_phase_3_middle_lane_hit:
+    l77:
+      color: "00ff00"
+      priority: 9600
+  yippee_ki_yay_phase_3_right_lane_hit:
+    l78:
+      color: "00ff00"
+      priority: 9600
+  yippee_ki_yay_phase_3_all_lanes_complete:
+    l10:
+      color: off
+      priority: 9700
+    l21:
+      color: off
+      priority: 9700
+    l76:
+      color: off
+      priority: 9700
+    l77:
+      color: off
+      priority: 9700
+    l78:
+      color: off
+      priority: 9700
+    BALL_SAVE:
+      color: off
+      priority: 9700
+  yippee_ki_yay_phase_2_complete:
+    # Keep villain inserts alive for Phase 3. Only clear the Phase 1 lock and Phase 2 ball-save light here.
+    l7:
+      color: off
+      priority: 9000
+    BALL_SAVE:
+      color: off
+      priority: 9000
+  yippee_ki_yay_phase_2_failed:
+    l44:
+      color: off
+      priority: 9000
+    l43:
+      color: off
+      priority: 9000
+    l40:
+      color: off
+      priority: 9000
+    l42:
+      color: off
+      priority: 9000
+    l41:
+      color: off
+      priority: 9000
+    l10:
+      color: off
+      priority: 9000
+    l7:
+      color: off
+      priority: 9000
+    l8:
+      color: off
+      priority: 9000
+    BALL_SAVE:
+      color: off
+      priority: 9000
+  yippee_ki_yay_phase_3_failed:
+    l10:
+      color: off
+      priority: 9700
+    l21:
+      color: off
+      priority: 9700
+    l76:
+      color: off
+      priority: 9700
+    l77:
+      color: off
+      priority: 9700
+    l78:
+      color: off
+      priority: 9700
+    BALL_SAVE:
+      color: off
+      priority: 9700
+  yippee_ki_yay_phase_1_failed:
+    l44:
+      color: off
+      priority: 9000
+    l43:
+      color: off
+      priority: 9000
+    l40:
+      color: off
+      priority: 9000
+    l42:
+      color: off
+      priority: 9000
+    l41:
+      color: off
+      priority: 9000
+    l10:
+      color: off
+      priority: 9000
+    l7:
+      color: off
+      priority: 9000
+    l8:
+      color: off
+      priority: 9000
+    BALL_SAVE:
+      color: off
+      priority: 9000
+  mode_yippee_ki_yay_wizard_stopping:
+    l44:
+      color: off
+      priority: 9000
+    l43:
+      color: off
+      priority: 9000
+    l40:
+      color: off
+      priority: 9000
+    l42:
+      color: off
+      priority: 9000
+    l41:
+      color: off
+      priority: 9000
+    l10:
+      color: off
+      priority: 9000
+    l7:
+      color: off
+      priority: 9000
+    l8:
+      color: off
+      priority: 9000
+    l21:
+      color: off
+      priority: 9700
+    l76:
+      color: off
+      priority: 9700
+    l77:
+      color: off
+      priority: 9700
+    l78:
+      color: off
+      priority: 9700
+    BALL_SAVE:
+      color: off
+      priority: 9000
+# ------------------------------------------------------------
+# SHOWS
+# ------------------------------------------------------------
+shows:
+  yippee_ki_yay_nakatomi_lock_blue_flash:
+    - time: 0
+      lights:
+        l7: 0000ff
+    - time: 250ms
+      lights:
+        l7: off
+    - time: 500ms
+  yippee_ki_yay_insert_red_yellow_flash:
+    - time: 0
+      lights:
+        l8: ff0000
+    - time: 1500ms
+      lights:
+        l8: ffff00
+    - time: 1650ms
+      lights:
+        l8: ff0000
+    - time: 1780ms
+      lights:
+        l8: ffff00
+    - time: 1930ms
+      lights:
+        l8: ff0000
+    - time: 2200ms
+  yippee_ki_yay_phase_2_l8_green_yellow_flash:
+    - time: 0
+      lights:
+        l8: "00ff00"
+    - time: 1500ms
+      lights:
+        l8: ffff00
+    - time: 1650ms
+      lights:
+        l8: "00ff00"
+    - time: 1780ms
+      lights:
+        l8: ffff00
+    - time: 1930ms
+      lights:
+        l8: "00ff00"
+    - time: 2200ms
+  yippee_ki_yay_phase_2_airplane_lock_red_flash:
+    - time: 0
+      lights:
+        l61: ff0000
+    - time: 250ms
+      lights:
+        l61: off
+    - time: 500ms
 
-# ------------------------------------------------------------
-# SLIDE PLAYER
-# Plays Katya Die Harder background and result slides.
-# ------------------------------------------------------------
-slide_player:
-  mode_katya_dieharder_started:
-    katya_dieharder_background:
-      action: play
-      expire: 0s
-      priority: 600
-  mode_katya_dieharder_stopping:
-    katya_dieharder_background:
-      action: remove
-  katya_dieharder_completed_show:
-    katya_dieharder_background:
-      action: remove
-    katya_defeated:
-      action: play
-      expire: 4s
-      priority: 10000
-  katya_dieharder_ball_drain_escape:
-    katya_dieharder_background:
-      action: remove
-    katya_escaped:
-      action: play
-      expire: 4s
-      priority: 10000
-  katya_dieharder_fail_mode:
-    katya_dieharder_background:
-      action: remove
-    katya_ball_lost:
-      action: play
-      expire: 4s
-      priority: 10000
-
-# ------------------------------------------------------------
-# WIDGET PLAYER
-# Shows Katya Die Harder timer/progress widgets during the mode.
-# Shows the Katya Die Harder villain bonus widget on the defeated slide.
-# The bonus widget is only posted by the completed-show event, so it
-# will not show on Katya escaped, ball lost, or failed flows.
-# ------------------------------------------------------------
-widget_player:
-  mode_katya_dieharder_started:
-    katya_dieharder_timer_widget:
-      slide: katya_dieharder_background
-      action: play
-    katya_dieharder_progress_widget:
-      slide: katya_dieharder_background
-      action: play
-  katya_dieharder_completed_show:
-    katya_dieharder_timer_widget:
-      action: remove
-    katya_dieharder_progress_widget:
-      action: remove
-    katya_dieharder_villian_bonus_widget:
-      slide: katya_defeated
-      action: play
-      expire: 4s
-  mode_katya_dieharder_stopping:
-    katya_dieharder_timer_widget:
-      action: remove
-    katya_dieharder_progress_widget:
-      action: remove
-    katya_dieharder_villian_bonus_widget:
-      action: remove
-  katya_dieharder_completed:
-    katya_dieharder_timer_widget:
-      action: remove
-    katya_dieharder_progress_widget:
-      action: remove
-    katya_dieharder_villian_bonus_widget:
-      action: remove
-  katya_dieharder_failed:
-    katya_dieharder_timer_widget:
-      action: remove
-    katya_dieharder_progress_widget:
-      action: remove
-    katya_dieharder_villian_bonus_widget:
-      action: remove
-
-# ------------------------------------------------------------
-# SOUND PLAYER
-# Starts Katya music and stops it when the mode stops.
-# ------------------------------------------------------------
-sound_player:
-  katya_dieharder_music_start:
-    katyatheme:
-      key: main_music
-      action: play
-      loops: -1
-      volume: 0.7
-  mode_katya_dieharder_stopping:
-    katyatheme:
-      key: main_music
-      action: stop
+  yippee_ki_yay_phase_3_l8_green_flash:
+    - time: 0
+      lights:
+        l8: "00ff00"
+    - time: 250ms
+      lights:
+        l8: off
+    - time: 500ms
+  yippee_ki_yay_phase_3_entrance_arrow_green_flash:
+    - time: 0
+      lights:
+        l21: "00ff00"
+    - time: 250ms
+      lights:
+        l21: off
+    - time: 500ms
+  yippee_ki_yay_phase_3_lane_left_green_flash:
+    - time: 0
+      lights:
+        l76: "00ff00"
+    - time: 250ms
+      lights:
+        l76: off
+    - time: 500ms
+  yippee_ki_yay_phase_3_lane_middle_green_flash:
+    - time: 0
+      lights:
+        l77: "00ff00"
+    - time: 250ms
+      lights:
+        l77: off
+    - time: 500ms
+  yippee_ki_yay_phase_3_lane_right_green_flash:
+    - time: 0
+      lights:
+        l78: "00ff00"
+    - time: 250ms
+      lights:
+        l78: off
+    - time: 500ms
