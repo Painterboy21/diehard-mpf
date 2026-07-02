@@ -1,0 +1,359 @@
+#config_version=6
+# ------------------------------------------------------------
+# WIZARD MODE
+# ------------------------------------------------------------
+# Final Yippee Ki Yay wizard mode, copied from the VPW flow:
+#   - starts after phase 3 posts start_yippee_ki_yay_final_wizard
+#   - runs a 60 second final jackpot multiball
+#   - base jackpot is 5,000,000
+#   - adds 1,000,000 for each completed/earned major bonus
+#   - every major shot awards the same wizard jackpot value
+# ------------------------------------------------------------
+
+mode:
+  start_events:
+    - start_yippee_ki_yay_final_wizard
+  stop_events:
+    - timer_wizard_mode_timer_complete
+    - ball_ended
+    - tilt
+  priority: 700
+
+# ------------------------------------------------------------
+# MULTIBALL / BALL SAVE
+# ------------------------------------------------------------
+multiballs:
+  wizard_mode:
+    ball_count: 3
+    ball_count_type: total
+    start_events:
+      - wizard_mode_start_multiball
+    stop_events:
+      - wizard_mode_complete
+      - mode_wizard_mode_stopping
+      - ball_ending
+      - tilt
+
+ball_saves:
+  wizard_mode_ball_save:
+    active_time: 60s
+    hurry_up_time: 10s
+    grace_period: 2s
+    auto_launch: true
+    balls_to_save: -1
+    enable_events:
+      - wizard_mode_start_multiball
+    disable_events:
+      - wizard_mode_complete
+      - mode_wizard_mode_stopping
+      - ball_ending
+      - tilt
+
+# ------------------------------------------------------------
+# TIMER
+# ------------------------------------------------------------
+timers:
+  wizard_mode_timer:
+    start_value: 60
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - event: wizard_mode_start_multiball
+        action: restart
+      - event: wizard_mode_complete
+        action: stop
+      - event: mode_wizard_mode_stopping
+        action: stop
+
+# ------------------------------------------------------------
+# EVENT PLAYER
+# ------------------------------------------------------------
+event_player:
+  mode_wizard_mode_started:
+    - wizard_mode_set_base_value
+    - wizard_mode_add_bonus_value|50ms
+    - wizard_mode_start_multiball|100ms
+    - wizard_mode_flash_yippee|100ms
+
+  timer_wizard_mode_timer_complete:
+    - wizard_mode_complete
+
+  left_orbit_hit{current_player.wizard_mode_running == 1}:
+    - wizard_mode_jackpot_hit
+  right_orbit_hit{current_player.wizard_mode_running == 1}:
+    - wizard_mode_jackpot_hit
+  s_mid_orbit_active{current_player.wizard_mode_running == 1}:
+    - wizard_mode_jackpot_hit
+  s_captiveball_active{current_player.wizard_mode_running == 1}:
+    - wizard_mode_jackpot_hit
+  s_air_duct_active{current_player.wizard_mode_running == 1}:
+    - wizard_mode_jackpot_hit
+  s_UrampUp001_active{current_player.wizard_mode_running == 1}:
+    - wizard_mode_jackpot_hit
+  balldevice_tower_vuk_ball_enter{current_player.wizard_mode_running == 1}:
+    - wizard_mode_jackpot_hit
+
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
+variable_player:
+  wizard_mode_set_base_value:
+    wizard_mode_running:
+      action: set
+      int: 1
+    wizard_mode_value:
+      action: set
+      int: 5000000
+    wizard_mode_shots:
+      action: set
+      int: 0
+    wizard_mode_won:
+      action: set
+      int: 1
+
+  wizard_mode_add_bonus_value{current_player.hans_bonus == 1}:
+    wizard_mode_value:
+      action: add
+      int: 1000000
+  wizard_mode_add_bonus_value{current_player.simon_complete == 1}:
+    wizard_mode_value:
+      action: add
+      int: 1000000
+  wizard_mode_add_bonus_value{current_player.karl_bonus == 1}:
+    wizard_mode_value:
+      action: add
+      int: 1000000
+  wizard_mode_add_bonus_value{current_player.stuart_bonus == 1}:
+    wizard_mode_value:
+      action: add
+      int: 1000000
+  wizard_mode_add_bonus_value{current_player.katya_bonus == 1}:
+    wizard_mode_value:
+      action: add
+      int: 1000000
+  wizard_mode_add_bonus_value{current_player.nakatomi_super_collected == 1}:
+    wizard_mode_value:
+      action: add
+      int: 1000000
+  wizard_mode_add_bonus_value{current_player.airplane_mb_stage2 == 1}:
+    wizard_mode_value:
+      action: add
+      int: 1000000
+  wizard_mode_add_bonus_value{current_player.score_park_super_jackpot_hit > 0}:
+    wizard_mode_value:
+      action: add
+      int: 1000000
+
+  wizard_mode_jackpot_hit:
+    wizard_mode_shots:
+      action: add
+      int: 1
+    last_jackpot_value:
+      action: set
+      int: 0
+
+  wizard_mode_jackpot_hit{current_player.wizard_mode_value == 5000000}:
+    score:
+      action: add
+      int: 5000000
+    last_jackpot_value:
+      action: set
+      int: 5000000
+  wizard_mode_jackpot_hit{current_player.wizard_mode_value == 6000000}:
+    score:
+      action: add
+      int: 6000000
+    last_jackpot_value:
+      action: set
+      int: 6000000
+  wizard_mode_jackpot_hit{current_player.wizard_mode_value == 7000000}:
+    score:
+      action: add
+      int: 7000000
+    last_jackpot_value:
+      action: set
+      int: 7000000
+  wizard_mode_jackpot_hit{current_player.wizard_mode_value == 8000000}:
+    score:
+      action: add
+      int: 8000000
+    last_jackpot_value:
+      action: set
+      int: 8000000
+  wizard_mode_jackpot_hit{current_player.wizard_mode_value == 9000000}:
+    score:
+      action: add
+      int: 9000000
+    last_jackpot_value:
+      action: set
+      int: 9000000
+  wizard_mode_jackpot_hit{current_player.wizard_mode_value == 10000000}:
+    score:
+      action: add
+      int: 10000000
+    last_jackpot_value:
+      action: set
+      int: 10000000
+  wizard_mode_jackpot_hit{current_player.wizard_mode_value == 11000000}:
+    score:
+      action: add
+      int: 11000000
+    last_jackpot_value:
+      action: set
+      int: 11000000
+  wizard_mode_jackpot_hit{current_player.wizard_mode_value == 12000000}:
+    score:
+      action: add
+      int: 12000000
+    last_jackpot_value:
+      action: set
+      int: 12000000
+  wizard_mode_jackpot_hit{current_player.wizard_mode_value >= 13000000}:
+    score:
+      action: add
+      int: 13000000
+    last_jackpot_value:
+      action: set
+      int: 13000000
+
+  wizard_mode_complete:
+    wizard_mode_running:
+      action: set
+      int: 0
+
+  mode_wizard_mode_stopping:
+    wizard_mode_running:
+      action: set
+      int: 0
+
+# ------------------------------------------------------------
+# LIGHT PLAYER
+# ------------------------------------------------------------
+light_player:
+  wizard_mode_start_multiball:
+    GI:
+      color: ff0000
+      priority: 9700
+    SPOTS:
+      color: 757575
+      priority: 9700
+    SPOTS_BUMPER:
+      color: 757575
+      priority: 9700
+    INSERT:
+      color: 220000
+      priority: 8500
+    BALL_SAVE:
+      color: ff0000
+      priority: 9700
+    l1000:
+      color: ff0000
+      priority: 9700
+    l1001:
+      color: ff0000
+      priority: 9700
+    l10:
+      color: ff0000
+      priority: 9800
+    l7:
+      color: ff0000
+      priority: 9800
+    l8:
+      color: ff0000
+      priority: 9800
+    l21:
+      color: ff0000
+      priority: 9800
+    l44:
+      color: 0044ff
+      priority: 9900
+    l43:
+      color: "00ff00"
+      priority: 9900
+    l40:
+      color: ff8800
+      priority: 9900
+    l42:
+      color: ff00aa
+      priority: 9900
+    l41:
+      color: "ffffff"
+      priority: 9900
+
+  wizard_mode_jackpot_hit:
+    NONRGB:
+      color: ff0000
+      priority: 9900
+
+  wizard_mode_complete:
+    GI:
+      color: off
+      priority: 10000
+    SPOTS:
+      color: off
+      priority: 10000
+    SPOTS_BUMPER:
+      color: off
+      priority: 10000
+    INSERT:
+      color: off
+      priority: 10000
+    BALL_SAVE:
+      color: off
+      priority: 10000
+    NONRGB:
+      color: off
+      priority: 10000
+
+  mode_wizard_mode_stopping:
+    GI:
+      color: off
+      priority: 10000
+    SPOTS:
+      color: off
+      priority: 10000
+    SPOTS_BUMPER:
+      color: off
+      priority: 10000
+    INSERT:
+      color: off
+      priority: 10000
+    BALL_SAVE:
+      color: off
+      priority: 10000
+    NONRGB:
+      color: off
+      priority: 10000
+
+# ------------------------------------------------------------
+# SHOW PLAYER
+# ------------------------------------------------------------
+show_player:
+  wizard_mode_start_multiball:
+    flicker_color:
+      key: key_wizard_mode_yippee_flash
+      speed: 3
+      show_tokens:
+        lights: l10
+        color: ff0000
+
+  wizard_mode_jackpot_hit:
+    flicker_color:
+      key: key_wizard_mode_jackpot_flash
+      loops: 0
+      speed: 8
+      show_tokens:
+        lights: NONRGB
+        color: ffffff
+
+  wizard_mode_complete:
+    flicker_color:
+      key: key_wizard_mode_yippee_flash
+      action: stop
+
+  mode_wizard_mode_stopping:
+    flicker_color:
+      key: key_wizard_mode_yippee_flash
+      action: stop

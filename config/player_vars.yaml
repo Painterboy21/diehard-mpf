@@ -34,6 +34,18 @@ player_vars:
   wizard_mode_ready:
     initial_value: 0
     value_type: int
+  wizard_mode_running:
+    initial_value: 0
+    value_type: int
+  wizard_mode_value:
+    initial_value: 5000000
+    value_type: int
+  wizard_mode_shots:
+    initial_value: 0
+    value_type: int
+  wizard_mode_won:
+    initial_value: 0
+    value_type: int
   tower_lock:
     initial_value: 0
     value_type: int
