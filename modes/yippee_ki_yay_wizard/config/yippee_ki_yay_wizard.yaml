@@ -24,6 +24,27 @@ multiballs:
       - yippee_ki_yay_phase_1_failed
       - ball_ending
 # ------------------------------------------------------------
+# BALL HOLDS
+# ------------------------------------------------------------
+ball_holds:
+  yippee_phase_2_last_ball_hold:
+    enable_events:
+      - s_UrampUp001_active{current_player.yippee_ki_yay_phase_2_active == 1 and current_player.yippee_ki_yay_phase_2_scoop_armed == 1 and current_player.yippee_ki_yay_phase_2_balls_locked == 2}
+    disable_events:
+      - yippee_ki_yay_phase_3_start
+      - yippee_ki_yay_phase_2_failed
+      - mode_yippee_ki_yay_wizard_stopping
+      - ball_ended
+      - tilt
+    hold_devices: UrampUp001
+    balls_to_hold: 1
+    release_all_events:
+      - yippee_ki_yay_phase_3_start
+      - yippee_ki_yay_phase_2_failed
+      - mode_yippee_ki_yay_wizard_stopping
+      - ball_ended
+      - tilt
+# ------------------------------------------------------------
 # BALL SAVES
 # ------------------------------------------------------------
 ball_saves:
@@ -178,7 +199,6 @@ event_player:
     - yippee_ki_yay_phase_2_ball_3_lock_show
     - yippee_ki_yay_phase_2_scoop_counted
     - show_yippee_airplane_lock_3_widget|250ms
-    - yippee_ki_yay_phase_2_release_scoop|1000ms
     - yippee_ki_yay_phase_2_check_count|1500ms
   yippee_ki_yay_phase_2_check_count{current_player.yippee_ki_yay_phase_2_balls_locked < 3 and current_player.yippee_ki_yay_phase_2_complete != 1}:
     - arm_yippee_ki_yay_phase_2_scoop
