@@ -82,13 +82,13 @@ event_player:
   s_popbumper_right_active:
     - flash_bumper_right
     - flash_bumper_explosion
-  ball_save_one_saving_ball:
+  ball_save_one_saving_ball{current_player.wizard_mode_running != 1}:
     - ball_save_saving_ball
-  ball_save_two_saving_ball:
+  ball_save_two_saving_ball{current_player.wizard_mode_running != 1}:
     - ball_save_saving_ball
-  ball_save_three_saving_ball:
+  ball_save_three_saving_ball{current_player.wizard_mode_running != 1}:
     - ball_save_saving_ball
-  ball_save_holly_saving_ball:
+  ball_save_holly_saving_ball{current_player.wizard_mode_running != 1}:
     - ball_save_saving_ball
   s_air_duct_active:
     - show_airduct

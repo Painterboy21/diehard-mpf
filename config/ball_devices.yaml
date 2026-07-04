@@ -49,6 +49,8 @@ ball_devices:
     ball_switches: s_plunger_lane
     eject_coil: c_plunger
     player_controlled_eject_event: s_fire_active
+    eject_events:
+      - wizard_mode_auto_plunge
     ball_search_order: 10
 
   # ------------------------------------------------------------
