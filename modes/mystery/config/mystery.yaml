@@ -12,10 +12,17 @@
 #   - First Mystery during a villain mode gives Add More Time.
 #   - Mystery uses playfield_x_max for Playfield X cap.
 #   - Award display clears after every award so the current mode returns.
+#   - Blocked while Yippee Ki Yay or final Wizard is running.
 # ------------------------------------------------------------
 mode:
-  start_events: ball_started
-  stop_events: ball_ended
+  start_events:
+    - ball_started{current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+  stop_events:
+    - ball_ended
+    - start_yippee_ki_yay_wizard
+    - start_yippee_ki_yay_final_wizard
+    - mode_yippee_ki_yay_wizard_started
+    - mode_wizard_mode_started
   priority: 115
 
 ball_holds:

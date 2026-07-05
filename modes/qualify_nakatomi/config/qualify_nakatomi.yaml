@@ -10,38 +10,39 @@
 #   - Starts Nakatomi Multiball after the 3rd lock slide is removed.
 #   - Stops during villains, Ambush, wizard mode, Airplane lock flow, or other multiballs.
 #   - Every start event is gated so Nakatomi cannot restart once played.
+#   - Blocked while Yippee Ki Yay or final Wizard is running.
 # ------------------------------------------------------------
 mode:
   start_events:
-    - ball_started{current_player.played_nakatomi_multiball==0}
-    - multiball_central_park_ended{current_player.played_nakatomi_multiball==0}
-    - multiball_airplane_ended{current_player.played_nakatomi_multiball==0}
-    - mode_ambush_stopped{current_player.played_nakatomi_multiball==0}
+    - ball_started{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - multiball_central_park_ended{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - multiball_airplane_ended{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - mode_ambush_stopped{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
     # Hans finished
-    - hans_diehard_won_complete{current_player.played_nakatomi_multiball==0}
-    - hans_diehard_failed_complete{current_player.played_nakatomi_multiball==0}
-    - hans_dieharder_won_complete{current_player.played_nakatomi_multiball==0}
-    - hans_dieharder_failed_complete{current_player.played_nakatomi_multiball==0}
+    - hans_diehard_won_complete{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - hans_diehard_failed_complete{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - hans_dieharder_won_complete{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - hans_dieharder_failed_complete{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
     # Katya finished
-    - katya_completed{current_player.played_nakatomi_multiball==0}
-    - katya_failed{current_player.played_nakatomi_multiball==0}
-    - katya_dieharder_completed{current_player.played_nakatomi_multiball==0}
-    - katya_dieharder_failed{current_player.played_nakatomi_multiball==0}
+    - katya_completed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - katya_failed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - katya_dieharder_completed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - katya_dieharder_failed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
     # Karl finished
-    - karl_diehard_completed{current_player.played_nakatomi_multiball==0}
-    - karl_diehard_failed{current_player.played_nakatomi_multiball==0}
-    - karl_dieharder_completed{current_player.played_nakatomi_multiball==0}
-    - karl_dieharder_failed{current_player.played_nakatomi_multiball==0}
+    - karl_diehard_completed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - karl_diehard_failed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - karl_dieharder_completed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - karl_dieharder_failed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
     # Simon finished
-    - simon_completed{current_player.played_nakatomi_multiball==0}
-    - simon_failed{current_player.played_nakatomi_multiball==0}
-    - simon_dieharder_completed{current_player.played_nakatomi_multiball==0}
-    - simon_dieharder_failed{current_player.played_nakatomi_multiball==0}
+    - simon_completed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - simon_failed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - simon_dieharder_completed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - simon_dieharder_failed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
     # Col / Stuart finished
-    - col_stuart_diehard_completed{current_player.played_nakatomi_multiball==0}
-    - col_stuart_diehard_failed{current_player.played_nakatomi_multiball==0}
-    - col_stuart_dieharder_completed{current_player.played_nakatomi_multiball==0}
-    - col_stuart_dieharder_failed{current_player.played_nakatomi_multiball==0}
+    - col_stuart_diehard_completed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - col_stuart_diehard_failed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - col_stuart_dieharder_completed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
+    - col_stuart_dieharder_failed{current_player.played_nakatomi_multiball==0 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}
   stop_events:
     - ball_ended
     # Stop during multiballs
@@ -79,9 +80,11 @@ mode:
     - mode_col_dieharder_started
     - mode_col_stuart_diehard_started
     - mode_col_stuart_dieharder_started
-    # Wizard mode
+    # Yippee / Wizard started
     - start_yippee_ki_yay_wizard
+    - start_yippee_ki_yay_final_wizard
     - mode_yippee_ki_yay_wizard_started
+    - mode_wizard_mode_started
   priority: 120
 # ------------------------------------------------------------
 # EVENT PLAYER

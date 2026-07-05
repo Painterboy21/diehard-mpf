@@ -14,19 +14,18 @@
 #   - tower VUK
 #   - captive ball / airplane device
 #
-# Ball search order has been added so MPF can try to free
-# a stuck ball safely if the playfield goes quiet.
+# Normal gameplay:
+#   - s_fire_active launches the plunger normally.
+#
+# Wizard mode:
+#   - wizard auto-plunge must use wizard_mode_auto_plunge_allowed.
+#   - do not use wizard_mode_auto_plunge directly in bd_plunger.
 # ------------------------------------------------------------
 
 ball_devices:
 
   # ------------------------------------------------------------
   # TROUGH
-  # ------------------------------------------------------------
-  # Main ball trough with jam switch and eject to plunger lane.
-  # Tags include trough, home, and drain.
-  # Kept late/low priority for ball search because we do not
-  # want the trough doing anything unless MPF really needs it.
   # ------------------------------------------------------------
   trough:
     label: Trough
@@ -41,23 +40,19 @@ ball_devices:
   # ------------------------------------------------------------
   # PLUNGER LANE
   # ------------------------------------------------------------
-  # Holds the ball in the plunger lane.
-  # Player controlled eject uses the fire/action button switch.
-  # ------------------------------------------------------------
   bd_plunger:
     label: Plunger Lane
     ball_switches: s_plunger_lane
     eject_coil: c_plunger
+    eject_targets: playfield
+    eject_timeouts: 1s
     player_controlled_eject_event: s_fire_active
     eject_events:
       - wizard_mode_auto_plunge
-    ball_search_order: 10
-
+    auto_fire_on_unexpected_ball: false
+    ball_search_order: 0
   # ------------------------------------------------------------
   # VAULT KICKER
-  # ------------------------------------------------------------
-  # Used by vault, mystery, and ambush style ball holds/releases.
-  # Added to ball search because this is a likely stuck-ball spot.
   # ------------------------------------------------------------
   kickervault1_eject:
     label: Vault Kicker
@@ -67,8 +62,6 @@ ball_devices:
 
   # ------------------------------------------------------------
   # RIGHT KICKER
-  # ------------------------------------------------------------
-  # Standard right kicker device.
   # ------------------------------------------------------------
   rightkicker:
     label: Right Kicker
@@ -80,8 +73,6 @@ ball_devices:
   # ------------------------------------------------------------
   # UPPER RAMP DEVICE
   # ------------------------------------------------------------
-  # Upper ramp ball device.
-  # ------------------------------------------------------------
   UrampUp001:
     label: Upper Ramp VUK
     ball_switches: s_UrampUp001
@@ -91,9 +82,6 @@ ball_devices:
 
   # ------------------------------------------------------------
   # RIGHT VUK
-  # ------------------------------------------------------------
-  # Right VUK device.
-  # Also used elsewhere for right VUK collections.
   # ------------------------------------------------------------
   rightvuk:
     label: Right VUK
@@ -105,12 +93,6 @@ ball_devices:
   # ------------------------------------------------------------
   # TOWER VUK
   # ------------------------------------------------------------
-  # Nakatomi tower VUK.
-  # Mechanical eject device with 3-ball capacity.
-  # Ejects all balls when Nakatomi multiball starts.
-  # Added to ball search because Nakatomi is the one that just
-  # showed a stuck playfield-ball warning.
-  # ------------------------------------------------------------
   tower_vuk:
     label: Tower VUK / Nakatomi Lock
     entrance_switch: s_towervuk
@@ -119,16 +101,13 @@ ball_devices:
     auto_fire_on_unexpected_ball: false
     eject_targets: playfield
     eject_timeouts: 250ms
-    eject_all_events: 
+    eject_all_events:
       - multiball_nakatomi_started
       - service_test_tower_vuk
     ball_search_order: 60
 
   # ------------------------------------------------------------
   # AIRPLANE / CAPTIVE BALL
-  # ------------------------------------------------------------
-  # Captive ball / airplane device.
-  # Kept later in ball search because it is stronger/mechanical.
   # ------------------------------------------------------------
   airplane:
     label: Airplane Captive Ball

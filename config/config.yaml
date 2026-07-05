@@ -347,16 +347,14 @@ machine:
 game:
   balls_per_game: 3
   max_players: 4
+  end_game_event: end_game
 
 # ------------------------------------------------------------
 # PLAYFIELDS
 # ------------------------------------------------------------
-# Enables MPF ball search on the main playfield.
-# Keep this simple first so MPF definitely starts the search.
-# ------------------------------------------------------------
 playfields:
   playfield:
-    default_source_device: bd_plunger
+    default_source_device: trough
     tags: default
     enable_ball_search: true
 

@@ -59,7 +59,6 @@ mode:
     - start_yippee_ki_yay_wizard
     - mode_yippee_ki_yay_wizard_started
   priority: 200
-
 light_player:
   central_park_start_multiball_hit:
     GI:

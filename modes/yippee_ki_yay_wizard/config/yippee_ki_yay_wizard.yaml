@@ -278,6 +278,9 @@ event_player:
 # ------------------------------------------------------------
 variable_player:
   mode_yippee_ki_yay_wizard_started:
+    yippee_ki_yay_running:
+      action: set
+      int: 1
     yippee_ki_yay_phase_1_active:
       action: set
       int: 0
@@ -590,6 +593,14 @@ variable_player:
       action: set
       int: 0
     yippee_ki_yay_phase_1_ball_save_running:
+      action: set
+      int: 0
+  mode_yippee_ki_yay_wizard_stopping:
+    yippee_ki_yay_running:
+      action: set
+      int: 0
+  ball_ended:
+    yippee_ki_yay_running:
       action: set
       int: 0
 # ------------------------------------------------------------
