@@ -16,7 +16,7 @@
 [ext_resource type="Script" uid="uid://bh8uniugrpk3c" path="res://slides/holly_letters.gd" id="10_4yxvp"]
 [ext_resource type="Texture2D" uid="uid://c0tj7020wfqu7" path="res://godot-media/images/H.png" id="10_s2a5r"]
 [ext_resource type="Texture2D" uid="uid://binlmwaj3sxtd" path="res://godot-media/images/O.png" id="11_4yxvp"]
-[ext_resource type="Script" uid="uid://dinegb8scbud" path="res://slides/score-overlay-manager.gd" id="11_gjonj"]
+[ext_resource type="Script" path="res://slides/score-overlay-manager.gd" id="11_gjonj"]
 [ext_resource type="Texture2D" uid="uid://bo1y2txk5qfxf" path="res://godot-media/images/L.png" id="12_dm14r"]
 [ext_resource type="Texture2D" uid="uid://bgrlutxjsatig" path="res://godot-media/images/player 2 overlay.png" id="13_77bry"]
 [ext_resource type="Texture2D" uid="uid://bs0sdjldfa8j4" path="res://godot-media/images/Y.png" id="13_735fb"]

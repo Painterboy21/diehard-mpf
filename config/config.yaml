@@ -354,7 +354,7 @@ game:
 # ------------------------------------------------------------
 playfields:
   playfield:
-    default_source_device: trough
+    default_source_device: bd_plunger
     tags: default
     enable_ball_search: true
 

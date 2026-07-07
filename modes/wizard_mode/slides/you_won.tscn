@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://l7u3lui7xvf0"]
 
-[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_obq3o"]
+[ext_resource type="Script" uid="uid://bvped2m8mi4lq" path="res://modes/wizard_mode/slides/you_won.gd" id="1_qq63n"]
 [ext_resource type="VideoStream" uid="uid://dm1bfwqgagk1r" path="res://modes/wizard_mode/slides/YouWon.ogv" id="2_qq63n"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_bln56"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="4_qq63n"]
+[ext_resource type="Script" uid="uid://bgfhdcsfeeqd3" path="res://addons/mpf-gmc/classes/mpf_event_handler.gd" id="5_bln56"]
 
 [node name="you_won" type="Control" unique_id=1406998591]
 layout_mode = 3
@@ -11,7 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_obq3o")
+script = ExtResource("1_qq63n")
 metadata/_custom_type_script = "uid://dru3usokwlhd3"
 
 [node name="youwon" type="VideoStreamPlayer" parent="." unique_id=1221378670]
@@ -25,3 +27,31 @@ script = ExtResource("3_bln56")
 end_behavior = 1
 preview_in_editor = true
 metadata/_custom_type_script = "uid://bov7mrgxslshq"
+
+[node name="final_score_label" type="Label" parent="." unique_id=1834325253]
+visible = false
+layout_mode = 0
+offset_left = 10.0
+offset_top = 750.0
+offset_right = 1899.0
+offset_bottom = 1004.0
+theme_override_colors/font_color = Color(1, 0.04000002, 0.04000002, 1)
+theme_override_colors/font_shadow_color = Color(0.95, 0.95, 0.95, 0.96862745)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 4
+theme_override_constants/shadow_outline_size = 12
+theme_override_fonts/font = ExtResource("4_qq63n")
+theme_override_font_sizes/font_size = 180
+text = "00000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MPFEventHandler_show_final_score" type="Control" parent="." unique_id=1242382819]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_bln56")
+event_name = "wizard_mode_show_final_score"
+call_method = "show_final_score"
+metadata/_custom_type_script = "uid://bgfhdcsfeeqd3"

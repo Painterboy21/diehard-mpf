@@ -1,147 +1,137 @@
 #config_version=6
-
 # ------------------------------------------------------------
 # EOB BONUS
 # ------------------------------------------------------------
 # What this mode does:
 #   - Starts from MPF ball_ending.
 #   - Waits in the ball-ending queue until bonus_finished.
-#   - Plays the EOB bonus show/video.
+#   - Plays the EOB bonus show/video on normal drains.
 #   - Shows the bonus summary when the EOB timer completes.
-#   - Allows both flippers to skip to the summary.
-#   - Delays EOB bonus show when a villain result is active.
-#   - Starts EOB after the villain result completion event.
+#   - During wizard ending, starts silently only to hold the queue.
+#   - Wizard ending releases the queue with wizard_mode_force_game_over.
 # ------------------------------------------------------------
 mode:
-  start_events: ball_ending{game.tilted == False}
-  stop_events: bonus_finished
+  start_events:
+    - ball_ending{game.tilted == False}
+  stop_events:
+    - bonus_finished
+    - wizard_mode_force_game_over
+    - wizard_mode_complete
+    - game_ended
   priority: 9999
   use_wait_queue: true
-
-# ------------------------------------------------------------
-# COMBO SWITCHES
-# ------------------------------------------------------------
-# Press both flippers together to skip straight to the bonus summary.
-# ------------------------------------------------------------
-combo_switches:
-  flipper_cancel_bonus:
-    switches_1: s_left_flipper
-    switches_2: s_right_flipper
-    events_when_both:
-      - calculate_eob_bonus_x
-
 # ------------------------------------------------------------
 # EVENT PLAYER
 # ------------------------------------------------------------
-# Handles EOB timer completion, summary start, final finish,
-# and stopping normal gameplay music when EOB begins.
-# ------------------------------------------------------------
 event_player:
-  timer_eob_bonus_complete:
-    - calculate_eob_bonus_x
-  calculate_eob_bonus_x{current_player.eob_bonus_awarded != 1}:
-    - award_eob_bonus|50ms
-  calculate_eob_bonus_x{current_player.eob_bonus_awarded == 1}:
-    - show_bonus_summary
-  award_eob_bonus:
-    - show_bonus_summary|250ms
-  timer_eob_bonus_summary_complete:
-    - bonus_finished
-  mode_eob_bonus_started:
+  mode_eob_bonus_started{current_player.suppress_eob_bonus != 1}:
     - stop_main_music1
     - stop_main_music2
     - stop_main_music3
     - stop_main_music4
-
+  mode_eob_bonus_started{current_player.suppress_eob_bonus == 1}:
+    - stop_eob_bonus_now
+  timer_eob_bonus_complete{current_player.suppress_eob_bonus != 1}:
+    - calculate_eob_bonus_x
+  calculate_eob_bonus_x{current_player.eob_bonus_awarded != 1 and current_player.suppress_eob_bonus != 1}:
+    - award_eob_bonus|50ms
+  calculate_eob_bonus_x{current_player.eob_bonus_awarded == 1 and current_player.suppress_eob_bonus != 1}:
+    - show_bonus_summary
+  award_eob_bonus{current_player.suppress_eob_bonus != 1}:
+    - show_bonus_summary|250ms
+  timer_eob_bonus_summary_complete{current_player.suppress_eob_bonus != 1}:
+    - bonus_finished
+  wizard_mode_force_game_over{current_player.suppress_eob_bonus == 1}:
+    - bonus_finished
+  wizard_mode_complete{current_player.suppress_eob_bonus == 1}:
+    - bonus_finished
+  game_ended:
+    - bonus_finished
 # ------------------------------------------------------------
 # SHOW PLAYER
 # ------------------------------------------------------------
-# Starts the EOB bonus show on a normal drain.
-# If a villain result is active, waits until that villain result
-# completion event before starting the EOB bonus show.
-# ------------------------------------------------------------
 show_player:
-  mode_eob_bonus_started{current_player.karl_result_started != 1 and current_player.karl_dieharder_result_started != 1 and current_player.hans_result_started != 1 and current_player.hans_dieharder_result_started != 1 and current_player.hans_dieharder_failed_active != 1 and current_player.katya_diehard_result_started != 1 and current_player.katya_dieharder_result_started != 1 and current_player.simon_result_started != 1 and current_player.simon_dieharder_result_started != 1 and current_player.col_stuart_result_started != 1 and current_player.col_stuart_dieharder_result_started != 1}:
+  mode_eob_bonus_started{current_player.suppress_eob_bonus != 1 and current_player.karl_result_started != 1 and current_player.karl_dieharder_result_started != 1 and current_player.hans_result_started != 1 and current_player.hans_dieharder_result_started != 1 and current_player.hans_dieharder_failed_active != 1 and current_player.katya_diehard_result_started != 1 and current_player.katya_dieharder_result_started != 1 and current_player.simon_result_started != 1 and current_player.simon_dieharder_result_started != 1 and current_player.col_stuart_result_started != 1 and current_player.col_stuart_dieharder_result_started != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  karl_diehard_failed:
+  karl_diehard_failed{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  karl_diehard_failed_complete:
+  karl_diehard_failed_complete{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  karl_dieharder_failed:
+  karl_dieharder_failed{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  karl_dieharder_failed_complete:
+  karl_dieharder_failed_complete{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  hans_diehard_failed:
+  hans_diehard_failed{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  hans_diehard_failed_complete:
+  hans_diehard_failed_complete{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  hans_dieharder_failed_complete:
+  hans_dieharder_failed_complete{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  katya_failed:
+  katya_failed{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  katya_diehard_failed_complete:
+  katya_diehard_failed_complete{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  katya_dieharder_failed:
+  katya_dieharder_failed{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  katya_dieharder_failed_complete:
+  katya_dieharder_failed_complete{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  simon_failed:
+  simon_failed{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  simon_diehard_failed:
+  simon_diehard_failed{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  simon_diehard_failed_complete:
+  simon_diehard_failed_complete{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  simon_dieharder_failed:
+  simon_dieharder_failed{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  simon_dieharder_failed_complete:
+  simon_dieharder_failed_complete{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  col_stuart_diehard_failed:
+  col_stuart_diehard_failed{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  col_stuart_diehard_failed_complete:
+  col_stuart_diehard_failed_complete{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  col_stuart_dieharder_failed:
+  col_stuart_dieharder_failed{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
-  col_stuart_dieharder_failed_complete:
+  col_stuart_dieharder_failed_complete{current_player.suppress_eob_bonus != 1}:
     eob_bonus:
       key: key_eob_bonus
       loops: 0
@@ -149,22 +139,44 @@ show_player:
     eob_bonus:
       action: stop
       key: key_eob_bonus
-
+  stop_eob_bonus_now:
+    eob_bonus:
+      action: stop
+      key: key_eob_bonus
+  wizard_mode_force_game_over:
+    eob_bonus:
+      action: stop
+      key: key_eob_bonus
+  wizard_mode_complete:
+    eob_bonus:
+      action: stop
+      key: key_eob_bonus
+  game_ended:
+    eob_bonus:
+      action: stop
+      key: key_eob_bonus
 # ------------------------------------------------------------
 # SLIDE PLAYER
 # ------------------------------------------------------------
-# Shows the final EOB bonus summary slide.
-# ------------------------------------------------------------
 slide_player:
-  show_bonus_summary:
+  show_bonus_summary{current_player.suppress_eob_bonus != 1}:
     eob_bonus_summary:
       action: play
       expire: 0s
-
+  stop_eob_bonus_now:
+    eob_bonus_summary:
+      action: remove
+  wizard_mode_force_game_over:
+    eob_bonus_summary:
+      action: remove
+  wizard_mode_complete:
+    eob_bonus_summary:
+      action: remove
+  game_ended:
+    eob_bonus_summary:
+      action: remove
 # ------------------------------------------------------------
 # SOUND PLAYER
-# ------------------------------------------------------------
-# Stops normal gameplay music when EOB starts.
 # ------------------------------------------------------------
 sound_player:
   stop_main_music1:
@@ -183,12 +195,8 @@ sound_player:
     gameplay_music_battle:
       key: main_snd_music
       action: stop
-
 # ------------------------------------------------------------
 # TIMERS
-# ------------------------------------------------------------
-# Main EOB timer runs the bonus count/video timing.
-# Summary timer controls how long the summary slide stays up.
 # ------------------------------------------------------------
 timers:
   eob_bonus:
@@ -199,51 +207,58 @@ timers:
     start_running: false
     restart_on_complete: false
     control_events:
-      - event: mode_eob_bonus_started{current_player.karl_result_started != 1 and current_player.karl_dieharder_result_started != 1 and current_player.hans_result_started != 1 and current_player.hans_dieharder_result_started != 1 and current_player.hans_dieharder_failed_active != 1 and current_player.katya_diehard_result_started != 1 and current_player.katya_dieharder_result_started != 1 and current_player.simon_result_started != 1 and current_player.simon_dieharder_result_started != 1 and current_player.col_stuart_result_started != 1 and current_player.col_stuart_dieharder_result_started != 1}
+      - event: mode_eob_bonus_started{current_player.suppress_eob_bonus != 1 and current_player.karl_result_started != 1 and current_player.karl_dieharder_result_started != 1 and current_player.hans_result_started != 1 and current_player.hans_dieharder_result_started != 1 and current_player.hans_dieharder_failed_active != 1 and current_player.katya_diehard_result_started != 1 and current_player.katya_dieharder_result_started != 1 and current_player.simon_result_started != 1 and current_player.simon_dieharder_result_started != 1 and current_player.col_stuart_result_started != 1 and current_player.col_stuart_dieharder_result_started != 1}
         action: restart
-      - event: karl_diehard_failed
+      - event: karl_diehard_failed{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: karl_diehard_failed_complete
+      - event: karl_diehard_failed_complete{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: karl_dieharder_failed
+      - event: karl_dieharder_failed{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: karl_dieharder_failed_complete
+      - event: karl_dieharder_failed_complete{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: hans_diehard_failed
+      - event: hans_diehard_failed{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: hans_diehard_failed_complete
+      - event: hans_diehard_failed_complete{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: hans_dieharder_failed_complete
+      - event: hans_dieharder_failed_complete{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: katya_failed
+      - event: katya_failed{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: katya_diehard_failed_complete
+      - event: katya_diehard_failed_complete{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: katya_dieharder_failed
+      - event: katya_dieharder_failed{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: katya_dieharder_failed_complete
+      - event: katya_dieharder_failed_complete{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: simon_failed
+      - event: simon_failed{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: simon_diehard_failed
+      - event: simon_diehard_failed{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: simon_diehard_failed_complete
+      - event: simon_diehard_failed_complete{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: simon_dieharder_failed
+      - event: simon_dieharder_failed{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: simon_dieharder_failed_complete
+      - event: simon_dieharder_failed_complete{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: col_stuart_diehard_failed
+      - event: col_stuart_diehard_failed{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: col_stuart_diehard_failed_complete
+      - event: col_stuart_diehard_failed_complete{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: col_stuart_dieharder_failed
+      - event: col_stuart_dieharder_failed{current_player.suppress_eob_bonus != 1}
         action: restart
-      - event: col_stuart_dieharder_failed_complete
+      - event: col_stuart_dieharder_failed_complete{current_player.suppress_eob_bonus != 1}
         action: restart
       - event: show_bonus_summary
         action: stop
-
+      - event: stop_eob_bonus_now
+        action: stop
+      - event: wizard_mode_force_game_over
+        action: stop
+      - event: wizard_mode_complete
+        action: stop
+      - event: game_ended
+        action: stop
   eob_bonus_summary:
     start_value: 0
     end_value: 3
@@ -252,11 +267,21 @@ timers:
     start_running: false
     restart_on_complete: false
     control_events:
-      - event: show_bonus_summary
+      - event: show_bonus_summary{current_player.suppress_eob_bonus != 1}
         action: start
-
+      - event: stop_eob_bonus_now
+        action: stop
+      - event: wizard_mode_force_game_over
+        action: stop
+      - event: wizard_mode_complete
+        action: stop
+      - event: game_ended
+        action: stop
+# ------------------------------------------------------------
+# VARIABLE PLAYER
+# ------------------------------------------------------------
 variable_player:
-  mode_eob_bonus_started:
+  mode_eob_bonus_started{current_player.suppress_eob_bonus != 1}:
     eob_bonus_awarded:
       int: 0
       action: set
@@ -266,14 +291,14 @@ variable_player:
     eob_bonus_x:
       int: "(current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains) * current_player.bonus_multiplier"
       action: set
-  calculate_eob_bonus_x:
+  calculate_eob_bonus_x{current_player.suppress_eob_bonus != 1}:
     eob_bonus_total:
       int: "current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains"
       action: set
     eob_bonus_x:
       int: "(current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains) * current_player.bonus_multiplier"
       action: set
-  award_eob_bonus{current_player.eob_bonus_awarded != 1}:
+  award_eob_bonus{current_player.eob_bonus_awarded != 1 and current_player.suppress_eob_bonus != 1}:
     score:
       int: current_player.eob_bonus_x
       action: add

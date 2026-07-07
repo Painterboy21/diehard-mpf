@@ -25,11 +25,11 @@ var start_time
 var duration: float
 var release_time: int
 
-
 func _init(settings: Dictionary = {}, fallback: DuckSettings = null):
 	# The bus comes as a string, convert it to a GMCBus
 	if settings.get("bus"):
-		self.bus = MPF.media.sound.get_bus(settings["bus"])
+		if MPF.media and MPF.media.sound:
+			self.bus = MPF.media.sound.get_bus(settings["bus"])
 	elif fallback and fallback.bus:
 		self.bus = fallback.bus
 	for p in merge_props:
@@ -40,11 +40,11 @@ func _init(settings: Dictionary = {}, fallback: DuckSettings = null):
 
 func calculate_release_time(start_time_msecs: int, stream: AudioStream = null) -> float:
 	if stream:
-		self.duration = stream.get_length() - self.release_point
-	elif self.release_from_start:
-		self.duration = release_from_start
+		self.duration = max(stream.get_length() - self.release_point, 0.0)
+	elif self.release_from_start > 0:
+		self.duration = self.release_from_start
 	else:
-		assert(false, "Ducking release requires an AudioStream or release_from_start")
+		self.duration = 0.0
 	self.release_time = start_time_msecs + int(self.duration * 1000)
 	return self.release_time
 
@@ -53,8 +53,12 @@ func _set_target_bus(value: String) -> void:
 	# The saved bus may have been overridden by _init settings
 	# Bind to the bus, but not in editor because it validates on every keystroke
 	if not bus and not Engine.is_editor_hint():
-		bus = MPF.media.sound.get_bus(value)
+		if MPF.media and MPF.media.sound:
+			bus = MPF.media.sound.get_bus(value)
 
 func _to_string() -> String:
+	var bus_name = "none"
+	if bus:
+		bus_name = bus.name
 	return "<DuckSettings>{ delay: %s, attenuation: %s, attack: %s, release: %s, release_from_start: %s, release_point: %s, bus: %s" % \
-		[delay, attenuation, attack, release, release_from_start, release_point, bus.name]
+		[delay, attenuation, attack, release, release_from_start, release_point, bus_name]

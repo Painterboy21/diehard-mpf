@@ -1,74 +1,74 @@
 {
-  "updatedAt": 1783272124,
+  "updatedAt": 1783451779,
   "entries": [
     {
       "rank": "1",
       "name": "AAA",
-      "score": 50234230,
-      "score_text": "50,234,230",
+      "score": 11565740,
+      "score_text": "11,565,740",
       "pending": false
     },
     {
       "rank": "2",
-      "name": "SMD",
-      "score": 36642580,
-      "score_text": "36,642,580",
+      "name": "JOHNMCCLANE",
+      "score": 10077420,
+      "score_text": "10,077,420",
       "pending": false
     },
     {
       "rank": "3",
-      "name": "IJJ",
-      "score": 20199790,
-      "score_text": "20,199,790",
+      "name": "---",
+      "score": 0,
+      "score_text": "---",
       "pending": false
     },
     {
       "rank": "4",
-      "name": "JOHNMCCLANE",
-      "score": 20114290,
-      "score_text": "20,114,290",
+      "name": "---",
+      "score": 0,
+      "score_text": "---",
       "pending": false
     },
     {
       "rank": "5",
-      "name": "YXX",
-      "score": 17981420,
-      "score_text": "17,981,420",
+      "name": "---",
+      "score": 0,
+      "score_text": "---",
       "pending": false
     },
     {
       "rank": "6",
-      "name": "ZZZ",
-      "score": 11355170,
-      "score_text": "11,355,170",
+      "name": "---",
+      "score": 0,
+      "score_text": "---",
       "pending": false
     },
     {
       "rank": "7",
-      "name": "DEF",
-      "score": 9450990,
-      "score_text": "9,450,990",
+      "name": "---",
+      "score": 0,
+      "score_text": "---",
       "pending": false
     },
     {
       "rank": "8",
-      "name": "BAD",
-      "score": 8312150,
-      "score_text": "8,312,150",
+      "name": "---",
+      "score": 0,
+      "score_text": "---",
       "pending": false
     },
     {
       "rank": "9",
-      "name": "DAD",
-      "score": 6005860,
-      "score_text": "6,005,860",
+      "name": "---",
+      "score": 0,
+      "score_text": "---",
       "pending": false
     },
     {
       "rank": "10",
-      "name": "BBB",
-      "score": 5138450,
-      "score_text": "5,138,450",
+      "name": "---",
+      "score": 0,
+      "score_text": "---",
       "pending": false
     }
   ]

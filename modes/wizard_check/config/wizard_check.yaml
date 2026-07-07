@@ -35,7 +35,6 @@ mode:
 event_player:
   mode_wizard_check_started:
     - wizard_check_clear_stuck_flags
-    - start_yippee_ki_yay_final_wizard|4s     # TEMP TEST: starts final wizard straight away
     - check_yippee_ki_yay_wizard_ready|5s
   hans_diehard_won_complete:
     - check_yippee_ki_yay_wizard_ready|500ms

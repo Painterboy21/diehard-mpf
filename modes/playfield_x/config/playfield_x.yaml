@@ -188,7 +188,7 @@ show_player:
       key: pf_x_l18_yellow_slow
       speed: 2
       loops: -1
-      priority: 1000
+      priority: 22000
       show_tokens:
         lights: l18
         color: yellow
@@ -199,7 +199,7 @@ show_player:
       key: pf_x_l18_yellow_fast
       speed: 5
       loops: -1
-      priority: 1000
+      priority: 22000
       show_tokens:
         lights: l18
         color: yellow
@@ -219,7 +219,7 @@ show_player:
       key: pf_x_l18_green_ready
       speed: 8
       loops: -1
-      priority: 1000
+      priority: 22000
       show_tokens:
         lights: l18
         color: green
@@ -243,7 +243,7 @@ show_player:
       key: pf_x_2x_flash
       speed: 5
       loops: -1
-      priority: 1000
+      priority: 22000
       show_tokens:
         lights: l12
         color: yellow
@@ -254,7 +254,7 @@ show_player:
       key: pf_x_3x_flash
       speed: 5
       loops: -1
-      priority: 1000
+      priority: 22000
       show_tokens:
         lights: l13
         color: yellow
@@ -265,7 +265,7 @@ show_player:
       key: pf_x_4x_flash
       speed: 5
       loops: -1
-      priority: 1000
+      priority: 22000
       show_tokens:
         lights: l15
         color: yellow
@@ -276,7 +276,7 @@ show_player:
       key: pf_x_5x_flash
       speed: 5
       loops: -1
-      priority: 1000
+      priority: 22000
       show_tokens:
         lights: l14
         color: yellow
@@ -320,70 +320,70 @@ light_player:
   playfield_x_collected:
     l18:
       color: off
-      priority: 1000
+      priority: 22000
   playfield_x_started{current_player.playfield_multiplier==2}:
     l18:
       color: off
-      priority: 1000
+      priority: 22000
   playfield_x_started{current_player.playfield_multiplier==3}:
     l12:
       color: white
-      priority: 1000
+      priority: 22000
     l18:
       color: off
-      priority: 1000
+      priority: 22000
   playfield_x_started{current_player.playfield_multiplier==4}:
     l12:
       color: white
-      priority: 1000
+      priority: 22000
     l13:
       color: white
-      priority: 1000
+      priority: 22000
     l18:
       color: off
-      priority: 1000
+      priority: 22000
   playfield_x_started{current_player.playfield_multiplier==5}:
     l12:
       color: white
-      priority: 1000
+      priority: 22000
     l13:
       color: white
-      priority: 1000
+      priority: 22000
     l15:
       color: white
-      priority: 1000
+      priority: 22000
     l18:
       color: off
-      priority: 1000
+      priority: 22000
   playfield_x_expired:
     l12:
       color: off
-      priority: 1000
+      priority: 22000
     l13:
       color: off
-      priority: 1000
+      priority: 22000
     l14:
       color: off
-      priority: 1000
+      priority: 22000
     l15:
       color: off
-      priority: 1000
+      priority: 22000
     l18:
       color: off
-      priority: 1000
+      priority: 22000
   ball_ended:
     l12:
       color: off
-      priority: 1000
+      priority: 22000
     l13:
       color: off
-      priority: 1000
+      priority: 22000
     l14:
       color: off
-      priority: 1000
+      priority: 22000
     l15:
       color: off
-      priority: 1000
+      priority: 22000
     l18:
       color: off
-      priority: 1000
+      priority: 22000

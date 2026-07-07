@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cxsja5f4ym8dl"]
+
+[ext_resource type="Script" uid="uid://c4keaj2s2gr16" path="res://modes/wizard_mode/widgets/wizard_mode_timer_widget.gd" id="1_stsr7"]
+[ext_resource type="Texture2D" uid="uid://cfxyj8151nfrt" path="res://godot-media/images/PoliceBadge.png" id="2_ur23l"]
+[ext_resource type="FontFile" uid="uid://56ggie763du6" path="res://godot-media/fonts/impact.ttf" id="3_7fcoh"]
+[ext_resource type="FontFile" uid="uid://8bwe3lenjji0" path="res://godot-media/fonts/DieHardVPX-Regular.ttf" id="4_stsr7"]
+
+[node name="wizard_mode_timer_widget" type="Control" unique_id=1875424892]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_stsr7")
+
+[node name="PoliceBadge" type="Sprite2D" parent="." unique_id=565013197]
+position = Vector2(953.00006, 471)
+scale = Vector2(1.3886926, 1.1249999)
+texture = ExtResource("2_ur23l")
+
+[node name="timer_text" type="Label" parent="." unique_id=587211538]
+layout_mode = 0
+offset_left = 763.0
+offset_top = 283.0
+offset_right = 1137.0
+offset_bottom = 594.0
+theme_override_colors/font_color = Color(1, 0.00999999, 0.00999999, 1)
+theme_override_colors/font_shadow_color = Color(0.98, 0.98, 0.98, 0.98039216)
+theme_override_fonts/font = ExtResource("3_7fcoh")
+theme_override_font_sizes/font_size = 120
+text = "60"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="yippee_text" type="Label" parent="." unique_id=1597471969]
+layout_mode = 0
+offset_left = 441.0
+offset_top = 669.0
+offset_right = 1472.0
+offset_bottom = 802.0
+theme_override_colors/font_color = Color(1, 0.01999998, 0.01999998, 1)
+theme_override_colors/font_shadow_color = Color(0.99, 0.99, 0.99, 0.9882353)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 9
+theme_override_constants/shadow_outline_size = 9
+theme_override_fonts/font = ExtResource("4_stsr7")
+theme_override_font_sizes/font_size = 100
+text = "YIPPIE KI YAY"
+horizontal_alignment = 1
+vertical_alignment = 1

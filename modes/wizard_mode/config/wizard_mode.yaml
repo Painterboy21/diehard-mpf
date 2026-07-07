@@ -10,7 +10,6 @@ mode:
     - game_ended
     - tilt
   priority: 700
-
 # ------------------------------------------------------------
 # MULTIBALL / BALL SAVE
 # ------------------------------------------------------------
@@ -28,13 +27,12 @@ multiballs:
       - game_ended
       - mode_wizard_mode_stopping
       - tilt
-
 ball_saves:
   wizard_mode_ball_save:
     active_time: 60s
     hurry_up_time: 10s
     grace_period: 0s
-    auto_launch: false
+    auto_launch: true
     balls_to_save: -1
     enable_events:
       - wizard_mode_start_multiball
@@ -45,7 +43,6 @@ ball_saves:
       - game_ended
       - mode_wizard_mode_stopping
       - tilt
-
 # ------------------------------------------------------------
 # TIMER
 # ------------------------------------------------------------
@@ -71,25 +68,24 @@ timers:
         action: stop
       - event: tilt
         action: stop
-
 # ------------------------------------------------------------
 # EVENT PLAYER
 # ------------------------------------------------------------
 event_player:
   mode_wizard_mode_started:
+    - hide_main_score
     - nakatomi_entrance_lock_close
     - wizard_mode_set_base_value
     - wizard_mode_add_bonus_value|50ms
     - wizard_mode_start_multiball|100ms
-
   wizard_mode_start_multiball:
     - nakatomi_entrance_lock_close
-
+    - hide_main_score
   timer_wizard_mode_timer_complete:
     - wizard_mode_kill_launches
     - wizard_mode_blackout_start|50ms
-
   wizard_mode_blackout_start:
+    - hide_main_score
     - wizard_mode_kill_launches
     - wizard_mode_stop_scoring
     - wizard_mode_stop_shows
@@ -97,58 +93,55 @@ event_player:
     - disable_flippers
     - nakatomi_entrance_lock_close
     - wizard_mode_show_won_slide
-    - wizard_mode_force_game_over|14s
-
+    - wizard_mode_show_final_score|22s
+    - wizard_mode_force_game_over|27s
   wizard_mode_force_game_over:
+    - show_main_score
+    - bonus_finished
     - end_game
-    - wizard_mode_complete|250ms
-
+  ball_started{current_player.suppress_eob_bonus == 1}:
+    - wizard_mode_force_game_over
   ball_started{current_player.wizard_mode_blackout == 1}:
     - wizard_mode_force_game_over
-
   wizard_mode_jackpot_hit:
     - wizard_mode_show_jackpot_slide|50ms
-
   balldevice_bd_plunger_ball_enter{current_player.wizard_mode_running == 1 and current_player.wizard_mode_blackout != 1}:
     - wizard_mode_auto_plunge_request|75ms
     - wizard_mode_auto_plunge_request|300ms
-
   wizard_mode_auto_plunge_request{current_player.wizard_mode_running == 1 and current_player.wizard_mode_blackout != 1}:
     - wizard_mode_auto_plunge_allowed
-
   left_orbit_hit{current_player.wizard_mode_running == 1 and current_player.wizard_mode_blackout != 1}:
     - wizard_mode_jackpot_hit
     - wizard_mode_left_orbit_bullet_flash
-
   right_orbit_hit{current_player.wizard_mode_running == 1 and current_player.wizard_mode_blackout != 1}:
     - wizard_mode_jackpot_hit
     - wizard_mode_right_orbit_bullet_flash
-
   s_mid_orbit_active{current_player.wizard_mode_running == 1 and current_player.wizard_mode_blackout != 1}:
     - wizard_mode_jackpot_hit
     - wizard_mode_mid_orbit_bullet_flash
-
   s_air_duct_active{current_player.wizard_mode_running == 1 and current_player.wizard_mode_blackout != 1}:
     - wizard_mode_jackpot_hit
     - wizard_mode_air_duct_bullet_flash
-
-  s_UrampUp001_active{current_player.wizard_mode_running == 1 and current_player.wizard_mode_blackout != 1}:
+  s_upper_pf_entrance_active{current_player.wizard_mode_running == 1 and current_player.wizard_mode_blackout != 1}:
     - wizard_mode_jackpot_hit
     - wizard_mode_upper_pf_bullet_flash
-
   s_captiveball_active{current_player.wizard_mode_running == 1 and current_player.wizard_mode_blackout != 1}:
     - wizard_mode_jackpot_hit
-
-  balldevice_tower_vuk_ball_enter{current_player.wizard_mode_running == 1 and current_player.wizard_mode_blackout != 1}:
-    - wizard_mode_jackpot_hit
-
   wizard_mode_complete:
+    - show_main_score
     - nakatomi_entrance_lock_close
-
+  game_ended:
+    - show_main_score
+  tilt:
+    - show_main_score
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------
 variable_player:
+  game_started:
+    suppress_eob_bonus:
+      action: set
+      int: 0
   wizard_mode_set_base_value:
     wizard_mode_running:
       action: set
@@ -156,6 +149,9 @@ variable_player:
     wizard_mode_blackout:
       action: set
       int: 0
+    suppress_eob_bonus:
+      action: set
+      int: 1
     wizard_mode_value:
       action: set
       int: 5000000
@@ -165,7 +161,6 @@ variable_player:
     wizard_mode_won:
       action: set
       int: 1
-
   wizard_mode_kill_launches:
     wizard_mode_running:
       action: set
@@ -173,47 +168,41 @@ variable_player:
     wizard_mode_blackout:
       action: set
       int: 1
-
+    suppress_eob_bonus:
+      action: set
+      int: 1
   wizard_mode_add_bonus_value{current_player.hans_bonus == 1}:
     wizard_mode_value:
       action: add
       int: 1000000
-
   wizard_mode_add_bonus_value{current_player.simon_complete == 1}:
     wizard_mode_value:
       action: add
       int: 1000000
-
   wizard_mode_add_bonus_value{current_player.karl_bonus == 1}:
     wizard_mode_value:
       action: add
       int: 1000000
-
   wizard_mode_add_bonus_value{current_player.stuart_bonus == 1}:
     wizard_mode_value:
       action: add
       int: 1000000
-
   wizard_mode_add_bonus_value{current_player.katya_bonus == 1}:
     wizard_mode_value:
       action: add
       int: 1000000
-
   wizard_mode_add_bonus_value{current_player.nakatomi_super_collected == 1}:
     wizard_mode_value:
       action: add
       int: 1000000
-
   wizard_mode_add_bonus_value{current_player.airplane_mb_stage2 == 1}:
     wizard_mode_value:
       action: add
       int: 1000000
-
   wizard_mode_add_bonus_value{current_player.score_park_super_jackpot_hit > 0}:
     wizard_mode_value:
       action: add
       int: 1000000
-
   wizard_mode_jackpot_hit:
     wizard_mode_shots:
       action: add
@@ -224,7 +213,6 @@ variable_player:
     last_jackpot_value:
       action: set
       int: "current_player.wizard_mode_value * current_player.playfield_multiplier"
-
   wizard_mode_blackout_start:
     wizard_mode_running:
       action: set
@@ -232,12 +220,13 @@ variable_player:
     wizard_mode_blackout:
       action: set
       int: 1
-
+    suppress_eob_bonus:
+      action: set
+      int: 1
   wizard_mode_stop_scoring:
     wizard_mode_running:
       action: set
       int: 0
-
   wizard_mode_force_game_over:
     wizard_mode_running:
       action: set
@@ -245,7 +234,9 @@ variable_player:
     wizard_mode_blackout:
       action: set
       int: 1
-
+    suppress_eob_bonus:
+      action: set
+      int: 1
   wizard_mode_complete:
     wizard_mode_running:
       action: set
@@ -253,7 +244,6 @@ variable_player:
     wizard_mode_blackout:
       action: set
       int: 0
-
   game_ended:
     wizard_mode_running:
       action: set
@@ -261,7 +251,6 @@ variable_player:
     wizard_mode_blackout:
       action: set
       int: 0
-
   mode_wizard_mode_stopping:
     wizard_mode_running:
       action: set
@@ -269,7 +258,6 @@ variable_player:
     wizard_mode_blackout:
       action: set
       int: 0
-
   tilt:
     wizard_mode_running:
       action: set
@@ -277,7 +265,9 @@ variable_player:
     wizard_mode_blackout:
       action: set
       int: 0
-
+    suppress_eob_bonus:
+      action: set
+      int: 0
 # ------------------------------------------------------------
 # LIGHT PLAYER
 # ------------------------------------------------------------
@@ -287,10 +277,10 @@ light_player:
       color: ff0000
       priority: 9700
     SPOTS:
-      color: 303030
+      color: 757575
       priority: 9700
     SPOTS_BUMPER:
-      color: 303030
+      color: 757575
       priority: 9700
     INSERT:
       color: 220000
@@ -331,7 +321,6 @@ light_player:
     l41:
       color: ff0000
       priority: 9900
-
   wizard_mode_blackout_start:
     GI:
       color: off
@@ -414,7 +403,6 @@ light_player:
     f147:
       color: off
       priority: 20000
-
   wizard_mode_complete:
     GI:
       color: off
@@ -512,7 +500,6 @@ light_player:
     f147:
       color: off
       priority: 10000
-
 # ------------------------------------------------------------
 # SLIDE PLAYER
 # ------------------------------------------------------------
@@ -522,23 +509,49 @@ slide_player:
       action: play
       priority: 19000
       expire: 1.5s
-
   wizard_mode_show_won_slide:
     you_won:
       action: play
       priority: 50000
-      expire: 14s
-
+      expire: 0s
   wizard_mode_complete:
     jackpot:
       action: remove
+  game_ending:
     you_won:
       action: remove
-
   mode_wizard_mode_stopping:
     jackpot:
       action: remove
-
+# ------------------------------------------------------------
+# WIDGET PLAYER
+# ------------------------------------------------------------
+widget_player:
+  wizard_mode_start_multiball:
+    wizard_mode_timer_widget:
+      action: play
+      slide: base
+      priority: 30000
+  wizard_mode_blackout_start:
+    wizard_mode_timer_widget:
+      action: remove
+      slide: base
+  wizard_mode_force_game_over:
+    wizard_mode_timer_widget:
+      action: remove
+      slide: base
+  wizard_mode_complete:
+    wizard_mode_timer_widget:
+      action: remove
+      slide: base
+  game_ended:
+    wizard_mode_timer_widget:
+      action: remove
+      slide: base
+  tilt:
+    wizard_mode_timer_widget:
+      action: remove
+      slide: base
 # ------------------------------------------------------------
 # SHOWS
 # ------------------------------------------------------------
@@ -550,7 +563,6 @@ shows:
     - duration: 900ms
       lights:
         (lights): off
-
 # ------------------------------------------------------------
 # SHOW PLAYER
 # ------------------------------------------------------------
@@ -562,7 +574,7 @@ show_player:
       speed: 4
       priority: 12000
       show_tokens:
-        lights: l20,l21,l22,l23,l24
+        lights: l20,l21,l22,l23,l24,l76,l77,l78
         color: ff0000
     wizard_mode_ball_save_yippee_slow_flash:
       key: key_wizard_mode_ball_save_yippee_slow_flash
@@ -572,7 +584,6 @@ show_player:
       show_tokens:
         lights: BALL_SAVE,l8
         color: 999999
-
   wizard_mode_jackpot_hit:
     flash_color:
       key: key_wizard_mode_all_flashers_white
@@ -582,7 +593,6 @@ show_player:
       show_tokens:
         lights: f140,f141,f142,f143,f144,f145,f146,f147
         color: ffffff
-
   wizard_mode_left_orbit_bullet_flash:
     flicker_color:
       key: key_wizard_mode_left_orbit_bullet_flash
@@ -592,7 +602,6 @@ show_player:
       show_tokens:
         lights: l50
         color: ff0000
-
   wizard_mode_upper_pf_bullet_flash:
     flicker_color:
       key: key_wizard_mode_upper_pf_bullet_flash
@@ -600,9 +609,8 @@ show_player:
       speed: 8
       priority: 13000
       show_tokens:
-        lights: l51
+        lights: l51,l76,l77,l78
         color: ff0000
-
   wizard_mode_right_orbit_bullet_flash:
     flicker_color:
       key: key_wizard_mode_right_orbit_bullet_flash
@@ -612,7 +620,6 @@ show_player:
       show_tokens:
         lights: l53
         color: ff0000
-
   wizard_mode_mid_orbit_bullet_flash:
     flicker_color:
       key: key_wizard_mode_mid_orbit_bullet_flash
@@ -622,7 +629,6 @@ show_player:
       show_tokens:
         lights: l54
         color: ff0000
-
   wizard_mode_air_duct_bullet_flash:
     flicker_color:
       key: key_wizard_mode_air_duct_bullet_flash
@@ -632,7 +638,6 @@ show_player:
       show_tokens:
         lights: l55
         color: ff0000
-
   wizard_mode_stop_shows:
     flash_color:
       key: key_wizard_mode_arrow_red_flash
@@ -640,7 +645,6 @@ show_player:
     wizard_mode_ball_save_yippee_slow_flash:
       key: key_wizard_mode_ball_save_yippee_slow_flash
       action: stop
-
   wizard_mode_complete:
     flash_color:
       key: key_wizard_mode_arrow_red_flash
@@ -648,7 +652,6 @@ show_player:
     wizard_mode_ball_save_yippee_slow_flash:
       key: key_wizard_mode_ball_save_yippee_slow_flash
       action: stop
-
   mode_wizard_mode_stopping:
     flash_color:
       key: key_wizard_mode_arrow_red_flash

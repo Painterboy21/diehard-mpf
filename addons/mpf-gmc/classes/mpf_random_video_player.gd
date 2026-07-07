@@ -48,45 +48,54 @@ func _enter_tree() -> void:
 	if Engine.is_editor_hint():
 		return
 	self.log = preload("res://addons/mpf-gmc/scripts/log.gd").new("VideoPlayer<%s>" % self.name)
-
 	files = _get_video_files(folder_path, ["ogv"])
 	if files.is_empty():
 		self.log.debug("No video files found in: %s (allowed: %s)" % [folder_path, ["ogv"]])
 		return
-
 	_rng.randomize()
 	var chosen_path := files[_rng.randi_range(0, files.size() - 1)]
 	_set_stream_from_path(chosen_path)
-
 	if not self.is_visible_in_tree() and self.hide_behavior != HideBehavior.CONTINUE:
 		self.stop()
 
 func _ready() -> void:
-
 	if Engine.is_editor_hint():
 		if self.preview_in_editor:
 			self.play()
 		return
-
 	self.finished.connect(self._on_finished)
 	self.visibility_changed.connect(self._on_visibility)
-	if self.is_playing() and self.ducking:
-		self.ducking.calculate_release_time(Time.get_ticks_msec())
-		#self.ducking.bus.duck(self.ducking)
-		MPF.media.sound.buses[self.ducking.target_bus].duck(self.ducking)
+	if self.is_playing():
+		_start_ducking()
 
 func _play_random(payload: Dictionary) -> void:
 	self._play()
 	self.play()
 
 func _play() -> void:
+	if files.is_empty():
+		return
 	_rng.randomize()
 	var chosen_path := files[_rng.randi_range(0, files.size() - 1)]
-	self.visible=true
+	self.visible = true
 	_set_stream_from_path(chosen_path)
-	if self.ducking:
-		self.ducking.calculate_release_time(Time.get_ticks_msec())
-		self.ducking.bus.duck(self.ducking)
+	_start_ducking()
+
+func _start_ducking() -> void:
+	if not self.ducking:
+		return
+	if not MPF.media:
+		return
+	if not MPF.media.sound:
+		return
+	if self.ducking.target_bus == "":
+		return
+	if not MPF.media.sound.buses.has(self.ducking.target_bus):
+		return
+	if self.ducking.release_from_start <= 0:
+		self.ducking.release_from_start = 0.1
+	self.ducking.calculate_release_time(Time.get_ticks_msec())
+	MPF.media.sound.buses[self.ducking.target_bus].duck(self.ducking)
 
 func _on_visibility() -> void:
 	var do_show: bool = self.is_visible_in_tree() and self.autoplay and not Engine.is_editor_hint()
@@ -113,9 +122,7 @@ func _on_finished() -> void:
 		self[end_method].call()
 	elif end_behavior == EndBehavior.PARENT_METHOD:
 		self._get_parent()[end_method].call()
-
 	if events_when_stopped:
-		# TBD: Will the events come as a string or an array?
 		for e in events_when_stopped.split(","):
 			MPF.server.send_event(e.strip_edges())
 
@@ -148,7 +155,6 @@ func _get_video_files(dir_path: String, exts: PackedStringArray) -> PackedString
 	if dir == null:
 		self.log.debug("Could not open folder: %s" % dir_path)
 		return out
-
 	dir.list_dir_begin()
 	while true:
 		var name := dir.get_next()
@@ -156,22 +162,18 @@ func _get_video_files(dir_path: String, exts: PackedStringArray) -> PackedString
 			break
 		if dir.current_is_dir():
 			continue
-
 		var ext := name.get_extension().to_lower()
 		if exts.has(ext):
 			out.append(dir_path.path_join(name))
 	dir.list_dir_end()
-
 	return out
 
 func _set_stream_from_path(path: String) -> void:
-	# For .ogv (Theora), create a VideoStreamTheora and set its file.
-	# If you use other formats, you may need a different VideoStream resource type/plugin.
 	var ext := path.get_extension().to_lower()
 	if ext == "ogv":
 		stream = load(path)
 		if self.autoplay:
-			play();
+			play()
 	else:
 		self.log.debug("Unsupported extension for built-in playback: %s (%s)" % [ext, path])
 
