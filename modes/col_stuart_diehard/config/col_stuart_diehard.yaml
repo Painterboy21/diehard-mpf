@@ -605,7 +605,6 @@ variable_player:
     col_stuart_villain_score:
       action: add
       int: 3000000
-
   col_stuart_diehard_completed:
     col_stuart_complete:
       action: set
@@ -613,6 +612,9 @@ variable_player:
     col_stuart_diehard_complete:
       action: set
       int: 1
+    playfield_x_max:
+      action: set
+      int: 4
     modes_complete:
       action: add
       int: 1

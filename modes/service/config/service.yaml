@@ -9,7 +9,6 @@
 # Native MPF service exit is not used because MPF 0.80 resets the
 # machine when service exits.
 # ------------------------------------------------------------
-
 mode:
   code: diehard_service.DieHardService
   priority: 100000
@@ -19,64 +18,48 @@ mode:
   stop_events:
     - shutdown
   stop_on_ball_end: false
-
 event_player:
   sw_s_door_open_active:
     - service_door_opened
     - service_mode_entered
-
   sw_s_door_open_inactive:
     - service_door_closed
     - service_mode_exited
-
   sw_service_door_open_active:
     - service_door_opened
     - service_mode_entered
-
   sw_service_door_open_inactive:
     - service_door_closed
     - service_mode_exited
-
   sw_service_door_closed_active:
     - service_door_closed
     - service_mode_exited
-
   sw_service_door_closed_inactive:
     - service_door_opened
     - service_mode_entered
-
   sw_service_up_active:
     service_button:
       button: UP
-
   sw_service_down_active:
     service_button:
       button: DOWN
-
   sw_service_enter_active:
     service_button:
       button: ENTER
-
   sw_service_esc_active:
     service_button:
       button: ESC
-
   sw_start_active:
     service_button:
       button: START
-
   sw_power_off_inactive:
     - service_power_on
-
   sw_power_off_active:
     - service_power_off
-
   sw_power_on_inactive:
     - service_power_off
-
   sw_power_on_active:
     - service_power_on
-
   service_test_full_mech_check:
     - service_test_trough_eject
     - service_test_vault_kicker
@@ -86,57 +69,44 @@ event_player:
     - service_test_tower_vuk
     - service_test_airplane_captive
     - service_test_shaker_light
-
 slide_player:
   service_mode_entered:
     service:
       priority: 100000
-
   service_mode_exited:
     service:
       action: remove
-
 coil_player:
   service_test_trough_eject:
     c_trough_eject:
       action: pulse
-
   service_test_plunger:
     c_plunger:
       action: pulse
-
   service_test_vault_kicker:
     c_kickervault1_eject:
       action: pulse
-
   service_test_right_kicker:
     c_rightkicker_eject:
       action: pulse
-
   service_test_upper_ramp_vuk:
     c_UrampUp001_eject:
       action: pulse
-
   service_test_right_vuk:
     c_rightvuk_eject:
       action: pulse
-
   service_test_tower_vuk:
     c_towervuk_eject:
       action: pulse
-
   service_test_airplane_captive:
     c_captivetarget:
       action: pulse
-
   service_test_left_magnet:
     c_trmagl:
       action: pulse
-
   service_test_right_magnet:
     c_trmagr:
       action: pulse
-
 light_player:
   service_mode_entered:
     INSERT:
@@ -167,7 +137,6 @@ light_player:
       color: 000000
       priority: 100000
       fade: 300ms
-
   service_mode_exited:
     INSERT:
       color: stop
@@ -190,105 +159,138 @@ light_player:
     s_actionbtn:
       color: stop
       fade: 300ms
-
   service_test_lamps_inserts:
     INSERT:
       color: ff0000
-
+      priority: 100100
   service_test_lamps_gi:
     GI:
       color: ffffff
-
+      priority: 100100
   service_test_lamps_flashers:
     SPOTS:
       color: ffffff
+      priority: 100100
     SPOTS_BUMPER:
       color: ffffff
+      priority: 100100
     LeftSling:
       color: ffffff
+      priority: 100100
     RightSling:
       color: ffffff
-
+      priority: 100100
   service_test_lamps_cabinet:
     s_actionbtn:
       color: ff0000
-
+      priority: 100100
   service_test_lamps_all_white:
     INSERT:
       color: ffffff
+      priority: 100100
     GI:
       color: ffffff
+      priority: 100100
     SPOTS:
       color: ffffff
+      priority: 100100
     SPOTS_BUMPER:
       color: ffffff
+      priority: 100100
     LeftSling:
       color: ffffff
+      priority: 100100
     RightSling:
       color: ffffff
+      priority: 100100
     s_actionbtn:
       color: ffffff
-
+      priority: 100100
   service_test_lamps_all_red:
     INSERT:
       color: ff0000
+      priority: 100100
     GI:
       color: ff0000
+      priority: 100100
     SPOTS:
       color: ff0000
+      priority: 100100
     SPOTS_BUMPER:
       color: ff0000
+      priority: 100100
     LeftSling:
       color: ff0000
+      priority: 100100
     RightSling:
       color: ff0000
+      priority: 100100
     s_actionbtn:
       color: ff0000
-
+      priority: 100100
   service_test_lamps_all_green:
     INSERT:
       color: 00ff00
+      priority: 100100
     GI:
       color: 00ff00
+      priority: 100100
     SPOTS:
       color: 00ff00
+      priority: 100100
     SPOTS_BUMPER:
       color: 00ff00
+      priority: 100100
     LeftSling:
       color: 00ff00
+      priority: 100100
     RightSling:
       color: 00ff00
+      priority: 100100
     s_actionbtn:
       color: 00ff00
-
+      priority: 100100
   service_test_lamps_all_blue:
     INSERT:
       color: 0000ff
+      priority: 100100
     GI:
       color: 0000ff
+      priority: 100100
     SPOTS:
       color: 0000ff
+      priority: 100100
     SPOTS_BUMPER:
       color: 0000ff
+      priority: 100100
     LeftSling:
       color: 0000ff
+      priority: 100100
     RightSling:
       color: 0000ff
+      priority: 100100
     s_actionbtn:
       color: 0000ff
-
+      priority: 100100
   service_test_lamps_all_off:
     INSERT:
       color: off
+      priority: 100100
     GI:
       color: off
+      priority: 100100
     SPOTS:
       color: off
+      priority: 100100
     SPOTS_BUMPER:
       color: off
+      priority: 100100
     LeftSling:
       color: off
+      priority: 100100
     RightSling:
       color: off
+      priority: 100100
     s_actionbtn:
       color: off
+      priority: 100100

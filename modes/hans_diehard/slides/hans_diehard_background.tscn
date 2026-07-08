@@ -20,7 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://d1oeuf2cfd8n5" path="res://godot-media/images/Detonators/Detonator4.png" id="19_jmbaf"]
 [ext_resource type="Texture2D" uid="uid://d247imuretpi0" path="res://godot-media/images/Detonators/Detonator5.png" id="20_5xuoq"]
 [ext_resource type="Texture2D" uid="uid://kgm007q4a0pd" path="res://godot-media/images/Detonators/Detonator6.png" id="21_hl42m"]
-[ext_resource type="Script" path="res://slides/score-overlay-manager.gd" id="21_htvvc"]
+[ext_resource type="Script" uid="uid://dinegb8scbud" path="res://slides/score-overlay-manager.gd" id="21_htvvc"]
 [ext_resource type="Texture2D" uid="uid://bgrlutxjsatig" path="res://godot-media/images/player 2 overlay.png" id="23_jmbaf"]
 [ext_resource type="Texture2D" uid="uid://cyuh0skrfoso2" path="res://godot-media/images/Detonators/Detonator8.png" id="23_vd1jh"]
 [ext_resource type="Texture2D" uid="uid://cghope0h5kgp1" path="res://godot-media/images/player 3 overlay.png" id="24_5xuoq"]
@@ -58,7 +58,7 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 scale = Vector2(1, 0.9)
 stream = ExtResource("4_iqljn")
-volume_db = 10.0
+volume_db = 11.999999
 
 [node name="HansVideoControl" type="Control" parent="." unique_id=959045619]
 visible = false

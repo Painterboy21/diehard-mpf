@@ -285,7 +285,6 @@ event_player:
   ball_save_col_stuart_dieharder_complete_save_saving_ball:
     - ball_save_saving_ball
 
-
 variable_player:
   col_stuart_reset:
     villain_mode_running:
@@ -593,6 +592,9 @@ variable_player:
     stuart_bonus:
       action: set
       int: 1
+    playfield_x_max:
+      action: set
+      int: 5
     modes_complete:
       action: add
       int: 1

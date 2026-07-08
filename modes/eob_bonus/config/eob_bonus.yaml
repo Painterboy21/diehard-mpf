@@ -7,6 +7,9 @@
 #   - Waits in the ball-ending queue until bonus_finished.
 #   - Plays the EOB bonus show/video on normal drains.
 #   - Shows the bonus summary when the EOB timer completes.
+#   - Allows both flipper buttons held for 1s to skip normal EOB bonus
+#     to the bonus calculation/summary.
+#   - Does NOT skip straight to bonus_finished, so high score input is safe.
 #   - During wizard ending, starts silently only to hold the queue.
 #   - Wizard ending releases the queue with wizard_mode_force_game_over.
 # ------------------------------------------------------------
@@ -31,6 +34,16 @@ event_player:
     - stop_main_music4
   mode_eob_bonus_started{current_player.suppress_eob_bonus == 1}:
     - stop_eob_bonus_now
+  s_left_flipper_active{current_player.suppress_eob_bonus != 1 and current_player.eob_right_flipper_held == 1}:
+    - eob_flipper_skip_start
+  s_right_flipper_active{current_player.suppress_eob_bonus != 1 and current_player.eob_left_flipper_held == 1}:
+    - eob_flipper_skip_start
+  s_left_flipper_inactive:
+    - eob_flipper_skip_stop
+  s_right_flipper_inactive:
+    - eob_flipper_skip_stop
+  timer_eob_flipper_skip_complete{current_player.suppress_eob_bonus != 1}:
+    - calculate_eob_bonus_x
   timer_eob_bonus_complete{current_player.suppress_eob_bonus != 1}:
     - calculate_eob_bonus_x
   calculate_eob_bonus_x{current_player.eob_bonus_awarded != 1 and current_player.suppress_eob_bonus != 1}:
@@ -277,10 +290,57 @@ timers:
         action: stop
       - event: game_ended
         action: stop
+  eob_flipper_skip:
+    start_value: 0
+    end_value: 1
+    direction: up
+    tick_interval: 1s
+    start_running: false
+    restart_on_complete: false
+    control_events:
+      - event: eob_flipper_skip_start
+        action: restart
+      - event: eob_flipper_skip_stop
+        action: stop
+      - event: calculate_eob_bonus_x
+        action: stop
+      - event: show_bonus_summary
+        action: stop
+      - event: bonus_finished
+        action: stop
+      - event: wizard_mode_force_game_over
+        action: stop
+      - event: wizard_mode_complete
+        action: stop
+      - event: game_ended
+        action: stop
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------
 variable_player:
+  mode_eob_bonus_started:
+    eob_left_flipper_held:
+      action: set
+      int: 0
+    eob_right_flipper_held:
+      action: set
+      int: 0
+  s_left_flipper_active{current_player.suppress_eob_bonus != 1}:
+    eob_left_flipper_held:
+      action: set
+      int: 1
+  s_right_flipper_active{current_player.suppress_eob_bonus != 1}:
+    eob_right_flipper_held:
+      action: set
+      int: 1
+  s_left_flipper_inactive:
+    eob_left_flipper_held:
+      action: set
+      int: 0
+  s_right_flipper_inactive:
+    eob_right_flipper_held:
+      action: set
+      int: 0
   mode_eob_bonus_started{current_player.suppress_eob_bonus != 1}:
     eob_bonus_awarded:
       int: 0

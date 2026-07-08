@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d1lo7qvca8esp"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_27r6a"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_27r6a"]
 [ext_resource type="VideoStream" uid="uid://cbk2hqwib6iwc" path="res://modes/airplane_multiball/slides/AirplaneSuperJackpot.ogv" id="2_m4or8"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_s38h1"]
 
@@ -21,6 +21,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_m4or8")
+volume_db = 11.999999
 autoplay = true
 script = ExtResource("3_s38h1")
 end_behavior = 1

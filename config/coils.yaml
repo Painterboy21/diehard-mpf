@@ -12,11 +12,11 @@ coils:
   # ------------------------------------------------------------
   c_left_sling:
     number: d-6
-    default_pulse_ms: 80ms
+    default_pulse_ms: 100ms
     label: Left Sling
   c_right_sling:
     number: d-7
-    default_pulse_ms: 80ms
+    default_pulse_ms: 100ms
     label: Right Sling
 
   # ------------------------------------------------------------
@@ -75,7 +75,7 @@ coils:
     label: Plunger
   c_trough_eject:
     number: d-1
-    default_pulse_ms: 130ms
+    default_pulse_ms: 140ms
     label: Trough Eject
 
   # ------------------------------------------------------------
@@ -126,7 +126,7 @@ coils:
     label: Right VUK Eject
   c_towervuk_eject:
     number: e-0
-    default_pulse_ms: 35ms
+    default_pulse_ms: 38ms
     label: Tower VUK Eject
   c_kickervault1_eject:
     number: e-6

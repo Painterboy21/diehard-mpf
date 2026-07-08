@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://dcwjyu352ua3g" path="res://modes/hans_diehard/slides/detonators.gd" id="16_w2tnv"]
 [ext_resource type="Texture2D" uid="uid://bb3045ld4jo7u" path="res://godot-media/images/Detonators/Detonator1.png" id="17_gwlfv"]
 [ext_resource type="Texture2D" uid="uid://bjquoenugp2oh" path="res://godot-media/images/Detonators/Detonator2.png" id="18_y2ju8"]
-[ext_resource type="Script" path="res://slides/score-overlay-manager.gd" id="19_f6ckk"]
+[ext_resource type="Script" uid="uid://dinegb8scbud" path="res://slides/score-overlay-manager.gd" id="19_f6ckk"]
 [ext_resource type="Texture2D" uid="uid://duffsm3leqd04" path="res://godot-media/images/Detonators/Detonator3.png" id="19_p6llr"]
 [ext_resource type="Texture2D" uid="uid://d1oeuf2cfd8n5" path="res://godot-media/images/Detonators/Detonator4.png" id="20_e36fi"]
 [ext_resource type="Texture2D" uid="uid://d247imuretpi0" path="res://godot-media/images/Detonators/Detonator5.png" id="21_oikbv"]
@@ -56,7 +56,7 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 scale = Vector2(1, 0.9)
 stream = ExtResource("4_xr35f")
-volume_db = 10.0
+volume_db = 11.999999
 
 [node name="HansDieHarderVideoControl" type="Control" parent="." unique_id=266920814]
 layout_mode = 1

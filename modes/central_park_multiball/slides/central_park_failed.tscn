@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cepsfq2x665mb"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_p1ick"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_p1ick"]
 [ext_resource type="VideoStream" uid="uid://d0ru8pdjofmxl" path="res://modes/central_park_multiball/slides/CentralParkMBFailed.ogv" id="2_pnq25"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_0x1wv"]
 
@@ -23,6 +23,7 @@ offset_right = -0.00012207031
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_pnq25")
+volume_db = 11.999999
 autoplay = true
 script = ExtResource("3_0x1wv")
 end_behavior = 1

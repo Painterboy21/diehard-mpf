@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://iu7lqp68vavb"]
 
 [ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_1aqkg"]
-[ext_resource type="VideoStream" uid="uid://t0wr7bls4rer" path="res://modes/col_stuart_diehard/slides/ColDefeated.ogv" id="2_mvrre"]
+[ext_resource type="VideoStream" uid="uid://t0wr7bls4rer" path="res://modes/col_stuart_dieharder/slides/ColDefeated.ogv" id="2_mvrre"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_bpyjc"]
 
 [node name="ColDefeated" type="Control" unique_id=380409143]
@@ -22,7 +22,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_mvrre")
-volume_db = 7.999999
+volume_db = 11.999999
 autoplay = true
 script = ExtResource("3_bpyjc")
+preview_in_editor = true
 metadata/_custom_type_script = "uid://bov7mrgxslshq"

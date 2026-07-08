@@ -337,7 +337,7 @@ sound_player:
       key: main_music
       action: play
       loops: -1
-      volume: 0.8
+      volume: 1.0
   mode_nakatomi_multiball_stopping:
     Johns Escape-You Want Money:
       key: main_music

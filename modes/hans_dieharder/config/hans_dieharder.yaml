@@ -251,7 +251,7 @@ event_player:
     - hans_dieharder_show_ball_lost
     - reset_bullet_total
     - reset_bullets
-    - hans_dieharder_failed_complete|10s
+    - hans_dieharder_failed_complete|8s
   hans_dieharder_won_complete:
     - record_finish_hans_dieharder_villain_mvp
     - reset_bullet_total
@@ -631,7 +631,7 @@ slide_player:
       action: remove
     hans_ball_lost:
       action: play
-      expire: 6s
+      expire: 4s
       priority: 20000
 
 # ------------------------------------------------------------

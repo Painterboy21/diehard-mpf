@@ -363,7 +363,6 @@ light_player:
       color: off
       priority: 22000
     l14:
-      color: off
       priority: 22000
     l15:
       color: off
