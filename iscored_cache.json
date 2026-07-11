@@ -1,32 +1,32 @@
 {
-  "updatedAt": 1783545401,
+  "updatedAt": 1783783621,
   "entries": [
     {
       "rank": "1",
       "name": "DAD",
-      "score": 48985370,
-      "score_text": "48,985,370",
+      "score": 26834370,
+      "score_text": "26,834,370",
       "pending": false
     },
     {
       "rank": "2",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
+      "name": "JohnMcClane",
+      "score": 2679350,
+      "score_text": "2,679,350",
       "pending": false
     },
     {
       "rank": "3",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
+      "name": "DCB",
+      "score": 845600,
+      "score_text": "845,600",
       "pending": false
     },
     {
       "rank": "4",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
+      "name": "DEF",
+      "score": 522950,
+      "score_text": "522,950",
       "pending": false
     },
     {

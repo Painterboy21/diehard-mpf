@@ -16,8 +16,12 @@
 
 mode:
   start_events:
-    - start_ambush_from_vuk_hold{current_player.villain_mode_running!=1 and current_player.villain_select_running!=1 and current_player.villain_difficulty_select_running!=1}
-    - start_ambush_from_mystery{current_player.villain_mode_running!=1 and current_player.villain_select_running!=1 and current_player.villain_difficulty_select_running!=1}
+    # The VUK hold only posts its start event after all conflicting modes
+    # clear, and Mystery only awards Ambush while those modes are inactive.
+    # Do not guard these again here: a stale transition flag would consume
+    # the one-shot event and silently lose the lit/vault-awarded Ambush.
+    - start_ambush_from_vuk_hold
+    - start_ambush_from_mystery
   stop_events:
     - ambush_finished
     - ambush_failed

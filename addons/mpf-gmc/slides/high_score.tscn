@@ -86,13 +86,12 @@ offset_right = 1909.0
 offset_bottom = 796.0
 theme = ExtResource("5_qkqu0")
 theme_override_font_sizes/font_size = 100
-text = "10,455,566"
+text = "0"
 horizontal_alignment = 1
 script = ExtResource("3_hewrl")
-variable_type = 1
-variable_name = "value"
-comma_separate = true
-min_digits = 2
+variable_type = 2
+variable_name = "machine_record_pending_score_text"
+template_string = "%s"
 
 [node name="Control" type="Control" parent="." unique_id=1551951499]
 layout_mode = 1

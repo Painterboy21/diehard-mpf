@@ -36,6 +36,9 @@ event_player:
     - play_show_xmas
     - play_show_start_button_flash
     - iscored_refresh_scores
+    # Retry scores saved while iScored was offline. A short delay lets the
+    # just-finished game's fallback submission reach the queue first.
+    - iscored_flush_queue|2s
     - reset_idle_timer
     - attract_sound_wake
 

@@ -40,8 +40,10 @@ event_player:
     - eob_flipper_skip_start
   s_left_flipper_inactive:
     - eob_flipper_skip_stop
+    - eob_check_flippers_released|10ms
   s_right_flipper_inactive:
     - eob_flipper_skip_stop
+    - eob_check_flippers_released|10ms
   timer_eob_flipper_skip_complete{current_player.suppress_eob_bonus != 1}:
     - calculate_eob_bonus_x
   timer_eob_bonus_complete{current_player.suppress_eob_bonus != 1}:
@@ -52,7 +54,11 @@ event_player:
     - show_bonus_summary
   award_eob_bonus{current_player.suppress_eob_bonus != 1}:
     - show_bonus_summary|250ms
-  timer_eob_bonus_summary_complete{current_player.suppress_eob_bonus != 1}:
+  timer_eob_bonus_summary_complete{current_player.suppress_eob_bonus != 1 and current_player.eob_left_flipper_held == 0 and current_player.eob_right_flipper_held == 0}:
+    - bonus_finished
+  timer_eob_bonus_summary_complete{current_player.suppress_eob_bonus != 1 and (current_player.eob_left_flipper_held == 1 or current_player.eob_right_flipper_held == 1)}:
+    - eob_wait_for_flipper_release
+  eob_check_flippers_released{current_player.suppress_eob_bonus != 1 and current_player.eob_waiting_for_flipper_release == 1 and current_player.eob_left_flipper_held == 0 and current_player.eob_right_flipper_held == 0}:
     - bonus_finished
   wizard_mode_force_game_over{current_player.suppress_eob_bonus == 1}:
     - bonus_finished
@@ -325,6 +331,9 @@ variable_player:
     eob_right_flipper_held:
       action: set
       int: 0
+    eob_waiting_for_flipper_release:
+      action: set
+      int: 0
   s_left_flipper_active{current_player.suppress_eob_bonus != 1}:
     eob_left_flipper_held:
       action: set
@@ -339,6 +348,14 @@ variable_player:
       int: 0
   s_right_flipper_inactive:
     eob_right_flipper_held:
+      action: set
+      int: 0
+  eob_wait_for_flipper_release:
+    eob_waiting_for_flipper_release:
+      action: set
+      int: 1
+  bonus_finished:
+    eob_waiting_for_flipper_release:
       action: set
       int: 0
   mode_eob_bonus_started{current_player.suppress_eob_bonus != 1}:

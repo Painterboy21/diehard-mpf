@@ -678,10 +678,6 @@ light_player:
     l24: off
     l44:
       color: "0044ff"
-    l14:
-      color: "0044ff"
-    l15:
-      color: "0044ff"
 
   col_stuart_diehard_failed:
     l1000: off

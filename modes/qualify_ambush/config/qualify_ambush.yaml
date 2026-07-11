@@ -76,6 +76,9 @@ ball_holds:
   ambush_hold:
     enable_events:
       - qualify_ambush_on_complete
+      # If another major mode temporarily stops this mode while Ambush is
+      # already lit, restore the hold when qualification play resumes.
+      - mode_qualify_ambush_started{current_player.ambush_qualified == 1}
     disable_events:
       - mode_ambush_started
       - ball_ended
@@ -138,6 +141,8 @@ shots:
       lights: l9
     control_events:
       - events: qualify_ambush_on_complete
+        state: 1
+      - events: mode_qualify_ambush_started{current_player.ambush_qualified == 1}
         state: 1
       - events: start_ambush_from_vuk_hold
         state: 0
