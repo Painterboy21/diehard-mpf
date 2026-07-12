@@ -93,6 +93,7 @@ ball_holds:
 
 event_player:
   ball_hold_ambush_hold_full:
+    - nakatomi_entrance_lock_close
     - ambush_vuk_capture_confirmed
     - ambush_hold_timer_start
   timer_ambush_hold_complete{current_player.ambush_qualified == 1 and current_player.ambush_ball_captured == 1 and current_player.villain_select_running != 1 and current_player.villain_difficulty_select_running != 1 and current_player.villain_mode_running != 1 and current_player.yippee_ki_yay_running != 1 and current_player.wizard_mode_running != 1}:

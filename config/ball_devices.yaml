@@ -15,11 +15,11 @@
 #   - captive ball / airplane device
 #
 # Normal gameplay:
-#   - s_fire_active launches the plunger normally.
+#   - Fire button launches the plunger.
+#   - Action button also launches the plunger.
 #
 # Wizard mode:
-#   - wizard auto-plunge must use wizard_mode_auto_plunge_allowed.
-#   - do not use wizard_mode_auto_plunge directly in bd_plunger.
+#   - wizard_mode_auto_plunge launches automatically.
 # ------------------------------------------------------------
 
 ball_devices:
@@ -46,11 +46,12 @@ ball_devices:
     eject_coil: c_plunger
     eject_targets: playfield
     eject_timeouts: 1s
-    player_controlled_eject_event: s_fire_active
+    player_controlled_eject_event: launch_plunger
     eject_events:
       - wizard_mode_auto_plunge
-    auto_fire_on_unexpected_ball: false
+    auto_fire_on_unexpected_ball: true
     ball_search_order: 0
+
   # ------------------------------------------------------------
   # VAULT KICKER
   # ------------------------------------------------------------
@@ -115,3 +116,15 @@ ball_devices:
     eject_coil: c_captivetarget
     eject_timeouts: 1s
     ball_search_order: 70
+
+# ------------------------------------------------------------
+# PLUNGER BUTTON EVENTS
+# ------------------------------------------------------------
+# Both cabinet buttons launch the ball from the plunger lane.
+# ------------------------------------------------------------
+event_player:
+  s_fire_active:
+    - launch_plunger
+
+  s_actionbtn_active:
+    - launch_plunger

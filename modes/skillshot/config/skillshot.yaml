@@ -7,10 +7,8 @@ mode:
 
 # ---------------------------------------------------------------------
 # SOUND PLAYER
-# Preloads gunfire when skillshot starts, then plays it instantly
-# when the fire button is pressed.
-# Sound file:
-#   sounds/src/gunfire.wav
+# Fire event plays gunfire.
+# Action and plunger-key buttons both post s_fire_active.
 # ---------------------------------------------------------------------
 sound_player:
   s_fire_active:
@@ -20,18 +18,26 @@ sound_player:
 
 # ---------------------------------------------------------------------
 # EVENT PLAYER
-# skillshot_hit_fast comes from Godot immediately when skillshot is made.
-# skillshot_hit still comes later after the reward video for normal scoring.
-# Captive ball collects Super Skill Shot while available.
-# Player / ball text is handled directly in Godot by Mobiler.gd.
-# clear_skillshot_player_ball tells Godot to hide PLAYER X BALL X text.
+# bd_plunger listens directly for s_fire_active.
+#
+# Fire button:
+#   - directly launches the ball
+#   - checks the skillshot
+#
+# Action button and plunger key:
+#   - post s_fire_active
+#   - therefore launch the ball and check the skillshot
 # ---------------------------------------------------------------------
 event_player:
   mode_skillshot_started:
     - reset_super_skillshot
 
   s_plunger_key_active:
-    - skillshot_check
+    - s_fire_active
+
+  s_actionbtn_active:
+    - s_fire_active
+
   s_fire_active:
     - skillshot_check
 
@@ -43,8 +49,10 @@ event_player:
 
   skillshot_hit.1{current_player.ball==1}:
     - ball_save_one
+
   skillshot_hit.1{current_player.ball==2}:
     - ball_save_two
+
   skillshot_hit.1{current_player.ball==3}:
     - ball_save_three
 
@@ -79,7 +87,6 @@ event_player:
 
 # ---------------------------------------------------------------------
 # TIMERS
-# Super Skill Shot is available for 4 seconds from skillshot_hit_fast.
 # ---------------------------------------------------------------------
 timers:
   super_skillshot_timer:
@@ -98,8 +105,6 @@ timers:
 
 # ---------------------------------------------------------------------
 # COIL PLAYER
-# Plane bounce show posts super_skillshot_plane_pulse.
-# Each pulse fires the captive target / airplane coil.
 # ---------------------------------------------------------------------
 coil_player:
   super_skillshot_plane_pulse:
@@ -108,10 +113,13 @@ coil_player:
 
 # ---------------------------------------------------------------------
 # SHOW PLAYER
-# l52 flashes red straight away from skillshot_hit_fast.
-# Collect stops ready flash and starts reward shows.
 # ---------------------------------------------------------------------
 show_player:
+  mode_skillshot_started:
+    flash_action_button_red:
+      key: skillshot_action_button_flash
+      loops: -1
+
   skillshot_hit_fast:
     super_skillshot_captive_ready:
       key: super_skillshot_captive_ready
@@ -133,6 +141,9 @@ show_player:
       loops: 2
 
   mode_skillshot_stopping:
+    flash_action_button_red:
+      action: stop
+      key: skillshot_action_button_flash
     super_skillshot_captive_ready:
       key: super_skillshot_captive_ready
       action: stop
@@ -145,9 +156,6 @@ show_player:
 
 # ---------------------------------------------------------------------
 # SLIDE PLAYER
-# Keeps your normal skillshot slide/video until Godot posts skillshot_hit.
-# Player / ball text is handled in Godot, not MPF widgets.
-# Super Skill Shot does not use a slide.
 # ---------------------------------------------------------------------
 slide_player:
   mode_skillshot_started:
@@ -172,7 +180,6 @@ slide_player:
 
 # ---------------------------------------------------------------------
 # WIDGET PLAYER
-# Widget displays straight away when Super Skill Shot is collected.
 # ---------------------------------------------------------------------
 widget_player:
   super_skillshot_award:
@@ -186,9 +193,6 @@ widget_player:
 
 # ---------------------------------------------------------------------
 # VARIABLE PLAYER
-# Skillshot scoring is unchanged.
-# Super Skill Shot awards 1,000,000 and fills bullets to 15.
-# Your bullets mode uses bullet_hits.
 # ---------------------------------------------------------------------
 variable_player:
   reset_super_skillshot:

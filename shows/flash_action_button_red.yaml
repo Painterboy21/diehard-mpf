@@ -1,0 +1,11 @@
+#show_version=6
+
+- duration: 300ms
+  lights:
+    s_actionbtn:
+      color: ff0000
+
+- duration: 300ms
+  lights:
+    s_actionbtn:
+      color: 000000

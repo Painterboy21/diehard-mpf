@@ -1,53 +1,53 @@
 {
-  "updatedAt": 1783783621,
+  "updatedAt": 1783886784,
   "entries": [
     {
       "rank": "1",
+      "name": "SMD",
+      "score": 75260310,
+      "score_text": "75,260,310",
+      "pending": false
+    },
+    {
+      "rank": "2",
       "name": "DAD",
       "score": 26834370,
       "score_text": "26,834,370",
       "pending": false
     },
     {
-      "rank": "2",
+      "rank": "3",
       "name": "JohnMcClane",
       "score": 2679350,
       "score_text": "2,679,350",
       "pending": false
     },
     {
-      "rank": "3",
+      "rank": "4",
+      "name": "GIK",
+      "score": 1206290,
+      "score_text": "1,206,290",
+      "pending": false
+    },
+    {
+      "rank": "5",
       "name": "DCB",
       "score": 845600,
       "score_text": "845,600",
       "pending": false
     },
     {
-      "rank": "4",
-      "name": "DEF",
-      "score": 522950,
-      "score_text": "522,950",
-      "pending": false
-    },
-    {
-      "rank": "5",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
-      "pending": false
-    },
-    {
       "rank": "6",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
+      "name": "DEF",
+      "score": 723200,
+      "score_text": "723,200",
       "pending": false
     },
     {
       "rank": "7",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
+      "name": "MAX",
+      "score": 109210,
+      "score_text": "109,210",
       "pending": false
     },
     {
