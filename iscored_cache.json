@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1783886784,
+  "updatedAt": 1783971766,
   "entries": [
     {
       "rank": "1",
@@ -17,51 +17,51 @@
     },
     {
       "rank": "3",
+      "name": "ABC",
+      "score": 9891490,
+      "score_text": "9,891,490",
+      "pending": false
+    },
+    {
+      "rank": "4",
+      "name": "AAA",
+      "score": 3633420,
+      "score_text": "3,633,420",
+      "pending": false
+    },
+    {
+      "rank": "5",
       "name": "JohnMcClane",
       "score": 2679350,
       "score_text": "2,679,350",
       "pending": false
     },
     {
-      "rank": "4",
+      "rank": "6",
       "name": "GIK",
       "score": 1206290,
       "score_text": "1,206,290",
       "pending": false
     },
     {
-      "rank": "5",
+      "rank": "7",
       "name": "DCB",
       "score": 845600,
       "score_text": "845,600",
       "pending": false
     },
     {
-      "rank": "6",
+      "rank": "8",
       "name": "DEF",
       "score": 723200,
       "score_text": "723,200",
       "pending": false
     },
     {
-      "rank": "7",
+      "rank": "9",
       "name": "MAX",
       "score": 109210,
       "score_text": "109,210",
-      "pending": false
-    },
-    {
-      "rank": "8",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
-      "pending": false
-    },
-    {
-      "rank": "9",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
       "pending": false
     },
     {

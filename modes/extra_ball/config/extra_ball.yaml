@@ -8,6 +8,12 @@
 #
 # If Extra Ball and Villain Start are both ready:
 #   Extra Ball collects first, then villain select starts after 2.5s.
+#
+# Supports up to two Extra Balls per game.
+# extra_ball_owed is a count:
+#   0 = no Extra Balls owed
+#   1 = one Extra Ball owed
+#   2 = two Extra Balls owed
 # ------------------------------------------------------------
 mode:
   start_events:
@@ -55,23 +61,28 @@ ball_holds:
 # villain completion counting, multiball counting, and Shoot Again.
 # ------------------------------------------------------------
 event_player:
-  light_extra_ball_from_mystery{current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0 and current_player.extra_ball_owed == 0}:
+  light_extra_ball_from_mystery{current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0}:
     - light_extra_ball
     - extra_ball_lit
-  light_extra_ball_from_modes{current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0 and current_player.extra_ball_owed == 0}:
+
+  light_extra_ball_from_modes{current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0}:
     - light_extra_ball
     - extra_ball_lit
-  light_extra_ball_from_multiballs{current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0 and current_player.extra_ball_owed == 0}:
+
+  light_extra_ball_from_multiballs{current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0}:
     - light_extra_ball
     - extra_ball_lit
 
   extra_ball_lit:
     - extra_ball_flash_on|50ms
-  mode_extra_ball_started{current_player.extra_balls_lit == 1 and current_player.extra_ball_owed == 0}:
+
+  mode_extra_ball_started{current_player.extra_balls_lit == 1}:
     - extra_ball_flash_on|50ms
-  extra_ball_flash_on{current_player.extra_balls_lit == 1 and current_player.extra_ball_owed == 0}:
+
+  extra_ball_flash_on{current_player.extra_balls_lit == 1}:
     - extra_ball_flash_off|350ms
-  extra_ball_flash_off{current_player.extra_balls_lit == 1 and current_player.extra_ball_owed == 0}:
+
+  extra_ball_flash_off{current_player.extra_balls_lit == 1}:
     - extra_ball_flash_on|350ms
 
   # ------------------------------------------------------------
@@ -99,7 +110,13 @@ event_player:
     - reset_bullets|100ms
     - clear_start_villain_after_extra_ball|150ms
 
-  mode_extra_ball_started{current_player.extra_ball_owed == 1}:
+  # ------------------------------------------------------------
+  # SHOOT AGAIN
+  # Each Extra Ball played removes one from extra_ball_owed.
+  # If two Extra Balls were collected, one remains owed after the
+  # first Shoot Again ball begins.
+  # ------------------------------------------------------------
+  mode_extra_ball_started{current_player.extra_ball_owed >= 1}:
     - show_shoot_again_slide
     - extra_ball_used|2s
 
@@ -109,16 +126,20 @@ event_player:
   # ------------------------------------------------------------
   count_hans_for_extra_ball:
     - check_villain_extra_ball|100ms
+
   count_karl_for_extra_ball:
     - check_villain_extra_ball|100ms
+
   count_katya_for_extra_ball:
     - check_villain_extra_ball|100ms
+
   count_simon_for_extra_ball:
     - check_villain_extra_ball|100ms
+
   count_stuart_for_extra_ball:
     - check_villain_extra_ball|100ms
 
-  check_villain_extra_ball{current_player.villain_extra_ball_count >= 2 and current_player.extra_ball_mode_awarded == 0 and current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0 and current_player.extra_ball_owed == 0}:
+  check_villain_extra_ball{current_player.villain_extra_ball_count >= 2 and current_player.extra_ball_mode_awarded == 0 and current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0}:
     - light_extra_ball_from_modes
     - mark_mode_extra_ball_awarded
 
@@ -127,12 +148,14 @@ event_player:
   # ------------------------------------------------------------
   count_nakatomi_for_extra_ball:
     - check_multiball_extra_ball|100ms
+
   count_airplane_for_extra_ball:
     - check_multiball_extra_ball|100ms
+
   count_park_for_extra_ball:
     - check_multiball_extra_ball|100ms
 
-  check_multiball_extra_ball{current_player.multiball_extra_ball_count >= 2 and current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0 and current_player.extra_ball_owed == 0}:
+  check_multiball_extra_ball{current_player.multiball_extra_ball_count >= 2 and current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0}:
     - light_extra_ball_from_multiballs
     - mark_mball_extra_ball_awarded
 
@@ -146,22 +169,27 @@ variable_player:
     extra_balls_lit:
       action: set
       int: 0
+
   mode_extra_ball_started{current_player.extra_ball_owed == None}:
     extra_ball_owed:
       action: set
       int: 0
+
   mode_extra_ball_started{current_player.diehard_extra_balls_awarded == None}:
     diehard_extra_balls_awarded:
       action: set
       int: 0
+
   mode_extra_ball_started{current_player.extra_ball_mode_awarded == None}:
     extra_ball_mode_awarded:
       action: set
       int: 0
+
   mode_extra_ball_started{current_player.extra_ball_mball_awarded == None}:
     extra_ball_mball_awarded:
       action: set
       int: 0
+
   mode_extra_ball_started{current_player.start_villain_after_extra_ball == None}:
     start_villain_after_extra_ball:
       action: set
@@ -177,16 +205,16 @@ variable_player:
       action: set
       int: 0
     extra_ball_owed:
-      action: set
+      action: add
       int: 1
     diehard_extra_balls_awarded:
       action: add
       int: 1
 
-  extra_ball_used:
+  extra_ball_used{current_player.extra_ball_owed >= 1}:
     extra_ball_owed:
-      action: set
-      int: 0
+      action: add
+      int: -1
 
   set_start_villain_after_extra_ball:
     start_villain_after_extra_ball:
@@ -202,22 +230,27 @@ variable_player:
     villain_extra_ball_count:
       action: set
       int: 0
+
   mode_extra_ball_started{current_player.hans_eb_counted == None}:
     hans_eb_counted:
       action: set
       int: 0
+
   mode_extra_ball_started{current_player.karl_eb_counted == None}:
     karl_eb_counted:
       action: set
       int: 0
+
   mode_extra_ball_started{current_player.katya_eb_counted == None}:
     katya_eb_counted:
       action: set
       int: 0
+
   mode_extra_ball_started{current_player.simon_eb_counted == None}:
     simon_eb_counted:
       action: set
       int: 0
+
   mode_extra_ball_started{current_player.stuart_eb_counted == None}:
     stuart_eb_counted:
       action: set
@@ -230,6 +263,7 @@ variable_player:
     villain_extra_ball_count:
       action: add
       int: 1
+
   count_karl_for_extra_ball{current_player.karl_eb_counted == 0}:
     karl_eb_counted:
       action: set
@@ -237,6 +271,7 @@ variable_player:
     villain_extra_ball_count:
       action: add
       int: 1
+
   count_katya_for_extra_ball{current_player.katya_eb_counted == 0}:
     katya_eb_counted:
       action: set
@@ -244,6 +279,7 @@ variable_player:
     villain_extra_ball_count:
       action: add
       int: 1
+
   count_simon_for_extra_ball{current_player.simon_eb_counted == 0}:
     simon_eb_counted:
       action: set
@@ -251,6 +287,7 @@ variable_player:
     villain_extra_ball_count:
       action: add
       int: 1
+
   count_stuart_for_extra_ball{current_player.stuart_eb_counted == 0}:
     stuart_eb_counted:
       action: set
@@ -263,14 +300,17 @@ variable_player:
     multiball_extra_ball_count:
       action: set
       int: 0
+
   mode_extra_ball_started{current_player.nakatomi_eb_counted == None}:
     nakatomi_eb_counted:
       action: set
       int: 0
+
   mode_extra_ball_started{current_player.airplane_eb_counted == None}:
     airplane_eb_counted:
       action: set
       int: 0
+
   mode_extra_ball_started{current_player.park_eb_counted == None}:
     park_eb_counted:
       action: set
@@ -283,6 +323,7 @@ variable_player:
     multiball_extra_ball_count:
       action: add
       int: 1
+
   count_airplane_for_extra_ball{current_player.airplane_eb_counted == 0}:
     airplane_eb_counted:
       action: set
@@ -290,6 +331,7 @@ variable_player:
     multiball_extra_ball_count:
       action: add
       int: 1
+
   count_park_for_extra_ball{current_player.park_eb_counted == 0}:
     park_eb_counted:
       action: set
@@ -302,6 +344,7 @@ variable_player:
     extra_ball_mode_awarded:
       action: set
       int: 1
+
   mark_mball_extra_ball_awarded:
     extra_ball_mball_awarded:
       action: set
@@ -309,31 +352,41 @@ variable_player:
 
 # ------------------------------------------------------------
 # LIGHT PLAYER
-# l63 flashes red while Extra Ball is lit.
-# l63 stays solid red while Extra Ball is owed.
-# l63 turns off after Shoot Again is used.
+# l63 flashes red while an Extra Ball is lit.
+# l63 stays solid red while one or more Extra Balls are owed.
+# l63 turns off when no Extra Balls remain lit or owed.
 # ------------------------------------------------------------
 light_player:
-  extra_ball_flash_on{current_player.extra_balls_lit == 1 and current_player.extra_ball_owed == 0}:
+  extra_ball_flash_on{current_player.extra_balls_lit == 1}:
     l63:
       color: red
       priority: 9999
-  extra_ball_flash_off{current_player.extra_balls_lit == 1 and current_player.extra_ball_owed == 0}:
+
+  extra_ball_flash_off{current_player.extra_balls_lit == 1}:
     l63:
       color: off
       priority: 9999
+
   extra_ball_collected:
     l63:
       color: red
       priority: 9999
+
   show_shoot_again_slide:
     l63:
       color: red
       priority: 9999
-  extra_ball_used:
+
+  extra_ball_used{current_player.extra_ball_owed <= 1 and current_player.extra_balls_lit == 0}:
     l63:
       color: off
       priority: 9999
+
+  extra_ball_used{current_player.extra_ball_owed > 1 and current_player.extra_balls_lit == 0}:
+    l63:
+      color: red
+      priority: 9999
+
   ball_ended{current_player.extra_ball_owed == 0 and current_player.extra_balls_lit == 0}:
     l63:
       color: off
