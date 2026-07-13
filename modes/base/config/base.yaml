@@ -307,11 +307,11 @@ light_player:
     l57:
       color: ff0000
       priority: 50
-  mode_base_started{current_player.played_nakatomi_multiball==1 and current_player.nakatomi_super_jackpot_collected==0}:
+  mode_base_started{machine.nakatomi_multiball_result==1}:
     l57:
       color: ff0000
       priority: 50
-  mode_base_started{current_player.played_nakatomi_multiball==1 and current_player.nakatomi_super_jackpot_collected==1}:
+  mode_base_started{machine.nakatomi_multiball_result==2}:
     l57:
       color: 00ff00
       priority: 50
@@ -805,6 +805,18 @@ sound_player:
 # reset values when base starts.
 # ------------------------------------------------------------
 variable_player:
+  mode_base_started.100{current_player.number == 1 and current_player.ball == 1}:
+    nakatomi_multiball_result:
+      action: set_machine
+      int: 0
+  nakatomi_super_jackpot_collected:
+    nakatomi_multiball_result:
+      action: set_machine
+      int: 2
+  multiball_nakatomi_ended{machine.nakatomi_multiball_result != 2}:
+    nakatomi_multiball_result:
+      action: set_machine
+      int: 1
   magnets_turn_off_after_switch:
     magnets_enabled:
       action: set_machine
