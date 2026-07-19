@@ -1,8 +1,8 @@
 {
   "loop_champion": {
     "name": "SMD",
-    "value": 2,
-    "text": "2 LOOPS"
+    "value": 3,
+    "text": "3 LOOPS"
   },
   "multiball_hero": {
     "name": "AAA",
@@ -12,8 +12,8 @@
   },
   "villain_mvp": {
     "name": "SMD",
-    "value": 4897030,
-    "text": "4,897,030",
-    "mode": "HANS DIE HARDER"
+    "value": 23133220,
+    "text": "23,133,220",
+    "mode": "KATYA DIE HARDER"
   }
 }

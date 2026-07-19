@@ -10,8 +10,9 @@
 #   - White shots extend time and increase the Ambush value.
 #   - Right ramp / air duct collects the Ambush value.
 #   - Value decays after the grace timer starts decay.
-#   - Ambush stops safely if villain select, difficulty select,
-#     villain mode, or ball end starts.
+#   - Villain select is blocked while Ambush is running.
+#   - Ambush stops safely if difficulty select, villain mode,
+#     or ball end starts.
 # ------------------------------------------------------------
 
 mode:
@@ -26,7 +27,6 @@ mode:
     - ambush_finished
     - ambush_failed
     - ball_ended
-    - start_villain_select
     - start_karl_difficulty_select
     - start_hans_difficulty_select
     - start_katya_difficulty_select
@@ -38,7 +38,7 @@ mode:
 # WIDGET PLAYER
 # ------------------------------------------------------------
 # Shows the Ambush value widget while Ambush is active.
-# Removes it when Ambush ends or another major mode/select starts.
+# Removes it when Ambush ends or another conflicting major mode starts.
 # ------------------------------------------------------------
 widget_player:
   ambush_start_timers:
@@ -52,9 +52,6 @@ widget_player:
     ambush_value_widget:
       action: remove
   ball_ended:
-    ambush_value_widget:
-      action: remove
-  start_villain_select:
     ambush_value_widget:
       action: remove
   start_karl_difficulty_select:
@@ -91,7 +88,7 @@ slide_player:
 # EVENT PLAYER
 # ------------------------------------------------------------
 # Starts Ambush, runs timer ticks, extends/collects value,
-# handles finish delay, and stops Ambush when other modes start.
+# handles finish delay, and stops Ambush when conflicting modes start.
 # ------------------------------------------------------------
 event_player:
   mode_ambush_started:
@@ -145,9 +142,6 @@ event_player:
 
   ball_ended:
     - wire_ramp_exit_closed
-
-  start_villain_select:
-    - ambush_failed
 
   start_karl_difficulty_select:
     - ambush_failed
@@ -382,8 +376,6 @@ timers:
         action: stop
       - event: ambush_failed
         action: stop
-      - event: start_villain_select
-        action: stop
       - event: start_karl_difficulty_select
         action: stop
       - event: start_hans_difficulty_select
@@ -409,8 +401,6 @@ timers:
       - event: ambush_collected
         action: stop
       - event: ambush_failed
-        action: stop
-      - event: start_villain_select
         action: stop
       - event: start_karl_difficulty_select
         action: stop
@@ -438,8 +428,6 @@ timers:
         action: stop
       - event: ambush_failed
         action: stop
-      - event: start_villain_select
-        action: stop
       - event: start_karl_difficulty_select
         action: stop
       - event: start_hans_difficulty_select
@@ -464,8 +452,6 @@ timers:
         action: restart
       - event: ambush_failed
         action: stop
-      - event: start_villain_select
-        action: stop
       - event: start_karl_difficulty_select
         action: stop
       - event: start_hans_difficulty_select
@@ -484,7 +470,8 @@ timers:
 # ------------------------------------------------------------
 # White Ambush shots extend time/value.
 # Right ramp / air duct collects the current Ambush value.
-# All shots disable on collect, fail, ball end, or villain/select start.
+# All shots disable on collect, fail, ball end, difficulty select,
+# or villain mode start.
 # ------------------------------------------------------------
 shots:
   ambush_left_loop:
@@ -496,7 +483,6 @@ shots:
       - ambush_collected
       - ambush_failed
       - ball_ended
-      - start_villain_select
       - start_karl_difficulty_select
       - start_hans_difficulty_select
       - start_katya_difficulty_select
@@ -513,7 +499,6 @@ shots:
       - ambush_collected
       - ambush_failed
       - ball_ended
-      - start_villain_select
       - start_karl_difficulty_select
       - start_hans_difficulty_select
       - start_katya_difficulty_select
@@ -530,7 +515,6 @@ shots:
       - ambush_collected
       - ambush_failed
       - ball_ended
-      - start_villain_select
       - start_karl_difficulty_select
       - start_hans_difficulty_select
       - start_katya_difficulty_select
@@ -547,7 +531,6 @@ shots:
       - ambush_collected
       - ambush_failed
       - ball_ended
-      - start_villain_select
       - start_karl_difficulty_select
       - start_hans_difficulty_select
       - start_katya_difficulty_select
@@ -564,7 +547,6 @@ shots:
       - ambush_collected
       - ambush_failed
       - ball_ended
-      - start_villain_select
       - start_karl_difficulty_select
       - start_hans_difficulty_select
       - start_katya_difficulty_select
@@ -580,7 +562,6 @@ shots:
       - ambush_collected
       - ambush_failed
       - ball_ended
-      - start_villain_select
       - start_karl_difficulty_select
       - start_hans_difficulty_select
       - start_katya_difficulty_select
@@ -705,20 +686,6 @@ show_player:
     ambush_l24_flash:
       action: stop
 
-  start_villain_select:
-    ambush_l20_flash:
-      action: stop
-    ambush_l21_flash:
-      action: stop
-    ambush_l22_flash:
-      action: stop
-    ambush_l23_flash:
-      action: stop
-    ambush_l52_flash:
-      action: stop
-    ambush_l24_flash:
-      action: stop
-
   start_karl_difficulty_select:
     ambush_l20_flash:
       action: stop
@@ -827,9 +794,6 @@ sound_player:
   ball_ended:
     "Shooting The Glass":
       action: stop
-  start_villain_select:
-    "Shooting The Glass":
-      action: stop
   villain_mode_started:
     "Shooting The Glass":
       action: stop
@@ -837,7 +801,7 @@ sound_player:
 # LIGHT PLAYER
 # ------------------------------------------------------------
 # Sets Ambush colour and clears shot lights when Ambush ends
-# or another mode/select flow takes over.
+# or another conflicting mode flow takes over.
 # ------------------------------------------------------------
 light_player:
   mode_ambush_started:
@@ -855,14 +819,6 @@ light_player:
     l52: off
 
   ambush_failed:
-    l20: off
-    l21: off
-    l22: off
-    l23: off
-    l24: off
-    l52: off
-
-  start_villain_select:
     l20: off
     l21: off
     l22: off

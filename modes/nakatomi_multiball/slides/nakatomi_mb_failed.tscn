@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://l7ae2o5k1ght"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_4hg1q"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_4hg1q"]
 [ext_resource type="VideoStream" uid="uid://cq24axi8tvloj" path="res://modes/nakatomi_multiball/slides/NakatomiMBFailed.ogv" id="2_0k0kc"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_hlhgp"]
 
@@ -21,6 +21,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_0k0kc")
+volume_db = 11.999999
 autoplay = true
 script = ExtResource("3_hlhgp")
 end_behavior = 1

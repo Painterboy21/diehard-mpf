@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1783975596,
+  "updatedAt": 1784486201,
   "entries": [
     {
       "rank": "1",
@@ -17,58 +17,58 @@
     },
     {
       "rank": "3",
+      "name": "CEF",
+      "score": 26120840,
+      "score_text": "26,120,840",
+      "pending": false
+    },
+    {
+      "rank": "4",
+      "name": "DDD",
+      "score": 14061340,
+      "score_text": "14,061,340",
+      "pending": false
+    },
+    {
+      "rank": "5",
+      "name": "ABA",
+      "score": 10084770,
+      "score_text": "10,084,770",
+      "pending": false
+    },
+    {
+      "rank": "6",
       "name": "ABC",
       "score": 9891490,
       "score_text": "9,891,490",
       "pending": false
     },
     {
-      "rank": "4",
-      "name": "AAA",
-      "score": 3633420,
-      "score_text": "3,633,420",
-      "pending": false
-    },
-    {
-      "rank": "5",
-      "name": "JohnMcClane",
-      "score": 2679350,
-      "score_text": "2,679,350",
-      "pending": false
-    },
-    {
-      "rank": "6",
-      "name": "GIK",
-      "score": 1206290,
-      "score_text": "1,206,290",
-      "pending": false
-    },
-    {
       "rank": "7",
-      "name": "DCB",
-      "score": 845600,
-      "score_text": "845,600",
+      "name": "FHA",
+      "score": 8763520,
+      "score_text": "8,763,520",
       "pending": false
     },
     {
       "rank": "8",
-      "name": "DEF",
-      "score": 723200,
-      "score_text": "723,200",
+      "name": "JOHNMCCLANE",
+      "score": 8225470,
+      "score_text": "8,225,470",
       "pending": false
     },
     {
       "rank": "9",
-      "name": "MAX",
-      "score": 109210,
-      "score_text": "109,210",
+      "name": "AAA",
+      "score": 8063860,
+      "score_text": "8,063,860",
       "pending": false
     },
     {
       "rank": "10",
-      "name": "---",
-      "score": 0,
-      "score_text": "---",
+      "name": "LMP",
+      "score": 4149380,
+      "score_text": "4,149,380",
       "pending": false
     }
   ]

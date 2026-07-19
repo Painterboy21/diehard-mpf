@@ -58,7 +58,7 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 scale = Vector2(1, 0.9)
 stream = ExtResource("4_iqljn")
-volume_db = 11.999999
+volume_db = 11.999998
 
 [node name="HansVideoControl" type="Control" parent="." unique_id=959045619]
 visible = false

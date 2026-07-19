@@ -1,0 +1,40 @@
+#config_version=6
+# ------------------------------------------------------------
+# ABANDONED GAME AUTO-RESET
+# ------------------------------------------------------------
+# Ends an active game after 5 minutes with no player activity.
+# This is a non-game mode so it can remain active across ball changes.
+# ------------------------------------------------------------
+mode:
+  start_events:
+    - game_started
+  stop_events:
+    - game_ended
+  priority: 100
+  game_mode: false
+  stop_on_ball_end: false
+timers:
+  abandoned_game_timer:
+    start_value: 300
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: true
+    control_events:
+      - event: sw_playfield_active
+        action: restart
+      - event: s_left_flipper_active
+        action: restart
+      - event: s_right_flipper_active
+        action: restart
+      - event: s_actionbtn_active
+        action: restart
+      - event: s_fire_active
+        action: restart
+      - event: s_start_active
+        action: restart
+event_player:
+  timer_abandoned_game_timer_complete:
+    - abandoned_game_timeout
+  abandoned_game_timeout:
+    - end_game

@@ -52,7 +52,7 @@ timers:
 # ------------------------------------------------------------
 ball_saves:
   hans_diehard_start_save:
-    active_time: 2s
+    active_time: 4s
     hurry_up_time: 0s
     grace_period: 0s
     auto_launch: true

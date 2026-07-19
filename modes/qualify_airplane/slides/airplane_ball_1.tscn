@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bsxh08at2y051"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_fhj2x"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_fhj2x"]
 [ext_resource type="VideoStream" uid="uid://6upjkkpcuoaj" path="res://modes/qualify_airplane/slides/AirplaneBallLocked1.ogv" id="2_hgs1t"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_otyj4"]
 
@@ -18,6 +18,7 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 stream = ExtResource("2_hgs1t")
+volume_db = 11.999999
 autoplay = true
 script = ExtResource("3_otyj4")
 end_behavior = 1

@@ -82,7 +82,7 @@ ratio = 1.777
 [node name="MPFVideoPlayer" type="VideoStreamPlayer" parent="AspectRatioContainer" unique_id=847438674]
 layout_mode = 2
 stream = ExtResource("2_gvfig")
-volume_db = 7.999997
+volume_db = 11.999999
 autoplay = true
 expand = true
 loop = true

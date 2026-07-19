@@ -58,7 +58,7 @@ timers:
 # ------------------------------------------------------------
 ball_saves:
   hans_dieharder_start_save:
-    active_time: 2s
+    active_time: 4s
     hurry_up_time: 0s
     grace_period: 0s
     auto_launch: true
@@ -70,7 +70,7 @@ ball_saves:
       - hans_dieharder_complete
       - mode_hans_dieharder_stopping
   hans_dieharder_complete_save:
-    active_time: 8s
+    active_time: 10s
     hurry_up_time: 1s
     grace_period: 1s
     auto_launch: true
@@ -240,7 +240,7 @@ event_player:
     - reset_bullets
   timer_hans_dieharder_timer_complete{current_player.hans_dieharder_result_started==0 and current_player.hans_dieharder_completion_active==0}:
     - hans_dieharder_fail_mode
-  ball_drain{current_player.villain_mode_running==1 and current_player.hans_dieharder_result_started==0 and current_player.hans_dieharder_completion_active==0}:
+  ball_drain{current_player.villain_mode_running==1 and current_player.hans_dieharder_result_started==0 and current_player.hans_dieharder_completion_active==0 and current_player.hans_dieharder_start_save_active==0 and current_player.hans_dieharder_complete_save_active==0}:
     - hans_dieharder_fail_mode
   ball_drain{current_player.hans_dieharder_completion_active==1}:
     - reset_bullet_total
@@ -273,6 +273,12 @@ variable_player:
     villain_mode_running:
       int: 1
       action: set
+    hans_dieharder_start_save_active:
+      int: 0
+      action: set
+    hans_dieharder_complete_save_active:
+      int: 0
+      action: set
     hans_dieharder_result_started:
       int: 0
       action: set
@@ -290,6 +296,22 @@ variable_player:
       action: set
     hans_dieharder_remaining:
       int: 8
+      action: set
+  ball_save_hans_dieharder_start_save_enabled:
+    hans_dieharder_start_save_active:
+      int: 1
+      action: set
+  ball_save_hans_dieharder_start_save_disabled:
+    hans_dieharder_start_save_active:
+      int: 0
+      action: set
+  ball_save_hans_dieharder_complete_save_enabled:
+    hans_dieharder_complete_save_active:
+      int: 1
+      action: set
+  ball_save_hans_dieharder_complete_save_disabled:
+    hans_dieharder_complete_save_active:
+      int: 0
       action: set
   timer_hans_dieharder_timer_tick:
     hans_dieharder_time:
@@ -338,6 +360,12 @@ variable_player:
       action: add
   mode_hans_dieharder_stopping:
     villain_mode_running:
+      int: 0
+      action: set
+    hans_dieharder_start_save_active:
+      int: 0
+      action: set
+    hans_dieharder_complete_save_active:
       int: 0
       action: set
     hans_dieharder_result_started:

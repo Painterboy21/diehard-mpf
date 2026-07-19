@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c4iom2c84lpya"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_a7sh0"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_a7sh0"]
 [ext_resource type="VideoStream" uid="uid://cs8epycswpgdw" path="res://videos/VillainSelect/ColStuartEnters.ogv" id="2_htwkm"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_diehv"]
 
@@ -21,6 +21,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_htwkm")
+volume_db = 11.999999
 autoplay = true
 script = ExtResource("3_diehv")
 end_behavior = 1

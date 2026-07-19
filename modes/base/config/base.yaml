@@ -26,18 +26,22 @@ mode:
 ball_holds:
   villain_hold:
     enable_events:
-      - villain_start_lit
-      - yippee_ki_yay_wizard_ready
+      - villain_start_lit{current_player.ambush_running != 1}
+      - yippee_ki_yay_wizard_ready{current_player.ambush_running != 1}
     disable_events:
       - ball_ended
       - tilt
       - release_villain_select_vuk
+      - start_ambush
+      - mode_ambush_started
     hold_devices: rightvuk
     balls_to_hold: 1
     release_all_events:
       - tilt
       - ball_ended
       - release_villain_select_vuk
+      - start_ambush
+      - mode_ambush_started
 # ------------------------------------------------------------
 # BALL SAVES
 # ------------------------------------------------------------
@@ -109,9 +113,11 @@ event_player:
     - drop_target_hit
   s_drop_target_3_active:
     - drop_target_hit
-  ball_hold_villain_hold_full{current_player.multiball_running != 1 and current_player.wizard_mode_ready != 1 and current_player.villain_start_ready == 1}:
+  ball_hold_villain_hold_full{current_player.multiball_running != 1 and current_player.wizard_mode_ready != 1 and current_player.villain_start_ready == 1 and current_player.ambush_running != 1}:
     - start_villain_select
   ball_hold_villain_hold_full{current_player.multiball_running == 1}:
+    - release_villain_select_vuk
+  ball_hold_villain_hold_full{current_player.ambush_running == 1}:
     - release_villain_select_vuk
   player_added{num==2}:
     - player_2_added

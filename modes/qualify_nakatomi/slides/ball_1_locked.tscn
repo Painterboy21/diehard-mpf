@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bhexc7pxnncsu"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_m1p16"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_m1p16"]
 [ext_resource type="VideoStream" uid="uid://bbaya65taq6ic" path="res://modes/qualify_nakatomi/slides/ball_1_locked.ogv" id="2_m1p16"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_ofwfp"]
 
@@ -22,6 +22,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_m1p16")
+volume_db = 11.999999
 autoplay = true
 bus = &"voice"
 script = ExtResource("3_ofwfp")

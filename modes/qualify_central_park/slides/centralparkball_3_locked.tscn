@@ -16,6 +16,7 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 stream = ExtResource("2_uuh3d")
+volume_db = 11.999999
 autoplay = true
 script = ExtResource("3_nnh51")
 end_behavior = 1
