@@ -362,18 +362,30 @@ variable_player:
     eob_bonus_awarded:
       int: 0
       action: set
+    villains_completed:
+      int: "current_player.hans_complete + current_player.katya_complete + current_player.karl_complete + current_player.simon_complete + current_player.col_stuart_complete"
+      action: set
+    eob_bonus_villains:
+      int: "(current_player.hans_complete + current_player.katya_complete + current_player.karl_complete + current_player.simon_complete + current_player.col_stuart_complete) * 1000000"
+      action: set
     eob_bonus_total:
-      int: "current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains"
+      int: "current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + ((current_player.hans_complete + current_player.katya_complete + current_player.karl_complete + current_player.simon_complete + current_player.col_stuart_complete) * 1000000)"
       action: set
     eob_bonus_x:
-      int: "(current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains) * current_player.bonus_multiplier"
+      int: "(current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + ((current_player.hans_complete + current_player.katya_complete + current_player.karl_complete + current_player.simon_complete + current_player.col_stuart_complete) * 1000000)) * current_player.bonus_multiplier"
       action: set
   calculate_eob_bonus_x{current_player.suppress_eob_bonus != 1}:
+    villains_completed:
+      int: "current_player.hans_complete + current_player.katya_complete + current_player.karl_complete + current_player.simon_complete + current_player.col_stuart_complete"
+      action: set
+    eob_bonus_villains:
+      int: "(current_player.hans_complete + current_player.katya_complete + current_player.karl_complete + current_player.simon_complete + current_player.col_stuart_complete) * 1000000"
+      action: set
     eob_bonus_total:
-      int: "current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains"
+      int: "current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + ((current_player.hans_complete + current_player.katya_complete + current_player.karl_complete + current_player.simon_complete + current_player.col_stuart_complete) * 1000000)"
       action: set
     eob_bonus_x:
-      int: "(current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + current_player.eob_bonus_villains) * current_player.bonus_multiplier"
+      int: "(current_player.eob_bonus_bullets + current_player.eob_bonus_multiball + current_player.eob_bonus_ambush + current_player.eob_bonus_holly + ((current_player.hans_complete + current_player.katya_complete + current_player.karl_complete + current_player.simon_complete + current_player.col_stuart_complete) * 1000000)) * current_player.bonus_multiplier"
       action: set
   award_eob_bonus{current_player.eob_bonus_awarded != 1 and current_player.suppress_eob_bonus != 1}:
     score:

@@ -234,7 +234,7 @@ light_player:
     SPOTS:
       color: 969696
     SPOTS_BUMPER:
-      color: 969670
+      color: 969650
     s_actionbtn:
       color: 969696
   hold_bonus_x_lights_on:

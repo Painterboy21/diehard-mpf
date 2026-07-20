@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="3_uas50"]
 [ext_resource type="VideoStream" uid="uid://b3u8pr02538pc" path="res://modes/hans_diehard/slides/Hans1.ogv" id="4_iqljn"]
 [ext_resource type="PackedScene" uid="uid://cerpiy4w578gl" path="res://modes/hans_diehard/widgets/hans_progress_widget.tscn" id="4_uas50"]
-[ext_resource type="Script" uid="uid://dn8kd4bkicwek" path="res://modes/hans_dieharder/slides/hans_dieharder_video_control.gd" id="5_hk5xl"]
+[ext_resource type="Script" uid="uid://dqxu7scei7tfq" path="res://modes/hans_diehard/slides/hans_diehard_background.gd" id="5_evd32"]
 [ext_resource type="PackedScene" uid="uid://660hrg5dn8jt" path="res://modes/katya_diehard/widgets/katya_timer_widget.tscn" id="5_yudu3"]
 [ext_resource type="Theme" uid="uid://b76wudqrb3pvv" path="res://godot-media/themes/lbl_score.tres" id="6_mugig"]
 [ext_resource type="Script" uid="uid://bfvhmv2eirpua" path="res://addons/mpf-gmc/classes/mpf_variable.gd" id="7_kferj"]
@@ -13,7 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://ytwrcjpchkp8" path="res://godot-media/images/player 1 overlay.png" id="9_g3nsm"]
 [ext_resource type="Texture2D" uid="uid://cgdg61xeojmu8" path="res://godot-media/images/hollywhite.png" id="10_iqljn"]
 [ext_resource type="Texture2D" uid="uid://bb3045ld4jo7u" path="res://godot-media/images/Detonators/Detonator1.png" id="16_cmyb2"]
-[ext_resource type="Script" uid="uid://dcwjyu352ua3g" path="res://modes/hans_diehard/slides/detonators.gd" id="16_evd32"]
 [ext_resource type="Texture2D" uid="uid://dgj3qlcbcqwa7" path="res://godot-media/images/Detonators/Detonator7.png" id="16_mugig"]
 [ext_resource type="Texture2D" uid="uid://bjquoenugp2oh" path="res://godot-media/images/Detonators/Detonator2.png" id="17_evd32"]
 [ext_resource type="Texture2D" uid="uid://duffsm3leqd04" path="res://godot-media/images/Detonators/Detonator3.png" id="18_htvvc"]
@@ -25,6 +24,59 @@
 [ext_resource type="Texture2D" uid="uid://cyuh0skrfoso2" path="res://godot-media/images/Detonators/Detonator8.png" id="23_vd1jh"]
 [ext_resource type="Texture2D" uid="uid://cghope0h5kgp1" path="res://godot-media/images/player 3 overlay.png" id="24_5xuoq"]
 [ext_resource type="Texture2D" uid="uid://6fk0ee3lpgir" path="res://godot-media/images/player 4 overlay.png" id="25_hl42m"]
+
+[sub_resource type="GDScript" id="GDScript_evd32"]
+script/source = "
+extends Control
+
+var detonator_nodes: Array[Sprite2D] = []
+var last_hits: int = -1
+
+func _ready() -> void:
+	for i in range(1, 9):
+		var detonator := get_node_or_null(\"%s_detonator\" % i) as Sprite2D
+
+		if detonator == null:
+			push_error(\"Missing detonator node: %s_detonator\" % i)
+			continue
+
+		detonator.visible = true
+		detonator_nodes.append(detonator)
+
+	update_from_mpf()
+
+
+func _process(_delta: float) -> void:
+	update_from_mpf()
+
+
+func update_from_mpf() -> void:
+	if MPF.game == null or MPF.game.player == null:
+		return
+
+	var hits := int(MPF.game.player.get(\"hans_diehard_progress\", 0))
+	hits = clampi(hits, 0, 8)
+
+	if hits == last_hits:
+		return
+
+	last_hits = hits
+	update_detonators(hits)
+
+
+func update_detonators(hits: int) -> void:
+	# Show all detonators first.
+	for detonator in detonator_nodes:
+		detonator.visible = true
+
+	# Hide one detonator per hit.
+	# Hit 1 hides detonator 8, hit 2 hides detonator 7, etc.
+	for i in range(hits):
+		var detonator_index := 7 - i
+
+		if detonator_index >= 0 and detonator_index < detonator_nodes.size():
+			detonator_nodes[detonator_index].visible = false
+"
 
 [node name="hans_diehard_background" type="Control" unique_id=1876849087]
 layout_mode = 3
@@ -58,7 +110,7 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 scale = Vector2(1, 0.9)
 stream = ExtResource("4_iqljn")
-volume_db = 11.999998
+volume_db = 11.999997
 
 [node name="HansVideoControl" type="Control" parent="." unique_id=959045619]
 visible = false
@@ -68,7 +120,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("5_hk5xl")
+script = ExtResource("5_evd32")
 
 [node name="HansRemainingVariable" type="Label" parent="HansVideoControl" unique_id=1659313648]
 visible = false
@@ -147,7 +199,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("16_evd32")
+script = SubResource("GDScript_evd32")
 
 [node name="1_detonator" type="Sprite2D" parent="detonators" unique_id=500312049]
 position = Vector2(1827.9999, 744.5)

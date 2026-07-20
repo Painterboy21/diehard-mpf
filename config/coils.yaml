@@ -112,7 +112,7 @@ coils:
   # ------------------------------------------------------------
   c_rightkicker_eject:
     number: e-8
-    default_pulse_ms: 80ms
+    default_pulse_ms: 126ms
     default_pulse_power: 1.0
     max_pulse_ms: 255ms
     label: Right Kicker Eject
