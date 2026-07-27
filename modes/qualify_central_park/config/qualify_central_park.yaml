@@ -157,8 +157,16 @@ slide_player:
       expire: 0s
 
 event_player:
+
+  counter_central_park_multiball_counter_hit{hits==1}: taxi_lock_1
+  counter_central_park_multiball_counter_hit{hits==2}: taxi_lock_2
+  counter_central_park_multiball_counter_hit{hits==3}: taxi_lock_3
+
   slide_centralpark_mb_removed:
-    - start_central_park_multiball
+    - taxi_end
+    - start_central_park_multiball|500ms
+    - taxi_home|2s
+
 
 variable_player:
   trigger_central_park_ball_locked:

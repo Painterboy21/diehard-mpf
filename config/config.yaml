@@ -34,11 +34,14 @@ fast:
         order: 4
   exp:
     port: auto
+    debug: false
     boards:
       neuron:
         model: FP-EXP-2000
       playfield:
         model: FP-EXP-0071
+      playfield_1:
+        model: FP-EXP-0061-2
       shakerboard:
         model: FP-EXP-1313
       cab:
@@ -177,7 +180,38 @@ flippers:
       - disable_flippers
       - flipper_off
 
-# ------------------------------------------------------------
+steppers:
+  taxi:
+    number: playfield_1-1
+    homing_mode: hardware
+    homing_direction: clockwise
+    home_on_startup: true
+    pos_min: -1050
+    pos_max: 0
+    reset_position: 0
+    reset_events:
+      - machine_reset_phase_3
+    platform_settings:
+      default_speed: 500
+    named_positions:
+      0:
+        event: taxi_home
+        speed: 500
+      -200:
+        event: taxi_lock_1
+        speed: 500
+      -500:
+        event: taxi_lock_2
+        speed: 500
+      -650:
+        event: taxi_lock_3
+        speed: 500
+      -1050:
+        event: taxi_end
+        speed: 500
+
+
+#----------------------------------------------------------
 # DROP TARGETS
 # ------------------------------------------------------------
 drop_targets:
@@ -273,7 +307,8 @@ event_player:
     - trmagl_fling|180ms
   s_trmagr_active{machine.magnets_enabled}:
     - trmagr_fling|180ms
-
+  game_ended:
+    - taxi_home
 
 # ------------------------------------------------------------
 # MACHINE VARS

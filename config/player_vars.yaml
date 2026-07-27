@@ -46,6 +46,9 @@ player_vars:
   wizard_mode_won:
     initial_value: 0
     value_type: int
+  yippee_ki_yay_pending_score:
+    initial_value: 0
+    value_type: int
   tower_lock:
     initial_value: 0
     value_type: int
