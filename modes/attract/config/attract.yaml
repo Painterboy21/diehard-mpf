@@ -41,6 +41,7 @@ event_player:
     - iscored_flush_queue|2s
     - reset_idle_timer
     - attract_sound_wake
+    - taxi_home
 
   s_left_flipper_active:
     - rotate_attract_left

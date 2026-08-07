@@ -186,7 +186,7 @@ steppers:
     homing_mode: hardware
     homing_direction: clockwise
     home_on_startup: true
-    pos_min: -1050
+    pos_min: -1450
     pos_max: 0
     reset_position: 0
     reset_events:
@@ -197,16 +197,16 @@ steppers:
       0:
         event: taxi_home
         speed: 500
-      -200:
+      -280:
         event: taxi_lock_1
         speed: 500
-      -500:
+      -620:
         event: taxi_lock_2
         speed: 500
-      -650:
+      -970:
         event: taxi_lock_3
         speed: 500
-      -1050:
+      -1450:
         event: taxi_end
         speed: 500
 
@@ -307,7 +307,7 @@ event_player:
     - trmagl_fling|180ms
   s_trmagr_active{machine.magnets_enabled}:
     - trmagr_fling|180ms
-  game_ended:
+  game_ending: 
     - taxi_home
 
 # ------------------------------------------------------------
@@ -430,14 +430,14 @@ servos:
   servo1:
     number: playfield-1
     platform_settings:
-      min_us: 0.2
+      min_us: 0.1
       max_us: 0.2
-      home_us: 0.2
+      home_us: 0.1
       max_runtime: 2s
     reset_position: 0.2
     reset_events: game_started, ball_ended
     positions:
-      0.2: wire_ramp_exit_closed
+      0.1: wire_ramp_exit_closed
       0.90: wire_ramp_exit_open
   servo2:
     number: playfield-2

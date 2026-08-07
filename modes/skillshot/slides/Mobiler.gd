@@ -84,7 +84,6 @@ func update_player_ball_label():
 
 	playerBallLabel.text = "PLAYER %d  BALL %d" % [player_num, ball_num]
 	playerBallLabel.visible = true
-
 	playerBallLabelActive = true
 	playerBallFlashTime = 0.0
 	playerBallFlashCount = 0
@@ -137,8 +136,6 @@ func flash_player_ball_label(delta):
 		if playerBallHoldTime >= playerBallHoldDuration:
 			hide_player_ball_label()
 
-		return
-
 
 func _process(delta):
 	flash_player_ball_label(delta)
@@ -180,7 +177,7 @@ func CheckHit(payload: Dictionary):
 
 		if not skillshotHitSent:
 			skillshotHitSent = true
-			MPF.server.send_event("skillshot_hit_fast")
+			MPF.server.send_event("skillshot_hit")
 
 		match MPF.game.player.ball:
 			1:
@@ -191,6 +188,7 @@ func CheckHit(payload: Dictionary):
 				videoPlayer.stream = load("res://modes/skillshot/slides/assets/4M10Sec.ogv")
 	else:
 		hitSuccess = false
+		MPF.server.send_event("skillshot_miss")
 		videoPlayer.stream = load("res://modes/skillshot/slides/assets/SkillshotMissed.ogv")
 
 	videoPlayer.visible = true
@@ -204,11 +202,7 @@ func _on_video_finished():
 		return
 
 	hide_player_ball_label()
-
-	if hitSuccess:
-		MPF.server.send_event("skillshot_hit")
-	else:
-		MPF.server.send_event("skillshot_miss")
+	MPF.server.send_event("skillshot_result_video_finished")
 
 
 func _on_clear_skillshot_player_ball(payload: Dictionary):
