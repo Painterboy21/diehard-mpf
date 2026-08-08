@@ -29,12 +29,15 @@ ball_devices:
   # ------------------------------------------------------------
   trough:
     label: Trough
-    ball_switches: s_trough1, s_trough2, s_trough3, s_trough4, s_trough5, s_trough6, s_trough_jam
+    ball_switches: s_trough1, s_trough2, s_trough3, s_trough4, s_trough5, s_trough6
     eject_coil: c_trough_eject
     tags: trough, home, drain
     jam_switch: s_trough_jam
     eject_coil_jam_pulse: 15ms
     eject_targets: bd_plunger
+    eject_timeouts: 3s
+    idle_missing_ball_timeout: 15s
+    entrance_count_delay: 750ms
     ball_search_order: 0
 
   # ------------------------------------------------------------

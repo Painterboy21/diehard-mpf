@@ -9,8 +9,9 @@
 # Normal score top 3 stays separate from the machine-record initials trigger.
 # ------------------------------------------------------------
 mode:
-  code: mpf.modes.high_score.code.high_score.HighScore
+  code: final_ball_high_score.PerPlayerHighScore
   start_events:
+    - player_turn_ending
     - game_ending
     - start_high_score
   stop_events:
@@ -94,11 +95,13 @@ slide_player:
   high_score_enter_initials:
     high_score:
       action: play
+      priority: 10000
       expire: 0s
 
   high_score_award_display{category_name=="score"}:
     high_score_award:
       action: play
+      priority: 10000
       expire: 0s
 
 

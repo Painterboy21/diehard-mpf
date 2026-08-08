@@ -1,19 +1,19 @@
 {
   "loop_champion": {
-    "name": "SMD",
-    "value": 1,
-    "text": "1 LOOPS"
+    "name": "DAD",
+    "value": 2,
+    "text": "2 LOOPS"
   },
   "multiball_hero": {
-    "name": "---",
-    "value": 0,
-    "text": "---",
-    "mode": "---"
+    "name": "DAD",
+    "value": 6471960,
+    "text": "6,471,960",
+    "mode": "NAKATOMI MULTIBALL"
   },
   "villain_mvp": {
     "name": "SMD",
-    "value": 3114340,
-    "text": "3,114,340",
+    "value": 10067220,
+    "text": "10,067,220",
     "mode": "HANS DIE HARD"
   }
 }
