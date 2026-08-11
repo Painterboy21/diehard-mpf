@@ -7,6 +7,7 @@ var default_display: MPFDisplay
 
 func _enter_tree() -> void:
 	if not Engine.is_editor_hint():
+		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 		if MPF.get_config_value("gmc", "fullscreen", false):
 			get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN
 

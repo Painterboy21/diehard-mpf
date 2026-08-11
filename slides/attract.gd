@@ -32,6 +32,26 @@ var attract_sound_asleep: bool = false
 @onready var lblVillainMVPName = get_node_or_null("../VillainMVP/Name")
 @onready var lblVillainMVPValue = get_node_or_null("../VillainMVP/Value")
 
+@onready var vboxMultiplayerMadness = get_node_or_null("../MultiplayerMadness")
+@onready var multiplayerMadnessVideos: Array = [
+	get_node_or_null("../MultiplayerMadness/Panels/NakatomiPanel/NakatomiVideo"),
+	get_node_or_null("../MultiplayerMadness/Panels/CentralParkPanel/CentralParkVideo"),
+	get_node_or_null("../MultiplayerMadness/Panels/AirplanePanel/AirplaneVideo"),
+]
+
+@onready var vboxVpinWorkshop = get_node_or_null("../VPinWorkshop")
+@onready var vpinWorkshopBackground = get_node_or_null("../VPinWorkshop/Background")
+@onready var vpinWorkshopLogo = get_node_or_null("../VPinWorkshop/Logo")
+@onready var vpinWorkshopLabels: Array = [
+	get_node_or_null("../VPinWorkshop/Logo"),
+	get_node_or_null("../VPinWorkshop/Title"),
+	get_node_or_null("../VPinWorkshop/Body"),
+]
+
+@onready var vboxFastPinball = get_node_or_null("../FastPinball")
+@onready var fastPinballScreen = get_node_or_null("../FastPinball/Screen")
+@onready var fastPinballLogo = get_node_or_null("../FastPinball/Content/Logo")
+
 @onready var iscoredLeaderboard = get_node_or_null("../iscored_leaderboard")
 
 var loop_videos: Array[String] = [
@@ -52,8 +72,13 @@ const ISCORED_PAGE_INDEX := 6
 
 var current_index: int = -1
 var player_scores_index: int = -1
+var multiplayer_madness_page_index: int = -1
+var vpin_workshop_page_index: int = -1
+var fast_pinball_page_index: int = -1
 var instruction_page_index: int = -1
 var iscored_refresh_elapsed: float = 0.0
+var vpin_workshop_tween: Tween
+var vpin_workshop_label_home_positions: Dictionary = {}
 
 
 func _ready() -> void:
@@ -94,6 +119,27 @@ func _ready() -> void:
 	else:
 		push_warning("VillainMVP node not found. Add it as a sibling of this VideoStreamPlayer.")
 
+	if vboxMultiplayerMadness:
+		vboxMultiplayerMadness.hide()
+		vboxMultiplayerMadness.z_index = 100
+		print("MultiplayerMadness node found")
+	else:
+		push_warning("MultiplayerMadness node not found. Add it as a sibling of this VideoStreamPlayer.")
+
+	if vboxVpinWorkshop:
+		vboxVpinWorkshop.hide()
+		vboxVpinWorkshop.z_index = 100
+		print("VPinWorkshop node found")
+	else:
+		push_warning("VPinWorkshop node not found. Add it as a sibling of this VideoStreamPlayer.")
+
+	if vboxFastPinball:
+		vboxFastPinball.hide()
+		vboxFastPinball.z_index = 100
+		print("FastPinball node found")
+	else:
+		push_warning("FastPinball node not found. Add it as a sibling of this VideoStreamPlayer.")
+
 	loop_videos.erase(instruction_video)
 
 	if MPF.game.machine_vars.has("last_game_players") and MPF.game.machine_vars["last_game_players"] != null and int(MPF.game.machine_vars["last_game_players"]) > 0:
@@ -110,6 +156,15 @@ func _ready() -> void:
 				loop_videos.append("res://videos/attractvideos/pl4gameover.ogv")
 
 		player_scores_index = loop_videos.size() - 1
+
+	loop_videos.append("res://videos/attractvideos/HSBackground3.ogv")
+	multiplayer_madness_page_index = loop_videos.size() - 1
+
+	loop_videos.append("res://videos/attractvideos/HSBackground2.ogv")
+	vpin_workshop_page_index = loop_videos.size() - 1
+
+	loop_videos.append("res://videos/attractvideos/HSBackground1.ogv")
+	fast_pinball_page_index = loop_videos.size() - 1
 
 	loop_videos.append(instruction_video)
 	instruction_page_index = loop_videos.size() - 1
@@ -174,6 +229,8 @@ func _on_timer_attract_idle_complete(payload: Dictionary) -> void:
 
 
 func _hide_all_overlays() -> void:
+	self.show()
+
 	lblP1Score.hide()
 	lblP2Score.hide()
 	lblP3Score.hide()
@@ -191,6 +248,17 @@ func _hide_all_overlays() -> void:
 
 	if vboxVillainMVP:
 		vboxVillainMVP.hide()
+
+	if vboxMultiplayerMadness:
+		vboxMultiplayerMadness.hide()
+		_stop_multiplayer_madness_videos()
+
+	if vboxVpinWorkshop:
+		vboxVpinWorkshop.hide()
+		_reset_vpin_workshop_labels()
+
+	if vboxFastPinball:
+		vboxFastPinball.hide()
 
 	if iscoredLeaderboard:
 		iscoredLeaderboard.hide()
@@ -250,6 +318,15 @@ func _play_next(increment: bool) -> void:
 
 		if current_index == ISCORED_PAGE_INDEX:
 			_show_iscored_leaderboard()
+
+		if current_index == multiplayer_madness_page_index:
+			_show_multiplayer_madness()
+
+		if current_index == vpin_workshop_page_index:
+			_show_vpin_workshop()
+
+		if current_index == fast_pinball_page_index:
+			_show_fast_pinball()
 
 	_apply_video_volume()
 
@@ -383,6 +460,138 @@ func _show_villain_mvp() -> void:
 	print("Showing Villain MVP: ", villain_name, " ", villain_text, " ", villain_mode)
 
 
+func _show_multiplayer_madness() -> void:
+	if not vboxMultiplayerMadness:
+		push_warning("MultiplayerMadness node not found")
+		return
+
+	vboxMultiplayerMadness.show()
+	vboxMultiplayerMadness.z_index = 100
+	_play_multiplayer_madness_videos()
+
+	print("Showing Multiplayer Madness")
+
+
+func _play_multiplayer_madness_videos() -> void:
+	for video in multiplayerMadnessVideos:
+		if video:
+			video.stop()
+			video.play()
+
+
+func _stop_multiplayer_madness_videos() -> void:
+	for video in multiplayerMadnessVideos:
+		if video:
+			video.stop()
+
+
+func _show_vpin_workshop() -> void:
+	if not vboxVpinWorkshop:
+		push_warning("VPinWorkshop node not found")
+		return
+
+	self.stop()
+	self.hide()
+	_ensure_vpin_workshop_textures()
+
+	vboxVpinWorkshop.show()
+	vboxVpinWorkshop.z_index = 100
+	call_deferred("_animate_vpin_workshop")
+
+	print("Showing VPin Workshop attract page")
+
+
+func _load_texture_from_file(path: String) -> Texture2D:
+	var image := Image.load_from_file(path)
+
+	if image == null or image.is_empty():
+		push_warning("Could not load attract image: %s" % path)
+		return null
+
+	return ImageTexture.create_from_image(image)
+
+
+func _ensure_vpin_workshop_textures() -> void:
+	if vpinWorkshopBackground and not vpinWorkshopBackground.texture:
+		vpinWorkshopBackground.texture = _load_texture_from_file("res://slides/vpw_attract_assets/vpw_background.jpg")
+
+	if vpinWorkshopLogo and not vpinWorkshopLogo.texture:
+		vpinWorkshopLogo.texture = _load_texture_from_file("res://slides/vpw_attract_assets/vpw_logo.png")
+
+
+func _show_fast_pinball() -> void:
+	if not vboxFastPinball:
+		push_warning("FastPinball node not found")
+		return
+
+	self.stop()
+	self.hide()
+	_ensure_fast_pinball_textures()
+
+	vboxFastPinball.show()
+	vboxFastPinball.z_index = 100
+
+	print("Showing Powered by Fast Pinball")
+
+
+func _ensure_fast_pinball_textures() -> void:
+	if fastPinballScreen:
+		fastPinballScreen.texture = _load_texture_from_file("res://slides/fast_pinball_assets/fast_pinball_fullscreen.png")
+	else:
+		push_warning("Fast Pinball screen node not found")
+
+	if fastPinballLogo:
+		fastPinballLogo.texture = _load_texture_from_file("res://slides/fast_pinball_assets/fast_pinball_logo_remade.png")
+	else:
+		push_warning("Fast Pinball logo node not found")
+
+
+func _reset_vpin_workshop_labels() -> void:
+	if vpin_workshop_tween:
+		vpin_workshop_tween.kill()
+		vpin_workshop_tween = null
+
+	for label in vpinWorkshopLabels:
+		if label:
+			if vpin_workshop_label_home_positions.has(label):
+				label.position = vpin_workshop_label_home_positions[label]
+			label.modulate = Color(1, 1, 1, 1)
+
+
+func _animate_vpin_workshop() -> void:
+	await get_tree().process_frame
+
+	if not vboxVpinWorkshop or not vboxVpinWorkshop.visible:
+		return
+
+	if vpin_workshop_tween:
+		vpin_workshop_tween.kill()
+
+	var label_data := []
+
+	for label in vpinWorkshopLabels:
+		if label:
+			if not vpin_workshop_label_home_positions.has(label):
+				vpin_workshop_label_home_positions[label] = label.position
+
+			var final_position: Vector2 = vpin_workshop_label_home_positions[label]
+			label.modulate = Color(1, 1, 1, 0)
+			label.position = Vector2(final_position.x, -label.size.y - 40.0)
+			label_data.append([label, final_position])
+
+	vpin_workshop_tween = create_tween()
+	vpin_workshop_tween.set_parallel(true)
+
+	var delay := 0.0
+
+	for item in label_data:
+		var label := item[0] as Control
+		var final_position: Vector2 = item[1]
+		vpin_workshop_tween.tween_property(label, "position", final_position, 0.45).set_delay(delay).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		vpin_workshop_tween.tween_property(label, "modulate:a", 1.0, 0.25).set_delay(delay)
+		delay += 0.18
+
+
 func _show_iscored_leaderboard() -> void:
 	if not iscoredLeaderboard:
 		push_warning("iscored_leaderboard node not found")
@@ -475,4 +684,10 @@ func _show_last_game_player_scores() -> void:
 
 
 func _on_video_finished() -> void:
+	if current_index == multiplayer_madness_page_index:
+		await get_tree().create_timer(2.0).timeout
+
+		if current_index != multiplayer_madness_page_index:
+			return
+
 	_play_next(true)

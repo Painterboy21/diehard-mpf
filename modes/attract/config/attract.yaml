@@ -30,6 +30,8 @@ mode:
 # Flippers rotate the Godot attract display using the original
 # rotate_attract_left / rotate_attract_right events.
 # Idle completion restarts the attract show and refreshes scores.
+# When attract begins, wait briefly for ball devices to settle. Then check the
+# shooter-lane switch and pulse the plunger only if a ball is actually there.
 # ------------------------------------------------------------
 event_player:
   mode_attract_started:
@@ -42,6 +44,10 @@ event_player:
     - reset_idle_timer
     - attract_sound_wake
     - taxi_home
+    - clear_plunger_lane_if_loaded|750ms
+
+  clear_plunger_lane_if_loaded:
+    - attract_plunger_lane_loaded
 
   s_left_flipper_active:
     - rotate_attract_left
@@ -99,6 +105,17 @@ show_player:
   play_show_start_button_flash:
     flash_start_button:
       key: key_attract_start_button_flash
+
+# ------------------------------------------------------------
+# COIL PLAYER
+# ------------------------------------------------------------
+# Clears a ball left in the shooter lane after an abandoned game or normal
+# return to attract. This is switch-gated, so it will not fire an empty lane.
+# ------------------------------------------------------------
+coil_player:
+  attract_plunger_lane_loaded{device.switches.s_plunger_lane.state == 1}:
+    c_plunger:
+      action: pulse
 
 # ------------------------------------------------------------
 # SLIDE PLAYER

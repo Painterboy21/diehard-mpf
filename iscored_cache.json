@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1786194889,
+  "updatedAt": 1786395218,
   "entries": [
     {
       "rank": "1",
@@ -45,30 +45,30 @@
     },
     {
       "rank": "7",
+      "name": "SM",
+      "score": 17516940,
+      "score_text": "17,516,940",
+      "pending": false
+    },
+    {
+      "rank": "8",
       "name": "DEG",
       "score": 17167770,
       "score_text": "17,167,770",
       "pending": false
     },
     {
-      "rank": "8",
-      "name": "DAD2",
-      "score": 14953190,
-      "score_text": "14,953,190",
-      "pending": false
-    },
-    {
       "rank": "9",
-      "name": "SMD2",
-      "score": 14307580,
-      "score_text": "14,307,580",
+      "name": "JOHNMCCLANE2",
+      "score": 15017540,
+      "score_text": "15,017,540",
       "pending": false
     },
     {
       "rank": "10",
-      "name": "DDD",
-      "score": 14061340,
-      "score_text": "14,061,340",
+      "name": "DAD2",
+      "score": 14953190,
+      "score_text": "14,953,190",
       "pending": false
     }
   ]
