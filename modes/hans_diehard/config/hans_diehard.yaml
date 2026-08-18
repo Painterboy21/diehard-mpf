@@ -36,6 +36,8 @@ timers:
     control_events:
       - event: mode_hans_diehard_started
         action: restart
+      - event: hans_diehard_complete
+        action: stop
       - event: hans_diehard_won_complete
         action: stop
       - event: hans_diehard_failed_complete
@@ -221,7 +223,7 @@ event_player:
     - hans_diehard_won_complete|8s
     - reset_bullet_total
     - reset_bullets
-  timer_hans_diehard_timer_complete:
+  timer_hans_diehard_timer_complete{current_player.hans_diehard_completion_active==0}:
     - hans_lost_slide
     - hans_diehard_failed_complete|5s
     - reset_bullet_total

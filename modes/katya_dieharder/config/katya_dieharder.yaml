@@ -59,6 +59,8 @@ timers:
       - event: katya_dieharder_start_bonus_timer
         action: restart
         value: 113
+      - event: katya_dieharder_victory_sequence
+        action: stop
       - event: katya_dieharder_completed
         action: stop
       - event: katya_dieharder_failed
@@ -192,7 +194,7 @@ event_player:
   record_finish_katya_dieharder_villain_mvp:
     record_finish_villain_mvp:
       mode: KATYA DIE HARDER
-  timer_katya_dieharder_timer_complete:
+  timer_katya_dieharder_timer_complete{current_player.katya_dieharder_completion_active==0 and current_player.katya_dieharder_failed_active==0}:
     - katya_dieharder_fail_mode
   ball_drain{current_player.katya_dieharder_completion_active==0 and current_player.katya_dieharder_failed_active==0}:
     - katya_dieharder_ball_drain_escape

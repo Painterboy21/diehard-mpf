@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1786395218,
+  "updatedAt": 1787074631,
   "entries": [
     {
       "rank": "1",
@@ -17,58 +17,58 @@
     },
     {
       "rank": "3",
+      "name": "SMD9",
+      "score": 47456870,
+      "score_text": "47,456,870",
+      "pending": false
+    },
+    {
+      "rank": "4",
+      "name": "SMD6",
+      "score": 34444180,
+      "score_text": "34,444,180",
+      "pending": false
+    },
+    {
+      "rank": "5",
+      "name": "SMD8",
+      "score": 26916790,
+      "score_text": "26,916,790",
+      "pending": false
+    },
+    {
+      "rank": "6",
       "name": "DAD",
       "score": 26834370,
       "score_text": "26,834,370",
       "pending": false
     },
     {
-      "rank": "4",
+      "rank": "7",
       "name": "BAD",
       "score": 26257210,
       "score_text": "26,257,210",
       "pending": false
     },
     {
-      "rank": "5",
+      "rank": "8",
       "name": "CEF",
       "score": 26120840,
       "score_text": "26,120,840",
       "pending": false
     },
     {
-      "rank": "6",
-      "name": "JOHNMCCLANE",
-      "score": 19595020,
-      "score_text": "19,595,020",
-      "pending": false
-    },
-    {
-      "rank": "7",
-      "name": "SM",
-      "score": 17516940,
-      "score_text": "17,516,940",
-      "pending": false
-    },
-    {
-      "rank": "8",
-      "name": "DEG",
-      "score": 17167770,
-      "score_text": "17,167,770",
-      "pending": false
-    },
-    {
       "rank": "9",
-      "name": "JOHNMCCLANE2",
-      "score": 15017540,
-      "score_text": "15,017,540",
+      "name": "SMD10",
+      "score": 24244430,
+      "score_text": "24,244,430",
       "pending": false
     },
     {
       "rank": "10",
-      "name": "DAD2",
-      "score": 14953190,
-      "score_text": "14,953,190",
+      "name": "SMD5",
+      "score": 22520490,
+      "score_text": "22,520,490",
       "pending": false
     }
   ]

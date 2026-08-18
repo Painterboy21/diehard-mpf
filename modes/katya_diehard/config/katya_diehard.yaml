@@ -42,6 +42,8 @@ timers:
       - event: katya_start_bonus_timer
         action: restart
         value: 123
+      - event: katya_victory_sequence
+        action: stop
       - event: katya_completed
         action: stop
       - event: katya_failed
@@ -192,7 +194,7 @@ event_player:
   record_finish_katya_diehard_villain_mvp:
     record_finish_villain_mvp:
       mode: KATYA DIE HARD
-  timer_katya_timer_complete:
+  timer_katya_timer_complete{current_player.katya_diehard_completion_active==0}:
     - katya_escape_sequence
   ball_drain{current_player.katya_diehard_completion_active==0 and current_player.katya_diehard_result_started==0}:
     - katya_ball_drain_escape

@@ -3,18 +3,6 @@
 # ------------------------------------------------------------
 # EXTRA BALL
 # ------------------------------------------------------------
-# Starts each ball, lights/collects Extra Ball, handles Shoot Again,
-# and fixes the right VUK clash with villain select.
-#
-# If Extra Ball and Villain Start are both ready:
-#   Extra Ball collects first, then villain select starts after 2.5s.
-#
-# Supports up to two Extra Balls per game.
-# extra_ball_owed is a count:
-#   0 = no Extra Balls owed
-#   1 = one Extra Ball owed
-#   2 = two Extra Balls owed
-# ------------------------------------------------------------
 mode:
   start_events:
     - ball_started
@@ -29,14 +17,14 @@ extra_balls:
   diehard_extra_ball:
     group: diehard_extra_balls
     enabled: true
+    light_events:
+      - light_diehard_extra_ball
     award_events:
       - collect_lit_extra_ball
     max_per_game: 2
 
 # ------------------------------------------------------------
 # BALL HOLD
-# Holds/releases the right VUK during Extra Ball collection.
-# This no longer waits for slide_extra_ball_removed.
 # ------------------------------------------------------------
 ball_holds:
   extra_ball_collect_hold:
@@ -57,20 +45,18 @@ ball_holds:
 
 # ------------------------------------------------------------
 # EVENT PLAYER
-# Handles Extra Ball lighting, collection, delayed villain start,
-# villain completion counting, multiball counting, and Shoot Again.
 # ------------------------------------------------------------
 event_player:
   light_extra_ball_from_mystery{current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0}:
-    - light_extra_ball
-    - extra_ball_lit
+    - light_diehard_extra_ball
 
   light_extra_ball_from_modes{current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0}:
-    - light_extra_ball
-    - extra_ball_lit
+    - light_diehard_extra_ball
 
   light_extra_ball_from_multiballs{current_player.diehard_extra_balls_awarded < 2 and current_player.extra_balls_lit == 0}:
-    - light_extra_ball
+    - light_diehard_extra_ball
+
+  extra_ball_group_diehard_extra_balls_lit_awarded:
     - extra_ball_lit
 
   extra_ball_lit:
@@ -85,11 +71,6 @@ event_player:
   extra_ball_flash_off{current_player.extra_balls_lit == 1}:
     - extra_ball_flash_on|350ms
 
-  # ------------------------------------------------------------
-  # RIGHT VUK EXTRA BALL COLLECTION
-  # If villain start is ready from bullets, collect Extra Ball first,
-  # then start villain select after the award slide has had time to show.
-  # ------------------------------------------------------------
   s_rightvuk_active{current_player.extra_balls_lit == 1 and current_player.bullet_hits >= 15}:
     - set_start_villain_after_extra_ball
     - collect_lit_extra_ball
@@ -100,30 +81,16 @@ event_player:
     - collect_lit_extra_ball
     - extra_ball_collected
 
-  # ------------------------------------------------------------
-  # DELAYED VILLAIN START AFTER EXTRA BALL
-  # This replaces slide_extra_ball_removed for this flow.
-  # ------------------------------------------------------------
   extra_ball_then_start_villain_delay{current_player.start_villain_after_extra_ball == 1}:
     - start_villain_select
     - reset_bullet_total|100ms
     - reset_bullets|100ms
     - clear_start_villain_after_extra_ball|150ms
 
-  # ------------------------------------------------------------
-  # SHOOT AGAIN
-  # Each Extra Ball played removes one from extra_ball_owed.
-  # If two Extra Balls were collected, one remains owed after the
-  # first Shoot Again ball begins.
-  # ------------------------------------------------------------
   mode_extra_ball_started{current_player.extra_ball_owed >= 1}:
     - show_shoot_again_slide
     - extra_ball_used|2s
 
-  # ------------------------------------------------------------
-  # VILLAIN EXTRA BALL CHECKS
-  # Each completed villain counts once toward lighting Extra Ball.
-  # ------------------------------------------------------------
   count_hans_for_extra_ball:
     - check_villain_extra_ball|100ms
 
@@ -143,9 +110,6 @@ event_player:
     - light_extra_ball_from_modes
     - mark_mode_extra_ball_awarded
 
-  # ------------------------------------------------------------
-  # MULTIBALL EXTRA BALL CHECKS
-  # ------------------------------------------------------------
   count_nakatomi_for_extra_ball:
     - check_multiball_extra_ball|100ms
 
@@ -161,8 +125,6 @@ event_player:
 
 # ------------------------------------------------------------
 # VARIABLE PLAYER
-# Stores Extra Ball state, awarded counts, villain/multiball count
-# flags, and the pending villain-after-extra-ball flag.
 # ------------------------------------------------------------
 variable_player:
   mode_extra_ball_started{current_player.extra_balls_lit == None}:
@@ -352,9 +314,6 @@ variable_player:
 
 # ------------------------------------------------------------
 # LIGHT PLAYER
-# l63 flashes red while an Extra Ball is lit.
-# l63 stays solid red while one or more Extra Balls are owed.
-# l63 turns off when no Extra Balls remain lit or owed.
 # ------------------------------------------------------------
 light_player:
   extra_ball_flash_on{current_player.extra_balls_lit == 1}:
@@ -394,7 +353,6 @@ light_player:
 
 # ------------------------------------------------------------
 # SLIDE PLAYER
-# Shows Extra Ball Lit, Extra Ball Collected, and Shoot Again.
 # ------------------------------------------------------------
 slide_player:
   extra_ball_lit:
