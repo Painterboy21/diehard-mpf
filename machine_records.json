@@ -1,19 +1,19 @@
 {
   "loop_champion": {
-    "name": "JOHNMCCLANE",
-    "value": 3,
-    "text": "3 LOOPS"
+    "name": "BAD",
+    "value": 2,
+    "text": "2 LOOPS"
   },
   "multiball_hero": {
-    "name": "DAD",
-    "value": 6501960,
-    "text": "6,501,960",
+    "name": "JOHNMCCLANE",
+    "value": 12120,
+    "text": "12,120",
     "mode": "NAKATOMI MULTIBALL"
   },
   "villain_mvp": {
-    "name": "SMD",
-    "value": 19133630,
-    "text": "19,133,630",
-    "mode": "HANS DIE HARDER"
+    "name": "JOHNMCCLANE",
+    "value": 2072220,
+    "text": "2,072,220",
+    "mode": "COL/STUART DIE HARDER"
   }
 }

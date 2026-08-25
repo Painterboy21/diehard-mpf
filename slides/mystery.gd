@@ -119,6 +119,8 @@ func _build_scroll_award_indexes() -> void:
 
 	var bullets_full := int(_get_player_var("bullet_hits", 0)) >= 15
 	var super_spinners_awarded := int(_get_player_var("super_spinners", 0)) == 1
+	var nakatomi_lock_available := int(_get_player_var("shot_nakatomi_lock_lit", 0)) != 1
+	nakatomi_lock_available = nakatomi_lock_available and int(_get_machine_var("nakatomi_balls_locked_shared", 0)) < 3
 
 	var villain_active := int(_get_player_var("mystery_villain_active", 0)) == 1
 	var multiball_active := int(_get_player_var("mystery_multiball_active", 0)) == 1
@@ -130,6 +132,9 @@ func _build_scroll_award_indexes() -> void:
 
 	for i in range(award_names.size()):
 		if bullets_full and i == 4:
+			continue
+
+		if i == 1 and not nakatomi_lock_available:
 			continue
 
 		if super_spinners_awarded and i == 9:
@@ -239,6 +244,18 @@ func _get_player_var(var_name: String, default_value: Variant = null) -> Variant
 		return default_value
 
 	return value
+
+
+func _get_machine_var(var_name: String, default_value: Variant = null) -> Variant:
+	if MPF.game.machine_vars.has(var_name):
+		return MPF.game.machine_vars[var_name]
+
+	var prefixed_var_name := "machine_var_" + var_name
+
+	if MPF.game.machine_vars.has(prefixed_var_name):
+		return MPF.game.machine_vars[prefixed_var_name]
+
+	return default_value
 
 
 func _on_video_finished() -> void:

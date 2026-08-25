@@ -203,12 +203,17 @@ event_player:
     - add_a_ball_in_multiball|750ms
   mystery_award_points:
     - mystery_awarded
-  mystery_award_tower_lock:
+  mystery_award_tower_lock{current_player.shot_nakatomi_lock_lit != 1 and machine.nakatomi_balls_locked_shared < 3}:
+    - mystery_do_award_tower_lock
+  mystery_award_tower_lock{current_player.shot_nakatomi_lock_lit == 1}:
+    - mystery_award_points
+  mystery_award_tower_lock{current_player.shot_nakatomi_lock_lit != 1 and machine.nakatomi_balls_locked_shared >= 3}:
+    - mystery_award_points
+  mystery_do_award_tower_lock:
     - qualify_nakatomi_on_complete
     - mystery_awarded
   mystery_award_airplane_lock:
-    - lock_lit
-    - airplane_disable_lock_counter
+    - airplane_lock_ready
     - mystery_awarded
   mystery_award_add_time:
     - mystery_set_award_add_time
@@ -809,7 +814,7 @@ variable_player:
     mystery_awarded_index:
       action: set
       int: 0
-  mystery_award_tower_lock:
+  mystery_do_award_tower_lock:
     tower_lock_lit:
       action: set
       int: 1
@@ -820,7 +825,7 @@ variable_player:
     airplane_lock_lit:
       action: set
       int: 1
-    airplane_captive_hits:
+    airplane_qualify_hits:
       action: set
       int: 0
     mystery_awarded_index:

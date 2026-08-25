@@ -93,7 +93,7 @@ func _make_rows() -> void:
 	_add_status_row("LOOPS", "---", x, start_y + row_gap * 0)
 	_add_status_row("AIRPLANE", "---", x, start_y + row_gap * 1)
 	_add_status_row("CENTRAL PARK", "---", x, start_y + row_gap * 2)
-	_add_status_row("MULTIBALLS", "---", x, start_y + row_gap * 3)
+	_add_status_row("NAKATOMI", "---", x, start_y + row_gap * 3)
 	_add_status_row("VILLAINS", "---", x, start_y + row_gap * 4)
 	_add_status_row("PLAYFIELD X", "---", x, start_y + row_gap * 5)
 	_add_status_row("BONUS X", "---", x, start_y + row_gap * 6)
@@ -179,18 +179,29 @@ func _get_player_int(var_name: String, default_value: int = 0) -> int:
 	return default_value
 
 
+func _get_machine_int(var_name: String, default_value: int = 0) -> int:
+	if USE_TEST_DATA:
+		return _get_test_value(var_name, default_value)
+
+	if MPF.game.machine_vars.has(var_name):
+		return int(MPF.game.machine_vars[var_name])
+
+	var prefixed_var_name := "machine_var_" + var_name
+
+	if MPF.game.machine_vars.has(prefixed_var_name):
+		return int(MPF.game.machine_vars[prefixed_var_name])
+
+	return default_value
+
+
 func _get_test_value(var_name: String, default_value: int = 0) -> int:
 	match var_name:
 		"airplane_virtual_locks":
 			return 2
 		"central_park_virtual_locks":
 			return 1
-		"played_nakatomi_multiball":
-			return 1
-		"airplane_mb_played":
-			return 1
-		"central_park_played":
-			return 0
+		"nakatomi_balls_locked_shared":
+			return 2
 		"hans_complete":
 			return 1
 		"karl_complete":
@@ -263,14 +274,25 @@ func _refresh_rows() -> void:
 
 	var airplane_locks := _get_player_int("airplane_virtual_locks", 0)
 	var central_park_locks := _get_player_int("central_park_virtual_locks", 0)
+	var nakatomi_locks := _get_machine_int("nakatomi_balls_locked_shared", _get_player_int("nakatomi_balls_locked", 0))
 
-	var multiballs_played := 0
-	multiballs_played += _get_player_int("played_nakatomi_multiball", 0)
-	multiballs_played += _get_player_int("airplane_mb_played", 0)
-	multiballs_played += _get_player_int("central_park_played", 0)
+	if airplane_locks > 2:
+		airplane_locks = 2
 
-	if multiballs_played > 3:
-		multiballs_played = 3
+	if central_park_locks > 3:
+		central_park_locks = 3
+
+	if airplane_locks < 0:
+		airplane_locks = 0
+
+	if central_park_locks < 0:
+		central_park_locks = 0
+
+	if nakatomi_locks > 3:
+		nakatomi_locks = 3
+
+	if nakatomi_locks < 0:
+		nakatomi_locks = 0
 
 	var villains_defeated := 0
 	villains_defeated += _get_player_int("hans_complete", 0)
@@ -337,9 +359,9 @@ func _refresh_rows() -> void:
 		spinners_left = 0
 
 	_set_value(0, str(loops_this_ball))
-	_set_value(1, "%d / 3" % airplane_locks)
+	_set_value(1, "%d / 2" % airplane_locks)
 	_set_value(2, "%d / 3" % central_park_locks)
-	_set_value(3, "%d / 3" % multiballs_played)
+	_set_value(3, "%d / 3" % nakatomi_locks)
 	_set_value(4, "%d / 5" % villains_defeated)
 
 	if playfield_x_multiplier > 1:
