@@ -125,6 +125,11 @@ event_player:
     - reset_bullets|100ms
   player_bullet_hits{value>=15 and current_player.multiball_running != 1}:
     - villain_start_lit
+  villain_start_lit:
+    - bullets_stop_flashing_for_villain_ready|150ms
+  timer_bullet_reminder_complete{current_player.bullet_hits < 15 and current_player.villain_start_ready != 1 and current_player.multiball_running != 1 and current_player.villain_select_running != 1 and current_player.villain_difficulty_select_running != 1 and current_player.villain_mode_running != 1 and current_player.ambush_running != 1 and current_player.wizard_mode_running != 1}:
+    - bullet_reminder_callout
+    - bullet_reminder_repeat|1s
   # ------------------------------------------------------------
   # VILLAIN VUK START
   # ------------------------------------------------------------
@@ -167,6 +172,10 @@ sound_player:
     dh_bulletcollected2:
       action: play
       volume: 1.0
+  bullet_reminder_callout:
+    collect_the_bullets:
+      action: play
+      volume: 1.0
 # ------------------------------------------------------------
 # SHOTS
 # ------------------------------------------------------------
@@ -183,6 +192,10 @@ shots:
         state: 0
       - events: bullet_lock_left_orbit
         state: 1
+      - events: villain_start_lit
+        state: 4
+      - events: bullets_stop_flashing_for_villain_ready
+        state: 4
   bullet_upper_pf:
     switch: s_upper_pf_entrance
     profile: profile_bullets
@@ -194,6 +207,10 @@ shots:
         state: 0
       - events: bullet_lock_upper_pf
         state: 1
+      - events: villain_start_lit
+        state: 4
+      - events: bullets_stop_flashing_for_villain_ready
+        state: 4
   bullet_right_orbit:
     profile: profile_bullets
     start_enabled: true
@@ -204,6 +221,10 @@ shots:
         state: 0
       - events: bullet_lock_right_orbit
         state: 1
+      - events: villain_start_lit
+        state: 4
+      - events: bullets_stop_flashing_for_villain_ready
+        state: 4
   bullet_mid_orbit:
     switch: s_mid_orbit
     profile: profile_bullets
@@ -215,6 +236,10 @@ shots:
         state: 0
       - events: bullet_lock_mid_orbit
         state: 1
+      - events: villain_start_lit
+        state: 4
+      - events: bullets_stop_flashing_for_villain_ready
+        state: 4
   bullet_air_duct:
     switch: s_air_duct
     profile: profile_bullets
@@ -226,6 +251,10 @@ shots:
         state: 0
       - events: bullet_lock_air_duct
         state: 1
+      - events: villain_start_lit
+        state: 4
+      - events: bullets_stop_flashing_for_villain_ready
+        state: 4
 # ------------------------------------------------------------
 # SHOW PLAYER
 # ------------------------------------------------------------
@@ -337,6 +366,46 @@ timers:
     restart_on_complete: false
     start_running: false
     tick_interval: 100ms
+  bullet_reminder:
+    start_value: 0
+    end_value: 40
+    direction: up
+    tick_interval: 1s
+    start_running: false
+    restart_on_complete: false
+    control_events:
+      - event: mode_bullets_started
+        action: restart
+      - event: bullet_new_unique_shot
+        action: restart
+      - event: bullet_reminder_repeat
+        action: restart
+      - event: villain_start_lit
+        action: stop
+      - event: mode_villain_select_started
+        action: stop
+      - event: mode_villain_difficulty_select_started
+        action: stop
+      - event: villain_mode_started
+        action: stop
+      - event: start_ambush_from_vuk_hold
+        action: stop
+      - event: start_ambush_from_mystery
+        action: stop
+      - event: mode_ambush_started
+        action: stop
+      - event: bullets_multiball_safety_clear
+        action: stop
+      - event: start_yippee_ki_yay_wizard
+        action: stop
+      - event: start_yippee_ki_yay_final_wizard
+        action: stop
+      - event: ball_ending
+        action: stop
+      - event: ball_ended
+        action: stop
+      - event: mode_bullets_stopping
+        action: stop
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------

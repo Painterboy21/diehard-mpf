@@ -1,19 +1,19 @@
 {
   "loop_champion": {
-    "name": "BAD",
+    "name": "SMD",
     "value": 2,
     "text": "2 LOOPS"
   },
   "multiball_hero": {
-    "name": "JOHNMCCLANE",
-    "value": 12120,
-    "text": "12,120",
-    "mode": "NAKATOMI MULTIBALL"
+    "name": "---",
+    "value": 0,
+    "text": "---",
+    "mode": "---"
   },
   "villain_mvp": {
-    "name": "JOHNMCCLANE",
-    "value": 2072220,
-    "text": "2,072,220",
-    "mode": "COL/STUART DIE HARDER"
+    "name": "AAA",
+    "value": 4567320,
+    "text": "4,567,320",
+    "mode": "SIMON DIE HARD"
   }
 }

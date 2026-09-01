@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1787691717,
+  "updatedAt": 1788294606,
   "entries": [
     {
       "rank": "1",
@@ -38,37 +38,37 @@
     },
     {
       "rank": "6",
+      "name": "EFF",
+      "score": 37157010,
+      "score_text": "37,157,010",
+      "pending": false
+    },
+    {
+      "rank": "7",
       "name": "SMD6",
       "score": 34444180,
       "score_text": "34,444,180",
       "pending": false
     },
     {
-      "rank": "7",
+      "rank": "8",
       "name": "SMD8",
       "score": 26916790,
       "score_text": "26,916,790",
       "pending": false
     },
     {
-      "rank": "8",
+      "rank": "9",
       "name": "DAD",
       "score": 26834370,
       "score_text": "26,834,370",
       "pending": false
     },
     {
-      "rank": "9",
+      "rank": "10",
       "name": "BAD",
       "score": 26257210,
       "score_text": "26,257,210",
-      "pending": false
-    },
-    {
-      "rank": "10",
-      "name": "CEF",
-      "score": 26120840,
-      "score_text": "26,120,840",
       "pending": false
     }
   ]

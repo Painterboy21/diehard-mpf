@@ -17,7 +17,7 @@
 #   - Fail / ball lost disables flippers and uses ball-lost flow.
 #   - Completion sets shared simon_complete so Simon cannot be selected again.
 #   - Completion sets simon_bonus for wizard/multiball bonus use.
-#   - Completion posts Extra Ball bridge and wizard check.
+#   - Completion posts Add-a-Ball, Extra Ball bridge, and wizard check.
 #   - Villain MVP starts on mode start and finishes only on win/fail result.
 #   - Simon insert l41 is white.
 #   - Simon mode insert flash is dimmed slightly while flashing.
@@ -290,6 +290,7 @@ event_player:
   simon_dieharder_completed:
     - record_finish_simon_dieharder_villain_mvp
     - simon_completed
+    - add_a_ball_in_multiball
     - count_simon_for_extra_ball
     - check_wizard_mode
     - reset_bullet_total
@@ -565,9 +566,6 @@ variable_player:
     simon_bonus:
       action: set
       int: 1
-    bonus_multiplier:
-      action: set
-      int: 6
     modes_complete:
       action: add
       int: 1

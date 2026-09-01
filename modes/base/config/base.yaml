@@ -451,6 +451,18 @@ timers:
         action: restart
       - event: loop_streak_reset
         action: stop
+  use_magnets_john:
+    start_value: 0
+    end_value: 1
+    direction: up
+    tick_interval: 1s
+    control_events:
+      - event: s_upper_pf_entrance_active
+        action: restart
+      - event: s_trmagl_active
+        action: stop
+      - event: s_trmagr_active
+        action: stop
 # ------------------------------------------------------------
 # SEQUENCE SHOTS
 # ------------------------------------------------------------
@@ -724,6 +736,10 @@ sound_player:
       action: play
   s_captiveball_active:
     dh_captiveballhit1:
+      action: play
+      volume: 1.0
+  timer_use_magnets_john_complete:
+    use_the_magnets_john:
       action: play
       volume: 1.0
   drop_target_sound_1:

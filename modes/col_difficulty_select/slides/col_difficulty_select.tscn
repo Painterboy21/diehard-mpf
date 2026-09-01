@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bfkjmo5doelp3"]
 
-[ext_resource type="Script" uid="uid://cdwas3gbf7w3g" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_j7anw"]
+[ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_j7anw"]
 [ext_resource type="Script" uid="uid://dpe3dq8axt3g7" path="res://addons/mpf-gmc/classes/mpf_carousel.gd" id="2_ewonx"]
 [ext_resource type="VideoStream" uid="uid://coc0x1xbcwelj" path="res://videos/VillainSelect/ColDieHard.ogv" id="3_m18m3"]
 [ext_resource type="Script" uid="uid://bov7mrgxslshq" path="res://addons/mpf-gmc/classes/mpf_video_player.gd" id="4_g5j4j"]
