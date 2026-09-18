@@ -58,9 +58,9 @@ timers:
 # ------------------------------------------------------------
 ball_saves:
   hans_dieharder_start_save:
-    active_time: 4s
-    hurry_up_time: 0s
-    grace_period: 0s
+    active_time: 5s
+    hurry_up_time: 1s
+    grace_period: 1s
     auto_launch: true
     balls_to_save: 1
     enable_events:
@@ -70,7 +70,7 @@ ball_saves:
       - hans_dieharder_complete
       - mode_hans_dieharder_stopping
   hans_dieharder_complete_save:
-    active_time: 10s
+    active_time: 5s
     hurry_up_time: 1s
     grace_period: 1s
     auto_launch: true

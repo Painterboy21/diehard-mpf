@@ -8,7 +8,7 @@
 #   - Opens the Nakatomi entrance when lock is lit.
 #   - Locks 3 balls using the tower VUK / Nakatomi lock flow.
 #   - Lock progress is shared across all players as a steal multiball.
-#   - Starts Nakatomi Multiball after the 3rd lock slide is removed.
+#   - Starts Nakatomi Multiball after the multiball intro slide is removed.
 #   - Once claimed, no other player can qualify or start it that game.
 #   - Stops during villains, Ambush, wizard mode, Airplane lock flow, or other multiballs.
 #   - Every start event is gated so Nakatomi cannot restart once played.
@@ -205,7 +205,7 @@ slide_player:
     ball_2_locked:
       action: play
       expire: 0s
-  multiball_lock_nakatomi_locked_ball{machine.nakatomi_balls_locked_shared == 2}:
+  multiball_lock_nakatomi_full:
     nakatomi_mb:
       action: play
       expire: 0s
@@ -251,6 +251,10 @@ variable_player:
     nakatomi_multiball_claimed:
       action: set_machine
       int: 1
+  multiball_lock_nakatomi_full.100:
+    nakatomi_balls_locked_shared:
+      action: set_machine
+      int: 3
   multiball_lock_nakatomi_locked_ball:
     ball_locking_nakatomi:
       action: set
@@ -258,13 +262,17 @@ variable_player:
     eob_bonus_multiball:
       action: add
       int: 100000
-  trigger_nakatomi_ball_locked.10:
+  trigger_nakatomi_ball_locked.10{machine.nakatomi_balls_locked_shared < 3}:
     ball_locking_nakatomi:
       action: set
       int: 0
     nakatomi_balls_locked_shared:
       action: add_machine
       int: 1
+  trigger_nakatomi_ball_locked.10{machine.nakatomi_balls_locked_shared >= 3}:
+    ball_locking_nakatomi:
+      action: set
+      int: 0
 # ------------------------------------------------------------
 # COIL PLAYER
 # ------------------------------------------------------------

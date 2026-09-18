@@ -1,0 +1,52 @@
+#config_version=6
+
+mode:
+  start_events:
+    - ball_started
+  stop_events:
+    - ball_ended
+    - game_ending
+  priority: 95
+
+timers:
+  trmagl_safety:
+    start_value: 0
+    end_value: 8
+    direction: up
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - event: s_trmagl_active
+        action: restart
+      - event: s_trmagl_inactive
+        action: stop
+      - event: safety_trip_trmagl
+        action: stop
+
+  trmagr_safety:
+    start_value: 0
+    end_value: 8
+    direction: up
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - event: s_trmagr_active
+        action: restart
+      - event: s_trmagr_inactive
+        action: stop
+      - event: safety_trip_trmagr
+        action: stop
+
+event_player:
+  timer_trmagl_safety_complete:
+    - safety_trip_trmagl
+  timer_trmagr_safety_complete:
+    - safety_trip_trmagr
+
+coil_player:
+  safety_trip_trmagl:
+    c_trmagl:
+      action: disable
+  safety_trip_trmagr:
+    c_trmagr:
+      action: disable

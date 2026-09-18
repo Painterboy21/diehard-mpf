@@ -76,7 +76,7 @@ timers:
 # ------------------------------------------------------------
 ball_saves:
   karl_ball_save:
-    active_time: 2s
+    active_time: 5s
     hurry_up_time: 1s
     grace_period: 1s
     enable_events:
@@ -89,6 +89,16 @@ ball_saves:
       - tilt
     auto_launch: true
     balls_to_save: -1
+  karl_diehard_complete_save:
+    active_time: 5s
+    hurry_up_time: 1s
+    grace_period: 1s
+    auto_launch: true
+    balls_to_save: 1
+    enable_events:
+      - karl_diehard_completed
+    disable_events:
+      - mode_karl_diehard_stopping
 
 # ------------------------------------------------------------
 # EVENT PLAYER
@@ -102,6 +112,7 @@ event_player:
     - stop_base_music
     - karl_music_start
     - reset_bullets
+    - nakatomi_entrance_lock_close  
     - reset_bullet_total
     - karl_reset_damage
     - karl_enable_ball_save

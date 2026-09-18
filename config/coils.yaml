@@ -112,21 +112,22 @@ coils:
   # ------------------------------------------------------------
   c_rightkicker_eject:
     number: e-8
-    default_pulse_ms: 136ms
+    default_pulse_ms: 216ms
     default_pulse_power: 1.0
     max_pulse_ms: 255ms
     label: Right Kicker Eject
   c_UrampUp001_eject:
     number: e-9
-    default_pulse_ms: 55ms
+    default_pulse_ms: 65ms
     label: Upper Ramp VUK Eject
   c_rightvuk_eject:
     number: e-13
-    default_pulse_ms: 85ms
+    default_pulse_ms: 165ms
+    default_pulse_power: 1.0
     label: Right VUK Eject
   c_towervuk_eject:
     number: e-0
-    default_pulse_ms: 38ms
+    default_pulse_ms: 30ms
     label: Tower VUK Eject
   c_kickervault1_eject:
     number: e-6

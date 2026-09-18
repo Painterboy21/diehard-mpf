@@ -333,6 +333,7 @@ modes:
   - qualify_ambush
   - ambush
   - base
+  - magnet_safety
   - basement
   - bullets
   - high_scores

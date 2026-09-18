@@ -34,7 +34,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_upjj2")
-volume_db = 11.999999
+volume_db = 11.999998
 autoplay = true
 loop = true
 script = ExtResource("3_cc736")
@@ -149,7 +149,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("4_mqg44")
-volume_db = 7.999997
+volume_db = 13.699999
 
 [node name="Hollywhite" type="Sprite2D" parent="." unique_id=1237423753]
 position = Vector2(160, 823)
