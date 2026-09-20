@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://modes/col_stuart_dieharder/slides/col_stuart_dieharder_background.tscn" id="1"]
+
+[node name="col_stuart_dieharder_background_selection_preview" instance=ExtResource("1")]

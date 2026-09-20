@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://addons/mpf-gmc/classes/mpf_widget.gd" id="1"]
+[ext_resource type="Theme" path="res://godot-media/themes/lbl_score.tres" id="2"]
+
+[node name="SuperComboAddBall" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1")
+
+[node name="Message" type="Label" parent="."]
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -550.0
+offset_top = 14.0
+offset_right = 550.0
+offset_bottom = 164.0
+grow_horizontal = 2
+mouse_filter = 2
+theme = ExtResource("2")
+theme_override_font_sizes/font_size = 100
+text = "ADD A BALL"
+horizontal_alignment = 1
+vertical_alignment = 1

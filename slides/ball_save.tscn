@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dru3usokwlhd3" path="res://addons/mpf-gmc/classes/mpf_slide.gd" id="1_s21al"]
 [ext_resource type="VideoStream" uid="uid://bvlax5evyxk10" path="res://videos/ball_save/BallSaved1.ogv" id="2_f0y7e"]
-[ext_resource type="Script" uid="uid://j5rv2iupm8s0" path="res://addons/mpf-gmc/classes/mpf_random_video_player.gd" id="2_hrsh4"]
+[sub_resource type="GDScript" id="GDScript_save_cleanup"]
+script/source = "extends \"res://addons/mpf-gmc/classes/mpf_random_video_player.gd\"\n\nvar _closing: bool = false\n\nfunc _on_finished() -> void:\n\tif _closing:\n\t\treturn\n\t_closing = true\n\t# Clear the final frame even if the display retains an empty slide.\n\thide()\n\tsuper._on_finished()\n"
 
 [node name="BallSave" type="Control" unique_id=1585087607]
 layout_mode = 3
@@ -25,8 +26,15 @@ stream = ExtResource("2_f0y7e")
 volume_db = 11.999999
 autoplay = true
 bus = &"voice"
-script = ExtResource("2_hrsh4")
+script = SubResource("GDScript_save_cleanup")
 end_behavior = 1
 preview_in_editor = true
 folder_path = "res://videos/ball_save"
 metadata/_custom_type_script = "uid://j5rv2iupm8s0"
+
+[node name="PlaybackCutoff" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="PlaybackCutoff" to="MPFVideoPlayer" method="_on_finished"]

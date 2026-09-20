@@ -201,7 +201,7 @@ event_player:
       mode: COL/STUART DIE HARD
   timer_col_stuart_diehard_timer_complete{current_player.col_stuart_result_started == 0}:
     - col_stuart_fail_mode
-  ball_drain{current_player.col_stuart_result_started == 0}:
+  ball_drain{balls > 0 and current_player.col_stuart_result_started == 0}:
     - col_stuart_fail_mode
   col_stuart_fail_mode:
     - col_stuart_escaped_slide

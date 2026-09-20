@@ -39,6 +39,8 @@
 [ext_resource type="Texture2D" uid="uid://dbimohvmuh7to" path="res://godot-media/images/14bullets.png" id="29_cbytx"]
 [ext_resource type="Texture2D" uid="uid://bc2jqlfsyu4tc" path="res://godot-media/images/15bullets.png" id="30_1m7cl"]
 
+[ext_resource type="Script" path="res://slides/super_progress.gd" id="99_super_progress"]
+
 [sub_resource type="Resource" id="Resource_oj564"]
 script = ExtResource("4_oj564")
 metadata/_custom_type_script = "uid://8w1dn35u20tw"
@@ -743,3 +745,15 @@ offset_bottom = 839.0
 theme = ExtResource("7_smx5b")
 theme_override_font_sizes/font_size = 38
 text = "0 of 15"
+
+[node name="SuperProgress" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 14.0
+offset_top = 14.0
+offset_right = -24.0
+offset_bottom = 164.0
+grow_horizontal = 2
+mouse_filter = 2
+script = ExtResource("99_super_progress")

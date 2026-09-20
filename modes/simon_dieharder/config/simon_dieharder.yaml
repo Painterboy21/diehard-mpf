@@ -178,6 +178,10 @@ random_event_player:
 # fail flow, completion flow, Villain MVP tracking, and cleanup.
 # ------------------------------------------------------------
 event_player:
+  ball_save_simon_dieharder_start_save_saving_ball:
+    - ball_save_saving_ball
+  ball_save_simon_dieharder_complete_save_saving_ball:
+    - ball_save_saving_ball
   mode_simon_dieharder_started:
     - villain_mode_started
     - stop_base_music
@@ -271,7 +275,7 @@ event_player:
   timer_simon_dieharder_timer_complete{current_player.simon_dieharder_result_started==0}:
     - simon_dieharder_fail_mode
 
-  ball_drain{current_player.simon_dieharder_result_started==0}:
+  ball_drain{balls > 0 and current_player.simon_dieharder_result_started==0}:
     - simon_dieharder_fail_mode
 
   simon_dieharder_fail_mode:

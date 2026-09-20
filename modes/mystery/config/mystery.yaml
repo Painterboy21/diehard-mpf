@@ -324,7 +324,7 @@ random_event_player:
       mystery_award_super_spinners: 8
       mystery_award_playfield_x: 8
       mystery_award_ambush: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
   mystery_pick_normal_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 0}:
@@ -340,7 +340,7 @@ random_event_player:
       mystery_award_super_spinners: 8
       mystery_award_playfield_x: 8
       mystery_award_ambush: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
   mystery_pick_normal_award{current_player.bullet_hits < 15 and current_player.super_spinners == 1}:
@@ -356,7 +356,7 @@ random_event_player:
       mystery_award_super_jets: 8
       mystery_award_playfield_x: 8
       mystery_award_ambush: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
   mystery_pick_normal_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 1}:
@@ -371,7 +371,7 @@ random_event_player:
       mystery_award_super_jets: 8
       mystery_award_playfield_x: 8
       mystery_award_ambush: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
 
@@ -388,7 +388,7 @@ random_event_player:
       mystery_award_super_jets: 8
       mystery_award_super_spinners: 8
       mystery_award_playfield_x: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
   mystery_pick_villain_safe_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 0}:
@@ -403,7 +403,7 @@ random_event_player:
       mystery_award_super_jets: 8
       mystery_award_super_spinners: 8
       mystery_award_playfield_x: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
   mystery_pick_villain_safe_award{current_player.bullet_hits < 15 and current_player.super_spinners == 1}:
@@ -417,7 +417,7 @@ random_event_player:
       mystery_award_hold_bonus_x: 8
       mystery_award_super_jets: 8
       mystery_award_playfield_x: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
   mystery_pick_villain_safe_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 1}:
@@ -431,7 +431,7 @@ random_event_player:
       mystery_award_hold_bonus_x: 8
       mystery_award_super_jets: 8
       mystery_award_playfield_x: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
 
@@ -447,7 +447,7 @@ random_event_player:
       mystery_award_super_jets: 8
       mystery_award_super_spinners: 8
       mystery_award_playfield_x: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
   mystery_pick_multiball_safe_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 0}:
@@ -462,7 +462,7 @@ random_event_player:
       mystery_award_super_jets: 8
       mystery_award_super_spinners: 8
       mystery_award_playfield_x: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
   mystery_pick_multiball_safe_award{current_player.bullet_hits < 15 and current_player.super_spinners == 1}:
@@ -476,7 +476,7 @@ random_event_player:
       mystery_award_hold_bonus_x: 8
       mystery_award_super_jets: 8
       mystery_award_playfield_x: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
   mystery_pick_multiball_safe_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 1}:
@@ -491,7 +491,7 @@ random_event_player:
       mystery_award_super_jets: 8
       mystery_award_playfield_x: 8
       mystery_award_ambush: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
 
@@ -507,7 +507,7 @@ random_event_player:
       mystery_award_super_jets: 8
       mystery_award_super_spinners: 8
       mystery_award_playfield_x: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
   mystery_pick_ambush_safe_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 0}:
@@ -521,7 +521,7 @@ random_event_player:
       mystery_award_super_jets: 8
       mystery_award_super_spinners: 8
       mystery_award_playfield_x: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
   mystery_pick_ambush_safe_award{current_player.bullet_hits < 15 and current_player.super_spinners == 1}:
@@ -534,7 +534,7 @@ random_event_player:
       mystery_award_hold_bonus_x: 8
       mystery_award_super_jets: 8
       mystery_award_playfield_x: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
   mystery_pick_ambush_safe_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 1}:
@@ -548,7 +548,7 @@ random_event_player:
       mystery_award_hold_bonus_x: 8
       mystery_award_super_jets: 8
       mystery_award_playfield_x: 8
-      mystery_award_extra_ball_lit: 4
+      mystery_award_extra_ball_lit: 8
     scope: player
     force_all: false
 

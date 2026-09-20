@@ -11,7 +11,7 @@
 #   - Normal max is 3x.
 #   - unlock_4x_playfield allows 4x for the rest of the game.
 #   - unlock_5x_playfield allows 5x for the rest of the game.
-#   - Active multiplier resets when timer expires.
+#   - Active multiplier lasts until the end of the ball; next ball starts at 1x.
 #   - Unlocked max does not reset each ball.
 # ------------------------------------------------------------
 widgets:
@@ -33,30 +33,10 @@ mode:
   stop_events: ball_ended
   priority: 90
 # ------------------------------------------------------------
-# TIMERS
-# ------------------------------------------------------------
-# Runs the active Playfield X countdown.
-# When it expires, active multiplier resets back to 1x.
-# ------------------------------------------------------------
-timers:
-  playfield_x_timer:
-    start_value: 30
-    end_value: 0
-    direction: down
-    tick_interval: 1s
-    start_running: false
-    control_events:
-      - event: playfield_x_started
-        action: restart
-      - event: playfield_x_expired
-        action: stop
-      - event: ball_ended
-        action: stop
-# ------------------------------------------------------------
 # EVENT PLAYER
 # ------------------------------------------------------------
 # Drop targets qualify Playfield X.
-# Pop bumpers collect the next multiplier, start/restart the timer,
+# Pop bumpers collect the next multiplier for the rest of the ball,
 # then reset the drop target bank.
 # ------------------------------------------------------------
 event_player:
@@ -78,9 +58,6 @@ event_player:
     - playfield_x_collected|10ms
     - playfield_x_started|20ms
     - reset_drop_targets_after_delay|750ms
-  timer_playfield_x_timer_complete:
-    - playfield_x_expired
-    - reset_drop_targets_after_delay|250ms
 # ------------------------------------------------------------
 # VARIABLE PLAYER
 # ------------------------------------------------------------
@@ -144,13 +121,6 @@ variable_player:
     score:
       int: "50000 * current_player.playfield_multiplier"
       action: add
-    playfield_x_qualified:
-      int: 0
-      action: set
-  playfield_x_expired:
-    playfield_multiplier:
-      int: 1
-      action: set
     playfield_x_qualified:
       int: 0
       action: set
@@ -280,21 +250,6 @@ show_player:
       show_tokens:
         lights: l14
         color: yellow
-  playfield_x_expired:
-    pf_x_l18_yellow_slow:
-      action: stop
-    pf_x_l18_yellow_fast:
-      action: stop
-    pf_x_l18_green_ready:
-      action: stop
-    pf_x_2x_flash:
-      action: stop
-    pf_x_3x_flash:
-      action: stop
-    pf_x_4x_flash:
-      action: stop
-    pf_x_5x_flash:
-      action: stop
   ball_ended:
     pf_x_l18_yellow_slow:
       action: stop
@@ -314,7 +269,7 @@ show_player:
 # LIGHT PLAYER
 # ------------------------------------------------------------
 # Holds completed multiplier lights solid white and clears
-# Playfield X lights when expired or ball ends.
+# Playfield X lights when the ball ends.
 # ------------------------------------------------------------
 light_player:
   playfield_x_collected:
@@ -351,22 +306,6 @@ light_player:
       priority: 22000
     l15:
       color: white
-      priority: 22000
-    l18:
-      color: off
-      priority: 22000
-  playfield_x_expired:
-    l12:
-      color: off
-      priority: 22000
-    l13:
-      color: off
-      priority: 22000
-    l14:
-      color: off
-      priority: 22000
-    l15:
-      color: off
       priority: 22000
     l18:
       color: off

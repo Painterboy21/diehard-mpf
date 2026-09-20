@@ -19,8 +19,8 @@ extra_balls:
     enabled: true
     light_events:
       - light_diehard_extra_ball
-    award_events:
-      - collect_lit_extra_ball
+    # The group awards the lit extra ball via collect_lit_extra_ball.
+    # Do not also award here: that would grant two balls per collection.
     max_per_game: 2
 
 # ------------------------------------------------------------

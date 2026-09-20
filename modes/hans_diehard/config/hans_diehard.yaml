@@ -163,6 +163,10 @@ shots:
 # and final cleanup.
 # ------------------------------------------------------------
 event_player:
+  ball_save_hans_diehard_start_save_saving_ball:
+    - ball_save_saving_ball
+  ball_save_hans_diehard_complete_save_saving_ball:
+    - ball_save_saving_ball
   mode_hans_diehard_started:
     - villain_mode_started
     - hans_diehard_h_ready
@@ -228,12 +232,12 @@ event_player:
     - hans_diehard_failed_complete|5s
     - reset_bullet_total
     - reset_bullets
-  ball_drain{current_player.hans_diehard_completion_active==0}:
+  ball_drain{balls > 0 and current_player.hans_diehard_completion_active==0}:
     - hans_lost_slide
     - hans_diehard_failed_complete|5s
     - reset_bullet_total
     - reset_bullets
-  ball_drain{current_player.hans_diehard_completion_active==1}:
+  ball_drain{balls > 0 and current_player.hans_diehard_completion_active==1}:
     - reset_bullet_total
     - reset_bullets
   hans_diehard_won_complete:

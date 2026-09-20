@@ -95,7 +95,7 @@ slide_player:
   set_difficulty_die_hard:
     col_difficulty_select:
       action: remove
-    col_stuart_background:
+    col_stuart_background_selection_preview:
       action: play
       expire: 0s
       priority: 500
@@ -103,7 +103,7 @@ slide_player:
   set_difficulty_die_harder:
     col_difficulty_select:
       action: remove
-    col_stuart_dieharder_background:
+    col_stuart_dieharder_background_selection_preview:
       action: play
       expire: 0s
       priority: 500

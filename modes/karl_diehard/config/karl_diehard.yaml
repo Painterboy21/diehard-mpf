@@ -107,6 +107,8 @@ ball_saves:
 # result flow, Villain MVP tracking, final cleanup, and bullet resets.
 # ------------------------------------------------------------
 event_player:
+  ball_save_karl_diehard_complete_save_saving_ball:
+    - ball_save_saving_ball
   mode_karl_diehard_started:
     - villain_mode_started
     - stop_base_music
@@ -125,7 +127,7 @@ event_player:
   timer_karl_diehard_timer_complete{current_player.karl_result_started==0}:
     - karl_escaped_slide
     - karl_diehard_failed|5s
-  ball_drain{current_player.karl_result_started==0}:
+  ball_drain{balls > 0 and current_player.karl_result_started==0}:
     - karl_escaped_slide
     - karl_diehard_failed|5s
   karl_check_complete{current_player.karl_damage >= 100 and current_player.karl_result_started==0}:
