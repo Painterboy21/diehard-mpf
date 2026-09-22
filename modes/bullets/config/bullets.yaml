@@ -72,6 +72,8 @@ mode:
 # and starts villain select safely.
 # ------------------------------------------------------------
 event_player:
+  multiball_super_combo_ended{current_player.super_combo_blocked == 0 and game.balls_in_play == 1}:
+    - bullets_restore_villain_start_ready|10ms
   mode_bullets_started:
     - bullets_check_vpw_minimum
     - bullets_force_bullet_count_refresh|250ms
@@ -261,6 +263,9 @@ shots:
 # Bullet feedback and villain start insert.
 # ------------------------------------------------------------
 show_player:
+  multiball_super_combo_started:
+    key_villain_start_lit:
+      action: stop
   bullets_combo_max:
     flicker_color:
       key: key_bullets_combo_max
@@ -315,7 +320,7 @@ show_player:
       show_tokens:
         lights: BUP
         color: ff0000
-  villain_start_lit:
+  villain_start_lit{current_player.multiball_running != 1}:
     flash_color:
       key: key_villain_start_lit
       priority: 10
@@ -337,6 +342,9 @@ show_player:
 # It is forced off when any multiball starts.
 # ------------------------------------------------------------
 light_player:
+  multiball_super_combo_started:
+    l10:
+      color: off
   start_villain_select:
     l10:
       color: ffff00

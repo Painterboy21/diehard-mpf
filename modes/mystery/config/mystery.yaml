@@ -56,6 +56,19 @@ shots:
         state: 1
 
 event_player:
+  mystery_try_super_combo{current_player.multiball_running != 1 and current_player.villain_mode_running != 1 and current_player.villain_select_running != 1 and current_player.villain_difficulty_select_running != 1 and current_player.ambush_running != 1 and current_player.wizard_mode_running != 1 and current_player.yippee_ki_yay_running != 1 and current_player.super_combo_blocked == 0 and game.balls_in_play == 1}:
+    - mystery_award_add_a_ball
+    - mystery_check_super_combo_launch|750ms
+  mystery_try_super_combo{not (current_player.multiball_running != 1 and current_player.villain_mode_running != 1 and current_player.villain_select_running != 1 and current_player.villain_difficulty_select_running != 1 and current_player.ambush_running != 1 and current_player.wizard_mode_running != 1 and current_player.yippee_ki_yay_running != 1 and current_player.super_combo_blocked == 0 and game.balls_in_play == 1)}:
+    - mystery_award_points
+  mystery_check_super_combo_launch{current_player.multiball_running != 1 and current_player.villain_mode_running != 1 and current_player.villain_select_running != 1 and current_player.villain_difficulty_select_running != 1 and current_player.ambush_running != 1 and current_player.wizard_mode_running != 1 and current_player.yippee_ki_yay_running != 1 and current_player.super_combo_blocked == 0 and game.balls_in_play == 1}:
+    - mystery_start_super_combo
+  multiball_super_combo_started:
+    - mystery_multiball_active
+    - mystery_clear_add_a_ball_available
+  multiball_super_combo_ended:
+    - mystery_multiball_inactive
+    - mystery_clear_add_a_ball_available
   mode_mystery_started:
     - mystery_close_vault
     - mystery_reset_ho_counts
@@ -325,6 +338,7 @@ random_event_player:
       mystery_award_playfield_x: 8
       mystery_award_ambush: 8
       mystery_award_extra_ball_lit: 8
+      mystery_try_super_combo: 8
     scope: player
     force_all: false
   mystery_pick_normal_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 0}:
@@ -341,6 +355,7 @@ random_event_player:
       mystery_award_playfield_x: 8
       mystery_award_ambush: 8
       mystery_award_extra_ball_lit: 8
+      mystery_try_super_combo: 8
     scope: player
     force_all: false
   mystery_pick_normal_award{current_player.bullet_hits < 15 and current_player.super_spinners == 1}:
@@ -357,6 +372,7 @@ random_event_player:
       mystery_award_playfield_x: 8
       mystery_award_ambush: 8
       mystery_award_extra_ball_lit: 8
+      mystery_try_super_combo: 8
     scope: player
     force_all: false
   mystery_pick_normal_award{current_player.bullet_hits >= 15 and current_player.super_spinners == 1}:
@@ -372,6 +388,7 @@ random_event_player:
       mystery_award_playfield_x: 8
       mystery_award_ambush: 8
       mystery_award_extra_ball_lit: 8
+      mystery_try_super_combo: 8
     scope: player
     force_all: false
 

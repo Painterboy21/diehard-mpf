@@ -70,6 +70,8 @@ func _mode_hides_indicators(player: Dictionary, active_modes: Array) -> bool:
 	# The supers multiball runs inside the always-on spinner mode.
 	for flag in ["multiball_running", "villain_mode_running", "villain_select_running", "villain_difficulty_select_running", "ambush_running", "wizard_mode_running", "wizard_mode_blackout", "yippee_ki_yay_running"]:
 		if int(player.get(flag, 0)) == 1:
+			if flag == "multiball_running" and int(player.get("super_combo_from_mystery", 0)) == 1 and int(player.get("super_combo_awarded", 0)) == 0:
+				continue
 			return true
 	return false
 

@@ -431,15 +431,15 @@ servos:
   servo1:
     number: playfield-1
     platform_settings:
-      min_us: 0.1
+      min_us: 0.0
       max_us: 0.2
-      home_us: 0.1
+      home_us: 0.0
       max_runtime: 2s
-    reset_position: 0.2
+    reset_position: 00
     reset_events: game_started, ball_ended
     positions:
-      0.1: wire_ramp_exit_closed
-      0.90: wire_ramp_exit_open
+      0.0: wire_ramp_exit_closed
+      0.50: wire_ramp_exit_open
   servo2:
     number: playfield-2
     platform_settings:

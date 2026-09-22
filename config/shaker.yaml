@@ -1,20 +1,189 @@
 #config_version=6
-
+# Graduated shaker feedback. Gameplay events are rate-limited before reaching hardware.
 shakers:
   main_shaker:
     number: shakerboard-1
     debug: false
-    default_power: 0.25
-
+    default_power: 0.45
     control_events:
       service_test_shaker_light:
-        power: 0.15
-        duration: 150ms
-
+        power: 0.30
+        duration: 180ms
       service_test_shaker_medium:
-        power: 0.25
-        duration: 200ms
-
+        power: 0.45
+        duration: 220ms
       service_test_shaker_strong:
-        power: 0.35
-        duration: 250ms
+        power: 0.60
+        duration: 450ms
+      diehard_shaker_impact:
+        power: 0.45
+        duration: 180ms
+      diehard_shaker_award:
+        power: 0.60
+        duration: 450ms
+      tilt:
+        action: stop
+      ball_ending:
+        action: stop
+      game_ended:
+        action: stop
+      service_mode_entered:
+        action: stop
+
+machine_vars:
+  diehard_shaker_enabled:
+    initial_value: 0
+    value_type: int
+    persist: false
+  diehard_shaker_hit_busy:
+    initial_value: 0
+    value_type: int
+    persist: false
+  diehard_shaker_award_busy:
+    initial_value: 0
+    value_type: int
+    persist: false
+
+variable_player:
+  ball_started:
+    diehard_shaker_enabled:
+      action: set_machine
+      int: 1
+  tilt:
+    diehard_shaker_enabled:
+      action: set_machine
+      int: 0
+  ball_ending:
+    diehard_shaker_enabled:
+      action: set_machine
+      int: 0
+  game_ended:
+    diehard_shaker_enabled:
+      action: set_machine
+      int: 0
+  service_mode_entered:
+    diehard_shaker_enabled:
+      action: set_machine
+      int: 0
+  diehard_shaker_impact:
+    diehard_shaker_hit_busy:
+      action: set_machine
+      int: 1
+  diehard_shaker_award:
+    diehard_shaker_award_busy:
+      action: set_machine
+      int: 1
+  diehard_shaker_hit_ready:
+    diehard_shaker_hit_busy:
+      action: set_machine
+      int: 0
+  diehard_shaker_award_ready:
+    diehard_shaker_award_busy:
+      action: set_machine
+      int: 0
+
+event_player:
+  diehard_shaker_impact:
+    - diehard_shaker_hit_ready|350ms
+  diehard_shaker_award:
+    - diehard_shaker_award_ready|750ms
+  pop_bumper_score_5000{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  pop_bumper_score_25000{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  bullet_new_unique_shot{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  counter_airplane_light_lock_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  hans_diehard_target_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  hans_dieharder_target_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  karl_score_spinner{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  karl_score_pop{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  karl_dieharder_spinner_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  karl_dieharder_pop_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  katya_loop_hit_scored{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  katya_dieharder_loop_hit_scored{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  simon_diehard_correct_progress_shot{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  simon_dieharder_correct_progress_shot{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  col_stuart_left_orbit_first_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  col_stuart_left_ramp_first_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  col_stuart_right_ramp_first_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  col_stuart_upper_loop_first_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  col_stuart_right_orbit_first_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_hit_busy != 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_impact
+  airplane_ball_1_locked_complete{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  airplane_ball_2_locked_complete{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  super_spinners_start{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  super_jets_started{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  multiball_super_combo_started{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  super_combo_add_to_mystery{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  multiball_airplane_started{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  multiball_nakatomi_started{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  multiball_central_park_started{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  hans_diehard_complete{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  hans_dieharder_complete{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  karl_score_complete{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  karl_dieharder_won_complete{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  katya_captive_final_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  katya_dieharder_captive_final_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  simon_diehard_complete{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  simon_dieharder_complete{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  col_stuart_score_complete{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  jackpot_2mil{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  jackpot_20mil{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  score_park_jackpot{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  score_park_super_jackpot_1{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  score_park_super_jackpot_2{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  score_park_super_jackpot_3{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  airplane_super_jackpot_score_stage_1{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  airplane_super_jackpot_score_stage_2{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  airplane_left_orbit_jackpot_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  airplane_right_orbit_jackpot_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  airplane_mid_orbit_jackpot_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  airplane_air_duct_jackpot_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award
+  airplane_upper_pf_jackpot_hit{machine.diehard_shaker_enabled == 1 and machine.diehard_shaker_award_busy != 1}:
+    - diehard_shaker_award

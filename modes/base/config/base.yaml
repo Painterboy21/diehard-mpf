@@ -26,9 +26,10 @@ mode:
 ball_holds:
   villain_hold:
     enable_events:
-      - villain_start_lit{current_player.ambush_running != 1}
+      - villain_start_lit{current_player.ambush_running != 1 and current_player.multiball_running != 1}
       - yippee_ki_yay_wizard_ready{current_player.ambush_running != 1}
     disable_events:
+      - multiball_super_combo_started
       - ball_ended
       - tilt
       - release_villain_select_vuk
@@ -37,6 +38,7 @@ ball_holds:
     hold_devices: rightvuk
     balls_to_hold: 1
     release_all_events:
+      - multiball_super_combo_started
       - tilt
       - ball_ended
       - release_villain_select_vuk
