@@ -127,4 +127,3 @@ func _draw_red_bumper(center: Vector2) -> void:
 	draw_circle(center + Vector2(0, -9), 36, Color("ee303b"), true, -1, true)
 	draw_arc(center + Vector2(0, -9), 31, PI * 1.12, PI * 1.8, 40, Color("ff9b9f"), 4, true)
 	draw_arc(center + Vector2(0, -5), 40, 0.12, PI * 0.85, 40, Color("870d17"), 3, true)
-

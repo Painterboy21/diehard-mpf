@@ -1,15 +1,22 @@
 #config_version=6
 
 mode:
-  start_events: ball_started
-  stop_events: ball_ended, end_skillshot
+  start_events:
+    - ball_started
+
+  stop_events:
+    - ball_ended
+    - end_skillshot
+
   priority: 1100
+
 
 sound_player:
   s_fire_active:
     gunfire:
       action: play
       volume: 1.0
+
 
 event_player:
   mode_skillshot_started:
@@ -44,7 +51,7 @@ event_player:
   s_captiveball_active:
     - super_skillshot_check|250ms
 
-  super_skillshot_check{current_player.skillshot_completed==1 and current_player.super_skillshot_awarded==0}:
+  super_skillshot_check{current_player.skillshot_completed==1 and current_player.super_skillshot_available==1 and current_player.super_skillshot_awarded==0}:
     - super_skillshot_award
 
   super_skillshot_award:
@@ -61,6 +68,7 @@ event_player:
   ball_will_end:
     - end_skillshot
 
+
 timers:
   super_skillshot_timer:
     start_value: 3
@@ -68,15 +76,17 @@ timers:
     direction: down
     tick_interval: 1s
     start_running: false
+
     control_events:
       - event: skillshot_hit
         action: restart
-      - event: skillshot_hit
-        action: start
+
       - event: super_skillshot_award
         action: stop
+
       - event: mode_skillshot_stopping
         action: stop
+
 
 show_player:
   mode_skillshot_started:
@@ -95,6 +105,7 @@ show_player:
     flash_action_button_red:
       key: skillshot_action_button_flash
       action: stop
+
     super_skillshot_captive_ready:
       key: super_skillshot_captive_ready
       speed: 8
@@ -116,10 +127,12 @@ show_player:
     super_skillshot_captive_ready:
       key: super_skillshot_captive_ready
       action: stop
+
     super_skillshot_plane_bounce:
       key: super_skillshot_plane_bounce
       speed: 1
       loops: 0
+
     super_skillshot_collected_crazy:
       key: super_skillshot_collected_crazy
       speed: 1
@@ -129,15 +142,19 @@ show_player:
     flash_action_button_red:
       key: skillshot_action_button_flash
       action: stop
+
     super_skillshot_captive_ready:
       key: super_skillshot_captive_ready
       action: stop
+
     super_skillshot_plane_bounce:
       key: super_skillshot_plane_bounce
       action: stop
+
     super_skillshot_collected_crazy:
       key: super_skillshot_collected_crazy
       action: stop
+
 
 slide_player:
   mode_skillshot_started:
@@ -155,6 +172,7 @@ slide_player:
       action: remove
       expire: 0s
 
+
 widget_player:
   super_skillshot_award:
     super_skill_shot:
@@ -165,14 +183,17 @@ widget_player:
     super_skill_shot:
       action: remove
 
+
 variable_player:
   reset_super_skillshot:
     skillshot_completed:
       action: set
       int: 0
+
     super_skillshot_available:
       action: set
       int: 0
+
     super_skillshot_awarded:
       action: set
       int: 0
@@ -181,9 +202,11 @@ variable_player:
     skillshot_completed:
       action: set
       int: 1
+
     super_skillshot_available:
       action: set
       int: 1
+
     super_skillshot_awarded:
       action: set
       int: 0
@@ -192,6 +215,7 @@ variable_player:
     skillshot_completed:
       action: set
       int: 0
+
     super_skillshot_available:
       action: set
       int: 0
@@ -200,6 +224,7 @@ variable_player:
     skillshot_completed:
       action: set
       int: 0
+
     super_skillshot_available:
       action: set
       int: 0
@@ -208,12 +233,15 @@ variable_player:
     score:
       action: add
       int: 1000000
+
     super_skillshot_awarded:
       action: set
       int: 1
+
     super_skillshot_available:
       action: set
       int: 0
+
     bullet_hits:
       action: set
       int: 15
