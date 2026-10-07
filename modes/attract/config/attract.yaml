@@ -97,10 +97,19 @@ light_player:
 # Runs the main attract light show and flashing start button show.
 # ------------------------------------------------------------
 show_player:
-  play_show_xmas:
+  play_show_xmas{machine.diehard_attract_lights_disabled != 1}:
     attract_show_runner:
       key: key_attract_christmas
-      loops: 0
+      loops: -1
+
+  attract_lights_on:
+    attract_show_runner:
+      key: key_attract_christmas
+      loops: -1
+  attract_lights_off:
+    attract_show_runner:
+      key: key_attract_christmas
+      action: stop
 
   play_show_start_button_flash:
     flash_start_button:

@@ -50,11 +50,11 @@ switches:
     tags: service_esc
     label: Service Escape
   s_service_down:
-    number: j-2
+    number: j-1
     tags: service_down
     label: Service Down
   s_service_up:
-    number: j-1
+    number: j-2
     tags: service_up
     label: Service Up
   s_service_enter:

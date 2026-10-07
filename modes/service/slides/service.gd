@@ -6,6 +6,7 @@ const DIEHARD_FONT_PATH := "res://godot-media/fonts/DieHardVPX-Regular.ttf"
 const SETTINGS_FILE := "user://settings.cfg"
 
 const TRIGGERS := [
+	"service_attract_lights_status",
 	"service_button",
 	"service_switch_test_start",
 	"service_switch_test_stop",
@@ -19,6 +20,7 @@ const TRIGGERS := [
 
 const MENU_ITEMS := [
 	"VOLUME SETTINGS",
+	"ATTRACT LIGHTS",
 	"BALL STATUS",
 	"DEVICE TEST",
 	"SWITCH TEST",
@@ -101,6 +103,8 @@ var service_background: TextureRect
 var diehard_font: Font
 var menu_items: Array[Label] = []
 var detail_labels: Array[Label] = []
+var attract_lights_enabled := true
+var attract_lights_loaded := false
 var selected_index := 0
 var page_index := 0
 var screen_mode := "menu"
@@ -459,6 +463,11 @@ func _on_service(payload: Dictionary) -> void:
 
 func _on_service_event(payload: Dictionary) -> void:
 	match str(payload.name):
+		"service_attract_lights_status":
+			attract_lights_enabled = int(payload.get("enabled", 1)) == 1
+			attract_lights_loaded = true
+			if screen_mode == "attract_lights":
+				_show_attract_lights()
 		"service_switch_test_start":
 			screen_mode = "switch_test"
 			_show_switch_test(payload)
@@ -558,6 +567,8 @@ func _show_light_test(payload: Dictionary) -> void:
 
 func _on_button(button: String) -> void:
 	match screen_mode:
+		"attract_lights":
+			_on_attract_lights_button(button)
 		"menu":
 			_on_menu_button(button)
 		"ball_status":
@@ -827,6 +838,11 @@ func _select_current() -> void:
 	var item := _clean_menu_text(menu_items[selected_index].text)
 
 	match item:
+		"ATTRACT LIGHTS":
+			screen_mode = "attract_lights"
+			attract_lights_loaded = false
+			_show_attract_lights()
+			MPF.server.send_event("service_attract_lights_get")
 		"VOLUME SETTINGS":
 			_show_volume_settings()
 
@@ -921,3 +937,35 @@ func _exit_service() -> void:
 		"",
 		"RESET GAME IS THE ONLY OPTION THAT ENDS THE GAME",
 	])
+
+
+func _show_attract_lights() -> void:
+	var status := ("ON" if attract_lights_enabled else "OFF") if attract_lights_loaded else "LOADING..."
+	_show_detail("ATTRACT LIGHTS", [
+		"LIGHT SHOW: " + status,
+		"",
+		"UP: ON    DOWN: OFF    ENTER: TOGGLE",
+		"SETTING IS SAVED AUTOMATICALLY",
+		"SERVICE ESC: BACK TO MENU",
+	])
+
+
+func _on_attract_lights_button(button: String) -> void:
+	if button == "ESC" or button == "START":
+		_show_menu()
+		return
+	if not attract_lights_loaded:
+		return
+	var enabled := attract_lights_enabled
+	match button:
+		"UP":
+			enabled = true
+		"DOWN":
+			enabled = false
+		"ENTER":
+			enabled = not enabled
+		_:
+			return
+	attract_lights_loaded = false
+	_show_attract_lights()
+	MPF.server.send_event("service_attract_lights_set&enabled=%d" % int(enabled))

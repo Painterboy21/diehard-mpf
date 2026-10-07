@@ -8,7 +8,7 @@
 #   - Counts left/right spinner hits toward Super Spinners.
 #   - Starts Super Spinners after 25 / 50 / 100 hits as add-a-ball awards are earned.
 #   - While active, spinner scoring is boosted.
-#   - Tracks progress with player vars for the status display.
+#   - Carries each player's hits and completed targets across balls until awarded.
 # ------------------------------------------------------------
 mode:
   start_events:
@@ -30,6 +30,11 @@ timers:
     start_running: false
     restart_on_complete: true
     control_events:
+      # Recheck carried qualification after skillshot or another blocking mode.
+      - event: mode_super_spinners_started
+        action: restart
+      - event: multiball_super_combo_ended
+        action: restart
       - event: super_spinners_start{(current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}
         action: restart
       - event: super_jets_started{(current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}
@@ -42,7 +47,6 @@ timers:
         action: stop
       - event: tilt
         action: stop
-
   super_spinners_timer:
     start_value: 120
     end_value: 0
@@ -60,16 +64,21 @@ timers:
 # ------------------------------------------------------------
 # COUNTERS
 # ------------------------------------------------------------
+# Counts spinner hits until Super Spinners starts.
+# The target doubles immediately on collection; ball changes preserve progress.
+# ------------------------------------------------------------
 counters:
   super_spinners_counter:
     count_events:
-      - SpinnerLeft_active{current_player.super_spinners != 1 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}
-      - SpinnerRight_active{current_player.super_spinners != 1 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}
-    starting_count: 0
+      - SpinnerLeft_active{current_player.super_spinners != 1 and current_player.super_combo_spinners_done == 0 and current_player.super_combo_awarded == 0 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}
+      - SpinnerRight_active{current_player.super_spinners != 1 and current_player.super_combo_spinners_done == 0 and current_player.super_combo_awarded == 0 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}
+    restart_events: super_combo_counter_restart
+    starting_count: current_player.super_spinners_hits
     count_complete_value: current_player.super_spinners_goal
     direction: up
     persist_state: false
-    reset_on_complete: true
+    reset_on_complete: false
+    disable_on_complete: true
     events_when_complete:
       - super_spinners_start
     events_when_hit:
@@ -78,27 +87,42 @@ counters:
 # ------------------------------------------------------------
 # EVENT PLAYER
 # ------------------------------------------------------------
+# Stops Super Spinners when the timer expires.
+# ------------------------------------------------------------
 event_player:
+  # Queued events run after the award count has been incremented.
+  super_combo_start:
+    - super_combo_progress_reset
+  super_combo_add_to_mystery:
+    - super_combo_progress_reset
+  super_combo_progress_reset:
+    - super_spinners_stop
+    - super_combo_counter_restart
   super_spinners_start{(current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}:
     - super_combo_check|10ms
-
   super_jets_started{(current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}:
     - super_combo_check|10ms
-
   timer_super_combo_check_complete:
     - super_combo_check
-
   super_combo_check{current_player.super_combo_spinners_done == 1 and current_player.super_combo_pops_done == 1 and current_player.super_combo_awarded == 0 and current_player.super_combo_blocked == 0 and current_player.multiball_running != 1 and current_player.villain_mode_running != 1 and current_player.villain_select_running != 1 and current_player.villain_difficulty_select_running != 1 and current_player.wizard_mode_running != 1 and game.balls_in_play == 1}:
     - super_combo_start
-
   super_combo_check{current_player.super_combo_spinners_done == 1 and current_player.super_combo_pops_done == 1 and current_player.super_combo_awarded == 0 and current_player.super_combo_blocked == 0 and current_player.multiball_running == 1 and current_player.super_combo_from_mystery == 1 and current_player.villain_mode_running != 1 and current_player.villain_select_running != 1 and current_player.villain_difficulty_select_running != 1 and current_player.wizard_mode_running != 1 and game.balls_in_play >= 2}:
     - super_combo_add_to_mystery
-
   timer_super_spinners_timer_complete:
     - super_spinners_stop
 
 # ------------------------------------------------------------
 # VARIABLE PLAYER
+# ------------------------------------------------------------
+# super_spinners:
+#   0 = off
+#   1 = active
+#
+# super_spinners_hits:
+#   Current spinner hits toward Super Spinners.
+#
+# super_spinners_goal:
+#   Target spinner hits needed. Used by the status display.
 # ------------------------------------------------------------
 variable_player:
   mode_super_spinners_started:
@@ -108,18 +132,9 @@ variable_player:
     super_spinners:
       action: set
       int: 0
-    super_spinners_hits:
-      action: set
-      int: 0
     super_spinners_goal:
       action: set
       int: "25 * 2 ** current_player.super_combo_awards"
-    super_combo_spinners_done:
-      action: set
-      int: 0
-    super_combo_pops_done:
-      action: set
-      int: 0
     super_combo_awarded:
       action: set
       int: 0
@@ -127,11 +142,17 @@ variable_player:
       action: set
       int: 0
 
-  super_spinners_counted{current_player.super_spinners != 1 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}:
+  # ------------------------------------------------------------
+  # Count spinner hits toward Super Spinners while inactive.
+  # ------------------------------------------------------------
+  super_spinners_counted{current_player.super_spinners != 1 and current_player.super_combo_spinners_done == 0 and current_player.super_combo_awarded == 0 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}:
     super_spinners_hits:
       action: add
       int: 1
 
+  # ------------------------------------------------------------
+  # Start / stop Super Spinners.
+  # ------------------------------------------------------------
   super_spinners_start{(current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}:
     super_combo_spinners_done:
       action: set
@@ -147,18 +168,35 @@ variable_player:
     super_spinners:
       action: set
       int: 0
-    super_spinners_hits:
-      action: set
-      int: 0
 
   ball_ended:
     super_spinners:
       action: set
       int: 0
+
+  # Only collection clears progress and advances both goals.
+  super_combo_progress_reset:
+    super_spinners_goal:
+      action: set
+      int: "25 * 2 ** current_player.super_combo_awards"
     super_spinners_hits:
       action: set
       int: 0
+    super_combo_spinners_done:
+      action: set
+      int: 0
+    super_combo_pops_done:
+      action: set
+      int: 0
 
+  # ------------------------------------------------------------
+  # VPW score adjusted to timed version:
+  # Normal spinner already scores 1010 elsewhere.
+  # Super Spinners should total 5010.
+  #
+  # This adds the extra 4000 while active:
+  # 1010 + 4000 = 5010.
+  # ------------------------------------------------------------
   SpinnerLeft_active{current_player.super_spinners == 1}:
     score:
       action: add
@@ -168,12 +206,10 @@ variable_player:
     score:
       action: add
       int: 4000
-
   super_jets_started{(current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}:
     super_combo_pops_done:
       action: set
       int: 1
-
   super_combo_start:
     super_combo_awards:
       action: add
@@ -181,12 +217,10 @@ variable_player:
     super_combo_awarded:
       action: set
       int: 1
-
   mystery_start_super_combo:
     super_combo_from_mystery:
       action: set
       int: 1
-
   super_combo_add_to_mystery:
     super_combo_awards:
       action: add
@@ -194,129 +228,61 @@ variable_player:
     super_combo_awarded:
       action: set
       int: 1
-
   multiball_super_combo_started:
     multiball_running:
       action: set
       int: 1
-
   multiball_super_combo_ended:
+    super_combo_awarded:
+      action: set
+      int: 0
     super_combo_from_mystery:
       action: set
       int: 0
     multiball_running:
       action: set
       int: 0
-
   ball_ending:
     super_combo_blocked:
       action: set
       int: 1
-
   tilt:
     super_combo_blocked:
       action: set
       int: 1
 
-# ------------------------------------------------------------
-# SUPER COMBO MULTIBALL
-# ------------------------------------------------------------
+# Completing both targets earns multiball and immediately advances the next goals.
+# Use the normal trough/plunger path; total=2 adds one to single-ball play.
 multiballs:
   super_combo:
     ball_count: 2
     ball_count_type: total
     shoot_again: 5s
-
-    add_a_ball_events:
-      - super_combo_add_to_mystery
-
+    add_a_ball_events: super_combo_add_to_mystery
     add_a_ball_shoot_again: 5s
+    start_events: super_combo_start, mystery_start_super_combo
+    stop_events: ball_ending, tilt
 
-    start_events:
-      - super_combo_start
-      - mystery_start_super_combo
-
-    stop_events:
-      - ball_ending
-      - tilt
-
-# ------------------------------------------------------------
-# SAVE INDICATOR SHOW
-# ------------------------------------------------------------
-shows:
-  super_combo_save_indicator:
-    - duration: 250ms
-      lights:
-        l29: ff0000
-
-    - duration: 250ms
-      lights:
-        l29: 000000
-
-# ------------------------------------------------------------
-# SHOW PLAYER
-# ------------------------------------------------------------
-show_player:
-  multiball_super_combo_started:
-    super_combo_save_indicator:
-      key: super_combo_ball_save_flash
-      priority: 20000
-      loops: -1
-
-  ball_save_super_combo_timer_start:
-    super_combo_save_indicator:
-      key: super_combo_ball_save_flash
-      priority: 20000
-      loops: -1
-
-  ball_save_super_combo_add_a_ball_timer_start:
-    super_combo_save_indicator:
-      key: super_combo_ball_save_flash
-      priority: 20000
-      loops: -1
-
-  multiball_super_combo_shoot_again_ended:
-    super_combo_ball_save_flash:
-      action: stop
-
-  multiball_super_combo_ended:
-    super_combo_ball_save_flash:
-      action: stop
-
-  ball_ending:
-    super_combo_ball_save_flash:
-      action: stop
-
-  tilt:
-    super_combo_ball_save_flash:
-      action: stop
-
-# ------------------------------------------------------------
-# WIDGET PLAYER
-# ------------------------------------------------------------
+# Show the award above the playfield when the supers multiball starts.
 widget_player:
   super_combo_add_to_mystery:
     super_combo_add_ball:
       action: play
       slide: _overlay
       expire: 5s
-
   multiball_super_combo_started:
     super_combo_add_ball:
       action: play
       slide: _overlay
       expire: 5s
-
   multiball_super_combo_ended:
     super_combo_add_ball:
       action: remove
       slide: _overlay
-
   ball_ending:
     super_combo_add_ball:
       action: remove
       slide: _overlay
-
   tilt:
     super_combo_add_ball:
       action: remove

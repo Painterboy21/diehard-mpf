@@ -32,7 +32,7 @@ mode:
 #
 # VPW behaviour:
 #   Hits before the target = 5,000
-#   Target hit and onwards = 25,000; next-ball target doubles after each add-a-ball award: 10, 20, 40, ...
+#   Target hit and onwards = 25,000; target doubles immediately after each earned combo award: 10, 20, 40, ...
 #
 # Widget replay:
 #   Each score event removes the old widget first, then plays it again
@@ -40,14 +40,18 @@ mode:
 #   of only showing once or twice.
 # ------------------------------------------------------------
 event_player:
-  s_popbumper_left_active{current_player.super_jets_active==0 and (current_player.super_jets_hits < current_player.super_jets_goal-1 or not ((current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)))}:
+  ? s_popbumper_left_active{current_player.super_jets_active==0 and (current_player.super_jets_hits < current_player.super_jets_goal-1 or not ((current_player.super_combo_awarded == 0 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1)) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)))}
+  :
     - pop_bumper_score_5000
-  s_popbumper_right_active{current_player.super_jets_active==0 and (current_player.super_jets_hits < current_player.super_jets_goal-1 or not ((current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)))}:
+  ? s_popbumper_right_active{current_player.super_jets_active==0 and (current_player.super_jets_hits < current_player.super_jets_goal-1 or not ((current_player.super_combo_awarded == 0 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1)) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)))}
+  :
     - pop_bumper_score_5000
-  s_popbumper_left_active{current_player.super_jets_active==0 and current_player.super_jets_hits >= current_player.super_jets_goal-1 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}:
+  ? s_popbumper_left_active{current_player.super_jets_active==0 and current_player.super_jets_hits >= current_player.super_jets_goal-1 and (current_player.super_combo_awarded == 0 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1)) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}
+  :
     - super_jets_started
     - pop_bumper_score_25000
-  s_popbumper_right_active{current_player.super_jets_active==0 and current_player.super_jets_hits >= current_player.super_jets_goal-1 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}:
+  ? s_popbumper_right_active{current_player.super_jets_active==0 and current_player.super_jets_hits >= current_player.super_jets_goal-1 and (current_player.super_combo_awarded == 0 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1)) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}
+  :
     - super_jets_started
     - pop_bumper_score_25000
   s_popbumper_left_active{current_player.super_jets_active==1}:
@@ -68,7 +72,7 @@ event_player:
 # Stores VPW Super Jets progress and awards points.
 #
 # super_jets_hits:
-#   Counts pop bumper hits toward the current ball's Super Jets goal.
+#   Counts pop bumper hits across balls until the combo multiball is earned.
 #
 # super_jets_goal:
 #   Target hits needed for Super Jets. Used by the status display.
@@ -82,9 +86,6 @@ event_player:
 # ------------------------------------------------------------
 variable_player:
   mode_super_jets_started:
-    super_jets_hits:
-      int: 0
-      action: set
     super_jets_goal:
       int: "10 * 2 ** current_player.super_combo_awards"
       action: set
@@ -95,22 +96,30 @@ variable_player:
     score:
       int: "5000 * current_player.playfield_multiplier"
       action: add
-  pop_bumper_score_5000{(current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}:
+  pop_bumper_score_5000{(current_player.super_combo_awarded == 0 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1)) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}:
     super_jets_hits:
-      int: 1
-      action: add
+      int: "current_player.super_jets_hits + 1 if current_player.super_jets_hits < current_player.super_jets_goal else current_player.super_jets_goal"
+      action: set
   pop_bumper_score_25000:
     score:
       int: "25000 * current_player.playfield_multiplier"
       action: add
     super_jets_hits:
-      int: 1
-      action: add
-  super_jets_started{(current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}:
+      int: "current_player.super_jets_hits + 1 if current_player.super_jets_hits < current_player.super_jets_goal else current_player.super_jets_goal"
+      action: set
+  super_jets_started{(current_player.super_combo_awarded == 0 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1)) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}:
     super_jets_active:
       int: 1
       action: set
   ball_ended:
+    super_jets_active:
+      int: 0
+      action: set
+  # Collection clears qualification immediately and advances the target.
+  super_combo_progress_reset:
+    super_jets_goal:
+      int: "10 * 2 ** current_player.super_combo_awards"
+      action: set
     super_jets_active:
       int: 0
       action: set
@@ -148,7 +157,7 @@ widget_player:
       action: play
       priority: 9999
       expire: 1s
-  super_jets_started{(current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}:
+  super_jets_started{(current_player.super_combo_awarded == 0 and (current_player.multiball_running != 1 or current_player.super_combo_from_mystery == 1)) and not (mode.ambush.active or mode.skillshot.active or mode.villain_select.active or mode.wizard_mode.active or mode.yippee_ki_yay_wizard.active or mode.airplane_multiball.active or mode.central_park_multiball.active or mode.nakatomi_multiball.active or mode.eob_bonus.active or mode.hans_diehard.active or mode.hans_dieharder.active or mode.karl_diehard.active or mode.karl_dieharder.active or mode.katya_diehard.active or mode.katya_dieharder.active or mode.simon_diehard.active or mode.simon_dieharder.active or mode.col_stuart_diehard.active or mode.col_stuart_dieharder.active or mode.hans_difficulty_select.active or mode.karl_difficulty_select.active or mode.katya_difficulty_select.active or mode.simon_difficulty_select.active or mode.col_difficulty_select.active)}:
     super_jets:
       action: play
       priority: 9999

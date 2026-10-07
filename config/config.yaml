@@ -401,28 +401,28 @@ playfields:
 variable_player:
   increase_main_volume:
     fast_audio_main_volume:
-      action: add_machine
-      int: 1
+      action: set_machine
+      int: "0 if (machine.fast_audio_main_volume + 1) < 0 else (63 if (machine.fast_audio_main_volume + 1) > 63 else (machine.fast_audio_main_volume + 1))"
   decrease_main_volume:
     fast_audio_main_volume:
-      action: add_machine
-      int: -1
+      action: set_machine
+      int: "0 if (machine.fast_audio_main_volume - 1) < 0 else (63 if (machine.fast_audio_main_volume - 1) > 63 else (machine.fast_audio_main_volume - 1))"
   increase_sub_volume:
     fast_audio_sub_volume:
-      action: add_machine
-      int: 1
+      action: set_machine
+      int: "0 if (machine.fast_audio_sub_volume + 1) < 0 else (63 if (machine.fast_audio_sub_volume + 1) > 63 else (machine.fast_audio_sub_volume + 1))"
   decrease_sub_volume:
     fast_audio_sub_volume:
-      action: add_machine
-      int: -1
+      action: set_machine
+      int: "0 if (machine.fast_audio_sub_volume - 1) < 0 else (63 if (machine.fast_audio_sub_volume - 1) > 63 else (machine.fast_audio_sub_volume - 1))"
   increase_headphones_volume:
     fast_audio_headphones_volume:
-      action: add_machine
-      int: 1
+      action: set_machine
+      int: "0 if (machine.fast_audio_headphones_volume + 1) < 0 else (63 if (machine.fast_audio_headphones_volume + 1) > 63 else (machine.fast_audio_headphones_volume + 1))"
   decrease_headphones_volume:
     fast_audio_headphones_volume:
-      action: add_machine
-      int: -1
+      action: set_machine
+      int: "0 if (machine.fast_audio_headphones_volume - 1) < 0 else (63 if (machine.fast_audio_headphones_volume - 1) > 63 else (machine.fast_audio_headphones_volume - 1))"
 
 # ------------------------------------------------------------
 # SERVOS

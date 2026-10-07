@@ -79,8 +79,8 @@ func _mode_hides_indicators(player: Dictionary, active_modes: Array) -> bool:
 func update_from_player(player: Dictionary) -> void:
 	spinner_left = maxi(0, int(player.get("super_spinners_goal", 25)) - int(player.get("super_spinners_hits", 0)))
 	pops_left = maxi(0, int(player.get("super_jets_goal", 10)) - int(player.get("super_jets_hits", 0)))
-	spinner_active = int(player.get("super_spinners", 0)) == 1
-	pops_active = int(player.get("super_jets_active", 0)) == 1
+	spinner_active = int(player.get("super_spinners", 0)) == 1 or int(player.get("super_combo_spinners_done", 0)) == 1
+	pops_active = int(player.get("super_jets_active", 0)) == 1 or int(player.get("super_combo_pops_done", 0)) == 1
 	var state: Array = [spinner_left, pops_left, spinner_active, pops_active]
 	if state != last_state:
 		last_state = state

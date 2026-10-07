@@ -61,10 +61,10 @@ coils:
     label: Right Magnet
   c_trmagl:
     number: e-14
-    default_pulse_ms: 195ms
-    default_hold_power: 0.95
+    default_pulse_ms: 230ms
+    default_hold_power: 1
     allow_enable: true
-    label: Left Magnet
+    label: Right Magnet
 
   # ------------------------------------------------------------
   # PLUNGER & TROUGH

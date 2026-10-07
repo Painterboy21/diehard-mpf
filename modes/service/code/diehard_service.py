@@ -23,10 +23,29 @@ class DieHardService(Mode):
     def mode_start(self, **kwargs):
         del kwargs
         self._clear_restore_state()
+        self.machine.variables.configure_machine_var("diehard_attract_lights_disabled", persist=True)
+        if self.machine.variables.get_machine_var("diehard_attract_lights_disabled") is None:
+            self.machine.variables.set_machine_var("diehard_attract_lights_disabled", 0)
+        self.add_mode_event_handler("service_attract_lights_set", self._set_attract_lights)
+        self.add_mode_event_handler("service_attract_lights_get", self._attract_lights_status)
         self.add_mode_event_handler("service_mode_entered", self._service_entered)
         self.add_mode_event_handler("service_mode_exited", self._service_exited)
         self.add_mode_event_handler("service_reset_game_requested", self._reset_game_requested)
         self.add_mode_event_handler("service_reset_local_scores_requested", self._reset_local_scores_requested)
+
+    def _attract_lights_status(self, **kwargs):
+        del kwargs
+        enabled = self.machine.variables.get_machine_var("diehard_attract_lights_disabled") != 1
+        self.machine.events.post("service_attract_lights_status", enabled=int(enabled))
+
+    def _set_attract_lights(self, enabled=None, **kwargs):
+        del kwargs
+        if str(enabled) not in ("0", "1"):
+            return
+        enabled = int(enabled)
+        self.machine.variables.set_machine_var("diehard_attract_lights_disabled", 1 - enabled)
+        self.machine.events.post("attract_lights_on" if enabled else "attract_lights_off")
+        self._attract_lights_status()
 
     def _service_entered(self, **kwargs):
         del kwargs

@@ -1,40 +1,52 @@
 #show_version=6
-
-- time: 0
+# Gentler attract pacing. Retains all effects; extended slots avoid overlaps.
+- duration: 9
   shows:
-    attract_christmas: 
+    attract_christmas:
       key: key_attract_xmas_up
       loops: 0
-
-- time: 9s
+- duration: 10
   shows:
-    attract_christmas_flash: 
+    attract_christmas_flash:
       key: key_attract_xmas_flash
       loops: 4
-
-- time: 14s
+      speed: 0.5
+- duration: 0.01
   shows:
-    orange_fade_out: 
+    orange_fade_out:
       key: key_attract_orange_fade_out
       loops: 0
-
-- time: 14.01s
+- duration: 11.99
   shows:
-    bullets_fade: 
+    bullets_fade:
       key: key_attract_bullets_fade
       loops: 0
-
-- time: 26s
+- duration: 12.5
   shows:
-    dotwaves: 
+    dotwaves:
       key: key_attract_dotwaves
       loops: 0
-
-- time: 34s
-  duration: 8s
+      speed: 0.64
+- duration: 16
   shows:
-    physio: 
+    physio:
       key: key_attract_physio
       loops: 0
-
-
+      speed: 0.5
+- duration: 12
+  shows:
+    attract_skyline_sweep:
+      key: key_attract_skyline_sweep
+      loops: 0
+- duration: 16
+  shows:
+    attract_feature_spotlight:
+      key: key_attract_feature_spotlight
+      loops: 0
+      speed: 0.75
+- duration: 16
+  shows:
+    attract_action_finale:
+      key: key_attract_action_finale
+      loops: 0
+      speed: 0.75
